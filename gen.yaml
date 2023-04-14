@@ -1,0 +1,10 @@
+configVersion: 1.0.0
+generation:
+  telemetryEnabled: false
+  sdkClassName: SDK
+  singleTagPerOp: false
+terraform:
+  version: 0.0.1
+  author: speakeasy
+  packageName: openapi
+  serverURL: https://api.airbyte.com/v1/
