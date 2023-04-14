@@ -9,7 +9,7 @@ import (
 	"strings"
 	"time"
 
-	"openapi/internal/sdk/pkg/types"
+	"airbyte/internal/sdk/pkg/types"
 )
 
 func populateForm(paramName string, explode bool, objType reflect.Type, objValue reflect.Value, getFieldName func(reflect.StructField) string) url.Values {

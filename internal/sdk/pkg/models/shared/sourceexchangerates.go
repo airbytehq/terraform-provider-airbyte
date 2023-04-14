@@ -3,9 +3,9 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/types"
 	"encoding/json"
 	"fmt"
-	"openapi/internal/sdk/pkg/types"
 )
 
 type SourceExchangeRatesExchangeRatesEnum string

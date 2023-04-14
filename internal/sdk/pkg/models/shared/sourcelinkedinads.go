@@ -3,11 +3,11 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/types"
 	"bytes"
 	"encoding/json"
 	"errors"
 	"fmt"
-	"openapi/internal/sdk/pkg/types"
 )
 
 type SourceLinkedinAdsAuthenticationAccessTokenAuthMethodEnum string

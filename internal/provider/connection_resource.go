@@ -3,9 +3,9 @@
 package provider
 
 import (
+	"airbyte/internal/sdk"
 	"context"
 	"fmt"
-	"openapi/internal/sdk"
 
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"

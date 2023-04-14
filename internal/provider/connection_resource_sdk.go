@@ -3,8 +3,8 @@
 package provider
 
 import (
+	"airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"openapi/internal/sdk/pkg/models/shared"
 )
 
 func (r *ConnectionResourceModel) ToSDKType() *shared.ConnectionCreateRequest {

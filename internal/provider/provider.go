@@ -3,9 +3,9 @@
 package provider
 
 import (
+	"airbyte/internal/sdk"
+	"airbyte/internal/sdk/pkg/models/shared"
 	"context"
-	"openapi/internal/sdk"
-	"openapi/internal/sdk/pkg/models/shared"
 
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/provider"
@@ -14,26 +14,26 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-var _ provider.Provider = &OpenapiProvider{}
+var _ provider.Provider = &AirbyteProvider{}
 
-type OpenapiProvider struct {
+type AirbyteProvider struct {
 	// version is set to the provider version on release, "dev" when the
 	// provider is built and ran locally, and "test" when running acceptance
 	// testing.
 	version string
 }
 
-// OpenapiProviderModel describes the provider data model.
-type OpenapiProviderModel struct {
+// AirbyteProviderModel describes the provider data model.
+type AirbyteProviderModel struct {
 	BearerAuth types.String `tfsdk:"bearer_auth"`
 }
 
-func (p *OpenapiProvider) Metadata(ctx context.Context, req provider.MetadataRequest, resp *provider.MetadataResponse) {
-	resp.TypeName = "openapi"
+func (p *AirbyteProvider) Metadata(ctx context.Context, req provider.MetadataRequest, resp *provider.MetadataResponse) {
+	resp.TypeName = "airbyte"
 	resp.Version = p.version
 }
 
-func (p *OpenapiProvider) Schema(ctx context.Context, req provider.SchemaRequest, resp *provider.SchemaResponse) {
+func (p *AirbyteProvider) Schema(ctx context.Context, req provider.SchemaRequest, resp *provider.SchemaResponse) {
 	resp.Schema = schema.Schema{
 		Attributes: map[string]schema.Attribute{
 			"bearer_auth": schema.StringAttribute{
@@ -44,8 +44,8 @@ func (p *OpenapiProvider) Schema(ctx context.Context, req provider.SchemaRequest
 	}
 }
 
-func (p *OpenapiProvider) Configure(ctx context.Context, req provider.ConfigureRequest, resp *provider.ConfigureResponse) {
-	var data OpenapiProviderModel
+func (p *AirbyteProvider) Configure(ctx context.Context, req provider.ConfigureRequest, resp *provider.ConfigureResponse) {
+	var data AirbyteProviderModel
 
 	resp.Diagnostics.Append(req.Config.Get(ctx, &data)...)
 
@@ -68,7 +68,7 @@ func (p *OpenapiProvider) Configure(ctx context.Context, req provider.ConfigureR
 	resp.ResourceData = client
 }
 
-func (p *OpenapiProvider) Resources(ctx context.Context) []func() resource.Resource {
+func (p *AirbyteProvider) Resources(ctx context.Context) []func() resource.Resource {
 	return []func() resource.Resource{
 		NewConnectionResource,
 		NewDestinationResource,
@@ -76,13 +76,13 @@ func (p *OpenapiProvider) Resources(ctx context.Context) []func() resource.Resou
 	}
 }
 
-func (p *OpenapiProvider) DataSources(ctx context.Context) []func() datasource.DataSource {
+func (p *AirbyteProvider) DataSources(ctx context.Context) []func() datasource.DataSource {
 	return []func() datasource.DataSource{}
 }
 
 func New(version string) func() provider.Provider {
 	return func() provider.Provider {
-		return &OpenapiProvider{
+		return &AirbyteProvider{
 			version: version,
 		}
 	}

@@ -7,8 +7,8 @@ import (
 	"flag"
 	"log"
 
+	"airbyte/internal/provider"
 	"github.com/hashicorp/terraform-plugin-framework/providerserver"
-	"openapi/internal/provider"
 )
 
 // Run "go generate" to format example terraform files and generate the docs for the registry/website
@@ -34,7 +34,7 @@ func main() {
 	flag.Parse()
 
 	opts := providerserver.ServeOpts{
-		Address: "registry.terraform.io/speakeasy/openapi",
+		Address: "registry.terraform.io/airbytehq/airbyte",
 		Debug:   debug,
 	}
 

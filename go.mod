@@ -1,4 +1,4 @@
-module openapi
+module airbyte
 
 go 1.18
 

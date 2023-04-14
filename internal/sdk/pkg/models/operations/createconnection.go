@@ -3,8 +3,8 @@
 package operations
 
 import (
+	"airbyte/internal/sdk/pkg/models/shared"
 	"net/http"
-	"openapi/internal/sdk/pkg/models/shared"
 )
 
 type CreateConnectionResponse struct {

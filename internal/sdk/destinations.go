@@ -3,12 +3,12 @@
 package sdk
 
 import (
+	"airbyte/internal/sdk/pkg/models/operations"
+	"airbyte/internal/sdk/pkg/models/shared"
+	"airbyte/internal/sdk/pkg/utils"
 	"context"
 	"fmt"
 	"net/http"
-	"openapi/internal/sdk/pkg/models/operations"
-	"openapi/internal/sdk/pkg/models/shared"
-	"openapi/internal/sdk/pkg/utils"
 	"strings"
 )
 

@@ -3,13 +3,13 @@
 package provider
 
 import (
+	"airbyte/internal/sdk/pkg/models/shared"
 	"encoding/json"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"math/big"
-	"openapi/internal/sdk/pkg/models/shared"
 	"time"
 
-	customTypes "openapi/internal/sdk/pkg/types"
+	customTypes "airbyte/internal/sdk/pkg/types"
 )
 
 func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
