@@ -15,17 +15,21 @@ const (
 	SourceClickhouseClickhouseEnumClickhouse SourceClickhouseClickhouseEnum = "clickhouse"
 )
 
+func (e SourceClickhouseClickhouseEnum) ToPointer() *SourceClickhouseClickhouseEnum {
+	return &e
+}
+
 func (e *SourceClickhouseClickhouseEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "clickhouse":
-		*e = SourceClickhouseClickhouseEnum(s)
+		*e = SourceClickhouseClickhouseEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceClickhouseClickhouseEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceClickhouseClickhouseEnum: %v", v)
 	}
 }
 
@@ -36,17 +40,21 @@ const (
 	SourceClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethodEnumSSHPasswordAuth SourceClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum = "SSH_PASSWORD_AUTH"
 )
 
+func (e SourceClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) ToPointer() *SourceClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum {
+	return &e
+}
+
 func (e *SourceClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "SSH_PASSWORD_AUTH":
-		*e = SourceClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(s)
+		*e = SourceClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum: %v", v)
 	}
 }
 
@@ -71,17 +79,21 @@ const (
 	SourceClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnumSSHKeyAuth SourceClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum = "SSH_KEY_AUTH"
 )
 
+func (e SourceClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) ToPointer() *SourceClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum {
+	return &e
+}
+
 func (e *SourceClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "SSH_KEY_AUTH":
-		*e = SourceClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(s)
+		*e = SourceClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum: %v", v)
 	}
 }
 
@@ -106,17 +118,21 @@ const (
 	SourceClickhouseSSHTunnelMethodNoTunnelTunnelMethodEnumNoTunnel SourceClickhouseSSHTunnelMethodNoTunnelTunnelMethodEnum = "NO_TUNNEL"
 )
 
+func (e SourceClickhouseSSHTunnelMethodNoTunnelTunnelMethodEnum) ToPointer() *SourceClickhouseSSHTunnelMethodNoTunnelTunnelMethodEnum {
+	return &e
+}
+
 func (e *SourceClickhouseSSHTunnelMethodNoTunnelTunnelMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "NO_TUNNEL":
-		*e = SourceClickhouseSSHTunnelMethodNoTunnelTunnelMethodEnum(s)
+		*e = SourceClickhouseSSHTunnelMethodNoTunnelTunnelMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceClickhouseSSHTunnelMethodNoTunnelTunnelMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceClickhouseSSHTunnelMethodNoTunnelTunnelMethodEnum: %v", v)
 	}
 }
 

@@ -4,7 +4,6 @@ package provider
 
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
-type SourceAmplitudeEventStreamTimeInterval struct {
-	Size     types.Int64  `tfsdk:"size"`
-	SizeUnit types.String `tfsdk:"size_unit"`
+type SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON struct {
+	FormatType types.String `tfsdk:"format_type"`
 }

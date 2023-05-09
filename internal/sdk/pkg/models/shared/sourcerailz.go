@@ -13,17 +13,21 @@ const (
 	SourceRailzRailzEnumRailz SourceRailzRailzEnum = "railz"
 )
 
+func (e SourceRailzRailzEnum) ToPointer() *SourceRailzRailzEnum {
+	return &e
+}
+
 func (e *SourceRailzRailzEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "railz":
-		*e = SourceRailzRailzEnum(s)
+		*e = SourceRailzRailzEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceRailzRailzEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceRailzRailzEnum: %v", v)
 	}
 }
 

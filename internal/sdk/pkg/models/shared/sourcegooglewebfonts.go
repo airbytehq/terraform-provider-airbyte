@@ -13,17 +13,21 @@ const (
 	SourceGoogleWebfontsGoogleWebfontsEnumGoogleWebfonts SourceGoogleWebfontsGoogleWebfontsEnum = "google-webfonts"
 )
 
+func (e SourceGoogleWebfontsGoogleWebfontsEnum) ToPointer() *SourceGoogleWebfontsGoogleWebfontsEnum {
+	return &e
+}
+
 func (e *SourceGoogleWebfontsGoogleWebfontsEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "google-webfonts":
-		*e = SourceGoogleWebfontsGoogleWebfontsEnum(s)
+		*e = SourceGoogleWebfontsGoogleWebfontsEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGoogleWebfontsGoogleWebfontsEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceGoogleWebfontsGoogleWebfontsEnum: %v", v)
 	}
 }
 

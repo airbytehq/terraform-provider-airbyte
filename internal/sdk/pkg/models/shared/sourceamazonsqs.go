@@ -38,12 +38,16 @@ const (
 	SourceAmazonSqsAWSRegionEnumUsGovWest1   SourceAmazonSqsAWSRegionEnum = "us-gov-west-1"
 )
 
+func (e SourceAmazonSqsAWSRegionEnum) ToPointer() *SourceAmazonSqsAWSRegionEnum {
+	return &e
+}
+
 func (e *SourceAmazonSqsAWSRegionEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "us-east-1":
 		fallthrough
 	case "us-east-2":
@@ -93,10 +97,10 @@ func (e *SourceAmazonSqsAWSRegionEnum) UnmarshalJSON(data []byte) error {
 	case "us-gov-east-1":
 		fallthrough
 	case "us-gov-west-1":
-		*e = SourceAmazonSqsAWSRegionEnum(s)
+		*e = SourceAmazonSqsAWSRegionEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAmazonSqsAWSRegionEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceAmazonSqsAWSRegionEnum: %v", v)
 	}
 }
 
@@ -106,17 +110,21 @@ const (
 	SourceAmazonSqsAmazonSqsEnumAmazonSqs SourceAmazonSqsAmazonSqsEnum = "amazon-sqs"
 )
 
+func (e SourceAmazonSqsAmazonSqsEnum) ToPointer() *SourceAmazonSqsAmazonSqsEnum {
+	return &e
+}
+
 func (e *SourceAmazonSqsAmazonSqsEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "amazon-sqs":
-		*e = SourceAmazonSqsAmazonSqsEnum(s)
+		*e = SourceAmazonSqsAmazonSqsEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAmazonSqsAmazonSqsEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceAmazonSqsAmazonSqsEnum: %v", v)
 	}
 }
 

@@ -14,17 +14,21 @@ const (
 	SourceCloseComCloseComEnumCloseCom SourceCloseComCloseComEnum = "close-com"
 )
 
+func (e SourceCloseComCloseComEnum) ToPointer() *SourceCloseComCloseComEnum {
+	return &e
+}
+
 func (e *SourceCloseComCloseComEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "close-com":
-		*e = SourceCloseComCloseComEnum(s)
+		*e = SourceCloseComCloseComEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceCloseComCloseComEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceCloseComCloseComEnum: %v", v)
 	}
 }
 

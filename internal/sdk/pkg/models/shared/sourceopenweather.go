@@ -62,12 +62,16 @@ const (
 	SourceOpenweatherLanguageEnumZu   SourceOpenweatherLanguageEnum = "zu"
 )
 
+func (e SourceOpenweatherLanguageEnum) ToPointer() *SourceOpenweatherLanguageEnum {
+	return &e
+}
+
 func (e *SourceOpenweatherLanguageEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "af":
 		fallthrough
 	case "al":
@@ -165,10 +169,10 @@ func (e *SourceOpenweatherLanguageEnum) UnmarshalJSON(data []byte) error {
 	case "zh_tw":
 		fallthrough
 	case "zu":
-		*e = SourceOpenweatherLanguageEnum(s)
+		*e = SourceOpenweatherLanguageEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceOpenweatherLanguageEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceOpenweatherLanguageEnum: %v", v)
 	}
 }
 
@@ -178,17 +182,21 @@ const (
 	SourceOpenweatherOpenweatherEnumOpenweather SourceOpenweatherOpenweatherEnum = "openweather"
 )
 
+func (e SourceOpenweatherOpenweatherEnum) ToPointer() *SourceOpenweatherOpenweatherEnum {
+	return &e
+}
+
 func (e *SourceOpenweatherOpenweatherEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "openweather":
-		*e = SourceOpenweatherOpenweatherEnum(s)
+		*e = SourceOpenweatherOpenweatherEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceOpenweatherOpenweatherEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceOpenweatherOpenweatherEnum: %v", v)
 	}
 }
 
@@ -201,21 +209,25 @@ const (
 	SourceOpenweatherUnitsEnumImperial SourceOpenweatherUnitsEnum = "imperial"
 )
 
+func (e SourceOpenweatherUnitsEnum) ToPointer() *SourceOpenweatherUnitsEnum {
+	return &e
+}
+
 func (e *SourceOpenweatherUnitsEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "standard":
 		fallthrough
 	case "metric":
 		fallthrough
 	case "imperial":
-		*e = SourceOpenweatherUnitsEnum(s)
+		*e = SourceOpenweatherUnitsEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceOpenweatherUnitsEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceOpenweatherUnitsEnum: %v", v)
 	}
 }
 

@@ -15,17 +15,21 @@ const (
 	DestinationRedshiftRedshiftEnumRedshift DestinationRedshiftRedshiftEnum = "redshift"
 )
 
+func (e DestinationRedshiftRedshiftEnum) ToPointer() *DestinationRedshiftRedshiftEnum {
+	return &e
+}
+
 func (e *DestinationRedshiftRedshiftEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "redshift":
-		*e = DestinationRedshiftRedshiftEnum(s)
+		*e = DestinationRedshiftRedshiftEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationRedshiftRedshiftEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationRedshiftRedshiftEnum: %v", v)
 	}
 }
 
@@ -36,17 +40,21 @@ const (
 	DestinationRedshiftSSHTunnelMethodPasswordAuthenticationTunnelMethodEnumSSHPasswordAuth DestinationRedshiftSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum = "SSH_PASSWORD_AUTH"
 )
 
+func (e DestinationRedshiftSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) ToPointer() *DestinationRedshiftSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum {
+	return &e
+}
+
 func (e *DestinationRedshiftSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "SSH_PASSWORD_AUTH":
-		*e = DestinationRedshiftSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(s)
+		*e = DestinationRedshiftSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationRedshiftSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationRedshiftSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum: %v", v)
 	}
 }
 
@@ -71,17 +79,21 @@ const (
 	DestinationRedshiftSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnumSSHKeyAuth DestinationRedshiftSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum = "SSH_KEY_AUTH"
 )
 
+func (e DestinationRedshiftSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) ToPointer() *DestinationRedshiftSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum {
+	return &e
+}
+
 func (e *DestinationRedshiftSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "SSH_KEY_AUTH":
-		*e = DestinationRedshiftSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(s)
+		*e = DestinationRedshiftSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationRedshiftSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationRedshiftSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum: %v", v)
 	}
 }
 
@@ -106,17 +118,21 @@ const (
 	DestinationRedshiftSSHTunnelMethodNoTunnelTunnelMethodEnumNoTunnel DestinationRedshiftSSHTunnelMethodNoTunnelTunnelMethodEnum = "NO_TUNNEL"
 )
 
+func (e DestinationRedshiftSSHTunnelMethodNoTunnelTunnelMethodEnum) ToPointer() *DestinationRedshiftSSHTunnelMethodNoTunnelTunnelMethodEnum {
+	return &e
+}
+
 func (e *DestinationRedshiftSSHTunnelMethodNoTunnelTunnelMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "NO_TUNNEL":
-		*e = DestinationRedshiftSSHTunnelMethodNoTunnelTunnelMethodEnum(s)
+		*e = DestinationRedshiftSSHTunnelMethodNoTunnelTunnelMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationRedshiftSSHTunnelMethodNoTunnelTunnelMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationRedshiftSSHTunnelMethodNoTunnelTunnelMethodEnum: %v", v)
 	}
 }
 
@@ -224,17 +240,21 @@ const (
 	DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionTypeEnumAesCbcEnvelope DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionTypeEnum = "aes_cbc_envelope"
 )
 
+func (e DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionTypeEnum) ToPointer() *DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionTypeEnum {
+	return &e
+}
+
 func (e *DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "aes_cbc_envelope":
-		*e = DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionTypeEnum(s)
+		*e = DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationRedshiftUploadingMethodS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionTypeEnum: %v", v)
 	}
 }
 
@@ -251,17 +271,21 @@ const (
 	DestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryptionEncryptionTypeEnumNone DestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryptionEncryptionTypeEnum = "none"
 )
 
+func (e DestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryptionEncryptionTypeEnum) ToPointer() *DestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryptionEncryptionTypeEnum {
+	return &e
+}
+
 func (e *DestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryptionEncryptionTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "none":
-		*e = DestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryptionEncryptionTypeEnum(s)
+		*e = DestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryptionEncryptionTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryptionEncryptionTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationRedshiftUploadingMethodS3StagingEncryptionNoEncryptionEncryptionTypeEnum: %v", v)
 	}
 }
 
@@ -344,17 +368,21 @@ const (
 	DestinationRedshiftUploadingMethodS3StagingMethodEnumS3Staging DestinationRedshiftUploadingMethodS3StagingMethodEnum = "S3 Staging"
 )
 
+func (e DestinationRedshiftUploadingMethodS3StagingMethodEnum) ToPointer() *DestinationRedshiftUploadingMethodS3StagingMethodEnum {
+	return &e
+}
+
 func (e *DestinationRedshiftUploadingMethodS3StagingMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "S3 Staging":
-		*e = DestinationRedshiftUploadingMethodS3StagingMethodEnum(s)
+		*e = DestinationRedshiftUploadingMethodS3StagingMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationRedshiftUploadingMethodS3StagingMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationRedshiftUploadingMethodS3StagingMethodEnum: %v", v)
 	}
 }
 
@@ -388,12 +416,16 @@ const (
 	DestinationRedshiftUploadingMethodS3StagingS3BucketRegionEnumMeSouth1     DestinationRedshiftUploadingMethodS3StagingS3BucketRegionEnum = "me-south-1"
 )
 
+func (e DestinationRedshiftUploadingMethodS3StagingS3BucketRegionEnum) ToPointer() *DestinationRedshiftUploadingMethodS3StagingS3BucketRegionEnum {
+	return &e
+}
+
 func (e *DestinationRedshiftUploadingMethodS3StagingS3BucketRegionEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "":
 		fallthrough
 	case "us-east-1":
@@ -441,10 +473,10 @@ func (e *DestinationRedshiftUploadingMethodS3StagingS3BucketRegionEnum) Unmarsha
 	case "sa-east-1":
 		fallthrough
 	case "me-south-1":
-		*e = DestinationRedshiftUploadingMethodS3StagingS3BucketRegionEnum(s)
+		*e = DestinationRedshiftUploadingMethodS3StagingS3BucketRegionEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationRedshiftUploadingMethodS3StagingS3BucketRegionEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationRedshiftUploadingMethodS3StagingS3BucketRegionEnum: %v", v)
 	}
 }
 
@@ -477,17 +509,21 @@ const (
 	DestinationRedshiftUploadingMethodStandardMethodEnumStandard DestinationRedshiftUploadingMethodStandardMethodEnum = "Standard"
 )
 
+func (e DestinationRedshiftUploadingMethodStandardMethodEnum) ToPointer() *DestinationRedshiftUploadingMethodStandardMethodEnum {
+	return &e
+}
+
 func (e *DestinationRedshiftUploadingMethodStandardMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "Standard":
-		*e = DestinationRedshiftUploadingMethodStandardMethodEnum(s)
+		*e = DestinationRedshiftUploadingMethodStandardMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationRedshiftUploadingMethodStandardMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationRedshiftUploadingMethodStandardMethodEnum: %v", v)
 	}
 }
 

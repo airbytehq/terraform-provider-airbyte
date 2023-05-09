@@ -14,17 +14,21 @@ const (
 	SourceSalesforceAuthTypeEnumClient SourceSalesforceAuthTypeEnum = "Client"
 )
 
+func (e SourceSalesforceAuthTypeEnum) ToPointer() *SourceSalesforceAuthTypeEnum {
+	return &e
+}
+
 func (e *SourceSalesforceAuthTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "Client":
-		*e = SourceSalesforceAuthTypeEnum(s)
+		*e = SourceSalesforceAuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSalesforceAuthTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceSalesforceAuthTypeEnum: %v", v)
 	}
 }
 
@@ -34,17 +38,21 @@ const (
 	SourceSalesforceSalesforceEnumSalesforce SourceSalesforceSalesforceEnum = "salesforce"
 )
 
+func (e SourceSalesforceSalesforceEnum) ToPointer() *SourceSalesforceSalesforceEnum {
+	return &e
+}
+
 func (e *SourceSalesforceSalesforceEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "salesforce":
-		*e = SourceSalesforceSalesforceEnum(s)
+		*e = SourceSalesforceSalesforceEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSalesforceSalesforceEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceSalesforceSalesforceEnum: %v", v)
 	}
 }
 
@@ -61,12 +69,16 @@ const (
 	SourceSalesforceStreamsCriteriaSearchCriteriaEnumNotExacts     SourceSalesforceStreamsCriteriaSearchCriteriaEnum = "not exacts"
 )
 
+func (e SourceSalesforceStreamsCriteriaSearchCriteriaEnum) ToPointer() *SourceSalesforceStreamsCriteriaSearchCriteriaEnum {
+	return &e
+}
+
 func (e *SourceSalesforceStreamsCriteriaSearchCriteriaEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "starts with":
 		fallthrough
 	case "ends with":
@@ -82,10 +94,10 @@ func (e *SourceSalesforceStreamsCriteriaSearchCriteriaEnum) UnmarshalJSON(data [
 	case "not contains":
 		fallthrough
 	case "not exacts":
-		*e = SourceSalesforceStreamsCriteriaSearchCriteriaEnum(s)
+		*e = SourceSalesforceStreamsCriteriaSearchCriteriaEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSalesforceStreamsCriteriaSearchCriteriaEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceSalesforceStreamsCriteriaSearchCriteriaEnum: %v", v)
 	}
 }
 

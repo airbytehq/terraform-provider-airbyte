@@ -14,17 +14,21 @@ const (
 	SourceSnapchatMarketingSnapchatMarketingEnumSnapchatMarketing SourceSnapchatMarketingSnapchatMarketingEnum = "snapchat-marketing"
 )
 
+func (e SourceSnapchatMarketingSnapchatMarketingEnum) ToPointer() *SourceSnapchatMarketingSnapchatMarketingEnum {
+	return &e
+}
+
 func (e *SourceSnapchatMarketingSnapchatMarketingEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "snapchat-marketing":
-		*e = SourceSnapchatMarketingSnapchatMarketingEnum(s)
+		*e = SourceSnapchatMarketingSnapchatMarketingEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSnapchatMarketingSnapchatMarketingEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceSnapchatMarketingSnapchatMarketingEnum: %v", v)
 	}
 }
 

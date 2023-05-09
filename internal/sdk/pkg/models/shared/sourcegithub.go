@@ -16,17 +16,21 @@ const (
 	SourceGithubAuthenticationPersonalAccessTokenOptionTitleEnumPatCredentials SourceGithubAuthenticationPersonalAccessTokenOptionTitleEnum = "PAT Credentials"
 )
 
+func (e SourceGithubAuthenticationPersonalAccessTokenOptionTitleEnum) ToPointer() *SourceGithubAuthenticationPersonalAccessTokenOptionTitleEnum {
+	return &e
+}
+
 func (e *SourceGithubAuthenticationPersonalAccessTokenOptionTitleEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "PAT Credentials":
-		*e = SourceGithubAuthenticationPersonalAccessTokenOptionTitleEnum(s)
+		*e = SourceGithubAuthenticationPersonalAccessTokenOptionTitleEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGithubAuthenticationPersonalAccessTokenOptionTitleEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceGithubAuthenticationPersonalAccessTokenOptionTitleEnum: %v", v)
 	}
 }
 
@@ -43,17 +47,21 @@ const (
 	SourceGithubAuthenticationOAuthOptionTitleEnumOAuthCredentials SourceGithubAuthenticationOAuthOptionTitleEnum = "OAuth Credentials"
 )
 
+func (e SourceGithubAuthenticationOAuthOptionTitleEnum) ToPointer() *SourceGithubAuthenticationOAuthOptionTitleEnum {
+	return &e
+}
+
 func (e *SourceGithubAuthenticationOAuthOptionTitleEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "OAuth Credentials":
-		*e = SourceGithubAuthenticationOAuthOptionTitleEnum(s)
+		*e = SourceGithubAuthenticationOAuthOptionTitleEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGithubAuthenticationOAuthOptionTitleEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceGithubAuthenticationOAuthOptionTitleEnum: %v", v)
 	}
 }
 
@@ -138,17 +146,21 @@ const (
 	SourceGithubGithubEnumGithub SourceGithubGithubEnum = "github"
 )
 
+func (e SourceGithubGithubEnum) ToPointer() *SourceGithubGithubEnum {
+	return &e
+}
+
 func (e *SourceGithubGithubEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "github":
-		*e = SourceGithubGithubEnum(s)
+		*e = SourceGithubGithubEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGithubGithubEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceGithubGithubEnum: %v", v)
 	}
 }
 

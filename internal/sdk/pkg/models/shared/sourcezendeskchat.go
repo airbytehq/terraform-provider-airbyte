@@ -16,17 +16,21 @@ const (
 	SourceZendeskChatAuthorizationMethodAccessTokenCredentialsEnumAccessToken SourceZendeskChatAuthorizationMethodAccessTokenCredentialsEnum = "access_token"
 )
 
+func (e SourceZendeskChatAuthorizationMethodAccessTokenCredentialsEnum) ToPointer() *SourceZendeskChatAuthorizationMethodAccessTokenCredentialsEnum {
+	return &e
+}
+
 func (e *SourceZendeskChatAuthorizationMethodAccessTokenCredentialsEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "access_token":
-		*e = SourceZendeskChatAuthorizationMethodAccessTokenCredentialsEnum(s)
+		*e = SourceZendeskChatAuthorizationMethodAccessTokenCredentialsEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZendeskChatAuthorizationMethodAccessTokenCredentialsEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceZendeskChatAuthorizationMethodAccessTokenCredentialsEnum: %v", v)
 	}
 }
 
@@ -42,17 +46,21 @@ const (
 	SourceZendeskChatAuthorizationMethodOAuth20CredentialsEnumOauth20 SourceZendeskChatAuthorizationMethodOAuth20CredentialsEnum = "oauth2.0"
 )
 
+func (e SourceZendeskChatAuthorizationMethodOAuth20CredentialsEnum) ToPointer() *SourceZendeskChatAuthorizationMethodOAuth20CredentialsEnum {
+	return &e
+}
+
 func (e *SourceZendeskChatAuthorizationMethodOAuth20CredentialsEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "oauth2.0":
-		*e = SourceZendeskChatAuthorizationMethodOAuth20CredentialsEnum(s)
+		*e = SourceZendeskChatAuthorizationMethodOAuth20CredentialsEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZendeskChatAuthorizationMethodOAuth20CredentialsEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceZendeskChatAuthorizationMethodOAuth20CredentialsEnum: %v", v)
 	}
 }
 
@@ -142,17 +150,21 @@ const (
 	SourceZendeskChatZendeskChatEnumZendeskChat SourceZendeskChatZendeskChatEnum = "zendesk-chat"
 )
 
+func (e SourceZendeskChatZendeskChatEnum) ToPointer() *SourceZendeskChatZendeskChatEnum {
+	return &e
+}
+
 func (e *SourceZendeskChatZendeskChatEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "zendesk-chat":
-		*e = SourceZendeskChatZendeskChatEnum(s)
+		*e = SourceZendeskChatZendeskChatEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZendeskChatZendeskChatEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceZendeskChatZendeskChatEnum: %v", v)
 	}
 }
 

@@ -13,17 +13,21 @@ const (
 	SourcePexelsAPIPexelsAPIEnumPexelsAPI SourcePexelsAPIPexelsAPIEnum = "pexels-api"
 )
 
+func (e SourcePexelsAPIPexelsAPIEnum) ToPointer() *SourcePexelsAPIPexelsAPIEnum {
+	return &e
+}
+
 func (e *SourcePexelsAPIPexelsAPIEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "pexels-api":
-		*e = SourcePexelsAPIPexelsAPIEnum(s)
+		*e = SourcePexelsAPIPexelsAPIEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePexelsAPIPexelsAPIEnum: %s", s)
+		return fmt.Errorf("invalid value for SourcePexelsAPIPexelsAPIEnum: %v", v)
 	}
 }
 

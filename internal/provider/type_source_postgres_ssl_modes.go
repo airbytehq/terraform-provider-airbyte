@@ -3,10 +3,10 @@
 package provider
 
 type SourcePostgresSSLModes struct {
-	SourcePostgresSSLModesDisable    *SourcePostgresSSLModesDisable   `tfsdk:"source_postgres_ssl_modes_disable"`
-	SourcePostgresSSLModesAllow      *SourceAlloydbSSLModesAllow      `tfsdk:"source_postgres_ssl_modes_allow"`
-	SourcePostgresSSLModesPrefer     *SourceAlloydbSSLModesPrefer     `tfsdk:"source_postgres_ssl_modes_prefer"`
-	SourcePostgresSSLModesRequire    *SourceAlloydbSSLModesRequire    `tfsdk:"source_postgres_ssl_modes_require"`
-	SourcePostgresSSLModesVerifyCa   *SourceAlloydbSSLModesVerifyCa   `tfsdk:"source_postgres_ssl_modes_verify_ca"`
-	SourcePostgresSSLModesVerifyFull *SourceAlloydbSSLModesVerifyFull `tfsdk:"source_postgres_ssl_modes_verify_full"`
+	SourcePostgresSSLModesDisable    *SourcePostgresSSLModesDisable    `tfsdk:"source_postgres_ssl_modes_disable"`
+	SourcePostgresSSLModesAllow      *SourcePostgresSSLModesAllow      `tfsdk:"source_postgres_ssl_modes_allow"`
+	SourcePostgresSSLModesPrefer     *SourcePostgresSSLModesPrefer     `tfsdk:"source_postgres_ssl_modes_prefer"`
+	SourcePostgresSSLModesRequire    *SourcePostgresSSLModesRequire    `tfsdk:"source_postgres_ssl_modes_require"`
+	SourcePostgresSSLModesVerifyCa   *SourcePostgresSSLModesVerifyCa   `tfsdk:"source_postgres_ssl_modes_verify_ca"`
+	SourcePostgresSSLModesVerifyFull *SourcePostgresSSLModesVerifyFull `tfsdk:"source_postgres_ssl_modes_verify_full"`
 }

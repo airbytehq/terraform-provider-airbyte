@@ -16,17 +16,21 @@ const (
 	SourceGitlabAuthorizationMethodPrivateTokenAuthTypeEnumAccessToken SourceGitlabAuthorizationMethodPrivateTokenAuthTypeEnum = "access_token"
 )
 
+func (e SourceGitlabAuthorizationMethodPrivateTokenAuthTypeEnum) ToPointer() *SourceGitlabAuthorizationMethodPrivateTokenAuthTypeEnum {
+	return &e
+}
+
 func (e *SourceGitlabAuthorizationMethodPrivateTokenAuthTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "access_token":
-		*e = SourceGitlabAuthorizationMethodPrivateTokenAuthTypeEnum(s)
+		*e = SourceGitlabAuthorizationMethodPrivateTokenAuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGitlabAuthorizationMethodPrivateTokenAuthTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceGitlabAuthorizationMethodPrivateTokenAuthTypeEnum: %v", v)
 	}
 }
 
@@ -42,17 +46,21 @@ const (
 	SourceGitlabAuthorizationMethodOAuth20AuthTypeEnumOauth20 SourceGitlabAuthorizationMethodOAuth20AuthTypeEnum = "oauth2.0"
 )
 
+func (e SourceGitlabAuthorizationMethodOAuth20AuthTypeEnum) ToPointer() *SourceGitlabAuthorizationMethodOAuth20AuthTypeEnum {
+	return &e
+}
+
 func (e *SourceGitlabAuthorizationMethodOAuth20AuthTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "oauth2.0":
-		*e = SourceGitlabAuthorizationMethodOAuth20AuthTypeEnum(s)
+		*e = SourceGitlabAuthorizationMethodOAuth20AuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGitlabAuthorizationMethodOAuth20AuthTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceGitlabAuthorizationMethodOAuth20AuthTypeEnum: %v", v)
 	}
 }
 
@@ -144,17 +152,21 @@ const (
 	SourceGitlabGitlabEnumGitlab SourceGitlabGitlabEnum = "gitlab"
 )
 
+func (e SourceGitlabGitlabEnum) ToPointer() *SourceGitlabGitlabEnum {
+	return &e
+}
+
 func (e *SourceGitlabGitlabEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "gitlab":
-		*e = SourceGitlabGitlabEnum(s)
+		*e = SourceGitlabGitlabEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGitlabGitlabEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceGitlabGitlabEnum: %v", v)
 	}
 }
 

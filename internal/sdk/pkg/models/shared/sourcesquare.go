@@ -16,17 +16,21 @@ const (
 	SourceSquareAuthenticationAPIKeyCredentialsTitleEnumAPIKey SourceSquareAuthenticationAPIKeyCredentialsTitleEnum = "API Key"
 )
 
+func (e SourceSquareAuthenticationAPIKeyCredentialsTitleEnum) ToPointer() *SourceSquareAuthenticationAPIKeyCredentialsTitleEnum {
+	return &e
+}
+
 func (e *SourceSquareAuthenticationAPIKeyCredentialsTitleEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "API Key":
-		*e = SourceSquareAuthenticationAPIKeyCredentialsTitleEnum(s)
+		*e = SourceSquareAuthenticationAPIKeyCredentialsTitleEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSquareAuthenticationAPIKeyCredentialsTitleEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceSquareAuthenticationAPIKeyCredentialsTitleEnum: %v", v)
 	}
 }
 
@@ -43,17 +47,21 @@ const (
 	SourceSquareAuthenticationOauthAuthenticationCredentialsTitleEnumOAuthCredentials SourceSquareAuthenticationOauthAuthenticationCredentialsTitleEnum = "OAuth Credentials"
 )
 
+func (e SourceSquareAuthenticationOauthAuthenticationCredentialsTitleEnum) ToPointer() *SourceSquareAuthenticationOauthAuthenticationCredentialsTitleEnum {
+	return &e
+}
+
 func (e *SourceSquareAuthenticationOauthAuthenticationCredentialsTitleEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "OAuth Credentials":
-		*e = SourceSquareAuthenticationOauthAuthenticationCredentialsTitleEnum(s)
+		*e = SourceSquareAuthenticationOauthAuthenticationCredentialsTitleEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSquareAuthenticationOauthAuthenticationCredentialsTitleEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceSquareAuthenticationOauthAuthenticationCredentialsTitleEnum: %v", v)
 	}
 }
 
@@ -142,17 +150,21 @@ const (
 	SourceSquareSquareEnumSquare SourceSquareSquareEnum = "square"
 )
 
+func (e SourceSquareSquareEnum) ToPointer() *SourceSquareSquareEnum {
+	return &e
+}
+
 func (e *SourceSquareSquareEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "square":
-		*e = SourceSquareSquareEnum(s)
+		*e = SourceSquareSquareEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSquareSquareEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceSquareSquareEnum: %v", v)
 	}
 }
 

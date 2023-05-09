@@ -22,6 +22,7 @@ const (
 	SourceConfigurationTypeSourceAsana                       SourceConfigurationType = "source-asana"
 	SourceConfigurationTypeSourceAuth0                       SourceConfigurationType = "source-auth0"
 	SourceConfigurationTypeSourceAwsCloudtrail               SourceConfigurationType = "source-aws-cloudtrail"
+	SourceConfigurationTypeSourceAzureBlobStorage            SourceConfigurationType = "source-azure-blob-storage"
 	SourceConfigurationTypeSourceAzureTable                  SourceConfigurationType = "source-azure-table"
 	SourceConfigurationTypeSourceBambooHr                    SourceConfigurationType = "source-bamboo-hr"
 	SourceConfigurationTypeSourceBigcommerce                 SourceConfigurationType = "source-bigcommerce"
@@ -133,6 +134,7 @@ const (
 	SourceConfigurationTypeSourcePunkAPI                     SourceConfigurationType = "source-punk-api"
 	SourceConfigurationTypeSourcePypi                        SourceConfigurationType = "source-pypi"
 	SourceConfigurationTypeSourceQualaroo                    SourceConfigurationType = "source-qualaroo"
+	SourceConfigurationTypeSourceQuickbooks                  SourceConfigurationType = "source-quickbooks"
 	SourceConfigurationTypeSourceRailz                       SourceConfigurationType = "source-railz"
 	SourceConfigurationTypeSourceRecharge                    SourceConfigurationType = "source-recharge"
 	SourceConfigurationTypeSourceRecreation                  SourceConfigurationType = "source-recreation"
@@ -213,6 +215,7 @@ type SourceConfiguration struct {
 	SourceAsana                       *SourceAsana
 	SourceAuth0                       *SourceAuth0
 	SourceAwsCloudtrail               *SourceAwsCloudtrail
+	SourceAzureBlobStorage            *SourceAzureBlobStorage
 	SourceAzureTable                  *SourceAzureTable
 	SourceBambooHr                    *SourceBambooHr
 	SourceBigcommerce                 *SourceBigcommerce
@@ -324,6 +327,7 @@ type SourceConfiguration struct {
 	SourcePunkAPI                     *SourcePunkAPI
 	SourcePypi                        *SourcePypi
 	SourceQualaroo                    *SourceQualaroo
+	SourceQuickbooks                  *SourceQuickbooks
 	SourceRailz                       *SourceRailz
 	SourceRecharge                    *SourceRecharge
 	SourceRecreation                  *SourceRecreation
@@ -490,6 +494,15 @@ func CreateSourceConfigurationSourceAwsCloudtrail(sourceAwsCloudtrail SourceAwsC
 	return SourceConfiguration{
 		SourceAwsCloudtrail: &sourceAwsCloudtrail,
 		Type:                typ,
+	}
+}
+
+func CreateSourceConfigurationSourceAzureBlobStorage(sourceAzureBlobStorage SourceAzureBlobStorage) SourceConfiguration {
+	typ := SourceConfigurationTypeSourceAzureBlobStorage
+
+	return SourceConfiguration{
+		SourceAzureBlobStorage: &sourceAzureBlobStorage,
+		Type:                   typ,
 	}
 }
 
@@ -1492,6 +1505,15 @@ func CreateSourceConfigurationSourceQualaroo(sourceQualaroo SourceQualaroo) Sour
 	}
 }
 
+func CreateSourceConfigurationSourceQuickbooks(sourceQuickbooks SourceQuickbooks) SourceConfiguration {
+	typ := SourceConfigurationTypeSourceQuickbooks
+
+	return SourceConfiguration{
+		SourceQuickbooks: &sourceQuickbooks,
+		Type:             typ,
+	}
+}
+
 func CreateSourceConfigurationSourceRailz(sourceRailz SourceRailz) SourceConfiguration {
 	typ := SourceConfigurationTypeSourceRailz
 
@@ -2185,6 +2207,15 @@ func (u *SourceConfiguration) UnmarshalJSON(data []byte) error {
 	if err := d.Decode(&sourceAwsCloudtrail); err == nil {
 		u.SourceAwsCloudtrail = sourceAwsCloudtrail
 		u.Type = SourceConfigurationTypeSourceAwsCloudtrail
+		return nil
+	}
+
+	sourceAzureBlobStorage := new(SourceAzureBlobStorage)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceAzureBlobStorage); err == nil {
+		u.SourceAzureBlobStorage = sourceAzureBlobStorage
+		u.Type = SourceConfigurationTypeSourceAzureBlobStorage
 		return nil
 	}
 
@@ -3187,6 +3218,15 @@ func (u *SourceConfiguration) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	sourceQuickbooks := new(SourceQuickbooks)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceQuickbooks); err == nil {
+		u.SourceQuickbooks = sourceQuickbooks
+		u.Type = SourceConfigurationTypeSourceQuickbooks
+		return nil
+	}
+
 	sourceRailz := new(SourceRailz)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -3829,6 +3869,10 @@ func (u SourceConfiguration) MarshalJSON() ([]byte, error) {
 		return json.Marshal(u.SourceAwsCloudtrail)
 	}
 
+	if u.SourceAzureBlobStorage != nil {
+		return json.Marshal(u.SourceAzureBlobStorage)
+	}
+
 	if u.SourceAzureTable != nil {
 		return json.Marshal(u.SourceAzureTable)
 	}
@@ -4271,6 +4315,10 @@ func (u SourceConfiguration) MarshalJSON() ([]byte, error) {
 
 	if u.SourceQualaroo != nil {
 		return json.Marshal(u.SourceQualaroo)
+	}
+
+	if u.SourceQuickbooks != nil {
+		return json.Marshal(u.SourceQuickbooks)
 	}
 
 	if u.SourceRailz != nil {

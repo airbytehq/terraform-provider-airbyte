@@ -13,17 +13,21 @@ const (
 	SourceIp2whoisIp2whoisEnumIp2whois SourceIp2whoisIp2whoisEnum = "ip2whois"
 )
 
+func (e SourceIp2whoisIp2whoisEnum) ToPointer() *SourceIp2whoisIp2whoisEnum {
+	return &e
+}
+
 func (e *SourceIp2whoisIp2whoisEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "ip2whois":
-		*e = SourceIp2whoisIp2whoisEnum(s)
+		*e = SourceIp2whoisIp2whoisEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceIp2whoisIp2whoisEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceIp2whoisIp2whoisEnum: %v", v)
 	}
 }
 

@@ -15,17 +15,21 @@ const (
 	DestinationGcsAuthenticationHMACKeyCredentialTypeEnumHmacKey DestinationGcsAuthenticationHMACKeyCredentialTypeEnum = "HMAC_KEY"
 )
 
+func (e DestinationGcsAuthenticationHMACKeyCredentialTypeEnum) ToPointer() *DestinationGcsAuthenticationHMACKeyCredentialTypeEnum {
+	return &e
+}
+
 func (e *DestinationGcsAuthenticationHMACKeyCredentialTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "HMAC_KEY":
-		*e = DestinationGcsAuthenticationHMACKeyCredentialTypeEnum(s)
+		*e = DestinationGcsAuthenticationHMACKeyCredentialTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationGcsAuthenticationHMACKeyCredentialTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationGcsAuthenticationHMACKeyCredentialTypeEnum: %v", v)
 	}
 }
 
@@ -88,17 +92,21 @@ const (
 	DestinationGcsGcsEnumGcs DestinationGcsGcsEnum = "gcs"
 )
 
+func (e DestinationGcsGcsEnum) ToPointer() *DestinationGcsGcsEnum {
+	return &e
+}
+
 func (e *DestinationGcsGcsEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "gcs":
-		*e = DestinationGcsGcsEnum(s)
+		*e = DestinationGcsGcsEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationGcsGcsEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationGcsGcsEnum: %v", v)
 	}
 }
 
@@ -115,12 +123,16 @@ const (
 	DestinationGcsOutputFormatParquetColumnarStorageCompressionCodecEnumZstd         DestinationGcsOutputFormatParquetColumnarStorageCompressionCodecEnum = "ZSTD"
 )
 
+func (e DestinationGcsOutputFormatParquetColumnarStorageCompressionCodecEnum) ToPointer() *DestinationGcsOutputFormatParquetColumnarStorageCompressionCodecEnum {
+	return &e
+}
+
 func (e *DestinationGcsOutputFormatParquetColumnarStorageCompressionCodecEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "UNCOMPRESSED":
 		fallthrough
 	case "SNAPPY":
@@ -134,10 +146,10 @@ func (e *DestinationGcsOutputFormatParquetColumnarStorageCompressionCodecEnum) U
 	case "LZ4":
 		fallthrough
 	case "ZSTD":
-		*e = DestinationGcsOutputFormatParquetColumnarStorageCompressionCodecEnum(s)
+		*e = DestinationGcsOutputFormatParquetColumnarStorageCompressionCodecEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationGcsOutputFormatParquetColumnarStorageCompressionCodecEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationGcsOutputFormatParquetColumnarStorageCompressionCodecEnum: %v", v)
 	}
 }
 
@@ -147,17 +159,21 @@ const (
 	DestinationGcsOutputFormatParquetColumnarStorageFormatTypeEnumParquet DestinationGcsOutputFormatParquetColumnarStorageFormatTypeEnum = "Parquet"
 )
 
+func (e DestinationGcsOutputFormatParquetColumnarStorageFormatTypeEnum) ToPointer() *DestinationGcsOutputFormatParquetColumnarStorageFormatTypeEnum {
+	return &e
+}
+
 func (e *DestinationGcsOutputFormatParquetColumnarStorageFormatTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "Parquet":
-		*e = DestinationGcsOutputFormatParquetColumnarStorageFormatTypeEnum(s)
+		*e = DestinationGcsOutputFormatParquetColumnarStorageFormatTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationGcsOutputFormatParquetColumnarStorageFormatTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationGcsOutputFormatParquetColumnarStorageFormatTypeEnum: %v", v)
 	}
 }
 
@@ -184,17 +200,21 @@ const (
 	DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnumGzip DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum = "GZIP"
 )
 
+func (e DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum) ToPointer() *DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum {
+	return &e
+}
+
 func (e *DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "GZIP":
-		*e = DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum(s)
+		*e = DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum: %v", v)
 	}
 }
 
@@ -209,17 +229,21 @@ const (
 	DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnumNoCompression DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum = "No Compression"
 )
 
+func (e DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum) ToPointer() *DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum {
+	return &e
+}
+
 func (e *DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "No Compression":
-		*e = DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum(s)
+		*e = DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum: %v", v)
 	}
 }
 
@@ -302,17 +326,21 @@ const (
 	DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnumJsonl DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum = "JSONL"
 )
 
+func (e DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum) ToPointer() *DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum {
+	return &e
+}
+
 func (e *DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "JSONL":
-		*e = DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum(s)
+		*e = DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum: %v", v)
 	}
 }
 
@@ -329,17 +357,21 @@ const (
 	DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionTypeEnumGzip DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionTypeEnum = "GZIP"
 )
 
+func (e DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionTypeEnum) ToPointer() *DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionTypeEnum {
+	return &e
+}
+
 func (e *DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "GZIP":
-		*e = DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionTypeEnum(s)
+		*e = DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionTypeEnum: %v", v)
 	}
 }
 
@@ -354,17 +386,21 @@ const (
 	DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionTypeEnumNoCompression DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionTypeEnum = "No Compression"
 )
 
+func (e DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionTypeEnum) ToPointer() *DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionTypeEnum {
+	return &e
+}
+
 func (e *DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "No Compression":
-		*e = DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionTypeEnum(s)
+		*e = DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionTypeEnum: %v", v)
 	}
 }
 
@@ -449,19 +485,23 @@ const (
 	DestinationGcsOutputFormatCSVCommaSeparatedValuesNormalizationEnumRootLevelFlattening DestinationGcsOutputFormatCSVCommaSeparatedValuesNormalizationEnum = "Root level flattening"
 )
 
+func (e DestinationGcsOutputFormatCSVCommaSeparatedValuesNormalizationEnum) ToPointer() *DestinationGcsOutputFormatCSVCommaSeparatedValuesNormalizationEnum {
+	return &e
+}
+
 func (e *DestinationGcsOutputFormatCSVCommaSeparatedValuesNormalizationEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "No flattening":
 		fallthrough
 	case "Root level flattening":
-		*e = DestinationGcsOutputFormatCSVCommaSeparatedValuesNormalizationEnum(s)
+		*e = DestinationGcsOutputFormatCSVCommaSeparatedValuesNormalizationEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationGcsOutputFormatCSVCommaSeparatedValuesNormalizationEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationGcsOutputFormatCSVCommaSeparatedValuesNormalizationEnum: %v", v)
 	}
 }
 
@@ -471,17 +511,21 @@ const (
 	DestinationGcsOutputFormatCSVCommaSeparatedValuesFormatTypeEnumCsv DestinationGcsOutputFormatCSVCommaSeparatedValuesFormatTypeEnum = "CSV"
 )
 
+func (e DestinationGcsOutputFormatCSVCommaSeparatedValuesFormatTypeEnum) ToPointer() *DestinationGcsOutputFormatCSVCommaSeparatedValuesFormatTypeEnum {
+	return &e
+}
+
 func (e *DestinationGcsOutputFormatCSVCommaSeparatedValuesFormatTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "CSV":
-		*e = DestinationGcsOutputFormatCSVCommaSeparatedValuesFormatTypeEnum(s)
+		*e = DestinationGcsOutputFormatCSVCommaSeparatedValuesFormatTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationGcsOutputFormatCSVCommaSeparatedValuesFormatTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationGcsOutputFormatCSVCommaSeparatedValuesFormatTypeEnum: %v", v)
 	}
 }
 
@@ -500,17 +544,21 @@ const (
 	DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappyCodecEnumSnappy DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappyCodecEnum = "snappy"
 )
 
+func (e DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappyCodecEnum) ToPointer() *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappyCodecEnum {
+	return &e
+}
+
 func (e *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappyCodecEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "snappy":
-		*e = DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappyCodecEnum(s)
+		*e = DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappyCodecEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappyCodecEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappyCodecEnum: %v", v)
 	}
 }
 
@@ -525,17 +573,21 @@ const (
 	DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandardCodecEnumZstandard DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandardCodecEnum = "zstandard"
 )
 
+func (e DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandardCodecEnum) ToPointer() *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandardCodecEnum {
+	return &e
+}
+
 func (e *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandardCodecEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "zstandard":
-		*e = DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandardCodecEnum(s)
+		*e = DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandardCodecEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandardCodecEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandardCodecEnum: %v", v)
 	}
 }
 
@@ -554,17 +606,21 @@ const (
 	DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXzCodecEnumXz DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXzCodecEnum = "xz"
 )
 
+func (e DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXzCodecEnum) ToPointer() *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXzCodecEnum {
+	return &e
+}
+
 func (e *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXzCodecEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "xz":
-		*e = DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXzCodecEnum(s)
+		*e = DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXzCodecEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXzCodecEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXzCodecEnum: %v", v)
 	}
 }
 
@@ -581,17 +637,21 @@ const (
 	DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2CodecEnumBzip2 DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2CodecEnum = "bzip2"
 )
 
+func (e DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2CodecEnum) ToPointer() *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2CodecEnum {
+	return &e
+}
+
 func (e *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2CodecEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "bzip2":
-		*e = DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2CodecEnum(s)
+		*e = DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2CodecEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2CodecEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2CodecEnum: %v", v)
 	}
 }
 
@@ -606,17 +666,21 @@ const (
 	DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflateCodecEnumDeflate DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflateCodecEnum = "Deflate"
 )
 
+func (e DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflateCodecEnum) ToPointer() *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflateCodecEnum {
+	return &e
+}
+
 func (e *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflateCodecEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "Deflate":
-		*e = DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflateCodecEnum(s)
+		*e = DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflateCodecEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflateCodecEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflateCodecEnum: %v", v)
 	}
 }
 
@@ -633,17 +697,21 @@ const (
 	DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompressionCodecEnumNoCompression DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompressionCodecEnum = "no compression"
 )
 
+func (e DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompressionCodecEnum) ToPointer() *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompressionCodecEnum {
+	return &e
+}
+
 func (e *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompressionCodecEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "no compression":
-		*e = DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompressionCodecEnum(s)
+		*e = DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompressionCodecEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompressionCodecEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompressionCodecEnum: %v", v)
 	}
 }
 
@@ -822,17 +890,21 @@ const (
 	DestinationGcsOutputFormatAvroApacheAvroFormatTypeEnumAvro DestinationGcsOutputFormatAvroApacheAvroFormatTypeEnum = "Avro"
 )
 
+func (e DestinationGcsOutputFormatAvroApacheAvroFormatTypeEnum) ToPointer() *DestinationGcsOutputFormatAvroApacheAvroFormatTypeEnum {
+	return &e
+}
+
 func (e *DestinationGcsOutputFormatAvroApacheAvroFormatTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "Avro":
-		*e = DestinationGcsOutputFormatAvroApacheAvroFormatTypeEnum(s)
+		*e = DestinationGcsOutputFormatAvroApacheAvroFormatTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationGcsOutputFormatAvroApacheAvroFormatTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationGcsOutputFormatAvroApacheAvroFormatTypeEnum: %v", v)
 	}
 }
 
@@ -1000,12 +1072,16 @@ const (
 	DestinationGCSGCSBucketRegionEnumNam4                   DestinationGCSGCSBucketRegionEnum = "nam4"
 )
 
+func (e DestinationGCSGCSBucketRegionEnum) ToPointer() *DestinationGCSGCSBucketRegionEnum {
+	return &e
+}
+
 func (e *DestinationGCSGCSBucketRegionEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "northamerica-northeast1":
 		fallthrough
 	case "northamerica-northeast2":
@@ -1075,10 +1151,10 @@ func (e *DestinationGCSGCSBucketRegionEnum) UnmarshalJSON(data []byte) error {
 	case "eur4":
 		fallthrough
 	case "nam4":
-		*e = DestinationGCSGCSBucketRegionEnum(s)
+		*e = DestinationGCSGCSBucketRegionEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationGCSGCSBucketRegionEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationGCSGCSBucketRegionEnum: %v", v)
 	}
 }
 

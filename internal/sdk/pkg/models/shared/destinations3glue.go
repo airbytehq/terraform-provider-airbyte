@@ -15,17 +15,21 @@ const (
 	DestinationS3GlueS3GlueEnumS3Glue DestinationS3GlueS3GlueEnum = "s3-glue"
 )
 
+func (e DestinationS3GlueS3GlueEnum) ToPointer() *DestinationS3GlueS3GlueEnum {
+	return &e
+}
+
 func (e *DestinationS3GlueS3GlueEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "s3-glue":
-		*e = DestinationS3GlueS3GlueEnum(s)
+		*e = DestinationS3GlueS3GlueEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3GlueS3GlueEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationS3GlueS3GlueEnum: %v", v)
 	}
 }
 
@@ -35,17 +39,21 @@ const (
 	DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnumGzip DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum = "GZIP"
 )
 
+func (e DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum) ToPointer() *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum {
+	return &e
+}
+
 func (e *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "GZIP":
-		*e = DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum(s)
+		*e = DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum: %v", v)
 	}
 }
 
@@ -60,17 +68,21 @@ const (
 	DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnumNoCompression DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum = "No Compression"
 )
 
+func (e DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum) ToPointer() *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum {
+	return &e
+}
+
 func (e *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "No Compression":
-		*e = DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum(s)
+		*e = DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum: %v", v)
 	}
 }
 
@@ -147,23 +159,55 @@ func (u DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompression) M
 	return nil, nil
 }
 
+// DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlatteningEnum - Whether the input json data should be normalized (flattened) in the output JSON Lines. Please refer to docs for details.
+type DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlatteningEnum string
+
+const (
+	DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlatteningEnumNoFlattening        DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlatteningEnum = "No flattening"
+	DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlatteningEnumRootLevelFlattening DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlatteningEnum = "Root level flattening"
+)
+
+func (e DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlatteningEnum) ToPointer() *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlatteningEnum {
+	return &e
+}
+
+func (e *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlatteningEnum) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "No flattening":
+		fallthrough
+	case "Root level flattening":
+		*e = DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlatteningEnum(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlatteningEnum: %v", v)
+	}
+}
+
 type DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum string
 
 const (
 	DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnumJsonl DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum = "JSONL"
 )
 
+func (e DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum) ToPointer() *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum {
+	return &e
+}
+
 func (e *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "JSONL":
-		*e = DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum(s)
+		*e = DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum: %v", v)
 	}
 }
 
@@ -171,9 +215,9 @@ func (e *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnu
 type DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON struct {
 	// Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
 	Compression *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompression `json:"compression,omitempty"`
-	// If true data will be flattened and won't be nested in the _airbyte_data field
-	FlattenData *bool                                                                    `json:"flatten_data,omitempty"`
-	FormatType  DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum `json:"format_type"`
+	// Whether the input json data should be normalized (flattened) in the output JSON Lines. Please refer to docs for details.
+	Flattening *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlatteningEnum `json:"flattening,omitempty"`
+	FormatType DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum  `json:"format_type"`
 }
 
 type DestinationS3GlueOutputFormatType string
@@ -228,19 +272,23 @@ const (
 	DestinationS3GlueSerializationLibraryEnumOrgApacheHiveHcatalogDataJSONSerDe DestinationS3GlueSerializationLibraryEnum = "org.apache.hive.hcatalog.data.JsonSerDe"
 )
 
+func (e DestinationS3GlueSerializationLibraryEnum) ToPointer() *DestinationS3GlueSerializationLibraryEnum {
+	return &e
+}
+
 func (e *DestinationS3GlueSerializationLibraryEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "org.openx.data.jsonserde.JsonSerDe":
 		fallthrough
 	case "org.apache.hive.hcatalog.data.JsonSerDe":
-		*e = DestinationS3GlueSerializationLibraryEnum(s)
+		*e = DestinationS3GlueSerializationLibraryEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3GlueSerializationLibraryEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationS3GlueSerializationLibraryEnum: %v", v)
 	}
 }
 
@@ -276,12 +324,16 @@ const (
 	DestinationS3GlueS3BucketRegionEnumUsGovWest1   DestinationS3GlueS3BucketRegionEnum = "us-gov-west-1"
 )
 
+func (e DestinationS3GlueS3BucketRegionEnum) ToPointer() *DestinationS3GlueS3BucketRegionEnum {
+	return &e
+}
+
 func (e *DestinationS3GlueS3BucketRegionEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "":
 		fallthrough
 	case "us-east-1":
@@ -333,10 +385,10 @@ func (e *DestinationS3GlueS3BucketRegionEnum) UnmarshalJSON(data []byte) error {
 	case "us-gov-east-1":
 		fallthrough
 	case "us-gov-west-1":
-		*e = DestinationS3GlueS3BucketRegionEnum(s)
+		*e = DestinationS3GlueS3BucketRegionEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3GlueS3BucketRegionEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationS3GlueS3BucketRegionEnum: %v", v)
 	}
 }
 

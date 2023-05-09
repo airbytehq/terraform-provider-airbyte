@@ -15,17 +15,21 @@ const (
 	DestinationMongodbAuthorizationTypeLoginPasswordAuthorizationEnumLoginPassword DestinationMongodbAuthorizationTypeLoginPasswordAuthorizationEnum = "login/password"
 )
 
+func (e DestinationMongodbAuthorizationTypeLoginPasswordAuthorizationEnum) ToPointer() *DestinationMongodbAuthorizationTypeLoginPasswordAuthorizationEnum {
+	return &e
+}
+
 func (e *DestinationMongodbAuthorizationTypeLoginPasswordAuthorizationEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "login/password":
-		*e = DestinationMongodbAuthorizationTypeLoginPasswordAuthorizationEnum(s)
+		*e = DestinationMongodbAuthorizationTypeLoginPasswordAuthorizationEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationMongodbAuthorizationTypeLoginPasswordAuthorizationEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationMongodbAuthorizationTypeLoginPasswordAuthorizationEnum: %v", v)
 	}
 }
 
@@ -44,17 +48,21 @@ const (
 	DestinationMongodbAuthorizationTypeNoneAuthorizationEnumNone DestinationMongodbAuthorizationTypeNoneAuthorizationEnum = "none"
 )
 
+func (e DestinationMongodbAuthorizationTypeNoneAuthorizationEnum) ToPointer() *DestinationMongodbAuthorizationTypeNoneAuthorizationEnum {
+	return &e
+}
+
 func (e *DestinationMongodbAuthorizationTypeNoneAuthorizationEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "none":
-		*e = DestinationMongodbAuthorizationTypeNoneAuthorizationEnum(s)
+		*e = DestinationMongodbAuthorizationTypeNoneAuthorizationEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationMongodbAuthorizationTypeNoneAuthorizationEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationMongodbAuthorizationTypeNoneAuthorizationEnum: %v", v)
 	}
 }
 
@@ -137,17 +145,21 @@ const (
 	DestinationMongodbMongodbEnumMongodb DestinationMongodbMongodbEnum = "mongodb"
 )
 
+func (e DestinationMongodbMongodbEnum) ToPointer() *DestinationMongodbMongodbEnum {
+	return &e
+}
+
 func (e *DestinationMongodbMongodbEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "mongodb":
-		*e = DestinationMongodbMongodbEnum(s)
+		*e = DestinationMongodbMongodbEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationMongodbMongodbEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationMongodbMongodbEnum: %v", v)
 	}
 }
 
@@ -157,17 +169,21 @@ const (
 	DestinationMongodbMongoDBInstanceTypeMongoDBAtlasInstanceEnumAtlas DestinationMongodbMongoDBInstanceTypeMongoDBAtlasInstanceEnum = "atlas"
 )
 
+func (e DestinationMongodbMongoDBInstanceTypeMongoDBAtlasInstanceEnum) ToPointer() *DestinationMongodbMongoDBInstanceTypeMongoDBAtlasInstanceEnum {
+	return &e
+}
+
 func (e *DestinationMongodbMongoDBInstanceTypeMongoDBAtlasInstanceEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "atlas":
-		*e = DestinationMongodbMongoDBInstanceTypeMongoDBAtlasInstanceEnum(s)
+		*e = DestinationMongodbMongoDBInstanceTypeMongoDBAtlasInstanceEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationMongodbMongoDBInstanceTypeMongoDBAtlasInstanceEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationMongodbMongoDBInstanceTypeMongoDBAtlasInstanceEnum: %v", v)
 	}
 }
 
@@ -184,17 +200,21 @@ const (
 	DestinationMongodbMongoDbInstanceTypeReplicaSetInstanceEnumReplica DestinationMongodbMongoDbInstanceTypeReplicaSetInstanceEnum = "replica"
 )
 
+func (e DestinationMongodbMongoDbInstanceTypeReplicaSetInstanceEnum) ToPointer() *DestinationMongodbMongoDbInstanceTypeReplicaSetInstanceEnum {
+	return &e
+}
+
 func (e *DestinationMongodbMongoDbInstanceTypeReplicaSetInstanceEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "replica":
-		*e = DestinationMongodbMongoDbInstanceTypeReplicaSetInstanceEnum(s)
+		*e = DestinationMongodbMongoDbInstanceTypeReplicaSetInstanceEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationMongodbMongoDbInstanceTypeReplicaSetInstanceEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationMongodbMongoDbInstanceTypeReplicaSetInstanceEnum: %v", v)
 	}
 }
 
@@ -213,17 +233,21 @@ const (
 	DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstanceEnumStandalone DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstanceEnum = "standalone"
 )
 
+func (e DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstanceEnum) ToPointer() *DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstanceEnum {
+	return &e
+}
+
 func (e *DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstanceEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "standalone":
-		*e = DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstanceEnum(s)
+		*e = DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstanceEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstanceEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstanceEnum: %v", v)
 	}
 }
 
@@ -335,17 +359,21 @@ const (
 	DestinationMongodbSSHTunnelMethodPasswordAuthenticationTunnelMethodEnumSSHPasswordAuth DestinationMongodbSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum = "SSH_PASSWORD_AUTH"
 )
 
+func (e DestinationMongodbSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) ToPointer() *DestinationMongodbSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum {
+	return &e
+}
+
 func (e *DestinationMongodbSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "SSH_PASSWORD_AUTH":
-		*e = DestinationMongodbSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(s)
+		*e = DestinationMongodbSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationMongodbSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationMongodbSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum: %v", v)
 	}
 }
 
@@ -370,17 +398,21 @@ const (
 	DestinationMongodbSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnumSSHKeyAuth DestinationMongodbSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum = "SSH_KEY_AUTH"
 )
 
+func (e DestinationMongodbSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) ToPointer() *DestinationMongodbSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum {
+	return &e
+}
+
 func (e *DestinationMongodbSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "SSH_KEY_AUTH":
-		*e = DestinationMongodbSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(s)
+		*e = DestinationMongodbSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationMongodbSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationMongodbSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum: %v", v)
 	}
 }
 
@@ -405,17 +437,21 @@ const (
 	DestinationMongodbSSHTunnelMethodNoTunnelTunnelMethodEnumNoTunnel DestinationMongodbSSHTunnelMethodNoTunnelTunnelMethodEnum = "NO_TUNNEL"
 )
 
+func (e DestinationMongodbSSHTunnelMethodNoTunnelTunnelMethodEnum) ToPointer() *DestinationMongodbSSHTunnelMethodNoTunnelTunnelMethodEnum {
+	return &e
+}
+
 func (e *DestinationMongodbSSHTunnelMethodNoTunnelTunnelMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "NO_TUNNEL":
-		*e = DestinationMongodbSSHTunnelMethodNoTunnelTunnelMethodEnum(s)
+		*e = DestinationMongodbSSHTunnelMethodNoTunnelTunnelMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationMongodbSSHTunnelMethodNoTunnelTunnelMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationMongodbSSHTunnelMethodNoTunnelTunnelMethodEnum: %v", v)
 	}
 }
 

@@ -5,7 +5,8 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceYoutubeAnalyticsAuthenticateViaOAuth20 struct {
-	ClientID     types.String `tfsdk:"client_id"`
-	ClientSecret types.String `tfsdk:"client_secret"`
-	RefreshToken types.String `tfsdk:"refresh_token"`
+	ClientID             types.String            `tfsdk:"client_id"`
+	ClientSecret         types.String            `tfsdk:"client_secret"`
+	RefreshToken         types.String            `tfsdk:"refresh_token"`
+	AdditionalProperties map[string]types.String `tfsdk:"additional_properties"`
 }

@@ -7,10 +7,8 @@ import (
 	"context"
 	"fmt"
 
+	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -35,11 +33,18 @@ type ConnectionResource struct {
 
 // ConnectionResourceModel describes the resource data model.
 type ConnectionResourceModel struct {
-	DestinationID types.String              `tfsdk:"destination_id"`
-	Geography     types.String              `tfsdk:"geography"`
-	Name          types.String              `tfsdk:"name"`
-	Schedule      *ConnectionScheduleCreate `tfsdk:"schedule"`
-	SourceID      types.String              `tfsdk:"source_id"`
+	Configurations      *StreamConfigurations     `tfsdk:"configurations"`
+	ConnectionID        types.String              `tfsdk:"connection_id"`
+	DataResidency       types.String              `tfsdk:"data_residency"`
+	DestinationID       types.String              `tfsdk:"destination_id"`
+	Name                types.String              `tfsdk:"name"`
+	NamespaceDefinition types.String              `tfsdk:"namespace_definition"`
+	NamespaceFormat     types.String              `tfsdk:"namespace_format"`
+	Prefix              types.String              `tfsdk:"prefix"`
+	Schedule            *ConnectionScheduleCreate `tfsdk:"schedule"`
+	SourceID            types.String              `tfsdk:"source_id"`
+	Status              types.String              `tfsdk:"status"`
+	WorkspaceID         types.String              `tfsdk:"workspace_id"`
 }
 
 func (r *ConnectionResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -51,18 +56,51 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 		MarkdownDescription: "Connection Resource",
 
 		Attributes: map[string]schema.Attribute{
-			"destination_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
-				Required: true,
-			},
-			"geography": schema.StringAttribute{
+			"configurations": schema.SingleNestedAttribute{
 				Computed: true,
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
+				Attributes: map[string]schema.Attribute{
+					"streams": schema.ListNestedAttribute{
+						Computed: true,
+						NestedObject: schema.NestedAttributeObject{
+							Attributes: map[string]schema.Attribute{
+								"cursor_field": schema.ListAttribute{
+									Computed:    true,
+									Optional:    true,
+									ElementType: types.StringType,
+								},
+								"name": schema.StringAttribute{
+									Required: true,
+								},
+								"primary_key": schema.ListAttribute{
+									Computed: true,
+									Optional: true,
+									ElementType: types.ListType{
+										ElemType: types.StringType,
+									},
+								},
+								"sync_mode": schema.StringAttribute{
+									Computed: true,
+									Optional: true,
+									Validators: []validator.String{
+										stringvalidator.OneOf(
+											"full_refresh_overwrite",
+											"full_refresh_append",
+											"incremental_append",
+											"incremental_deduped_history",
+										),
+									},
+								},
+							},
+						},
+					},
 				},
-				Optional: true,
+				Description: `A list of configured stream options for a connection.`,
+			},
+			"connection_id": schema.StringAttribute{
+				Computed: true,
+			},
+			"data_residency": schema.StringAttribute{
+				Computed: true,
 				Validators: []validator.String{
 					stringvalidator.OneOf(
 						"auto",
@@ -71,32 +109,37 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 					),
 				},
 			},
+			"destination_id": schema.StringAttribute{
+				Computed: true,
+			},
 			"name": schema.StringAttribute{
 				Computed: true,
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
+			},
+			"namespace_definition": schema.StringAttribute{
+				Computed: true,
+				Validators: []validator.String{
+					stringvalidator.OneOf(
+						"source",
+						"destination",
+						"custom_format",
+					),
 				},
-				Optional: true,
+				Description: `Define the location where the data will be stored in the destination`,
+			},
+			"namespace_format": schema.StringAttribute{
+				Computed: true,
+			},
+			"prefix": schema.StringAttribute{
+				Computed: true,
 			},
 			"schedule": schema.SingleNestedAttribute{
 				Computed: true,
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplace(),
-				},
-				Optional: true,
 				Attributes: map[string]schema.Attribute{
 					"cron_expression": schema.StringAttribute{
 						Computed: true,
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
-						Optional: true,
 					},
 					"schedule_type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
-						Required: true,
+						Computed: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"manual",
@@ -108,10 +151,20 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Description: `schedule for when the the connection should run, per the schedule type`,
 			},
 			"source_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
+				Computed: true,
+			},
+			"status": schema.StringAttribute{
+				Computed: true,
+				Validators: []validator.String{
+					stringvalidator.OneOf(
+						"active",
+						"inactive",
+						"deprecated",
+					),
 				},
-				Required: true,
+			},
+			"workspace_id": schema.StringAttribute{
+				Computed: true,
 			},
 		},
 	}
@@ -155,7 +208,7 @@ func (r *ConnectionResource) Create(ctx context.Context, req resource.CreateRequ
 		return
 	}
 
-	request := *data.ToSDKType()
+	request := *data.ToCreateSDKType()
 	res, err := r.client.Connections.CreateConnection(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -169,6 +222,11 @@ func (r *ConnectionResource) Create(ctx context.Context, req resource.CreateRequ
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
+	if res.ConnectionResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+		return
+	}
+	data.RefreshFromCreateResponse(res.ConnectionResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -200,18 +258,7 @@ func (r *ConnectionResource) Read(ctx context.Context, req resource.ReadRequest,
 
 func (r *ConnectionResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 	var data *ConnectionResourceModel
-	var item types.Object
-
-	resp.Diagnostics.Append(req.Plan.Get(ctx, &item)...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	resp.Diagnostics.Append(item.As(ctx, &data, basetypes.ObjectAsOptions{
-		UnhandledNullAsEmpty:    true,
-		UnhandledUnknownAsEmpty: true,
-	})...)
-
+	merge(ctx, req, resp, &data)
 	if resp.Diagnostics.HasError() {
 		return
 	}
@@ -240,7 +287,24 @@ func (r *ConnectionResource) Delete(ctx context.Context, req resource.DeleteRequ
 		return
 	}
 
-	// Not Implemented; entity does not have a configured DELETE operation
+	connectionID := data.ConnectionID.ValueString()
+	request := operations.DeleteConnectionRequest{
+		ConnectionID: connectionID,
+	}
+	res, err := r.client.Connections.DeleteConnection(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode != 204 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
+
 }
 
 func (r *ConnectionResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {

@@ -14,17 +14,21 @@ const (
 	SourcePolygonStockAPIPolygonStockAPIEnumPolygonStockAPI SourcePolygonStockAPIPolygonStockAPIEnum = "polygon-stock-api"
 )
 
+func (e SourcePolygonStockAPIPolygonStockAPIEnum) ToPointer() *SourcePolygonStockAPIPolygonStockAPIEnum {
+	return &e
+}
+
 func (e *SourcePolygonStockAPIPolygonStockAPIEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "polygon-stock-api":
-		*e = SourcePolygonStockAPIPolygonStockAPIEnum(s)
+		*e = SourcePolygonStockAPIPolygonStockAPIEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePolygonStockAPIPolygonStockAPIEnum: %s", s)
+		return fmt.Errorf("invalid value for SourcePolygonStockAPIPolygonStockAPIEnum: %v", v)
 	}
 }
 

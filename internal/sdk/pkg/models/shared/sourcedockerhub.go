@@ -13,17 +13,21 @@ const (
 	SourceDockerhubDockerhubEnumDockerhub SourceDockerhubDockerhubEnum = "dockerhub"
 )
 
+func (e SourceDockerhubDockerhubEnum) ToPointer() *SourceDockerhubDockerhubEnum {
+	return &e
+}
+
 func (e *SourceDockerhubDockerhubEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "dockerhub":
-		*e = SourceDockerhubDockerhubEnum(s)
+		*e = SourceDockerhubDockerhubEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceDockerhubDockerhubEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceDockerhubDockerhubEnum: %v", v)
 	}
 }
 

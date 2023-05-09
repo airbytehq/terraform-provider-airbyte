@@ -15,17 +15,21 @@ const (
 	SourceMailchimpAuthenticationAPIKeyAuthTypeEnumApikey SourceMailchimpAuthenticationAPIKeyAuthTypeEnum = "apikey"
 )
 
+func (e SourceMailchimpAuthenticationAPIKeyAuthTypeEnum) ToPointer() *SourceMailchimpAuthenticationAPIKeyAuthTypeEnum {
+	return &e
+}
+
 func (e *SourceMailchimpAuthenticationAPIKeyAuthTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "apikey":
-		*e = SourceMailchimpAuthenticationAPIKeyAuthTypeEnum(s)
+		*e = SourceMailchimpAuthenticationAPIKeyAuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMailchimpAuthenticationAPIKeyAuthTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceMailchimpAuthenticationAPIKeyAuthTypeEnum: %v", v)
 	}
 }
 
@@ -41,17 +45,21 @@ const (
 	SourceMailchimpAuthenticationOAuth20AuthTypeEnumOauth20 SourceMailchimpAuthenticationOAuth20AuthTypeEnum = "oauth2.0"
 )
 
+func (e SourceMailchimpAuthenticationOAuth20AuthTypeEnum) ToPointer() *SourceMailchimpAuthenticationOAuth20AuthTypeEnum {
+	return &e
+}
+
 func (e *SourceMailchimpAuthenticationOAuth20AuthTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "oauth2.0":
-		*e = SourceMailchimpAuthenticationOAuth20AuthTypeEnum(s)
+		*e = SourceMailchimpAuthenticationOAuth20AuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMailchimpAuthenticationOAuth20AuthTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceMailchimpAuthenticationOAuth20AuthTypeEnum: %v", v)
 	}
 }
 
@@ -139,17 +147,21 @@ const (
 	SourceMailchimpMailchimpEnumMailchimp SourceMailchimpMailchimpEnum = "mailchimp"
 )
 
+func (e SourceMailchimpMailchimpEnum) ToPointer() *SourceMailchimpMailchimpEnum {
+	return &e
+}
+
 func (e *SourceMailchimpMailchimpEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "mailchimp":
-		*e = SourceMailchimpMailchimpEnum(s)
+		*e = SourceMailchimpMailchimpEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMailchimpMailchimpEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceMailchimpMailchimpEnum: %v", v)
 	}
 }
 

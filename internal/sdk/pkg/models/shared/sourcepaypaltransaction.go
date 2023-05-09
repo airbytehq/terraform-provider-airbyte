@@ -13,17 +13,21 @@ const (
 	SourcePaypalTransactionPaypalTransactionEnumPaypalTransaction SourcePaypalTransactionPaypalTransactionEnum = "paypal-transaction"
 )
 
+func (e SourcePaypalTransactionPaypalTransactionEnum) ToPointer() *SourcePaypalTransactionPaypalTransactionEnum {
+	return &e
+}
+
 func (e *SourcePaypalTransactionPaypalTransactionEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "paypal-transaction":
-		*e = SourcePaypalTransactionPaypalTransactionEnum(s)
+		*e = SourcePaypalTransactionPaypalTransactionEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePaypalTransactionPaypalTransactionEnum: %s", s)
+		return fmt.Errorf("invalid value for SourcePaypalTransactionPaypalTransactionEnum: %v", v)
 	}
 }
 

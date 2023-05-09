@@ -15,58 +15,24 @@ const (
 	SourceAmplitudeDataRegionEnumEuResidencyServer SourceAmplitudeDataRegionEnum = "EU Residency Server"
 )
 
+func (e SourceAmplitudeDataRegionEnum) ToPointer() *SourceAmplitudeDataRegionEnum {
+	return &e
+}
+
 func (e *SourceAmplitudeDataRegionEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "Standard Server":
 		fallthrough
 	case "EU Residency Server":
-		*e = SourceAmplitudeDataRegionEnum(s)
+		*e = SourceAmplitudeDataRegionEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAmplitudeDataRegionEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceAmplitudeDataRegionEnum: %v", v)
 	}
-}
-
-// SourceAmplitudeEventStreamTimeIntervalEventsTimeIntervalSizeUnitEnum - Amplitude event stream's interval size unit
-type SourceAmplitudeEventStreamTimeIntervalEventsTimeIntervalSizeUnitEnum string
-
-const (
-	SourceAmplitudeEventStreamTimeIntervalEventsTimeIntervalSizeUnitEnumDays   SourceAmplitudeEventStreamTimeIntervalEventsTimeIntervalSizeUnitEnum = "days"
-	SourceAmplitudeEventStreamTimeIntervalEventsTimeIntervalSizeUnitEnumHours  SourceAmplitudeEventStreamTimeIntervalEventsTimeIntervalSizeUnitEnum = "hours"
-	SourceAmplitudeEventStreamTimeIntervalEventsTimeIntervalSizeUnitEnumWeeks  SourceAmplitudeEventStreamTimeIntervalEventsTimeIntervalSizeUnitEnum = "weeks"
-	SourceAmplitudeEventStreamTimeIntervalEventsTimeIntervalSizeUnitEnumMonths SourceAmplitudeEventStreamTimeIntervalEventsTimeIntervalSizeUnitEnum = "months"
-)
-
-func (e *SourceAmplitudeEventStreamTimeIntervalEventsTimeIntervalSizeUnitEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
-		return err
-	}
-	switch s {
-	case "days":
-		fallthrough
-	case "hours":
-		fallthrough
-	case "weeks":
-		fallthrough
-	case "months":
-		*e = SourceAmplitudeEventStreamTimeIntervalEventsTimeIntervalSizeUnitEnum(s)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceAmplitudeEventStreamTimeIntervalEventsTimeIntervalSizeUnitEnum: %s", s)
-	}
-}
-
-// SourceAmplitudeEventStreamTimeInterval - Amplitude event stream time interval
-type SourceAmplitudeEventStreamTimeInterval struct {
-	// Amplitude event stream's interval size unit
-	Size int64 `json:"size"`
-	// Amplitude event stream's interval size unit
-	SizeUnit SourceAmplitudeEventStreamTimeIntervalEventsTimeIntervalSizeUnitEnum `json:"size_unit"`
 }
 
 type SourceAmplitudeAmplitudeEnum string
@@ -75,17 +41,21 @@ const (
 	SourceAmplitudeAmplitudeEnumAmplitude SourceAmplitudeAmplitudeEnum = "amplitude"
 )
 
+func (e SourceAmplitudeAmplitudeEnum) ToPointer() *SourceAmplitudeAmplitudeEnum {
+	return &e
+}
+
 func (e *SourceAmplitudeAmplitudeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "amplitude":
-		*e = SourceAmplitudeAmplitudeEnum(s)
+		*e = SourceAmplitudeAmplitudeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAmplitudeAmplitudeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceAmplitudeAmplitudeEnum: %v", v)
 	}
 }
 
@@ -95,8 +65,8 @@ type SourceAmplitude struct {
 	APIKey string `json:"api_key"`
 	// Amplitude data region server
 	DataRegion *SourceAmplitudeDataRegionEnum `json:"data_region,omitempty"`
-	// Amplitude event stream time interval
-	EventTimeInterval *SourceAmplitudeEventStreamTimeInterval `json:"event_time_interval,omitempty"`
+	// According to <a href="https://www.docs.developers.amplitude.com/analytics/apis/export-api/#considerations">Considerations</a> too big time range in request can cause a timeout error. In this case, set shorter time interval in hours.
+	RequestTimeRange *int64 `json:"request_time_range,omitempty"`
 	// Amplitude Secret Key. See the <a href="https://docs.airbyte.com/integrations/sources/amplitude#setup-guide">setup guide</a> for more information on how to obtain this key.
 	SecretKey  string                       `json:"secret_key"`
 	SourceType SourceAmplitudeAmplitudeEnum `json:"sourceType"`

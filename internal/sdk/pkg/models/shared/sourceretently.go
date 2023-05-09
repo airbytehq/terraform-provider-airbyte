@@ -15,17 +15,21 @@ const (
 	SourceRetentlyAuthenticationMechanismAuthenticateWithAPITokenAuthTypeEnumToken SourceRetentlyAuthenticationMechanismAuthenticateWithAPITokenAuthTypeEnum = "Token"
 )
 
+func (e SourceRetentlyAuthenticationMechanismAuthenticateWithAPITokenAuthTypeEnum) ToPointer() *SourceRetentlyAuthenticationMechanismAuthenticateWithAPITokenAuthTypeEnum {
+	return &e
+}
+
 func (e *SourceRetentlyAuthenticationMechanismAuthenticateWithAPITokenAuthTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "Token":
-		*e = SourceRetentlyAuthenticationMechanismAuthenticateWithAPITokenAuthTypeEnum(s)
+		*e = SourceRetentlyAuthenticationMechanismAuthenticateWithAPITokenAuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceRetentlyAuthenticationMechanismAuthenticateWithAPITokenAuthTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceRetentlyAuthenticationMechanismAuthenticateWithAPITokenAuthTypeEnum: %v", v)
 	}
 }
 
@@ -34,6 +38,53 @@ type SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken struct {
 	// Retently API Token. See the <a href="https://app.retently.com/settings/api/tokens">docs</a> for more information on how to obtain this key.
 	APIKey   string                                                                     `json:"api_key"`
 	AuthType *SourceRetentlyAuthenticationMechanismAuthenticateWithAPITokenAuthTypeEnum `json:"auth_type,omitempty"`
+
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type _SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken
+
+func (c *SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken) UnmarshalJSON(bs []byte) error {
+	data := _SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "api_key")
+	delete(additionalFields, "auth_type")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuthAuthTypeEnum string
@@ -42,17 +93,21 @@ const (
 	SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuthAuthTypeEnumClient SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuthAuthTypeEnum = "Client"
 )
 
+func (e SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuthAuthTypeEnum) ToPointer() *SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuthAuthTypeEnum {
+	return &e
+}
+
 func (e *SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuthAuthTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "Client":
-		*e = SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuthAuthTypeEnum(s)
+		*e = SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuthAuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuthAuthTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuthAuthTypeEnum: %v", v)
 	}
 }
 
@@ -65,6 +120,55 @@ type SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth struct {
 	ClientSecret string `json:"client_secret"`
 	// Retently Refresh Token which can be used to fetch new Bearer Tokens when the current one expires.
 	RefreshToken string `json:"refresh_token"`
+
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type _SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth
+
+func (c *SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth) UnmarshalJSON(bs []byte) error {
+	data := _SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "auth_type")
+	delete(additionalFields, "client_id")
+	delete(additionalFields, "client_secret")
+	delete(additionalFields, "refresh_token")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type SourceRetentlyAuthenticationMechanismType string
@@ -141,17 +245,21 @@ const (
 	SourceRetentlyRetentlyEnumRetently SourceRetentlyRetentlyEnum = "retently"
 )
 
+func (e SourceRetentlyRetentlyEnum) ToPointer() *SourceRetentlyRetentlyEnum {
+	return &e
+}
+
 func (e *SourceRetentlyRetentlyEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "retently":
-		*e = SourceRetentlyRetentlyEnum(s)
+		*e = SourceRetentlyRetentlyEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceRetentlyRetentlyEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceRetentlyRetentlyEnum: %v", v)
 	}
 }
 

@@ -5,8 +5,8 @@ package shared
 // ConnectionResponse - Provides details of a single connection.
 type ConnectionResponse struct {
 	ConnectionID  string            `json:"connectionId"`
+	DataResidency GeographyEnumEnum `json:"dataResidency"`
 	DestinationID string            `json:"destinationId"`
-	Geography     GeographyEnumEnum `json:"geography"`
 	Name          string            `json:"name"`
 	// schedule for when the the connection should run, per the schedule type
 	Schedule    ConnectionScheduleResponse `json:"schedule"`

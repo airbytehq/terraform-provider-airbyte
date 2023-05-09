@@ -26,32 +26,45 @@ const (
 	DestinationBigqueryDatasetLocationEnumAsiaSoutheast2         DestinationBigqueryDatasetLocationEnum = "asia-southeast2"
 	DestinationBigqueryDatasetLocationEnumAustraliaSoutheast1    DestinationBigqueryDatasetLocationEnum = "australia-southeast1"
 	DestinationBigqueryDatasetLocationEnumAustraliaSoutheast2    DestinationBigqueryDatasetLocationEnum = "australia-southeast2"
+	DestinationBigqueryDatasetLocationEnumEuropeCentral1         DestinationBigqueryDatasetLocationEnum = "europe-central1"
 	DestinationBigqueryDatasetLocationEnumEuropeCentral2         DestinationBigqueryDatasetLocationEnum = "europe-central2"
 	DestinationBigqueryDatasetLocationEnumEuropeNorth1           DestinationBigqueryDatasetLocationEnum = "europe-north1"
+	DestinationBigqueryDatasetLocationEnumEuropeSouthwest1       DestinationBigqueryDatasetLocationEnum = "europe-southwest1"
 	DestinationBigqueryDatasetLocationEnumEuropeWest1            DestinationBigqueryDatasetLocationEnum = "europe-west1"
 	DestinationBigqueryDatasetLocationEnumEuropeWest2            DestinationBigqueryDatasetLocationEnum = "europe-west2"
 	DestinationBigqueryDatasetLocationEnumEuropeWest3            DestinationBigqueryDatasetLocationEnum = "europe-west3"
 	DestinationBigqueryDatasetLocationEnumEuropeWest4            DestinationBigqueryDatasetLocationEnum = "europe-west4"
 	DestinationBigqueryDatasetLocationEnumEuropeWest6            DestinationBigqueryDatasetLocationEnum = "europe-west6"
+	DestinationBigqueryDatasetLocationEnumEuropeWest7            DestinationBigqueryDatasetLocationEnum = "europe-west7"
+	DestinationBigqueryDatasetLocationEnumEuropeWest8            DestinationBigqueryDatasetLocationEnum = "europe-west8"
+	DestinationBigqueryDatasetLocationEnumEuropeWest9            DestinationBigqueryDatasetLocationEnum = "europe-west9"
+	DestinationBigqueryDatasetLocationEnumMeWest1                DestinationBigqueryDatasetLocationEnum = "me-west1"
 	DestinationBigqueryDatasetLocationEnumNorthamericaNortheast1 DestinationBigqueryDatasetLocationEnum = "northamerica-northeast1"
 	DestinationBigqueryDatasetLocationEnumNorthamericaNortheast2 DestinationBigqueryDatasetLocationEnum = "northamerica-northeast2"
 	DestinationBigqueryDatasetLocationEnumSouthamericaEast1      DestinationBigqueryDatasetLocationEnum = "southamerica-east1"
 	DestinationBigqueryDatasetLocationEnumSouthamericaWest1      DestinationBigqueryDatasetLocationEnum = "southamerica-west1"
 	DestinationBigqueryDatasetLocationEnumUsCentral1             DestinationBigqueryDatasetLocationEnum = "us-central1"
 	DestinationBigqueryDatasetLocationEnumUsEast1                DestinationBigqueryDatasetLocationEnum = "us-east1"
+	DestinationBigqueryDatasetLocationEnumUsEast2                DestinationBigqueryDatasetLocationEnum = "us-east2"
+	DestinationBigqueryDatasetLocationEnumUsEast3                DestinationBigqueryDatasetLocationEnum = "us-east3"
 	DestinationBigqueryDatasetLocationEnumUsEast4                DestinationBigqueryDatasetLocationEnum = "us-east4"
+	DestinationBigqueryDatasetLocationEnumUsEast5                DestinationBigqueryDatasetLocationEnum = "us-east5"
 	DestinationBigqueryDatasetLocationEnumUsWest1                DestinationBigqueryDatasetLocationEnum = "us-west1"
 	DestinationBigqueryDatasetLocationEnumUsWest2                DestinationBigqueryDatasetLocationEnum = "us-west2"
 	DestinationBigqueryDatasetLocationEnumUsWest3                DestinationBigqueryDatasetLocationEnum = "us-west3"
 	DestinationBigqueryDatasetLocationEnumUsWest4                DestinationBigqueryDatasetLocationEnum = "us-west4"
 )
 
+func (e DestinationBigqueryDatasetLocationEnum) ToPointer() *DestinationBigqueryDatasetLocationEnum {
+	return &e
+}
+
 func (e *DestinationBigqueryDatasetLocationEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "US":
 		fallthrough
 	case "EU":
@@ -78,9 +91,13 @@ func (e *DestinationBigqueryDatasetLocationEnum) UnmarshalJSON(data []byte) erro
 		fallthrough
 	case "australia-southeast2":
 		fallthrough
+	case "europe-central1":
+		fallthrough
 	case "europe-central2":
 		fallthrough
 	case "europe-north1":
+		fallthrough
+	case "europe-southwest1":
 		fallthrough
 	case "europe-west1":
 		fallthrough
@@ -91,6 +108,14 @@ func (e *DestinationBigqueryDatasetLocationEnum) UnmarshalJSON(data []byte) erro
 	case "europe-west4":
 		fallthrough
 	case "europe-west6":
+		fallthrough
+	case "europe-west7":
+		fallthrough
+	case "europe-west8":
+		fallthrough
+	case "europe-west9":
+		fallthrough
+	case "me-west1":
 		fallthrough
 	case "northamerica-northeast1":
 		fallthrough
@@ -104,7 +129,13 @@ func (e *DestinationBigqueryDatasetLocationEnum) UnmarshalJSON(data []byte) erro
 		fallthrough
 	case "us-east1":
 		fallthrough
+	case "us-east2":
+		fallthrough
+	case "us-east3":
+		fallthrough
 	case "us-east4":
+		fallthrough
+	case "us-east5":
 		fallthrough
 	case "us-west1":
 		fallthrough
@@ -113,10 +144,10 @@ func (e *DestinationBigqueryDatasetLocationEnum) UnmarshalJSON(data []byte) erro
 	case "us-west3":
 		fallthrough
 	case "us-west4":
-		*e = DestinationBigqueryDatasetLocationEnum(s)
+		*e = DestinationBigqueryDatasetLocationEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationBigqueryDatasetLocationEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationBigqueryDatasetLocationEnum: %v", v)
 	}
 }
 
@@ -126,17 +157,21 @@ const (
 	DestinationBigqueryBigqueryEnumBigquery DestinationBigqueryBigqueryEnum = "bigquery"
 )
 
+func (e DestinationBigqueryBigqueryEnum) ToPointer() *DestinationBigqueryBigqueryEnum {
+	return &e
+}
+
 func (e *DestinationBigqueryBigqueryEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "bigquery":
-		*e = DestinationBigqueryBigqueryEnum(s)
+		*e = DestinationBigqueryBigqueryEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationBigqueryBigqueryEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationBigqueryBigqueryEnum: %v", v)
 	}
 }
 
@@ -146,17 +181,21 @@ const (
 	DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKeyCredentialTypeEnumHmacKey DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKeyCredentialTypeEnum = "HMAC_KEY"
 )
 
+func (e DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKeyCredentialTypeEnum) ToPointer() *DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKeyCredentialTypeEnum {
+	return &e
+}
+
 func (e *DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKeyCredentialTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "HMAC_KEY":
-		*e = DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKeyCredentialTypeEnum(s)
+		*e = DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKeyCredentialTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKeyCredentialTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKeyCredentialTypeEnum: %v", v)
 	}
 }
 
@@ -221,19 +260,23 @@ const (
 	DestinationBigqueryLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessingEnumKeepAllTmpFilesInGcs     DestinationBigqueryLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessingEnum = "Keep all tmp files in GCS"
 )
 
+func (e DestinationBigqueryLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessingEnum) ToPointer() *DestinationBigqueryLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessingEnum {
+	return &e
+}
+
 func (e *DestinationBigqueryLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessingEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "Delete all tmp files from GCS":
 		fallthrough
 	case "Keep all tmp files in GCS":
-		*e = DestinationBigqueryLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessingEnum(s)
+		*e = DestinationBigqueryLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessingEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationBigqueryLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessingEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationBigqueryLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessingEnum: %v", v)
 	}
 }
 
@@ -243,17 +286,21 @@ const (
 	DestinationBigqueryLoadingMethodGCSStagingMethodEnumGcsStaging DestinationBigqueryLoadingMethodGCSStagingMethodEnum = "GCS Staging"
 )
 
+func (e DestinationBigqueryLoadingMethodGCSStagingMethodEnum) ToPointer() *DestinationBigqueryLoadingMethodGCSStagingMethodEnum {
+	return &e
+}
+
 func (e *DestinationBigqueryLoadingMethodGCSStagingMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "GCS Staging":
-		*e = DestinationBigqueryLoadingMethodGCSStagingMethodEnum(s)
+		*e = DestinationBigqueryLoadingMethodGCSStagingMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationBigqueryLoadingMethodGCSStagingMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationBigqueryLoadingMethodGCSStagingMethodEnum: %v", v)
 	}
 }
 
@@ -276,17 +323,21 @@ const (
 	DestinationBigqueryLoadingMethodStandardInsertsMethodEnumStandard DestinationBigqueryLoadingMethodStandardInsertsMethodEnum = "Standard"
 )
 
+func (e DestinationBigqueryLoadingMethodStandardInsertsMethodEnum) ToPointer() *DestinationBigqueryLoadingMethodStandardInsertsMethodEnum {
+	return &e
+}
+
 func (e *DestinationBigqueryLoadingMethodStandardInsertsMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "Standard":
-		*e = DestinationBigqueryLoadingMethodStandardInsertsMethodEnum(s)
+		*e = DestinationBigqueryLoadingMethodStandardInsertsMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationBigqueryLoadingMethodStandardInsertsMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationBigqueryLoadingMethodStandardInsertsMethodEnum: %v", v)
 	}
 }
 
@@ -371,19 +422,23 @@ const (
 	DestinationBigqueryTransformationQueryRunTypeEnumBatch       DestinationBigqueryTransformationQueryRunTypeEnum = "batch"
 )
 
+func (e DestinationBigqueryTransformationQueryRunTypeEnum) ToPointer() *DestinationBigqueryTransformationQueryRunTypeEnum {
+	return &e
+}
+
 func (e *DestinationBigqueryTransformationQueryRunTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "interactive":
 		fallthrough
 	case "batch":
-		*e = DestinationBigqueryTransformationQueryRunTypeEnum(s)
+		*e = DestinationBigqueryTransformationQueryRunTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationBigqueryTransformationQueryRunTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationBigqueryTransformationQueryRunTypeEnum: %v", v)
 	}
 }
 

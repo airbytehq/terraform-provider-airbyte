@@ -14,17 +14,21 @@ const (
 	SourcePipedriveAPIKeyAuthenticationAuthTypeEnumToken SourcePipedriveAPIKeyAuthenticationAuthTypeEnum = "Token"
 )
 
+func (e SourcePipedriveAPIKeyAuthenticationAuthTypeEnum) ToPointer() *SourcePipedriveAPIKeyAuthenticationAuthTypeEnum {
+	return &e
+}
+
 func (e *SourcePipedriveAPIKeyAuthenticationAuthTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "Token":
-		*e = SourcePipedriveAPIKeyAuthenticationAuthTypeEnum(s)
+		*e = SourcePipedriveAPIKeyAuthenticationAuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePipedriveAPIKeyAuthenticationAuthTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourcePipedriveAPIKeyAuthenticationAuthTypeEnum: %v", v)
 	}
 }
 
@@ -40,17 +44,21 @@ const (
 	SourcePipedrivePipedriveEnumPipedrive SourcePipedrivePipedriveEnum = "pipedrive"
 )
 
+func (e SourcePipedrivePipedriveEnum) ToPointer() *SourcePipedrivePipedriveEnum {
+	return &e
+}
+
 func (e *SourcePipedrivePipedriveEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "pipedrive":
-		*e = SourcePipedrivePipedriveEnum(s)
+		*e = SourcePipedrivePipedriveEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePipedrivePipedriveEnum: %s", s)
+		return fmt.Errorf("invalid value for SourcePipedrivePipedriveEnum: %v", v)
 	}
 }
 

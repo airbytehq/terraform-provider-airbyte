@@ -13,17 +13,21 @@ const (
 	SourceUsCensusUsCensusEnumUsCensus SourceUsCensusUsCensusEnum = "us-census"
 )
 
+func (e SourceUsCensusUsCensusEnum) ToPointer() *SourceUsCensusUsCensusEnum {
+	return &e
+}
+
 func (e *SourceUsCensusUsCensusEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "us-census":
-		*e = SourceUsCensusUsCensusEnum(s)
+		*e = SourceUsCensusUsCensusEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceUsCensusUsCensusEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceUsCensusUsCensusEnum: %v", v)
 	}
 }
 

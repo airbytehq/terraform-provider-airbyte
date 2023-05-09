@@ -13,17 +13,21 @@ const (
 	SourceTempoTempoEnumTempo SourceTempoTempoEnum = "tempo"
 )
 
+func (e SourceTempoTempoEnum) ToPointer() *SourceTempoTempoEnum {
+	return &e
+}
+
 func (e *SourceTempoTempoEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "tempo":
-		*e = SourceTempoTempoEnum(s)
+		*e = SourceTempoTempoEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceTempoTempoEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceTempoTempoEnum: %v", v)
 	}
 }
 

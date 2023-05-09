@@ -13,17 +13,21 @@ const (
 	SourceAmazonSellerPartnerAuthTypeEnumOauth20 SourceAmazonSellerPartnerAuthTypeEnum = "oauth2.0"
 )
 
+func (e SourceAmazonSellerPartnerAuthTypeEnum) ToPointer() *SourceAmazonSellerPartnerAuthTypeEnum {
+	return &e
+}
+
 func (e *SourceAmazonSellerPartnerAuthTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "oauth2.0":
-		*e = SourceAmazonSellerPartnerAuthTypeEnum(s)
+		*e = SourceAmazonSellerPartnerAuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAmazonSellerPartnerAuthTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceAmazonSellerPartnerAuthTypeEnum: %v", v)
 	}
 }
 
@@ -35,19 +39,23 @@ const (
 	SourceAmazonSellerPartnerAWSEnvironmentEnumSandbox    SourceAmazonSellerPartnerAWSEnvironmentEnum = "SANDBOX"
 )
 
+func (e SourceAmazonSellerPartnerAWSEnvironmentEnum) ToPointer() *SourceAmazonSellerPartnerAWSEnvironmentEnum {
+	return &e
+}
+
 func (e *SourceAmazonSellerPartnerAWSEnvironmentEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "PRODUCTION":
 		fallthrough
 	case "SANDBOX":
-		*e = SourceAmazonSellerPartnerAWSEnvironmentEnum(s)
+		*e = SourceAmazonSellerPartnerAWSEnvironmentEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAmazonSellerPartnerAWSEnvironmentEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceAmazonSellerPartnerAWSEnvironmentEnum: %v", v)
 	}
 }
 
@@ -79,12 +87,16 @@ const (
 	SourceAmazonSellerPartnerAWSRegionEnumUs SourceAmazonSellerPartnerAWSRegionEnum = "US"
 )
 
+func (e SourceAmazonSellerPartnerAWSRegionEnum) ToPointer() *SourceAmazonSellerPartnerAWSRegionEnum {
+	return &e
+}
+
 func (e *SourceAmazonSellerPartnerAWSRegionEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "AE":
 		fallthrough
 	case "AU":
@@ -128,10 +140,10 @@ func (e *SourceAmazonSellerPartnerAWSRegionEnum) UnmarshalJSON(data []byte) erro
 	case "UK":
 		fallthrough
 	case "US":
-		*e = SourceAmazonSellerPartnerAWSRegionEnum(s)
+		*e = SourceAmazonSellerPartnerAWSRegionEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAmazonSellerPartnerAWSRegionEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceAmazonSellerPartnerAWSRegionEnum: %v", v)
 	}
 }
 
@@ -141,17 +153,21 @@ const (
 	SourceAmazonSellerPartnerAmazonSellerPartnerEnumAmazonSellerPartner SourceAmazonSellerPartnerAmazonSellerPartnerEnum = "amazon-seller-partner"
 )
 
+func (e SourceAmazonSellerPartnerAmazonSellerPartnerEnum) ToPointer() *SourceAmazonSellerPartnerAmazonSellerPartnerEnum {
+	return &e
+}
+
 func (e *SourceAmazonSellerPartnerAmazonSellerPartnerEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "amazon-seller-partner":
-		*e = SourceAmazonSellerPartnerAmazonSellerPartnerEnum(s)
+		*e = SourceAmazonSellerPartnerAmazonSellerPartnerEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAmazonSellerPartnerAmazonSellerPartnerEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceAmazonSellerPartnerAmazonSellerPartnerEnum: %v", v)
 	}
 }
 

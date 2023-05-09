@@ -18,12 +18,16 @@ const (
 	DestinationPulsarCompressionTypeEnumSnappy DestinationPulsarCompressionTypeEnum = "SNAPPY"
 )
 
+func (e DestinationPulsarCompressionTypeEnum) ToPointer() *DestinationPulsarCompressionTypeEnum {
+	return &e
+}
+
 func (e *DestinationPulsarCompressionTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "NONE":
 		fallthrough
 	case "LZ4":
@@ -33,10 +37,10 @@ func (e *DestinationPulsarCompressionTypeEnum) UnmarshalJSON(data []byte) error 
 	case "ZSTD":
 		fallthrough
 	case "SNAPPY":
-		*e = DestinationPulsarCompressionTypeEnum(s)
+		*e = DestinationPulsarCompressionTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationPulsarCompressionTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationPulsarCompressionTypeEnum: %v", v)
 	}
 }
 
@@ -46,17 +50,21 @@ const (
 	DestinationPulsarPulsarEnumPulsar DestinationPulsarPulsarEnum = "pulsar"
 )
 
+func (e DestinationPulsarPulsarEnum) ToPointer() *DestinationPulsarPulsarEnum {
+	return &e
+}
+
 func (e *DestinationPulsarPulsarEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "pulsar":
-		*e = DestinationPulsarPulsarEnum(s)
+		*e = DestinationPulsarPulsarEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationPulsarPulsarEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationPulsarPulsarEnum: %v", v)
 	}
 }
 
@@ -68,19 +76,23 @@ const (
 	DestinationPulsarTopicTypeEnumNonPersistent DestinationPulsarTopicTypeEnum = "non-persistent"
 )
 
+func (e DestinationPulsarTopicTypeEnum) ToPointer() *DestinationPulsarTopicTypeEnum {
+	return &e
+}
+
 func (e *DestinationPulsarTopicTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "persistent":
 		fallthrough
 	case "non-persistent":
-		*e = DestinationPulsarTopicTypeEnum(s)
+		*e = DestinationPulsarTopicTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationPulsarTopicTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationPulsarTopicTypeEnum: %v", v)
 	}
 }
 

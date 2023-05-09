@@ -13,17 +13,21 @@ const (
 	SourceRssRssEnumRss SourceRssRssEnum = "rss"
 )
 
+func (e SourceRssRssEnum) ToPointer() *SourceRssRssEnum {
+	return &e
+}
+
 func (e *SourceRssRssEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "rss":
-		*e = SourceRssRssEnum(s)
+		*e = SourceRssRssEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceRssRssEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceRssRssEnum: %v", v)
 	}
 }
 

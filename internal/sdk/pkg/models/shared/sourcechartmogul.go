@@ -18,12 +18,16 @@ const (
 	SourceChartmogulIntervalEnumQuarter SourceChartmogulIntervalEnum = "quarter"
 )
 
+func (e SourceChartmogulIntervalEnum) ToPointer() *SourceChartmogulIntervalEnum {
+	return &e
+}
+
 func (e *SourceChartmogulIntervalEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "day":
 		fallthrough
 	case "week":
@@ -31,10 +35,10 @@ func (e *SourceChartmogulIntervalEnum) UnmarshalJSON(data []byte) error {
 	case "month":
 		fallthrough
 	case "quarter":
-		*e = SourceChartmogulIntervalEnum(s)
+		*e = SourceChartmogulIntervalEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceChartmogulIntervalEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceChartmogulIntervalEnum: %v", v)
 	}
 }
 
@@ -44,17 +48,21 @@ const (
 	SourceChartmogulChartmogulEnumChartmogul SourceChartmogulChartmogulEnum = "chartmogul"
 )
 
+func (e SourceChartmogulChartmogulEnum) ToPointer() *SourceChartmogulChartmogulEnum {
+	return &e
+}
+
 func (e *SourceChartmogulChartmogulEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "chartmogul":
-		*e = SourceChartmogulChartmogulEnum(s)
+		*e = SourceChartmogulChartmogulEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceChartmogulChartmogulEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceChartmogulChartmogulEnum: %v", v)
 	}
 }
 

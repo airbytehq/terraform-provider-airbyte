@@ -4,15 +4,13 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	customTypes "airbyte/internal/sdk/pkg/types"
 	"encoding/json"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"math/big"
 	"time"
-
-	customTypes "airbyte/internal/sdk/pkg/types"
 )
 
-func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
+func (r *SourceResourceModel) ToCreateSDKType() *shared.SourceCreateRequest {
 	var configuration shared.SourceConfiguration
 	var sourcePokeapi *shared.SourcePokeapi
 	if r.Configuration.SourcePokeapi != nil {
@@ -151,6 +149,12 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			}
 			publication := r.Configuration.SourceAlloydb.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.Publication.ValueString()
 			replicationSlot := r.Configuration.SourceAlloydb.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.ReplicationSlot.ValueString()
+			additionalProperties := make(map[string]interface{})
+			for additionalPropertiesKey, additionalPropertiesValue := range r.Configuration.SourceAlloydb.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.AdditionalProperties {
+				var additionalPropertiesInst interface{}
+				_ = json.Unmarshal([]byte(additionalPropertiesValue.ValueString()), &additionalPropertiesInst)
+				additionalProperties[additionalPropertiesKey] = additionalPropertiesInst
+			}
 			sourceAlloydbReplicationMethodLogicalReplicationCDC = &shared.SourceAlloydbReplicationMethodLogicalReplicationCDC{
 				InitialWaitingSeconds: initialWaitingSeconds,
 				LsnCommitBehaviour:    lsnCommitBehaviour,
@@ -158,6 +162,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 				Plugin:                plugin,
 				Publication:           publication,
 				ReplicationSlot:       replicationSlot,
+				AdditionalProperties:  additionalProperties,
 			}
 		}
 		if sourceAlloydbReplicationMethodLogicalReplicationCDC != nil {
@@ -171,11 +176,37 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		}
 		sourceType2 := shared.SourceAlloydbAlloydbEnum(r.Configuration.SourceAlloydb.SourceType.ValueString())
 		var sslMode *shared.SourceAlloydbSSLModes
+		var sourceAlloydbSSLModesDisable *shared.SourceAlloydbSSLModesDisable
+		if r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesDisable != nil {
+			mode := shared.SourceAlloydbSSLModesDisableModeEnum(r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesDisable.Mode.ValueString())
+			additionalProperties1 := make(map[string]interface{})
+			for additionalPropertiesKey1, additionalPropertiesValue1 := range r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesDisable.AdditionalProperties {
+				var additionalPropertiesInst1 interface{}
+				_ = json.Unmarshal([]byte(additionalPropertiesValue1.ValueString()), &additionalPropertiesInst1)
+				additionalProperties1[additionalPropertiesKey1] = additionalPropertiesInst1
+			}
+			sourceAlloydbSSLModesDisable = &shared.SourceAlloydbSSLModesDisable{
+				Mode:                 mode,
+				AdditionalProperties: additionalProperties1,
+			}
+		}
+		if sourceAlloydbSSLModesDisable != nil {
+			sslMode = &shared.SourceAlloydbSSLModes{
+				SourceAlloydbSSLModesDisable: sourceAlloydbSSLModesDisable,
+			}
+		}
 		var sourceAlloydbSSLModesAllow *shared.SourceAlloydbSSLModesAllow
 		if r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesAllow != nil {
-			mode := shared.SourceAlloydbSSLModesAllowModeEnum(r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesAllow.Mode.ValueString())
+			mode1 := shared.SourceAlloydbSSLModesAllowModeEnum(r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesAllow.Mode.ValueString())
+			additionalProperties2 := make(map[string]interface{})
+			for additionalPropertiesKey2, additionalPropertiesValue2 := range r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesAllow.AdditionalProperties {
+				var additionalPropertiesInst2 interface{}
+				_ = json.Unmarshal([]byte(additionalPropertiesValue2.ValueString()), &additionalPropertiesInst2)
+				additionalProperties2[additionalPropertiesKey2] = additionalPropertiesInst2
+			}
 			sourceAlloydbSSLModesAllow = &shared.SourceAlloydbSSLModesAllow{
-				Mode: mode,
+				Mode:                 mode1,
+				AdditionalProperties: additionalProperties2,
 			}
 		}
 		if sourceAlloydbSSLModesAllow != nil {
@@ -185,9 +216,16 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		}
 		var sourceAlloydbSSLModesPrefer *shared.SourceAlloydbSSLModesPrefer
 		if r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesPrefer != nil {
-			mode1 := shared.SourceAlloydbSSLModesPreferModeEnum(r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesPrefer.Mode.ValueString())
+			mode2 := shared.SourceAlloydbSSLModesPreferModeEnum(r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesPrefer.Mode.ValueString())
+			additionalProperties3 := make(map[string]interface{})
+			for additionalPropertiesKey3, additionalPropertiesValue3 := range r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesPrefer.AdditionalProperties {
+				var additionalPropertiesInst3 interface{}
+				_ = json.Unmarshal([]byte(additionalPropertiesValue3.ValueString()), &additionalPropertiesInst3)
+				additionalProperties3[additionalPropertiesKey3] = additionalPropertiesInst3
+			}
 			sourceAlloydbSSLModesPrefer = &shared.SourceAlloydbSSLModesPrefer{
-				Mode: mode1,
+				Mode:                 mode2,
+				AdditionalProperties: additionalProperties3,
 			}
 		}
 		if sourceAlloydbSSLModesPrefer != nil {
@@ -197,9 +235,16 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		}
 		var sourceAlloydbSSLModesRequire *shared.SourceAlloydbSSLModesRequire
 		if r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesRequire != nil {
-			mode2 := shared.SourceAlloydbSSLModesRequireModeEnum(r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesRequire.Mode.ValueString())
+			mode3 := shared.SourceAlloydbSSLModesRequireModeEnum(r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesRequire.Mode.ValueString())
+			additionalProperties4 := make(map[string]interface{})
+			for additionalPropertiesKey4, additionalPropertiesValue4 := range r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesRequire.AdditionalProperties {
+				var additionalPropertiesInst4 interface{}
+				_ = json.Unmarshal([]byte(additionalPropertiesValue4.ValueString()), &additionalPropertiesInst4)
+				additionalProperties4[additionalPropertiesKey4] = additionalPropertiesInst4
+			}
 			sourceAlloydbSSLModesRequire = &shared.SourceAlloydbSSLModesRequire{
-				Mode: mode2,
+				Mode:                 mode3,
+				AdditionalProperties: additionalProperties4,
 			}
 		}
 		if sourceAlloydbSSLModesRequire != nil {
@@ -228,13 +273,20 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			} else {
 				clientKeyPassword = nil
 			}
-			mode3 := shared.SourceAlloydbSSLModesVerifyCaModeEnum(r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesVerifyCa.Mode.ValueString())
+			mode4 := shared.SourceAlloydbSSLModesVerifyCaModeEnum(r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesVerifyCa.Mode.ValueString())
+			additionalProperties5 := make(map[string]interface{})
+			for additionalPropertiesKey5, additionalPropertiesValue5 := range r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesVerifyCa.AdditionalProperties {
+				var additionalPropertiesInst5 interface{}
+				_ = json.Unmarshal([]byte(additionalPropertiesValue5.ValueString()), &additionalPropertiesInst5)
+				additionalProperties5[additionalPropertiesKey5] = additionalPropertiesInst5
+			}
 			sourceAlloydbSSLModesVerifyCa = &shared.SourceAlloydbSSLModesVerifyCa{
-				CaCertificate:     caCertificate,
-				ClientCertificate: clientCertificate,
-				ClientKey:         clientKey,
-				ClientKeyPassword: clientKeyPassword,
-				Mode:              mode3,
+				CaCertificate:        caCertificate,
+				ClientCertificate:    clientCertificate,
+				ClientKey:            clientKey,
+				ClientKeyPassword:    clientKeyPassword,
+				Mode:                 mode4,
+				AdditionalProperties: additionalProperties5,
 			}
 		}
 		if sourceAlloydbSSLModesVerifyCa != nil {
@@ -263,13 +315,20 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			} else {
 				clientKeyPassword1 = nil
 			}
-			mode4 := shared.SourceAlloydbSSLModesVerifyFullModeEnum(r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesVerifyFull.Mode.ValueString())
+			mode5 := shared.SourceAlloydbSSLModesVerifyFullModeEnum(r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesVerifyFull.Mode.ValueString())
+			additionalProperties6 := make(map[string]interface{})
+			for additionalPropertiesKey6, additionalPropertiesValue6 := range r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesVerifyFull.AdditionalProperties {
+				var additionalPropertiesInst6 interface{}
+				_ = json.Unmarshal([]byte(additionalPropertiesValue6.ValueString()), &additionalPropertiesInst6)
+				additionalProperties6[additionalPropertiesKey6] = additionalPropertiesInst6
+			}
 			sourceAlloydbSSLModesVerifyFull = &shared.SourceAlloydbSSLModesVerifyFull{
-				CaCertificate:     caCertificate1,
-				ClientCertificate: clientCertificate1,
-				ClientKey:         clientKey1,
-				ClientKeyPassword: clientKeyPassword1,
-				Mode:              mode4,
+				CaCertificate:        caCertificate1,
+				ClientCertificate:    clientCertificate1,
+				ClientKey:            clientKey1,
+				ClientKeyPassword:    clientKeyPassword1,
+				Mode:                 mode5,
+				AdditionalProperties: additionalProperties6,
 			}
 		}
 		if sourceAlloydbSSLModesVerifyFull != nil {
@@ -562,25 +621,22 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			dataRegion = nil
 		}
-		var eventTimeInterval *shared.SourceAmplitudeEventStreamTimeInterval
-		if r.Configuration.SourceAmplitude.EventTimeInterval != nil {
-			size := r.Configuration.SourceAmplitude.EventTimeInterval.Size.ValueInt64()
-			sizeUnit := shared.SourceAmplitudeEventStreamTimeIntervalEventsTimeIntervalSizeUnitEnum(r.Configuration.SourceAmplitude.EventTimeInterval.SizeUnit.ValueString())
-			eventTimeInterval = &shared.SourceAmplitudeEventStreamTimeInterval{
-				Size:     size,
-				SizeUnit: sizeUnit,
-			}
+		requestTimeRange := new(int64)
+		if !r.Configuration.SourceAmplitude.RequestTimeRange.IsUnknown() && !r.Configuration.SourceAmplitude.RequestTimeRange.IsNull() {
+			*requestTimeRange = r.Configuration.SourceAmplitude.RequestTimeRange.ValueInt64()
+		} else {
+			requestTimeRange = nil
 		}
 		secretKey1 := r.Configuration.SourceAmplitude.SecretKey.ValueString()
 		sourceType6 := shared.SourceAmplitudeAmplitudeEnum(r.Configuration.SourceAmplitude.SourceType.ValueString())
 		startDate1 := r.Configuration.SourceAmplitude.StartDate.ValueString()
 		sourceAmplitude = &shared.SourceAmplitude{
-			APIKey:            apiKey1,
-			DataRegion:        dataRegion,
-			EventTimeInterval: eventTimeInterval,
-			SecretKey:         secretKey1,
-			SourceType:        sourceType6,
-			StartDate:         startDate1,
+			APIKey:           apiKey1,
+			DataRegion:       dataRegion,
+			RequestTimeRange: requestTimeRange,
+			SecretKey:        secretKey1,
+			SourceType:       sourceType6,
+			StartDate:        startDate1,
 		}
 	}
 	if sourceAmplitude != nil {
@@ -733,9 +789,62 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			SourceAwsCloudtrail: sourceAwsCloudtrail,
 		}
 	}
+	var sourceAzureBlobStorage *shared.SourceAzureBlobStorage
+	if r.Configuration.SourceAzureBlobStorage != nil {
+		azureBlobStorageAccountKey := r.Configuration.SourceAzureBlobStorage.AzureBlobStorageAccountKey.ValueString()
+		azureBlobStorageAccountName := r.Configuration.SourceAzureBlobStorage.AzureBlobStorageAccountName.ValueString()
+		azureBlobStorageBlobsPrefix := new(string)
+		if !r.Configuration.SourceAzureBlobStorage.AzureBlobStorageBlobsPrefix.IsUnknown() && !r.Configuration.SourceAzureBlobStorage.AzureBlobStorageBlobsPrefix.IsNull() {
+			*azureBlobStorageBlobsPrefix = r.Configuration.SourceAzureBlobStorage.AzureBlobStorageBlobsPrefix.ValueString()
+		} else {
+			azureBlobStorageBlobsPrefix = nil
+		}
+		azureBlobStorageContainerName := r.Configuration.SourceAzureBlobStorage.AzureBlobStorageContainerName.ValueString()
+		azureBlobStorageEndpoint := new(string)
+		if !r.Configuration.SourceAzureBlobStorage.AzureBlobStorageEndpoint.IsUnknown() && !r.Configuration.SourceAzureBlobStorage.AzureBlobStorageEndpoint.IsNull() {
+			*azureBlobStorageEndpoint = r.Configuration.SourceAzureBlobStorage.AzureBlobStorageEndpoint.ValueString()
+		} else {
+			azureBlobStorageEndpoint = nil
+		}
+		azureBlobStorageSchemaInferenceLimit := new(int64)
+		if !r.Configuration.SourceAzureBlobStorage.AzureBlobStorageSchemaInferenceLimit.IsUnknown() && !r.Configuration.SourceAzureBlobStorage.AzureBlobStorageSchemaInferenceLimit.IsNull() {
+			*azureBlobStorageSchemaInferenceLimit = r.Configuration.SourceAzureBlobStorage.AzureBlobStorageSchemaInferenceLimit.ValueInt64()
+		} else {
+			azureBlobStorageSchemaInferenceLimit = nil
+		}
+		var format shared.SourceAzureBlobStorageInputFormat
+		var sourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON *shared.SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON
+		if r.Configuration.SourceAzureBlobStorage.Format.SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON != nil {
+			formatType := shared.SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum(r.Configuration.SourceAzureBlobStorage.Format.SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON.FormatType.ValueString())
+			sourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON = &shared.SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON{
+				FormatType: formatType,
+			}
+		}
+		if sourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON != nil {
+			format = shared.SourceAzureBlobStorageInputFormat{
+				SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON: sourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON,
+			}
+		}
+		sourceType11 := shared.SourceAzureBlobStorageAzureBlobStorageEnum(r.Configuration.SourceAzureBlobStorage.SourceType.ValueString())
+		sourceAzureBlobStorage = &shared.SourceAzureBlobStorage{
+			AzureBlobStorageAccountKey:           azureBlobStorageAccountKey,
+			AzureBlobStorageAccountName:          azureBlobStorageAccountName,
+			AzureBlobStorageBlobsPrefix:          azureBlobStorageBlobsPrefix,
+			AzureBlobStorageContainerName:        azureBlobStorageContainerName,
+			AzureBlobStorageEndpoint:             azureBlobStorageEndpoint,
+			AzureBlobStorageSchemaInferenceLimit: azureBlobStorageSchemaInferenceLimit,
+			Format:                               format,
+			SourceType:                           sourceType11,
+		}
+	}
+	if sourceAzureBlobStorage != nil {
+		configuration = shared.SourceConfiguration{
+			SourceAzureBlobStorage: sourceAzureBlobStorage,
+		}
+	}
 	var sourceAzureTable *shared.SourceAzureTable
 	if r.Configuration.SourceAzureTable != nil {
-		sourceType11 := shared.SourceAzureTableAzureTableEnum(r.Configuration.SourceAzureTable.SourceType.ValueString())
+		sourceType12 := shared.SourceAzureTableAzureTableEnum(r.Configuration.SourceAzureTable.SourceType.ValueString())
 		storageAccessKey := r.Configuration.SourceAzureTable.StorageAccessKey.ValueString()
 		storageAccountName := r.Configuration.SourceAzureTable.StorageAccountName.ValueString()
 		storageEndpointSuffix := new(string)
@@ -745,7 +854,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			storageEndpointSuffix = nil
 		}
 		sourceAzureTable = &shared.SourceAzureTable{
-			SourceType:            sourceType11,
+			SourceType:            sourceType12,
 			StorageAccessKey:      storageAccessKey,
 			StorageAccountName:    storageAccountName,
 			StorageEndpointSuffix: storageEndpointSuffix,
@@ -771,13 +880,13 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			customReportsIncludeDefaultFields = nil
 		}
-		sourceType12 := shared.SourceBambooHrBambooHrEnum(r.Configuration.SourceBambooHr.SourceType.ValueString())
+		sourceType13 := shared.SourceBambooHrBambooHrEnum(r.Configuration.SourceBambooHr.SourceType.ValueString())
 		subdomain := r.Configuration.SourceBambooHr.Subdomain.ValueString()
 		sourceBambooHr = &shared.SourceBambooHr{
 			APIKey:                            apiKey2,
 			CustomReportsFields:               customReportsFields,
 			CustomReportsIncludeDefaultFields: customReportsIncludeDefaultFields,
-			SourceType:                        sourceType12,
+			SourceType:                        sourceType13,
 			Subdomain:                         subdomain,
 		}
 	}
@@ -789,12 +898,12 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	var sourceBigcommerce *shared.SourceBigcommerce
 	if r.Configuration.SourceBigcommerce != nil {
 		accessToken2 := r.Configuration.SourceBigcommerce.AccessToken.ValueString()
-		sourceType13 := shared.SourceBigcommerceBigcommerceEnum(r.Configuration.SourceBigcommerce.SourceType.ValueString())
+		sourceType14 := shared.SourceBigcommerceBigcommerceEnum(r.Configuration.SourceBigcommerce.SourceType.ValueString())
 		startDate3 := r.Configuration.SourceBigcommerce.StartDate.ValueString()
 		storeHash := r.Configuration.SourceBigcommerce.StoreHash.ValueString()
 		sourceBigcommerce = &shared.SourceBigcommerce{
 			AccessToken: accessToken2,
-			SourceType:  sourceType13,
+			SourceType:  sourceType14,
 			StartDate:   startDate3,
 			StoreHash:   storeHash,
 		}
@@ -814,12 +923,12 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			datasetId1 = nil
 		}
 		projectID := r.Configuration.SourceBigquery.ProjectID.ValueString()
-		sourceType14 := shared.SourceBigqueryBigqueryEnum(r.Configuration.SourceBigquery.SourceType.ValueString())
+		sourceType15 := shared.SourceBigqueryBigqueryEnum(r.Configuration.SourceBigquery.SourceType.ValueString())
 		sourceBigquery = &shared.SourceBigquery{
 			CredentialsJSON: credentialsJSON,
 			DatasetID:       datasetId1,
 			ProjectID:       projectID,
-			SourceType:      sourceType14,
+			SourceType:      sourceType15,
 		}
 	}
 	if sourceBigquery != nil {
@@ -845,7 +954,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		developerToken := r.Configuration.SourceBingAds.DeveloperToken.ValueString()
 		refreshToken4 := r.Configuration.SourceBingAds.RefreshToken.ValueString()
 		reportsStartDate, _ := customTypes.NewDate(r.Configuration.SourceBingAds.ReportsStartDate.ValueString())
-		sourceType15 := shared.SourceBingAdsBingAdsEnum(r.Configuration.SourceBingAds.SourceType.ValueString())
+		sourceType16 := shared.SourceBingAdsBingAdsEnum(r.Configuration.SourceBingAds.SourceType.ValueString())
 		tenantID := new(string)
 		if !r.Configuration.SourceBingAds.TenantID.IsUnknown() && !r.Configuration.SourceBingAds.TenantID.IsNull() {
 			*tenantID = r.Configuration.SourceBingAds.TenantID.ValueString()
@@ -859,7 +968,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			DeveloperToken:   developerToken,
 			RefreshToken:     refreshToken4,
 			ReportsStartDate: reportsStartDate,
-			SourceType:       sourceType15,
+			SourceType:       sourceType16,
 			TenantID:         tenantID,
 		}
 	}
@@ -874,7 +983,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		merchantID := r.Configuration.SourceBraintree.MerchantID.ValueString()
 		privateKey := r.Configuration.SourceBraintree.PrivateKey.ValueString()
 		publicKey := r.Configuration.SourceBraintree.PublicKey.ValueString()
-		sourceType16 := shared.SourceBraintreeBraintreeEnum(r.Configuration.SourceBraintree.SourceType.ValueString())
+		sourceType17 := shared.SourceBraintreeBraintreeEnum(r.Configuration.SourceBraintree.SourceType.ValueString())
 		startDate4 := new(time.Time)
 		if !r.Configuration.SourceBraintree.StartDate.IsUnknown() && !r.Configuration.SourceBraintree.StartDate.IsNull() {
 			*startDate4, _ = time.Parse(time.RFC3339Nano, r.Configuration.SourceBraintree.StartDate.ValueString())
@@ -886,7 +995,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			MerchantID:  merchantID,
 			PrivateKey:  privateKey,
 			PublicKey:   publicKey,
-			SourceType:  sourceType16,
+			SourceType:  sourceType17,
 			StartDate:   startDate4,
 		}
 	}
@@ -898,12 +1007,12 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	var sourceBraze *shared.SourceBraze
 	if r.Configuration.SourceBraze != nil {
 		apiKey3 := r.Configuration.SourceBraze.APIKey.ValueString()
-		sourceType17 := shared.SourceBrazeBrazeEnum(r.Configuration.SourceBraze.SourceType.ValueString())
+		sourceType18 := shared.SourceBrazeBrazeEnum(r.Configuration.SourceBraze.SourceType.ValueString())
 		startDate5, _ := customTypes.NewDate(r.Configuration.SourceBraze.StartDate.ValueString())
 		url := r.Configuration.SourceBraze.URL.ValueString()
 		sourceBraze = &shared.SourceBraze{
 			APIKey:     apiKey3,
-			SourceType: sourceType17,
+			SourceType: sourceType18,
 			StartDate:  startDate5,
 			URL:        url,
 		}
@@ -918,13 +1027,13 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		productCatalog := shared.SourceChargebeeProductCatalogEnum(r.Configuration.SourceChargebee.ProductCatalog.ValueString())
 		site := r.Configuration.SourceChargebee.Site.ValueString()
 		siteAPIKey := r.Configuration.SourceChargebee.SiteAPIKey.ValueString()
-		sourceType18 := shared.SourceChargebeeChargebeeEnum(r.Configuration.SourceChargebee.SourceType.ValueString())
+		sourceType19 := shared.SourceChargebeeChargebeeEnum(r.Configuration.SourceChargebee.SourceType.ValueString())
 		startDate6, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceChargebee.StartDate.ValueString())
 		sourceChargebee = &shared.SourceChargebee{
 			ProductCatalog: productCatalog,
 			Site:           site,
 			SiteAPIKey:     siteAPIKey,
-			SourceType:     sourceType18,
+			SourceType:     sourceType19,
 			StartDate:      startDate6,
 		}
 	}
@@ -937,12 +1046,12 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	if r.Configuration.SourceChartmogul != nil {
 		apiKey4 := r.Configuration.SourceChartmogul.APIKey.ValueString()
 		interval := shared.SourceChartmogulIntervalEnum(r.Configuration.SourceChartmogul.Interval.ValueString())
-		sourceType19 := shared.SourceChartmogulChartmogulEnum(r.Configuration.SourceChartmogul.SourceType.ValueString())
+		sourceType20 := shared.SourceChartmogulChartmogulEnum(r.Configuration.SourceChartmogul.SourceType.ValueString())
 		startDate7, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceChartmogul.StartDate.ValueString())
 		sourceChartmogul = &shared.SourceChartmogul{
 			APIKey:     apiKey4,
 			Interval:   interval,
-			SourceType: sourceType19,
+			SourceType: sourceType20,
 			StartDate:  startDate7,
 		}
 	}
@@ -962,7 +1071,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			password1 = nil
 		}
 		port1 := r.Configuration.SourceClickhouse.Port.ValueInt64()
-		sourceType20 := shared.SourceClickhouseClickhouseEnum(r.Configuration.SourceClickhouse.SourceType.ValueString())
+		sourceType21 := shared.SourceClickhouseClickhouseEnum(r.Configuration.SourceClickhouse.SourceType.ValueString())
 		var tunnelMethod4 *shared.SourceClickhouseSSHTunnelMethod
 		var sourceClickhouseSSHTunnelMethodNoTunnel *shared.SourceClickhouseSSHTunnelMethodNoTunnel
 		if r.Configuration.SourceClickhouse.TunnelMethod.SourceClickhouseSSHTunnelMethodNoTunnel != nil {
@@ -1022,7 +1131,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			Host:         host1,
 			Password:     password1,
 			Port:         port1,
-			SourceType:   sourceType20,
+			SourceType:   sourceType21,
 			TunnelMethod: tunnelMethod4,
 			Username:     username1,
 		}
@@ -1053,7 +1162,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			listID = nil
 		}
-		sourceType21 := shared.SourceClickupAPIClickupAPIEnum(r.Configuration.SourceClickupAPI.SourceType.ValueString())
+		sourceType22 := shared.SourceClickupAPIClickupAPIEnum(r.Configuration.SourceClickupAPI.SourceType.ValueString())
 		spaceID := new(string)
 		if !r.Configuration.SourceClickupAPI.SpaceID.IsUnknown() && !r.Configuration.SourceClickupAPI.SpaceID.IsNull() {
 			*spaceID = r.Configuration.SourceClickupAPI.SpaceID.ValueString()
@@ -1071,7 +1180,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			FolderID:           folderID,
 			IncludeClosedTasks: includeClosedTasks,
 			ListID:             listID,
-			SourceType:         sourceType21,
+			SourceType:         sourceType22,
 			SpaceID:            spaceID,
 			TeamID:             teamID,
 		}
@@ -1084,7 +1193,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	var sourceCloseCom *shared.SourceCloseCom
 	if r.Configuration.SourceCloseCom != nil {
 		apiKey5 := r.Configuration.SourceCloseCom.APIKey.ValueString()
-		sourceType22 := shared.SourceCloseComCloseComEnum(r.Configuration.SourceCloseCom.SourceType.ValueString())
+		sourceType23 := shared.SourceCloseComCloseComEnum(r.Configuration.SourceCloseCom.SourceType.ValueString())
 		startDate8 := new(time.Time)
 		if !r.Configuration.SourceCloseCom.StartDate.IsUnknown() && !r.Configuration.SourceCloseCom.StartDate.IsNull() {
 			*startDate8, _ = time.Parse(time.RFC3339Nano, r.Configuration.SourceCloseCom.StartDate.ValueString())
@@ -1093,7 +1202,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		}
 		sourceCloseCom = &shared.SourceCloseCom{
 			APIKey:     apiKey5,
-			SourceType: sourceType22,
+			SourceType: sourceType23,
 			StartDate:  startDate8,
 		}
 	}
@@ -1105,10 +1214,10 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	var sourceCoda *shared.SourceCoda
 	if r.Configuration.SourceCoda != nil {
 		authToken := r.Configuration.SourceCoda.AuthToken.ValueString()
-		sourceType23 := shared.SourceCodaCodaEnum(r.Configuration.SourceCoda.SourceType.ValueString())
+		sourceType24 := shared.SourceCodaCodaEnum(r.Configuration.SourceCoda.SourceType.ValueString())
 		sourceCoda = &shared.SourceCoda{
 			AuthToken:  authToken,
-			SourceType: sourceType23,
+			SourceType: sourceType24,
 		}
 	}
 	if sourceCoda != nil {
@@ -1133,7 +1242,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			limit = nil
 		}
 		period := r.Configuration.SourceCoinAPI.Period.ValueString()
-		sourceType24 := shared.SourceCoinAPICoinAPIEnum(r.Configuration.SourceCoinAPI.SourceType.ValueString())
+		sourceType25 := shared.SourceCoinAPICoinAPIEnum(r.Configuration.SourceCoinAPI.SourceType.ValueString())
 		startDate9 := r.Configuration.SourceCoinAPI.StartDate.ValueString()
 		symbolID := r.Configuration.SourceCoinAPI.SymbolID.ValueString()
 		sourceCoinAPI = &shared.SourceCoinAPI{
@@ -1142,7 +1251,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			Environment: environment1,
 			Limit:       limit,
 			Period:      period,
-			SourceType:  sourceType24,
+			SourceType:  sourceType25,
 			StartDate:   startDate9,
 			SymbolID:    symbolID,
 		}
@@ -1156,7 +1265,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	if r.Configuration.SourceCoinmarketcap != nil {
 		apiKey7 := r.Configuration.SourceCoinmarketcap.APIKey.ValueString()
 		dataType := shared.SourceCoinmarketcapDataTypeEnum(r.Configuration.SourceCoinmarketcap.DataType.ValueString())
-		sourceType25 := shared.SourceCoinmarketcapCoinmarketcapEnum(r.Configuration.SourceCoinmarketcap.SourceType.ValueString())
+		sourceType26 := shared.SourceCoinmarketcapCoinmarketcapEnum(r.Configuration.SourceCoinmarketcap.SourceType.ValueString())
 		symbols := make([]string, 0)
 		for _, symbolsItem := range r.Configuration.SourceCoinmarketcap.Symbols {
 			symbols = append(symbols, symbolsItem.ValueString())
@@ -1164,7 +1273,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		sourceCoinmarketcap = &shared.SourceCoinmarketcap{
 			APIKey:     apiKey7,
 			DataType:   dataType,
-			SourceType: sourceType25,
+			SourceType: sourceType26,
 			Symbols:    symbols,
 		}
 	}
@@ -1176,11 +1285,11 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	var sourceConfigcat *shared.SourceConfigcat
 	if r.Configuration.SourceConfigcat != nil {
 		password2 := r.Configuration.SourceConfigcat.Password.ValueString()
-		sourceType26 := shared.SourceConfigcatConfigcatEnum(r.Configuration.SourceConfigcat.SourceType.ValueString())
+		sourceType27 := shared.SourceConfigcatConfigcatEnum(r.Configuration.SourceConfigcat.SourceType.ValueString())
 		username2 := r.Configuration.SourceConfigcat.Username.ValueString()
 		sourceConfigcat = &shared.SourceConfigcat{
 			Password:   password2,
-			SourceType: sourceType26,
+			SourceType: sourceType27,
 			Username:   username2,
 		}
 	}
@@ -1194,12 +1303,12 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		apiToken1 := r.Configuration.SourceConfluence.APIToken.ValueString()
 		domainName := r.Configuration.SourceConfluence.DomainName.ValueString()
 		email := r.Configuration.SourceConfluence.Email.ValueString()
-		sourceType27 := shared.SourceConfluenceConfluenceEnum(r.Configuration.SourceConfluence.SourceType.ValueString())
+		sourceType28 := shared.SourceConfluenceConfluenceEnum(r.Configuration.SourceConfluence.SourceType.ValueString())
 		sourceConfluence = &shared.SourceConfluence{
 			APIToken:   apiToken1,
 			DomainName: domainName,
 			Email:      email,
-			SourceType: sourceType27,
+			SourceType: sourceType28,
 		}
 	}
 	if sourceConfluence != nil {
@@ -1210,11 +1319,11 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	var sourceDatascope *shared.SourceDatascope
 	if r.Configuration.SourceDatascope != nil {
 		apiKey8 := r.Configuration.SourceDatascope.APIKey.ValueString()
-		sourceType28 := shared.SourceDatascopeDatascopeEnum(r.Configuration.SourceDatascope.SourceType.ValueString())
+		sourceType29 := shared.SourceDatascopeDatascopeEnum(r.Configuration.SourceDatascope.SourceType.ValueString())
 		startDate10 := r.Configuration.SourceDatascope.StartDate.ValueString()
 		sourceDatascope = &shared.SourceDatascope{
 			APIKey:     apiKey8,
-			SourceType: sourceType28,
+			SourceType: sourceType29,
 			StartDate:  startDate10,
 		}
 	}
@@ -1227,11 +1336,11 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	if r.Configuration.SourceDelighted != nil {
 		apiKey9 := r.Configuration.SourceDelighted.APIKey.ValueString()
 		since, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceDelighted.Since.ValueString())
-		sourceType29 := shared.SourceDelightedDelightedEnum(r.Configuration.SourceDelighted.SourceType.ValueString())
+		sourceType30 := shared.SourceDelightedDelightedEnum(r.Configuration.SourceDelighted.SourceType.ValueString())
 		sourceDelighted = &shared.SourceDelighted{
 			APIKey:     apiKey9,
 			Since:      since,
-			SourceType: sourceType29,
+			SourceType: sourceType30,
 		}
 	}
 	if sourceDelighted != nil {
@@ -1248,12 +1357,12 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			batchSize = nil
 		}
-		sourceType30 := shared.SourceDixaDixaEnum(r.Configuration.SourceDixa.SourceType.ValueString())
+		sourceType31 := shared.SourceDixaDixaEnum(r.Configuration.SourceDixa.SourceType.ValueString())
 		startDate11 := r.Configuration.SourceDixa.StartDate.ValueString()
 		sourceDixa = &shared.SourceDixa{
 			APIToken:   apiToken2,
 			BatchSize:  batchSize,
-			SourceType: sourceType30,
+			SourceType: sourceType31,
 			StartDate:  startDate11,
 		}
 	}
@@ -1265,10 +1374,10 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	var sourceDockerhub *shared.SourceDockerhub
 	if r.Configuration.SourceDockerhub != nil {
 		dockerUsername := r.Configuration.SourceDockerhub.DockerUsername.ValueString()
-		sourceType31 := shared.SourceDockerhubDockerhubEnum(r.Configuration.SourceDockerhub.SourceType.ValueString())
+		sourceType32 := shared.SourceDockerhubDockerhubEnum(r.Configuration.SourceDockerhub.SourceType.ValueString())
 		sourceDockerhub = &shared.SourceDockerhub{
 			DockerUsername: dockerUsername,
-			SourceType:     sourceType31,
+			SourceType:     sourceType32,
 		}
 	}
 	if sourceDockerhub != nil {
@@ -1280,11 +1389,11 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	if r.Configuration.SourceDremio != nil {
 		apiKey10 := r.Configuration.SourceDremio.APIKey.ValueString()
 		baseUrl1 := r.Configuration.SourceDremio.BaseURL.ValueString()
-		sourceType32 := shared.SourceDremioDremioEnum(r.Configuration.SourceDremio.SourceType.ValueString())
+		sourceType33 := shared.SourceDremioDremioEnum(r.Configuration.SourceDremio.SourceType.ValueString())
 		sourceDremio = &shared.SourceDremio{
 			APIKey:     apiKey10,
 			BaseURL:    baseUrl1,
-			SourceType: sourceType32,
+			SourceType: sourceType33,
 		}
 	}
 	if sourceDremio != nil {
@@ -1314,14 +1423,14 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			reservedAttributeNames = nil
 		}
 		secretAccessKey := r.Configuration.SourceDynamodb.SecretAccessKey.ValueString()
-		sourceType33 := shared.SourceDynamodbDynamodbEnum(r.Configuration.SourceDynamodb.SourceType.ValueString())
+		sourceType34 := shared.SourceDynamodbDynamodbEnum(r.Configuration.SourceDynamodb.SourceType.ValueString())
 		sourceDynamodb = &shared.SourceDynamodb{
 			AccessKeyID:            accessKeyID,
 			Endpoint:               endpoint,
 			Region:                 region3,
 			ReservedAttributeNames: reservedAttributeNames,
 			SecretAccessKey:        secretAccessKey,
-			SourceType:             sourceType33,
+			SourceType:             sourceType34,
 		}
 	}
 	if sourceDynamodb != nil {
@@ -1382,7 +1491,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			seed = nil
 		}
-		sourceType34 := shared.SourceE2eTestCloudE2eTestCloudEnum(r.Configuration.SourceE2eTestCloud.SourceType.ValueString())
+		sourceType35 := shared.SourceE2eTestCloudE2eTestCloudEnum(r.Configuration.SourceE2eTestCloud.SourceType.ValueString())
 		type3 := new(shared.SourceE2eTestCloudTypeEnum)
 		if !r.Configuration.SourceE2eTestCloud.Type.IsUnknown() && !r.Configuration.SourceE2eTestCloud.Type.IsNull() {
 			*type3 = shared.SourceE2eTestCloudTypeEnum(r.Configuration.SourceE2eTestCloud.Type.ValueString())
@@ -1394,7 +1503,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			MessageIntervalMs: messageIntervalMs,
 			MockCatalog:       mockCatalog,
 			Seed:              seed,
-			SourceType:        sourceType34,
+			SourceType:        sourceType35,
 			Type:              type3,
 		}
 	}
@@ -1406,10 +1515,10 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	var sourceEmailoctopus *shared.SourceEmailoctopus
 	if r.Configuration.SourceEmailoctopus != nil {
 		apiKey11 := r.Configuration.SourceEmailoctopus.APIKey.ValueString()
-		sourceType35 := shared.SourceEmailoctopusEmailoctopusEnum(r.Configuration.SourceEmailoctopus.SourceType.ValueString())
+		sourceType36 := shared.SourceEmailoctopusEmailoctopusEnum(r.Configuration.SourceEmailoctopus.SourceType.ValueString())
 		sourceEmailoctopus = &shared.SourceEmailoctopus{
 			APIKey:     apiKey11,
-			SourceType: sourceType35,
+			SourceType: sourceType36,
 		}
 	}
 	if sourceEmailoctopus != nil {
@@ -1432,13 +1541,13 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			ignoreWeekends = nil
 		}
-		sourceType36 := shared.SourceExchangeRatesExchangeRatesEnum(r.Configuration.SourceExchangeRates.SourceType.ValueString())
+		sourceType37 := shared.SourceExchangeRatesExchangeRatesEnum(r.Configuration.SourceExchangeRates.SourceType.ValueString())
 		startDate12, _ := customTypes.NewDate(r.Configuration.SourceExchangeRates.StartDate.ValueString())
 		sourceExchangeRates = &shared.SourceExchangeRates{
 			AccessKey:      accessKey1,
 			Base:           base,
 			IgnoreWeekends: ignoreWeekends,
-			SourceType:     sourceType36,
+			SourceType:     sourceType37,
 			StartDate:      startDate12,
 		}
 	}
@@ -1550,7 +1659,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			pageSize = nil
 		}
-		sourceType37 := shared.SourceFacebookMarketingFacebookMarketingEnum(r.Configuration.SourceFacebookMarketing.SourceType.ValueString())
+		sourceType38 := shared.SourceFacebookMarketingFacebookMarketingEnum(r.Configuration.SourceFacebookMarketing.SourceType.ValueString())
 		startDate14, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceFacebookMarketing.StartDate.ValueString())
 		sourceFacebookMarketing = &shared.SourceFacebookMarketing{
 			AccessToken:                accessToken3,
@@ -1563,7 +1672,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			InsightsLookbackWindow:     insightsLookbackWindow1,
 			MaxBatchSize:               maxBatchSize1,
 			PageSize:                   pageSize,
-			SourceType:                 sourceType37,
+			SourceType:                 sourceType38,
 			StartDate:                  startDate14,
 		}
 	}
@@ -1576,11 +1685,11 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	if r.Configuration.SourceFacebookPages != nil {
 		accessToken4 := r.Configuration.SourceFacebookPages.AccessToken.ValueString()
 		pageID := r.Configuration.SourceFacebookPages.PageID.ValueString()
-		sourceType38 := shared.SourceFacebookPagesFacebookPagesEnum(r.Configuration.SourceFacebookPages.SourceType.ValueString())
+		sourceType39 := shared.SourceFacebookPagesFacebookPagesEnum(r.Configuration.SourceFacebookPages.SourceType.ValueString())
 		sourceFacebookPages = &shared.SourceFacebookPages{
 			AccessToken: accessToken4,
 			PageID:      pageID,
-			SourceType:  sourceType38,
+			SourceType:  sourceType39,
 		}
 	}
 	if sourceFacebookPages != nil {
@@ -1615,14 +1724,14 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			seed1 = nil
 		}
-		sourceType39 := shared.SourceFakerFakerEnum(r.Configuration.SourceFaker.SourceType.ValueString())
+		sourceType40 := shared.SourceFakerFakerEnum(r.Configuration.SourceFaker.SourceType.ValueString())
 		sourceFaker = &shared.SourceFaker{
 			Count:           count,
 			Parallelism:     parallelism,
 			RecordsPerSlice: recordsPerSlice,
 			RecordsPerSync:  recordsPerSync,
 			Seed:            seed1,
-			SourceType:      sourceType39,
+			SourceType:      sourceType40,
 		}
 	}
 	if sourceFaker != nil {
@@ -1671,14 +1780,14 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		port2 := r.Configuration.SourceFauna.Port.ValueInt64()
 		scheme := r.Configuration.SourceFauna.Scheme.ValueString()
 		secret := r.Configuration.SourceFauna.Secret.ValueString()
-		sourceType40 := shared.SourceFaunaFaunaEnum(r.Configuration.SourceFauna.SourceType.ValueString())
+		sourceType41 := shared.SourceFaunaFaunaEnum(r.Configuration.SourceFauna.SourceType.ValueString())
 		sourceFauna = &shared.SourceFauna{
 			Collection: collection,
 			Domain:     domain,
 			Port:       port2,
 			Scheme:     scheme,
 			Secret:     secret,
-			SourceType: sourceType40,
+			SourceType: sourceType41,
 		}
 	}
 	if sourceFauna != nil {
@@ -1689,7 +1798,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	var sourceFileSecure *shared.SourceFileSecure
 	if r.Configuration.SourceFileSecure != nil {
 		datasetName := r.Configuration.SourceFileSecure.DatasetName.ValueString()
-		format := shared.SourceFileSecureFileFormatEnum(r.Configuration.SourceFileSecure.Format.ValueString())
+		format1 := shared.SourceFileSecureFileFormatEnum(r.Configuration.SourceFileSecure.Format.ValueString())
 		var provider shared.SourceFileSecureStorageProvider
 		var sourceFileSecureStorageProviderHTTPSPublicWeb *shared.SourceFileSecureStorageProviderHTTPSPublicWeb
 		if r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderHTTPSPublicWeb != nil {
@@ -1879,14 +1988,14 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			readerOptions = nil
 		}
-		sourceType41 := shared.SourceFileSecureFileSecureEnum(r.Configuration.SourceFileSecure.SourceType.ValueString())
+		sourceType42 := shared.SourceFileSecureFileSecureEnum(r.Configuration.SourceFileSecure.SourceType.ValueString())
 		url1 := r.Configuration.SourceFileSecure.URL.ValueString()
 		sourceFileSecure = &shared.SourceFileSecure{
 			DatasetName:   datasetName,
-			Format:        format,
+			Format:        format1,
 			Provider:      provider,
 			ReaderOptions: readerOptions,
-			SourceType:    sourceType41,
+			SourceType:    sourceType42,
 			URL:           url1,
 		}
 	}
@@ -1917,7 +2026,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			host5 = nil
 		}
 		password6 := r.Configuration.SourceFirebolt.Password.ValueString()
-		sourceType42 := shared.SourceFireboltFireboltEnum(r.Configuration.SourceFirebolt.SourceType.ValueString())
+		sourceType43 := shared.SourceFireboltFireboltEnum(r.Configuration.SourceFirebolt.SourceType.ValueString())
 		username3 := r.Configuration.SourceFirebolt.Username.ValueString()
 		sourceFirebolt = &shared.SourceFirebolt{
 			Account:    account,
@@ -1925,7 +2034,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			Engine:     engine,
 			Host:       host5,
 			Password:   password6,
-			SourceType: sourceType42,
+			SourceType: sourceType43,
 			Username:   username3,
 		}
 	}
@@ -1944,7 +2053,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			requestsPerMinute = nil
 		}
-		sourceType43 := shared.SourceFreshcallerFreshcallerEnum(r.Configuration.SourceFreshcaller.SourceType.ValueString())
+		sourceType44 := shared.SourceFreshcallerFreshcallerEnum(r.Configuration.SourceFreshcaller.SourceType.ValueString())
 		var startDate15 interface{}
 		_ = json.Unmarshal([]byte(r.Configuration.SourceFreshcaller.StartDate.ValueString()), &startDate15)
 		syncLagMinutes := new(int64)
@@ -1957,7 +2066,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			APIKey:            apiKey12,
 			Domain:            domain1,
 			RequestsPerMinute: requestsPerMinute,
-			SourceType:        sourceType43,
+			SourceType:        sourceType44,
 			StartDate:         startDate15,
 			SyncLagMinutes:    syncLagMinutes,
 		}
@@ -1977,7 +2086,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			requestsPerMinute1 = nil
 		}
-		sourceType44 := shared.SourceFreshdeskFreshdeskEnum(r.Configuration.SourceFreshdesk.SourceType.ValueString())
+		sourceType45 := shared.SourceFreshdeskFreshdeskEnum(r.Configuration.SourceFreshdesk.SourceType.ValueString())
 		startDate16 := new(time.Time)
 		if !r.Configuration.SourceFreshdesk.StartDate.IsUnknown() && !r.Configuration.SourceFreshdesk.StartDate.IsNull() {
 			*startDate16, _ = time.Parse(time.RFC3339Nano, r.Configuration.SourceFreshdesk.StartDate.ValueString())
@@ -1988,7 +2097,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			APIKey:            apiKey13,
 			Domain:            domain2,
 			RequestsPerMinute: requestsPerMinute1,
-			SourceType:        sourceType44,
+			SourceType:        sourceType45,
 			StartDate:         startDate16,
 		}
 	}
@@ -2001,11 +2110,11 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	if r.Configuration.SourceFreshsales != nil {
 		apiKey14 := r.Configuration.SourceFreshsales.APIKey.ValueString()
 		domainName1 := r.Configuration.SourceFreshsales.DomainName.ValueString()
-		sourceType45 := shared.SourceFreshsalesFreshsalesEnum(r.Configuration.SourceFreshsales.SourceType.ValueString())
+		sourceType46 := shared.SourceFreshsalesFreshsalesEnum(r.Configuration.SourceFreshsales.SourceType.ValueString())
 		sourceFreshsales = &shared.SourceFreshsales{
 			APIKey:     apiKey14,
 			DomainName: domainName1,
-			SourceType: sourceType45,
+			SourceType: sourceType46,
 		}
 	}
 	if sourceFreshsales != nil {
@@ -2018,12 +2127,12 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		gcsBucket := r.Configuration.SourceGcs.GcsBucket.ValueString()
 		gcsPath := r.Configuration.SourceGcs.GcsPath.ValueString()
 		serviceAccount := r.Configuration.SourceGcs.ServiceAccount.ValueString()
-		sourceType46 := shared.SourceGcsGcsEnum(r.Configuration.SourceGcs.SourceType.ValueString())
+		sourceType47 := shared.SourceGcsGcsEnum(r.Configuration.SourceGcs.SourceType.ValueString())
 		sourceGcs = &shared.SourceGcs{
 			GcsBucket:      gcsBucket,
 			GcsPath:        gcsPath,
 			ServiceAccount: serviceAccount,
-			SourceType:     sourceType46,
+			SourceType:     sourceType47,
 		}
 	}
 	if sourceGcs != nil {
@@ -2034,10 +2143,10 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	var sourceGetlago *shared.SourceGetlago
 	if r.Configuration.SourceGetlago != nil {
 		apiKey15 := r.Configuration.SourceGetlago.APIKey.ValueString()
-		sourceType47 := shared.SourceGetlagoGetlagoEnum(r.Configuration.SourceGetlago.SourceType.ValueString())
+		sourceType48 := shared.SourceGetlagoGetlagoEnum(r.Configuration.SourceGetlago.SourceType.ValueString())
 		sourceGetlago = &shared.SourceGetlago{
 			APIKey:     apiKey15,
-			SourceType: sourceType47,
+			SourceType: sourceType48,
 		}
 	}
 	if sourceGetlago != nil {
@@ -2099,14 +2208,14 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			pageSizeForLargeStreams = nil
 		}
 		repository := r.Configuration.SourceGithub.Repository.ValueString()
-		sourceType48 := shared.SourceGithubGithubEnum(r.Configuration.SourceGithub.SourceType.ValueString())
+		sourceType49 := shared.SourceGithubGithubEnum(r.Configuration.SourceGithub.SourceType.ValueString())
 		startDate17, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceGithub.StartDate.ValueString())
 		sourceGithub = &shared.SourceGithub{
 			Branch:                  branch,
 			Credentials:             credentials3,
 			PageSizeForLargeStreams: pageSizeForLargeStreams,
 			Repository:              repository,
-			SourceType:              sourceType48,
+			SourceType:              sourceType49,
 			StartDate:               startDate17,
 		}
 	}
@@ -2177,14 +2286,14 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			projects = nil
 		}
-		sourceType49 := shared.SourceGitlabGitlabEnum(r.Configuration.SourceGitlab.SourceType.ValueString())
+		sourceType50 := shared.SourceGitlabGitlabEnum(r.Configuration.SourceGitlab.SourceType.ValueString())
 		startDate18, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceGitlab.StartDate.ValueString())
 		sourceGitlab = &shared.SourceGitlab{
 			APIURL:      apiURL,
 			Credentials: credentials4,
 			Groups:      groups,
 			Projects:    projects,
-			SourceType:  sourceType49,
+			SourceType:  sourceType50,
 			StartDate:   startDate18,
 		}
 	}
@@ -2196,10 +2305,10 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	var sourceGlassfrog *shared.SourceGlassfrog
 	if r.Configuration.SourceGlassfrog != nil {
 		apiKey16 := r.Configuration.SourceGlassfrog.APIKey.ValueString()
-		sourceType50 := shared.SourceGlassfrogGlassfrogEnum(r.Configuration.SourceGlassfrog.SourceType.ValueString())
+		sourceType51 := shared.SourceGlassfrogGlassfrogEnum(r.Configuration.SourceGlassfrog.SourceType.ValueString())
 		sourceGlassfrog = &shared.SourceGlassfrog{
 			APIKey:     apiKey16,
-			SourceType: sourceType50,
+			SourceType: sourceType51,
 		}
 	}
 	if sourceGlassfrog != nil {
@@ -2243,7 +2352,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			sortby = nil
 		}
-		sourceType51 := shared.SourceGnewsGnewsEnum(r.Configuration.SourceGnews.SourceType.ValueString())
+		sourceType52 := shared.SourceGnewsGnewsEnum(r.Configuration.SourceGnews.SourceType.ValueString())
 		startDate19 := new(string)
 		if !r.Configuration.SourceGnews.StartDate.IsUnknown() && !r.Configuration.SourceGnews.StartDate.IsNull() {
 			*startDate19 = r.Configuration.SourceGnews.StartDate.ValueString()
@@ -2271,7 +2380,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			Nullable:          nullable,
 			Query:             query,
 			Sortby:            sortby,
-			SourceType:        sourceType51,
+			SourceType:        sourceType52,
 			StartDate:         startDate19,
 			TopHeadlinesQuery: topHeadlinesQuery,
 			TopHeadlinesTopic: topHeadlinesTopic,
@@ -2329,7 +2438,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			loginCustomerID = nil
 		}
-		sourceType52 := shared.SourceGoogleAdsGoogleAdsEnum(r.Configuration.SourceGoogleAds.SourceType.ValueString())
+		sourceType53 := shared.SourceGoogleAdsGoogleAdsEnum(r.Configuration.SourceGoogleAds.SourceType.ValueString())
 		startDate20, _ := customTypes.NewDate(r.Configuration.SourceGoogleAds.StartDate.ValueString())
 		sourceGoogleAds = &shared.SourceGoogleAds{
 			ConversionWindowDays: conversionWindowDays,
@@ -2338,7 +2447,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			CustomerID:           customerID,
 			EndDate:              endDate4,
 			LoginCustomerID:      loginCustomerID,
-			SourceType:           sourceType52,
+			SourceType:           sourceType53,
 			StartDate:            startDate20,
 		}
 	}
@@ -2407,7 +2516,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		}
 		dateRangesStartDate, _ := customTypes.NewDate(r.Configuration.SourceGoogleAnalyticsDataAPI.DateRangesStartDate.ValueString())
 		propertyID := r.Configuration.SourceGoogleAnalyticsDataAPI.PropertyID.ValueString()
-		sourceType53 := shared.SourceGoogleAnalyticsDataAPIGoogleAnalyticsDataAPIEnum(r.Configuration.SourceGoogleAnalyticsDataAPI.SourceType.ValueString())
+		sourceType54 := shared.SourceGoogleAnalyticsDataAPIGoogleAnalyticsDataAPIEnum(r.Configuration.SourceGoogleAnalyticsDataAPI.SourceType.ValueString())
 		windowInDays := new(int64)
 		if !r.Configuration.SourceGoogleAnalyticsDataAPI.WindowInDays.IsUnknown() && !r.Configuration.SourceGoogleAnalyticsDataAPI.WindowInDays.IsNull() {
 			*windowInDays = r.Configuration.SourceGoogleAnalyticsDataAPI.WindowInDays.ValueInt64()
@@ -2419,7 +2528,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			CustomReports:       customReports,
 			DateRangesStartDate: dateRangesStartDate,
 			PropertyID:          propertyID,
-			SourceType:          sourceType53,
+			SourceType:          sourceType54,
 			WindowInDays:        windowInDays,
 		}
 	}
@@ -2486,7 +2595,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			customReports1 = nil
 		}
-		sourceType54 := shared.SourceGoogleAnalyticsV4GoogleAnalyticsV4Enum(r.Configuration.SourceGoogleAnalyticsV4.SourceType.ValueString())
+		sourceType55 := shared.SourceGoogleAnalyticsV4GoogleAnalyticsV4Enum(r.Configuration.SourceGoogleAnalyticsV4.SourceType.ValueString())
 		startDate21 := r.Configuration.SourceGoogleAnalyticsV4.StartDate.ValueString()
 		viewID := r.Configuration.SourceGoogleAnalyticsV4.ViewID.ValueString()
 		windowInDays1 := new(int64)
@@ -2498,7 +2607,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		sourceGoogleAnalyticsV4 = &shared.SourceGoogleAnalyticsV4{
 			Credentials:   credentials7,
 			CustomReports: customReports1,
-			SourceType:    sourceType54,
+			SourceType:    sourceType55,
 			StartDate:     startDate21,
 			ViewID:        viewID,
 			WindowInDays:  windowInDays1,
@@ -2513,11 +2622,11 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	if r.Configuration.SourceGoogleDirectory != nil {
 		credentialsJson3 := r.Configuration.SourceGoogleDirectory.CredentialsJSON.ValueString()
 		email1 := r.Configuration.SourceGoogleDirectory.Email.ValueString()
-		sourceType55 := shared.SourceGoogleDirectoryGoogleDirectoryEnum(r.Configuration.SourceGoogleDirectory.SourceType.ValueString())
+		sourceType56 := shared.SourceGoogleDirectoryGoogleDirectoryEnum(r.Configuration.SourceGoogleDirectory.SourceType.ValueString())
 		sourceGoogleDirectory = &shared.SourceGoogleDirectory{
 			CredentialsJSON: credentialsJson3,
 			Email:           email1,
-			SourceType:      sourceType55,
+			SourceType:      sourceType56,
 		}
 	}
 	if sourceGoogleDirectory != nil {
@@ -2585,14 +2694,14 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		for _, siteUrlsItem := range r.Configuration.SourceGoogleSearchConsole.SiteUrls {
 			siteUrls = append(siteUrls, siteUrlsItem.ValueString())
 		}
-		sourceType56 := shared.SourceGoogleSearchConsoleGoogleSearchConsoleEnum(r.Configuration.SourceGoogleSearchConsole.SourceType.ValueString())
+		sourceType57 := shared.SourceGoogleSearchConsoleGoogleSearchConsoleEnum(r.Configuration.SourceGoogleSearchConsole.SourceType.ValueString())
 		startDate22, _ := customTypes.NewDate(r.Configuration.SourceGoogleSearchConsole.StartDate.ValueString())
 		sourceGoogleSearchConsole = &shared.SourceGoogleSearchConsole{
 			Authorization: authorization,
 			CustomReports: customReports2,
 			EndDate:       endDate5,
 			SiteUrls:      siteUrls,
-			SourceType:    sourceType56,
+			SourceType:    sourceType57,
 			StartDate:     startDate22,
 		}
 	}
@@ -2642,12 +2751,12 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			rowBatchSize = nil
 		}
-		sourceType57 := shared.SourceGoogleSheetsGoogleSheetsEnum(r.Configuration.SourceGoogleSheets.SourceType.ValueString())
+		sourceType58 := shared.SourceGoogleSheetsGoogleSheetsEnum(r.Configuration.SourceGoogleSheets.SourceType.ValueString())
 		spreadsheetID := r.Configuration.SourceGoogleSheets.SpreadsheetID.ValueString()
 		sourceGoogleSheets = &shared.SourceGoogleSheets{
 			Credentials:   credentials8,
 			RowBatchSize:  rowBatchSize,
-			SourceType:    sourceType57,
+			SourceType:    sourceType58,
 			SpreadsheetID: spreadsheetID,
 		}
 	}
@@ -2677,13 +2786,13 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			sort = nil
 		}
-		sourceType58 := shared.SourceGoogleWebfontsGoogleWebfontsEnum(r.Configuration.SourceGoogleWebfonts.SourceType.ValueString())
+		sourceType59 := shared.SourceGoogleWebfontsGoogleWebfontsEnum(r.Configuration.SourceGoogleWebfonts.SourceType.ValueString())
 		sourceGoogleWebfonts = &shared.SourceGoogleWebfonts{
 			Alt:         alt,
 			APIKey:      apiKey18,
 			PrettyPrint: prettyPrint,
 			Sort:        sort,
-			SourceType:  sourceType58,
+			SourceType:  sourceType59,
 		}
 	}
 	if sourceGoogleWebfonts != nil {
@@ -2701,12 +2810,12 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			lookback = nil
 		}
-		sourceType59 := shared.SourceGoogleWorkspaceAdminReportsGoogleWorkspaceAdminReportsEnum(r.Configuration.SourceGoogleWorkspaceAdminReports.SourceType.ValueString())
+		sourceType60 := shared.SourceGoogleWorkspaceAdminReportsGoogleWorkspaceAdminReportsEnum(r.Configuration.SourceGoogleWorkspaceAdminReports.SourceType.ValueString())
 		sourceGoogleWorkspaceAdminReports = &shared.SourceGoogleWorkspaceAdminReports{
 			CredentialsJSON: credentialsJson4,
 			Email:           email3,
 			Lookback:        lookback,
-			SourceType:      sourceType59,
+			SourceType:      sourceType60,
 		}
 	}
 	if sourceGoogleWorkspaceAdminReports != nil {
@@ -2717,10 +2826,10 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	var sourceGreenhouse *shared.SourceGreenhouse
 	if r.Configuration.SourceGreenhouse != nil {
 		apiKey19 := r.Configuration.SourceGreenhouse.APIKey.ValueString()
-		sourceType60 := shared.SourceGreenhouseGreenhouseEnum(r.Configuration.SourceGreenhouse.SourceType.ValueString())
+		sourceType61 := shared.SourceGreenhouseGreenhouseEnum(r.Configuration.SourceGreenhouse.SourceType.ValueString())
 		sourceGreenhouse = &shared.SourceGreenhouse{
 			APIKey:     apiKey19,
-			SourceType: sourceType60,
+			SourceType: sourceType61,
 		}
 	}
 	if sourceGreenhouse != nil {
@@ -2732,11 +2841,11 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	if r.Configuration.SourceGridly != nil {
 		apiKey20 := r.Configuration.SourceGridly.APIKey.ValueString()
 		gridID := r.Configuration.SourceGridly.GridID.ValueString()
-		sourceType61 := shared.SourceGridlyGridlyEnum(r.Configuration.SourceGridly.SourceType.ValueString())
+		sourceType62 := shared.SourceGridlyGridlyEnum(r.Configuration.SourceGridly.SourceType.ValueString())
 		sourceGridly = &shared.SourceGridly{
 			APIKey:     apiKey20,
 			GridID:     gridID,
-			SourceType: sourceType61,
+			SourceType: sourceType62,
 		}
 	}
 	if sourceGridly != nil {
@@ -2759,11 +2868,18 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			clientId11 := r.Configuration.SourceHarvest.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.ClientID.ValueString()
 			clientSecret11 := r.Configuration.SourceHarvest.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.ClientSecret.ValueString()
 			refreshToken11 := r.Configuration.SourceHarvest.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.RefreshToken.ValueString()
+			additionalProperties7 := make(map[string]interface{})
+			for additionalPropertiesKey7, additionalPropertiesValue7 := range r.Configuration.SourceHarvest.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.AdditionalProperties {
+				var additionalPropertiesInst7 interface{}
+				_ = json.Unmarshal([]byte(additionalPropertiesValue7.ValueString()), &additionalPropertiesInst7)
+				additionalProperties7[additionalPropertiesKey7] = additionalPropertiesInst7
+			}
 			sourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth = &shared.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth{
-				AuthType:     authType14,
-				ClientID:     clientId11,
-				ClientSecret: clientSecret11,
-				RefreshToken: refreshToken11,
+				AuthType:             authType14,
+				ClientID:             clientId11,
+				ClientSecret:         clientSecret11,
+				RefreshToken:         refreshToken11,
+				AdditionalProperties: additionalProperties7,
 			}
 		}
 		if sourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth != nil {
@@ -2780,9 +2896,16 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			} else {
 				authType15 = nil
 			}
+			additionalProperties8 := make(map[string]interface{})
+			for additionalPropertiesKey8, additionalPropertiesValue8 := range r.Configuration.SourceHarvest.Credentials.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken.AdditionalProperties {
+				var additionalPropertiesInst8 interface{}
+				_ = json.Unmarshal([]byte(additionalPropertiesValue8.ValueString()), &additionalPropertiesInst8)
+				additionalProperties8[additionalPropertiesKey8] = additionalPropertiesInst8
+			}
 			sourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken = &shared.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken{
-				APIToken: apiToken3,
-				AuthType: authType15,
+				APIToken:             apiToken3,
+				AuthType:             authType15,
+				AdditionalProperties: additionalProperties8,
 			}
 		}
 		if sourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken != nil {
@@ -2790,20 +2913,20 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 				SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken: sourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken,
 			}
 		}
-		replicationEndDate1 := new(string)
+		replicationEndDate1 := new(time.Time)
 		if !r.Configuration.SourceHarvest.ReplicationEndDate.IsUnknown() && !r.Configuration.SourceHarvest.ReplicationEndDate.IsNull() {
-			*replicationEndDate1 = r.Configuration.SourceHarvest.ReplicationEndDate.ValueString()
+			*replicationEndDate1, _ = time.Parse(time.RFC3339Nano, r.Configuration.SourceHarvest.ReplicationEndDate.ValueString())
 		} else {
 			replicationEndDate1 = nil
 		}
-		replicationStartDate1 := r.Configuration.SourceHarvest.ReplicationStartDate.ValueString()
-		sourceType62 := shared.SourceHarvestHarvestEnum(r.Configuration.SourceHarvest.SourceType.ValueString())
+		replicationStartDate1, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceHarvest.ReplicationStartDate.ValueString())
+		sourceType63 := shared.SourceHarvestHarvestEnum(r.Configuration.SourceHarvest.SourceType.ValueString())
 		sourceHarvest = &shared.SourceHarvest{
 			AccountID:            accountId1,
 			Credentials:          credentials9,
 			ReplicationEndDate:   replicationEndDate1,
 			ReplicationStartDate: replicationStartDate1,
-			SourceType:           sourceType62,
+			SourceType:           sourceType63,
 		}
 	}
 	if sourceHarvest != nil {
@@ -2814,10 +2937,10 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	var sourceHubplanner *shared.SourceHubplanner
 	if r.Configuration.SourceHubplanner != nil {
 		apiKey21 := r.Configuration.SourceHubplanner.APIKey.ValueString()
-		sourceType63 := shared.SourceHubplannerHubplannerEnum(r.Configuration.SourceHubplanner.SourceType.ValueString())
+		sourceType64 := shared.SourceHubplannerHubplannerEnum(r.Configuration.SourceHubplanner.SourceType.ValueString())
 		sourceHubplanner = &shared.SourceHubplanner{
 			APIKey:     apiKey21,
-			SourceType: sourceType63,
+			SourceType: sourceType64,
 		}
 	}
 	if sourceHubplanner != nil {
@@ -2860,11 +2983,11 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 				SourceHubspotAuthenticationPrivateApp: sourceHubspotAuthenticationPrivateApp,
 			}
 		}
-		sourceType64 := shared.SourceHubspotHubspotEnum(r.Configuration.SourceHubspot.SourceType.ValueString())
-		startDate23 := r.Configuration.SourceHubspot.StartDate.ValueString()
+		sourceType65 := shared.SourceHubspotHubspotEnum(r.Configuration.SourceHubspot.SourceType.ValueString())
+		startDate23, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceHubspot.StartDate.ValueString())
 		sourceHubspot = &shared.SourceHubspot{
 			Credentials: credentials10,
-			SourceType:  sourceType64,
+			SourceType:  sourceType65,
 			StartDate:   startDate23,
 		}
 	}
@@ -2875,11 +2998,11 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	}
 	var sourceInsightly *shared.SourceInsightly
 	if r.Configuration.SourceInsightly != nil {
-		sourceType65 := shared.SourceInsightlyInsightlyEnum(r.Configuration.SourceInsightly.SourceType.ValueString())
+		sourceType66 := shared.SourceInsightlyInsightlyEnum(r.Configuration.SourceInsightly.SourceType.ValueString())
 		startDate24 := r.Configuration.SourceInsightly.StartDate.ValueString()
 		token := r.Configuration.SourceInsightly.Token.ValueString()
 		sourceInsightly = &shared.SourceInsightly{
-			SourceType: sourceType65,
+			SourceType: sourceType66,
 			StartDate:  startDate24,
 			Token:      token,
 		}
@@ -2892,11 +3015,11 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	var sourceInstagram *shared.SourceInstagram
 	if r.Configuration.SourceInstagram != nil {
 		accessToken13 := r.Configuration.SourceInstagram.AccessToken.ValueString()
-		sourceType66 := shared.SourceInstagramInstagramEnum(r.Configuration.SourceInstagram.SourceType.ValueString())
+		sourceType67 := shared.SourceInstagramInstagramEnum(r.Configuration.SourceInstagram.SourceType.ValueString())
 		startDate25, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceInstagram.StartDate.ValueString())
 		sourceInstagram = &shared.SourceInstagram{
 			AccessToken: accessToken13,
-			SourceType:  sourceType66,
+			SourceType:  sourceType67,
 			StartDate:   startDate25,
 		}
 	}
@@ -2908,10 +3031,10 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	var sourceInstatus *shared.SourceInstatus
 	if r.Configuration.SourceInstatus != nil {
 		apiKey22 := r.Configuration.SourceInstatus.APIKey.ValueString()
-		sourceType67 := shared.SourceInstatusInstatusEnum(r.Configuration.SourceInstatus.SourceType.ValueString())
+		sourceType68 := shared.SourceInstatusInstatusEnum(r.Configuration.SourceInstatus.SourceType.ValueString())
 		sourceInstatus = &shared.SourceInstatus{
 			APIKey:     apiKey22,
-			SourceType: sourceType67,
+			SourceType: sourceType68,
 		}
 	}
 	if sourceInstatus != nil {
@@ -2922,11 +3045,11 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	var sourceIntercom *shared.SourceIntercom
 	if r.Configuration.SourceIntercom != nil {
 		accessToken14 := r.Configuration.SourceIntercom.AccessToken.ValueString()
-		sourceType68 := shared.SourceIntercomIntercomEnum(r.Configuration.SourceIntercom.SourceType.ValueString())
+		sourceType69 := shared.SourceIntercomIntercomEnum(r.Configuration.SourceIntercom.SourceType.ValueString())
 		startDate26, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceIntercom.StartDate.ValueString())
 		sourceIntercom = &shared.SourceIntercom{
 			AccessToken: accessToken14,
-			SourceType:  sourceType68,
+			SourceType:  sourceType69,
 			StartDate:   startDate26,
 		}
 	}
@@ -2949,11 +3072,11 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			domain3 = nil
 		}
-		sourceType69 := shared.SourceIp2whoisIp2whoisEnum(r.Configuration.SourceIp2whois.SourceType.ValueString())
+		sourceType70 := shared.SourceIp2whoisIp2whoisEnum(r.Configuration.SourceIp2whois.SourceType.ValueString())
 		sourceIp2whois = &shared.SourceIp2whois{
 			APIKey:     apiKey23,
 			Domain:     domain3,
-			SourceType: sourceType69,
+			SourceType: sourceType70,
 		}
 	}
 	if sourceIp2whois != nil {
@@ -2964,11 +3087,11 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	var sourceIterable *shared.SourceIterable
 	if r.Configuration.SourceIterable != nil {
 		apiKey24 := r.Configuration.SourceIterable.APIKey.ValueString()
-		sourceType70 := shared.SourceIterableIterableEnum(r.Configuration.SourceIterable.SourceType.ValueString())
+		sourceType71 := shared.SourceIterableIterableEnum(r.Configuration.SourceIterable.SourceType.ValueString())
 		startDate27, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceIterable.StartDate.ValueString())
 		sourceIterable = &shared.SourceIterable{
 			APIKey:     apiKey24,
-			SourceType: sourceType70,
+			SourceType: sourceType71,
 			StartDate:  startDate27,
 		}
 	}
@@ -3004,7 +3127,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			renderFields = nil
 		}
-		sourceType71 := shared.SourceJiraJiraEnum(r.Configuration.SourceJira.SourceType.ValueString())
+		sourceType72 := shared.SourceJiraJiraEnum(r.Configuration.SourceJira.SourceType.ValueString())
 		startDate28 := new(time.Time)
 		if !r.Configuration.SourceJira.StartDate.IsUnknown() && !r.Configuration.SourceJira.StartDate.IsNull() {
 			*startDate28, _ = time.Parse(time.RFC3339Nano, r.Configuration.SourceJira.StartDate.ValueString())
@@ -3019,7 +3142,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			ExpandIssueChangelog:      expandIssueChangelog,
 			Projects:                  projects1,
 			RenderFields:              renderFields,
-			SourceType:                sourceType71,
+			SourceType:                sourceType72,
 			StartDate:                 startDate28,
 		}
 	}
@@ -3031,10 +3154,10 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	var sourceK6Cloud *shared.SourceK6Cloud
 	if r.Configuration.SourceK6Cloud != nil {
 		apiToken5 := r.Configuration.SourceK6Cloud.APIToken.ValueString()
-		sourceType72 := shared.SourceK6CloudK6CloudEnum(r.Configuration.SourceK6Cloud.SourceType.ValueString())
+		sourceType73 := shared.SourceK6CloudK6CloudEnum(r.Configuration.SourceK6Cloud.SourceType.ValueString())
 		sourceK6Cloud = &shared.SourceK6Cloud{
 			APIToken:   apiToken5,
-			SourceType: sourceType72,
+			SourceType: sourceType73,
 		}
 	}
 	if sourceK6Cloud != nil {
@@ -3047,13 +3170,13 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		password7 := r.Configuration.SourceKlarna.Password.ValueString()
 		playground := r.Configuration.SourceKlarna.Playground.ValueBool()
 		region4 := shared.SourceKlarnaRegionEnum(r.Configuration.SourceKlarna.Region.ValueString())
-		sourceType73 := shared.SourceKlarnaKlarnaEnum(r.Configuration.SourceKlarna.SourceType.ValueString())
+		sourceType74 := shared.SourceKlarnaKlarnaEnum(r.Configuration.SourceKlarna.SourceType.ValueString())
 		username4 := r.Configuration.SourceKlarna.Username.ValueString()
 		sourceKlarna = &shared.SourceKlarna{
 			Password:   password7,
 			Playground: playground,
 			Region:     region4,
-			SourceType: sourceType73,
+			SourceType: sourceType74,
 			Username:   username4,
 		}
 	}
@@ -3065,11 +3188,11 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	var sourceKlaviyo *shared.SourceKlaviyo
 	if r.Configuration.SourceKlaviyo != nil {
 		apiKey25 := r.Configuration.SourceKlaviyo.APIKey.ValueString()
-		sourceType74 := shared.SourceKlaviyoKlaviyoEnum(r.Configuration.SourceKlaviyo.SourceType.ValueString())
+		sourceType75 := shared.SourceKlaviyoKlaviyoEnum(r.Configuration.SourceKlaviyo.SourceType.ValueString())
 		startDate29, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceKlaviyo.StartDate.ValueString())
 		sourceKlaviyo = &shared.SourceKlaviyo{
 			APIKey:     apiKey25,
-			SourceType: sourceType74,
+			SourceType: sourceType75,
 			StartDate:  startDate29,
 		}
 	}
@@ -3081,11 +3204,11 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	var sourceKustomerSinger *shared.SourceKustomerSinger
 	if r.Configuration.SourceKustomerSinger != nil {
 		apiToken6 := r.Configuration.SourceKustomerSinger.APIToken.ValueString()
-		sourceType75 := shared.SourceKustomerSingerKustomerSingerEnum(r.Configuration.SourceKustomerSinger.SourceType.ValueString())
+		sourceType76 := shared.SourceKustomerSingerKustomerSingerEnum(r.Configuration.SourceKustomerSinger.SourceType.ValueString())
 		startDate30 := r.Configuration.SourceKustomerSinger.StartDate.ValueString()
 		sourceKustomerSinger = &shared.SourceKustomerSinger{
 			APIToken:   apiToken6,
-			SourceType: sourceType75,
+			SourceType: sourceType76,
 			StartDate:  startDate30,
 		}
 	}
@@ -3097,10 +3220,10 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	var sourceLaunchdarkly *shared.SourceLaunchdarkly
 	if r.Configuration.SourceLaunchdarkly != nil {
 		accessToken15 := r.Configuration.SourceLaunchdarkly.AccessToken.ValueString()
-		sourceType76 := shared.SourceLaunchdarklyLaunchdarklyEnum(r.Configuration.SourceLaunchdarkly.SourceType.ValueString())
+		sourceType77 := shared.SourceLaunchdarklyLaunchdarklyEnum(r.Configuration.SourceLaunchdarkly.SourceType.ValueString())
 		sourceLaunchdarkly = &shared.SourceLaunchdarkly{
 			AccessToken: accessToken15,
-			SourceType:  sourceType76,
+			SourceType:  sourceType77,
 		}
 	}
 	if sourceLaunchdarkly != nil {
@@ -3111,10 +3234,10 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	var sourceLemlist *shared.SourceLemlist
 	if r.Configuration.SourceLemlist != nil {
 		apiKey26 := r.Configuration.SourceLemlist.APIKey.ValueString()
-		sourceType77 := shared.SourceLemlistLemlistEnum(r.Configuration.SourceLemlist.SourceType.ValueString())
+		sourceType78 := shared.SourceLemlistLemlistEnum(r.Configuration.SourceLemlist.SourceType.ValueString())
 		sourceLemlist = &shared.SourceLemlist{
 			APIKey:     apiKey26,
-			SourceType: sourceType77,
+			SourceType: sourceType78,
 		}
 	}
 	if sourceLemlist != nil {
@@ -3171,12 +3294,12 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 				SourceLinkedinAdsAuthenticationAccessToken: sourceLinkedinAdsAuthenticationAccessToken,
 			}
 		}
-		sourceType78 := shared.SourceLinkedinAdsLinkedinAdsEnum(r.Configuration.SourceLinkedinAds.SourceType.ValueString())
+		sourceType79 := shared.SourceLinkedinAdsLinkedinAdsEnum(r.Configuration.SourceLinkedinAds.SourceType.ValueString())
 		startDate31, _ := customTypes.NewDate(r.Configuration.SourceLinkedinAds.StartDate.ValueString())
 		sourceLinkedinAds = &shared.SourceLinkedinAds{
 			AccountIds:  accountIds,
 			Credentials: credentials11,
-			SourceType:  sourceType78,
+			SourceType:  sourceType79,
 			StartDate:   startDate31,
 		}
 	}
@@ -3231,11 +3354,11 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			}
 		}
 		orgID := r.Configuration.SourceLinkedinPages.OrgID.ValueString()
-		sourceType79 := shared.SourceLinkedinPagesLinkedinPagesEnum(r.Configuration.SourceLinkedinPages.SourceType.ValueString())
+		sourceType80 := shared.SourceLinkedinPagesLinkedinPagesEnum(r.Configuration.SourceLinkedinPages.SourceType.ValueString())
 		sourceLinkedinPages = &shared.SourceLinkedinPages{
 			Credentials: credentials12,
 			OrgID:       orgID,
-			SourceType:  sourceType79,
+			SourceType:  sourceType80,
 		}
 	}
 	if sourceLinkedinPages != nil {
@@ -3247,13 +3370,13 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	if r.Configuration.SourceLinnworks != nil {
 		applicationID := r.Configuration.SourceLinnworks.ApplicationID.ValueString()
 		applicationSecret := r.Configuration.SourceLinnworks.ApplicationSecret.ValueString()
-		sourceType80 := shared.SourceLinnworksLinnworksEnum(r.Configuration.SourceLinnworks.SourceType.ValueString())
+		sourceType81 := shared.SourceLinnworksLinnworksEnum(r.Configuration.SourceLinnworks.SourceType.ValueString())
 		startDate32, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceLinnworks.StartDate.ValueString())
 		token1 := r.Configuration.SourceLinnworks.Token.ValueString()
 		sourceLinnworks = &shared.SourceLinnworks{
 			ApplicationID:     applicationID,
 			ApplicationSecret: applicationSecret,
-			SourceType:        sourceType80,
+			SourceType:        sourceType81,
 			StartDate:         startDate32,
 			Token:             token1,
 		}
@@ -3267,11 +3390,11 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	if r.Configuration.SourceLokalise != nil {
 		apiKey27 := r.Configuration.SourceLokalise.APIKey.ValueString()
 		projectId1 := r.Configuration.SourceLokalise.ProjectID.ValueString()
-		sourceType81 := shared.SourceLokaliseLokaliseEnum(r.Configuration.SourceLokalise.SourceType.ValueString())
+		sourceType82 := shared.SourceLokaliseLokaliseEnum(r.Configuration.SourceLokalise.SourceType.ValueString())
 		sourceLokalise = &shared.SourceLokalise{
 			APIKey:     apiKey27,
 			ProjectID:  projectId1,
-			SourceType: sourceType81,
+			SourceType: sourceType82,
 		}
 	}
 	if sourceLokalise != nil {
@@ -3330,11 +3453,11 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 				SourceMailchimpAuthenticationAPIKey: sourceMailchimpAuthenticationAPIKey,
 			}
 		}
-		sourceType82 := shared.SourceMailchimpMailchimpEnum(r.Configuration.SourceMailchimp.SourceType.ValueString())
+		sourceType83 := shared.SourceMailchimpMailchimpEnum(r.Configuration.SourceMailchimp.SourceType.ValueString())
 		sourceMailchimp = &shared.SourceMailchimp{
 			CampaignID:  campaignID,
 			Credentials: credentials13,
-			SourceType:  sourceType82,
+			SourceType:  sourceType83,
 		}
 	}
 	if sourceMailchimp != nil {
@@ -3351,7 +3474,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			domainRegion = nil
 		}
 		privateKey1 := r.Configuration.SourceMailgun.PrivateKey.ValueString()
-		sourceType83 := shared.SourceMailgunMailgunEnum(r.Configuration.SourceMailgun.SourceType.ValueString())
+		sourceType84 := shared.SourceMailgunMailgunEnum(r.Configuration.SourceMailgun.SourceType.ValueString())
 		startDate33 := new(time.Time)
 		if !r.Configuration.SourceMailgun.StartDate.IsUnknown() && !r.Configuration.SourceMailgun.StartDate.IsNull() {
 			*startDate33, _ = time.Parse(time.RFC3339Nano, r.Configuration.SourceMailgun.StartDate.ValueString())
@@ -3361,7 +3484,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		sourceMailgun = &shared.SourceMailgun{
 			DomainRegion: domainRegion,
 			PrivateKey:   privateKey1,
-			SourceType:   sourceType83,
+			SourceType:   sourceType84,
 			StartDate:    startDate33,
 		}
 	}
@@ -3378,7 +3501,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			endDate6 = nil
 		}
-		sourceType84 := shared.SourceMailjetSmsMailjetSmsEnum(r.Configuration.SourceMailjetSms.SourceType.ValueString())
+		sourceType85 := shared.SourceMailjetSmsMailjetSmsEnum(r.Configuration.SourceMailjetSms.SourceType.ValueString())
 		startDate34 := new(int64)
 		if !r.Configuration.SourceMailjetSms.StartDate.IsUnknown() && !r.Configuration.SourceMailjetSms.StartDate.IsNull() {
 			*startDate34 = r.Configuration.SourceMailjetSms.StartDate.ValueInt64()
@@ -3388,7 +3511,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		token2 := r.Configuration.SourceMailjetSms.Token.ValueString()
 		sourceMailjetSms = &shared.SourceMailjetSms{
 			EndDate:    endDate6,
-			SourceType: sourceType84,
+			SourceType: sourceType85,
 			StartDate:  startDate34,
 			Token:      token2,
 		}
@@ -3403,13 +3526,13 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		clientId16 := r.Configuration.SourceMarketo.ClientID.ValueString()
 		clientSecret16 := r.Configuration.SourceMarketo.ClientSecret.ValueString()
 		domainURL := r.Configuration.SourceMarketo.DomainURL.ValueString()
-		sourceType85 := shared.SourceMarketoMarketoEnum(r.Configuration.SourceMarketo.SourceType.ValueString())
-		startDate35 := r.Configuration.SourceMarketo.StartDate.ValueString()
+		sourceType86 := shared.SourceMarketoMarketoEnum(r.Configuration.SourceMarketo.SourceType.ValueString())
+		startDate35, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceMarketo.StartDate.ValueString())
 		sourceMarketo = &shared.SourceMarketo{
 			ClientID:     clientId16,
 			ClientSecret: clientSecret16,
 			DomainURL:    domainURL,
-			SourceType:   sourceType85,
+			SourceType:   sourceType86,
 			StartDate:    startDate35,
 		}
 	}
@@ -3433,7 +3556,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			sessionToken = nil
 		}
-		sourceType86 := shared.SourceMetabaseMetabaseEnum(r.Configuration.SourceMetabase.SourceType.ValueString())
+		sourceType87 := shared.SourceMetabaseMetabaseEnum(r.Configuration.SourceMetabase.SourceType.ValueString())
 		username5 := new(string)
 		if !r.Configuration.SourceMetabase.Username.IsUnknown() && !r.Configuration.SourceMetabase.Username.IsNull() {
 			*username5 = r.Configuration.SourceMetabase.Username.ValueString()
@@ -3444,7 +3567,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			InstanceAPIURL: instanceAPIURL,
 			Password:       password8,
 			SessionToken:   sessionToken,
-			SourceType:     sourceType86,
+			SourceType:     sourceType87,
 			Username:       username5,
 		}
 	}
@@ -3505,11 +3628,11 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			}
 		}
 		period1 := r.Configuration.SourceMicrosoftTeams.Period.ValueString()
-		sourceType87 := shared.SourceMicrosoftTeamsMicrosoftTeamsEnum(r.Configuration.SourceMicrosoftTeams.SourceType.ValueString())
+		sourceType88 := shared.SourceMicrosoftTeamsMicrosoftTeamsEnum(r.Configuration.SourceMicrosoftTeams.SourceType.ValueString())
 		sourceMicrosoftTeams = &shared.SourceMicrosoftTeams{
 			Credentials: credentials14,
 			Period:      period1,
-			SourceType:  sourceType87,
+			SourceType:  sourceType88,
 		}
 	}
 	if sourceMicrosoftTeams != nil {
@@ -3572,9 +3695,9 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			dateWindowSize = nil
 		}
-		endDate7 := new(string)
+		endDate7 := new(time.Time)
 		if !r.Configuration.SourceMixpanel.EndDate.IsUnknown() && !r.Configuration.SourceMixpanel.EndDate.IsNull() {
-			*endDate7 = r.Configuration.SourceMixpanel.EndDate.ValueString()
+			*endDate7, _ = time.Parse(time.RFC3339Nano, r.Configuration.SourceMixpanel.EndDate.ValueString())
 		} else {
 			endDate7 = nil
 		}
@@ -3602,10 +3725,10 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			selectPropertiesByDefault = nil
 		}
-		sourceType88 := shared.SourceMixpanelMixpanelEnum(r.Configuration.SourceMixpanel.SourceType.ValueString())
-		startDate36 := new(string)
+		sourceType89 := shared.SourceMixpanelMixpanelEnum(r.Configuration.SourceMixpanel.SourceType.ValueString())
+		startDate36 := new(time.Time)
 		if !r.Configuration.SourceMixpanel.StartDate.IsUnknown() && !r.Configuration.SourceMixpanel.StartDate.IsNull() {
-			*startDate36 = r.Configuration.SourceMixpanel.StartDate.ValueString()
+			*startDate36, _ = time.Parse(time.RFC3339Nano, r.Configuration.SourceMixpanel.StartDate.ValueString())
 		} else {
 			startDate36 = nil
 		}
@@ -3618,7 +3741,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			ProjectTimezone:           projectTimezone,
 			Region:                    region5,
 			SelectPropertiesByDefault: selectPropertiesByDefault,
-			SourceType:                sourceType88,
+			SourceType:                sourceType89,
 			StartDate:                 startDate36,
 		}
 	}
@@ -3669,10 +3792,10 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 				SourceMondayAuthorizationMethodAPIToken: sourceMondayAuthorizationMethodAPIToken,
 			}
 		}
-		sourceType89 := shared.SourceMondayMondayEnum(r.Configuration.SourceMonday.SourceType.ValueString())
+		sourceType90 := shared.SourceMondayMondayEnum(r.Configuration.SourceMonday.SourceType.ValueString())
 		sourceMonday = &shared.SourceMonday{
 			Credentials: credentials16,
-			SourceType:  sourceType89,
+			SourceType:  sourceType90,
 		}
 	}
 	if sourceMonday != nil {
@@ -3747,7 +3870,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			password9 = nil
 		}
-		sourceType90 := shared.SourceMongodbMongodbEnum(r.Configuration.SourceMongodb.SourceType.ValueString())
+		sourceType91 := shared.SourceMongodbMongodbEnum(r.Configuration.SourceMongodb.SourceType.ValueString())
 		user3 := new(string)
 		if !r.Configuration.SourceMongodb.User.IsUnknown() && !r.Configuration.SourceMongodb.User.IsNull() {
 			*user3 = r.Configuration.SourceMongodb.User.ValueString()
@@ -3759,7 +3882,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			Database:     database3,
 			InstanceType: instanceType,
 			Password:     password9,
-			SourceType:   sourceType90,
+			SourceType:   sourceType91,
 			User:         user3,
 		}
 	}
@@ -3835,7 +3958,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		for _, schemasItem1 := range r.Configuration.SourceMssql.Schemas {
 			schemas1 = append(schemas1, schemasItem1.ValueString())
 		}
-		sourceType91 := shared.SourceMssqlMssqlEnum(r.Configuration.SourceMssql.SourceType.ValueString())
+		sourceType92 := shared.SourceMssqlMssqlEnum(r.Configuration.SourceMssql.SourceType.ValueString())
 		var sslMethod *shared.SourceMssqlSSLMethod
 		var sourceMssqlSSLMethodEncryptedTrustServerCertificate *shared.SourceMssqlSSLMethodEncryptedTrustServerCertificate
 		if r.Configuration.SourceMssql.SslMethod.SourceMssqlSSLMethodEncryptedTrustServerCertificate != nil {
@@ -3930,7 +4053,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			Port:              port7,
 			ReplicationMethod: replicationMethod1,
 			Schemas:           schemas1,
-			SourceType:        sourceType91,
+			SourceType:        sourceType92,
 			SslMethod:         sslMethod,
 			TunnelMethod:      tunnelMethod8,
 			Username:          username7,
@@ -3951,13 +4074,13 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			logsBatchSize = nil
 		}
 		password11 := r.Configuration.SourceMyHours.Password.ValueString()
-		sourceType92 := shared.SourceMyHoursMyHoursEnum(r.Configuration.SourceMyHours.SourceType.ValueString())
+		sourceType93 := shared.SourceMyHoursMyHoursEnum(r.Configuration.SourceMyHours.SourceType.ValueString())
 		startDate37 := r.Configuration.SourceMyHours.StartDate.ValueString()
 		sourceMyHours = &shared.SourceMyHours{
 			Email:         email5,
 			LogsBatchSize: logsBatchSize,
 			Password:      password11,
-			SourceType:    sourceType92,
+			SourceType:    sourceType93,
 			StartDate:     startDate37,
 		}
 	}
@@ -4022,13 +4145,13 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 				SourceMysqlReplicationMethodLogicalReplicationCDC: sourceMysqlReplicationMethodLogicalReplicationCDC,
 			}
 		}
-		sourceType93 := shared.SourceMysqlMysqlEnum(r.Configuration.SourceMysql.SourceType.ValueString())
+		sourceType94 := shared.SourceMysqlMysqlEnum(r.Configuration.SourceMysql.SourceType.ValueString())
 		var sslMode1 *shared.SourceMysqlSSLModes
 		var sourceMysqlSSLModesPreferred *shared.SourceMysqlSSLModesPreferred
 		if r.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesPreferred != nil {
-			mode5 := shared.SourceMysqlSSLModesPreferredModeEnum(r.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesPreferred.Mode.ValueString())
+			mode6 := shared.SourceMysqlSSLModesPreferredModeEnum(r.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesPreferred.Mode.ValueString())
 			sourceMysqlSSLModesPreferred = &shared.SourceMysqlSSLModesPreferred{
-				Mode: mode5,
+				Mode: mode6,
 			}
 		}
 		if sourceMysqlSSLModesPreferred != nil {
@@ -4038,9 +4161,9 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		}
 		var sourceMysqlSSLModesRequired *shared.SourceMysqlSSLModesRequired
 		if r.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesRequired != nil {
-			mode6 := shared.SourceMysqlSSLModesRequiredModeEnum(r.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesRequired.Mode.ValueString())
+			mode7 := shared.SourceMysqlSSLModesRequiredModeEnum(r.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesRequired.Mode.ValueString())
 			sourceMysqlSSLModesRequired = &shared.SourceMysqlSSLModesRequired{
-				Mode: mode6,
+				Mode: mode7,
 			}
 		}
 		if sourceMysqlSSLModesRequired != nil {
@@ -4069,13 +4192,13 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			} else {
 				clientKeyPassword2 = nil
 			}
-			mode7 := shared.SourceMysqlSSLModesVerifyCAModeEnum(r.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesVerifyCA.Mode.ValueString())
+			mode8 := shared.SourceMysqlSSLModesVerifyCAModeEnum(r.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesVerifyCA.Mode.ValueString())
 			sourceMysqlSSLModesVerifyCA = &shared.SourceMysqlSSLModesVerifyCA{
 				CaCertificate:     caCertificate2,
 				ClientCertificate: clientCertificate2,
 				ClientKey:         clientKey2,
 				ClientKeyPassword: clientKeyPassword2,
-				Mode:              mode7,
+				Mode:              mode8,
 			}
 		}
 		if sourceMysqlSSLModesVerifyCA != nil {
@@ -4104,13 +4227,13 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			} else {
 				clientKeyPassword3 = nil
 			}
-			mode8 := shared.SourceMysqlSSLModesVerifyIdentityModeEnum(r.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesVerifyIdentity.Mode.ValueString())
+			mode9 := shared.SourceMysqlSSLModesVerifyIdentityModeEnum(r.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesVerifyIdentity.Mode.ValueString())
 			sourceMysqlSSLModesVerifyIdentity = &shared.SourceMysqlSSLModesVerifyIdentity{
 				CaCertificate:     caCertificate3,
 				ClientCertificate: clientCertificate3,
 				ClientKey:         clientKey3,
 				ClientKeyPassword: clientKeyPassword3,
-				Mode:              mode8,
+				Mode:              mode9,
 			}
 		}
 		if sourceMysqlSSLModesVerifyIdentity != nil {
@@ -4179,7 +4302,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			Password:          password12,
 			Port:              port8,
 			ReplicationMethod: replicationMethod2,
-			SourceType:        sourceType93,
+			SourceType:        sourceType94,
 			SslMode:           sslMode1,
 			TunnelMethod:      tunnelMethod12,
 			Username:          username8,
@@ -4199,7 +4322,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			objectTypes = append(objectTypes, objectTypesItem.ValueString())
 		}
 		realm := r.Configuration.SourceNetsuite.Realm.ValueString()
-		sourceType94 := shared.SourceNetsuiteNetsuiteEnum(r.Configuration.SourceNetsuite.SourceType.ValueString())
+		sourceType95 := shared.SourceNetsuiteNetsuiteEnum(r.Configuration.SourceNetsuite.SourceType.ValueString())
 		startDatetime := r.Configuration.SourceNetsuite.StartDatetime.ValueString()
 		tokenKey := r.Configuration.SourceNetsuite.TokenKey.ValueString()
 		tokenSecret := r.Configuration.SourceNetsuite.TokenSecret.ValueString()
@@ -4214,7 +4337,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			ConsumerSecret: consumerSecret,
 			ObjectTypes:    objectTypes,
 			Realm:          realm,
-			SourceType:     sourceType94,
+			SourceType:     sourceType95,
 			StartDatetime:  startDatetime,
 			TokenKey:       tokenKey,
 			TokenSecret:    tokenSecret,
@@ -4261,11 +4384,11 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 				SourceNotionAuthenticateUsingAccessToken: sourceNotionAuthenticateUsingAccessToken,
 			}
 		}
-		sourceType95 := shared.SourceNotionNotionEnum(r.Configuration.SourceNotion.SourceType.ValueString())
+		sourceType96 := shared.SourceNotionNotionEnum(r.Configuration.SourceNotion.SourceType.ValueString())
 		startDate38, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceNotion.StartDate.ValueString())
 		sourceNotion = &shared.SourceNotion{
 			Credentials: credentials17,
-			SourceType:  sourceType95,
+			SourceType:  sourceType96,
 			StartDate:   startDate38,
 		}
 	}
@@ -4283,21 +4406,21 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			endDate8 = nil
 		}
-		period2 := shared.SourceNytimesPeriodUsedForMostPopularStreamsEnum(r.Configuration.SourceNytimes.Period.ValueString())
+		period2 := shared.SourceNytimesPeriodUsedForMostPopularStreamsEnum(r.Configuration.SourceNytimes.Period.ValueInt64())
 		shareType := new(shared.SourceNytimesShareTypeUsedForMostPopularSharedStreamEnum)
 		if !r.Configuration.SourceNytimes.ShareType.IsUnknown() && !r.Configuration.SourceNytimes.ShareType.IsNull() {
 			*shareType = shared.SourceNytimesShareTypeUsedForMostPopularSharedStreamEnum(r.Configuration.SourceNytimes.ShareType.ValueString())
 		} else {
 			shareType = nil
 		}
-		sourceType96 := shared.SourceNytimesNytimesEnum(r.Configuration.SourceNytimes.SourceType.ValueString())
+		sourceType97 := shared.SourceNytimesNytimesEnum(r.Configuration.SourceNytimes.SourceType.ValueString())
 		startDate39, _ := customTypes.NewDate(r.Configuration.SourceNytimes.StartDate.ValueString())
 		sourceNytimes = &shared.SourceNytimes{
 			APIKey:     apiKey28,
 			EndDate:    endDate8,
 			Period:     period2,
 			ShareType:  shareType,
-			SourceType: sourceType96,
+			SourceType: sourceType97,
 			StartDate:  startDate39,
 		}
 	}
@@ -4347,7 +4470,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			domain5 = nil
 		}
-		sourceType97 := shared.SourceOktaOktaEnum(r.Configuration.SourceOkta.SourceType.ValueString())
+		sourceType98 := shared.SourceOktaOktaEnum(r.Configuration.SourceOkta.SourceType.ValueString())
 		startDate40 := new(string)
 		if !r.Configuration.SourceOkta.StartDate.IsUnknown() && !r.Configuration.SourceOkta.StartDate.IsNull() {
 			*startDate40 = r.Configuration.SourceOkta.StartDate.ValueString()
@@ -4357,7 +4480,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		sourceOkta = &shared.SourceOkta{
 			Credentials: credentials18,
 			Domain:      domain5,
-			SourceType:  sourceType97,
+			SourceType:  sourceType98,
 			StartDate:   startDate40,
 		}
 	}
@@ -4369,10 +4492,10 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	var sourceOmnisend *shared.SourceOmnisend
 	if r.Configuration.SourceOmnisend != nil {
 		apiKey29 := r.Configuration.SourceOmnisend.APIKey.ValueString()
-		sourceType98 := shared.SourceOmnisendOmnisendEnum(r.Configuration.SourceOmnisend.SourceType.ValueString())
+		sourceType99 := shared.SourceOmnisendOmnisendEnum(r.Configuration.SourceOmnisend.SourceType.ValueString())
 		sourceOmnisend = &shared.SourceOmnisend{
 			APIKey:     apiKey29,
-			SourceType: sourceType98,
+			SourceType: sourceType99,
 		}
 	}
 	if sourceOmnisend != nil {
@@ -4399,13 +4522,13 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			})
 		}
 		outcomeNames := r.Configuration.SourceOnesignal.OutcomeNames.ValueString()
-		sourceType99 := shared.SourceOnesignalOnesignalEnum(r.Configuration.SourceOnesignal.SourceType.ValueString())
+		sourceType100 := shared.SourceOnesignalOnesignalEnum(r.Configuration.SourceOnesignal.SourceType.ValueString())
 		startDate41, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceOnesignal.StartDate.ValueString())
 		userAuthKey := r.Configuration.SourceOnesignal.UserAuthKey.ValueString()
 		sourceOnesignal = &shared.SourceOnesignal{
 			Applications: applications,
 			OutcomeNames: outcomeNames,
-			SourceType:   sourceType99,
+			SourceType:   sourceType100,
 			StartDate:    startDate41,
 			UserAuthKey:  userAuthKey,
 		}
@@ -4426,7 +4549,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		}
 		lat := r.Configuration.SourceOpenweather.Lat.ValueString()
 		lon := r.Configuration.SourceOpenweather.Lon.ValueString()
-		sourceType100 := shared.SourceOpenweatherOpenweatherEnum(r.Configuration.SourceOpenweather.SourceType.ValueString())
+		sourceType101 := shared.SourceOpenweatherOpenweatherEnum(r.Configuration.SourceOpenweather.SourceType.ValueString())
 		units := new(shared.SourceOpenweatherUnitsEnum)
 		if !r.Configuration.SourceOpenweather.Units.IsUnknown() && !r.Configuration.SourceOpenweather.Units.IsNull() {
 			*units = shared.SourceOpenweatherUnitsEnum(r.Configuration.SourceOpenweather.Units.ValueString())
@@ -4438,7 +4561,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			Lang:       lang,
 			Lat:        lat,
 			Lon:        lon,
-			SourceType: sourceType100,
+			SourceType: sourceType101,
 			Units:      units,
 		}
 	}
@@ -4540,7 +4663,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		for _, schemasItem2 := range r.Configuration.SourceOracle.Schemas {
 			schemas2 = append(schemas2, schemasItem2.ValueString())
 		}
-		sourceType101 := shared.SourceOracleOracleEnum(r.Configuration.SourceOracle.SourceType.ValueString())
+		sourceType102 := shared.SourceOracleOracleEnum(r.Configuration.SourceOracle.SourceType.ValueString())
 		var tunnelMethod16 *shared.SourceOracleSSHTunnelMethod
 		var sourceOracleSSHTunnelMethodNoTunnel *shared.SourceOracleSSHTunnelMethodNoTunnel
 		if r.Configuration.SourceOracle.TunnelMethod.SourceOracleSSHTunnelMethodNoTunnel != nil {
@@ -4603,7 +4726,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			Password:       password13,
 			Port:           port9,
 			Schemas:        schemas2,
-			SourceType:     sourceType101,
+			SourceType:     sourceType102,
 			TunnelMethod:   tunnelMethod16,
 			Username:       username9,
 		}
@@ -4632,7 +4755,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			planID = nil
 		}
-		sourceType102 := shared.SourceOrbOrbEnum(r.Configuration.SourceOrb.SourceType.ValueString())
+		sourceType103 := shared.SourceOrbOrbEnum(r.Configuration.SourceOrb.SourceType.ValueString())
 		startDate42 := r.Configuration.SourceOrb.StartDate.ValueString()
 		stringEventPropertiesKeys := make([]string, 0)
 		for _, stringEventPropertiesKeysItem := range r.Configuration.SourceOrb.StringEventPropertiesKeys {
@@ -4649,7 +4772,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			LookbackWindowDays:           lookbackWindowDays,
 			NumericEventPropertiesKeys:   numericEventPropertiesKeys,
 			PlanID:                       planID,
-			SourceType:                   sourceType102,
+			SourceType:                   sourceType103,
 			StartDate:                    startDate42,
 			StringEventPropertiesKeys:    stringEventPropertiesKeys,
 			SubscriptionUsageGroupingKey: subscriptionUsageGroupingKey,
@@ -4663,7 +4786,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	var sourceOrbit *shared.SourceOrbit
 	if r.Configuration.SourceOrbit != nil {
 		apiToken9 := r.Configuration.SourceOrbit.APIToken.ValueString()
-		sourceType103 := shared.SourceOrbitOrbitEnum(r.Configuration.SourceOrbit.SourceType.ValueString())
+		sourceType104 := shared.SourceOrbitOrbitEnum(r.Configuration.SourceOrbit.SourceType.ValueString())
 		startDate43 := new(string)
 		if !r.Configuration.SourceOrbit.StartDate.IsUnknown() && !r.Configuration.SourceOrbit.StartDate.IsNull() {
 			*startDate43 = r.Configuration.SourceOrbit.StartDate.ValueString()
@@ -4673,7 +4796,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		workspace := r.Configuration.SourceOrbit.Workspace.ValueString()
 		sourceOrbit = &shared.SourceOrbit{
 			APIToken:   apiToken9,
-			SourceType: sourceType103,
+			SourceType: sourceType104,
 			StartDate:  startDate43,
 			Workspace:  workspace,
 		}
@@ -4689,14 +4812,14 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		clientSecret22 := r.Configuration.SourceOutreach.ClientSecret.ValueString()
 		redirectURI := r.Configuration.SourceOutreach.RedirectURI.ValueString()
 		refreshToken17 := r.Configuration.SourceOutreach.RefreshToken.ValueString()
-		sourceType104 := shared.SourceOutreachOutreachEnum(r.Configuration.SourceOutreach.SourceType.ValueString())
+		sourceType105 := shared.SourceOutreachOutreachEnum(r.Configuration.SourceOutreach.SourceType.ValueString())
 		startDate44 := r.Configuration.SourceOutreach.StartDate.ValueString()
 		sourceOutreach = &shared.SourceOutreach{
 			ClientID:     clientId22,
 			ClientSecret: clientSecret22,
 			RedirectURI:  redirectURI,
 			RefreshToken: refreshToken17,
-			SourceType:   sourceType104,
+			SourceType:   sourceType105,
 			StartDate:    startDate44,
 		}
 	}
@@ -4726,14 +4849,14 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			refreshToken18 = nil
 		}
-		sourceType105 := shared.SourcePaypalTransactionPaypalTransactionEnum(r.Configuration.SourcePaypalTransaction.SourceType.ValueString())
+		sourceType106 := shared.SourcePaypalTransactionPaypalTransactionEnum(r.Configuration.SourcePaypalTransaction.SourceType.ValueString())
 		startDate45 := r.Configuration.SourcePaypalTransaction.StartDate.ValueString()
 		sourcePaypalTransaction = &shared.SourcePaypalTransaction{
 			ClientID:     clientId23,
 			ClientSecret: clientSecret23,
 			IsSandbox:    isSandbox,
 			RefreshToken: refreshToken18,
-			SourceType:   sourceType105,
+			SourceType:   sourceType106,
 			StartDate:    startDate45,
 		}
 	}
@@ -4751,12 +4874,12 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			lookbackWindowDays1 = nil
 		}
 		secretKey2 := r.Configuration.SourcePaystack.SecretKey.ValueString()
-		sourceType106 := shared.SourcePaystackPaystackEnum(r.Configuration.SourcePaystack.SourceType.ValueString())
+		sourceType107 := shared.SourcePaystackPaystackEnum(r.Configuration.SourcePaystack.SourceType.ValueString())
 		startDate46, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourcePaystack.StartDate.ValueString())
 		sourcePaystack = &shared.SourcePaystack{
 			LookbackWindowDays: lookbackWindowDays1,
 			SecretKey:          secretKey2,
-			SourceType:         sourceType106,
+			SourceType:         sourceType107,
 			StartDate:          startDate46,
 		}
 	}
@@ -4768,10 +4891,10 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	var sourcePendo *shared.SourcePendo
 	if r.Configuration.SourcePendo != nil {
 		apiKey31 := r.Configuration.SourcePendo.APIKey.ValueString()
-		sourceType107 := shared.SourcePendoPendoEnum(r.Configuration.SourcePendo.SourceType.ValueString())
+		sourceType108 := shared.SourcePendoPendoEnum(r.Configuration.SourcePendo.SourceType.ValueString())
 		sourcePendo = &shared.SourcePendo{
 			APIKey:     apiKey31,
-			SourceType: sourceType107,
+			SourceType: sourceType108,
 		}
 	}
 	if sourcePendo != nil {
@@ -4782,10 +4905,10 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	var sourcePersistiq *shared.SourcePersistiq
 	if r.Configuration.SourcePersistiq != nil {
 		apiKey32 := r.Configuration.SourcePersistiq.APIKey.ValueString()
-		sourceType108 := shared.SourcePersistiqPersistiqEnum(r.Configuration.SourcePersistiq.SourceType.ValueString())
+		sourceType109 := shared.SourcePersistiqPersistiqEnum(r.Configuration.SourcePersistiq.SourceType.ValueString())
 		sourcePersistiq = &shared.SourcePersistiq{
 			APIKey:     apiKey32,
-			SourceType: sourceType108,
+			SourceType: sourceType109,
 		}
 	}
 	if sourcePersistiq != nil {
@@ -4815,21 +4938,21 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			orientation = nil
 		}
 		query2 := r.Configuration.SourcePexelsAPI.Query.ValueString()
-		size1 := new(string)
+		size := new(string)
 		if !r.Configuration.SourcePexelsAPI.Size.IsUnknown() && !r.Configuration.SourcePexelsAPI.Size.IsNull() {
-			*size1 = r.Configuration.SourcePexelsAPI.Size.ValueString()
+			*size = r.Configuration.SourcePexelsAPI.Size.ValueString()
 		} else {
-			size1 = nil
+			size = nil
 		}
-		sourceType109 := shared.SourcePexelsAPIPexelsAPIEnum(r.Configuration.SourcePexelsAPI.SourceType.ValueString())
+		sourceType110 := shared.SourcePexelsAPIPexelsAPIEnum(r.Configuration.SourcePexelsAPI.SourceType.ValueString())
 		sourcePexelsAPI = &shared.SourcePexelsAPI{
 			APIKey:      apiKey33,
 			Color:       color,
 			Locale:      locale,
 			Orientation: orientation,
 			Query:       query2,
-			Size:        size1,
-			SourceType:  sourceType109,
+			Size:        size,
+			SourceType:  sourceType110,
 		}
 	}
 	if sourcePexelsAPI != nil {
@@ -4882,7 +5005,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 				SourcePinterestAuthorizationMethodAccessToken: sourcePinterestAuthorizationMethodAccessToken,
 			}
 		}
-		sourceType110 := shared.SourcePinterestPinterestEnum(r.Configuration.SourcePinterest.SourceType.ValueString())
+		sourceType111 := shared.SourcePinterestPinterestEnum(r.Configuration.SourcePinterest.SourceType.ValueString())
 		startDate47 := r.Configuration.SourcePinterest.StartDate.ValueString()
 		status := make([]shared.SourcePinterestStatusEnum, 0)
 		for _, statusItem := range r.Configuration.SourcePinterest.Status {
@@ -4890,7 +5013,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		}
 		sourcePinterest = &shared.SourcePinterest{
 			Credentials: credentials19,
-			SourceType:  sourceType110,
+			SourceType:  sourceType111,
 			StartDate:   startDate47,
 			Status:      status,
 		}
@@ -4912,11 +5035,11 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			}
 		}
 		replicationStartDate2, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourcePipedrive.ReplicationStartDate.ValueString())
-		sourceType111 := shared.SourcePipedrivePipedriveEnum(r.Configuration.SourcePipedrive.SourceType.ValueString())
+		sourceType112 := shared.SourcePipedrivePipedriveEnum(r.Configuration.SourcePipedrive.SourceType.ValueString())
 		sourcePipedrive = &shared.SourcePipedrive{
 			Authorization:        authorization1,
 			ReplicationStartDate: replicationStartDate2,
-			SourceType:           sourceType111,
+			SourceType:           sourceType112,
 		}
 	}
 	if sourcePipedrive != nil {
@@ -4970,7 +5093,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			sort1 = nil
 		}
-		sourceType112 := shared.SourcePocketPocketEnum(r.Configuration.SourcePocket.SourceType.ValueString())
+		sourceType113 := shared.SourcePocketPocketEnum(r.Configuration.SourcePocket.SourceType.ValueString())
 		state := new(shared.SourcePocketStateEnum)
 		if !r.Configuration.SourcePocket.State.IsUnknown() && !r.Configuration.SourcePocket.State.IsNull() {
 			*state = shared.SourcePocketStateEnum(r.Configuration.SourcePocket.State.ValueString())
@@ -4993,7 +5116,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			Search:      search,
 			Since:       since1,
 			Sort:        sort1,
-			SourceType:  sourceType112,
+			SourceType:  sourceType113,
 			State:       state,
 			Tag:         tag,
 		}
@@ -5026,7 +5149,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			sort2 = nil
 		}
-		sourceType113 := shared.SourcePolygonStockAPIPolygonStockAPIEnum(r.Configuration.SourcePolygonStockAPI.SourceType.ValueString())
+		sourceType114 := shared.SourcePolygonStockAPIPolygonStockAPIEnum(r.Configuration.SourcePolygonStockAPI.SourceType.ValueString())
 		startDate48, _ := customTypes.NewDate(r.Configuration.SourcePolygonStockAPI.StartDate.ValueString())
 		stocksTicker := r.Configuration.SourcePolygonStockAPI.StocksTicker.ValueString()
 		timespan := r.Configuration.SourcePolygonStockAPI.Timespan.ValueString()
@@ -5037,7 +5160,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			Limit:        limit1,
 			Multiplier:   multiplier,
 			Sort:         sort2,
-			SourceType:   sourceType113,
+			SourceType:   sourceType114,
 			StartDate:    startDate48,
 			StocksTicker: stocksTicker,
 			Timespan:     timespan,
@@ -5101,6 +5224,12 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			}
 			publication1 := r.Configuration.SourcePostgres.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.Publication.ValueString()
 			replicationSlot1 := r.Configuration.SourcePostgres.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.ReplicationSlot.ValueString()
+			additionalProperties9 := make(map[string]interface{})
+			for additionalPropertiesKey9, additionalPropertiesValue9 := range r.Configuration.SourcePostgres.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.AdditionalProperties {
+				var additionalPropertiesInst9 interface{}
+				_ = json.Unmarshal([]byte(additionalPropertiesValue9.ValueString()), &additionalPropertiesInst9)
+				additionalProperties9[additionalPropertiesKey9] = additionalPropertiesInst9
+			}
 			sourcePostgresReplicationMethodLogicalReplicationCDC = &shared.SourcePostgresReplicationMethodLogicalReplicationCDC{
 				InitialWaitingSeconds: initialWaitingSeconds3,
 				LsnCommitBehaviour:    lsnCommitBehaviour1,
@@ -5108,6 +5237,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 				Plugin:                plugin1,
 				Publication:           publication1,
 				ReplicationSlot:       replicationSlot1,
+				AdditionalProperties:  additionalProperties9,
 			}
 		}
 		if sourcePostgresReplicationMethodLogicalReplicationCDC != nil {
@@ -5119,13 +5249,20 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		for _, schemasItem3 := range r.Configuration.SourcePostgres.Schemas {
 			schemas3 = append(schemas3, schemasItem3.ValueString())
 		}
-		sourceType114 := shared.SourcePostgresPostgresEnum(r.Configuration.SourcePostgres.SourceType.ValueString())
+		sourceType115 := shared.SourcePostgresPostgresEnum(r.Configuration.SourcePostgres.SourceType.ValueString())
 		var sslMode2 *shared.SourcePostgresSSLModes
 		var sourcePostgresSSLModesDisable *shared.SourcePostgresSSLModesDisable
 		if r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesDisable != nil {
-			mode9 := shared.SourcePostgresSSLModesDisableModeEnum(r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesDisable.Mode.ValueString())
+			mode10 := shared.SourcePostgresSSLModesDisableModeEnum(r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesDisable.Mode.ValueString())
+			additionalProperties10 := make(map[string]interface{})
+			for additionalPropertiesKey10, additionalPropertiesValue10 := range r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesDisable.AdditionalProperties {
+				var additionalPropertiesInst10 interface{}
+				_ = json.Unmarshal([]byte(additionalPropertiesValue10.ValueString()), &additionalPropertiesInst10)
+				additionalProperties10[additionalPropertiesKey10] = additionalPropertiesInst10
+			}
 			sourcePostgresSSLModesDisable = &shared.SourcePostgresSSLModesDisable{
-				Mode: mode9,
+				Mode:                 mode10,
+				AdditionalProperties: additionalProperties10,
 			}
 		}
 		if sourcePostgresSSLModesDisable != nil {
@@ -5135,9 +5272,16 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		}
 		var sourcePostgresSSLModesAllow *shared.SourcePostgresSSLModesAllow
 		if r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesAllow != nil {
-			mode10 := shared.SourcePostgresSSLModesAllowModeEnum(r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesAllow.Mode.ValueString())
+			mode11 := shared.SourcePostgresSSLModesAllowModeEnum(r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesAllow.Mode.ValueString())
+			additionalProperties11 := make(map[string]interface{})
+			for additionalPropertiesKey11, additionalPropertiesValue11 := range r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesAllow.AdditionalProperties {
+				var additionalPropertiesInst11 interface{}
+				_ = json.Unmarshal([]byte(additionalPropertiesValue11.ValueString()), &additionalPropertiesInst11)
+				additionalProperties11[additionalPropertiesKey11] = additionalPropertiesInst11
+			}
 			sourcePostgresSSLModesAllow = &shared.SourcePostgresSSLModesAllow{
-				Mode: mode10,
+				Mode:                 mode11,
+				AdditionalProperties: additionalProperties11,
 			}
 		}
 		if sourcePostgresSSLModesAllow != nil {
@@ -5147,9 +5291,16 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		}
 		var sourcePostgresSSLModesPrefer *shared.SourcePostgresSSLModesPrefer
 		if r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesPrefer != nil {
-			mode11 := shared.SourcePostgresSSLModesPreferModeEnum(r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesPrefer.Mode.ValueString())
+			mode12 := shared.SourcePostgresSSLModesPreferModeEnum(r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesPrefer.Mode.ValueString())
+			additionalProperties12 := make(map[string]interface{})
+			for additionalPropertiesKey12, additionalPropertiesValue12 := range r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesPrefer.AdditionalProperties {
+				var additionalPropertiesInst12 interface{}
+				_ = json.Unmarshal([]byte(additionalPropertiesValue12.ValueString()), &additionalPropertiesInst12)
+				additionalProperties12[additionalPropertiesKey12] = additionalPropertiesInst12
+			}
 			sourcePostgresSSLModesPrefer = &shared.SourcePostgresSSLModesPrefer{
-				Mode: mode11,
+				Mode:                 mode12,
+				AdditionalProperties: additionalProperties12,
 			}
 		}
 		if sourcePostgresSSLModesPrefer != nil {
@@ -5159,9 +5310,16 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		}
 		var sourcePostgresSSLModesRequire *shared.SourcePostgresSSLModesRequire
 		if r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesRequire != nil {
-			mode12 := shared.SourcePostgresSSLModesRequireModeEnum(r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesRequire.Mode.ValueString())
+			mode13 := shared.SourcePostgresSSLModesRequireModeEnum(r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesRequire.Mode.ValueString())
+			additionalProperties13 := make(map[string]interface{})
+			for additionalPropertiesKey13, additionalPropertiesValue13 := range r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesRequire.AdditionalProperties {
+				var additionalPropertiesInst13 interface{}
+				_ = json.Unmarshal([]byte(additionalPropertiesValue13.ValueString()), &additionalPropertiesInst13)
+				additionalProperties13[additionalPropertiesKey13] = additionalPropertiesInst13
+			}
 			sourcePostgresSSLModesRequire = &shared.SourcePostgresSSLModesRequire{
-				Mode: mode12,
+				Mode:                 mode13,
+				AdditionalProperties: additionalProperties13,
 			}
 		}
 		if sourcePostgresSSLModesRequire != nil {
@@ -5190,13 +5348,20 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			} else {
 				clientKeyPassword4 = nil
 			}
-			mode13 := shared.SourcePostgresSSLModesVerifyCaModeEnum(r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesVerifyCa.Mode.ValueString())
+			mode14 := shared.SourcePostgresSSLModesVerifyCaModeEnum(r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesVerifyCa.Mode.ValueString())
+			additionalProperties14 := make(map[string]interface{})
+			for additionalPropertiesKey14, additionalPropertiesValue14 := range r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesVerifyCa.AdditionalProperties {
+				var additionalPropertiesInst14 interface{}
+				_ = json.Unmarshal([]byte(additionalPropertiesValue14.ValueString()), &additionalPropertiesInst14)
+				additionalProperties14[additionalPropertiesKey14] = additionalPropertiesInst14
+			}
 			sourcePostgresSSLModesVerifyCa = &shared.SourcePostgresSSLModesVerifyCa{
-				CaCertificate:     caCertificate4,
-				ClientCertificate: clientCertificate4,
-				ClientKey:         clientKey4,
-				ClientKeyPassword: clientKeyPassword4,
-				Mode:              mode13,
+				CaCertificate:        caCertificate4,
+				ClientCertificate:    clientCertificate4,
+				ClientKey:            clientKey4,
+				ClientKeyPassword:    clientKeyPassword4,
+				Mode:                 mode14,
+				AdditionalProperties: additionalProperties14,
 			}
 		}
 		if sourcePostgresSSLModesVerifyCa != nil {
@@ -5225,13 +5390,20 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			} else {
 				clientKeyPassword5 = nil
 			}
-			mode14 := shared.SourcePostgresSSLModesVerifyFullModeEnum(r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesVerifyFull.Mode.ValueString())
+			mode15 := shared.SourcePostgresSSLModesVerifyFullModeEnum(r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesVerifyFull.Mode.ValueString())
+			additionalProperties15 := make(map[string]interface{})
+			for additionalPropertiesKey15, additionalPropertiesValue15 := range r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesVerifyFull.AdditionalProperties {
+				var additionalPropertiesInst15 interface{}
+				_ = json.Unmarshal([]byte(additionalPropertiesValue15.ValueString()), &additionalPropertiesInst15)
+				additionalProperties15[additionalPropertiesKey15] = additionalPropertiesInst15
+			}
 			sourcePostgresSSLModesVerifyFull = &shared.SourcePostgresSSLModesVerifyFull{
-				CaCertificate:     caCertificate5,
-				ClientCertificate: clientCertificate5,
-				ClientKey:         clientKey5,
-				ClientKeyPassword: clientKeyPassword5,
-				Mode:              mode14,
+				CaCertificate:        caCertificate5,
+				ClientCertificate:    clientCertificate5,
+				ClientKey:            clientKey5,
+				ClientKeyPassword:    clientKeyPassword5,
+				Mode:                 mode15,
+				AdditionalProperties: additionalProperties15,
 			}
 		}
 		if sourcePostgresSSLModesVerifyFull != nil {
@@ -5301,7 +5473,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			Port:              port10,
 			ReplicationMethod: replicationMethod3,
 			Schemas:           schemas3,
-			SourceType:        sourceType114,
+			SourceType:        sourceType115,
 			SslMode:           sslMode2,
 			TunnelMethod:      tunnelMethod20,
 			Username:          username10,
@@ -5321,12 +5493,12 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			baseUrl2 = nil
 		}
-		sourceType115 := shared.SourcePosthogPosthogEnum(r.Configuration.SourcePosthog.SourceType.ValueString())
+		sourceType116 := shared.SourcePosthogPosthogEnum(r.Configuration.SourcePosthog.SourceType.ValueString())
 		startDate49, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourcePosthog.StartDate.ValueString())
 		sourcePosthog = &shared.SourcePosthog{
 			APIKey:     apiKey35,
 			BaseURL:    baseUrl2,
-			SourceType: sourceType115,
+			SourceType: sourceType116,
 			StartDate:  startDate49,
 		}
 	}
@@ -5339,11 +5511,11 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	if r.Configuration.SourcePostmarkapp != nil {
 		xPostmarkAccountToken := r.Configuration.SourcePostmarkapp.XPostmarkAccountToken.ValueString()
 		xPostmarkServerToken := r.Configuration.SourcePostmarkapp.XPostmarkServerToken.ValueString()
-		sourceType116 := shared.SourcePostmarkappPostmarkappEnum(r.Configuration.SourcePostmarkapp.SourceType.ValueString())
+		sourceType117 := shared.SourcePostmarkappPostmarkappEnum(r.Configuration.SourcePostmarkapp.SourceType.ValueString())
 		sourcePostmarkapp = &shared.SourcePostmarkapp{
 			XPostmarkAccountToken: xPostmarkAccountToken,
 			XPostmarkServerToken:  xPostmarkServerToken,
-			SourceType:            sourceType116,
+			SourceType:            sourceType117,
 		}
 	}
 	if sourcePostmarkapp != nil {
@@ -5354,12 +5526,12 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	var sourcePrestashop *shared.SourcePrestashop
 	if r.Configuration.SourcePrestashop != nil {
 		accessKey2 := r.Configuration.SourcePrestashop.AccessKey.ValueString()
-		sourceType117 := shared.SourcePrestashopPrestashopEnum(r.Configuration.SourcePrestashop.SourceType.ValueString())
+		sourceType118 := shared.SourcePrestashopPrestashopEnum(r.Configuration.SourcePrestashop.SourceType.ValueString())
 		startDate50, _ := customTypes.NewDate(r.Configuration.SourcePrestashop.StartDate.ValueString())
 		url2 := r.Configuration.SourcePrestashop.URL.ValueString()
 		sourcePrestashop = &shared.SourcePrestashop{
 			AccessKey:  accessKey2,
-			SourceType: sourceType117,
+			SourceType: sourceType118,
 			StartDate:  startDate50,
 			URL:        url2,
 		}
@@ -5371,9 +5543,9 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	}
 	var sourcePublicApis *shared.SourcePublicApis
 	if r.Configuration.SourcePublicApis != nil {
-		sourceType118 := shared.SourcePublicApisPublicApisEnum(r.Configuration.SourcePublicApis.SourceType.ValueString())
+		sourceType119 := shared.SourcePublicApisPublicApisEnum(r.Configuration.SourcePublicApis.SourceType.ValueString())
 		sourcePublicApis = &shared.SourcePublicApis{
-			SourceType: sourceType118,
+			SourceType: sourceType119,
 		}
 	}
 	if sourcePublicApis != nil {
@@ -5391,12 +5563,12 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			id = nil
 		}
-		sourceType119 := shared.SourcePunkAPIPunkAPIEnum(r.Configuration.SourcePunkAPI.SourceType.ValueString())
+		sourceType120 := shared.SourcePunkAPIPunkAPIEnum(r.Configuration.SourcePunkAPI.SourceType.ValueString())
 		sourcePunkAPI = &shared.SourcePunkAPI{
 			BrewedAfter:  brewedAfter,
 			BrewedBefore: brewedBefore,
 			ID:           id,
-			SourceType:   sourceType119,
+			SourceType:   sourceType120,
 		}
 	}
 	if sourcePunkAPI != nil {
@@ -5407,7 +5579,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	var sourcePypi *shared.SourcePypi
 	if r.Configuration.SourcePypi != nil {
 		projectName := r.Configuration.SourcePypi.ProjectName.ValueString()
-		sourceType120 := shared.SourcePypiPypiEnum(r.Configuration.SourcePypi.SourceType.ValueString())
+		sourceType121 := shared.SourcePypiPypiEnum(r.Configuration.SourcePypi.SourceType.ValueString())
 		version := new(string)
 		if !r.Configuration.SourcePypi.Version.IsUnknown() && !r.Configuration.SourcePypi.Version.IsNull() {
 			*version = r.Configuration.SourcePypi.Version.ValueString()
@@ -5416,7 +5588,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		}
 		sourcePypi = &shared.SourcePypi{
 			ProjectName: projectName,
-			SourceType:  sourceType120,
+			SourceType:  sourceType121,
 			Version:     version,
 		}
 	}
@@ -5428,7 +5600,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	var sourceQualaroo *shared.SourceQualaroo
 	if r.Configuration.SourceQualaroo != nil {
 		key := r.Configuration.SourceQualaroo.Key.ValueString()
-		sourceType121 := shared.SourceQualarooQualarooEnum(r.Configuration.SourceQualaroo.SourceType.ValueString())
+		sourceType122 := shared.SourceQualarooQualarooEnum(r.Configuration.SourceQualaroo.SourceType.ValueString())
 		startDate51 := r.Configuration.SourceQualaroo.StartDate.ValueString()
 		surveyIds := make([]string, 0)
 		for _, surveyIdsItem := range r.Configuration.SourceQualaroo.SurveyIds {
@@ -5437,7 +5609,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		token4 := r.Configuration.SourceQualaroo.Token.ValueString()
 		sourceQualaroo = &shared.SourceQualaroo{
 			Key:        key,
-			SourceType: sourceType121,
+			SourceType: sourceType122,
 			StartDate:  startDate51,
 			SurveyIds:  surveyIds,
 			Token:      token4,
@@ -5448,17 +5620,64 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			SourceQualaroo: sourceQualaroo,
 		}
 	}
+	var sourceQuickbooks *shared.SourceQuickbooks
+	if r.Configuration.SourceQuickbooks != nil {
+		var credentials20 shared.SourceQuickbooksAuthorizationMethod
+		var sourceQuickbooksAuthorizationMethodOAuth20 *shared.SourceQuickbooksAuthorizationMethodOAuth20
+		if r.Configuration.SourceQuickbooks.Credentials.SourceQuickbooksAuthorizationMethodOAuth20 != nil {
+			accessToken23 := r.Configuration.SourceQuickbooks.Credentials.SourceQuickbooksAuthorizationMethodOAuth20.AccessToken.ValueString()
+			authType27 := new(shared.SourceQuickbooksAuthorizationMethodOAuth20AuthTypeEnum)
+			if !r.Configuration.SourceQuickbooks.Credentials.SourceQuickbooksAuthorizationMethodOAuth20.AuthType.IsUnknown() && !r.Configuration.SourceQuickbooks.Credentials.SourceQuickbooksAuthorizationMethodOAuth20.AuthType.IsNull() {
+				*authType27 = shared.SourceQuickbooksAuthorizationMethodOAuth20AuthTypeEnum(r.Configuration.SourceQuickbooks.Credentials.SourceQuickbooksAuthorizationMethodOAuth20.AuthType.ValueString())
+			} else {
+				authType27 = nil
+			}
+			clientId25 := r.Configuration.SourceQuickbooks.Credentials.SourceQuickbooksAuthorizationMethodOAuth20.ClientID.ValueString()
+			clientSecret25 := r.Configuration.SourceQuickbooks.Credentials.SourceQuickbooksAuthorizationMethodOAuth20.ClientSecret.ValueString()
+			realmID := r.Configuration.SourceQuickbooks.Credentials.SourceQuickbooksAuthorizationMethodOAuth20.RealmID.ValueString()
+			refreshToken20 := r.Configuration.SourceQuickbooks.Credentials.SourceQuickbooksAuthorizationMethodOAuth20.RefreshToken.ValueString()
+			tokenExpiryDate2, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceQuickbooks.Credentials.SourceQuickbooksAuthorizationMethodOAuth20.TokenExpiryDate.ValueString())
+			sourceQuickbooksAuthorizationMethodOAuth20 = &shared.SourceQuickbooksAuthorizationMethodOAuth20{
+				AccessToken:     accessToken23,
+				AuthType:        authType27,
+				ClientID:        clientId25,
+				ClientSecret:    clientSecret25,
+				RealmID:         realmID,
+				RefreshToken:    refreshToken20,
+				TokenExpiryDate: tokenExpiryDate2,
+			}
+		}
+		if sourceQuickbooksAuthorizationMethodOAuth20 != nil {
+			credentials20 = shared.SourceQuickbooksAuthorizationMethod{
+				SourceQuickbooksAuthorizationMethodOAuth20: sourceQuickbooksAuthorizationMethodOAuth20,
+			}
+		}
+		sandbox := r.Configuration.SourceQuickbooks.Sandbox.ValueBool()
+		sourceType123 := shared.SourceQuickbooksQuickbooksEnum(r.Configuration.SourceQuickbooks.SourceType.ValueString())
+		startDate52, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceQuickbooks.StartDate.ValueString())
+		sourceQuickbooks = &shared.SourceQuickbooks{
+			Credentials: credentials20,
+			Sandbox:     sandbox,
+			SourceType:  sourceType123,
+			StartDate:   startDate52,
+		}
+	}
+	if sourceQuickbooks != nil {
+		configuration = shared.SourceConfiguration{
+			SourceQuickbooks: sourceQuickbooks,
+		}
+	}
 	var sourceRailz *shared.SourceRailz
 	if r.Configuration.SourceRailz != nil {
-		clientId25 := r.Configuration.SourceRailz.ClientID.ValueString()
+		clientId26 := r.Configuration.SourceRailz.ClientID.ValueString()
 		secretKey3 := r.Configuration.SourceRailz.SecretKey.ValueString()
-		sourceType122 := shared.SourceRailzRailzEnum(r.Configuration.SourceRailz.SourceType.ValueString())
-		startDate52 := r.Configuration.SourceRailz.StartDate.ValueString()
+		sourceType124 := shared.SourceRailzRailzEnum(r.Configuration.SourceRailz.SourceType.ValueString())
+		startDate53 := r.Configuration.SourceRailz.StartDate.ValueString()
 		sourceRailz = &shared.SourceRailz{
-			ClientID:   clientId25,
+			ClientID:   clientId26,
 			SecretKey:  secretKey3,
-			SourceType: sourceType122,
-			StartDate:  startDate52,
+			SourceType: sourceType124,
+			StartDate:  startDate53,
 		}
 	}
 	if sourceRailz != nil {
@@ -5468,13 +5687,13 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	}
 	var sourceRecharge *shared.SourceRecharge
 	if r.Configuration.SourceRecharge != nil {
-		accessToken23 := r.Configuration.SourceRecharge.AccessToken.ValueString()
-		sourceType123 := shared.SourceRechargeRechargeEnum(r.Configuration.SourceRecharge.SourceType.ValueString())
-		startDate53, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceRecharge.StartDate.ValueString())
+		accessToken24 := r.Configuration.SourceRecharge.AccessToken.ValueString()
+		sourceType125 := shared.SourceRechargeRechargeEnum(r.Configuration.SourceRecharge.SourceType.ValueString())
+		startDate54, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceRecharge.StartDate.ValueString())
 		sourceRecharge = &shared.SourceRecharge{
-			AccessToken: accessToken23,
-			SourceType:  sourceType123,
-			StartDate:   startDate53,
+			AccessToken: accessToken24,
+			SourceType:  sourceType125,
+			StartDate:   startDate54,
 		}
 	}
 	if sourceRecharge != nil {
@@ -5491,11 +5710,11 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			queryCampsites = nil
 		}
-		sourceType124 := shared.SourceRecreationRecreationEnum(r.Configuration.SourceRecreation.SourceType.ValueString())
+		sourceType126 := shared.SourceRecreationRecreationEnum(r.Configuration.SourceRecreation.SourceType.ValueString())
 		sourceRecreation = &shared.SourceRecreation{
 			Apikey:         apikey1,
 			QueryCampsites: queryCampsites,
-			SourceType:     sourceType124,
+			SourceType:     sourceType126,
 		}
 	}
 	if sourceRecreation != nil {
@@ -5507,11 +5726,11 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	if r.Configuration.SourceRecruitee != nil {
 		apiKey36 := r.Configuration.SourceRecruitee.APIKey.ValueString()
 		companyID := r.Configuration.SourceRecruitee.CompanyID.ValueInt64()
-		sourceType125 := shared.SourceRecruiteeRecruiteeEnum(r.Configuration.SourceRecruitee.SourceType.ValueString())
+		sourceType127 := shared.SourceRecruiteeRecruiteeEnum(r.Configuration.SourceRecruitee.SourceType.ValueString())
 		sourceRecruitee = &shared.SourceRecruitee{
 			APIKey:     apiKey36,
 			CompanyID:  companyID,
-			SourceType: sourceType125,
+			SourceType: sourceType127,
 		}
 	}
 	if sourceRecruitee != nil {
@@ -5534,12 +5753,12 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			endTime = nil
 		}
-		sourceType126 := shared.SourceRecurlyRecurlyEnum(r.Configuration.SourceRecurly.SourceType.ValueString())
+		sourceType128 := shared.SourceRecurlyRecurlyEnum(r.Configuration.SourceRecurly.SourceType.ValueString())
 		sourceRecurly = &shared.SourceRecurly{
 			APIKey:     apiKey37,
 			BeginTime:  beginTime,
 			EndTime:    endTime,
-			SourceType: sourceType126,
+			SourceType: sourceType128,
 		}
 	}
 	if sourceRecurly != nil {
@@ -5563,7 +5782,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		for _, schemasItem4 := range r.Configuration.SourceRedshift.Schemas {
 			schemas4 = append(schemas4, schemasItem4.ValueString())
 		}
-		sourceType127 := shared.SourceRedshiftRedshiftEnum(r.Configuration.SourceRedshift.SourceType.ValueString())
+		sourceType129 := shared.SourceRedshiftRedshiftEnum(r.Configuration.SourceRedshift.SourceType.ValueString())
 		username11 := r.Configuration.SourceRedshift.Username.ValueString()
 		sourceRedshift = &shared.SourceRedshift{
 			Database:      database7,
@@ -5572,7 +5791,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			Password:      password15,
 			Port:          port11,
 			Schemas:       schemas4,
-			SourceType:    sourceType127,
+			SourceType:    sourceType129,
 			Username:      username11,
 		}
 	}
@@ -5583,53 +5802,67 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	}
 	var sourceRetently *shared.SourceRetently
 	if r.Configuration.SourceRetently != nil {
-		var credentials20 *shared.SourceRetentlyAuthenticationMechanism
+		var credentials21 *shared.SourceRetentlyAuthenticationMechanism
 		var sourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth *shared.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth
 		if r.Configuration.SourceRetently.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth != nil {
-			authType27 := new(shared.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuthAuthTypeEnum)
+			authType28 := new(shared.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuthAuthTypeEnum)
 			if !r.Configuration.SourceRetently.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AuthType.IsUnknown() && !r.Configuration.SourceRetently.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AuthType.IsNull() {
-				*authType27 = shared.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuthAuthTypeEnum(r.Configuration.SourceRetently.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AuthType.ValueString())
+				*authType28 = shared.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuthAuthTypeEnum(r.Configuration.SourceRetently.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AuthType.ValueString())
 			} else {
-				authType27 = nil
+				authType28 = nil
 			}
-			clientId26 := r.Configuration.SourceRetently.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.ClientID.ValueString()
-			clientSecret25 := r.Configuration.SourceRetently.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.ClientSecret.ValueString()
-			refreshToken20 := r.Configuration.SourceRetently.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.RefreshToken.ValueString()
+			clientId27 := r.Configuration.SourceRetently.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.ClientID.ValueString()
+			clientSecret26 := r.Configuration.SourceRetently.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.ClientSecret.ValueString()
+			refreshToken21 := r.Configuration.SourceRetently.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.RefreshToken.ValueString()
+			additionalProperties16 := make(map[string]interface{})
+			for additionalPropertiesKey16, additionalPropertiesValue16 := range r.Configuration.SourceRetently.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AdditionalProperties {
+				var additionalPropertiesInst16 interface{}
+				_ = json.Unmarshal([]byte(additionalPropertiesValue16.ValueString()), &additionalPropertiesInst16)
+				additionalProperties16[additionalPropertiesKey16] = additionalPropertiesInst16
+			}
 			sourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth = &shared.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth{
-				AuthType:     authType27,
-				ClientID:     clientId26,
-				ClientSecret: clientSecret25,
-				RefreshToken: refreshToken20,
+				AuthType:             authType28,
+				ClientID:             clientId27,
+				ClientSecret:         clientSecret26,
+				RefreshToken:         refreshToken21,
+				AdditionalProperties: additionalProperties16,
 			}
 		}
 		if sourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth != nil {
-			credentials20 = &shared.SourceRetentlyAuthenticationMechanism{
+			credentials21 = &shared.SourceRetentlyAuthenticationMechanism{
 				SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth: sourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth,
 			}
 		}
 		var sourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken *shared.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken
 		if r.Configuration.SourceRetently.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken != nil {
 			apiKey38 := r.Configuration.SourceRetently.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.APIKey.ValueString()
-			authType28 := new(shared.SourceRetentlyAuthenticationMechanismAuthenticateWithAPITokenAuthTypeEnum)
+			authType29 := new(shared.SourceRetentlyAuthenticationMechanismAuthenticateWithAPITokenAuthTypeEnum)
 			if !r.Configuration.SourceRetently.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AuthType.IsUnknown() && !r.Configuration.SourceRetently.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AuthType.IsNull() {
-				*authType28 = shared.SourceRetentlyAuthenticationMechanismAuthenticateWithAPITokenAuthTypeEnum(r.Configuration.SourceRetently.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AuthType.ValueString())
+				*authType29 = shared.SourceRetentlyAuthenticationMechanismAuthenticateWithAPITokenAuthTypeEnum(r.Configuration.SourceRetently.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AuthType.ValueString())
 			} else {
-				authType28 = nil
+				authType29 = nil
+			}
+			additionalProperties17 := make(map[string]interface{})
+			for additionalPropertiesKey17, additionalPropertiesValue17 := range r.Configuration.SourceRetently.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AdditionalProperties {
+				var additionalPropertiesInst17 interface{}
+				_ = json.Unmarshal([]byte(additionalPropertiesValue17.ValueString()), &additionalPropertiesInst17)
+				additionalProperties17[additionalPropertiesKey17] = additionalPropertiesInst17
 			}
 			sourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken = &shared.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken{
-				APIKey:   apiKey38,
-				AuthType: authType28,
+				APIKey:               apiKey38,
+				AuthType:             authType29,
+				AdditionalProperties: additionalProperties17,
 			}
 		}
 		if sourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken != nil {
-			credentials20 = &shared.SourceRetentlyAuthenticationMechanism{
+			credentials21 = &shared.SourceRetentlyAuthenticationMechanism{
 				SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken: sourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken,
 			}
 		}
-		sourceType128 := shared.SourceRetentlyRetentlyEnum(r.Configuration.SourceRetently.SourceType.ValueString())
+		sourceType130 := shared.SourceRetentlyRetentlyEnum(r.Configuration.SourceRetently.SourceType.ValueString())
 		sourceRetently = &shared.SourceRetently{
-			Credentials: credentials20,
-			SourceType:  sourceType128,
+			Credentials: credentials21,
+			SourceType:  sourceType130,
 		}
 	}
 	if sourceRetently != nil {
@@ -5639,11 +5872,11 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	}
 	var sourceRkiCovid *shared.SourceRkiCovid
 	if r.Configuration.SourceRkiCovid != nil {
-		sourceType129 := shared.SourceRkiCovidRkiCovidEnum(r.Configuration.SourceRkiCovid.SourceType.ValueString())
-		startDate54 := r.Configuration.SourceRkiCovid.StartDate.ValueString()
+		sourceType131 := shared.SourceRkiCovidRkiCovidEnum(r.Configuration.SourceRkiCovid.SourceType.ValueString())
+		startDate55 := r.Configuration.SourceRkiCovid.StartDate.ValueString()
 		sourceRkiCovid = &shared.SourceRkiCovid{
-			SourceType: sourceType129,
-			StartDate:  startDate54,
+			SourceType: sourceType131,
+			StartDate:  startDate55,
 		}
 	}
 	if sourceRkiCovid != nil {
@@ -5653,10 +5886,10 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	}
 	var sourceRss *shared.SourceRss
 	if r.Configuration.SourceRss != nil {
-		sourceType130 := shared.SourceRssRssEnum(r.Configuration.SourceRss.SourceType.ValueString())
+		sourceType132 := shared.SourceRssRssEnum(r.Configuration.SourceRss.SourceType.ValueString())
 		url3 := r.Configuration.SourceRss.URL.ValueString()
 		sourceRss = &shared.SourceRss{
-			SourceType: sourceType130,
+			SourceType: sourceType132,
 			URL:        url3,
 		}
 	}
@@ -5668,7 +5901,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	var sourceS3 *shared.SourceS3
 	if r.Configuration.SourceS3 != nil {
 		dataset := r.Configuration.SourceS3.Dataset.ValueString()
-		var format1 *shared.SourceS3FileFormat
+		var format2 *shared.SourceS3FileFormat
 		var sourceS3FileFormatCSV *shared.SourceS3FileFormatCSV
 		if r.Configuration.SourceS3.Format.SourceS3FileFormatCSV != nil {
 			additionalReaderOptions := new(string)
@@ -5752,7 +5985,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			}
 		}
 		if sourceS3FileFormatCSV != nil {
-			format1 = &shared.SourceS3FileFormat{
+			format2 = &shared.SourceS3FileFormat{
 				SourceS3FileFormatCSV: sourceS3FileFormatCSV,
 			}
 		}
@@ -5788,7 +6021,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			}
 		}
 		if sourceS3FileFormatParquet != nil {
-			format1 = &shared.SourceS3FileFormat{
+			format2 = &shared.SourceS3FileFormat{
 				SourceS3FileFormatParquet: sourceS3FileFormatParquet,
 			}
 		}
@@ -5805,7 +6038,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			}
 		}
 		if sourceS3FileFormatAvro != nil {
-			format1 = &shared.SourceS3FileFormat{
+			format2 = &shared.SourceS3FileFormat{
 				SourceS3FileFormatAvro: sourceS3FileFormatAvro,
 			}
 		}
@@ -5843,7 +6076,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			}
 		}
 		if sourceS3FileFormatJsonl != nil {
-			format1 = &shared.SourceS3FileFormat{
+			format2 = &shared.SourceS3FileFormat{
 				SourceS3FileFormatJsonl: sourceS3FileFormatJsonl,
 			}
 		}
@@ -5886,14 +6119,14 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			schema = nil
 		}
-		sourceType131 := shared.SourceS3S3Enum(r.Configuration.SourceS3.SourceType.ValueString())
+		sourceType133 := shared.SourceS3S3Enum(r.Configuration.SourceS3.SourceType.ValueString())
 		sourceS3 = &shared.SourceS3{
 			Dataset:     dataset,
-			Format:      format1,
+			Format:      format2,
 			PathPattern: pathPattern,
 			Provider:    provider1,
 			Schema:      schema,
-			SourceType:  sourceType131,
+			SourceType:  sourceType133,
 		}
 	}
 	if sourceS3 != nil {
@@ -5903,27 +6136,27 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	}
 	var sourceSalesforce *shared.SourceSalesforce
 	if r.Configuration.SourceSalesforce != nil {
-		authType29 := new(shared.SourceSalesforceAuthTypeEnum)
+		authType30 := new(shared.SourceSalesforceAuthTypeEnum)
 		if !r.Configuration.SourceSalesforce.AuthType.IsUnknown() && !r.Configuration.SourceSalesforce.AuthType.IsNull() {
-			*authType29 = shared.SourceSalesforceAuthTypeEnum(r.Configuration.SourceSalesforce.AuthType.ValueString())
+			*authType30 = shared.SourceSalesforceAuthTypeEnum(r.Configuration.SourceSalesforce.AuthType.ValueString())
 		} else {
-			authType29 = nil
+			authType30 = nil
 		}
-		clientId27 := r.Configuration.SourceSalesforce.ClientID.ValueString()
-		clientSecret26 := r.Configuration.SourceSalesforce.ClientSecret.ValueString()
+		clientId28 := r.Configuration.SourceSalesforce.ClientID.ValueString()
+		clientSecret27 := r.Configuration.SourceSalesforce.ClientSecret.ValueString()
 		isSandbox1 := new(bool)
 		if !r.Configuration.SourceSalesforce.IsSandbox.IsUnknown() && !r.Configuration.SourceSalesforce.IsSandbox.IsNull() {
 			*isSandbox1 = r.Configuration.SourceSalesforce.IsSandbox.ValueBool()
 		} else {
 			isSandbox1 = nil
 		}
-		refreshToken21 := r.Configuration.SourceSalesforce.RefreshToken.ValueString()
-		sourceType132 := shared.SourceSalesforceSalesforceEnum(r.Configuration.SourceSalesforce.SourceType.ValueString())
-		startDate55 := new(time.Time)
+		refreshToken22 := r.Configuration.SourceSalesforce.RefreshToken.ValueString()
+		sourceType134 := shared.SourceSalesforceSalesforceEnum(r.Configuration.SourceSalesforce.SourceType.ValueString())
+		startDate56 := new(time.Time)
 		if !r.Configuration.SourceSalesforce.StartDate.IsUnknown() && !r.Configuration.SourceSalesforce.StartDate.IsNull() {
-			*startDate55, _ = time.Parse(time.RFC3339Nano, r.Configuration.SourceSalesforce.StartDate.ValueString())
+			*startDate56, _ = time.Parse(time.RFC3339Nano, r.Configuration.SourceSalesforce.StartDate.ValueString())
 		} else {
-			startDate55 = nil
+			startDate56 = nil
 		}
 		streamsCriteria := make([]shared.SourceSalesforceStreamsCriteria, 0)
 		for _, streamsCriteriaItem := range r.Configuration.SourceSalesforce.StreamsCriteria {
@@ -5935,13 +6168,13 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			})
 		}
 		sourceSalesforce = &shared.SourceSalesforce{
-			AuthType:        authType29,
-			ClientID:        clientId27,
-			ClientSecret:    clientSecret26,
+			AuthType:        authType30,
+			ClientID:        clientId28,
+			ClientSecret:    clientSecret27,
 			IsSandbox:       isSandbox1,
-			RefreshToken:    refreshToken21,
-			SourceType:      sourceType132,
-			StartDate:       startDate55,
+			RefreshToken:    refreshToken22,
+			SourceType:      sourceType134,
+			StartDate:       startDate56,
 			StreamsCriteria: streamsCriteria,
 		}
 	}
@@ -5953,8 +6186,8 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	var sourceSalesforceSinger *shared.SourceSalesforceSinger
 	if r.Configuration.SourceSalesforceSinger != nil {
 		apiType := shared.SourceSalesforceSingerAPITypeEnum(r.Configuration.SourceSalesforceSinger.APIType.ValueString())
-		clientId28 := r.Configuration.SourceSalesforceSinger.ClientID.ValueString()
-		clientSecret27 := r.Configuration.SourceSalesforceSinger.ClientSecret.ValueString()
+		clientId29 := r.Configuration.SourceSalesforceSinger.ClientID.ValueString()
+		clientSecret28 := r.Configuration.SourceSalesforceSinger.ClientSecret.ValueString()
 		isSandbox2 := new(bool)
 		if !r.Configuration.SourceSalesforceSinger.IsSandbox.IsUnknown() && !r.Configuration.SourceSalesforceSinger.IsSandbox.IsNull() {
 			*isSandbox2 = r.Configuration.SourceSalesforceSinger.IsSandbox.ValueBool()
@@ -5973,19 +6206,19 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			quotaPercentTotal = nil
 		}
-		refreshToken22 := r.Configuration.SourceSalesforceSinger.RefreshToken.ValueString()
-		sourceType133 := shared.SourceSalesforceSingerSalesforceSingerEnum(r.Configuration.SourceSalesforceSinger.SourceType.ValueString())
-		startDate56 := r.Configuration.SourceSalesforceSinger.StartDate.ValueString()
+		refreshToken23 := r.Configuration.SourceSalesforceSinger.RefreshToken.ValueString()
+		sourceType135 := shared.SourceSalesforceSingerSalesforceSingerEnum(r.Configuration.SourceSalesforceSinger.SourceType.ValueString())
+		startDate57 := r.Configuration.SourceSalesforceSinger.StartDate.ValueString()
 		sourceSalesforceSinger = &shared.SourceSalesforceSinger{
 			APIType:            apiType,
-			ClientID:           clientId28,
-			ClientSecret:       clientSecret27,
+			ClientID:           clientId29,
+			ClientSecret:       clientSecret28,
 			IsSandbox:          isSandbox2,
 			QuotaPercentPerRun: quotaPercentPerRun,
 			QuotaPercentTotal:  quotaPercentTotal,
-			RefreshToken:       refreshToken22,
-			SourceType:         sourceType133,
-			StartDate:          startDate56,
+			RefreshToken:       refreshToken23,
+			SourceType:         sourceType135,
+			StartDate:          startDate57,
 		}
 	}
 	if sourceSalesforceSinger != nil {
@@ -5995,49 +6228,49 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	}
 	var sourceSalesloft *shared.SourceSalesloft
 	if r.Configuration.SourceSalesloft != nil {
-		var credentials21 shared.SourceSalesloftCredentials
+		var credentials22 shared.SourceSalesloftCredentials
 		var sourceSalesloftCredentialsAuthenticateViaOAuth *shared.SourceSalesloftCredentialsAuthenticateViaOAuth
 		if r.Configuration.SourceSalesloft.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth != nil {
-			accessToken24 := r.Configuration.SourceSalesloft.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.AccessToken.ValueString()
-			authType30 := shared.SourceSalesloftCredentialsAuthenticateViaOAuthAuthTypeEnum(r.Configuration.SourceSalesloft.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.AuthType.ValueString())
-			clientId29 := r.Configuration.SourceSalesloft.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.ClientID.ValueString()
-			clientSecret28 := r.Configuration.SourceSalesloft.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.ClientSecret.ValueString()
-			refreshToken23 := r.Configuration.SourceSalesloft.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.RefreshToken.ValueString()
-			tokenExpiryDate2, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceSalesloft.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.TokenExpiryDate.ValueString())
+			accessToken25 := r.Configuration.SourceSalesloft.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.AccessToken.ValueString()
+			authType31 := shared.SourceSalesloftCredentialsAuthenticateViaOAuthAuthTypeEnum(r.Configuration.SourceSalesloft.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.AuthType.ValueString())
+			clientId30 := r.Configuration.SourceSalesloft.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.ClientID.ValueString()
+			clientSecret29 := r.Configuration.SourceSalesloft.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.ClientSecret.ValueString()
+			refreshToken24 := r.Configuration.SourceSalesloft.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.RefreshToken.ValueString()
+			tokenExpiryDate3, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceSalesloft.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.TokenExpiryDate.ValueString())
 			sourceSalesloftCredentialsAuthenticateViaOAuth = &shared.SourceSalesloftCredentialsAuthenticateViaOAuth{
-				AccessToken:     accessToken24,
-				AuthType:        authType30,
-				ClientID:        clientId29,
-				ClientSecret:    clientSecret28,
-				RefreshToken:    refreshToken23,
-				TokenExpiryDate: tokenExpiryDate2,
+				AccessToken:     accessToken25,
+				AuthType:        authType31,
+				ClientID:        clientId30,
+				ClientSecret:    clientSecret29,
+				RefreshToken:    refreshToken24,
+				TokenExpiryDate: tokenExpiryDate3,
 			}
 		}
 		if sourceSalesloftCredentialsAuthenticateViaOAuth != nil {
-			credentials21 = shared.SourceSalesloftCredentials{
+			credentials22 = shared.SourceSalesloftCredentials{
 				SourceSalesloftCredentialsAuthenticateViaOAuth: sourceSalesloftCredentialsAuthenticateViaOAuth,
 			}
 		}
 		var sourceSalesloftCredentialsAuthenticateViaAPIKey *shared.SourceSalesloftCredentialsAuthenticateViaAPIKey
 		if r.Configuration.SourceSalesloft.Credentials.SourceSalesloftCredentialsAuthenticateViaAPIKey != nil {
 			apiKey39 := r.Configuration.SourceSalesloft.Credentials.SourceSalesloftCredentialsAuthenticateViaAPIKey.APIKey.ValueString()
-			authType31 := shared.SourceSalesloftCredentialsAuthenticateViaAPIKeyAuthTypeEnum(r.Configuration.SourceSalesloft.Credentials.SourceSalesloftCredentialsAuthenticateViaAPIKey.AuthType.ValueString())
+			authType32 := shared.SourceSalesloftCredentialsAuthenticateViaAPIKeyAuthTypeEnum(r.Configuration.SourceSalesloft.Credentials.SourceSalesloftCredentialsAuthenticateViaAPIKey.AuthType.ValueString())
 			sourceSalesloftCredentialsAuthenticateViaAPIKey = &shared.SourceSalesloftCredentialsAuthenticateViaAPIKey{
 				APIKey:   apiKey39,
-				AuthType: authType31,
+				AuthType: authType32,
 			}
 		}
 		if sourceSalesloftCredentialsAuthenticateViaAPIKey != nil {
-			credentials21 = shared.SourceSalesloftCredentials{
+			credentials22 = shared.SourceSalesloftCredentials{
 				SourceSalesloftCredentialsAuthenticateViaAPIKey: sourceSalesloftCredentialsAuthenticateViaAPIKey,
 			}
 		}
-		sourceType134 := shared.SourceSalesloftSalesloftEnum(r.Configuration.SourceSalesloft.SourceType.ValueString())
-		startDate57, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceSalesloft.StartDate.ValueString())
+		sourceType136 := shared.SourceSalesloftSalesloftEnum(r.Configuration.SourceSalesloft.SourceType.ValueString())
+		startDate58, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceSalesloft.StartDate.ValueString())
 		sourceSalesloft = &shared.SourceSalesloft{
-			Credentials: credentials21,
-			SourceType:  sourceType134,
-			StartDate:   startDate57,
+			Credentials: credentials22,
+			SourceType:  sourceType136,
+			StartDate:   startDate58,
 		}
 	}
 	if sourceSalesloft != nil {
@@ -6048,10 +6281,10 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	var sourceSapFieldglass *shared.SourceSapFieldglass
 	if r.Configuration.SourceSapFieldglass != nil {
 		apiKey40 := r.Configuration.SourceSapFieldglass.APIKey.ValueString()
-		sourceType135 := shared.SourceSapFieldglassSapFieldglassEnum(r.Configuration.SourceSapFieldglass.SourceType.ValueString())
+		sourceType137 := shared.SourceSapFieldglassSapFieldglassEnum(r.Configuration.SourceSapFieldglass.SourceType.ValueString())
 		sourceSapFieldglass = &shared.SourceSapFieldglass{
 			APIKey:     apiKey40,
-			SourceType: sourceType135,
+			SourceType: sourceType137,
 		}
 	}
 	if sourceSapFieldglass != nil {
@@ -6062,10 +6295,10 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	var sourceSecoda *shared.SourceSecoda
 	if r.Configuration.SourceSecoda != nil {
 		apiKey41 := r.Configuration.SourceSecoda.APIKey.ValueString()
-		sourceType136 := shared.SourceSecodaSecodaEnum(r.Configuration.SourceSecoda.SourceType.ValueString())
+		sourceType138 := shared.SourceSecodaSecodaEnum(r.Configuration.SourceSecoda.SourceType.ValueString())
 		sourceSecoda = &shared.SourceSecoda{
 			APIKey:     apiKey41,
-			SourceType: sourceType136,
+			SourceType: sourceType138,
 		}
 	}
 	if sourceSecoda != nil {
@@ -6076,7 +6309,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	var sourceSendgrid *shared.SourceSendgrid
 	if r.Configuration.SourceSendgrid != nil {
 		apikey2 := r.Configuration.SourceSendgrid.Apikey.ValueString()
-		sourceType137 := shared.SourceSendgridSendgridEnum(r.Configuration.SourceSendgrid.SourceType.ValueString())
+		sourceType139 := shared.SourceSendgridSendgridEnum(r.Configuration.SourceSendgrid.SourceType.ValueString())
 		startTime := new(time.Time)
 		if !r.Configuration.SourceSendgrid.StartTime.IsUnknown() && !r.Configuration.SourceSendgrid.StartTime.IsNull() {
 			*startTime, _ = time.Parse(time.RFC3339Nano, r.Configuration.SourceSendgrid.StartTime.ValueString())
@@ -6085,7 +6318,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		}
 		sourceSendgrid = &shared.SourceSendgrid{
 			Apikey:     apikey2,
-			SourceType: sourceType137,
+			SourceType: sourceType139,
 			StartTime:  startTime,
 		}
 	}
@@ -6097,10 +6330,10 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	var sourceSendinblue *shared.SourceSendinblue
 	if r.Configuration.SourceSendinblue != nil {
 		apiKey42 := r.Configuration.SourceSendinblue.APIKey.ValueString()
-		sourceType138 := shared.SourceSendinblueSendinblueEnum(r.Configuration.SourceSendinblue.SourceType.ValueString())
+		sourceType140 := shared.SourceSendinblueSendinblueEnum(r.Configuration.SourceSendinblue.SourceType.ValueString())
 		sourceSendinblue = &shared.SourceSendinblue{
 			APIKey:     apiKey42,
-			SourceType: sourceType138,
+			SourceType: sourceType140,
 		}
 	}
 	if sourceSendinblue != nil {
@@ -6110,7 +6343,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	}
 	var sourceSenseforce *shared.SourceSenseforce
 	if r.Configuration.SourceSenseforce != nil {
-		accessToken25 := r.Configuration.SourceSenseforce.AccessToken.ValueString()
+		accessToken26 := r.Configuration.SourceSenseforce.AccessToken.ValueString()
 		backendURL := r.Configuration.SourceSenseforce.BackendURL.ValueString()
 		datasetId2 := r.Configuration.SourceSenseforce.DatasetID.ValueString()
 		sliceRange := new(int64)
@@ -6119,15 +6352,15 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			sliceRange = nil
 		}
-		sourceType139 := shared.SourceSenseforceSenseforceEnum(r.Configuration.SourceSenseforce.SourceType.ValueString())
-		startDate58, _ := customTypes.NewDate(r.Configuration.SourceSenseforce.StartDate.ValueString())
+		sourceType141 := shared.SourceSenseforceSenseforceEnum(r.Configuration.SourceSenseforce.SourceType.ValueString())
+		startDate59, _ := customTypes.NewDate(r.Configuration.SourceSenseforce.StartDate.ValueString())
 		sourceSenseforce = &shared.SourceSenseforce{
-			AccessToken: accessToken25,
+			AccessToken: accessToken26,
 			BackendURL:  backendURL,
 			DatasetID:   datasetId2,
 			SliceRange:  sliceRange,
-			SourceType:  sourceType139,
-			StartDate:   startDate58,
+			SourceType:  sourceType141,
+			StartDate:   startDate59,
 		}
 	}
 	if sourceSenseforce != nil {
@@ -6152,14 +6385,14 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		}
 		organization := r.Configuration.SourceSentry.Organization.ValueString()
 		project := r.Configuration.SourceSentry.Project.ValueString()
-		sourceType140 := shared.SourceSentrySentryEnum(r.Configuration.SourceSentry.SourceType.ValueString())
+		sourceType142 := shared.SourceSentrySentryEnum(r.Configuration.SourceSentry.SourceType.ValueString())
 		sourceSentry = &shared.SourceSentry{
 			AuthToken:      authToken1,
 			DiscoverFields: discoverFields,
 			Hostname:       hostname,
 			Organization:   organization,
 			Project:        project,
-			SourceType:     sourceType140,
+			SourceType:     sourceType142,
 		}
 	}
 	if sourceSentry != nil {
@@ -6169,7 +6402,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	}
 	var sourceSftp *shared.SourceSftp
 	if r.Configuration.SourceSftp != nil {
-		var credentials22 *shared.SourceSftpAuthenticationWildcard
+		var credentials23 *shared.SourceSftpAuthenticationWildcard
 		var sourceSftpAuthenticationWildcardPasswordAuthentication *shared.SourceSftpAuthenticationWildcardPasswordAuthentication
 		if r.Configuration.SourceSftp.Credentials.SourceSftpAuthenticationWildcardPasswordAuthentication != nil {
 			authMethod9 := shared.SourceSftpAuthenticationWildcardPasswordAuthenticationAuthMethodEnum(r.Configuration.SourceSftp.Credentials.SourceSftpAuthenticationWildcardPasswordAuthentication.AuthMethod.ValueString())
@@ -6180,7 +6413,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			}
 		}
 		if sourceSftpAuthenticationWildcardPasswordAuthentication != nil {
-			credentials22 = &shared.SourceSftpAuthenticationWildcard{
+			credentials23 = &shared.SourceSftpAuthenticationWildcard{
 				SourceSftpAuthenticationWildcardPasswordAuthentication: sourceSftpAuthenticationWildcardPasswordAuthentication,
 			}
 		}
@@ -6194,7 +6427,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			}
 		}
 		if sourceSftpAuthenticationWildcardSSHKeyAuthentication != nil {
-			credentials22 = &shared.SourceSftpAuthenticationWildcard{
+			credentials23 = &shared.SourceSftpAuthenticationWildcard{
 				SourceSftpAuthenticationWildcardSSHKeyAuthentication: sourceSftpAuthenticationWildcardSSHKeyAuthentication,
 			}
 		}
@@ -6218,16 +6451,16 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		}
 		host12 := r.Configuration.SourceSftp.Host.ValueString()
 		port12 := r.Configuration.SourceSftp.Port.ValueInt64()
-		sourceType141 := shared.SourceSftpSftpEnum(r.Configuration.SourceSftp.SourceType.ValueString())
+		sourceType143 := shared.SourceSftpSftpEnum(r.Configuration.SourceSftp.SourceType.ValueString())
 		user4 := r.Configuration.SourceSftp.User.ValueString()
 		sourceSftp = &shared.SourceSftp{
-			Credentials: credentials22,
+			Credentials: credentials23,
 			FilePattern: filePattern,
 			FileTypes:   fileTypes,
 			FolderPath:  folderPath,
 			Host:        host12,
 			Port:        port12,
-			SourceType:  sourceType141,
+			SourceType:  sourceType143,
 			User:        user4,
 		}
 	}
@@ -6271,8 +6504,8 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			privateKey2 = nil
 		}
-		sourceType142 := shared.SourceSftpBulkSftpBulkEnum(r.Configuration.SourceSftpBulk.SourceType.ValueString())
-		startDate59, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceSftpBulk.StartDate.ValueString())
+		sourceType144 := shared.SourceSftpBulkSftpBulkEnum(r.Configuration.SourceSftpBulk.SourceType.ValueString())
+		startDate60, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceSftpBulk.StartDate.ValueString())
 		streamName1 := r.Configuration.SourceSftpBulk.StreamName.ValueString()
 		username12 := r.Configuration.SourceSftpBulk.Username.ValueString()
 		sourceSftpBulk = &shared.SourceSftpBulk{
@@ -6284,8 +6517,8 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			Password:       password16,
 			Port:           port13,
 			PrivateKey:     privateKey2,
-			SourceType:     sourceType142,
-			StartDate:      startDate59,
+			SourceType:     sourceType144,
+			StartDate:      startDate60,
 			StreamName:     streamName1,
 			Username:       username12,
 		}
@@ -6297,7 +6530,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	}
 	var sourceShopify *shared.SourceShopify
 	if r.Configuration.SourceShopify != nil {
-		var credentials23 *shared.SourceShopifyShopifyAuthorizationMethod
+		var credentials24 *shared.SourceShopifyShopifyAuthorizationMethod
 		var sourceShopifyShopifyAuthorizationMethodAPIPassword *shared.SourceShopifyShopifyAuthorizationMethodAPIPassword
 		if r.Configuration.SourceShopify.Credentials.SourceShopifyShopifyAuthorizationMethodAPIPassword != nil {
 			apiPassword := r.Configuration.SourceShopify.Credentials.SourceShopifyShopifyAuthorizationMethodAPIPassword.APIPassword.ValueString()
@@ -6308,51 +6541,51 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			}
 		}
 		if sourceShopifyShopifyAuthorizationMethodAPIPassword != nil {
-			credentials23 = &shared.SourceShopifyShopifyAuthorizationMethod{
+			credentials24 = &shared.SourceShopifyShopifyAuthorizationMethod{
 				SourceShopifyShopifyAuthorizationMethodAPIPassword: sourceShopifyShopifyAuthorizationMethodAPIPassword,
 			}
 		}
 		var sourceShopifyShopifyAuthorizationMethodOAuth20 *shared.SourceShopifyShopifyAuthorizationMethodOAuth20
 		if r.Configuration.SourceShopify.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20 != nil {
-			accessToken26 := new(string)
+			accessToken27 := new(string)
 			if !r.Configuration.SourceShopify.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.AccessToken.IsUnknown() && !r.Configuration.SourceShopify.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.AccessToken.IsNull() {
-				*accessToken26 = r.Configuration.SourceShopify.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.AccessToken.ValueString()
+				*accessToken27 = r.Configuration.SourceShopify.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.AccessToken.ValueString()
 			} else {
-				accessToken26 = nil
+				accessToken27 = nil
 			}
 			authMethod12 := shared.SourceShopifyShopifyAuthorizationMethodOAuth20AuthMethodEnum(r.Configuration.SourceShopify.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.AuthMethod.ValueString())
-			clientId30 := new(string)
+			clientId31 := new(string)
 			if !r.Configuration.SourceShopify.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientID.IsUnknown() && !r.Configuration.SourceShopify.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientID.IsNull() {
-				*clientId30 = r.Configuration.SourceShopify.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientID.ValueString()
+				*clientId31 = r.Configuration.SourceShopify.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientID.ValueString()
 			} else {
-				clientId30 = nil
+				clientId31 = nil
 			}
-			clientSecret29 := new(string)
+			clientSecret30 := new(string)
 			if !r.Configuration.SourceShopify.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientSecret.IsUnknown() && !r.Configuration.SourceShopify.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientSecret.IsNull() {
-				*clientSecret29 = r.Configuration.SourceShopify.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientSecret.ValueString()
+				*clientSecret30 = r.Configuration.SourceShopify.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientSecret.ValueString()
 			} else {
-				clientSecret29 = nil
+				clientSecret30 = nil
 			}
 			sourceShopifyShopifyAuthorizationMethodOAuth20 = &shared.SourceShopifyShopifyAuthorizationMethodOAuth20{
-				AccessToken:  accessToken26,
+				AccessToken:  accessToken27,
 				AuthMethod:   authMethod12,
-				ClientID:     clientId30,
-				ClientSecret: clientSecret29,
+				ClientID:     clientId31,
+				ClientSecret: clientSecret30,
 			}
 		}
 		if sourceShopifyShopifyAuthorizationMethodOAuth20 != nil {
-			credentials23 = &shared.SourceShopifyShopifyAuthorizationMethod{
+			credentials24 = &shared.SourceShopifyShopifyAuthorizationMethod{
 				SourceShopifyShopifyAuthorizationMethodOAuth20: sourceShopifyShopifyAuthorizationMethodOAuth20,
 			}
 		}
 		shop := r.Configuration.SourceShopify.Shop.ValueString()
-		sourceType143 := shared.SourceShopifyShopifyEnum(r.Configuration.SourceShopify.SourceType.ValueString())
-		startDate60 := r.Configuration.SourceShopify.StartDate.ValueString()
+		sourceType145 := shared.SourceShopifyShopifyEnum(r.Configuration.SourceShopify.SourceType.ValueString())
+		startDate61 := r.Configuration.SourceShopify.StartDate.ValueString()
 		sourceShopify = &shared.SourceShopify{
-			Credentials: credentials23,
+			Credentials: credentials24,
 			Shop:        shop,
-			SourceType:  sourceType143,
-			StartDate:   startDate60,
+			SourceType:  sourceType145,
+			StartDate:   startDate61,
 		}
 	}
 	if sourceShopify != nil {
@@ -6364,13 +6597,13 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	if r.Configuration.SourceShortio != nil {
 		domainID := r.Configuration.SourceShortio.DomainID.ValueString()
 		secretKey4 := r.Configuration.SourceShortio.SecretKey.ValueString()
-		sourceType144 := shared.SourceShortioShortioEnum(r.Configuration.SourceShortio.SourceType.ValueString())
-		startDate61 := r.Configuration.SourceShortio.StartDate.ValueString()
+		sourceType146 := shared.SourceShortioShortioEnum(r.Configuration.SourceShortio.SourceType.ValueString())
+		startDate62 := r.Configuration.SourceShortio.StartDate.ValueString()
 		sourceShortio = &shared.SourceShortio{
 			DomainID:   domainID,
 			SecretKey:  secretKey4,
-			SourceType: sourceType144,
-			StartDate:  startDate61,
+			SourceType: sourceType146,
+			StartDate:  startDate62,
 		}
 	}
 	if sourceShortio != nil {
@@ -6384,22 +6617,22 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		for _, channelFilterItem := range r.Configuration.SourceSlack.ChannelFilter {
 			channelFilter = append(channelFilter, channelFilterItem.ValueString())
 		}
-		var credentials24 *shared.SourceSlackAuthenticationMechanism
+		var credentials25 *shared.SourceSlackAuthenticationMechanism
 		var sourceSlackAuthenticationMechanismSignInViaSlackOAuth *shared.SourceSlackAuthenticationMechanismSignInViaSlackOAuth
 		if r.Configuration.SourceSlack.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth != nil {
-			accessToken27 := r.Configuration.SourceSlack.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth.AccessToken.ValueString()
-			clientId31 := r.Configuration.SourceSlack.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth.ClientID.ValueString()
-			clientSecret30 := r.Configuration.SourceSlack.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth.ClientSecret.ValueString()
+			accessToken28 := r.Configuration.SourceSlack.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth.AccessToken.ValueString()
+			clientId32 := r.Configuration.SourceSlack.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth.ClientID.ValueString()
+			clientSecret31 := r.Configuration.SourceSlack.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth.ClientSecret.ValueString()
 			optionTitle6 := shared.SourceSlackAuthenticationMechanismSignInViaSlackOAuthOptionTitleEnum(r.Configuration.SourceSlack.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth.OptionTitle.ValueString())
 			sourceSlackAuthenticationMechanismSignInViaSlackOAuth = &shared.SourceSlackAuthenticationMechanismSignInViaSlackOAuth{
-				AccessToken:  accessToken27,
-				ClientID:     clientId31,
-				ClientSecret: clientSecret30,
+				AccessToken:  accessToken28,
+				ClientID:     clientId32,
+				ClientSecret: clientSecret31,
 				OptionTitle:  optionTitle6,
 			}
 		}
 		if sourceSlackAuthenticationMechanismSignInViaSlackOAuth != nil {
-			credentials24 = &shared.SourceSlackAuthenticationMechanism{
+			credentials25 = &shared.SourceSlackAuthenticationMechanism{
 				SourceSlackAuthenticationMechanismSignInViaSlackOAuth: sourceSlackAuthenticationMechanismSignInViaSlackOAuth,
 			}
 		}
@@ -6413,21 +6646,21 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			}
 		}
 		if sourceSlackAuthenticationMechanismAPIToken != nil {
-			credentials24 = &shared.SourceSlackAuthenticationMechanism{
+			credentials25 = &shared.SourceSlackAuthenticationMechanism{
 				SourceSlackAuthenticationMechanismAPIToken: sourceSlackAuthenticationMechanismAPIToken,
 			}
 		}
 		joinChannels := r.Configuration.SourceSlack.JoinChannels.ValueBool()
 		lookbackWindow := r.Configuration.SourceSlack.LookbackWindow.ValueInt64()
-		sourceType145 := shared.SourceSlackSlackEnum(r.Configuration.SourceSlack.SourceType.ValueString())
-		startDate62, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceSlack.StartDate.ValueString())
+		sourceType147 := shared.SourceSlackSlackEnum(r.Configuration.SourceSlack.SourceType.ValueString())
+		startDate63, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceSlack.StartDate.ValueString())
 		sourceSlack = &shared.SourceSlack{
 			ChannelFilter:  channelFilter,
-			Credentials:    credentials24,
+			Credentials:    credentials25,
 			JoinChannels:   joinChannels,
 			LookbackWindow: lookbackWindow,
-			SourceType:     sourceType145,
-			StartDate:      startDate62,
+			SourceType:     sourceType147,
+			StartDate:      startDate63,
 		}
 	}
 	if sourceSlack != nil {
@@ -6440,12 +6673,12 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		apiPassword1 := r.Configuration.SourceSmaily.APIPassword.ValueString()
 		apiSubdomain := r.Configuration.SourceSmaily.APISubdomain.ValueString()
 		apiUsername := r.Configuration.SourceSmaily.APIUsername.ValueString()
-		sourceType146 := shared.SourceSmailySmailyEnum(r.Configuration.SourceSmaily.SourceType.ValueString())
+		sourceType148 := shared.SourceSmailySmailyEnum(r.Configuration.SourceSmaily.SourceType.ValueString())
 		sourceSmaily = &shared.SourceSmaily{
 			APIPassword:  apiPassword1,
 			APISubdomain: apiSubdomain,
 			APIUsername:  apiUsername,
-			SourceType:   sourceType146,
+			SourceType:   sourceType148,
 		}
 	}
 	if sourceSmaily != nil {
@@ -6456,10 +6689,10 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	var sourceSmartengage *shared.SourceSmartengage
 	if r.Configuration.SourceSmartengage != nil {
 		apiKey43 := r.Configuration.SourceSmartengage.APIKey.ValueString()
-		sourceType147 := shared.SourceSmartengageSmartengageEnum(r.Configuration.SourceSmartengage.SourceType.ValueString())
+		sourceType149 := shared.SourceSmartengageSmartengageEnum(r.Configuration.SourceSmartengage.SourceType.ValueString())
 		sourceSmartengage = &shared.SourceSmartengage{
 			APIKey:     apiKey43,
-			SourceType: sourceType147,
+			SourceType: sourceType149,
 		}
 	}
 	if sourceSmartengage != nil {
@@ -6469,54 +6702,54 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	}
 	var sourceSmartsheets *shared.SourceSmartsheets
 	if r.Configuration.SourceSmartsheets != nil {
-		var credentials25 shared.SourceSmartsheetsAuthorizationMethod
+		var credentials26 shared.SourceSmartsheetsAuthorizationMethod
 		var sourceSmartsheetsAuthorizationMethodOAuth20 *shared.SourceSmartsheetsAuthorizationMethodOAuth20
 		if r.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20 != nil {
-			accessToken28 := r.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.AccessToken.ValueString()
-			authType32 := new(shared.SourceSmartsheetsAuthorizationMethodOAuth20AuthTypeEnum)
+			accessToken29 := r.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.AccessToken.ValueString()
+			authType33 := new(shared.SourceSmartsheetsAuthorizationMethodOAuth20AuthTypeEnum)
 			if !r.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.AuthType.IsUnknown() && !r.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.AuthType.IsNull() {
-				*authType32 = shared.SourceSmartsheetsAuthorizationMethodOAuth20AuthTypeEnum(r.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.AuthType.ValueString())
+				*authType33 = shared.SourceSmartsheetsAuthorizationMethodOAuth20AuthTypeEnum(r.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.AuthType.ValueString())
 			} else {
-				authType32 = nil
+				authType33 = nil
 			}
-			clientId32 := r.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.ClientID.ValueString()
-			clientSecret31 := r.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.ClientSecret.ValueString()
-			refreshToken24 := r.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.RefreshToken.ValueString()
-			tokenExpiryDate3, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.TokenExpiryDate.ValueString())
+			clientId33 := r.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.ClientID.ValueString()
+			clientSecret32 := r.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.ClientSecret.ValueString()
+			refreshToken25 := r.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.RefreshToken.ValueString()
+			tokenExpiryDate4, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.TokenExpiryDate.ValueString())
 			sourceSmartsheetsAuthorizationMethodOAuth20 = &shared.SourceSmartsheetsAuthorizationMethodOAuth20{
-				AccessToken:     accessToken28,
-				AuthType:        authType32,
-				ClientID:        clientId32,
-				ClientSecret:    clientSecret31,
-				RefreshToken:    refreshToken24,
-				TokenExpiryDate: tokenExpiryDate3,
+				AccessToken:     accessToken29,
+				AuthType:        authType33,
+				ClientID:        clientId33,
+				ClientSecret:    clientSecret32,
+				RefreshToken:    refreshToken25,
+				TokenExpiryDate: tokenExpiryDate4,
 			}
 		}
 		if sourceSmartsheetsAuthorizationMethodOAuth20 != nil {
-			credentials25 = shared.SourceSmartsheetsAuthorizationMethod{
+			credentials26 = shared.SourceSmartsheetsAuthorizationMethod{
 				SourceSmartsheetsAuthorizationMethodOAuth20: sourceSmartsheetsAuthorizationMethodOAuth20,
 			}
 		}
 		var sourceSmartsheetsAuthorizationMethodAPIAccessToken *shared.SourceSmartsheetsAuthorizationMethodAPIAccessToken
 		if r.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodAPIAccessToken != nil {
-			accessToken29 := r.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodAPIAccessToken.AccessToken.ValueString()
-			authType33 := new(shared.SourceSmartsheetsAuthorizationMethodAPIAccessTokenAuthTypeEnum)
+			accessToken30 := r.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodAPIAccessToken.AccessToken.ValueString()
+			authType34 := new(shared.SourceSmartsheetsAuthorizationMethodAPIAccessTokenAuthTypeEnum)
 			if !r.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodAPIAccessToken.AuthType.IsUnknown() && !r.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodAPIAccessToken.AuthType.IsNull() {
-				*authType33 = shared.SourceSmartsheetsAuthorizationMethodAPIAccessTokenAuthTypeEnum(r.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodAPIAccessToken.AuthType.ValueString())
+				*authType34 = shared.SourceSmartsheetsAuthorizationMethodAPIAccessTokenAuthTypeEnum(r.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodAPIAccessToken.AuthType.ValueString())
 			} else {
-				authType33 = nil
+				authType34 = nil
 			}
 			sourceSmartsheetsAuthorizationMethodAPIAccessToken = &shared.SourceSmartsheetsAuthorizationMethodAPIAccessToken{
-				AccessToken: accessToken29,
-				AuthType:    authType33,
+				AccessToken: accessToken30,
+				AuthType:    authType34,
 			}
 		}
 		if sourceSmartsheetsAuthorizationMethodAPIAccessToken != nil {
-			credentials25 = shared.SourceSmartsheetsAuthorizationMethod{
+			credentials26 = shared.SourceSmartsheetsAuthorizationMethod{
 				SourceSmartsheetsAuthorizationMethodAPIAccessToken: sourceSmartsheetsAuthorizationMethodAPIAccessToken,
 			}
 		}
-		sourceType148 := shared.SourceSmartsheetsSmartsheetsEnum(r.Configuration.SourceSmartsheets.SourceType.ValueString())
+		sourceType150 := shared.SourceSmartsheetsSmartsheetsEnum(r.Configuration.SourceSmartsheets.SourceType.ValueString())
 		spreadsheetId1 := r.Configuration.SourceSmartsheets.SpreadsheetID.ValueString()
 		startDatetime1 := new(time.Time)
 		if !r.Configuration.SourceSmartsheets.StartDatetime.IsUnknown() && !r.Configuration.SourceSmartsheets.StartDatetime.IsNull() {
@@ -6525,8 +6758,8 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			startDatetime1 = nil
 		}
 		sourceSmartsheets = &shared.SourceSmartsheets{
-			Credentials:   credentials25,
-			SourceType:    sourceType148,
+			Credentials:   credentials26,
+			SourceType:    sourceType150,
 			SpreadsheetID: spreadsheetId1,
 			StartDatetime: startDatetime1,
 		}
@@ -6538,29 +6771,29 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	}
 	var sourceSnapchatMarketing *shared.SourceSnapchatMarketing
 	if r.Configuration.SourceSnapchatMarketing != nil {
-		clientId33 := r.Configuration.SourceSnapchatMarketing.ClientID.ValueString()
-		clientSecret32 := r.Configuration.SourceSnapchatMarketing.ClientSecret.ValueString()
+		clientId34 := r.Configuration.SourceSnapchatMarketing.ClientID.ValueString()
+		clientSecret33 := r.Configuration.SourceSnapchatMarketing.ClientSecret.ValueString()
 		endDate10 := new(customTypes.Date)
 		if !r.Configuration.SourceSnapchatMarketing.EndDate.IsUnknown() && !r.Configuration.SourceSnapchatMarketing.EndDate.IsNull() {
 			*endDate10, _ = customTypes.NewDate(r.Configuration.SourceSnapchatMarketing.EndDate.ValueString())
 		} else {
 			endDate10 = nil
 		}
-		refreshToken25 := r.Configuration.SourceSnapchatMarketing.RefreshToken.ValueString()
-		sourceType149 := shared.SourceSnapchatMarketingSnapchatMarketingEnum(r.Configuration.SourceSnapchatMarketing.SourceType.ValueString())
-		startDate63 := new(customTypes.Date)
+		refreshToken26 := r.Configuration.SourceSnapchatMarketing.RefreshToken.ValueString()
+		sourceType151 := shared.SourceSnapchatMarketingSnapchatMarketingEnum(r.Configuration.SourceSnapchatMarketing.SourceType.ValueString())
+		startDate64 := new(customTypes.Date)
 		if !r.Configuration.SourceSnapchatMarketing.StartDate.IsUnknown() && !r.Configuration.SourceSnapchatMarketing.StartDate.IsNull() {
-			*startDate63, _ = customTypes.NewDate(r.Configuration.SourceSnapchatMarketing.StartDate.ValueString())
+			*startDate64, _ = customTypes.NewDate(r.Configuration.SourceSnapchatMarketing.StartDate.ValueString())
 		} else {
-			startDate63 = nil
+			startDate64 = nil
 		}
 		sourceSnapchatMarketing = &shared.SourceSnapchatMarketing{
-			ClientID:     clientId33,
-			ClientSecret: clientSecret32,
+			ClientID:     clientId34,
+			ClientSecret: clientSecret33,
 			EndDate:      endDate10,
-			RefreshToken: refreshToken25,
-			SourceType:   sourceType149,
-			StartDate:    startDate63,
+			RefreshToken: refreshToken26,
+			SourceType:   sourceType151,
+			StartDate:    startDate64,
 		}
 	}
 	if sourceSnapchatMarketing != nil {
@@ -6570,50 +6803,50 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	}
 	var sourceSnowflake *shared.SourceSnowflake
 	if r.Configuration.SourceSnowflake != nil {
-		var credentials26 *shared.SourceSnowflakeAuthorizationMethod
+		var credentials27 *shared.SourceSnowflakeAuthorizationMethod
 		var sourceSnowflakeAuthorizationMethodOAuth20 *shared.SourceSnowflakeAuthorizationMethodOAuth20
 		if r.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodOAuth20 != nil {
-			accessToken30 := new(string)
+			accessToken31 := new(string)
 			if !r.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.AccessToken.IsUnknown() && !r.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.AccessToken.IsNull() {
-				*accessToken30 = r.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.AccessToken.ValueString()
+				*accessToken31 = r.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.AccessToken.ValueString()
 			} else {
-				accessToken30 = nil
+				accessToken31 = nil
 			}
-			authType34 := shared.SourceSnowflakeAuthorizationMethodOAuth20AuthTypeEnum(r.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.AuthType.ValueString())
-			clientId34 := r.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.ClientID.ValueString()
-			clientSecret33 := r.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.ClientSecret.ValueString()
-			refreshToken26 := new(string)
+			authType35 := shared.SourceSnowflakeAuthorizationMethodOAuth20AuthTypeEnum(r.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.AuthType.ValueString())
+			clientId35 := r.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.ClientID.ValueString()
+			clientSecret34 := r.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.ClientSecret.ValueString()
+			refreshToken27 := new(string)
 			if !r.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.RefreshToken.IsUnknown() && !r.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.RefreshToken.IsNull() {
-				*refreshToken26 = r.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.RefreshToken.ValueString()
+				*refreshToken27 = r.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.RefreshToken.ValueString()
 			} else {
-				refreshToken26 = nil
+				refreshToken27 = nil
 			}
 			sourceSnowflakeAuthorizationMethodOAuth20 = &shared.SourceSnowflakeAuthorizationMethodOAuth20{
-				AccessToken:  accessToken30,
-				AuthType:     authType34,
-				ClientID:     clientId34,
-				ClientSecret: clientSecret33,
-				RefreshToken: refreshToken26,
+				AccessToken:  accessToken31,
+				AuthType:     authType35,
+				ClientID:     clientId35,
+				ClientSecret: clientSecret34,
+				RefreshToken: refreshToken27,
 			}
 		}
 		if sourceSnowflakeAuthorizationMethodOAuth20 != nil {
-			credentials26 = &shared.SourceSnowflakeAuthorizationMethod{
+			credentials27 = &shared.SourceSnowflakeAuthorizationMethod{
 				SourceSnowflakeAuthorizationMethodOAuth20: sourceSnowflakeAuthorizationMethodOAuth20,
 			}
 		}
 		var sourceSnowflakeAuthorizationMethodUsernameAndPassword *shared.SourceSnowflakeAuthorizationMethodUsernameAndPassword
 		if r.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodUsernameAndPassword != nil {
-			authType35 := shared.SourceSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeEnum(r.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodUsernameAndPassword.AuthType.ValueString())
+			authType36 := shared.SourceSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeEnum(r.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodUsernameAndPassword.AuthType.ValueString())
 			password17 := r.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodUsernameAndPassword.Password.ValueString()
 			username13 := r.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodUsernameAndPassword.Username.ValueString()
 			sourceSnowflakeAuthorizationMethodUsernameAndPassword = &shared.SourceSnowflakeAuthorizationMethodUsernameAndPassword{
-				AuthType: authType35,
+				AuthType: authType36,
 				Password: password17,
 				Username: username13,
 			}
 		}
 		if sourceSnowflakeAuthorizationMethodUsernameAndPassword != nil {
-			credentials26 = &shared.SourceSnowflakeAuthorizationMethod{
+			credentials27 = &shared.SourceSnowflakeAuthorizationMethod{
 				SourceSnowflakeAuthorizationMethodUsernameAndPassword: sourceSnowflakeAuthorizationMethodUsernameAndPassword,
 			}
 		}
@@ -6632,16 +6865,16 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			schema1 = nil
 		}
-		sourceType150 := shared.SourceSnowflakeSnowflakeEnum(r.Configuration.SourceSnowflake.SourceType.ValueString())
+		sourceType152 := shared.SourceSnowflakeSnowflakeEnum(r.Configuration.SourceSnowflake.SourceType.ValueString())
 		warehouse := r.Configuration.SourceSnowflake.Warehouse.ValueString()
 		sourceSnowflake = &shared.SourceSnowflake{
-			Credentials:   credentials26,
+			Credentials:   credentials27,
 			Database:      database8,
 			Host:          host14,
 			JdbcURLParams: jdbcURLParams6,
 			Role:          role,
 			Schema:        schema1,
-			SourceType:    sourceType150,
+			SourceType:    sourceType152,
 			Warehouse:     warehouse,
 		}
 	}
@@ -6665,20 +6898,20 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			endDate11 = nil
 		}
 		organization1 := r.Configuration.SourceSonarCloud.Organization.ValueString()
-		sourceType151 := shared.SourceSonarCloudSonarCloudEnum(r.Configuration.SourceSonarCloud.SourceType.ValueString())
-		startDate64 := new(customTypes.Date)
+		sourceType153 := shared.SourceSonarCloudSonarCloudEnum(r.Configuration.SourceSonarCloud.SourceType.ValueString())
+		startDate65 := new(customTypes.Date)
 		if !r.Configuration.SourceSonarCloud.StartDate.IsUnknown() && !r.Configuration.SourceSonarCloud.StartDate.IsNull() {
-			*startDate64, _ = customTypes.NewDate(r.Configuration.SourceSonarCloud.StartDate.ValueString())
+			*startDate65, _ = customTypes.NewDate(r.Configuration.SourceSonarCloud.StartDate.ValueString())
 		} else {
-			startDate64 = nil
+			startDate65 = nil
 		}
 		userToken := r.Configuration.SourceSonarCloud.UserToken.ValueString()
 		sourceSonarCloud = &shared.SourceSonarCloud{
 			ComponentKeys: componentKeys,
 			EndDate:       endDate11,
 			Organization:  organization1,
-			SourceType:    sourceType151,
-			StartDate:     startDate64,
+			SourceType:    sourceType153,
+			StartDate:     startDate65,
 			UserToken:     userToken,
 		}
 	}
@@ -6701,11 +6934,11 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			options = nil
 		}
-		sourceType152 := shared.SourceSpacexAPISpacexAPIEnum(r.Configuration.SourceSpacexAPI.SourceType.ValueString())
+		sourceType154 := shared.SourceSpacexAPISpacexAPIEnum(r.Configuration.SourceSpacexAPI.SourceType.ValueString())
 		sourceSpacexAPI = &shared.SourceSpacexAPI{
 			ID:         id1,
 			Options:    options,
-			SourceType: sourceType152,
+			SourceType: sourceType154,
 		}
 	}
 	if sourceSpacexAPI != nil {
@@ -6715,27 +6948,27 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	}
 	var sourceSquare *shared.SourceSquare
 	if r.Configuration.SourceSquare != nil {
-		var credentials27 *shared.SourceSquareAuthentication
+		var credentials28 *shared.SourceSquareAuthentication
 		var sourceSquareAuthenticationOauthAuthentication *shared.SourceSquareAuthenticationOauthAuthentication
 		if r.Configuration.SourceSquare.Credentials.SourceSquareAuthenticationOauthAuthentication != nil {
-			clientId35 := r.Configuration.SourceSquare.Credentials.SourceSquareAuthenticationOauthAuthentication.ClientID.ValueString()
-			clientSecret34 := r.Configuration.SourceSquare.Credentials.SourceSquareAuthenticationOauthAuthentication.ClientSecret.ValueString()
+			clientId36 := r.Configuration.SourceSquare.Credentials.SourceSquareAuthenticationOauthAuthentication.ClientID.ValueString()
+			clientSecret35 := r.Configuration.SourceSquare.Credentials.SourceSquareAuthenticationOauthAuthentication.ClientSecret.ValueString()
 			credentialsTitle2 := new(shared.SourceSquareAuthenticationOauthAuthenticationCredentialsTitleEnum)
 			if !r.Configuration.SourceSquare.Credentials.SourceSquareAuthenticationOauthAuthentication.CredentialsTitle.IsUnknown() && !r.Configuration.SourceSquare.Credentials.SourceSquareAuthenticationOauthAuthentication.CredentialsTitle.IsNull() {
 				*credentialsTitle2 = shared.SourceSquareAuthenticationOauthAuthenticationCredentialsTitleEnum(r.Configuration.SourceSquare.Credentials.SourceSquareAuthenticationOauthAuthentication.CredentialsTitle.ValueString())
 			} else {
 				credentialsTitle2 = nil
 			}
-			refreshToken27 := r.Configuration.SourceSquare.Credentials.SourceSquareAuthenticationOauthAuthentication.RefreshToken.ValueString()
+			refreshToken28 := r.Configuration.SourceSquare.Credentials.SourceSquareAuthenticationOauthAuthentication.RefreshToken.ValueString()
 			sourceSquareAuthenticationOauthAuthentication = &shared.SourceSquareAuthenticationOauthAuthentication{
-				ClientID:         clientId35,
-				ClientSecret:     clientSecret34,
+				ClientID:         clientId36,
+				ClientSecret:     clientSecret35,
 				CredentialsTitle: credentialsTitle2,
-				RefreshToken:     refreshToken27,
+				RefreshToken:     refreshToken28,
 			}
 		}
 		if sourceSquareAuthenticationOauthAuthentication != nil {
-			credentials27 = &shared.SourceSquareAuthentication{
+			credentials28 = &shared.SourceSquareAuthentication{
 				SourceSquareAuthenticationOauthAuthentication: sourceSquareAuthenticationOauthAuthentication,
 			}
 		}
@@ -6754,7 +6987,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			}
 		}
 		if sourceSquareAuthenticationAPIKey != nil {
-			credentials27 = &shared.SourceSquareAuthentication{
+			credentials28 = &shared.SourceSquareAuthentication{
 				SourceSquareAuthenticationAPIKey: sourceSquareAuthenticationAPIKey,
 			}
 		}
@@ -6765,19 +6998,19 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			includeDeletedObjects = nil
 		}
 		isSandbox3 := r.Configuration.SourceSquare.IsSandbox.ValueBool()
-		sourceType153 := shared.SourceSquareSquareEnum(r.Configuration.SourceSquare.SourceType.ValueString())
-		startDate65 := new(customTypes.Date)
+		sourceType155 := shared.SourceSquareSquareEnum(r.Configuration.SourceSquare.SourceType.ValueString())
+		startDate66 := new(customTypes.Date)
 		if !r.Configuration.SourceSquare.StartDate.IsUnknown() && !r.Configuration.SourceSquare.StartDate.IsNull() {
-			*startDate65, _ = customTypes.NewDate(r.Configuration.SourceSquare.StartDate.ValueString())
+			*startDate66, _ = customTypes.NewDate(r.Configuration.SourceSquare.StartDate.ValueString())
 		} else {
-			startDate65 = nil
+			startDate66 = nil
 		}
 		sourceSquare = &shared.SourceSquare{
-			Credentials:           credentials27,
+			Credentials:           credentials28,
 			IncludeDeletedObjects: includeDeletedObjects,
 			IsSandbox:             isSandbox3,
-			SourceType:            sourceType153,
-			StartDate:             startDate65,
+			SourceType:            sourceType155,
+			StartDate:             startDate66,
 		}
 	}
 	if sourceSquare != nil {
@@ -6788,25 +7021,25 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	var sourceStrava *shared.SourceStrava
 	if r.Configuration.SourceStrava != nil {
 		athleteID := r.Configuration.SourceStrava.AthleteID.ValueInt64()
-		authType36 := new(shared.SourceStravaAuthTypeEnum)
+		authType37 := new(shared.SourceStravaAuthTypeEnum)
 		if !r.Configuration.SourceStrava.AuthType.IsUnknown() && !r.Configuration.SourceStrava.AuthType.IsNull() {
-			*authType36 = shared.SourceStravaAuthTypeEnum(r.Configuration.SourceStrava.AuthType.ValueString())
+			*authType37 = shared.SourceStravaAuthTypeEnum(r.Configuration.SourceStrava.AuthType.ValueString())
 		} else {
-			authType36 = nil
+			authType37 = nil
 		}
-		clientId36 := r.Configuration.SourceStrava.ClientID.ValueString()
-		clientSecret35 := r.Configuration.SourceStrava.ClientSecret.ValueString()
-		refreshToken28 := r.Configuration.SourceStrava.RefreshToken.ValueString()
-		sourceType154 := shared.SourceStravaStravaEnum(r.Configuration.SourceStrava.SourceType.ValueString())
-		startDate66, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceStrava.StartDate.ValueString())
+		clientId37 := r.Configuration.SourceStrava.ClientID.ValueString()
+		clientSecret36 := r.Configuration.SourceStrava.ClientSecret.ValueString()
+		refreshToken29 := r.Configuration.SourceStrava.RefreshToken.ValueString()
+		sourceType156 := shared.SourceStravaStravaEnum(r.Configuration.SourceStrava.SourceType.ValueString())
+		startDate67, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceStrava.StartDate.ValueString())
 		sourceStrava = &shared.SourceStrava{
 			AthleteID:    athleteID,
-			AuthType:     authType36,
-			ClientID:     clientId36,
-			ClientSecret: clientSecret35,
-			RefreshToken: refreshToken28,
-			SourceType:   sourceType154,
-			StartDate:    startDate66,
+			AuthType:     authType37,
+			ClientID:     clientId37,
+			ClientSecret: clientSecret36,
+			RefreshToken: refreshToken29,
+			SourceType:   sourceType156,
+			StartDate:    startDate67,
 		}
 	}
 	if sourceStrava != nil {
@@ -6817,7 +7050,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	var sourceStripe *shared.SourceStripe
 	if r.Configuration.SourceStripe != nil {
 		accountId2 := r.Configuration.SourceStripe.AccountID.ValueString()
-		clientSecret36 := r.Configuration.SourceStripe.ClientSecret.ValueString()
+		clientSecret37 := r.Configuration.SourceStripe.ClientSecret.ValueString()
 		lookbackWindowDays2 := new(int64)
 		if !r.Configuration.SourceStripe.LookbackWindowDays.IsUnknown() && !r.Configuration.SourceStripe.LookbackWindowDays.IsNull() {
 			*lookbackWindowDays2 = r.Configuration.SourceStripe.LookbackWindowDays.ValueInt64()
@@ -6830,15 +7063,15 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			sliceRange1 = nil
 		}
-		sourceType155 := shared.SourceStripeStripeEnum(r.Configuration.SourceStripe.SourceType.ValueString())
-		startDate67, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceStripe.StartDate.ValueString())
+		sourceType157 := shared.SourceStripeStripeEnum(r.Configuration.SourceStripe.SourceType.ValueString())
+		startDate68, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceStripe.StartDate.ValueString())
 		sourceStripe = &shared.SourceStripe{
 			AccountID:          accountId2,
-			ClientSecret:       clientSecret36,
+			ClientSecret:       clientSecret37,
 			LookbackWindowDays: lookbackWindowDays2,
 			SliceRange:         sliceRange1,
-			SourceType:         sourceType155,
-			StartDate:          startDate67,
+			SourceType:         sourceType157,
+			StartDate:          startDate68,
 		}
 	}
 	if sourceStripe != nil {
@@ -6848,7 +7081,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	}
 	var sourceSurveySparrow *shared.SourceSurveySparrow
 	if r.Configuration.SourceSurveySparrow != nil {
-		accessToken31 := r.Configuration.SourceSurveySparrow.AccessToken.ValueString()
+		accessToken32 := r.Configuration.SourceSurveySparrow.AccessToken.ValueString()
 		var region6 *shared.SourceSurveySparrowBaseURL
 		var sourceSurveySparrowBaseURLEUBasedAccount *shared.SourceSurveySparrowBaseURLEUBasedAccount
 		if r.Configuration.SourceSurveySparrow.Region.SourceSurveySparrowBaseURLEUBasedAccount != nil {
@@ -6884,7 +7117,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 				SourceSurveySparrowBaseURLGlobalAccount: sourceSurveySparrowBaseURLGlobalAccount,
 			}
 		}
-		sourceType156 := shared.SourceSurveySparrowSurveySparrowEnum(r.Configuration.SourceSurveySparrow.SourceType.ValueString())
+		sourceType158 := shared.SourceSurveySparrowSurveySparrowEnum(r.Configuration.SourceSurveySparrow.SourceType.ValueString())
 		surveyID := make([]interface{}, 0)
 		for _, surveyIDItem := range r.Configuration.SourceSurveySparrow.SurveyID {
 			var surveyIDTmp interface{}
@@ -6892,9 +7125,9 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			surveyID = append(surveyID, surveyIDTmp)
 		}
 		sourceSurveySparrow = &shared.SourceSurveySparrow{
-			AccessToken: accessToken31,
+			AccessToken: accessToken32,
 			Region:      region6,
-			SourceType:  sourceType156,
+			SourceType:  sourceType158,
 			SurveyID:    surveyID,
 		}
 	}
@@ -6905,27 +7138,27 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	}
 	var sourceSurveymonkey *shared.SourceSurveymonkey
 	if r.Configuration.SourceSurveymonkey != nil {
-		var credentials28 *shared.SourceSurveymonkeySurveyMonkeyAuthorizationMethod
+		var credentials29 *shared.SourceSurveymonkeySurveyMonkeyAuthorizationMethod
 		if r.Configuration.SourceSurveymonkey.Credentials != nil {
-			accessToken32 := r.Configuration.SourceSurveymonkey.Credentials.AccessToken.ValueString()
+			accessToken33 := r.Configuration.SourceSurveymonkey.Credentials.AccessToken.ValueString()
 			authMethod13 := shared.SourceSurveymonkeySurveyMonkeyAuthorizationMethodAuthMethodEnum(r.Configuration.SourceSurveymonkey.Credentials.AuthMethod.ValueString())
-			clientId37 := new(string)
+			clientId38 := new(string)
 			if !r.Configuration.SourceSurveymonkey.Credentials.ClientID.IsUnknown() && !r.Configuration.SourceSurveymonkey.Credentials.ClientID.IsNull() {
-				*clientId37 = r.Configuration.SourceSurveymonkey.Credentials.ClientID.ValueString()
+				*clientId38 = r.Configuration.SourceSurveymonkey.Credentials.ClientID.ValueString()
 			} else {
-				clientId37 = nil
+				clientId38 = nil
 			}
-			clientSecret37 := new(string)
+			clientSecret38 := new(string)
 			if !r.Configuration.SourceSurveymonkey.Credentials.ClientSecret.IsUnknown() && !r.Configuration.SourceSurveymonkey.Credentials.ClientSecret.IsNull() {
-				*clientSecret37 = r.Configuration.SourceSurveymonkey.Credentials.ClientSecret.ValueString()
+				*clientSecret38 = r.Configuration.SourceSurveymonkey.Credentials.ClientSecret.ValueString()
 			} else {
-				clientSecret37 = nil
+				clientSecret38 = nil
 			}
-			credentials28 = &shared.SourceSurveymonkeySurveyMonkeyAuthorizationMethod{
-				AccessToken:  accessToken32,
+			credentials29 = &shared.SourceSurveymonkeySurveyMonkeyAuthorizationMethod{
+				AccessToken:  accessToken33,
 				AuthMethod:   authMethod13,
-				ClientID:     clientId37,
-				ClientSecret: clientSecret37,
+				ClientID:     clientId38,
+				ClientSecret: clientSecret38,
 			}
 		}
 		origin := new(shared.SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccountEnum)
@@ -6934,17 +7167,17 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			origin = nil
 		}
-		sourceType157 := shared.SourceSurveymonkeySurveymonkeyEnum(r.Configuration.SourceSurveymonkey.SourceType.ValueString())
-		startDate68, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceSurveymonkey.StartDate.ValueString())
+		sourceType159 := shared.SourceSurveymonkeySurveymonkeyEnum(r.Configuration.SourceSurveymonkey.SourceType.ValueString())
+		startDate69, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceSurveymonkey.StartDate.ValueString())
 		surveyIds1 := make([]string, 0)
 		for _, surveyIdsItem1 := range r.Configuration.SourceSurveymonkey.SurveyIds {
 			surveyIds1 = append(surveyIds1, surveyIdsItem1.ValueString())
 		}
 		sourceSurveymonkey = &shared.SourceSurveymonkey{
-			Credentials: credentials28,
+			Credentials: credentials29,
 			Origin:      origin,
-			SourceType:  sourceType157,
-			StartDate:   startDate68,
+			SourceType:  sourceType159,
+			StartDate:   startDate69,
 			SurveyIds:   surveyIds1,
 		}
 	}
@@ -6956,10 +7189,10 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	var sourceTempo *shared.SourceTempo
 	if r.Configuration.SourceTempo != nil {
 		apiToken12 := r.Configuration.SourceTempo.APIToken.ValueString()
-		sourceType158 := shared.SourceTempoTempoEnum(r.Configuration.SourceTempo.SourceType.ValueString())
+		sourceType160 := shared.SourceTempoTempoEnum(r.Configuration.SourceTempo.SourceType.ValueString())
 		sourceTempo = &shared.SourceTempo{
 			APIToken:   apiToken12,
-			SourceType: sourceType158,
+			SourceType: sourceType160,
 		}
 	}
 	if sourceTempo != nil {
@@ -6988,8 +7221,8 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			section = nil
 		}
-		sourceType159 := shared.SourceTheGuardianAPITheGuardianAPIEnum(r.Configuration.SourceTheGuardianAPI.SourceType.ValueString())
-		startDate69 := r.Configuration.SourceTheGuardianAPI.StartDate.ValueString()
+		sourceType161 := shared.SourceTheGuardianAPITheGuardianAPIEnum(r.Configuration.SourceTheGuardianAPI.SourceType.ValueString())
+		startDate70 := r.Configuration.SourceTheGuardianAPI.StartDate.ValueString()
 		tag1 := new(string)
 		if !r.Configuration.SourceTheGuardianAPI.Tag.IsUnknown() && !r.Configuration.SourceTheGuardianAPI.Tag.IsNull() {
 			*tag1 = r.Configuration.SourceTheGuardianAPI.Tag.ValueString()
@@ -7001,8 +7234,8 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			EndDate:    endDate12,
 			Query:      query3,
 			Section:    section,
-			SourceType: sourceType159,
-			StartDate:  startDate69,
+			SourceType: sourceType161,
+			StartDate:  startDate70,
 			Tag:        tag1,
 		}
 	}
@@ -7013,10 +7246,16 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	}
 	var sourceTiktokMarketing *shared.SourceTiktokMarketing
 	if r.Configuration.SourceTiktokMarketing != nil {
-		var credentials29 *shared.SourceTiktokMarketingAuthenticationMethod
+		attributionWindow1 := new(int64)
+		if !r.Configuration.SourceTiktokMarketing.AttributionWindow.IsUnknown() && !r.Configuration.SourceTiktokMarketing.AttributionWindow.IsNull() {
+			*attributionWindow1 = r.Configuration.SourceTiktokMarketing.AttributionWindow.ValueInt64()
+		} else {
+			attributionWindow1 = nil
+		}
+		var credentials30 *shared.SourceTiktokMarketingAuthenticationMethod
 		var sourceTiktokMarketingAuthenticationMethodOAuth20 *shared.SourceTiktokMarketingAuthenticationMethodOAuth20
 		if r.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodOAuth20 != nil {
-			accessToken33 := r.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodOAuth20.AccessToken.ValueString()
+			accessToken34 := r.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodOAuth20.AccessToken.ValueString()
 			advertiserID := new(string)
 			if !r.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodOAuth20.AdvertiserID.IsUnknown() && !r.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodOAuth20.AdvertiserID.IsNull() {
 				*advertiserID = r.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodOAuth20.AdvertiserID.ValueString()
@@ -7024,44 +7263,44 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 				advertiserID = nil
 			}
 			appId2 := r.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodOAuth20.AppID.ValueString()
-			authType37 := new(shared.SourceTiktokMarketingAuthenticationMethodOAuth20AuthTypeEnum)
+			authType38 := new(shared.SourceTiktokMarketingAuthenticationMethodOAuth20AuthTypeEnum)
 			if !r.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodOAuth20.AuthType.IsUnknown() && !r.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodOAuth20.AuthType.IsNull() {
-				*authType37 = shared.SourceTiktokMarketingAuthenticationMethodOAuth20AuthTypeEnum(r.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodOAuth20.AuthType.ValueString())
+				*authType38 = shared.SourceTiktokMarketingAuthenticationMethodOAuth20AuthTypeEnum(r.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodOAuth20.AuthType.ValueString())
 			} else {
-				authType37 = nil
+				authType38 = nil
 			}
 			secret2 := r.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodOAuth20.Secret.ValueString()
 			sourceTiktokMarketingAuthenticationMethodOAuth20 = &shared.SourceTiktokMarketingAuthenticationMethodOAuth20{
-				AccessToken:  accessToken33,
+				AccessToken:  accessToken34,
 				AdvertiserID: advertiserID,
 				AppID:        appId2,
-				AuthType:     authType37,
+				AuthType:     authType38,
 				Secret:       secret2,
 			}
 		}
 		if sourceTiktokMarketingAuthenticationMethodOAuth20 != nil {
-			credentials29 = &shared.SourceTiktokMarketingAuthenticationMethod{
+			credentials30 = &shared.SourceTiktokMarketingAuthenticationMethod{
 				SourceTiktokMarketingAuthenticationMethodOAuth20: sourceTiktokMarketingAuthenticationMethodOAuth20,
 			}
 		}
 		var sourceTiktokMarketingAuthenticationMethodSandboxAccessToken *shared.SourceTiktokMarketingAuthenticationMethodSandboxAccessToken
 		if r.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodSandboxAccessToken != nil {
-			accessToken34 := r.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodSandboxAccessToken.AccessToken.ValueString()
+			accessToken35 := r.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodSandboxAccessToken.AccessToken.ValueString()
 			advertiserId1 := r.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodSandboxAccessToken.AdvertiserID.ValueString()
-			authType38 := new(shared.SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthTypeEnum)
+			authType39 := new(shared.SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthTypeEnum)
 			if !r.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodSandboxAccessToken.AuthType.IsUnknown() && !r.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodSandboxAccessToken.AuthType.IsNull() {
-				*authType38 = shared.SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthTypeEnum(r.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodSandboxAccessToken.AuthType.ValueString())
+				*authType39 = shared.SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthTypeEnum(r.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodSandboxAccessToken.AuthType.ValueString())
 			} else {
-				authType38 = nil
+				authType39 = nil
 			}
 			sourceTiktokMarketingAuthenticationMethodSandboxAccessToken = &shared.SourceTiktokMarketingAuthenticationMethodSandboxAccessToken{
-				AccessToken:  accessToken34,
+				AccessToken:  accessToken35,
 				AdvertiserID: advertiserId1,
-				AuthType:     authType38,
+				AuthType:     authType39,
 			}
 		}
 		if sourceTiktokMarketingAuthenticationMethodSandboxAccessToken != nil {
-			credentials29 = &shared.SourceTiktokMarketingAuthenticationMethod{
+			credentials30 = &shared.SourceTiktokMarketingAuthenticationMethod{
 				SourceTiktokMarketingAuthenticationMethodSandboxAccessToken: sourceTiktokMarketingAuthenticationMethodSandboxAccessToken,
 			}
 		}
@@ -7071,25 +7310,19 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			endDate13 = nil
 		}
-		reportGranularity := new(shared.SourceTiktokMarketingReportAggregationGranularityEnum)
-		if !r.Configuration.SourceTiktokMarketing.ReportGranularity.IsUnknown() && !r.Configuration.SourceTiktokMarketing.ReportGranularity.IsNull() {
-			*reportGranularity = shared.SourceTiktokMarketingReportAggregationGranularityEnum(r.Configuration.SourceTiktokMarketing.ReportGranularity.ValueString())
-		} else {
-			reportGranularity = nil
-		}
-		sourceType160 := shared.SourceTiktokMarketingTiktokMarketingEnum(r.Configuration.SourceTiktokMarketing.SourceType.ValueString())
-		startDate70 := new(customTypes.Date)
+		sourceType162 := shared.SourceTiktokMarketingTiktokMarketingEnum(r.Configuration.SourceTiktokMarketing.SourceType.ValueString())
+		startDate71 := new(customTypes.Date)
 		if !r.Configuration.SourceTiktokMarketing.StartDate.IsUnknown() && !r.Configuration.SourceTiktokMarketing.StartDate.IsNull() {
-			*startDate70, _ = customTypes.NewDate(r.Configuration.SourceTiktokMarketing.StartDate.ValueString())
+			*startDate71, _ = customTypes.NewDate(r.Configuration.SourceTiktokMarketing.StartDate.ValueString())
 		} else {
-			startDate70 = nil
+			startDate71 = nil
 		}
 		sourceTiktokMarketing = &shared.SourceTiktokMarketing{
-			Credentials:       credentials29,
+			AttributionWindow: attributionWindow1,
+			Credentials:       credentials30,
 			EndDate:           endDate13,
-			ReportGranularity: reportGranularity,
-			SourceType:        sourceType160,
-			StartDate:         startDate70,
+			SourceType:        sourceType162,
+			StartDate:         startDate71,
 		}
 	}
 	if sourceTiktokMarketing != nil {
@@ -7099,10 +7332,10 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	}
 	var sourceTodoist *shared.SourceTodoist
 	if r.Configuration.SourceTodoist != nil {
-		sourceType161 := shared.SourceTodoistTodoistEnum(r.Configuration.SourceTodoist.SourceType.ValueString())
+		sourceType163 := shared.SourceTodoistTodoistEnum(r.Configuration.SourceTodoist.SourceType.ValueString())
 		token5 := r.Configuration.SourceTodoist.Token.ValueString()
 		sourceTodoist = &shared.SourceTodoist{
-			SourceType: sourceType161,
+			SourceType: sourceType163,
 			Token:      token5,
 		}
 	}
@@ -7118,14 +7351,14 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			boardIds = append(boardIds, boardIdsItem.ValueString())
 		}
 		key1 := r.Configuration.SourceTrello.Key.ValueString()
-		sourceType162 := shared.SourceTrelloTrelloEnum(r.Configuration.SourceTrello.SourceType.ValueString())
-		startDate71, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceTrello.StartDate.ValueString())
+		sourceType164 := shared.SourceTrelloTrelloEnum(r.Configuration.SourceTrello.SourceType.ValueString())
+		startDate72, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceTrello.StartDate.ValueString())
 		token6 := r.Configuration.SourceTrello.Token.ValueString()
 		sourceTrello = &shared.SourceTrello{
 			BoardIds:   boardIds,
 			Key:        key1,
-			SourceType: sourceType162,
-			StartDate:  startDate71,
+			SourceType: sourceType164,
+			StartDate:  startDate72,
 			Token:      token6,
 		}
 	}
@@ -7140,60 +7373,60 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		for _, businessUnitsItem := range r.Configuration.SourceTrustpilot.BusinessUnits {
 			businessUnits = append(businessUnits, businessUnitsItem.ValueString())
 		}
-		var credentials30 shared.SourceTrustpilotAuthorizationMethod
+		var credentials31 shared.SourceTrustpilotAuthorizationMethod
 		var sourceTrustpilotAuthorizationMethodOAuth20 *shared.SourceTrustpilotAuthorizationMethodOAuth20
 		if r.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodOAuth20 != nil {
-			accessToken35 := r.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.AccessToken.ValueString()
-			authType39 := new(shared.SourceTrustpilotAuthorizationMethodOAuth20AuthTypeEnum)
+			accessToken36 := r.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.AccessToken.ValueString()
+			authType40 := new(shared.SourceTrustpilotAuthorizationMethodOAuth20AuthTypeEnum)
 			if !r.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.AuthType.IsUnknown() && !r.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.AuthType.IsNull() {
-				*authType39 = shared.SourceTrustpilotAuthorizationMethodOAuth20AuthTypeEnum(r.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.AuthType.ValueString())
+				*authType40 = shared.SourceTrustpilotAuthorizationMethodOAuth20AuthTypeEnum(r.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.AuthType.ValueString())
 			} else {
-				authType39 = nil
+				authType40 = nil
 			}
-			clientId38 := r.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.ClientID.ValueString()
-			clientSecret38 := r.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.ClientSecret.ValueString()
-			refreshToken29 := r.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.RefreshToken.ValueString()
-			tokenExpiryDate4, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.TokenExpiryDate.ValueString())
+			clientId39 := r.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.ClientID.ValueString()
+			clientSecret39 := r.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.ClientSecret.ValueString()
+			refreshToken30 := r.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.RefreshToken.ValueString()
+			tokenExpiryDate5, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.TokenExpiryDate.ValueString())
 			sourceTrustpilotAuthorizationMethodOAuth20 = &shared.SourceTrustpilotAuthorizationMethodOAuth20{
-				AccessToken:     accessToken35,
-				AuthType:        authType39,
-				ClientID:        clientId38,
-				ClientSecret:    clientSecret38,
-				RefreshToken:    refreshToken29,
-				TokenExpiryDate: tokenExpiryDate4,
+				AccessToken:     accessToken36,
+				AuthType:        authType40,
+				ClientID:        clientId39,
+				ClientSecret:    clientSecret39,
+				RefreshToken:    refreshToken30,
+				TokenExpiryDate: tokenExpiryDate5,
 			}
 		}
 		if sourceTrustpilotAuthorizationMethodOAuth20 != nil {
-			credentials30 = shared.SourceTrustpilotAuthorizationMethod{
+			credentials31 = shared.SourceTrustpilotAuthorizationMethod{
 				SourceTrustpilotAuthorizationMethodOAuth20: sourceTrustpilotAuthorizationMethodOAuth20,
 			}
 		}
 		var sourceTrustpilotAuthorizationMethodAPIKey *shared.SourceTrustpilotAuthorizationMethodAPIKey
 		if r.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodAPIKey != nil {
-			authType40 := new(shared.SourceTrustpilotAuthorizationMethodAPIKeyAuthTypeEnum)
+			authType41 := new(shared.SourceTrustpilotAuthorizationMethodAPIKeyAuthTypeEnum)
 			if !r.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodAPIKey.AuthType.IsUnknown() && !r.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodAPIKey.AuthType.IsNull() {
-				*authType40 = shared.SourceTrustpilotAuthorizationMethodAPIKeyAuthTypeEnum(r.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodAPIKey.AuthType.ValueString())
+				*authType41 = shared.SourceTrustpilotAuthorizationMethodAPIKeyAuthTypeEnum(r.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodAPIKey.AuthType.ValueString())
 			} else {
-				authType40 = nil
+				authType41 = nil
 			}
-			clientId39 := r.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodAPIKey.ClientID.ValueString()
+			clientId40 := r.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodAPIKey.ClientID.ValueString()
 			sourceTrustpilotAuthorizationMethodAPIKey = &shared.SourceTrustpilotAuthorizationMethodAPIKey{
-				AuthType: authType40,
-				ClientID: clientId39,
+				AuthType: authType41,
+				ClientID: clientId40,
 			}
 		}
 		if sourceTrustpilotAuthorizationMethodAPIKey != nil {
-			credentials30 = shared.SourceTrustpilotAuthorizationMethod{
+			credentials31 = shared.SourceTrustpilotAuthorizationMethod{
 				SourceTrustpilotAuthorizationMethodAPIKey: sourceTrustpilotAuthorizationMethodAPIKey,
 			}
 		}
-		sourceType163 := shared.SourceTrustpilotTrustpilotEnum(r.Configuration.SourceTrustpilot.SourceType.ValueString())
-		startDate72 := r.Configuration.SourceTrustpilot.StartDate.ValueString()
+		sourceType165 := shared.SourceTrustpilotTrustpilotEnum(r.Configuration.SourceTrustpilot.SourceType.ValueString())
+		startDate73 := r.Configuration.SourceTrustpilot.StartDate.ValueString()
 		sourceTrustpilot = &shared.SourceTrustpilot{
 			BusinessUnits: businessUnits,
-			Credentials:   credentials30,
-			SourceType:    sourceType163,
-			StartDate:     startDate72,
+			Credentials:   credentials31,
+			SourceType:    sourceType165,
+			StartDate:     startDate73,
 		}
 	}
 	if sourceTrustpilot != nil {
@@ -7210,8 +7443,8 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			endDate14 = nil
 		}
-		sourceType164 := shared.SourceTvmazeScheduleTvmazeScheduleEnum(r.Configuration.SourceTvmazeSchedule.SourceType.ValueString())
-		startDate73 := r.Configuration.SourceTvmazeSchedule.StartDate.ValueString()
+		sourceType166 := shared.SourceTvmazeScheduleTvmazeScheduleEnum(r.Configuration.SourceTvmazeSchedule.SourceType.ValueString())
+		startDate74 := r.Configuration.SourceTvmazeSchedule.StartDate.ValueString()
 		webScheduleCountryCode := new(string)
 		if !r.Configuration.SourceTvmazeSchedule.WebScheduleCountryCode.IsUnknown() && !r.Configuration.SourceTvmazeSchedule.WebScheduleCountryCode.IsNull() {
 			*webScheduleCountryCode = r.Configuration.SourceTvmazeSchedule.WebScheduleCountryCode.ValueString()
@@ -7221,8 +7454,8 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		sourceTvmazeSchedule = &shared.SourceTvmazeSchedule{
 			DomesticScheduleCountryCode: domesticScheduleCountryCode,
 			EndDate:                     endDate14,
-			SourceType:                  sourceType164,
-			StartDate:                   startDate73,
+			SourceType:                  sourceType166,
+			StartDate:                   startDate74,
 			WebScheduleCountryCode:      webScheduleCountryCode,
 		}
 	}
@@ -7241,14 +7474,14 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			lookbackWindow1 = nil
 		}
-		sourceType165 := shared.SourceTwilioTwilioEnum(r.Configuration.SourceTwilio.SourceType.ValueString())
-		startDate74, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceTwilio.StartDate.ValueString())
+		sourceType167 := shared.SourceTwilioTwilioEnum(r.Configuration.SourceTwilio.SourceType.ValueString())
+		startDate75, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceTwilio.StartDate.ValueString())
 		sourceTwilio = &shared.SourceTwilio{
 			AccountSid:     accountSid,
 			AuthToken:      authToken2,
 			LookbackWindow: lookbackWindow1,
-			SourceType:     sourceType165,
-			StartDate:      startDate74,
+			SourceType:     sourceType167,
+			StartDate:      startDate75,
 		}
 	}
 	if sourceTwilio != nil {
@@ -7260,11 +7493,11 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	if r.Configuration.SourceTwilioTaskrouter != nil {
 		accountSid1 := r.Configuration.SourceTwilioTaskrouter.AccountSid.ValueString()
 		authToken3 := r.Configuration.SourceTwilioTaskrouter.AuthToken.ValueString()
-		sourceType166 := shared.SourceTwilioTaskrouterTwilioTaskrouterEnum(r.Configuration.SourceTwilioTaskrouter.SourceType.ValueString())
+		sourceType168 := shared.SourceTwilioTaskrouterTwilioTaskrouterEnum(r.Configuration.SourceTwilioTaskrouter.SourceType.ValueString())
 		sourceTwilioTaskrouter = &shared.SourceTwilioTaskrouter{
 			AccountSid: accountSid1,
 			AuthToken:  authToken3,
-			SourceType: sourceType166,
+			SourceType: sourceType168,
 		}
 	}
 	if sourceTwilioTaskrouter != nil {
@@ -7282,19 +7515,19 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			endDate15 = nil
 		}
 		query4 := r.Configuration.SourceTwitter.Query.ValueString()
-		sourceType167 := shared.SourceTwitterTwitterEnum(r.Configuration.SourceTwitter.SourceType.ValueString())
-		startDate75 := new(time.Time)
+		sourceType169 := shared.SourceTwitterTwitterEnum(r.Configuration.SourceTwitter.SourceType.ValueString())
+		startDate76 := new(time.Time)
 		if !r.Configuration.SourceTwitter.StartDate.IsUnknown() && !r.Configuration.SourceTwitter.StartDate.IsNull() {
-			*startDate75, _ = time.Parse(time.RFC3339Nano, r.Configuration.SourceTwitter.StartDate.ValueString())
+			*startDate76, _ = time.Parse(time.RFC3339Nano, r.Configuration.SourceTwitter.StartDate.ValueString())
 		} else {
-			startDate75 = nil
+			startDate76 = nil
 		}
 		sourceTwitter = &shared.SourceTwitter{
 			APIKey:     apiKey46,
 			EndDate:    endDate15,
 			Query:      query4,
-			SourceType: sourceType167,
-			StartDate:  startDate75,
+			SourceType: sourceType169,
+			StartDate:  startDate76,
 		}
 	}
 	if sourceTwitter != nil {
@@ -7308,13 +7541,13 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		for _, formIdsItem := range r.Configuration.SourceTypeform.FormIds {
 			formIds = append(formIds, formIdsItem.ValueString())
 		}
-		sourceType168 := shared.SourceTypeformTypeformEnum(r.Configuration.SourceTypeform.SourceType.ValueString())
-		startDate76, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceTypeform.StartDate.ValueString())
+		sourceType170 := shared.SourceTypeformTypeformEnum(r.Configuration.SourceTypeform.SourceType.ValueString())
+		startDate77, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceTypeform.StartDate.ValueString())
 		token7 := r.Configuration.SourceTypeform.Token.ValueString()
 		sourceTypeform = &shared.SourceTypeform{
 			FormIds:    formIds,
-			SourceType: sourceType168,
-			StartDate:  startDate76,
+			SourceType: sourceType170,
+			StartDate:  startDate77,
 			Token:      token7,
 		}
 	}
@@ -7333,12 +7566,12 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			queryParams = nil
 		}
 		queryPath := r.Configuration.SourceUsCensus.QueryPath.ValueString()
-		sourceType169 := shared.SourceUsCensusUsCensusEnum(r.Configuration.SourceUsCensus.SourceType.ValueString())
+		sourceType171 := shared.SourceUsCensusUsCensusEnum(r.Configuration.SourceUsCensus.SourceType.ValueString())
 		sourceUsCensus = &shared.SourceUsCensus{
 			APIKey:      apiKey47,
 			QueryParams: queryParams,
 			QueryPath:   queryPath,
-			SourceType:  sourceType169,
+			SourceType:  sourceType171,
 		}
 	}
 	if sourceUsCensus != nil {
@@ -7348,11 +7581,11 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	}
 	var sourceVantage *shared.SourceVantage
 	if r.Configuration.SourceVantage != nil {
-		accessToken36 := r.Configuration.SourceVantage.AccessToken.ValueString()
-		sourceType170 := shared.SourceVantageVantageEnum(r.Configuration.SourceVantage.SourceType.ValueString())
+		accessToken37 := r.Configuration.SourceVantage.AccessToken.ValueString()
+		sourceType172 := shared.SourceVantageVantageEnum(r.Configuration.SourceVantage.SourceType.ValueString())
 		sourceVantage = &shared.SourceVantage{
-			AccessToken: accessToken36,
-			SourceType:  sourceType170,
+			AccessToken: accessToken37,
+			SourceType:  sourceType172,
 		}
 	}
 	if sourceVantage != nil {
@@ -7364,11 +7597,11 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	if r.Configuration.SourceWebflow != nil {
 		apiKey48 := r.Configuration.SourceWebflow.APIKey.ValueString()
 		siteID := r.Configuration.SourceWebflow.SiteID.ValueString()
-		sourceType171 := shared.SourceWebflowWebflowEnum(r.Configuration.SourceWebflow.SourceType.ValueString())
+		sourceType173 := shared.SourceWebflowWebflowEnum(r.Configuration.SourceWebflow.SourceType.ValueString())
 		sourceWebflow = &shared.SourceWebflow{
 			APIKey:     apiKey48,
 			SiteID:     siteID,
-			SourceType: sourceType171,
+			SourceType: sourceType173,
 		}
 	}
 	if sourceWebflow != nil {
@@ -7378,9 +7611,9 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	}
 	var sourceWhiskyHunter *shared.SourceWhiskyHunter
 	if r.Configuration.SourceWhiskyHunter != nil {
-		sourceType172 := shared.SourceWhiskyHunterWhiskyHunterEnum(r.Configuration.SourceWhiskyHunter.SourceType.ValueString())
+		sourceType174 := shared.SourceWhiskyHunterWhiskyHunterEnum(r.Configuration.SourceWhiskyHunter.SourceType.ValueString())
 		sourceWhiskyHunter = &shared.SourceWhiskyHunter{
-			SourceType: sourceType172,
+			SourceType: sourceType174,
 		}
 	}
 	if sourceWhiskyHunter != nil {
@@ -7396,7 +7629,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		country1 := r.Configuration.SourceWikipediaPageviews.Country.ValueString()
 		end := r.Configuration.SourceWikipediaPageviews.End.ValueString()
 		project1 := r.Configuration.SourceWikipediaPageviews.Project.ValueString()
-		sourceType173 := shared.SourceWikipediaPageviewsWikipediaPageviewsEnum(r.Configuration.SourceWikipediaPageviews.SourceType.ValueString())
+		sourceType175 := shared.SourceWikipediaPageviewsWikipediaPageviewsEnum(r.Configuration.SourceWikipediaPageviews.SourceType.ValueString())
 		start := r.Configuration.SourceWikipediaPageviews.Start.ValueString()
 		sourceWikipediaPageviews = &shared.SourceWikipediaPageviews{
 			Access:     access,
@@ -7405,7 +7638,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			Country:    country1,
 			End:        end,
 			Project:    project1,
-			SourceType: sourceType173,
+			SourceType: sourceType175,
 			Start:      start,
 		}
 	}
@@ -7419,14 +7652,14 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		apiKey49 := r.Configuration.SourceWoocommerce.APIKey.ValueString()
 		apiSecret1 := r.Configuration.SourceWoocommerce.APISecret.ValueString()
 		shop1 := r.Configuration.SourceWoocommerce.Shop.ValueString()
-		sourceType174 := shared.SourceWoocommerceWoocommerceEnum(r.Configuration.SourceWoocommerce.SourceType.ValueString())
-		startDate77, _ := customTypes.NewDate(r.Configuration.SourceWoocommerce.StartDate.ValueString())
+		sourceType176 := shared.SourceWoocommerceWoocommerceEnum(r.Configuration.SourceWoocommerce.SourceType.ValueString())
+		startDate78, _ := customTypes.NewDate(r.Configuration.SourceWoocommerce.StartDate.ValueString())
 		sourceWoocommerce = &shared.SourceWoocommerce{
 			APIKey:     apiKey49,
 			APISecret:  apiSecret1,
 			Shop:       shop1,
-			SourceType: sourceType174,
-			StartDate:  startDate77,
+			SourceType: sourceType176,
+			StartDate:  startDate78,
 		}
 	}
 	if sourceWoocommerce != nil {
@@ -7436,25 +7669,25 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	}
 	var sourceXero *shared.SourceXero
 	if r.Configuration.SourceXero != nil {
-		accessToken37 := r.Configuration.SourceXero.Authentication.AccessToken.ValueString()
-		clientId40 := r.Configuration.SourceXero.Authentication.ClientID.ValueString()
-		clientSecret39 := r.Configuration.SourceXero.Authentication.ClientSecret.ValueString()
-		refreshToken30 := r.Configuration.SourceXero.Authentication.RefreshToken.ValueString()
-		tokenExpiryDate5 := r.Configuration.SourceXero.Authentication.TokenExpiryDate.ValueString()
+		accessToken38 := r.Configuration.SourceXero.Authentication.AccessToken.ValueString()
+		clientId41 := r.Configuration.SourceXero.Authentication.ClientID.ValueString()
+		clientSecret40 := r.Configuration.SourceXero.Authentication.ClientSecret.ValueString()
+		refreshToken31 := r.Configuration.SourceXero.Authentication.RefreshToken.ValueString()
+		tokenExpiryDate6 := r.Configuration.SourceXero.Authentication.TokenExpiryDate.ValueString()
 		authentication := shared.SourceXeroAuthenticateViaXeroOAuth{
-			AccessToken:     accessToken37,
-			ClientID:        clientId40,
-			ClientSecret:    clientSecret39,
-			RefreshToken:    refreshToken30,
-			TokenExpiryDate: tokenExpiryDate5,
+			AccessToken:     accessToken38,
+			ClientID:        clientId41,
+			ClientSecret:    clientSecret40,
+			RefreshToken:    refreshToken31,
+			TokenExpiryDate: tokenExpiryDate6,
 		}
-		sourceType175 := shared.SourceXeroXeroEnum(r.Configuration.SourceXero.SourceType.ValueString())
-		startDate78, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceXero.StartDate.ValueString())
+		sourceType177 := shared.SourceXeroXeroEnum(r.Configuration.SourceXero.SourceType.ValueString())
+		startDate79, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceXero.StartDate.ValueString())
 		tenantId3 := r.Configuration.SourceXero.TenantID.ValueString()
 		sourceXero = &shared.SourceXero{
 			Authentication: authentication,
-			SourceType:     sourceType175,
-			StartDate:      startDate78,
+			SourceType:     sourceType177,
+			StartDate:      startDate79,
 			TenantID:       tenantId3,
 		}
 	}
@@ -7465,9 +7698,9 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	}
 	var sourceXkcd *shared.SourceXkcd
 	if r.Configuration.SourceXkcd != nil {
-		sourceType176 := shared.SourceXkcdXkcdEnum(r.Configuration.SourceXkcd.SourceType.ValueString())
+		sourceType178 := shared.SourceXkcdXkcdEnum(r.Configuration.SourceXkcd.SourceType.ValueString())
 		sourceXkcd = &shared.SourceXkcd{
-			SourceType: sourceType176,
+			SourceType: sourceType178,
 		}
 	}
 	if sourceXkcd != nil {
@@ -7485,14 +7718,14 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			endDate16 = nil
 		}
-		sourceType177 := shared.SourceYandexMetricaYandexMetricaEnum(r.Configuration.SourceYandexMetrica.SourceType.ValueString())
-		startDate79, _ := customTypes.NewDate(r.Configuration.SourceYandexMetrica.StartDate.ValueString())
+		sourceType179 := shared.SourceYandexMetricaYandexMetricaEnum(r.Configuration.SourceYandexMetrica.SourceType.ValueString())
+		startDate80, _ := customTypes.NewDate(r.Configuration.SourceYandexMetrica.StartDate.ValueString())
 		sourceYandexMetrica = &shared.SourceYandexMetrica{
 			AuthToken:  authToken4,
 			CounterID:  counterID,
 			EndDate:    endDate16,
-			SourceType: sourceType177,
-			StartDate:  startDate79,
+			SourceType: sourceType179,
+			StartDate:  startDate80,
 		}
 	}
 	if sourceYandexMetrica != nil {
@@ -7510,13 +7743,13 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			playground1 = nil
 		}
-		sourceType178 := shared.SourceYouniumYouniumEnum(r.Configuration.SourceYounium.SourceType.ValueString())
+		sourceType180 := shared.SourceYouniumYouniumEnum(r.Configuration.SourceYounium.SourceType.ValueString())
 		username14 := r.Configuration.SourceYounium.Username.ValueString()
 		sourceYounium = &shared.SourceYounium{
 			LegalEntity: legalEntity,
 			Password:    password18,
 			Playground:  playground1,
-			SourceType:  sourceType178,
+			SourceType:  sourceType180,
 			Username:    username14,
 		}
 	}
@@ -7527,18 +7760,25 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	}
 	var sourceYoutubeAnalytics *shared.SourceYoutubeAnalytics
 	if r.Configuration.SourceYoutubeAnalytics != nil {
-		clientId41 := r.Configuration.SourceYoutubeAnalytics.Credentials.ClientID.ValueString()
-		clientSecret40 := r.Configuration.SourceYoutubeAnalytics.Credentials.ClientSecret.ValueString()
-		refreshToken31 := r.Configuration.SourceYoutubeAnalytics.Credentials.RefreshToken.ValueString()
-		credentials31 := shared.SourceYoutubeAnalyticsAuthenticateViaOAuth20{
-			ClientID:     clientId41,
-			ClientSecret: clientSecret40,
-			RefreshToken: refreshToken31,
+		clientId42 := r.Configuration.SourceYoutubeAnalytics.Credentials.ClientID.ValueString()
+		clientSecret41 := r.Configuration.SourceYoutubeAnalytics.Credentials.ClientSecret.ValueString()
+		refreshToken32 := r.Configuration.SourceYoutubeAnalytics.Credentials.RefreshToken.ValueString()
+		additionalProperties18 := make(map[string]interface{})
+		for additionalPropertiesKey18, additionalPropertiesValue18 := range r.Configuration.SourceYoutubeAnalytics.Credentials.AdditionalProperties {
+			var additionalPropertiesInst18 interface{}
+			_ = json.Unmarshal([]byte(additionalPropertiesValue18.ValueString()), &additionalPropertiesInst18)
+			additionalProperties18[additionalPropertiesKey18] = additionalPropertiesInst18
 		}
-		sourceType179 := shared.SourceYoutubeAnalyticsYoutubeAnalyticsEnum(r.Configuration.SourceYoutubeAnalytics.SourceType.ValueString())
+		credentials32 := shared.SourceYoutubeAnalyticsAuthenticateViaOAuth20{
+			ClientID:             clientId42,
+			ClientSecret:         clientSecret41,
+			RefreshToken:         refreshToken32,
+			AdditionalProperties: additionalProperties18,
+		}
+		sourceType181 := shared.SourceYoutubeAnalyticsYoutubeAnalyticsEnum(r.Configuration.SourceYoutubeAnalytics.SourceType.ValueString())
 		sourceYoutubeAnalytics = &shared.SourceYoutubeAnalytics{
-			Credentials: credentials31,
-			SourceType:  sourceType179,
+			Credentials: credentials32,
+			SourceType:  sourceType181,
 		}
 	}
 	if sourceYoutubeAnalytics != nil {
@@ -7548,63 +7788,63 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	}
 	var sourceZendeskChat *shared.SourceZendeskChat
 	if r.Configuration.SourceZendeskChat != nil {
-		var credentials32 *shared.SourceZendeskChatAuthorizationMethod
+		var credentials33 *shared.SourceZendeskChatAuthorizationMethod
 		var sourceZendeskChatAuthorizationMethodOAuth20 *shared.SourceZendeskChatAuthorizationMethodOAuth20
 		if r.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodOAuth20 != nil {
-			accessToken38 := new(string)
+			accessToken39 := new(string)
 			if !r.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.AccessToken.IsUnknown() && !r.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.AccessToken.IsNull() {
-				*accessToken38 = r.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.AccessToken.ValueString()
+				*accessToken39 = r.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.AccessToken.ValueString()
 			} else {
-				accessToken38 = nil
+				accessToken39 = nil
 			}
-			clientId42 := new(string)
+			clientId43 := new(string)
 			if !r.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.ClientID.IsUnknown() && !r.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.ClientID.IsNull() {
-				*clientId42 = r.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.ClientID.ValueString()
+				*clientId43 = r.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.ClientID.ValueString()
 			} else {
-				clientId42 = nil
+				clientId43 = nil
 			}
-			clientSecret41 := new(string)
+			clientSecret42 := new(string)
 			if !r.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.ClientSecret.IsUnknown() && !r.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.ClientSecret.IsNull() {
-				*clientSecret41 = r.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.ClientSecret.ValueString()
+				*clientSecret42 = r.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.ClientSecret.ValueString()
 			} else {
-				clientSecret41 = nil
+				clientSecret42 = nil
 			}
-			credentials33 := shared.SourceZendeskChatAuthorizationMethodOAuth20CredentialsEnum(r.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.Credentials.ValueString())
-			refreshToken32 := new(string)
+			credentials34 := shared.SourceZendeskChatAuthorizationMethodOAuth20CredentialsEnum(r.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.Credentials.ValueString())
+			refreshToken33 := new(string)
 			if !r.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.RefreshToken.IsUnknown() && !r.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.RefreshToken.IsNull() {
-				*refreshToken32 = r.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.RefreshToken.ValueString()
+				*refreshToken33 = r.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.RefreshToken.ValueString()
 			} else {
-				refreshToken32 = nil
+				refreshToken33 = nil
 			}
 			sourceZendeskChatAuthorizationMethodOAuth20 = &shared.SourceZendeskChatAuthorizationMethodOAuth20{
-				AccessToken:  accessToken38,
-				ClientID:     clientId42,
-				ClientSecret: clientSecret41,
-				Credentials:  credentials33,
-				RefreshToken: refreshToken32,
+				AccessToken:  accessToken39,
+				ClientID:     clientId43,
+				ClientSecret: clientSecret42,
+				Credentials:  credentials34,
+				RefreshToken: refreshToken33,
 			}
 		}
 		if sourceZendeskChatAuthorizationMethodOAuth20 != nil {
-			credentials32 = &shared.SourceZendeskChatAuthorizationMethod{
+			credentials33 = &shared.SourceZendeskChatAuthorizationMethod{
 				SourceZendeskChatAuthorizationMethodOAuth20: sourceZendeskChatAuthorizationMethodOAuth20,
 			}
 		}
 		var sourceZendeskChatAuthorizationMethodAccessToken *shared.SourceZendeskChatAuthorizationMethodAccessToken
 		if r.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodAccessToken != nil {
-			accessToken39 := r.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodAccessToken.AccessToken.ValueString()
-			credentials34 := shared.SourceZendeskChatAuthorizationMethodAccessTokenCredentialsEnum(r.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodAccessToken.Credentials.ValueString())
+			accessToken40 := r.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodAccessToken.AccessToken.ValueString()
+			credentials35 := shared.SourceZendeskChatAuthorizationMethodAccessTokenCredentialsEnum(r.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodAccessToken.Credentials.ValueString())
 			sourceZendeskChatAuthorizationMethodAccessToken = &shared.SourceZendeskChatAuthorizationMethodAccessToken{
-				AccessToken: accessToken39,
-				Credentials: credentials34,
+				AccessToken: accessToken40,
+				Credentials: credentials35,
 			}
 		}
 		if sourceZendeskChatAuthorizationMethodAccessToken != nil {
-			credentials32 = &shared.SourceZendeskChatAuthorizationMethod{
+			credentials33 = &shared.SourceZendeskChatAuthorizationMethod{
 				SourceZendeskChatAuthorizationMethodAccessToken: sourceZendeskChatAuthorizationMethodAccessToken,
 			}
 		}
-		sourceType180 := shared.SourceZendeskChatZendeskChatEnum(r.Configuration.SourceZendeskChat.SourceType.ValueString())
-		startDate80, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceZendeskChat.StartDate.ValueString())
+		sourceType182 := shared.SourceZendeskChatZendeskChatEnum(r.Configuration.SourceZendeskChat.SourceType.ValueString())
+		startDate81, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceZendeskChat.StartDate.ValueString())
 		subdomain2 := new(string)
 		if !r.Configuration.SourceZendeskChat.Subdomain.IsUnknown() && !r.Configuration.SourceZendeskChat.Subdomain.IsNull() {
 			*subdomain2 = r.Configuration.SourceZendeskChat.Subdomain.ValueString()
@@ -7612,9 +7852,9 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			subdomain2 = nil
 		}
 		sourceZendeskChat = &shared.SourceZendeskChat{
-			Credentials: credentials32,
-			SourceType:  sourceType180,
-			StartDate:   startDate80,
+			Credentials: credentials33,
+			SourceType:  sourceType182,
+			StartDate:   startDate81,
 			Subdomain:   subdomain2,
 		}
 	}
@@ -7625,22 +7865,22 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	}
 	var sourceZendeskSunshine *shared.SourceZendeskSunshine
 	if r.Configuration.SourceZendeskSunshine != nil {
-		var credentials35 *shared.SourceZendeskSunshineAuthorizationMethod
+		var credentials36 *shared.SourceZendeskSunshineAuthorizationMethod
 		var sourceZendeskSunshineAuthorizationMethodOAuth20 *shared.SourceZendeskSunshineAuthorizationMethodOAuth20
 		if r.Configuration.SourceZendeskSunshine.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20 != nil {
-			accessToken40 := r.Configuration.SourceZendeskSunshine.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20.AccessToken.ValueString()
+			accessToken41 := r.Configuration.SourceZendeskSunshine.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20.AccessToken.ValueString()
 			authMethod14 := shared.SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethodEnum(r.Configuration.SourceZendeskSunshine.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20.AuthMethod.ValueString())
-			clientId43 := r.Configuration.SourceZendeskSunshine.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20.ClientID.ValueString()
-			clientSecret42 := r.Configuration.SourceZendeskSunshine.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20.ClientSecret.ValueString()
+			clientId44 := r.Configuration.SourceZendeskSunshine.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20.ClientID.ValueString()
+			clientSecret43 := r.Configuration.SourceZendeskSunshine.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20.ClientSecret.ValueString()
 			sourceZendeskSunshineAuthorizationMethodOAuth20 = &shared.SourceZendeskSunshineAuthorizationMethodOAuth20{
-				AccessToken:  accessToken40,
+				AccessToken:  accessToken41,
 				AuthMethod:   authMethod14,
-				ClientID:     clientId43,
-				ClientSecret: clientSecret42,
+				ClientID:     clientId44,
+				ClientSecret: clientSecret43,
 			}
 		}
 		if sourceZendeskSunshineAuthorizationMethodOAuth20 != nil {
-			credentials35 = &shared.SourceZendeskSunshineAuthorizationMethod{
+			credentials36 = &shared.SourceZendeskSunshineAuthorizationMethod{
 				SourceZendeskSunshineAuthorizationMethodOAuth20: sourceZendeskSunshineAuthorizationMethodOAuth20,
 			}
 		}
@@ -7656,17 +7896,17 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			}
 		}
 		if sourceZendeskSunshineAuthorizationMethodAPIToken != nil {
-			credentials35 = &shared.SourceZendeskSunshineAuthorizationMethod{
+			credentials36 = &shared.SourceZendeskSunshineAuthorizationMethod{
 				SourceZendeskSunshineAuthorizationMethodAPIToken: sourceZendeskSunshineAuthorizationMethodAPIToken,
 			}
 		}
-		sourceType181 := shared.SourceZendeskSunshineZendeskSunshineEnum(r.Configuration.SourceZendeskSunshine.SourceType.ValueString())
-		startDate81 := r.Configuration.SourceZendeskSunshine.StartDate.ValueString()
+		sourceType183 := shared.SourceZendeskSunshineZendeskSunshineEnum(r.Configuration.SourceZendeskSunshine.SourceType.ValueString())
+		startDate82 := r.Configuration.SourceZendeskSunshine.StartDate.ValueString()
 		subdomain3 := r.Configuration.SourceZendeskSunshine.Subdomain.ValueString()
 		sourceZendeskSunshine = &shared.SourceZendeskSunshine{
-			Credentials: credentials35,
-			SourceType:  sourceType181,
-			StartDate:   startDate81,
+			Credentials: credentials36,
+			SourceType:  sourceType183,
+			StartDate:   startDate82,
 			Subdomain:   subdomain3,
 		}
 	}
@@ -7677,44 +7917,58 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	}
 	var sourceZendeskSupport *shared.SourceZendeskSupport
 	if r.Configuration.SourceZendeskSupport != nil {
-		var credentials36 *shared.SourceZendeskSupportAuthentication
+		var credentials37 *shared.SourceZendeskSupportAuthentication
 		var sourceZendeskSupportAuthenticationOAuth20 *shared.SourceZendeskSupportAuthenticationOAuth20
 		if r.Configuration.SourceZendeskSupport.Credentials.SourceZendeskSupportAuthenticationOAuth20 != nil {
-			accessToken41 := r.Configuration.SourceZendeskSupport.Credentials.SourceZendeskSupportAuthenticationOAuth20.AccessToken.ValueString()
-			credentials37 := new(shared.SourceZendeskSupportAuthenticationOAuth20CredentialsEnum)
+			accessToken42 := r.Configuration.SourceZendeskSupport.Credentials.SourceZendeskSupportAuthenticationOAuth20.AccessToken.ValueString()
+			credentials38 := new(shared.SourceZendeskSupportAuthenticationOAuth20CredentialsEnum)
 			if !r.Configuration.SourceZendeskSupport.Credentials.SourceZendeskSupportAuthenticationOAuth20.Credentials.IsUnknown() && !r.Configuration.SourceZendeskSupport.Credentials.SourceZendeskSupportAuthenticationOAuth20.Credentials.IsNull() {
-				*credentials37 = shared.SourceZendeskSupportAuthenticationOAuth20CredentialsEnum(r.Configuration.SourceZendeskSupport.Credentials.SourceZendeskSupportAuthenticationOAuth20.Credentials.ValueString())
+				*credentials38 = shared.SourceZendeskSupportAuthenticationOAuth20CredentialsEnum(r.Configuration.SourceZendeskSupport.Credentials.SourceZendeskSupportAuthenticationOAuth20.Credentials.ValueString())
 			} else {
-				credentials37 = nil
+				credentials38 = nil
+			}
+			additionalProperties19 := make(map[string]interface{})
+			for additionalPropertiesKey19, additionalPropertiesValue19 := range r.Configuration.SourceZendeskSupport.Credentials.SourceZendeskSupportAuthenticationOAuth20.AdditionalProperties {
+				var additionalPropertiesInst19 interface{}
+				_ = json.Unmarshal([]byte(additionalPropertiesValue19.ValueString()), &additionalPropertiesInst19)
+				additionalProperties19[additionalPropertiesKey19] = additionalPropertiesInst19
 			}
 			sourceZendeskSupportAuthenticationOAuth20 = &shared.SourceZendeskSupportAuthenticationOAuth20{
-				AccessToken: accessToken41,
-				Credentials: credentials37,
+				AccessToken:          accessToken42,
+				Credentials:          credentials38,
+				AdditionalProperties: additionalProperties19,
 			}
 		}
 		if sourceZendeskSupportAuthenticationOAuth20 != nil {
-			credentials36 = &shared.SourceZendeskSupportAuthentication{
+			credentials37 = &shared.SourceZendeskSupportAuthentication{
 				SourceZendeskSupportAuthenticationOAuth20: sourceZendeskSupportAuthenticationOAuth20,
 			}
 		}
 		var sourceZendeskSupportAuthenticationAPIToken *shared.SourceZendeskSupportAuthenticationAPIToken
 		if r.Configuration.SourceZendeskSupport.Credentials.SourceZendeskSupportAuthenticationAPIToken != nil {
 			apiToken14 := r.Configuration.SourceZendeskSupport.Credentials.SourceZendeskSupportAuthenticationAPIToken.APIToken.ValueString()
-			credentials38 := new(shared.SourceZendeskSupportAuthenticationAPITokenCredentialsEnum)
+			credentials39 := new(shared.SourceZendeskSupportAuthenticationAPITokenCredentialsEnum)
 			if !r.Configuration.SourceZendeskSupport.Credentials.SourceZendeskSupportAuthenticationAPIToken.Credentials.IsUnknown() && !r.Configuration.SourceZendeskSupport.Credentials.SourceZendeskSupportAuthenticationAPIToken.Credentials.IsNull() {
-				*credentials38 = shared.SourceZendeskSupportAuthenticationAPITokenCredentialsEnum(r.Configuration.SourceZendeskSupport.Credentials.SourceZendeskSupportAuthenticationAPIToken.Credentials.ValueString())
+				*credentials39 = shared.SourceZendeskSupportAuthenticationAPITokenCredentialsEnum(r.Configuration.SourceZendeskSupport.Credentials.SourceZendeskSupportAuthenticationAPIToken.Credentials.ValueString())
 			} else {
-				credentials38 = nil
+				credentials39 = nil
 			}
 			email7 := r.Configuration.SourceZendeskSupport.Credentials.SourceZendeskSupportAuthenticationAPIToken.Email.ValueString()
+			additionalProperties20 := make(map[string]interface{})
+			for additionalPropertiesKey20, additionalPropertiesValue20 := range r.Configuration.SourceZendeskSupport.Credentials.SourceZendeskSupportAuthenticationAPIToken.AdditionalProperties {
+				var additionalPropertiesInst20 interface{}
+				_ = json.Unmarshal([]byte(additionalPropertiesValue20.ValueString()), &additionalPropertiesInst20)
+				additionalProperties20[additionalPropertiesKey20] = additionalPropertiesInst20
+			}
 			sourceZendeskSupportAuthenticationAPIToken = &shared.SourceZendeskSupportAuthenticationAPIToken{
-				APIToken:    apiToken14,
-				Credentials: credentials38,
-				Email:       email7,
+				APIToken:             apiToken14,
+				Credentials:          credentials39,
+				Email:                email7,
+				AdditionalProperties: additionalProperties20,
 			}
 		}
 		if sourceZendeskSupportAuthenticationAPIToken != nil {
-			credentials36 = &shared.SourceZendeskSupportAuthentication{
+			credentials37 = &shared.SourceZendeskSupportAuthentication{
 				SourceZendeskSupportAuthenticationAPIToken: sourceZendeskSupportAuthenticationAPIToken,
 			}
 		}
@@ -7724,14 +7978,14 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			ignorePagination = nil
 		}
-		sourceType182 := shared.SourceZendeskSupportZendeskSupportEnum(r.Configuration.SourceZendeskSupport.SourceType.ValueString())
-		startDate82, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceZendeskSupport.StartDate.ValueString())
+		sourceType184 := shared.SourceZendeskSupportZendeskSupportEnum(r.Configuration.SourceZendeskSupport.SourceType.ValueString())
+		startDate83, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceZendeskSupport.StartDate.ValueString())
 		subdomain4 := r.Configuration.SourceZendeskSupport.Subdomain.ValueString()
 		sourceZendeskSupport = &shared.SourceZendeskSupport{
-			Credentials:      credentials36,
+			Credentials:      credentials37,
 			IgnorePagination: ignorePagination,
-			SourceType:       sourceType182,
-			StartDate:        startDate82,
+			SourceType:       sourceType184,
+			StartDate:        startDate83,
 			Subdomain:        subdomain4,
 		}
 	}
@@ -7742,54 +7996,68 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	}
 	var sourceZendeskTalk *shared.SourceZendeskTalk
 	if r.Configuration.SourceZendeskTalk != nil {
-		var credentials39 *shared.SourceZendeskTalkAuthentication
+		var credentials40 *shared.SourceZendeskTalkAuthentication
 		var sourceZendeskTalkAuthenticationAPIToken *shared.SourceZendeskTalkAuthenticationAPIToken
 		if r.Configuration.SourceZendeskTalk.Credentials.SourceZendeskTalkAuthenticationAPIToken != nil {
 			apiToken15 := r.Configuration.SourceZendeskTalk.Credentials.SourceZendeskTalkAuthenticationAPIToken.APIToken.ValueString()
-			authType41 := new(shared.SourceZendeskTalkAuthenticationAPITokenAuthTypeEnum)
+			authType42 := new(shared.SourceZendeskTalkAuthenticationAPITokenAuthTypeEnum)
 			if !r.Configuration.SourceZendeskTalk.Credentials.SourceZendeskTalkAuthenticationAPIToken.AuthType.IsUnknown() && !r.Configuration.SourceZendeskTalk.Credentials.SourceZendeskTalkAuthenticationAPIToken.AuthType.IsNull() {
-				*authType41 = shared.SourceZendeskTalkAuthenticationAPITokenAuthTypeEnum(r.Configuration.SourceZendeskTalk.Credentials.SourceZendeskTalkAuthenticationAPIToken.AuthType.ValueString())
+				*authType42 = shared.SourceZendeskTalkAuthenticationAPITokenAuthTypeEnum(r.Configuration.SourceZendeskTalk.Credentials.SourceZendeskTalkAuthenticationAPIToken.AuthType.ValueString())
 			} else {
-				authType41 = nil
+				authType42 = nil
 			}
 			email8 := r.Configuration.SourceZendeskTalk.Credentials.SourceZendeskTalkAuthenticationAPIToken.Email.ValueString()
+			additionalProperties21 := make(map[string]interface{})
+			for additionalPropertiesKey21, additionalPropertiesValue21 := range r.Configuration.SourceZendeskTalk.Credentials.SourceZendeskTalkAuthenticationAPIToken.AdditionalProperties {
+				var additionalPropertiesInst21 interface{}
+				_ = json.Unmarshal([]byte(additionalPropertiesValue21.ValueString()), &additionalPropertiesInst21)
+				additionalProperties21[additionalPropertiesKey21] = additionalPropertiesInst21
+			}
 			sourceZendeskTalkAuthenticationAPIToken = &shared.SourceZendeskTalkAuthenticationAPIToken{
-				APIToken: apiToken15,
-				AuthType: authType41,
-				Email:    email8,
+				APIToken:             apiToken15,
+				AuthType:             authType42,
+				Email:                email8,
+				AdditionalProperties: additionalProperties21,
 			}
 		}
 		if sourceZendeskTalkAuthenticationAPIToken != nil {
-			credentials39 = &shared.SourceZendeskTalkAuthentication{
+			credentials40 = &shared.SourceZendeskTalkAuthentication{
 				SourceZendeskTalkAuthenticationAPIToken: sourceZendeskTalkAuthenticationAPIToken,
 			}
 		}
 		var sourceZendeskTalkAuthenticationOAuth20 *shared.SourceZendeskTalkAuthenticationOAuth20
 		if r.Configuration.SourceZendeskTalk.Credentials.SourceZendeskTalkAuthenticationOAuth20 != nil {
-			accessToken42 := r.Configuration.SourceZendeskTalk.Credentials.SourceZendeskTalkAuthenticationOAuth20.AccessToken.ValueString()
-			authType42 := new(shared.SourceZendeskTalkAuthenticationOAuth20AuthTypeEnum)
+			accessToken43 := r.Configuration.SourceZendeskTalk.Credentials.SourceZendeskTalkAuthenticationOAuth20.AccessToken.ValueString()
+			authType43 := new(shared.SourceZendeskTalkAuthenticationOAuth20AuthTypeEnum)
 			if !r.Configuration.SourceZendeskTalk.Credentials.SourceZendeskTalkAuthenticationOAuth20.AuthType.IsUnknown() && !r.Configuration.SourceZendeskTalk.Credentials.SourceZendeskTalkAuthenticationOAuth20.AuthType.IsNull() {
-				*authType42 = shared.SourceZendeskTalkAuthenticationOAuth20AuthTypeEnum(r.Configuration.SourceZendeskTalk.Credentials.SourceZendeskTalkAuthenticationOAuth20.AuthType.ValueString())
+				*authType43 = shared.SourceZendeskTalkAuthenticationOAuth20AuthTypeEnum(r.Configuration.SourceZendeskTalk.Credentials.SourceZendeskTalkAuthenticationOAuth20.AuthType.ValueString())
 			} else {
-				authType42 = nil
+				authType43 = nil
+			}
+			additionalProperties22 := make(map[string]interface{})
+			for additionalPropertiesKey22, additionalPropertiesValue22 := range r.Configuration.SourceZendeskTalk.Credentials.SourceZendeskTalkAuthenticationOAuth20.AdditionalProperties {
+				var additionalPropertiesInst22 interface{}
+				_ = json.Unmarshal([]byte(additionalPropertiesValue22.ValueString()), &additionalPropertiesInst22)
+				additionalProperties22[additionalPropertiesKey22] = additionalPropertiesInst22
 			}
 			sourceZendeskTalkAuthenticationOAuth20 = &shared.SourceZendeskTalkAuthenticationOAuth20{
-				AccessToken: accessToken42,
-				AuthType:    authType42,
+				AccessToken:          accessToken43,
+				AuthType:             authType43,
+				AdditionalProperties: additionalProperties22,
 			}
 		}
 		if sourceZendeskTalkAuthenticationOAuth20 != nil {
-			credentials39 = &shared.SourceZendeskTalkAuthentication{
+			credentials40 = &shared.SourceZendeskTalkAuthentication{
 				SourceZendeskTalkAuthenticationOAuth20: sourceZendeskTalkAuthenticationOAuth20,
 			}
 		}
-		sourceType183 := shared.SourceZendeskTalkZendeskTalkEnum(r.Configuration.SourceZendeskTalk.SourceType.ValueString())
-		startDate83, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceZendeskTalk.StartDate.ValueString())
+		sourceType185 := shared.SourceZendeskTalkZendeskTalkEnum(r.Configuration.SourceZendeskTalk.SourceType.ValueString())
+		startDate84, _ := time.Parse(time.RFC3339Nano, r.Configuration.SourceZendeskTalk.StartDate.ValueString())
 		subdomain5 := r.Configuration.SourceZendeskTalk.Subdomain.ValueString()
 		sourceZendeskTalk = &shared.SourceZendeskTalk{
-			Credentials: credentials39,
-			SourceType:  sourceType183,
-			StartDate:   startDate83,
+			Credentials: credentials40,
+			SourceType:  sourceType185,
+			StartDate:   startDate84,
 			Subdomain:   subdomain5,
 		}
 	}
@@ -7807,7 +8075,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		} else {
 			dateFrom = nil
 		}
-		sourceType184 := shared.SourceZenloopZenloopEnum(r.Configuration.SourceZenloop.SourceType.ValueString())
+		sourceType186 := shared.SourceZenloopZenloopEnum(r.Configuration.SourceZenloop.SourceType.ValueString())
 		surveyGroupID := new(string)
 		if !r.Configuration.SourceZenloop.SurveyGroupID.IsUnknown() && !r.Configuration.SourceZenloop.SurveyGroupID.IsNull() {
 			*surveyGroupID = r.Configuration.SourceZenloop.SurveyGroupID.ValueString()
@@ -7823,7 +8091,7 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		sourceZenloop = &shared.SourceZenloop{
 			APIToken:      apiToken16,
 			DateFrom:      dateFrom,
-			SourceType:    sourceType184,
+			SourceType:    sourceType186,
 			SurveyGroupID: surveyGroupID,
 			SurveyID:      surveyId1,
 		}
@@ -7835,13 +8103,13 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	}
 	var sourceZohoCrm *shared.SourceZohoCrm
 	if r.Configuration.SourceZohoCrm != nil {
-		clientId44 := r.Configuration.SourceZohoCrm.ClientID.ValueString()
-		clientSecret43 := r.Configuration.SourceZohoCrm.ClientSecret.ValueString()
+		clientId45 := r.Configuration.SourceZohoCrm.ClientID.ValueString()
+		clientSecret44 := r.Configuration.SourceZohoCrm.ClientSecret.ValueString()
 		dcRegion := shared.SourceZohoCrmDataCenterLocationEnum(r.Configuration.SourceZohoCrm.DcRegion.ValueString())
 		edition := shared.SourceZohoCRMZohoCRMEditionEnum(r.Configuration.SourceZohoCrm.Edition.ValueString())
 		environment2 := shared.SourceZohoCrmEnvironmentEnum(r.Configuration.SourceZohoCrm.Environment.ValueString())
-		refreshToken33 := r.Configuration.SourceZohoCrm.RefreshToken.ValueString()
-		sourceType185 := shared.SourceZohoCrmZohoCrmEnum(r.Configuration.SourceZohoCrm.SourceType.ValueString())
+		refreshToken34 := r.Configuration.SourceZohoCrm.RefreshToken.ValueString()
+		sourceType187 := shared.SourceZohoCrmZohoCrmEnum(r.Configuration.SourceZohoCrm.SourceType.ValueString())
 		startDatetime2 := new(time.Time)
 		if !r.Configuration.SourceZohoCrm.StartDatetime.IsUnknown() && !r.Configuration.SourceZohoCrm.StartDatetime.IsNull() {
 			*startDatetime2, _ = time.Parse(time.RFC3339Nano, r.Configuration.SourceZohoCrm.StartDatetime.ValueString())
@@ -7849,13 +8117,13 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			startDatetime2 = nil
 		}
 		sourceZohoCrm = &shared.SourceZohoCrm{
-			ClientID:      clientId44,
-			ClientSecret:  clientSecret43,
+			ClientID:      clientId45,
+			ClientSecret:  clientSecret44,
 			DcRegion:      dcRegion,
 			Edition:       edition,
 			Environment:   environment2,
-			RefreshToken:  refreshToken33,
-			SourceType:    sourceType185,
+			RefreshToken:  refreshToken34,
+			SourceType:    sourceType187,
 			StartDatetime: startDatetime2,
 		}
 	}
@@ -7867,10 +8135,10 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	var sourceZoom *shared.SourceZoom
 	if r.Configuration.SourceZoom != nil {
 		jwtToken := r.Configuration.SourceZoom.JwtToken.ValueString()
-		sourceType186 := shared.SourceZoomZoomEnum(r.Configuration.SourceZoom.SourceType.ValueString())
+		sourceType188 := shared.SourceZoomZoomEnum(r.Configuration.SourceZoom.SourceType.ValueString())
 		sourceZoom = &shared.SourceZoom{
 			JwtToken:   jwtToken,
-			SourceType: sourceType186,
+			SourceType: sourceType188,
 		}
 	}
 	if sourceZoom != nil {
@@ -7880,16 +8148,16 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 	}
 	var sourceZuora *shared.SourceZuora
 	if r.Configuration.SourceZuora != nil {
-		clientId45 := r.Configuration.SourceZuora.ClientID.ValueString()
-		clientSecret44 := r.Configuration.SourceZuora.ClientSecret.ValueString()
+		clientId46 := r.Configuration.SourceZuora.ClientID.ValueString()
+		clientSecret45 := r.Configuration.SourceZuora.ClientSecret.ValueString()
 		isSandbox4 := new(bool)
 		if !r.Configuration.SourceZuora.IsSandbox.IsUnknown() && !r.Configuration.SourceZuora.IsSandbox.IsNull() {
 			*isSandbox4 = r.Configuration.SourceZuora.IsSandbox.ValueBool()
 		} else {
 			isSandbox4 = nil
 		}
-		sourceType187 := shared.SourceZuoraZuoraEnum(r.Configuration.SourceZuora.SourceType.ValueString())
-		startDate84 := r.Configuration.SourceZuora.StartDate.ValueString()
+		sourceType189 := shared.SourceZuoraZuoraEnum(r.Configuration.SourceZuora.SourceType.ValueString())
+		startDate85 := r.Configuration.SourceZuora.StartDate.ValueString()
 		windowInDays3 := new(int64)
 		if !r.Configuration.SourceZuora.WindowInDays.IsUnknown() && !r.Configuration.SourceZuora.WindowInDays.IsNull() {
 			*windowInDays3 = r.Configuration.SourceZuora.WindowInDays.ValueInt64()
@@ -7897,11 +8165,11 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 			windowInDays3 = nil
 		}
 		sourceZuora = &shared.SourceZuora{
-			ClientID:     clientId45,
-			ClientSecret: clientSecret44,
+			ClientID:     clientId46,
+			ClientSecret: clientSecret45,
 			IsSandbox:    isSandbox4,
-			SourceType:   sourceType187,
-			StartDate:    startDate84,
+			SourceType:   sourceType189,
+			StartDate:    startDate85,
 			WindowInDays: windowInDays3,
 		}
 	}
@@ -7925,4077 +8193,11 @@ func (r *SourceResourceModel) ToSDKType() *shared.SourceCreateRequest {
 		WorkspaceID:   workspaceID,
 	}
 	return &out
-
 }
 
-func (r *SourceResourceModel) RefreshFromSDKType(resp *shared.SourceCreateRequest) {
-	if resp.Configuration.SourcePokeapi != nil {
-		r.Configuration.SourcePokeapi = &SourcePokeapi{}
-		r.Configuration.SourcePokeapi.PokemonName = types.StringValue(resp.Configuration.SourcePokeapi.PokemonName)
-		r.Configuration.SourcePokeapi.SourceType = types.StringValue(string(resp.Configuration.SourcePokeapi.SourceType))
-	}
-	if resp.Configuration.SourceAirtable != nil {
-		r.Configuration.SourceAirtable = &SourceAirtable{}
-		if resp.Configuration.SourceAirtable.Credentials == nil {
-			r.Configuration.SourceAirtable.Credentials = nil
-		} else {
-			r.Configuration.SourceAirtable.Credentials = &SourceAirtableAuthentication{}
-			if resp.Configuration.SourceAirtable.Credentials.SourceAirtableAuthenticationOAuth20 != nil {
-				r.Configuration.SourceAirtable.Credentials.SourceAirtableAuthenticationOAuth20 = &SourceAirtableAuthenticationOAuth20{}
-				if resp.Configuration.SourceAirtable.Credentials.SourceAirtableAuthenticationOAuth20.AccessToken != nil {
-					r.Configuration.SourceAirtable.Credentials.SourceAirtableAuthenticationOAuth20.AccessToken = types.StringValue(*resp.Configuration.SourceAirtable.Credentials.SourceAirtableAuthenticationOAuth20.AccessToken)
-				} else {
-					r.Configuration.SourceAirtable.Credentials.SourceAirtableAuthenticationOAuth20.AccessToken = types.StringNull()
-				}
-				if resp.Configuration.SourceAirtable.Credentials.SourceAirtableAuthenticationOAuth20.AuthMethod != nil {
-					r.Configuration.SourceAirtable.Credentials.SourceAirtableAuthenticationOAuth20.AuthMethod = types.StringValue(string(*resp.Configuration.SourceAirtable.Credentials.SourceAirtableAuthenticationOAuth20.AuthMethod))
-				} else {
-					r.Configuration.SourceAirtable.Credentials.SourceAirtableAuthenticationOAuth20.AuthMethod = types.StringNull()
-				}
-				r.Configuration.SourceAirtable.Credentials.SourceAirtableAuthenticationOAuth20.ClientID = types.StringValue(resp.Configuration.SourceAirtable.Credentials.SourceAirtableAuthenticationOAuth20.ClientID)
-				r.Configuration.SourceAirtable.Credentials.SourceAirtableAuthenticationOAuth20.ClientSecret = types.StringValue(resp.Configuration.SourceAirtable.Credentials.SourceAirtableAuthenticationOAuth20.ClientSecret)
-				r.Configuration.SourceAirtable.Credentials.SourceAirtableAuthenticationOAuth20.RefreshToken = types.StringValue(resp.Configuration.SourceAirtable.Credentials.SourceAirtableAuthenticationOAuth20.RefreshToken)
-				if resp.Configuration.SourceAirtable.Credentials.SourceAirtableAuthenticationOAuth20.TokenExpiryDate != nil {
-					r.Configuration.SourceAirtable.Credentials.SourceAirtableAuthenticationOAuth20.TokenExpiryDate = types.StringValue(resp.Configuration.SourceAirtable.Credentials.SourceAirtableAuthenticationOAuth20.TokenExpiryDate.Format(time.RFC3339))
-				} else {
-					r.Configuration.SourceAirtable.Credentials.SourceAirtableAuthenticationOAuth20.TokenExpiryDate = types.StringNull()
-				}
-			}
-			if resp.Configuration.SourceAirtable.Credentials.SourceAirtableAuthenticationPersonalAccessToken != nil {
-				r.Configuration.SourceAirtable.Credentials.SourceAirtableAuthenticationPersonalAccessToken = &SourceAirtableAuthenticationPersonalAccessToken{}
-				r.Configuration.SourceAirtable.Credentials.SourceAirtableAuthenticationPersonalAccessToken.APIKey = types.StringValue(resp.Configuration.SourceAirtable.Credentials.SourceAirtableAuthenticationPersonalAccessToken.APIKey)
-				if resp.Configuration.SourceAirtable.Credentials.SourceAirtableAuthenticationPersonalAccessToken.AuthMethod != nil {
-					r.Configuration.SourceAirtable.Credentials.SourceAirtableAuthenticationPersonalAccessToken.AuthMethod = types.StringValue(string(*resp.Configuration.SourceAirtable.Credentials.SourceAirtableAuthenticationPersonalAccessToken.AuthMethod))
-				} else {
-					r.Configuration.SourceAirtable.Credentials.SourceAirtableAuthenticationPersonalAccessToken.AuthMethod = types.StringNull()
-				}
-			}
-		}
-		r.Configuration.SourceAirtable.SourceType = types.StringValue(string(resp.Configuration.SourceAirtable.SourceType))
-	}
-	if resp.Configuration.SourceAlloydb != nil {
-		r.Configuration.SourceAlloydb = &SourceAlloydb{}
-		r.Configuration.SourceAlloydb.Database = types.StringValue(resp.Configuration.SourceAlloydb.Database)
-		r.Configuration.SourceAlloydb.Host = types.StringValue(resp.Configuration.SourceAlloydb.Host)
-		if resp.Configuration.SourceAlloydb.JdbcURLParams != nil {
-			r.Configuration.SourceAlloydb.JdbcURLParams = types.StringValue(*resp.Configuration.SourceAlloydb.JdbcURLParams)
-		} else {
-			r.Configuration.SourceAlloydb.JdbcURLParams = types.StringNull()
-		}
-		if resp.Configuration.SourceAlloydb.Password != nil {
-			r.Configuration.SourceAlloydb.Password = types.StringValue(*resp.Configuration.SourceAlloydb.Password)
-		} else {
-			r.Configuration.SourceAlloydb.Password = types.StringNull()
-		}
-		r.Configuration.SourceAlloydb.Port = types.Int64Value(resp.Configuration.SourceAlloydb.Port)
-		if resp.Configuration.SourceAlloydb.ReplicationMethod == nil {
-			r.Configuration.SourceAlloydb.ReplicationMethod = nil
-		} else {
-			r.Configuration.SourceAlloydb.ReplicationMethod = &SourceAlloydbReplicationMethod{}
-			if resp.Configuration.SourceAlloydb.ReplicationMethod.SourceAlloydbReplicationMethodStandard != nil {
-				r.Configuration.SourceAlloydb.ReplicationMethod.SourceAlloydbReplicationMethodStandard = &SourceAlloydbReplicationMethodStandard{}
-				r.Configuration.SourceAlloydb.ReplicationMethod.SourceAlloydbReplicationMethodStandard.Method = types.StringValue(string(resp.Configuration.SourceAlloydb.ReplicationMethod.SourceAlloydbReplicationMethodStandard.Method))
-			}
-			if resp.Configuration.SourceAlloydb.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC != nil {
-				r.Configuration.SourceAlloydb.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC = &SourceAlloydbReplicationMethodLogicalReplicationCDC{}
-				if resp.Configuration.SourceAlloydb.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds != nil {
-					r.Configuration.SourceAlloydb.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds = types.Int64Value(*resp.Configuration.SourceAlloydb.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds)
-				} else {
-					r.Configuration.SourceAlloydb.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds = types.Int64Null()
-				}
-				if resp.Configuration.SourceAlloydb.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.LsnCommitBehaviour != nil {
-					r.Configuration.SourceAlloydb.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.LsnCommitBehaviour = types.StringValue(string(*resp.Configuration.SourceAlloydb.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.LsnCommitBehaviour))
-				} else {
-					r.Configuration.SourceAlloydb.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.LsnCommitBehaviour = types.StringNull()
-				}
-				r.Configuration.SourceAlloydb.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.Method = types.StringValue(string(resp.Configuration.SourceAlloydb.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.Method))
-				if resp.Configuration.SourceAlloydb.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.Plugin != nil {
-					r.Configuration.SourceAlloydb.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.Plugin = types.StringValue(string(*resp.Configuration.SourceAlloydb.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.Plugin))
-				} else {
-					r.Configuration.SourceAlloydb.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.Plugin = types.StringNull()
-				}
-				r.Configuration.SourceAlloydb.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.Publication = types.StringValue(resp.Configuration.SourceAlloydb.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.Publication)
-				r.Configuration.SourceAlloydb.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.ReplicationSlot = types.StringValue(resp.Configuration.SourceAlloydb.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.ReplicationSlot)
-			}
-		}
-		r.Configuration.SourceAlloydb.Schemas = nil
-		for _, v := range resp.Configuration.SourceAlloydb.Schemas {
-			r.Configuration.SourceAlloydb.Schemas = append(r.Configuration.SourceAlloydb.Schemas, types.StringValue(v))
-		}
-		r.Configuration.SourceAlloydb.SourceType = types.StringValue(string(resp.Configuration.SourceAlloydb.SourceType))
-		if resp.Configuration.SourceAlloydb.SslMode == nil {
-			r.Configuration.SourceAlloydb.SslMode = nil
-		} else {
-			r.Configuration.SourceAlloydb.SslMode = &SourceAlloydbSSLModes{}
-			if resp.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesAllow != nil {
-				r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesAllow = &SourceAlloydbSSLModesAllow{}
-				r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesAllow.Mode = types.StringValue(string(resp.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesAllow.Mode))
-			}
-			if resp.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesPrefer != nil {
-				r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesPrefer = &SourceAlloydbSSLModesPrefer{}
-				r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesPrefer.Mode = types.StringValue(string(resp.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesPrefer.Mode))
-			}
-			if resp.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesRequire != nil {
-				r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesRequire = &SourceAlloydbSSLModesRequire{}
-				r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesRequire.Mode = types.StringValue(string(resp.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesRequire.Mode))
-			}
-			if resp.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesVerifyCa != nil {
-				r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesVerifyCa = &SourceAlloydbSSLModesVerifyCa{}
-				r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesVerifyCa.CaCertificate = types.StringValue(resp.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesVerifyCa.CaCertificate)
-				if resp.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesVerifyCa.ClientCertificate != nil {
-					r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesVerifyCa.ClientCertificate = types.StringValue(*resp.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesVerifyCa.ClientCertificate)
-				} else {
-					r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesVerifyCa.ClientCertificate = types.StringNull()
-				}
-				if resp.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesVerifyCa.ClientKey != nil {
-					r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesVerifyCa.ClientKey = types.StringValue(*resp.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesVerifyCa.ClientKey)
-				} else {
-					r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesVerifyCa.ClientKey = types.StringNull()
-				}
-				if resp.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesVerifyCa.ClientKeyPassword != nil {
-					r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesVerifyCa.ClientKeyPassword = types.StringValue(*resp.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesVerifyCa.ClientKeyPassword)
-				} else {
-					r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesVerifyCa.ClientKeyPassword = types.StringNull()
-				}
-				r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesVerifyCa.Mode = types.StringValue(string(resp.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesVerifyCa.Mode))
-			}
-			if resp.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesVerifyFull != nil {
-				r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesVerifyFull = &SourceAlloydbSSLModesVerifyFull{}
-				r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesVerifyFull.CaCertificate = types.StringValue(resp.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesVerifyFull.CaCertificate)
-				if resp.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesVerifyFull.ClientCertificate != nil {
-					r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesVerifyFull.ClientCertificate = types.StringValue(*resp.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesVerifyFull.ClientCertificate)
-				} else {
-					r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesVerifyFull.ClientCertificate = types.StringNull()
-				}
-				if resp.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesVerifyFull.ClientKey != nil {
-					r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesVerifyFull.ClientKey = types.StringValue(*resp.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesVerifyFull.ClientKey)
-				} else {
-					r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesVerifyFull.ClientKey = types.StringNull()
-				}
-				if resp.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesVerifyFull.ClientKeyPassword != nil {
-					r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesVerifyFull.ClientKeyPassword = types.StringValue(*resp.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesVerifyFull.ClientKeyPassword)
-				} else {
-					r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesVerifyFull.ClientKeyPassword = types.StringNull()
-				}
-				r.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesVerifyFull.Mode = types.StringValue(string(resp.Configuration.SourceAlloydb.SslMode.SourceAlloydbSSLModesVerifyFull.Mode))
-			}
-		}
-		if resp.Configuration.SourceAlloydb.TunnelMethod == nil {
-			r.Configuration.SourceAlloydb.TunnelMethod = nil
-		} else {
-			r.Configuration.SourceAlloydb.TunnelMethod = &SourceAlloydbSSHTunnelMethod{}
-			if resp.Configuration.SourceAlloydb.TunnelMethod.SourceAlloydbSSHTunnelMethodNoTunnel != nil {
-				r.Configuration.SourceAlloydb.TunnelMethod.SourceAlloydbSSHTunnelMethodNoTunnel = &DestinationClickhouseSSHTunnelMethodNoTunnel{}
-				r.Configuration.SourceAlloydb.TunnelMethod.SourceAlloydbSSHTunnelMethodNoTunnel.TunnelMethod = types.StringValue(string(resp.Configuration.SourceAlloydb.TunnelMethod.SourceAlloydbSSHTunnelMethodNoTunnel.TunnelMethod))
-			}
-			if resp.Configuration.SourceAlloydb.TunnelMethod.SourceAlloydbSSHTunnelMethodSSHKeyAuthentication != nil {
-				r.Configuration.SourceAlloydb.TunnelMethod.SourceAlloydbSSHTunnelMethodSSHKeyAuthentication = &DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication{}
-				r.Configuration.SourceAlloydb.TunnelMethod.SourceAlloydbSSHTunnelMethodSSHKeyAuthentication.SSHKey = types.StringValue(resp.Configuration.SourceAlloydb.TunnelMethod.SourceAlloydbSSHTunnelMethodSSHKeyAuthentication.SSHKey)
-				r.Configuration.SourceAlloydb.TunnelMethod.SourceAlloydbSSHTunnelMethodSSHKeyAuthentication.TunnelHost = types.StringValue(resp.Configuration.SourceAlloydb.TunnelMethod.SourceAlloydbSSHTunnelMethodSSHKeyAuthentication.TunnelHost)
-				r.Configuration.SourceAlloydb.TunnelMethod.SourceAlloydbSSHTunnelMethodSSHKeyAuthentication.TunnelMethod = types.StringValue(string(resp.Configuration.SourceAlloydb.TunnelMethod.SourceAlloydbSSHTunnelMethodSSHKeyAuthentication.TunnelMethod))
-				r.Configuration.SourceAlloydb.TunnelMethod.SourceAlloydbSSHTunnelMethodSSHKeyAuthentication.TunnelPort = types.Int64Value(resp.Configuration.SourceAlloydb.TunnelMethod.SourceAlloydbSSHTunnelMethodSSHKeyAuthentication.TunnelPort)
-				r.Configuration.SourceAlloydb.TunnelMethod.SourceAlloydbSSHTunnelMethodSSHKeyAuthentication.TunnelUser = types.StringValue(resp.Configuration.SourceAlloydb.TunnelMethod.SourceAlloydbSSHTunnelMethodSSHKeyAuthentication.TunnelUser)
-			}
-			if resp.Configuration.SourceAlloydb.TunnelMethod.SourceAlloydbSSHTunnelMethodPasswordAuthentication != nil {
-				r.Configuration.SourceAlloydb.TunnelMethod.SourceAlloydbSSHTunnelMethodPasswordAuthentication = &DestinationClickhouseSSHTunnelMethodPasswordAuthentication{}
-				r.Configuration.SourceAlloydb.TunnelMethod.SourceAlloydbSSHTunnelMethodPasswordAuthentication.TunnelHost = types.StringValue(resp.Configuration.SourceAlloydb.TunnelMethod.SourceAlloydbSSHTunnelMethodPasswordAuthentication.TunnelHost)
-				r.Configuration.SourceAlloydb.TunnelMethod.SourceAlloydbSSHTunnelMethodPasswordAuthentication.TunnelMethod = types.StringValue(string(resp.Configuration.SourceAlloydb.TunnelMethod.SourceAlloydbSSHTunnelMethodPasswordAuthentication.TunnelMethod))
-				r.Configuration.SourceAlloydb.TunnelMethod.SourceAlloydbSSHTunnelMethodPasswordAuthentication.TunnelPort = types.Int64Value(resp.Configuration.SourceAlloydb.TunnelMethod.SourceAlloydbSSHTunnelMethodPasswordAuthentication.TunnelPort)
-				r.Configuration.SourceAlloydb.TunnelMethod.SourceAlloydbSSHTunnelMethodPasswordAuthentication.TunnelUser = types.StringValue(resp.Configuration.SourceAlloydb.TunnelMethod.SourceAlloydbSSHTunnelMethodPasswordAuthentication.TunnelUser)
-				r.Configuration.SourceAlloydb.TunnelMethod.SourceAlloydbSSHTunnelMethodPasswordAuthentication.TunnelUserPassword = types.StringValue(resp.Configuration.SourceAlloydb.TunnelMethod.SourceAlloydbSSHTunnelMethodPasswordAuthentication.TunnelUserPassword)
-			}
-		}
-		r.Configuration.SourceAlloydb.Username = types.StringValue(resp.Configuration.SourceAlloydb.Username)
-	}
-	if resp.Configuration.SourceAmazonAds != nil {
-		r.Configuration.SourceAmazonAds = &SourceAmazonAds{}
-		if resp.Configuration.SourceAmazonAds.AuthType != nil {
-			r.Configuration.SourceAmazonAds.AuthType = types.StringValue(string(*resp.Configuration.SourceAmazonAds.AuthType))
-		} else {
-			r.Configuration.SourceAmazonAds.AuthType = types.StringNull()
-		}
-		r.Configuration.SourceAmazonAds.ClientID = types.StringValue(resp.Configuration.SourceAmazonAds.ClientID)
-		r.Configuration.SourceAmazonAds.ClientSecret = types.StringValue(resp.Configuration.SourceAmazonAds.ClientSecret)
-		if resp.Configuration.SourceAmazonAds.LookBackWindow != nil {
-			r.Configuration.SourceAmazonAds.LookBackWindow = types.Int64Value(*resp.Configuration.SourceAmazonAds.LookBackWindow)
-		} else {
-			r.Configuration.SourceAmazonAds.LookBackWindow = types.Int64Null()
-		}
-		r.Configuration.SourceAmazonAds.Profiles = nil
-		for _, v := range resp.Configuration.SourceAmazonAds.Profiles {
-			r.Configuration.SourceAmazonAds.Profiles = append(r.Configuration.SourceAmazonAds.Profiles, types.Int64Value(v))
-		}
-		r.Configuration.SourceAmazonAds.RefreshToken = types.StringValue(resp.Configuration.SourceAmazonAds.RefreshToken)
-		if resp.Configuration.SourceAmazonAds.Region != nil {
-			r.Configuration.SourceAmazonAds.Region = types.StringValue(string(*resp.Configuration.SourceAmazonAds.Region))
-		} else {
-			r.Configuration.SourceAmazonAds.Region = types.StringNull()
-		}
-		r.Configuration.SourceAmazonAds.ReportRecordTypes = nil
-		for _, v := range resp.Configuration.SourceAmazonAds.ReportRecordTypes {
-			r.Configuration.SourceAmazonAds.ReportRecordTypes = append(r.Configuration.SourceAmazonAds.ReportRecordTypes, types.StringValue(string(v)))
-		}
-		r.Configuration.SourceAmazonAds.SourceType = types.StringValue(string(resp.Configuration.SourceAmazonAds.SourceType))
-		if resp.Configuration.SourceAmazonAds.StartDate != nil {
-			r.Configuration.SourceAmazonAds.StartDate = types.StringValue(*resp.Configuration.SourceAmazonAds.StartDate)
-		} else {
-			r.Configuration.SourceAmazonAds.StartDate = types.StringNull()
-		}
-		r.Configuration.SourceAmazonAds.StateFilter = nil
-		for _, v := range resp.Configuration.SourceAmazonAds.StateFilter {
-			r.Configuration.SourceAmazonAds.StateFilter = append(r.Configuration.SourceAmazonAds.StateFilter, types.StringValue(string(v)))
-		}
-	}
-	if resp.Configuration.SourceAmazonSellerPartner != nil {
-		r.Configuration.SourceAmazonSellerPartner = &SourceAmazonSellerPartner{}
-		r.Configuration.SourceAmazonSellerPartner.AppID = types.StringValue(resp.Configuration.SourceAmazonSellerPartner.AppID)
-		if resp.Configuration.SourceAmazonSellerPartner.AuthType != nil {
-			r.Configuration.SourceAmazonSellerPartner.AuthType = types.StringValue(string(*resp.Configuration.SourceAmazonSellerPartner.AuthType))
-		} else {
-			r.Configuration.SourceAmazonSellerPartner.AuthType = types.StringNull()
-		}
-		if resp.Configuration.SourceAmazonSellerPartner.AwsAccessKey != nil {
-			r.Configuration.SourceAmazonSellerPartner.AwsAccessKey = types.StringValue(*resp.Configuration.SourceAmazonSellerPartner.AwsAccessKey)
-		} else {
-			r.Configuration.SourceAmazonSellerPartner.AwsAccessKey = types.StringNull()
-		}
-		r.Configuration.SourceAmazonSellerPartner.AwsEnvironment = types.StringValue(string(resp.Configuration.SourceAmazonSellerPartner.AwsEnvironment))
-		if resp.Configuration.SourceAmazonSellerPartner.AwsSecretKey != nil {
-			r.Configuration.SourceAmazonSellerPartner.AwsSecretKey = types.StringValue(*resp.Configuration.SourceAmazonSellerPartner.AwsSecretKey)
-		} else {
-			r.Configuration.SourceAmazonSellerPartner.AwsSecretKey = types.StringNull()
-		}
-		r.Configuration.SourceAmazonSellerPartner.LwaAppID = types.StringValue(resp.Configuration.SourceAmazonSellerPartner.LwaAppID)
-		r.Configuration.SourceAmazonSellerPartner.LwaClientSecret = types.StringValue(resp.Configuration.SourceAmazonSellerPartner.LwaClientSecret)
-		if resp.Configuration.SourceAmazonSellerPartner.MaxWaitSeconds != nil {
-			r.Configuration.SourceAmazonSellerPartner.MaxWaitSeconds = types.Int64Value(*resp.Configuration.SourceAmazonSellerPartner.MaxWaitSeconds)
-		} else {
-			r.Configuration.SourceAmazonSellerPartner.MaxWaitSeconds = types.Int64Null()
-		}
-		if resp.Configuration.SourceAmazonSellerPartner.PeriodInDays != nil {
-			r.Configuration.SourceAmazonSellerPartner.PeriodInDays = types.Int64Value(*resp.Configuration.SourceAmazonSellerPartner.PeriodInDays)
-		} else {
-			r.Configuration.SourceAmazonSellerPartner.PeriodInDays = types.Int64Null()
-		}
-		r.Configuration.SourceAmazonSellerPartner.RefreshToken = types.StringValue(resp.Configuration.SourceAmazonSellerPartner.RefreshToken)
-		r.Configuration.SourceAmazonSellerPartner.Region = types.StringValue(string(resp.Configuration.SourceAmazonSellerPartner.Region))
-		if resp.Configuration.SourceAmazonSellerPartner.ReplicationEndDate != nil {
-			r.Configuration.SourceAmazonSellerPartner.ReplicationEndDate = types.StringValue(*resp.Configuration.SourceAmazonSellerPartner.ReplicationEndDate)
-		} else {
-			r.Configuration.SourceAmazonSellerPartner.ReplicationEndDate = types.StringNull()
-		}
-		r.Configuration.SourceAmazonSellerPartner.ReplicationStartDate = types.StringValue(resp.Configuration.SourceAmazonSellerPartner.ReplicationStartDate)
-		if resp.Configuration.SourceAmazonSellerPartner.ReportOptions != nil {
-			r.Configuration.SourceAmazonSellerPartner.ReportOptions = types.StringValue(*resp.Configuration.SourceAmazonSellerPartner.ReportOptions)
-		} else {
-			r.Configuration.SourceAmazonSellerPartner.ReportOptions = types.StringNull()
-		}
-		if resp.Configuration.SourceAmazonSellerPartner.RoleArn != nil {
-			r.Configuration.SourceAmazonSellerPartner.RoleArn = types.StringValue(*resp.Configuration.SourceAmazonSellerPartner.RoleArn)
-		} else {
-			r.Configuration.SourceAmazonSellerPartner.RoleArn = types.StringNull()
-		}
-		r.Configuration.SourceAmazonSellerPartner.SourceType = types.StringValue(string(resp.Configuration.SourceAmazonSellerPartner.SourceType))
-	}
-	if resp.Configuration.SourceAmazonSqs != nil {
-		r.Configuration.SourceAmazonSqs = &SourceAmazonSqs{}
-		if resp.Configuration.SourceAmazonSqs.AccessKey != nil {
-			r.Configuration.SourceAmazonSqs.AccessKey = types.StringValue(*resp.Configuration.SourceAmazonSqs.AccessKey)
-		} else {
-			r.Configuration.SourceAmazonSqs.AccessKey = types.StringNull()
-		}
-		if resp.Configuration.SourceAmazonSqs.AttributesToReturn != nil {
-			r.Configuration.SourceAmazonSqs.AttributesToReturn = types.StringValue(*resp.Configuration.SourceAmazonSqs.AttributesToReturn)
-		} else {
-			r.Configuration.SourceAmazonSqs.AttributesToReturn = types.StringNull()
-		}
-		r.Configuration.SourceAmazonSqs.DeleteMessages = types.BoolValue(resp.Configuration.SourceAmazonSqs.DeleteMessages)
-		if resp.Configuration.SourceAmazonSqs.MaxBatchSize != nil {
-			r.Configuration.SourceAmazonSqs.MaxBatchSize = types.Int64Value(*resp.Configuration.SourceAmazonSqs.MaxBatchSize)
-		} else {
-			r.Configuration.SourceAmazonSqs.MaxBatchSize = types.Int64Null()
-		}
-		if resp.Configuration.SourceAmazonSqs.MaxWaitTime != nil {
-			r.Configuration.SourceAmazonSqs.MaxWaitTime = types.Int64Value(*resp.Configuration.SourceAmazonSqs.MaxWaitTime)
-		} else {
-			r.Configuration.SourceAmazonSqs.MaxWaitTime = types.Int64Null()
-		}
-		r.Configuration.SourceAmazonSqs.QueueURL = types.StringValue(resp.Configuration.SourceAmazonSqs.QueueURL)
-		r.Configuration.SourceAmazonSqs.Region = types.StringValue(string(resp.Configuration.SourceAmazonSqs.Region))
-		if resp.Configuration.SourceAmazonSqs.SecretKey != nil {
-			r.Configuration.SourceAmazonSqs.SecretKey = types.StringValue(*resp.Configuration.SourceAmazonSqs.SecretKey)
-		} else {
-			r.Configuration.SourceAmazonSqs.SecretKey = types.StringNull()
-		}
-		r.Configuration.SourceAmazonSqs.SourceType = types.StringValue(string(resp.Configuration.SourceAmazonSqs.SourceType))
-		if resp.Configuration.SourceAmazonSqs.VisibilityTimeout != nil {
-			r.Configuration.SourceAmazonSqs.VisibilityTimeout = types.Int64Value(*resp.Configuration.SourceAmazonSqs.VisibilityTimeout)
-		} else {
-			r.Configuration.SourceAmazonSqs.VisibilityTimeout = types.Int64Null()
-		}
-	}
-	if resp.Configuration.SourceAmplitude != nil {
-		r.Configuration.SourceAmplitude = &SourceAmplitude{}
-		r.Configuration.SourceAmplitude.APIKey = types.StringValue(resp.Configuration.SourceAmplitude.APIKey)
-		if resp.Configuration.SourceAmplitude.DataRegion != nil {
-			r.Configuration.SourceAmplitude.DataRegion = types.StringValue(string(*resp.Configuration.SourceAmplitude.DataRegion))
-		} else {
-			r.Configuration.SourceAmplitude.DataRegion = types.StringNull()
-		}
-		if resp.Configuration.SourceAmplitude.EventTimeInterval == nil {
-			r.Configuration.SourceAmplitude.EventTimeInterval = nil
-		} else {
-			r.Configuration.SourceAmplitude.EventTimeInterval = &SourceAmplitudeEventStreamTimeInterval{}
-			r.Configuration.SourceAmplitude.EventTimeInterval.Size = types.Int64Value(resp.Configuration.SourceAmplitude.EventTimeInterval.Size)
-			r.Configuration.SourceAmplitude.EventTimeInterval.SizeUnit = types.StringValue(string(resp.Configuration.SourceAmplitude.EventTimeInterval.SizeUnit))
-		}
-		r.Configuration.SourceAmplitude.SecretKey = types.StringValue(resp.Configuration.SourceAmplitude.SecretKey)
-		r.Configuration.SourceAmplitude.SourceType = types.StringValue(string(resp.Configuration.SourceAmplitude.SourceType))
-		r.Configuration.SourceAmplitude.StartDate = types.StringValue(resp.Configuration.SourceAmplitude.StartDate)
-	}
-	if resp.Configuration.SourceApifyDataset != nil {
-		r.Configuration.SourceApifyDataset = &SourceApifyDataset{}
-		if resp.Configuration.SourceApifyDataset.Clean != nil {
-			r.Configuration.SourceApifyDataset.Clean = types.BoolValue(*resp.Configuration.SourceApifyDataset.Clean)
-		} else {
-			r.Configuration.SourceApifyDataset.Clean = types.BoolNull()
-		}
-		r.Configuration.SourceApifyDataset.DatasetID = types.StringValue(resp.Configuration.SourceApifyDataset.DatasetID)
-		r.Configuration.SourceApifyDataset.SourceType = types.StringValue(string(resp.Configuration.SourceApifyDataset.SourceType))
-	}
-	if resp.Configuration.SourceAsana != nil {
-		r.Configuration.SourceAsana = &SourceAsana{}
-		if resp.Configuration.SourceAsana.Credentials == nil {
-			r.Configuration.SourceAsana.Credentials = nil
-		} else {
-			r.Configuration.SourceAsana.Credentials = &SourceAsanaAuthenticationMechanism{}
-			if resp.Configuration.SourceAsana.Credentials.SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken != nil {
-				r.Configuration.SourceAsana.Credentials.SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken = &SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken{}
-				if resp.Configuration.SourceAsana.Credentials.SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken.OptionTitle != nil {
-					r.Configuration.SourceAsana.Credentials.SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken.OptionTitle = types.StringValue(string(*resp.Configuration.SourceAsana.Credentials.SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken.OptionTitle))
-				} else {
-					r.Configuration.SourceAsana.Credentials.SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken.OptionTitle = types.StringNull()
-				}
-				r.Configuration.SourceAsana.Credentials.SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken.PersonalAccessToken = types.StringValue(resp.Configuration.SourceAsana.Credentials.SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken.PersonalAccessToken)
-			}
-			if resp.Configuration.SourceAsana.Credentials.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth != nil {
-				r.Configuration.SourceAsana.Credentials.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth = &SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth{}
-				r.Configuration.SourceAsana.Credentials.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth.ClientID = types.StringValue(resp.Configuration.SourceAsana.Credentials.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth.ClientID)
-				r.Configuration.SourceAsana.Credentials.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth.ClientSecret = types.StringValue(resp.Configuration.SourceAsana.Credentials.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth.ClientSecret)
-				if resp.Configuration.SourceAsana.Credentials.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth.OptionTitle != nil {
-					r.Configuration.SourceAsana.Credentials.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth.OptionTitle = types.StringValue(string(*resp.Configuration.SourceAsana.Credentials.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth.OptionTitle))
-				} else {
-					r.Configuration.SourceAsana.Credentials.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth.OptionTitle = types.StringNull()
-				}
-				r.Configuration.SourceAsana.Credentials.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth.RefreshToken = types.StringValue(resp.Configuration.SourceAsana.Credentials.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth.RefreshToken)
-			}
-		}
-		r.Configuration.SourceAsana.SourceType = types.StringValue(string(resp.Configuration.SourceAsana.SourceType))
-	}
-	if resp.Configuration.SourceAuth0 != nil {
-		r.Configuration.SourceAuth0 = &SourceAuth0{}
-		r.Configuration.SourceAuth0.BaseURL = types.StringValue(resp.Configuration.SourceAuth0.BaseURL)
-		if resp.Configuration.SourceAuth0.Credentials.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication != nil {
-			r.Configuration.SourceAuth0.Credentials.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication = &SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication{}
-			r.Configuration.SourceAuth0.Credentials.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication.Audience = types.StringValue(resp.Configuration.SourceAuth0.Credentials.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication.Audience)
-			r.Configuration.SourceAuth0.Credentials.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication.AuthType = types.StringValue(string(resp.Configuration.SourceAuth0.Credentials.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication.AuthType))
-			r.Configuration.SourceAuth0.Credentials.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication.ClientID = types.StringValue(resp.Configuration.SourceAuth0.Credentials.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication.ClientID)
-			r.Configuration.SourceAuth0.Credentials.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication.ClientSecret = types.StringValue(resp.Configuration.SourceAuth0.Credentials.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication.ClientSecret)
-		}
-		if resp.Configuration.SourceAuth0.Credentials.SourceAuth0AuthenticationMethodOAuth2AccessToken != nil {
-			r.Configuration.SourceAuth0.Credentials.SourceAuth0AuthenticationMethodOAuth2AccessToken = &SourceAuth0AuthenticationMethodOAuth2AccessToken{}
-			r.Configuration.SourceAuth0.Credentials.SourceAuth0AuthenticationMethodOAuth2AccessToken.AccessToken = types.StringValue(resp.Configuration.SourceAuth0.Credentials.SourceAuth0AuthenticationMethodOAuth2AccessToken.AccessToken)
-			r.Configuration.SourceAuth0.Credentials.SourceAuth0AuthenticationMethodOAuth2AccessToken.AuthType = types.StringValue(string(resp.Configuration.SourceAuth0.Credentials.SourceAuth0AuthenticationMethodOAuth2AccessToken.AuthType))
-		}
-		r.Configuration.SourceAuth0.SourceType = types.StringValue(string(resp.Configuration.SourceAuth0.SourceType))
-	}
-	if resp.Configuration.SourceAwsCloudtrail != nil {
-		r.Configuration.SourceAwsCloudtrail = &SourceAwsCloudtrail{}
-		r.Configuration.SourceAwsCloudtrail.AwsKeyID = types.StringValue(resp.Configuration.SourceAwsCloudtrail.AwsKeyID)
-		r.Configuration.SourceAwsCloudtrail.AwsRegionName = types.StringValue(resp.Configuration.SourceAwsCloudtrail.AwsRegionName)
-		r.Configuration.SourceAwsCloudtrail.AwsSecretKey = types.StringValue(resp.Configuration.SourceAwsCloudtrail.AwsSecretKey)
-		r.Configuration.SourceAwsCloudtrail.SourceType = types.StringValue(string(resp.Configuration.SourceAwsCloudtrail.SourceType))
-		r.Configuration.SourceAwsCloudtrail.StartDate = types.StringValue(resp.Configuration.SourceAwsCloudtrail.StartDate.String())
-	}
-	if resp.Configuration.SourceAzureTable != nil {
-		r.Configuration.SourceAzureTable = &SourceAzureTable{}
-		r.Configuration.SourceAzureTable.SourceType = types.StringValue(string(resp.Configuration.SourceAzureTable.SourceType))
-		r.Configuration.SourceAzureTable.StorageAccessKey = types.StringValue(resp.Configuration.SourceAzureTable.StorageAccessKey)
-		r.Configuration.SourceAzureTable.StorageAccountName = types.StringValue(resp.Configuration.SourceAzureTable.StorageAccountName)
-		if resp.Configuration.SourceAzureTable.StorageEndpointSuffix != nil {
-			r.Configuration.SourceAzureTable.StorageEndpointSuffix = types.StringValue(*resp.Configuration.SourceAzureTable.StorageEndpointSuffix)
-		} else {
-			r.Configuration.SourceAzureTable.StorageEndpointSuffix = types.StringNull()
-		}
-	}
-	if resp.Configuration.SourceBambooHr != nil {
-		r.Configuration.SourceBambooHr = &SourceBambooHr{}
-		r.Configuration.SourceBambooHr.APIKey = types.StringValue(resp.Configuration.SourceBambooHr.APIKey)
-		if resp.Configuration.SourceBambooHr.CustomReportsFields != nil {
-			r.Configuration.SourceBambooHr.CustomReportsFields = types.StringValue(*resp.Configuration.SourceBambooHr.CustomReportsFields)
-		} else {
-			r.Configuration.SourceBambooHr.CustomReportsFields = types.StringNull()
-		}
-		if resp.Configuration.SourceBambooHr.CustomReportsIncludeDefaultFields != nil {
-			r.Configuration.SourceBambooHr.CustomReportsIncludeDefaultFields = types.BoolValue(*resp.Configuration.SourceBambooHr.CustomReportsIncludeDefaultFields)
-		} else {
-			r.Configuration.SourceBambooHr.CustomReportsIncludeDefaultFields = types.BoolNull()
-		}
-		r.Configuration.SourceBambooHr.SourceType = types.StringValue(string(resp.Configuration.SourceBambooHr.SourceType))
-		r.Configuration.SourceBambooHr.Subdomain = types.StringValue(resp.Configuration.SourceBambooHr.Subdomain)
-	}
-	if resp.Configuration.SourceBigcommerce != nil {
-		r.Configuration.SourceBigcommerce = &SourceBigcommerce{}
-		r.Configuration.SourceBigcommerce.AccessToken = types.StringValue(resp.Configuration.SourceBigcommerce.AccessToken)
-		r.Configuration.SourceBigcommerce.SourceType = types.StringValue(string(resp.Configuration.SourceBigcommerce.SourceType))
-		r.Configuration.SourceBigcommerce.StartDate = types.StringValue(resp.Configuration.SourceBigcommerce.StartDate)
-		r.Configuration.SourceBigcommerce.StoreHash = types.StringValue(resp.Configuration.SourceBigcommerce.StoreHash)
-	}
-	if resp.Configuration.SourceBigquery != nil {
-		r.Configuration.SourceBigquery = &SourceBigquery{}
-		r.Configuration.SourceBigquery.CredentialsJSON = types.StringValue(resp.Configuration.SourceBigquery.CredentialsJSON)
-		if resp.Configuration.SourceBigquery.DatasetID != nil {
-			r.Configuration.SourceBigquery.DatasetID = types.StringValue(*resp.Configuration.SourceBigquery.DatasetID)
-		} else {
-			r.Configuration.SourceBigquery.DatasetID = types.StringNull()
-		}
-		r.Configuration.SourceBigquery.ProjectID = types.StringValue(resp.Configuration.SourceBigquery.ProjectID)
-		r.Configuration.SourceBigquery.SourceType = types.StringValue(string(resp.Configuration.SourceBigquery.SourceType))
-	}
-	if resp.Configuration.SourceBingAds != nil {
-		r.Configuration.SourceBingAds = &SourceBingAds{}
-		if resp.Configuration.SourceBingAds.AuthMethod != nil {
-			r.Configuration.SourceBingAds.AuthMethod = types.StringValue(string(*resp.Configuration.SourceBingAds.AuthMethod))
-		} else {
-			r.Configuration.SourceBingAds.AuthMethod = types.StringNull()
-		}
-		r.Configuration.SourceBingAds.ClientID = types.StringValue(resp.Configuration.SourceBingAds.ClientID)
-		if resp.Configuration.SourceBingAds.ClientSecret != nil {
-			r.Configuration.SourceBingAds.ClientSecret = types.StringValue(*resp.Configuration.SourceBingAds.ClientSecret)
-		} else {
-			r.Configuration.SourceBingAds.ClientSecret = types.StringNull()
-		}
-		r.Configuration.SourceBingAds.DeveloperToken = types.StringValue(resp.Configuration.SourceBingAds.DeveloperToken)
-		r.Configuration.SourceBingAds.RefreshToken = types.StringValue(resp.Configuration.SourceBingAds.RefreshToken)
-		r.Configuration.SourceBingAds.ReportsStartDate = types.StringValue(resp.Configuration.SourceBingAds.ReportsStartDate.String())
-		r.Configuration.SourceBingAds.SourceType = types.StringValue(string(resp.Configuration.SourceBingAds.SourceType))
-		if resp.Configuration.SourceBingAds.TenantID != nil {
-			r.Configuration.SourceBingAds.TenantID = types.StringValue(*resp.Configuration.SourceBingAds.TenantID)
-		} else {
-			r.Configuration.SourceBingAds.TenantID = types.StringNull()
-		}
-	}
-	if resp.Configuration.SourceBraintree != nil {
-		r.Configuration.SourceBraintree = &SourceBraintree{}
-		r.Configuration.SourceBraintree.Environment = types.StringValue(string(resp.Configuration.SourceBraintree.Environment))
-		r.Configuration.SourceBraintree.MerchantID = types.StringValue(resp.Configuration.SourceBraintree.MerchantID)
-		r.Configuration.SourceBraintree.PrivateKey = types.StringValue(resp.Configuration.SourceBraintree.PrivateKey)
-		r.Configuration.SourceBraintree.PublicKey = types.StringValue(resp.Configuration.SourceBraintree.PublicKey)
-		r.Configuration.SourceBraintree.SourceType = types.StringValue(string(resp.Configuration.SourceBraintree.SourceType))
-		if resp.Configuration.SourceBraintree.StartDate != nil {
-			r.Configuration.SourceBraintree.StartDate = types.StringValue(resp.Configuration.SourceBraintree.StartDate.Format(time.RFC3339))
-		} else {
-			r.Configuration.SourceBraintree.StartDate = types.StringNull()
-		}
-	}
-	if resp.Configuration.SourceBraze != nil {
-		r.Configuration.SourceBraze = &SourceBraze{}
-		r.Configuration.SourceBraze.APIKey = types.StringValue(resp.Configuration.SourceBraze.APIKey)
-		r.Configuration.SourceBraze.SourceType = types.StringValue(string(resp.Configuration.SourceBraze.SourceType))
-		r.Configuration.SourceBraze.StartDate = types.StringValue(resp.Configuration.SourceBraze.StartDate.String())
-		r.Configuration.SourceBraze.URL = types.StringValue(resp.Configuration.SourceBraze.URL)
-	}
-	if resp.Configuration.SourceChargebee != nil {
-		r.Configuration.SourceChargebee = &SourceChargebee{}
-		r.Configuration.SourceChargebee.ProductCatalog = types.StringValue(string(resp.Configuration.SourceChargebee.ProductCatalog))
-		r.Configuration.SourceChargebee.Site = types.StringValue(resp.Configuration.SourceChargebee.Site)
-		r.Configuration.SourceChargebee.SiteAPIKey = types.StringValue(resp.Configuration.SourceChargebee.SiteAPIKey)
-		r.Configuration.SourceChargebee.SourceType = types.StringValue(string(resp.Configuration.SourceChargebee.SourceType))
-		r.Configuration.SourceChargebee.StartDate = types.StringValue(resp.Configuration.SourceChargebee.StartDate.Format(time.RFC3339))
-	}
-	if resp.Configuration.SourceChartmogul != nil {
-		r.Configuration.SourceChartmogul = &SourceChartmogul{}
-		r.Configuration.SourceChartmogul.APIKey = types.StringValue(resp.Configuration.SourceChartmogul.APIKey)
-		r.Configuration.SourceChartmogul.Interval = types.StringValue(string(resp.Configuration.SourceChartmogul.Interval))
-		r.Configuration.SourceChartmogul.SourceType = types.StringValue(string(resp.Configuration.SourceChartmogul.SourceType))
-		r.Configuration.SourceChartmogul.StartDate = types.StringValue(resp.Configuration.SourceChartmogul.StartDate.Format(time.RFC3339))
-	}
-	if resp.Configuration.SourceClickhouse != nil {
-		r.Configuration.SourceClickhouse = &SourceClickhouse{}
-		r.Configuration.SourceClickhouse.Database = types.StringValue(resp.Configuration.SourceClickhouse.Database)
-		r.Configuration.SourceClickhouse.Host = types.StringValue(resp.Configuration.SourceClickhouse.Host)
-		if resp.Configuration.SourceClickhouse.Password != nil {
-			r.Configuration.SourceClickhouse.Password = types.StringValue(*resp.Configuration.SourceClickhouse.Password)
-		} else {
-			r.Configuration.SourceClickhouse.Password = types.StringNull()
-		}
-		r.Configuration.SourceClickhouse.Port = types.Int64Value(resp.Configuration.SourceClickhouse.Port)
-		r.Configuration.SourceClickhouse.SourceType = types.StringValue(string(resp.Configuration.SourceClickhouse.SourceType))
-		if resp.Configuration.SourceClickhouse.TunnelMethod == nil {
-			r.Configuration.SourceClickhouse.TunnelMethod = nil
-		} else {
-			r.Configuration.SourceClickhouse.TunnelMethod = &SourceClickhouseSSHTunnelMethod{}
-			if resp.Configuration.SourceClickhouse.TunnelMethod.SourceClickhouseSSHTunnelMethodNoTunnel != nil {
-				r.Configuration.SourceClickhouse.TunnelMethod.SourceClickhouseSSHTunnelMethodNoTunnel = &DestinationClickhouseSSHTunnelMethodNoTunnel{}
-				r.Configuration.SourceClickhouse.TunnelMethod.SourceClickhouseSSHTunnelMethodNoTunnel.TunnelMethod = types.StringValue(string(resp.Configuration.SourceClickhouse.TunnelMethod.SourceClickhouseSSHTunnelMethodNoTunnel.TunnelMethod))
-			}
-			if resp.Configuration.SourceClickhouse.TunnelMethod.SourceClickhouseSSHTunnelMethodSSHKeyAuthentication != nil {
-				r.Configuration.SourceClickhouse.TunnelMethod.SourceClickhouseSSHTunnelMethodSSHKeyAuthentication = &DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication{}
-				r.Configuration.SourceClickhouse.TunnelMethod.SourceClickhouseSSHTunnelMethodSSHKeyAuthentication.SSHKey = types.StringValue(resp.Configuration.SourceClickhouse.TunnelMethod.SourceClickhouseSSHTunnelMethodSSHKeyAuthentication.SSHKey)
-				r.Configuration.SourceClickhouse.TunnelMethod.SourceClickhouseSSHTunnelMethodSSHKeyAuthentication.TunnelHost = types.StringValue(resp.Configuration.SourceClickhouse.TunnelMethod.SourceClickhouseSSHTunnelMethodSSHKeyAuthentication.TunnelHost)
-				r.Configuration.SourceClickhouse.TunnelMethod.SourceClickhouseSSHTunnelMethodSSHKeyAuthentication.TunnelMethod = types.StringValue(string(resp.Configuration.SourceClickhouse.TunnelMethod.SourceClickhouseSSHTunnelMethodSSHKeyAuthentication.TunnelMethod))
-				r.Configuration.SourceClickhouse.TunnelMethod.SourceClickhouseSSHTunnelMethodSSHKeyAuthentication.TunnelPort = types.Int64Value(resp.Configuration.SourceClickhouse.TunnelMethod.SourceClickhouseSSHTunnelMethodSSHKeyAuthentication.TunnelPort)
-				r.Configuration.SourceClickhouse.TunnelMethod.SourceClickhouseSSHTunnelMethodSSHKeyAuthentication.TunnelUser = types.StringValue(resp.Configuration.SourceClickhouse.TunnelMethod.SourceClickhouseSSHTunnelMethodSSHKeyAuthentication.TunnelUser)
-			}
-			if resp.Configuration.SourceClickhouse.TunnelMethod.SourceClickhouseSSHTunnelMethodPasswordAuthentication != nil {
-				r.Configuration.SourceClickhouse.TunnelMethod.SourceClickhouseSSHTunnelMethodPasswordAuthentication = &DestinationClickhouseSSHTunnelMethodPasswordAuthentication{}
-				r.Configuration.SourceClickhouse.TunnelMethod.SourceClickhouseSSHTunnelMethodPasswordAuthentication.TunnelHost = types.StringValue(resp.Configuration.SourceClickhouse.TunnelMethod.SourceClickhouseSSHTunnelMethodPasswordAuthentication.TunnelHost)
-				r.Configuration.SourceClickhouse.TunnelMethod.SourceClickhouseSSHTunnelMethodPasswordAuthentication.TunnelMethod = types.StringValue(string(resp.Configuration.SourceClickhouse.TunnelMethod.SourceClickhouseSSHTunnelMethodPasswordAuthentication.TunnelMethod))
-				r.Configuration.SourceClickhouse.TunnelMethod.SourceClickhouseSSHTunnelMethodPasswordAuthentication.TunnelPort = types.Int64Value(resp.Configuration.SourceClickhouse.TunnelMethod.SourceClickhouseSSHTunnelMethodPasswordAuthentication.TunnelPort)
-				r.Configuration.SourceClickhouse.TunnelMethod.SourceClickhouseSSHTunnelMethodPasswordAuthentication.TunnelUser = types.StringValue(resp.Configuration.SourceClickhouse.TunnelMethod.SourceClickhouseSSHTunnelMethodPasswordAuthentication.TunnelUser)
-				r.Configuration.SourceClickhouse.TunnelMethod.SourceClickhouseSSHTunnelMethodPasswordAuthentication.TunnelUserPassword = types.StringValue(resp.Configuration.SourceClickhouse.TunnelMethod.SourceClickhouseSSHTunnelMethodPasswordAuthentication.TunnelUserPassword)
-			}
-		}
-		r.Configuration.SourceClickhouse.Username = types.StringValue(resp.Configuration.SourceClickhouse.Username)
-	}
-	if resp.Configuration.SourceClickupAPI != nil {
-		r.Configuration.SourceClickupAPI = &SourceClickupAPI{}
-		r.Configuration.SourceClickupAPI.APIToken = types.StringValue(resp.Configuration.SourceClickupAPI.APIToken)
-		if resp.Configuration.SourceClickupAPI.FolderID != nil {
-			r.Configuration.SourceClickupAPI.FolderID = types.StringValue(*resp.Configuration.SourceClickupAPI.FolderID)
-		} else {
-			r.Configuration.SourceClickupAPI.FolderID = types.StringNull()
-		}
-		if resp.Configuration.SourceClickupAPI.IncludeClosedTasks != nil {
-			r.Configuration.SourceClickupAPI.IncludeClosedTasks = types.BoolValue(*resp.Configuration.SourceClickupAPI.IncludeClosedTasks)
-		} else {
-			r.Configuration.SourceClickupAPI.IncludeClosedTasks = types.BoolNull()
-		}
-		if resp.Configuration.SourceClickupAPI.ListID != nil {
-			r.Configuration.SourceClickupAPI.ListID = types.StringValue(*resp.Configuration.SourceClickupAPI.ListID)
-		} else {
-			r.Configuration.SourceClickupAPI.ListID = types.StringNull()
-		}
-		r.Configuration.SourceClickupAPI.SourceType = types.StringValue(string(resp.Configuration.SourceClickupAPI.SourceType))
-		if resp.Configuration.SourceClickupAPI.SpaceID != nil {
-			r.Configuration.SourceClickupAPI.SpaceID = types.StringValue(*resp.Configuration.SourceClickupAPI.SpaceID)
-		} else {
-			r.Configuration.SourceClickupAPI.SpaceID = types.StringNull()
-		}
-		if resp.Configuration.SourceClickupAPI.TeamID != nil {
-			r.Configuration.SourceClickupAPI.TeamID = types.StringValue(*resp.Configuration.SourceClickupAPI.TeamID)
-		} else {
-			r.Configuration.SourceClickupAPI.TeamID = types.StringNull()
-		}
-	}
-	if resp.Configuration.SourceCloseCom != nil {
-		r.Configuration.SourceCloseCom = &SourceCloseCom{}
-		r.Configuration.SourceCloseCom.APIKey = types.StringValue(resp.Configuration.SourceCloseCom.APIKey)
-		r.Configuration.SourceCloseCom.SourceType = types.StringValue(string(resp.Configuration.SourceCloseCom.SourceType))
-		if resp.Configuration.SourceCloseCom.StartDate != nil {
-			r.Configuration.SourceCloseCom.StartDate = types.StringValue(resp.Configuration.SourceCloseCom.StartDate.Format(time.RFC3339))
-		} else {
-			r.Configuration.SourceCloseCom.StartDate = types.StringNull()
-		}
-	}
-	if resp.Configuration.SourceCoda != nil {
-		r.Configuration.SourceCoda = &SourceCoda{}
-		r.Configuration.SourceCoda.AuthToken = types.StringValue(resp.Configuration.SourceCoda.AuthToken)
-		r.Configuration.SourceCoda.SourceType = types.StringValue(string(resp.Configuration.SourceCoda.SourceType))
-	}
-	if resp.Configuration.SourceCoinAPI != nil {
-		r.Configuration.SourceCoinAPI = &SourceCoinAPI{}
-		r.Configuration.SourceCoinAPI.APIKey = types.StringValue(resp.Configuration.SourceCoinAPI.APIKey)
-		if resp.Configuration.SourceCoinAPI.EndDate != nil {
-			r.Configuration.SourceCoinAPI.EndDate = types.StringValue(*resp.Configuration.SourceCoinAPI.EndDate)
-		} else {
-			r.Configuration.SourceCoinAPI.EndDate = types.StringNull()
-		}
-		r.Configuration.SourceCoinAPI.Environment = types.StringValue(string(resp.Configuration.SourceCoinAPI.Environment))
-		if resp.Configuration.SourceCoinAPI.Limit != nil {
-			r.Configuration.SourceCoinAPI.Limit = types.Int64Value(*resp.Configuration.SourceCoinAPI.Limit)
-		} else {
-			r.Configuration.SourceCoinAPI.Limit = types.Int64Null()
-		}
-		r.Configuration.SourceCoinAPI.Period = types.StringValue(resp.Configuration.SourceCoinAPI.Period)
-		r.Configuration.SourceCoinAPI.SourceType = types.StringValue(string(resp.Configuration.SourceCoinAPI.SourceType))
-		r.Configuration.SourceCoinAPI.StartDate = types.StringValue(resp.Configuration.SourceCoinAPI.StartDate)
-		r.Configuration.SourceCoinAPI.SymbolID = types.StringValue(resp.Configuration.SourceCoinAPI.SymbolID)
-	}
-	if resp.Configuration.SourceCoinmarketcap != nil {
-		r.Configuration.SourceCoinmarketcap = &SourceCoinmarketcap{}
-		r.Configuration.SourceCoinmarketcap.APIKey = types.StringValue(resp.Configuration.SourceCoinmarketcap.APIKey)
-		r.Configuration.SourceCoinmarketcap.DataType = types.StringValue(string(resp.Configuration.SourceCoinmarketcap.DataType))
-		r.Configuration.SourceCoinmarketcap.SourceType = types.StringValue(string(resp.Configuration.SourceCoinmarketcap.SourceType))
-		r.Configuration.SourceCoinmarketcap.Symbols = nil
-		for _, v := range resp.Configuration.SourceCoinmarketcap.Symbols {
-			r.Configuration.SourceCoinmarketcap.Symbols = append(r.Configuration.SourceCoinmarketcap.Symbols, types.StringValue(v))
-		}
-	}
-	if resp.Configuration.SourceConfigcat != nil {
-		r.Configuration.SourceConfigcat = &SourceConfigcat{}
-		r.Configuration.SourceConfigcat.Password = types.StringValue(resp.Configuration.SourceConfigcat.Password)
-		r.Configuration.SourceConfigcat.SourceType = types.StringValue(string(resp.Configuration.SourceConfigcat.SourceType))
-		r.Configuration.SourceConfigcat.Username = types.StringValue(resp.Configuration.SourceConfigcat.Username)
-	}
-	if resp.Configuration.SourceConfluence != nil {
-		r.Configuration.SourceConfluence = &SourceConfluence{}
-		r.Configuration.SourceConfluence.APIToken = types.StringValue(resp.Configuration.SourceConfluence.APIToken)
-		r.Configuration.SourceConfluence.DomainName = types.StringValue(resp.Configuration.SourceConfluence.DomainName)
-		r.Configuration.SourceConfluence.Email = types.StringValue(resp.Configuration.SourceConfluence.Email)
-		r.Configuration.SourceConfluence.SourceType = types.StringValue(string(resp.Configuration.SourceConfluence.SourceType))
-	}
-	if resp.Configuration.SourceDatascope != nil {
-		r.Configuration.SourceDatascope = &SourceDatascope{}
-		r.Configuration.SourceDatascope.APIKey = types.StringValue(resp.Configuration.SourceDatascope.APIKey)
-		r.Configuration.SourceDatascope.SourceType = types.StringValue(string(resp.Configuration.SourceDatascope.SourceType))
-		r.Configuration.SourceDatascope.StartDate = types.StringValue(resp.Configuration.SourceDatascope.StartDate)
-	}
-	if resp.Configuration.SourceDelighted != nil {
-		r.Configuration.SourceDelighted = &SourceDelighted{}
-		r.Configuration.SourceDelighted.APIKey = types.StringValue(resp.Configuration.SourceDelighted.APIKey)
-		r.Configuration.SourceDelighted.Since = types.StringValue(resp.Configuration.SourceDelighted.Since.Format(time.RFC3339))
-		r.Configuration.SourceDelighted.SourceType = types.StringValue(string(resp.Configuration.SourceDelighted.SourceType))
-	}
-	if resp.Configuration.SourceDixa != nil {
-		r.Configuration.SourceDixa = &SourceDixa{}
-		r.Configuration.SourceDixa.APIToken = types.StringValue(resp.Configuration.SourceDixa.APIToken)
-		if resp.Configuration.SourceDixa.BatchSize != nil {
-			r.Configuration.SourceDixa.BatchSize = types.Int64Value(*resp.Configuration.SourceDixa.BatchSize)
-		} else {
-			r.Configuration.SourceDixa.BatchSize = types.Int64Null()
-		}
-		r.Configuration.SourceDixa.SourceType = types.StringValue(string(resp.Configuration.SourceDixa.SourceType))
-		r.Configuration.SourceDixa.StartDate = types.StringValue(resp.Configuration.SourceDixa.StartDate)
-	}
-	if resp.Configuration.SourceDockerhub != nil {
-		r.Configuration.SourceDockerhub = &SourceDockerhub{}
-		r.Configuration.SourceDockerhub.DockerUsername = types.StringValue(resp.Configuration.SourceDockerhub.DockerUsername)
-		r.Configuration.SourceDockerhub.SourceType = types.StringValue(string(resp.Configuration.SourceDockerhub.SourceType))
-	}
-	if resp.Configuration.SourceDremio != nil {
-		r.Configuration.SourceDremio = &SourceDremio{}
-		r.Configuration.SourceDremio.APIKey = types.StringValue(resp.Configuration.SourceDremio.APIKey)
-		r.Configuration.SourceDremio.BaseURL = types.StringValue(resp.Configuration.SourceDremio.BaseURL)
-		r.Configuration.SourceDremio.SourceType = types.StringValue(string(resp.Configuration.SourceDremio.SourceType))
-	}
-	if resp.Configuration.SourceDynamodb != nil {
-		r.Configuration.SourceDynamodb = &SourceDynamodb{}
-		r.Configuration.SourceDynamodb.AccessKeyID = types.StringValue(resp.Configuration.SourceDynamodb.AccessKeyID)
-		if resp.Configuration.SourceDynamodb.Endpoint != nil {
-			r.Configuration.SourceDynamodb.Endpoint = types.StringValue(*resp.Configuration.SourceDynamodb.Endpoint)
-		} else {
-			r.Configuration.SourceDynamodb.Endpoint = types.StringNull()
-		}
-		if resp.Configuration.SourceDynamodb.Region != nil {
-			r.Configuration.SourceDynamodb.Region = types.StringValue(string(*resp.Configuration.SourceDynamodb.Region))
-		} else {
-			r.Configuration.SourceDynamodb.Region = types.StringNull()
-		}
-		if resp.Configuration.SourceDynamodb.ReservedAttributeNames != nil {
-			r.Configuration.SourceDynamodb.ReservedAttributeNames = types.StringValue(*resp.Configuration.SourceDynamodb.ReservedAttributeNames)
-		} else {
-			r.Configuration.SourceDynamodb.ReservedAttributeNames = types.StringNull()
-		}
-		r.Configuration.SourceDynamodb.SecretAccessKey = types.StringValue(resp.Configuration.SourceDynamodb.SecretAccessKey)
-		r.Configuration.SourceDynamodb.SourceType = types.StringValue(string(resp.Configuration.SourceDynamodb.SourceType))
-	}
-	if resp.Configuration.SourceE2eTestCloud != nil {
-		r.Configuration.SourceE2eTestCloud = &SourceE2eTestCloud{}
-		r.Configuration.SourceE2eTestCloud.MaxMessages = types.Int64Value(resp.Configuration.SourceE2eTestCloud.MaxMessages)
-		if resp.Configuration.SourceE2eTestCloud.MessageIntervalMs != nil {
-			r.Configuration.SourceE2eTestCloud.MessageIntervalMs = types.Int64Value(*resp.Configuration.SourceE2eTestCloud.MessageIntervalMs)
-		} else {
-			r.Configuration.SourceE2eTestCloud.MessageIntervalMs = types.Int64Null()
-		}
-		if resp.Configuration.SourceE2eTestCloud.MockCatalog.SourceE2eTestCloudMockCatalogSingleSchema != nil {
-			r.Configuration.SourceE2eTestCloud.MockCatalog.SourceE2eTestCloudMockCatalogSingleSchema = &SourceE2eTestCloudMockCatalogSingleSchema{}
-			if resp.Configuration.SourceE2eTestCloud.MockCatalog.SourceE2eTestCloudMockCatalogSingleSchema.StreamDuplication != nil {
-				r.Configuration.SourceE2eTestCloud.MockCatalog.SourceE2eTestCloudMockCatalogSingleSchema.StreamDuplication = types.Int64Value(*resp.Configuration.SourceE2eTestCloud.MockCatalog.SourceE2eTestCloudMockCatalogSingleSchema.StreamDuplication)
-			} else {
-				r.Configuration.SourceE2eTestCloud.MockCatalog.SourceE2eTestCloudMockCatalogSingleSchema.StreamDuplication = types.Int64Null()
-			}
-			r.Configuration.SourceE2eTestCloud.MockCatalog.SourceE2eTestCloudMockCatalogSingleSchema.StreamName = types.StringValue(resp.Configuration.SourceE2eTestCloud.MockCatalog.SourceE2eTestCloudMockCatalogSingleSchema.StreamName)
-			r.Configuration.SourceE2eTestCloud.MockCatalog.SourceE2eTestCloudMockCatalogSingleSchema.StreamSchema = types.StringValue(resp.Configuration.SourceE2eTestCloud.MockCatalog.SourceE2eTestCloudMockCatalogSingleSchema.StreamSchema)
-			r.Configuration.SourceE2eTestCloud.MockCatalog.SourceE2eTestCloudMockCatalogSingleSchema.Type = types.StringValue(string(resp.Configuration.SourceE2eTestCloud.MockCatalog.SourceE2eTestCloudMockCatalogSingleSchema.Type))
-		}
-		if resp.Configuration.SourceE2eTestCloud.MockCatalog.SourceE2eTestCloudMockCatalogMultiSchema != nil {
-			r.Configuration.SourceE2eTestCloud.MockCatalog.SourceE2eTestCloudMockCatalogMultiSchema = &SourceE2eTestCloudMockCatalogMultiSchema{}
-			r.Configuration.SourceE2eTestCloud.MockCatalog.SourceE2eTestCloudMockCatalogMultiSchema.StreamSchemas = types.StringValue(resp.Configuration.SourceE2eTestCloud.MockCatalog.SourceE2eTestCloudMockCatalogMultiSchema.StreamSchemas)
-			r.Configuration.SourceE2eTestCloud.MockCatalog.SourceE2eTestCloudMockCatalogMultiSchema.Type = types.StringValue(string(resp.Configuration.SourceE2eTestCloud.MockCatalog.SourceE2eTestCloudMockCatalogMultiSchema.Type))
-		}
-		if resp.Configuration.SourceE2eTestCloud.Seed != nil {
-			r.Configuration.SourceE2eTestCloud.Seed = types.Int64Value(*resp.Configuration.SourceE2eTestCloud.Seed)
-		} else {
-			r.Configuration.SourceE2eTestCloud.Seed = types.Int64Null()
-		}
-		r.Configuration.SourceE2eTestCloud.SourceType = types.StringValue(string(resp.Configuration.SourceE2eTestCloud.SourceType))
-		if resp.Configuration.SourceE2eTestCloud.Type != nil {
-			r.Configuration.SourceE2eTestCloud.Type = types.StringValue(string(*resp.Configuration.SourceE2eTestCloud.Type))
-		} else {
-			r.Configuration.SourceE2eTestCloud.Type = types.StringNull()
-		}
-	}
-	if resp.Configuration.SourceEmailoctopus != nil {
-		r.Configuration.SourceEmailoctopus = &SourceEmailoctopus{}
-		r.Configuration.SourceEmailoctopus.APIKey = types.StringValue(resp.Configuration.SourceEmailoctopus.APIKey)
-		r.Configuration.SourceEmailoctopus.SourceType = types.StringValue(string(resp.Configuration.SourceEmailoctopus.SourceType))
-	}
-	if resp.Configuration.SourceExchangeRates != nil {
-		r.Configuration.SourceExchangeRates = &SourceExchangeRates{}
-		r.Configuration.SourceExchangeRates.AccessKey = types.StringValue(resp.Configuration.SourceExchangeRates.AccessKey)
-		if resp.Configuration.SourceExchangeRates.Base != nil {
-			r.Configuration.SourceExchangeRates.Base = types.StringValue(*resp.Configuration.SourceExchangeRates.Base)
-		} else {
-			r.Configuration.SourceExchangeRates.Base = types.StringNull()
-		}
-		if resp.Configuration.SourceExchangeRates.IgnoreWeekends != nil {
-			r.Configuration.SourceExchangeRates.IgnoreWeekends = types.BoolValue(*resp.Configuration.SourceExchangeRates.IgnoreWeekends)
-		} else {
-			r.Configuration.SourceExchangeRates.IgnoreWeekends = types.BoolNull()
-		}
-		r.Configuration.SourceExchangeRates.SourceType = types.StringValue(string(resp.Configuration.SourceExchangeRates.SourceType))
-		r.Configuration.SourceExchangeRates.StartDate = types.StringValue(resp.Configuration.SourceExchangeRates.StartDate.String())
-	}
-	if resp.Configuration.SourceFacebookMarketing != nil {
-		r.Configuration.SourceFacebookMarketing = &SourceFacebookMarketing{}
-		r.Configuration.SourceFacebookMarketing.AccessToken = types.StringValue(resp.Configuration.SourceFacebookMarketing.AccessToken)
-		r.Configuration.SourceFacebookMarketing.AccountID = types.StringValue(resp.Configuration.SourceFacebookMarketing.AccountID)
-		if resp.Configuration.SourceFacebookMarketing.ActionBreakdownsAllowEmpty != nil {
-			r.Configuration.SourceFacebookMarketing.ActionBreakdownsAllowEmpty = types.BoolValue(*resp.Configuration.SourceFacebookMarketing.ActionBreakdownsAllowEmpty)
-		} else {
-			r.Configuration.SourceFacebookMarketing.ActionBreakdownsAllowEmpty = types.BoolNull()
-		}
-		r.Configuration.SourceFacebookMarketing.CustomInsights = nil
-		for _, customInsightsItem := range resp.Configuration.SourceFacebookMarketing.CustomInsights {
-			var customInsights1 SourceFacebookMarketingInsightConfig
-			customInsights1.ActionBreakdowns = nil
-			for _, v := range customInsightsItem.ActionBreakdowns {
-				customInsights1.ActionBreakdowns = append(customInsights1.ActionBreakdowns, types.StringValue(string(v)))
-			}
-			customInsights1.Breakdowns = nil
-			for _, v := range customInsightsItem.Breakdowns {
-				customInsights1.Breakdowns = append(customInsights1.Breakdowns, types.StringValue(string(v)))
-			}
-			if customInsightsItem.EndDate != nil {
-				customInsights1.EndDate = types.StringValue(customInsightsItem.EndDate.Format(time.RFC3339))
-			} else {
-				customInsights1.EndDate = types.StringNull()
-			}
-			customInsights1.Fields = nil
-			for _, v := range customInsightsItem.Fields {
-				customInsights1.Fields = append(customInsights1.Fields, types.StringValue(string(v)))
-			}
-			if customInsightsItem.InsightsLookbackWindow != nil {
-				customInsights1.InsightsLookbackWindow = types.Int64Value(*customInsightsItem.InsightsLookbackWindow)
-			} else {
-				customInsights1.InsightsLookbackWindow = types.Int64Null()
-			}
-			if customInsightsItem.Level != nil {
-				customInsights1.Level = types.StringValue(string(*customInsightsItem.Level))
-			} else {
-				customInsights1.Level = types.StringNull()
-			}
-			customInsights1.Name = types.StringValue(customInsightsItem.Name)
-			if customInsightsItem.StartDate != nil {
-				customInsights1.StartDate = types.StringValue(customInsightsItem.StartDate.Format(time.RFC3339))
-			} else {
-				customInsights1.StartDate = types.StringNull()
-			}
-			if customInsightsItem.TimeIncrement != nil {
-				customInsights1.TimeIncrement = types.Int64Value(*customInsightsItem.TimeIncrement)
-			} else {
-				customInsights1.TimeIncrement = types.Int64Null()
-			}
-			r.Configuration.SourceFacebookMarketing.CustomInsights = append(r.Configuration.SourceFacebookMarketing.CustomInsights, customInsights1)
-		}
-		if resp.Configuration.SourceFacebookMarketing.EndDate != nil {
-			r.Configuration.SourceFacebookMarketing.EndDate = types.StringValue(*resp.Configuration.SourceFacebookMarketing.EndDate)
-		} else {
-			r.Configuration.SourceFacebookMarketing.EndDate = types.StringNull()
-		}
-		if resp.Configuration.SourceFacebookMarketing.FetchThumbnailImages != nil {
-			r.Configuration.SourceFacebookMarketing.FetchThumbnailImages = types.BoolValue(*resp.Configuration.SourceFacebookMarketing.FetchThumbnailImages)
-		} else {
-			r.Configuration.SourceFacebookMarketing.FetchThumbnailImages = types.BoolNull()
-		}
-		if resp.Configuration.SourceFacebookMarketing.IncludeDeleted != nil {
-			r.Configuration.SourceFacebookMarketing.IncludeDeleted = types.BoolValue(*resp.Configuration.SourceFacebookMarketing.IncludeDeleted)
-		} else {
-			r.Configuration.SourceFacebookMarketing.IncludeDeleted = types.BoolNull()
-		}
-		if resp.Configuration.SourceFacebookMarketing.InsightsLookbackWindow != nil {
-			r.Configuration.SourceFacebookMarketing.InsightsLookbackWindow = types.Int64Value(*resp.Configuration.SourceFacebookMarketing.InsightsLookbackWindow)
-		} else {
-			r.Configuration.SourceFacebookMarketing.InsightsLookbackWindow = types.Int64Null()
-		}
-		if resp.Configuration.SourceFacebookMarketing.MaxBatchSize != nil {
-			r.Configuration.SourceFacebookMarketing.MaxBatchSize = types.Int64Value(*resp.Configuration.SourceFacebookMarketing.MaxBatchSize)
-		} else {
-			r.Configuration.SourceFacebookMarketing.MaxBatchSize = types.Int64Null()
-		}
-		if resp.Configuration.SourceFacebookMarketing.PageSize != nil {
-			r.Configuration.SourceFacebookMarketing.PageSize = types.Int64Value(*resp.Configuration.SourceFacebookMarketing.PageSize)
-		} else {
-			r.Configuration.SourceFacebookMarketing.PageSize = types.Int64Null()
-		}
-		r.Configuration.SourceFacebookMarketing.SourceType = types.StringValue(string(resp.Configuration.SourceFacebookMarketing.SourceType))
-		r.Configuration.SourceFacebookMarketing.StartDate = types.StringValue(resp.Configuration.SourceFacebookMarketing.StartDate.Format(time.RFC3339))
-	}
-	if resp.Configuration.SourceFacebookPages != nil {
-		r.Configuration.SourceFacebookPages = &SourceFacebookPages{}
-		r.Configuration.SourceFacebookPages.AccessToken = types.StringValue(resp.Configuration.SourceFacebookPages.AccessToken)
-		r.Configuration.SourceFacebookPages.PageID = types.StringValue(resp.Configuration.SourceFacebookPages.PageID)
-		r.Configuration.SourceFacebookPages.SourceType = types.StringValue(string(resp.Configuration.SourceFacebookPages.SourceType))
-	}
-	if resp.Configuration.SourceFaker != nil {
-		r.Configuration.SourceFaker = &SourceFaker{}
-		r.Configuration.SourceFaker.Count = types.Int64Value(resp.Configuration.SourceFaker.Count)
-		if resp.Configuration.SourceFaker.Parallelism != nil {
-			r.Configuration.SourceFaker.Parallelism = types.Int64Value(*resp.Configuration.SourceFaker.Parallelism)
-		} else {
-			r.Configuration.SourceFaker.Parallelism = types.Int64Null()
-		}
-		if resp.Configuration.SourceFaker.RecordsPerSlice != nil {
-			r.Configuration.SourceFaker.RecordsPerSlice = types.Int64Value(*resp.Configuration.SourceFaker.RecordsPerSlice)
-		} else {
-			r.Configuration.SourceFaker.RecordsPerSlice = types.Int64Null()
-		}
-		if resp.Configuration.SourceFaker.RecordsPerSync != nil {
-			r.Configuration.SourceFaker.RecordsPerSync = types.Int64Value(*resp.Configuration.SourceFaker.RecordsPerSync)
-		} else {
-			r.Configuration.SourceFaker.RecordsPerSync = types.Int64Null()
-		}
-		if resp.Configuration.SourceFaker.Seed != nil {
-			r.Configuration.SourceFaker.Seed = types.Int64Value(*resp.Configuration.SourceFaker.Seed)
-		} else {
-			r.Configuration.SourceFaker.Seed = types.Int64Null()
-		}
-		r.Configuration.SourceFaker.SourceType = types.StringValue(string(resp.Configuration.SourceFaker.SourceType))
-	}
-	if resp.Configuration.SourceFauna != nil {
-		r.Configuration.SourceFauna = &SourceFauna{}
-		if resp.Configuration.SourceFauna.Collection == nil {
-			r.Configuration.SourceFauna.Collection = nil
-		} else {
-			r.Configuration.SourceFauna.Collection = &SourceFaunaCollection{}
-			if resp.Configuration.SourceFauna.Collection.Deletions.SourceFaunaCollectionDeletionModeDisabled != nil {
-				r.Configuration.SourceFauna.Collection.Deletions.SourceFaunaCollectionDeletionModeDisabled = &SourceFaunaCollectionDeletionModeDisabled{}
-				r.Configuration.SourceFauna.Collection.Deletions.SourceFaunaCollectionDeletionModeDisabled.DeletionMode = types.StringValue(string(resp.Configuration.SourceFauna.Collection.Deletions.SourceFaunaCollectionDeletionModeDisabled.DeletionMode))
-			}
-			if resp.Configuration.SourceFauna.Collection.Deletions.SourceFaunaCollectionDeletionModeEnabled != nil {
-				r.Configuration.SourceFauna.Collection.Deletions.SourceFaunaCollectionDeletionModeEnabled = &SourceFaunaCollectionDeletionModeEnabled{}
-				r.Configuration.SourceFauna.Collection.Deletions.SourceFaunaCollectionDeletionModeEnabled.Column = types.StringValue(resp.Configuration.SourceFauna.Collection.Deletions.SourceFaunaCollectionDeletionModeEnabled.Column)
-				r.Configuration.SourceFauna.Collection.Deletions.SourceFaunaCollectionDeletionModeEnabled.DeletionMode = types.StringValue(string(resp.Configuration.SourceFauna.Collection.Deletions.SourceFaunaCollectionDeletionModeEnabled.DeletionMode))
-			}
-			r.Configuration.SourceFauna.Collection.PageSize = types.Int64Value(resp.Configuration.SourceFauna.Collection.PageSize)
-		}
-		r.Configuration.SourceFauna.Domain = types.StringValue(resp.Configuration.SourceFauna.Domain)
-		r.Configuration.SourceFauna.Port = types.Int64Value(resp.Configuration.SourceFauna.Port)
-		r.Configuration.SourceFauna.Scheme = types.StringValue(resp.Configuration.SourceFauna.Scheme)
-		r.Configuration.SourceFauna.Secret = types.StringValue(resp.Configuration.SourceFauna.Secret)
-		r.Configuration.SourceFauna.SourceType = types.StringValue(string(resp.Configuration.SourceFauna.SourceType))
-	}
-	if resp.Configuration.SourceFileSecure != nil {
-		r.Configuration.SourceFileSecure = &SourceFileSecure{}
-		r.Configuration.SourceFileSecure.DatasetName = types.StringValue(resp.Configuration.SourceFileSecure.DatasetName)
-		r.Configuration.SourceFileSecure.Format = types.StringValue(string(resp.Configuration.SourceFileSecure.Format))
-		if resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderHTTPSPublicWeb != nil {
-			r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderHTTPSPublicWeb = &SourceFileSecureStorageProviderHTTPSPublicWeb{}
-			r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderHTTPSPublicWeb.Storage = types.StringValue(string(resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderHTTPSPublicWeb.Storage))
-			if resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderHTTPSPublicWeb.UserAgent != nil {
-				r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderHTTPSPublicWeb.UserAgent = types.BoolValue(*resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderHTTPSPublicWeb.UserAgent)
-			} else {
-				r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderHTTPSPublicWeb.UserAgent = types.BoolNull()
-			}
-		}
-		if resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderGCSGoogleCloudStorage != nil {
-			r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderGCSGoogleCloudStorage = &SourceFileSecureStorageProviderGCSGoogleCloudStorage{}
-			if resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderGCSGoogleCloudStorage.ServiceAccountJSON != nil {
-				r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderGCSGoogleCloudStorage.ServiceAccountJSON = types.StringValue(*resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderGCSGoogleCloudStorage.ServiceAccountJSON)
-			} else {
-				r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderGCSGoogleCloudStorage.ServiceAccountJSON = types.StringNull()
-			}
-			r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderGCSGoogleCloudStorage.Storage = types.StringValue(string(resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderGCSGoogleCloudStorage.Storage))
-		}
-		if resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderS3AmazonWebServices != nil {
-			r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderS3AmazonWebServices = &SourceFileSecureStorageProviderS3AmazonWebServices{}
-			if resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderS3AmazonWebServices.AwsAccessKeyID != nil {
-				r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderS3AmazonWebServices.AwsAccessKeyID = types.StringValue(*resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderS3AmazonWebServices.AwsAccessKeyID)
-			} else {
-				r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderS3AmazonWebServices.AwsAccessKeyID = types.StringNull()
-			}
-			if resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderS3AmazonWebServices.AwsSecretAccessKey != nil {
-				r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderS3AmazonWebServices.AwsSecretAccessKey = types.StringValue(*resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderS3AmazonWebServices.AwsSecretAccessKey)
-			} else {
-				r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderS3AmazonWebServices.AwsSecretAccessKey = types.StringNull()
-			}
-			r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderS3AmazonWebServices.Storage = types.StringValue(string(resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderS3AmazonWebServices.Storage))
-		}
-		if resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderAzBlobAzureBlobStorage != nil {
-			r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderAzBlobAzureBlobStorage = &SourceFileSecureStorageProviderAzBlobAzureBlobStorage{}
-			if resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderAzBlobAzureBlobStorage.SasToken != nil {
-				r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderAzBlobAzureBlobStorage.SasToken = types.StringValue(*resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderAzBlobAzureBlobStorage.SasToken)
-			} else {
-				r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderAzBlobAzureBlobStorage.SasToken = types.StringNull()
-			}
-			if resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderAzBlobAzureBlobStorage.SharedKey != nil {
-				r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderAzBlobAzureBlobStorage.SharedKey = types.StringValue(*resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderAzBlobAzureBlobStorage.SharedKey)
-			} else {
-				r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderAzBlobAzureBlobStorage.SharedKey = types.StringNull()
-			}
-			r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderAzBlobAzureBlobStorage.Storage = types.StringValue(string(resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderAzBlobAzureBlobStorage.Storage))
-			r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderAzBlobAzureBlobStorage.StorageAccount = types.StringValue(resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderAzBlobAzureBlobStorage.StorageAccount)
-		}
-		if resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSSHSecureShell != nil {
-			r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSSHSecureShell = &SourceFileSecureStorageProviderSSHSecureShell{}
-			r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSSHSecureShell.Host = types.StringValue(resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSSHSecureShell.Host)
-			if resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSSHSecureShell.Password != nil {
-				r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSSHSecureShell.Password = types.StringValue(*resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSSHSecureShell.Password)
-			} else {
-				r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSSHSecureShell.Password = types.StringNull()
-			}
-			if resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSSHSecureShell.Port != nil {
-				r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSSHSecureShell.Port = types.StringValue(*resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSSHSecureShell.Port)
-			} else {
-				r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSSHSecureShell.Port = types.StringNull()
-			}
-			r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSSHSecureShell.Storage = types.StringValue(string(resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSSHSecureShell.Storage))
-			r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSSHSecureShell.User = types.StringValue(resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSSHSecureShell.User)
-		}
-		if resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSCPSecureCopyProtocol != nil {
-			r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSCPSecureCopyProtocol = &SourceFileSecureStorageProviderSCPSecureCopyProtocol{}
-			r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSCPSecureCopyProtocol.Host = types.StringValue(resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSCPSecureCopyProtocol.Host)
-			if resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSCPSecureCopyProtocol.Password != nil {
-				r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSCPSecureCopyProtocol.Password = types.StringValue(*resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSCPSecureCopyProtocol.Password)
-			} else {
-				r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSCPSecureCopyProtocol.Password = types.StringNull()
-			}
-			if resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSCPSecureCopyProtocol.Port != nil {
-				r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSCPSecureCopyProtocol.Port = types.StringValue(*resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSCPSecureCopyProtocol.Port)
-			} else {
-				r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSCPSecureCopyProtocol.Port = types.StringNull()
-			}
-			r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSCPSecureCopyProtocol.Storage = types.StringValue(string(resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSCPSecureCopyProtocol.Storage))
-			r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSCPSecureCopyProtocol.User = types.StringValue(resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSCPSecureCopyProtocol.User)
-		}
-		if resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSFTPSecureFileTransferProtocol != nil {
-			r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSFTPSecureFileTransferProtocol = &SourceFileSecureStorageProviderSFTPSecureFileTransferProtocol{}
-			r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSFTPSecureFileTransferProtocol.Host = types.StringValue(resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSFTPSecureFileTransferProtocol.Host)
-			if resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSFTPSecureFileTransferProtocol.Password != nil {
-				r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSFTPSecureFileTransferProtocol.Password = types.StringValue(*resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSFTPSecureFileTransferProtocol.Password)
-			} else {
-				r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSFTPSecureFileTransferProtocol.Password = types.StringNull()
-			}
-			if resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSFTPSecureFileTransferProtocol.Port != nil {
-				r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSFTPSecureFileTransferProtocol.Port = types.StringValue(*resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSFTPSecureFileTransferProtocol.Port)
-			} else {
-				r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSFTPSecureFileTransferProtocol.Port = types.StringNull()
-			}
-			r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSFTPSecureFileTransferProtocol.Storage = types.StringValue(string(resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSFTPSecureFileTransferProtocol.Storage))
-			r.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSFTPSecureFileTransferProtocol.User = types.StringValue(resp.Configuration.SourceFileSecure.Provider.SourceFileSecureStorageProviderSFTPSecureFileTransferProtocol.User)
-		}
-		if resp.Configuration.SourceFileSecure.ReaderOptions != nil {
-			r.Configuration.SourceFileSecure.ReaderOptions = types.StringValue(*resp.Configuration.SourceFileSecure.ReaderOptions)
-		} else {
-			r.Configuration.SourceFileSecure.ReaderOptions = types.StringNull()
-		}
-		r.Configuration.SourceFileSecure.SourceType = types.StringValue(string(resp.Configuration.SourceFileSecure.SourceType))
-		r.Configuration.SourceFileSecure.URL = types.StringValue(resp.Configuration.SourceFileSecure.URL)
-	}
-	if resp.Configuration.SourceFirebolt != nil {
-		r.Configuration.SourceFirebolt = &SourceFirebolt{}
-		if resp.Configuration.SourceFirebolt.Account != nil {
-			r.Configuration.SourceFirebolt.Account = types.StringValue(*resp.Configuration.SourceFirebolt.Account)
-		} else {
-			r.Configuration.SourceFirebolt.Account = types.StringNull()
-		}
-		r.Configuration.SourceFirebolt.Database = types.StringValue(resp.Configuration.SourceFirebolt.Database)
-		if resp.Configuration.SourceFirebolt.Engine != nil {
-			r.Configuration.SourceFirebolt.Engine = types.StringValue(*resp.Configuration.SourceFirebolt.Engine)
-		} else {
-			r.Configuration.SourceFirebolt.Engine = types.StringNull()
-		}
-		if resp.Configuration.SourceFirebolt.Host != nil {
-			r.Configuration.SourceFirebolt.Host = types.StringValue(*resp.Configuration.SourceFirebolt.Host)
-		} else {
-			r.Configuration.SourceFirebolt.Host = types.StringNull()
-		}
-		r.Configuration.SourceFirebolt.Password = types.StringValue(resp.Configuration.SourceFirebolt.Password)
-		r.Configuration.SourceFirebolt.SourceType = types.StringValue(string(resp.Configuration.SourceFirebolt.SourceType))
-		r.Configuration.SourceFirebolt.Username = types.StringValue(resp.Configuration.SourceFirebolt.Username)
-	}
-	if resp.Configuration.SourceFreshcaller != nil {
-		r.Configuration.SourceFreshcaller = &SourceFreshcaller{}
-		r.Configuration.SourceFreshcaller.APIKey = types.StringValue(resp.Configuration.SourceFreshcaller.APIKey)
-		r.Configuration.SourceFreshcaller.Domain = types.StringValue(resp.Configuration.SourceFreshcaller.Domain)
-		if resp.Configuration.SourceFreshcaller.RequestsPerMinute != nil {
-			r.Configuration.SourceFreshcaller.RequestsPerMinute = types.Int64Value(*resp.Configuration.SourceFreshcaller.RequestsPerMinute)
-		} else {
-			r.Configuration.SourceFreshcaller.RequestsPerMinute = types.Int64Null()
-		}
-		r.Configuration.SourceFreshcaller.SourceType = types.StringValue(string(resp.Configuration.SourceFreshcaller.SourceType))
-		startDateResult, _ := json.Marshal(resp.Configuration.SourceFreshcaller.StartDate)
-		r.Configuration.SourceFreshcaller.StartDate = types.StringValue(string(startDateResult))
-		if resp.Configuration.SourceFreshcaller.SyncLagMinutes != nil {
-			r.Configuration.SourceFreshcaller.SyncLagMinutes = types.Int64Value(*resp.Configuration.SourceFreshcaller.SyncLagMinutes)
-		} else {
-			r.Configuration.SourceFreshcaller.SyncLagMinutes = types.Int64Null()
-		}
-	}
-	if resp.Configuration.SourceFreshdesk != nil {
-		r.Configuration.SourceFreshdesk = &SourceFreshdesk{}
-		r.Configuration.SourceFreshdesk.APIKey = types.StringValue(resp.Configuration.SourceFreshdesk.APIKey)
-		r.Configuration.SourceFreshdesk.Domain = types.StringValue(resp.Configuration.SourceFreshdesk.Domain)
-		if resp.Configuration.SourceFreshdesk.RequestsPerMinute != nil {
-			r.Configuration.SourceFreshdesk.RequestsPerMinute = types.Int64Value(*resp.Configuration.SourceFreshdesk.RequestsPerMinute)
-		} else {
-			r.Configuration.SourceFreshdesk.RequestsPerMinute = types.Int64Null()
-		}
-		r.Configuration.SourceFreshdesk.SourceType = types.StringValue(string(resp.Configuration.SourceFreshdesk.SourceType))
-		if resp.Configuration.SourceFreshdesk.StartDate != nil {
-			r.Configuration.SourceFreshdesk.StartDate = types.StringValue(resp.Configuration.SourceFreshdesk.StartDate.Format(time.RFC3339))
-		} else {
-			r.Configuration.SourceFreshdesk.StartDate = types.StringNull()
-		}
-	}
-	if resp.Configuration.SourceFreshsales != nil {
-		r.Configuration.SourceFreshsales = &SourceFreshsales{}
-		r.Configuration.SourceFreshsales.APIKey = types.StringValue(resp.Configuration.SourceFreshsales.APIKey)
-		r.Configuration.SourceFreshsales.DomainName = types.StringValue(resp.Configuration.SourceFreshsales.DomainName)
-		r.Configuration.SourceFreshsales.SourceType = types.StringValue(string(resp.Configuration.SourceFreshsales.SourceType))
-	}
-	if resp.Configuration.SourceGcs != nil {
-		r.Configuration.SourceGcs = &SourceGcs{}
-		r.Configuration.SourceGcs.GcsBucket = types.StringValue(resp.Configuration.SourceGcs.GcsBucket)
-		r.Configuration.SourceGcs.GcsPath = types.StringValue(resp.Configuration.SourceGcs.GcsPath)
-		r.Configuration.SourceGcs.ServiceAccount = types.StringValue(resp.Configuration.SourceGcs.ServiceAccount)
-		r.Configuration.SourceGcs.SourceType = types.StringValue(string(resp.Configuration.SourceGcs.SourceType))
-	}
-	if resp.Configuration.SourceGetlago != nil {
-		r.Configuration.SourceGetlago = &SourceGetlago{}
-		r.Configuration.SourceGetlago.APIKey = types.StringValue(resp.Configuration.SourceGetlago.APIKey)
-		r.Configuration.SourceGetlago.SourceType = types.StringValue(string(resp.Configuration.SourceGetlago.SourceType))
-	}
-	if resp.Configuration.SourceGithub != nil {
-		r.Configuration.SourceGithub = &SourceGithub{}
-		if resp.Configuration.SourceGithub.Branch != nil {
-			r.Configuration.SourceGithub.Branch = types.StringValue(*resp.Configuration.SourceGithub.Branch)
-		} else {
-			r.Configuration.SourceGithub.Branch = types.StringNull()
-		}
-		if resp.Configuration.SourceGithub.Credentials == nil {
-			r.Configuration.SourceGithub.Credentials = nil
-		} else {
-			r.Configuration.SourceGithub.Credentials = &SourceGithubAuthentication{}
-			if resp.Configuration.SourceGithub.Credentials.SourceGithubAuthenticationOAuth != nil {
-				r.Configuration.SourceGithub.Credentials.SourceGithubAuthenticationOAuth = &SourceGithubAuthenticationOAuth{}
-				r.Configuration.SourceGithub.Credentials.SourceGithubAuthenticationOAuth.AccessToken = types.StringValue(resp.Configuration.SourceGithub.Credentials.SourceGithubAuthenticationOAuth.AccessToken)
-				if resp.Configuration.SourceGithub.Credentials.SourceGithubAuthenticationOAuth.OptionTitle != nil {
-					r.Configuration.SourceGithub.Credentials.SourceGithubAuthenticationOAuth.OptionTitle = types.StringValue(string(*resp.Configuration.SourceGithub.Credentials.SourceGithubAuthenticationOAuth.OptionTitle))
-				} else {
-					r.Configuration.SourceGithub.Credentials.SourceGithubAuthenticationOAuth.OptionTitle = types.StringNull()
-				}
-			}
-			if resp.Configuration.SourceGithub.Credentials.SourceGithubAuthenticationPersonalAccessToken != nil {
-				r.Configuration.SourceGithub.Credentials.SourceGithubAuthenticationPersonalAccessToken = &SourceGithubAuthenticationPersonalAccessToken{}
-				if resp.Configuration.SourceGithub.Credentials.SourceGithubAuthenticationPersonalAccessToken.OptionTitle != nil {
-					r.Configuration.SourceGithub.Credentials.SourceGithubAuthenticationPersonalAccessToken.OptionTitle = types.StringValue(string(*resp.Configuration.SourceGithub.Credentials.SourceGithubAuthenticationPersonalAccessToken.OptionTitle))
-				} else {
-					r.Configuration.SourceGithub.Credentials.SourceGithubAuthenticationPersonalAccessToken.OptionTitle = types.StringNull()
-				}
-				r.Configuration.SourceGithub.Credentials.SourceGithubAuthenticationPersonalAccessToken.PersonalAccessToken = types.StringValue(resp.Configuration.SourceGithub.Credentials.SourceGithubAuthenticationPersonalAccessToken.PersonalAccessToken)
-			}
-		}
-		if resp.Configuration.SourceGithub.PageSizeForLargeStreams != nil {
-			r.Configuration.SourceGithub.PageSizeForLargeStreams = types.Int64Value(*resp.Configuration.SourceGithub.PageSizeForLargeStreams)
-		} else {
-			r.Configuration.SourceGithub.PageSizeForLargeStreams = types.Int64Null()
-		}
-		r.Configuration.SourceGithub.Repository = types.StringValue(resp.Configuration.SourceGithub.Repository)
-		r.Configuration.SourceGithub.SourceType = types.StringValue(string(resp.Configuration.SourceGithub.SourceType))
-		r.Configuration.SourceGithub.StartDate = types.StringValue(resp.Configuration.SourceGithub.StartDate.Format(time.RFC3339))
-	}
-	if resp.Configuration.SourceGitlab != nil {
-		r.Configuration.SourceGitlab = &SourceGitlab{}
-		r.Configuration.SourceGitlab.APIURL = types.StringValue(resp.Configuration.SourceGitlab.APIURL)
-		if resp.Configuration.SourceGitlab.Credentials.SourceGitlabAuthorizationMethodOAuth20 != nil {
-			r.Configuration.SourceGitlab.Credentials.SourceGitlabAuthorizationMethodOAuth20 = &SourceGitlabAuthorizationMethodOAuth20{}
-			r.Configuration.SourceGitlab.Credentials.SourceGitlabAuthorizationMethodOAuth20.AccessToken = types.StringValue(resp.Configuration.SourceGitlab.Credentials.SourceGitlabAuthorizationMethodOAuth20.AccessToken)
-			if resp.Configuration.SourceGitlab.Credentials.SourceGitlabAuthorizationMethodOAuth20.AuthType != nil {
-				r.Configuration.SourceGitlab.Credentials.SourceGitlabAuthorizationMethodOAuth20.AuthType = types.StringValue(string(*resp.Configuration.SourceGitlab.Credentials.SourceGitlabAuthorizationMethodOAuth20.AuthType))
-			} else {
-				r.Configuration.SourceGitlab.Credentials.SourceGitlabAuthorizationMethodOAuth20.AuthType = types.StringNull()
-			}
-			r.Configuration.SourceGitlab.Credentials.SourceGitlabAuthorizationMethodOAuth20.ClientID = types.StringValue(resp.Configuration.SourceGitlab.Credentials.SourceGitlabAuthorizationMethodOAuth20.ClientID)
-			r.Configuration.SourceGitlab.Credentials.SourceGitlabAuthorizationMethodOAuth20.ClientSecret = types.StringValue(resp.Configuration.SourceGitlab.Credentials.SourceGitlabAuthorizationMethodOAuth20.ClientSecret)
-			r.Configuration.SourceGitlab.Credentials.SourceGitlabAuthorizationMethodOAuth20.RefreshToken = types.StringValue(resp.Configuration.SourceGitlab.Credentials.SourceGitlabAuthorizationMethodOAuth20.RefreshToken)
-			r.Configuration.SourceGitlab.Credentials.SourceGitlabAuthorizationMethodOAuth20.TokenExpiryDate = types.StringValue(resp.Configuration.SourceGitlab.Credentials.SourceGitlabAuthorizationMethodOAuth20.TokenExpiryDate.Format(time.RFC3339))
-		}
-		if resp.Configuration.SourceGitlab.Credentials.SourceGitlabAuthorizationMethodPrivateToken != nil {
-			r.Configuration.SourceGitlab.Credentials.SourceGitlabAuthorizationMethodPrivateToken = &SourceGitlabAuthorizationMethodPrivateToken{}
-			r.Configuration.SourceGitlab.Credentials.SourceGitlabAuthorizationMethodPrivateToken.AccessToken = types.StringValue(resp.Configuration.SourceGitlab.Credentials.SourceGitlabAuthorizationMethodPrivateToken.AccessToken)
-			if resp.Configuration.SourceGitlab.Credentials.SourceGitlabAuthorizationMethodPrivateToken.AuthType != nil {
-				r.Configuration.SourceGitlab.Credentials.SourceGitlabAuthorizationMethodPrivateToken.AuthType = types.StringValue(string(*resp.Configuration.SourceGitlab.Credentials.SourceGitlabAuthorizationMethodPrivateToken.AuthType))
-			} else {
-				r.Configuration.SourceGitlab.Credentials.SourceGitlabAuthorizationMethodPrivateToken.AuthType = types.StringNull()
-			}
-		}
-		if resp.Configuration.SourceGitlab.Groups != nil {
-			r.Configuration.SourceGitlab.Groups = types.StringValue(*resp.Configuration.SourceGitlab.Groups)
-		} else {
-			r.Configuration.SourceGitlab.Groups = types.StringNull()
-		}
-		if resp.Configuration.SourceGitlab.Projects != nil {
-			r.Configuration.SourceGitlab.Projects = types.StringValue(*resp.Configuration.SourceGitlab.Projects)
-		} else {
-			r.Configuration.SourceGitlab.Projects = types.StringNull()
-		}
-		r.Configuration.SourceGitlab.SourceType = types.StringValue(string(resp.Configuration.SourceGitlab.SourceType))
-		r.Configuration.SourceGitlab.StartDate = types.StringValue(resp.Configuration.SourceGitlab.StartDate.Format(time.RFC3339))
-	}
-	if resp.Configuration.SourceGlassfrog != nil {
-		r.Configuration.SourceGlassfrog = &SourceGlassfrog{}
-		r.Configuration.SourceGlassfrog.APIKey = types.StringValue(resp.Configuration.SourceGlassfrog.APIKey)
-		r.Configuration.SourceGlassfrog.SourceType = types.StringValue(string(resp.Configuration.SourceGlassfrog.SourceType))
-	}
-	if resp.Configuration.SourceGnews != nil {
-		r.Configuration.SourceGnews = &SourceGnews{}
-		r.Configuration.SourceGnews.APIKey = types.StringValue(resp.Configuration.SourceGnews.APIKey)
-		if resp.Configuration.SourceGnews.Country != nil {
-			r.Configuration.SourceGnews.Country = types.StringValue(string(*resp.Configuration.SourceGnews.Country))
-		} else {
-			r.Configuration.SourceGnews.Country = types.StringNull()
-		}
-		if resp.Configuration.SourceGnews.EndDate != nil {
-			r.Configuration.SourceGnews.EndDate = types.StringValue(*resp.Configuration.SourceGnews.EndDate)
-		} else {
-			r.Configuration.SourceGnews.EndDate = types.StringNull()
-		}
-		r.Configuration.SourceGnews.In = nil
-		for _, v := range resp.Configuration.SourceGnews.In {
-			r.Configuration.SourceGnews.In = append(r.Configuration.SourceGnews.In, types.StringValue(string(v)))
-		}
-		if resp.Configuration.SourceGnews.Language != nil {
-			r.Configuration.SourceGnews.Language = types.StringValue(string(*resp.Configuration.SourceGnews.Language))
-		} else {
-			r.Configuration.SourceGnews.Language = types.StringNull()
-		}
-		r.Configuration.SourceGnews.Nullable = nil
-		for _, v := range resp.Configuration.SourceGnews.Nullable {
-			r.Configuration.SourceGnews.Nullable = append(r.Configuration.SourceGnews.Nullable, types.StringValue(string(v)))
-		}
-		r.Configuration.SourceGnews.Query = types.StringValue(resp.Configuration.SourceGnews.Query)
-		if resp.Configuration.SourceGnews.Sortby != nil {
-			r.Configuration.SourceGnews.Sortby = types.StringValue(string(*resp.Configuration.SourceGnews.Sortby))
-		} else {
-			r.Configuration.SourceGnews.Sortby = types.StringNull()
-		}
-		r.Configuration.SourceGnews.SourceType = types.StringValue(string(resp.Configuration.SourceGnews.SourceType))
-		if resp.Configuration.SourceGnews.StartDate != nil {
-			r.Configuration.SourceGnews.StartDate = types.StringValue(*resp.Configuration.SourceGnews.StartDate)
-		} else {
-			r.Configuration.SourceGnews.StartDate = types.StringNull()
-		}
-		if resp.Configuration.SourceGnews.TopHeadlinesQuery != nil {
-			r.Configuration.SourceGnews.TopHeadlinesQuery = types.StringValue(*resp.Configuration.SourceGnews.TopHeadlinesQuery)
-		} else {
-			r.Configuration.SourceGnews.TopHeadlinesQuery = types.StringNull()
-		}
-		if resp.Configuration.SourceGnews.TopHeadlinesTopic != nil {
-			r.Configuration.SourceGnews.TopHeadlinesTopic = types.StringValue(string(*resp.Configuration.SourceGnews.TopHeadlinesTopic))
-		} else {
-			r.Configuration.SourceGnews.TopHeadlinesTopic = types.StringNull()
-		}
-	}
-	if resp.Configuration.SourceGoogleAds != nil {
-		r.Configuration.SourceGoogleAds = &SourceGoogleAds{}
-		if resp.Configuration.SourceGoogleAds.ConversionWindowDays != nil {
-			r.Configuration.SourceGoogleAds.ConversionWindowDays = types.Int64Value(*resp.Configuration.SourceGoogleAds.ConversionWindowDays)
-		} else {
-			r.Configuration.SourceGoogleAds.ConversionWindowDays = types.Int64Null()
-		}
-		if resp.Configuration.SourceGoogleAds.Credentials.AccessToken != nil {
-			r.Configuration.SourceGoogleAds.Credentials.AccessToken = types.StringValue(*resp.Configuration.SourceGoogleAds.Credentials.AccessToken)
-		} else {
-			r.Configuration.SourceGoogleAds.Credentials.AccessToken = types.StringNull()
-		}
-		r.Configuration.SourceGoogleAds.Credentials.ClientID = types.StringValue(resp.Configuration.SourceGoogleAds.Credentials.ClientID)
-		r.Configuration.SourceGoogleAds.Credentials.ClientSecret = types.StringValue(resp.Configuration.SourceGoogleAds.Credentials.ClientSecret)
-		r.Configuration.SourceGoogleAds.Credentials.DeveloperToken = types.StringValue(resp.Configuration.SourceGoogleAds.Credentials.DeveloperToken)
-		r.Configuration.SourceGoogleAds.Credentials.RefreshToken = types.StringValue(resp.Configuration.SourceGoogleAds.Credentials.RefreshToken)
-		r.Configuration.SourceGoogleAds.CustomQueries = nil
-		for _, customQueriesItem := range resp.Configuration.SourceGoogleAds.CustomQueries {
-			var customQueries1 SourceGoogleAdsCustomQueries
-			customQueries1.Query = types.StringValue(customQueriesItem.Query)
-			customQueries1.TableName = types.StringValue(customQueriesItem.TableName)
-			r.Configuration.SourceGoogleAds.CustomQueries = append(r.Configuration.SourceGoogleAds.CustomQueries, customQueries1)
-		}
-		r.Configuration.SourceGoogleAds.CustomerID = types.StringValue(resp.Configuration.SourceGoogleAds.CustomerID)
-		if resp.Configuration.SourceGoogleAds.EndDate != nil {
-			r.Configuration.SourceGoogleAds.EndDate = types.StringValue(resp.Configuration.SourceGoogleAds.EndDate.String())
-		} else {
-			r.Configuration.SourceGoogleAds.EndDate = types.StringNull()
-		}
-		if resp.Configuration.SourceGoogleAds.LoginCustomerID != nil {
-			r.Configuration.SourceGoogleAds.LoginCustomerID = types.StringValue(*resp.Configuration.SourceGoogleAds.LoginCustomerID)
-		} else {
-			r.Configuration.SourceGoogleAds.LoginCustomerID = types.StringNull()
-		}
-		r.Configuration.SourceGoogleAds.SourceType = types.StringValue(string(resp.Configuration.SourceGoogleAds.SourceType))
-		r.Configuration.SourceGoogleAds.StartDate = types.StringValue(resp.Configuration.SourceGoogleAds.StartDate.String())
-	}
-	if resp.Configuration.SourceGoogleAnalyticsDataAPI != nil {
-		r.Configuration.SourceGoogleAnalyticsDataAPI = &SourceGoogleAnalyticsDataAPI{}
-		if resp.Configuration.SourceGoogleAnalyticsDataAPI.Credentials == nil {
-			r.Configuration.SourceGoogleAnalyticsDataAPI.Credentials = nil
-		} else {
-			r.Configuration.SourceGoogleAnalyticsDataAPI.Credentials = &SourceGoogleAnalyticsDataAPICredentials{}
-			if resp.Configuration.SourceGoogleAnalyticsDataAPI.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth != nil {
-				r.Configuration.SourceGoogleAnalyticsDataAPI.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth = &SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth{}
-				if resp.Configuration.SourceGoogleAnalyticsDataAPI.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.AccessToken != nil {
-					r.Configuration.SourceGoogleAnalyticsDataAPI.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.AccessToken = types.StringValue(*resp.Configuration.SourceGoogleAnalyticsDataAPI.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.AccessToken)
-				} else {
-					r.Configuration.SourceGoogleAnalyticsDataAPI.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.AccessToken = types.StringNull()
-				}
-				if resp.Configuration.SourceGoogleAnalyticsDataAPI.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.AuthType != nil {
-					r.Configuration.SourceGoogleAnalyticsDataAPI.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.AuthType = types.StringValue(string(*resp.Configuration.SourceGoogleAnalyticsDataAPI.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.AuthType))
-				} else {
-					r.Configuration.SourceGoogleAnalyticsDataAPI.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.AuthType = types.StringNull()
-				}
-				r.Configuration.SourceGoogleAnalyticsDataAPI.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.ClientID = types.StringValue(resp.Configuration.SourceGoogleAnalyticsDataAPI.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.ClientID)
-				r.Configuration.SourceGoogleAnalyticsDataAPI.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.ClientSecret = types.StringValue(resp.Configuration.SourceGoogleAnalyticsDataAPI.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.ClientSecret)
-				r.Configuration.SourceGoogleAnalyticsDataAPI.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.RefreshToken = types.StringValue(resp.Configuration.SourceGoogleAnalyticsDataAPI.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.RefreshToken)
-			}
-			if resp.Configuration.SourceGoogleAnalyticsDataAPI.Credentials.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication != nil {
-				r.Configuration.SourceGoogleAnalyticsDataAPI.Credentials.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication = &SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication{}
-				if resp.Configuration.SourceGoogleAnalyticsDataAPI.Credentials.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication.AuthType != nil {
-					r.Configuration.SourceGoogleAnalyticsDataAPI.Credentials.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication.AuthType = types.StringValue(string(*resp.Configuration.SourceGoogleAnalyticsDataAPI.Credentials.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication.AuthType))
-				} else {
-					r.Configuration.SourceGoogleAnalyticsDataAPI.Credentials.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication.AuthType = types.StringNull()
-				}
-				r.Configuration.SourceGoogleAnalyticsDataAPI.Credentials.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication.CredentialsJSON = types.StringValue(resp.Configuration.SourceGoogleAnalyticsDataAPI.Credentials.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication.CredentialsJSON)
-			}
-		}
-		if resp.Configuration.SourceGoogleAnalyticsDataAPI.CustomReports != nil {
-			r.Configuration.SourceGoogleAnalyticsDataAPI.CustomReports = types.StringValue(*resp.Configuration.SourceGoogleAnalyticsDataAPI.CustomReports)
-		} else {
-			r.Configuration.SourceGoogleAnalyticsDataAPI.CustomReports = types.StringNull()
-		}
-		r.Configuration.SourceGoogleAnalyticsDataAPI.DateRangesStartDate = types.StringValue(resp.Configuration.SourceGoogleAnalyticsDataAPI.DateRangesStartDate.String())
-		r.Configuration.SourceGoogleAnalyticsDataAPI.PropertyID = types.StringValue(resp.Configuration.SourceGoogleAnalyticsDataAPI.PropertyID)
-		r.Configuration.SourceGoogleAnalyticsDataAPI.SourceType = types.StringValue(string(resp.Configuration.SourceGoogleAnalyticsDataAPI.SourceType))
-		if resp.Configuration.SourceGoogleAnalyticsDataAPI.WindowInDays != nil {
-			r.Configuration.SourceGoogleAnalyticsDataAPI.WindowInDays = types.Int64Value(*resp.Configuration.SourceGoogleAnalyticsDataAPI.WindowInDays)
-		} else {
-			r.Configuration.SourceGoogleAnalyticsDataAPI.WindowInDays = types.Int64Null()
-		}
-	}
-	if resp.Configuration.SourceGoogleAnalyticsV4 != nil {
-		r.Configuration.SourceGoogleAnalyticsV4 = &SourceGoogleAnalyticsV4{}
-		if resp.Configuration.SourceGoogleAnalyticsV4.Credentials == nil {
-			r.Configuration.SourceGoogleAnalyticsV4.Credentials = nil
-		} else {
-			r.Configuration.SourceGoogleAnalyticsV4.Credentials = &SourceGoogleAnalyticsV4Credentials{}
-			if resp.Configuration.SourceGoogleAnalyticsV4.Credentials.SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth != nil {
-				r.Configuration.SourceGoogleAnalyticsV4.Credentials.SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth = &SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth{}
-				if resp.Configuration.SourceGoogleAnalyticsV4.Credentials.SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth.AccessToken != nil {
-					r.Configuration.SourceGoogleAnalyticsV4.Credentials.SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth.AccessToken = types.StringValue(*resp.Configuration.SourceGoogleAnalyticsV4.Credentials.SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth.AccessToken)
-				} else {
-					r.Configuration.SourceGoogleAnalyticsV4.Credentials.SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth.AccessToken = types.StringNull()
-				}
-				if resp.Configuration.SourceGoogleAnalyticsV4.Credentials.SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth.AuthType != nil {
-					r.Configuration.SourceGoogleAnalyticsV4.Credentials.SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth.AuthType = types.StringValue(string(*resp.Configuration.SourceGoogleAnalyticsV4.Credentials.SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth.AuthType))
-				} else {
-					r.Configuration.SourceGoogleAnalyticsV4.Credentials.SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth.AuthType = types.StringNull()
-				}
-				r.Configuration.SourceGoogleAnalyticsV4.Credentials.SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth.ClientID = types.StringValue(resp.Configuration.SourceGoogleAnalyticsV4.Credentials.SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth.ClientID)
-				r.Configuration.SourceGoogleAnalyticsV4.Credentials.SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth.ClientSecret = types.StringValue(resp.Configuration.SourceGoogleAnalyticsV4.Credentials.SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth.ClientSecret)
-				r.Configuration.SourceGoogleAnalyticsV4.Credentials.SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth.RefreshToken = types.StringValue(resp.Configuration.SourceGoogleAnalyticsV4.Credentials.SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth.RefreshToken)
-			}
-			if resp.Configuration.SourceGoogleAnalyticsV4.Credentials.SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthentication != nil {
-				r.Configuration.SourceGoogleAnalyticsV4.Credentials.SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthentication = &SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication{}
-				if resp.Configuration.SourceGoogleAnalyticsV4.Credentials.SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthentication.AuthType != nil {
-					r.Configuration.SourceGoogleAnalyticsV4.Credentials.SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthentication.AuthType = types.StringValue(string(*resp.Configuration.SourceGoogleAnalyticsV4.Credentials.SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthentication.AuthType))
-				} else {
-					r.Configuration.SourceGoogleAnalyticsV4.Credentials.SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthentication.AuthType = types.StringNull()
-				}
-				r.Configuration.SourceGoogleAnalyticsV4.Credentials.SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthentication.CredentialsJSON = types.StringValue(resp.Configuration.SourceGoogleAnalyticsV4.Credentials.SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthentication.CredentialsJSON)
-			}
-		}
-		if resp.Configuration.SourceGoogleAnalyticsV4.CustomReports != nil {
-			r.Configuration.SourceGoogleAnalyticsV4.CustomReports = types.StringValue(*resp.Configuration.SourceGoogleAnalyticsV4.CustomReports)
-		} else {
-			r.Configuration.SourceGoogleAnalyticsV4.CustomReports = types.StringNull()
-		}
-		r.Configuration.SourceGoogleAnalyticsV4.SourceType = types.StringValue(string(resp.Configuration.SourceGoogleAnalyticsV4.SourceType))
-		r.Configuration.SourceGoogleAnalyticsV4.StartDate = types.StringValue(resp.Configuration.SourceGoogleAnalyticsV4.StartDate)
-		r.Configuration.SourceGoogleAnalyticsV4.ViewID = types.StringValue(resp.Configuration.SourceGoogleAnalyticsV4.ViewID)
-		if resp.Configuration.SourceGoogleAnalyticsV4.WindowInDays != nil {
-			r.Configuration.SourceGoogleAnalyticsV4.WindowInDays = types.Int64Value(*resp.Configuration.SourceGoogleAnalyticsV4.WindowInDays)
-		} else {
-			r.Configuration.SourceGoogleAnalyticsV4.WindowInDays = types.Int64Null()
-		}
-	}
-	if resp.Configuration.SourceGoogleDirectory != nil {
-		r.Configuration.SourceGoogleDirectory = &SourceGoogleDirectory{}
-		r.Configuration.SourceGoogleDirectory.CredentialsJSON = types.StringValue(resp.Configuration.SourceGoogleDirectory.CredentialsJSON)
-		r.Configuration.SourceGoogleDirectory.Email = types.StringValue(resp.Configuration.SourceGoogleDirectory.Email)
-		r.Configuration.SourceGoogleDirectory.SourceType = types.StringValue(string(resp.Configuration.SourceGoogleDirectory.SourceType))
-	}
-	if resp.Configuration.SourceGoogleSearchConsole != nil {
-		r.Configuration.SourceGoogleSearchConsole = &SourceGoogleSearchConsole{}
-		if resp.Configuration.SourceGoogleSearchConsole.Authorization.SourceGoogleSearchConsoleAuthenticationTypeOAuth != nil {
-			r.Configuration.SourceGoogleSearchConsole.Authorization.SourceGoogleSearchConsoleAuthenticationTypeOAuth = &SourceGoogleSearchConsoleAuthenticationTypeOAuth{}
-			if resp.Configuration.SourceGoogleSearchConsole.Authorization.SourceGoogleSearchConsoleAuthenticationTypeOAuth.AccessToken != nil {
-				r.Configuration.SourceGoogleSearchConsole.Authorization.SourceGoogleSearchConsoleAuthenticationTypeOAuth.AccessToken = types.StringValue(*resp.Configuration.SourceGoogleSearchConsole.Authorization.SourceGoogleSearchConsoleAuthenticationTypeOAuth.AccessToken)
-			} else {
-				r.Configuration.SourceGoogleSearchConsole.Authorization.SourceGoogleSearchConsoleAuthenticationTypeOAuth.AccessToken = types.StringNull()
-			}
-			r.Configuration.SourceGoogleSearchConsole.Authorization.SourceGoogleSearchConsoleAuthenticationTypeOAuth.AuthType = types.StringValue(string(resp.Configuration.SourceGoogleSearchConsole.Authorization.SourceGoogleSearchConsoleAuthenticationTypeOAuth.AuthType))
-			r.Configuration.SourceGoogleSearchConsole.Authorization.SourceGoogleSearchConsoleAuthenticationTypeOAuth.ClientID = types.StringValue(resp.Configuration.SourceGoogleSearchConsole.Authorization.SourceGoogleSearchConsoleAuthenticationTypeOAuth.ClientID)
-			r.Configuration.SourceGoogleSearchConsole.Authorization.SourceGoogleSearchConsoleAuthenticationTypeOAuth.ClientSecret = types.StringValue(resp.Configuration.SourceGoogleSearchConsole.Authorization.SourceGoogleSearchConsoleAuthenticationTypeOAuth.ClientSecret)
-			r.Configuration.SourceGoogleSearchConsole.Authorization.SourceGoogleSearchConsoleAuthenticationTypeOAuth.RefreshToken = types.StringValue(resp.Configuration.SourceGoogleSearchConsole.Authorization.SourceGoogleSearchConsoleAuthenticationTypeOAuth.RefreshToken)
-		}
-		if resp.Configuration.SourceGoogleSearchConsole.Authorization.SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication != nil {
-			r.Configuration.SourceGoogleSearchConsole.Authorization.SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication = &SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication{}
-			r.Configuration.SourceGoogleSearchConsole.Authorization.SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication.AuthType = types.StringValue(string(resp.Configuration.SourceGoogleSearchConsole.Authorization.SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication.AuthType))
-			r.Configuration.SourceGoogleSearchConsole.Authorization.SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication.Email = types.StringValue(resp.Configuration.SourceGoogleSearchConsole.Authorization.SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication.Email)
-			r.Configuration.SourceGoogleSearchConsole.Authorization.SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication.ServiceAccountInfo = types.StringValue(resp.Configuration.SourceGoogleSearchConsole.Authorization.SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication.ServiceAccountInfo)
-		}
-		if resp.Configuration.SourceGoogleSearchConsole.CustomReports != nil {
-			r.Configuration.SourceGoogleSearchConsole.CustomReports = types.StringValue(*resp.Configuration.SourceGoogleSearchConsole.CustomReports)
-		} else {
-			r.Configuration.SourceGoogleSearchConsole.CustomReports = types.StringNull()
-		}
-		if resp.Configuration.SourceGoogleSearchConsole.EndDate != nil {
-			r.Configuration.SourceGoogleSearchConsole.EndDate = types.StringValue(resp.Configuration.SourceGoogleSearchConsole.EndDate.String())
-		} else {
-			r.Configuration.SourceGoogleSearchConsole.EndDate = types.StringNull()
-		}
-		r.Configuration.SourceGoogleSearchConsole.SiteUrls = nil
-		for _, v := range resp.Configuration.SourceGoogleSearchConsole.SiteUrls {
-			r.Configuration.SourceGoogleSearchConsole.SiteUrls = append(r.Configuration.SourceGoogleSearchConsole.SiteUrls, types.StringValue(v))
-		}
-		r.Configuration.SourceGoogleSearchConsole.SourceType = types.StringValue(string(resp.Configuration.SourceGoogleSearchConsole.SourceType))
-		r.Configuration.SourceGoogleSearchConsole.StartDate = types.StringValue(resp.Configuration.SourceGoogleSearchConsole.StartDate.String())
-	}
-	if resp.Configuration.SourceGoogleSheets != nil {
-		r.Configuration.SourceGoogleSheets = &SourceGoogleSheets{}
-		if resp.Configuration.SourceGoogleSheets.Credentials.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth != nil {
-			r.Configuration.SourceGoogleSheets.Credentials.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth = &SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth{}
-			r.Configuration.SourceGoogleSheets.Credentials.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth.AuthType = types.StringValue(string(resp.Configuration.SourceGoogleSheets.Credentials.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth.AuthType))
-			r.Configuration.SourceGoogleSheets.Credentials.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth.ClientID = types.StringValue(resp.Configuration.SourceGoogleSheets.Credentials.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth.ClientID)
-			r.Configuration.SourceGoogleSheets.Credentials.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth.ClientSecret = types.StringValue(resp.Configuration.SourceGoogleSheets.Credentials.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth.ClientSecret)
-			r.Configuration.SourceGoogleSheets.Credentials.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth.RefreshToken = types.StringValue(resp.Configuration.SourceGoogleSheets.Credentials.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth.RefreshToken)
-		}
-		if resp.Configuration.SourceGoogleSheets.Credentials.SourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication != nil {
-			r.Configuration.SourceGoogleSheets.Credentials.SourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication = &SourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication{}
-			r.Configuration.SourceGoogleSheets.Credentials.SourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication.AuthType = types.StringValue(string(resp.Configuration.SourceGoogleSheets.Credentials.SourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication.AuthType))
-			r.Configuration.SourceGoogleSheets.Credentials.SourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication.ServiceAccountInfo = types.StringValue(resp.Configuration.SourceGoogleSheets.Credentials.SourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication.ServiceAccountInfo)
-		}
-		if resp.Configuration.SourceGoogleSheets.RowBatchSize != nil {
-			r.Configuration.SourceGoogleSheets.RowBatchSize = types.Int64Value(*resp.Configuration.SourceGoogleSheets.RowBatchSize)
-		} else {
-			r.Configuration.SourceGoogleSheets.RowBatchSize = types.Int64Null()
-		}
-		r.Configuration.SourceGoogleSheets.SourceType = types.StringValue(string(resp.Configuration.SourceGoogleSheets.SourceType))
-		r.Configuration.SourceGoogleSheets.SpreadsheetID = types.StringValue(resp.Configuration.SourceGoogleSheets.SpreadsheetID)
-	}
-	if resp.Configuration.SourceGoogleWebfonts != nil {
-		r.Configuration.SourceGoogleWebfonts = &SourceGoogleWebfonts{}
-		if resp.Configuration.SourceGoogleWebfonts.Alt != nil {
-			r.Configuration.SourceGoogleWebfonts.Alt = types.StringValue(*resp.Configuration.SourceGoogleWebfonts.Alt)
-		} else {
-			r.Configuration.SourceGoogleWebfonts.Alt = types.StringNull()
-		}
-		r.Configuration.SourceGoogleWebfonts.APIKey = types.StringValue(resp.Configuration.SourceGoogleWebfonts.APIKey)
-		if resp.Configuration.SourceGoogleWebfonts.PrettyPrint != nil {
-			r.Configuration.SourceGoogleWebfonts.PrettyPrint = types.StringValue(*resp.Configuration.SourceGoogleWebfonts.PrettyPrint)
-		} else {
-			r.Configuration.SourceGoogleWebfonts.PrettyPrint = types.StringNull()
-		}
-		if resp.Configuration.SourceGoogleWebfonts.Sort != nil {
-			r.Configuration.SourceGoogleWebfonts.Sort = types.StringValue(*resp.Configuration.SourceGoogleWebfonts.Sort)
-		} else {
-			r.Configuration.SourceGoogleWebfonts.Sort = types.StringNull()
-		}
-		r.Configuration.SourceGoogleWebfonts.SourceType = types.StringValue(string(resp.Configuration.SourceGoogleWebfonts.SourceType))
-	}
-	if resp.Configuration.SourceGoogleWorkspaceAdminReports != nil {
-		r.Configuration.SourceGoogleWorkspaceAdminReports = &SourceGoogleWorkspaceAdminReports{}
-		r.Configuration.SourceGoogleWorkspaceAdminReports.CredentialsJSON = types.StringValue(resp.Configuration.SourceGoogleWorkspaceAdminReports.CredentialsJSON)
-		r.Configuration.SourceGoogleWorkspaceAdminReports.Email = types.StringValue(resp.Configuration.SourceGoogleWorkspaceAdminReports.Email)
-		if resp.Configuration.SourceGoogleWorkspaceAdminReports.Lookback != nil {
-			r.Configuration.SourceGoogleWorkspaceAdminReports.Lookback = types.Int64Value(*resp.Configuration.SourceGoogleWorkspaceAdminReports.Lookback)
-		} else {
-			r.Configuration.SourceGoogleWorkspaceAdminReports.Lookback = types.Int64Null()
-		}
-		r.Configuration.SourceGoogleWorkspaceAdminReports.SourceType = types.StringValue(string(resp.Configuration.SourceGoogleWorkspaceAdminReports.SourceType))
-	}
-	if resp.Configuration.SourceGreenhouse != nil {
-		r.Configuration.SourceGreenhouse = &SourceGreenhouse{}
-		r.Configuration.SourceGreenhouse.APIKey = types.StringValue(resp.Configuration.SourceGreenhouse.APIKey)
-		r.Configuration.SourceGreenhouse.SourceType = types.StringValue(string(resp.Configuration.SourceGreenhouse.SourceType))
-	}
-	if resp.Configuration.SourceGridly != nil {
-		r.Configuration.SourceGridly = &SourceGridly{}
-		r.Configuration.SourceGridly.APIKey = types.StringValue(resp.Configuration.SourceGridly.APIKey)
-		r.Configuration.SourceGridly.GridID = types.StringValue(resp.Configuration.SourceGridly.GridID)
-		r.Configuration.SourceGridly.SourceType = types.StringValue(string(resp.Configuration.SourceGridly.SourceType))
-	}
-	if resp.Configuration.SourceHarvest != nil {
-		r.Configuration.SourceHarvest = &SourceHarvest{}
-		r.Configuration.SourceHarvest.AccountID = types.StringValue(resp.Configuration.SourceHarvest.AccountID)
-		if resp.Configuration.SourceHarvest.Credentials == nil {
-			r.Configuration.SourceHarvest.Credentials = nil
-		} else {
-			r.Configuration.SourceHarvest.Credentials = &SourceHarvestAuthenticationMechanism{}
-			if resp.Configuration.SourceHarvest.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth != nil {
-				r.Configuration.SourceHarvest.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth = &SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth{}
-				if resp.Configuration.SourceHarvest.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.AuthType != nil {
-					r.Configuration.SourceHarvest.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.AuthType = types.StringValue(string(*resp.Configuration.SourceHarvest.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.AuthType))
-				} else {
-					r.Configuration.SourceHarvest.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.AuthType = types.StringNull()
-				}
-				r.Configuration.SourceHarvest.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.ClientID = types.StringValue(resp.Configuration.SourceHarvest.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.ClientID)
-				r.Configuration.SourceHarvest.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.ClientSecret = types.StringValue(resp.Configuration.SourceHarvest.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.ClientSecret)
-				r.Configuration.SourceHarvest.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.RefreshToken = types.StringValue(resp.Configuration.SourceHarvest.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.RefreshToken)
-			}
-			if resp.Configuration.SourceHarvest.Credentials.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken != nil {
-				r.Configuration.SourceHarvest.Credentials.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken = &SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken{}
-				r.Configuration.SourceHarvest.Credentials.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken.APIToken = types.StringValue(resp.Configuration.SourceHarvest.Credentials.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken.APIToken)
-				if resp.Configuration.SourceHarvest.Credentials.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken.AuthType != nil {
-					r.Configuration.SourceHarvest.Credentials.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken.AuthType = types.StringValue(string(*resp.Configuration.SourceHarvest.Credentials.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken.AuthType))
-				} else {
-					r.Configuration.SourceHarvest.Credentials.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken.AuthType = types.StringNull()
-				}
-			}
-		}
-		if resp.Configuration.SourceHarvest.ReplicationEndDate != nil {
-			r.Configuration.SourceHarvest.ReplicationEndDate = types.StringValue(*resp.Configuration.SourceHarvest.ReplicationEndDate)
-		} else {
-			r.Configuration.SourceHarvest.ReplicationEndDate = types.StringNull()
-		}
-		r.Configuration.SourceHarvest.ReplicationStartDate = types.StringValue(resp.Configuration.SourceHarvest.ReplicationStartDate)
-		r.Configuration.SourceHarvest.SourceType = types.StringValue(string(resp.Configuration.SourceHarvest.SourceType))
-	}
-	if resp.Configuration.SourceHubplanner != nil {
-		r.Configuration.SourceHubplanner = &SourceHubplanner{}
-		r.Configuration.SourceHubplanner.APIKey = types.StringValue(resp.Configuration.SourceHubplanner.APIKey)
-		r.Configuration.SourceHubplanner.SourceType = types.StringValue(string(resp.Configuration.SourceHubplanner.SourceType))
-	}
-	if resp.Configuration.SourceHubspot != nil {
-		r.Configuration.SourceHubspot = &SourceHubspot{}
-		if resp.Configuration.SourceHubspot.Credentials.SourceHubspotAuthenticationOAuth != nil {
-			r.Configuration.SourceHubspot.Credentials.SourceHubspotAuthenticationOAuth = &SourceHubspotAuthenticationOAuth{}
-			r.Configuration.SourceHubspot.Credentials.SourceHubspotAuthenticationOAuth.ClientID = types.StringValue(resp.Configuration.SourceHubspot.Credentials.SourceHubspotAuthenticationOAuth.ClientID)
-			r.Configuration.SourceHubspot.Credentials.SourceHubspotAuthenticationOAuth.ClientSecret = types.StringValue(resp.Configuration.SourceHubspot.Credentials.SourceHubspotAuthenticationOAuth.ClientSecret)
-			r.Configuration.SourceHubspot.Credentials.SourceHubspotAuthenticationOAuth.CredentialsTitle = types.StringValue(string(resp.Configuration.SourceHubspot.Credentials.SourceHubspotAuthenticationOAuth.CredentialsTitle))
-			r.Configuration.SourceHubspot.Credentials.SourceHubspotAuthenticationOAuth.RefreshToken = types.StringValue(resp.Configuration.SourceHubspot.Credentials.SourceHubspotAuthenticationOAuth.RefreshToken)
-		}
-		if resp.Configuration.SourceHubspot.Credentials.SourceHubspotAuthenticationPrivateApp != nil {
-			r.Configuration.SourceHubspot.Credentials.SourceHubspotAuthenticationPrivateApp = &SourceHubspotAuthenticationPrivateApp{}
-			r.Configuration.SourceHubspot.Credentials.SourceHubspotAuthenticationPrivateApp.AccessToken = types.StringValue(resp.Configuration.SourceHubspot.Credentials.SourceHubspotAuthenticationPrivateApp.AccessToken)
-			r.Configuration.SourceHubspot.Credentials.SourceHubspotAuthenticationPrivateApp.CredentialsTitle = types.StringValue(string(resp.Configuration.SourceHubspot.Credentials.SourceHubspotAuthenticationPrivateApp.CredentialsTitle))
-		}
-		r.Configuration.SourceHubspot.SourceType = types.StringValue(string(resp.Configuration.SourceHubspot.SourceType))
-		r.Configuration.SourceHubspot.StartDate = types.StringValue(resp.Configuration.SourceHubspot.StartDate)
-	}
-	if resp.Configuration.SourceInsightly != nil {
-		r.Configuration.SourceInsightly = &SourceInsightly{}
-		r.Configuration.SourceInsightly.SourceType = types.StringValue(string(resp.Configuration.SourceInsightly.SourceType))
-		r.Configuration.SourceInsightly.StartDate = types.StringValue(resp.Configuration.SourceInsightly.StartDate)
-		r.Configuration.SourceInsightly.Token = types.StringValue(resp.Configuration.SourceInsightly.Token)
-	}
-	if resp.Configuration.SourceInstagram != nil {
-		r.Configuration.SourceInstagram = &SourceInstagram{}
-		r.Configuration.SourceInstagram.AccessToken = types.StringValue(resp.Configuration.SourceInstagram.AccessToken)
-		r.Configuration.SourceInstagram.SourceType = types.StringValue(string(resp.Configuration.SourceInstagram.SourceType))
-		r.Configuration.SourceInstagram.StartDate = types.StringValue(resp.Configuration.SourceInstagram.StartDate.Format(time.RFC3339))
-	}
-	if resp.Configuration.SourceInstatus != nil {
-		r.Configuration.SourceInstatus = &SourceInstatus{}
-		r.Configuration.SourceInstatus.APIKey = types.StringValue(resp.Configuration.SourceInstatus.APIKey)
-		r.Configuration.SourceInstatus.SourceType = types.StringValue(string(resp.Configuration.SourceInstatus.SourceType))
-	}
-	if resp.Configuration.SourceIntercom != nil {
-		r.Configuration.SourceIntercom = &SourceIntercom{}
-		r.Configuration.SourceIntercom.AccessToken = types.StringValue(resp.Configuration.SourceIntercom.AccessToken)
-		r.Configuration.SourceIntercom.SourceType = types.StringValue(string(resp.Configuration.SourceIntercom.SourceType))
-		r.Configuration.SourceIntercom.StartDate = types.StringValue(resp.Configuration.SourceIntercom.StartDate.Format(time.RFC3339))
-	}
-	if resp.Configuration.SourceIp2whois != nil {
-		r.Configuration.SourceIp2whois = &SourceIp2whois{}
-		if resp.Configuration.SourceIp2whois.APIKey != nil {
-			r.Configuration.SourceIp2whois.APIKey = types.StringValue(*resp.Configuration.SourceIp2whois.APIKey)
-		} else {
-			r.Configuration.SourceIp2whois.APIKey = types.StringNull()
-		}
-		if resp.Configuration.SourceIp2whois.Domain != nil {
-			r.Configuration.SourceIp2whois.Domain = types.StringValue(*resp.Configuration.SourceIp2whois.Domain)
-		} else {
-			r.Configuration.SourceIp2whois.Domain = types.StringNull()
-		}
-		r.Configuration.SourceIp2whois.SourceType = types.StringValue(string(resp.Configuration.SourceIp2whois.SourceType))
-	}
-	if resp.Configuration.SourceIterable != nil {
-		r.Configuration.SourceIterable = &SourceIterable{}
-		r.Configuration.SourceIterable.APIKey = types.StringValue(resp.Configuration.SourceIterable.APIKey)
-		r.Configuration.SourceIterable.SourceType = types.StringValue(string(resp.Configuration.SourceIterable.SourceType))
-		r.Configuration.SourceIterable.StartDate = types.StringValue(resp.Configuration.SourceIterable.StartDate.Format(time.RFC3339))
-	}
-	if resp.Configuration.SourceJira != nil {
-		r.Configuration.SourceJira = &SourceJira{}
-		r.Configuration.SourceJira.APIToken = types.StringValue(resp.Configuration.SourceJira.APIToken)
-		r.Configuration.SourceJira.Domain = types.StringValue(resp.Configuration.SourceJira.Domain)
-		r.Configuration.SourceJira.Email = types.StringValue(resp.Configuration.SourceJira.Email)
-		if resp.Configuration.SourceJira.EnableExperimentalStreams != nil {
-			r.Configuration.SourceJira.EnableExperimentalStreams = types.BoolValue(*resp.Configuration.SourceJira.EnableExperimentalStreams)
-		} else {
-			r.Configuration.SourceJira.EnableExperimentalStreams = types.BoolNull()
-		}
-		if resp.Configuration.SourceJira.ExpandIssueChangelog != nil {
-			r.Configuration.SourceJira.ExpandIssueChangelog = types.BoolValue(*resp.Configuration.SourceJira.ExpandIssueChangelog)
-		} else {
-			r.Configuration.SourceJira.ExpandIssueChangelog = types.BoolNull()
-		}
-		r.Configuration.SourceJira.Projects = nil
-		for _, v := range resp.Configuration.SourceJira.Projects {
-			r.Configuration.SourceJira.Projects = append(r.Configuration.SourceJira.Projects, types.StringValue(v))
-		}
-		if resp.Configuration.SourceJira.RenderFields != nil {
-			r.Configuration.SourceJira.RenderFields = types.BoolValue(*resp.Configuration.SourceJira.RenderFields)
-		} else {
-			r.Configuration.SourceJira.RenderFields = types.BoolNull()
-		}
-		r.Configuration.SourceJira.SourceType = types.StringValue(string(resp.Configuration.SourceJira.SourceType))
-		if resp.Configuration.SourceJira.StartDate != nil {
-			r.Configuration.SourceJira.StartDate = types.StringValue(resp.Configuration.SourceJira.StartDate.Format(time.RFC3339))
-		} else {
-			r.Configuration.SourceJira.StartDate = types.StringNull()
-		}
-	}
-	if resp.Configuration.SourceK6Cloud != nil {
-		r.Configuration.SourceK6Cloud = &SourceK6Cloud{}
-		r.Configuration.SourceK6Cloud.APIToken = types.StringValue(resp.Configuration.SourceK6Cloud.APIToken)
-		r.Configuration.SourceK6Cloud.SourceType = types.StringValue(string(resp.Configuration.SourceK6Cloud.SourceType))
-	}
-	if resp.Configuration.SourceKlarna != nil {
-		r.Configuration.SourceKlarna = &SourceKlarna{}
-		r.Configuration.SourceKlarna.Password = types.StringValue(resp.Configuration.SourceKlarna.Password)
-		r.Configuration.SourceKlarna.Playground = types.BoolValue(resp.Configuration.SourceKlarna.Playground)
-		r.Configuration.SourceKlarna.Region = types.StringValue(string(resp.Configuration.SourceKlarna.Region))
-		r.Configuration.SourceKlarna.SourceType = types.StringValue(string(resp.Configuration.SourceKlarna.SourceType))
-		r.Configuration.SourceKlarna.Username = types.StringValue(resp.Configuration.SourceKlarna.Username)
-	}
-	if resp.Configuration.SourceKlaviyo != nil {
-		r.Configuration.SourceKlaviyo = &SourceKlaviyo{}
-		r.Configuration.SourceKlaviyo.APIKey = types.StringValue(resp.Configuration.SourceKlaviyo.APIKey)
-		r.Configuration.SourceKlaviyo.SourceType = types.StringValue(string(resp.Configuration.SourceKlaviyo.SourceType))
-		r.Configuration.SourceKlaviyo.StartDate = types.StringValue(resp.Configuration.SourceKlaviyo.StartDate.Format(time.RFC3339))
-	}
-	if resp.Configuration.SourceKustomerSinger != nil {
-		r.Configuration.SourceKustomerSinger = &SourceKustomerSinger{}
-		r.Configuration.SourceKustomerSinger.APIToken = types.StringValue(resp.Configuration.SourceKustomerSinger.APIToken)
-		r.Configuration.SourceKustomerSinger.SourceType = types.StringValue(string(resp.Configuration.SourceKustomerSinger.SourceType))
-		r.Configuration.SourceKustomerSinger.StartDate = types.StringValue(resp.Configuration.SourceKustomerSinger.StartDate)
-	}
-	if resp.Configuration.SourceLaunchdarkly != nil {
-		r.Configuration.SourceLaunchdarkly = &SourceLaunchdarkly{}
-		r.Configuration.SourceLaunchdarkly.AccessToken = types.StringValue(resp.Configuration.SourceLaunchdarkly.AccessToken)
-		r.Configuration.SourceLaunchdarkly.SourceType = types.StringValue(string(resp.Configuration.SourceLaunchdarkly.SourceType))
-	}
-	if resp.Configuration.SourceLemlist != nil {
-		r.Configuration.SourceLemlist = &SourceLemlist{}
-		r.Configuration.SourceLemlist.APIKey = types.StringValue(resp.Configuration.SourceLemlist.APIKey)
-		r.Configuration.SourceLemlist.SourceType = types.StringValue(string(resp.Configuration.SourceLemlist.SourceType))
-	}
-	if resp.Configuration.SourceLinkedinAds != nil {
-		r.Configuration.SourceLinkedinAds = &SourceLinkedinAds{}
-		r.Configuration.SourceLinkedinAds.AccountIds = nil
-		for _, v := range resp.Configuration.SourceLinkedinAds.AccountIds {
-			r.Configuration.SourceLinkedinAds.AccountIds = append(r.Configuration.SourceLinkedinAds.AccountIds, types.Int64Value(v))
-		}
-		if resp.Configuration.SourceLinkedinAds.Credentials == nil {
-			r.Configuration.SourceLinkedinAds.Credentials = nil
-		} else {
-			r.Configuration.SourceLinkedinAds.Credentials = &SourceLinkedinAdsAuthentication{}
-			if resp.Configuration.SourceLinkedinAds.Credentials.SourceLinkedinAdsAuthenticationOAuth20 != nil {
-				r.Configuration.SourceLinkedinAds.Credentials.SourceLinkedinAdsAuthenticationOAuth20 = &SourceLinkedinAdsAuthenticationOAuth20{}
-				if resp.Configuration.SourceLinkedinAds.Credentials.SourceLinkedinAdsAuthenticationOAuth20.AuthMethod != nil {
-					r.Configuration.SourceLinkedinAds.Credentials.SourceLinkedinAdsAuthenticationOAuth20.AuthMethod = types.StringValue(string(*resp.Configuration.SourceLinkedinAds.Credentials.SourceLinkedinAdsAuthenticationOAuth20.AuthMethod))
-				} else {
-					r.Configuration.SourceLinkedinAds.Credentials.SourceLinkedinAdsAuthenticationOAuth20.AuthMethod = types.StringNull()
-				}
-				r.Configuration.SourceLinkedinAds.Credentials.SourceLinkedinAdsAuthenticationOAuth20.ClientID = types.StringValue(resp.Configuration.SourceLinkedinAds.Credentials.SourceLinkedinAdsAuthenticationOAuth20.ClientID)
-				r.Configuration.SourceLinkedinAds.Credentials.SourceLinkedinAdsAuthenticationOAuth20.ClientSecret = types.StringValue(resp.Configuration.SourceLinkedinAds.Credentials.SourceLinkedinAdsAuthenticationOAuth20.ClientSecret)
-				r.Configuration.SourceLinkedinAds.Credentials.SourceLinkedinAdsAuthenticationOAuth20.RefreshToken = types.StringValue(resp.Configuration.SourceLinkedinAds.Credentials.SourceLinkedinAdsAuthenticationOAuth20.RefreshToken)
-			}
-			if resp.Configuration.SourceLinkedinAds.Credentials.SourceLinkedinAdsAuthenticationAccessToken != nil {
-				r.Configuration.SourceLinkedinAds.Credentials.SourceLinkedinAdsAuthenticationAccessToken = &SourceLinkedinAdsAuthenticationAccessToken{}
-				r.Configuration.SourceLinkedinAds.Credentials.SourceLinkedinAdsAuthenticationAccessToken.AccessToken = types.StringValue(resp.Configuration.SourceLinkedinAds.Credentials.SourceLinkedinAdsAuthenticationAccessToken.AccessToken)
-				if resp.Configuration.SourceLinkedinAds.Credentials.SourceLinkedinAdsAuthenticationAccessToken.AuthMethod != nil {
-					r.Configuration.SourceLinkedinAds.Credentials.SourceLinkedinAdsAuthenticationAccessToken.AuthMethod = types.StringValue(string(*resp.Configuration.SourceLinkedinAds.Credentials.SourceLinkedinAdsAuthenticationAccessToken.AuthMethod))
-				} else {
-					r.Configuration.SourceLinkedinAds.Credentials.SourceLinkedinAdsAuthenticationAccessToken.AuthMethod = types.StringNull()
-				}
-			}
-		}
-		r.Configuration.SourceLinkedinAds.SourceType = types.StringValue(string(resp.Configuration.SourceLinkedinAds.SourceType))
-		r.Configuration.SourceLinkedinAds.StartDate = types.StringValue(resp.Configuration.SourceLinkedinAds.StartDate.String())
-	}
-	if resp.Configuration.SourceLinkedinPages != nil {
-		r.Configuration.SourceLinkedinPages = &SourceLinkedinPages{}
-		if resp.Configuration.SourceLinkedinPages.Credentials == nil {
-			r.Configuration.SourceLinkedinPages.Credentials = nil
-		} else {
-			r.Configuration.SourceLinkedinPages.Credentials = &SourceLinkedinPagesAuthentication{}
-			if resp.Configuration.SourceLinkedinPages.Credentials.SourceLinkedinPagesAuthenticationOAuth20 != nil {
-				r.Configuration.SourceLinkedinPages.Credentials.SourceLinkedinPagesAuthenticationOAuth20 = &SourceLinkedinAdsAuthenticationOAuth20{}
-				if resp.Configuration.SourceLinkedinPages.Credentials.SourceLinkedinPagesAuthenticationOAuth20.AuthMethod != nil {
-					r.Configuration.SourceLinkedinPages.Credentials.SourceLinkedinPagesAuthenticationOAuth20.AuthMethod = types.StringValue(string(*resp.Configuration.SourceLinkedinPages.Credentials.SourceLinkedinPagesAuthenticationOAuth20.AuthMethod))
-				} else {
-					r.Configuration.SourceLinkedinPages.Credentials.SourceLinkedinPagesAuthenticationOAuth20.AuthMethod = types.StringNull()
-				}
-				r.Configuration.SourceLinkedinPages.Credentials.SourceLinkedinPagesAuthenticationOAuth20.ClientID = types.StringValue(resp.Configuration.SourceLinkedinPages.Credentials.SourceLinkedinPagesAuthenticationOAuth20.ClientID)
-				r.Configuration.SourceLinkedinPages.Credentials.SourceLinkedinPagesAuthenticationOAuth20.ClientSecret = types.StringValue(resp.Configuration.SourceLinkedinPages.Credentials.SourceLinkedinPagesAuthenticationOAuth20.ClientSecret)
-				r.Configuration.SourceLinkedinPages.Credentials.SourceLinkedinPagesAuthenticationOAuth20.RefreshToken = types.StringValue(resp.Configuration.SourceLinkedinPages.Credentials.SourceLinkedinPagesAuthenticationOAuth20.RefreshToken)
-			}
-			if resp.Configuration.SourceLinkedinPages.Credentials.SourceLinkedinPagesAuthenticationAccessToken != nil {
-				r.Configuration.SourceLinkedinPages.Credentials.SourceLinkedinPagesAuthenticationAccessToken = &SourceLinkedinAdsAuthenticationAccessToken{}
-				r.Configuration.SourceLinkedinPages.Credentials.SourceLinkedinPagesAuthenticationAccessToken.AccessToken = types.StringValue(resp.Configuration.SourceLinkedinPages.Credentials.SourceLinkedinPagesAuthenticationAccessToken.AccessToken)
-				if resp.Configuration.SourceLinkedinPages.Credentials.SourceLinkedinPagesAuthenticationAccessToken.AuthMethod != nil {
-					r.Configuration.SourceLinkedinPages.Credentials.SourceLinkedinPagesAuthenticationAccessToken.AuthMethod = types.StringValue(string(*resp.Configuration.SourceLinkedinPages.Credentials.SourceLinkedinPagesAuthenticationAccessToken.AuthMethod))
-				} else {
-					r.Configuration.SourceLinkedinPages.Credentials.SourceLinkedinPagesAuthenticationAccessToken.AuthMethod = types.StringNull()
-				}
-			}
-		}
-		r.Configuration.SourceLinkedinPages.OrgID = types.StringValue(resp.Configuration.SourceLinkedinPages.OrgID)
-		r.Configuration.SourceLinkedinPages.SourceType = types.StringValue(string(resp.Configuration.SourceLinkedinPages.SourceType))
-	}
-	if resp.Configuration.SourceLinnworks != nil {
-		r.Configuration.SourceLinnworks = &SourceLinnworks{}
-		r.Configuration.SourceLinnworks.ApplicationID = types.StringValue(resp.Configuration.SourceLinnworks.ApplicationID)
-		r.Configuration.SourceLinnworks.ApplicationSecret = types.StringValue(resp.Configuration.SourceLinnworks.ApplicationSecret)
-		r.Configuration.SourceLinnworks.SourceType = types.StringValue(string(resp.Configuration.SourceLinnworks.SourceType))
-		r.Configuration.SourceLinnworks.StartDate = types.StringValue(resp.Configuration.SourceLinnworks.StartDate.Format(time.RFC3339))
-		r.Configuration.SourceLinnworks.Token = types.StringValue(resp.Configuration.SourceLinnworks.Token)
-	}
-	if resp.Configuration.SourceLokalise != nil {
-		r.Configuration.SourceLokalise = &SourceLokalise{}
-		r.Configuration.SourceLokalise.APIKey = types.StringValue(resp.Configuration.SourceLokalise.APIKey)
-		r.Configuration.SourceLokalise.ProjectID = types.StringValue(resp.Configuration.SourceLokalise.ProjectID)
-		r.Configuration.SourceLokalise.SourceType = types.StringValue(string(resp.Configuration.SourceLokalise.SourceType))
-	}
-	if resp.Configuration.SourceMailchimp != nil {
-		r.Configuration.SourceMailchimp = &SourceMailchimp{}
-		if resp.Configuration.SourceMailchimp.CampaignID != nil {
-			r.Configuration.SourceMailchimp.CampaignID = types.StringValue(*resp.Configuration.SourceMailchimp.CampaignID)
-		} else {
-			r.Configuration.SourceMailchimp.CampaignID = types.StringNull()
-		}
-		if resp.Configuration.SourceMailchimp.Credentials == nil {
-			r.Configuration.SourceMailchimp.Credentials = nil
-		} else {
-			r.Configuration.SourceMailchimp.Credentials = &SourceMailchimpAuthentication{}
-			if resp.Configuration.SourceMailchimp.Credentials.SourceMailchimpAuthenticationOAuth20 != nil {
-				r.Configuration.SourceMailchimp.Credentials.SourceMailchimpAuthenticationOAuth20 = &SourceMailchimpAuthenticationOAuth20{}
-				r.Configuration.SourceMailchimp.Credentials.SourceMailchimpAuthenticationOAuth20.AccessToken = types.StringValue(resp.Configuration.SourceMailchimp.Credentials.SourceMailchimpAuthenticationOAuth20.AccessToken)
-				r.Configuration.SourceMailchimp.Credentials.SourceMailchimpAuthenticationOAuth20.AuthType = types.StringValue(string(resp.Configuration.SourceMailchimp.Credentials.SourceMailchimpAuthenticationOAuth20.AuthType))
-				if resp.Configuration.SourceMailchimp.Credentials.SourceMailchimpAuthenticationOAuth20.ClientID != nil {
-					r.Configuration.SourceMailchimp.Credentials.SourceMailchimpAuthenticationOAuth20.ClientID = types.StringValue(*resp.Configuration.SourceMailchimp.Credentials.SourceMailchimpAuthenticationOAuth20.ClientID)
-				} else {
-					r.Configuration.SourceMailchimp.Credentials.SourceMailchimpAuthenticationOAuth20.ClientID = types.StringNull()
-				}
-				if resp.Configuration.SourceMailchimp.Credentials.SourceMailchimpAuthenticationOAuth20.ClientSecret != nil {
-					r.Configuration.SourceMailchimp.Credentials.SourceMailchimpAuthenticationOAuth20.ClientSecret = types.StringValue(*resp.Configuration.SourceMailchimp.Credentials.SourceMailchimpAuthenticationOAuth20.ClientSecret)
-				} else {
-					r.Configuration.SourceMailchimp.Credentials.SourceMailchimpAuthenticationOAuth20.ClientSecret = types.StringNull()
-				}
-			}
-			if resp.Configuration.SourceMailchimp.Credentials.SourceMailchimpAuthenticationAPIKey != nil {
-				r.Configuration.SourceMailchimp.Credentials.SourceMailchimpAuthenticationAPIKey = &SourceMailchimpAuthenticationAPIKey{}
-				r.Configuration.SourceMailchimp.Credentials.SourceMailchimpAuthenticationAPIKey.Apikey = types.StringValue(resp.Configuration.SourceMailchimp.Credentials.SourceMailchimpAuthenticationAPIKey.Apikey)
-				r.Configuration.SourceMailchimp.Credentials.SourceMailchimpAuthenticationAPIKey.AuthType = types.StringValue(string(resp.Configuration.SourceMailchimp.Credentials.SourceMailchimpAuthenticationAPIKey.AuthType))
-			}
-		}
-		r.Configuration.SourceMailchimp.SourceType = types.StringValue(string(resp.Configuration.SourceMailchimp.SourceType))
-	}
-	if resp.Configuration.SourceMailgun != nil {
-		r.Configuration.SourceMailgun = &SourceMailgun{}
-		if resp.Configuration.SourceMailgun.DomainRegion != nil {
-			r.Configuration.SourceMailgun.DomainRegion = types.StringValue(*resp.Configuration.SourceMailgun.DomainRegion)
-		} else {
-			r.Configuration.SourceMailgun.DomainRegion = types.StringNull()
-		}
-		r.Configuration.SourceMailgun.PrivateKey = types.StringValue(resp.Configuration.SourceMailgun.PrivateKey)
-		r.Configuration.SourceMailgun.SourceType = types.StringValue(string(resp.Configuration.SourceMailgun.SourceType))
-		if resp.Configuration.SourceMailgun.StartDate != nil {
-			r.Configuration.SourceMailgun.StartDate = types.StringValue(resp.Configuration.SourceMailgun.StartDate.Format(time.RFC3339))
-		} else {
-			r.Configuration.SourceMailgun.StartDate = types.StringNull()
-		}
-	}
-	if resp.Configuration.SourceMailjetSms != nil {
-		r.Configuration.SourceMailjetSms = &SourceMailjetSms{}
-		if resp.Configuration.SourceMailjetSms.EndDate != nil {
-			r.Configuration.SourceMailjetSms.EndDate = types.Int64Value(*resp.Configuration.SourceMailjetSms.EndDate)
-		} else {
-			r.Configuration.SourceMailjetSms.EndDate = types.Int64Null()
-		}
-		r.Configuration.SourceMailjetSms.SourceType = types.StringValue(string(resp.Configuration.SourceMailjetSms.SourceType))
-		if resp.Configuration.SourceMailjetSms.StartDate != nil {
-			r.Configuration.SourceMailjetSms.StartDate = types.Int64Value(*resp.Configuration.SourceMailjetSms.StartDate)
-		} else {
-			r.Configuration.SourceMailjetSms.StartDate = types.Int64Null()
-		}
-		r.Configuration.SourceMailjetSms.Token = types.StringValue(resp.Configuration.SourceMailjetSms.Token)
-	}
-	if resp.Configuration.SourceMarketo != nil {
-		r.Configuration.SourceMarketo = &SourceMarketo{}
-		r.Configuration.SourceMarketo.ClientID = types.StringValue(resp.Configuration.SourceMarketo.ClientID)
-		r.Configuration.SourceMarketo.ClientSecret = types.StringValue(resp.Configuration.SourceMarketo.ClientSecret)
-		r.Configuration.SourceMarketo.DomainURL = types.StringValue(resp.Configuration.SourceMarketo.DomainURL)
-		r.Configuration.SourceMarketo.SourceType = types.StringValue(string(resp.Configuration.SourceMarketo.SourceType))
-		r.Configuration.SourceMarketo.StartDate = types.StringValue(resp.Configuration.SourceMarketo.StartDate)
-	}
-	if resp.Configuration.SourceMetabase != nil {
-		r.Configuration.SourceMetabase = &SourceMetabase{}
-		r.Configuration.SourceMetabase.InstanceAPIURL = types.StringValue(resp.Configuration.SourceMetabase.InstanceAPIURL)
-		if resp.Configuration.SourceMetabase.Password != nil {
-			r.Configuration.SourceMetabase.Password = types.StringValue(*resp.Configuration.SourceMetabase.Password)
-		} else {
-			r.Configuration.SourceMetabase.Password = types.StringNull()
-		}
-		if resp.Configuration.SourceMetabase.SessionToken != nil {
-			r.Configuration.SourceMetabase.SessionToken = types.StringValue(*resp.Configuration.SourceMetabase.SessionToken)
-		} else {
-			r.Configuration.SourceMetabase.SessionToken = types.StringNull()
-		}
-		r.Configuration.SourceMetabase.SourceType = types.StringValue(string(resp.Configuration.SourceMetabase.SourceType))
-		if resp.Configuration.SourceMetabase.Username != nil {
-			r.Configuration.SourceMetabase.Username = types.StringValue(*resp.Configuration.SourceMetabase.Username)
-		} else {
-			r.Configuration.SourceMetabase.Username = types.StringNull()
-		}
-	}
-	if resp.Configuration.SourceMicrosoftTeams != nil {
-		r.Configuration.SourceMicrosoftTeams = &SourceMicrosoftTeams{}
-		if resp.Configuration.SourceMicrosoftTeams.Credentials == nil {
-			r.Configuration.SourceMicrosoftTeams.Credentials = nil
-		} else {
-			r.Configuration.SourceMicrosoftTeams.Credentials = &SourceMicrosoftTeamsAuthenticationMechanism{}
-			if resp.Configuration.SourceMicrosoftTeams.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20 != nil {
-				r.Configuration.SourceMicrosoftTeams.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20 = &SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20{}
-				if resp.Configuration.SourceMicrosoftTeams.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20.AuthType != nil {
-					r.Configuration.SourceMicrosoftTeams.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20.AuthType = types.StringValue(string(*resp.Configuration.SourceMicrosoftTeams.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20.AuthType))
-				} else {
-					r.Configuration.SourceMicrosoftTeams.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20.AuthType = types.StringNull()
-				}
-				r.Configuration.SourceMicrosoftTeams.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20.ClientID = types.StringValue(resp.Configuration.SourceMicrosoftTeams.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20.ClientID)
-				r.Configuration.SourceMicrosoftTeams.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20.ClientSecret = types.StringValue(resp.Configuration.SourceMicrosoftTeams.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20.ClientSecret)
-				r.Configuration.SourceMicrosoftTeams.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20.RefreshToken = types.StringValue(resp.Configuration.SourceMicrosoftTeams.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20.RefreshToken)
-				r.Configuration.SourceMicrosoftTeams.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20.TenantID = types.StringValue(resp.Configuration.SourceMicrosoftTeams.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20.TenantID)
-			}
-			if resp.Configuration.SourceMicrosoftTeams.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoft != nil {
-				r.Configuration.SourceMicrosoftTeams.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoft = &SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoft{}
-				if resp.Configuration.SourceMicrosoftTeams.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoft.AuthType != nil {
-					r.Configuration.SourceMicrosoftTeams.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoft.AuthType = types.StringValue(string(*resp.Configuration.SourceMicrosoftTeams.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoft.AuthType))
-				} else {
-					r.Configuration.SourceMicrosoftTeams.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoft.AuthType = types.StringNull()
-				}
-				r.Configuration.SourceMicrosoftTeams.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoft.ClientID = types.StringValue(resp.Configuration.SourceMicrosoftTeams.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoft.ClientID)
-				r.Configuration.SourceMicrosoftTeams.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoft.ClientSecret = types.StringValue(resp.Configuration.SourceMicrosoftTeams.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoft.ClientSecret)
-				r.Configuration.SourceMicrosoftTeams.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoft.TenantID = types.StringValue(resp.Configuration.SourceMicrosoftTeams.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoft.TenantID)
-			}
-		}
-		r.Configuration.SourceMicrosoftTeams.Period = types.StringValue(resp.Configuration.SourceMicrosoftTeams.Period)
-		r.Configuration.SourceMicrosoftTeams.SourceType = types.StringValue(string(resp.Configuration.SourceMicrosoftTeams.SourceType))
-	}
-	if resp.Configuration.SourceMixpanel != nil {
-		r.Configuration.SourceMixpanel = &SourceMixpanel{}
-		if resp.Configuration.SourceMixpanel.AttributionWindow != nil {
-			r.Configuration.SourceMixpanel.AttributionWindow = types.Int64Value(*resp.Configuration.SourceMixpanel.AttributionWindow)
-		} else {
-			r.Configuration.SourceMixpanel.AttributionWindow = types.Int64Null()
-		}
-		if resp.Configuration.SourceMixpanel.Credentials == nil {
-			r.Configuration.SourceMixpanel.Credentials = nil
-		} else {
-			r.Configuration.SourceMixpanel.Credentials = &SourceMixpanelAuthenticationWildcard{}
-			if resp.Configuration.SourceMixpanel.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount != nil {
-				r.Configuration.SourceMixpanel.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount = &SourceMixpanelAuthenticationWildcardServiceAccount{}
-				if resp.Configuration.SourceMixpanel.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount.OptionTitle != nil {
-					r.Configuration.SourceMixpanel.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount.OptionTitle = types.StringValue(string(*resp.Configuration.SourceMixpanel.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount.OptionTitle))
-				} else {
-					r.Configuration.SourceMixpanel.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount.OptionTitle = types.StringNull()
-				}
-				r.Configuration.SourceMixpanel.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount.Secret = types.StringValue(resp.Configuration.SourceMixpanel.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount.Secret)
-				r.Configuration.SourceMixpanel.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount.Username = types.StringValue(resp.Configuration.SourceMixpanel.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount.Username)
-			}
-			if resp.Configuration.SourceMixpanel.Credentials.SourceMixpanelAuthenticationWildcardProjectSecret != nil {
-				r.Configuration.SourceMixpanel.Credentials.SourceMixpanelAuthenticationWildcardProjectSecret = &SourceMixpanelAuthenticationWildcardProjectSecret{}
-				r.Configuration.SourceMixpanel.Credentials.SourceMixpanelAuthenticationWildcardProjectSecret.APISecret = types.StringValue(resp.Configuration.SourceMixpanel.Credentials.SourceMixpanelAuthenticationWildcardProjectSecret.APISecret)
-				if resp.Configuration.SourceMixpanel.Credentials.SourceMixpanelAuthenticationWildcardProjectSecret.OptionTitle != nil {
-					r.Configuration.SourceMixpanel.Credentials.SourceMixpanelAuthenticationWildcardProjectSecret.OptionTitle = types.StringValue(string(*resp.Configuration.SourceMixpanel.Credentials.SourceMixpanelAuthenticationWildcardProjectSecret.OptionTitle))
-				} else {
-					r.Configuration.SourceMixpanel.Credentials.SourceMixpanelAuthenticationWildcardProjectSecret.OptionTitle = types.StringNull()
-				}
-			}
-		}
-		if resp.Configuration.SourceMixpanel.DateWindowSize != nil {
-			r.Configuration.SourceMixpanel.DateWindowSize = types.Int64Value(*resp.Configuration.SourceMixpanel.DateWindowSize)
-		} else {
-			r.Configuration.SourceMixpanel.DateWindowSize = types.Int64Null()
-		}
-		if resp.Configuration.SourceMixpanel.EndDate != nil {
-			r.Configuration.SourceMixpanel.EndDate = types.StringValue(*resp.Configuration.SourceMixpanel.EndDate)
-		} else {
-			r.Configuration.SourceMixpanel.EndDate = types.StringNull()
-		}
-		if resp.Configuration.SourceMixpanel.ProjectID != nil {
-			r.Configuration.SourceMixpanel.ProjectID = types.Int64Value(*resp.Configuration.SourceMixpanel.ProjectID)
-		} else {
-			r.Configuration.SourceMixpanel.ProjectID = types.Int64Null()
-		}
-		if resp.Configuration.SourceMixpanel.ProjectTimezone != nil {
-			r.Configuration.SourceMixpanel.ProjectTimezone = types.StringValue(*resp.Configuration.SourceMixpanel.ProjectTimezone)
-		} else {
-			r.Configuration.SourceMixpanel.ProjectTimezone = types.StringNull()
-		}
-		if resp.Configuration.SourceMixpanel.Region != nil {
-			r.Configuration.SourceMixpanel.Region = types.StringValue(string(*resp.Configuration.SourceMixpanel.Region))
-		} else {
-			r.Configuration.SourceMixpanel.Region = types.StringNull()
-		}
-		if resp.Configuration.SourceMixpanel.SelectPropertiesByDefault != nil {
-			r.Configuration.SourceMixpanel.SelectPropertiesByDefault = types.BoolValue(*resp.Configuration.SourceMixpanel.SelectPropertiesByDefault)
-		} else {
-			r.Configuration.SourceMixpanel.SelectPropertiesByDefault = types.BoolNull()
-		}
-		r.Configuration.SourceMixpanel.SourceType = types.StringValue(string(resp.Configuration.SourceMixpanel.SourceType))
-		if resp.Configuration.SourceMixpanel.StartDate != nil {
-			r.Configuration.SourceMixpanel.StartDate = types.StringValue(*resp.Configuration.SourceMixpanel.StartDate)
-		} else {
-			r.Configuration.SourceMixpanel.StartDate = types.StringNull()
-		}
-	}
-	if resp.Configuration.SourceMonday != nil {
-		r.Configuration.SourceMonday = &SourceMonday{}
-		if resp.Configuration.SourceMonday.Credentials == nil {
-			r.Configuration.SourceMonday.Credentials = nil
-		} else {
-			r.Configuration.SourceMonday.Credentials = &SourceMondayAuthorizationMethod{}
-			if resp.Configuration.SourceMonday.Credentials.SourceMondayAuthorizationMethodOAuth20 != nil {
-				r.Configuration.SourceMonday.Credentials.SourceMondayAuthorizationMethodOAuth20 = &SourceMondayAuthorizationMethodOAuth20{}
-				r.Configuration.SourceMonday.Credentials.SourceMondayAuthorizationMethodOAuth20.AccessToken = types.StringValue(resp.Configuration.SourceMonday.Credentials.SourceMondayAuthorizationMethodOAuth20.AccessToken)
-				r.Configuration.SourceMonday.Credentials.SourceMondayAuthorizationMethodOAuth20.AuthType = types.StringValue(string(resp.Configuration.SourceMonday.Credentials.SourceMondayAuthorizationMethodOAuth20.AuthType))
-				r.Configuration.SourceMonday.Credentials.SourceMondayAuthorizationMethodOAuth20.ClientID = types.StringValue(resp.Configuration.SourceMonday.Credentials.SourceMondayAuthorizationMethodOAuth20.ClientID)
-				r.Configuration.SourceMonday.Credentials.SourceMondayAuthorizationMethodOAuth20.ClientSecret = types.StringValue(resp.Configuration.SourceMonday.Credentials.SourceMondayAuthorizationMethodOAuth20.ClientSecret)
-				if resp.Configuration.SourceMonday.Credentials.SourceMondayAuthorizationMethodOAuth20.Subdomain != nil {
-					r.Configuration.SourceMonday.Credentials.SourceMondayAuthorizationMethodOAuth20.Subdomain = types.StringValue(*resp.Configuration.SourceMonday.Credentials.SourceMondayAuthorizationMethodOAuth20.Subdomain)
-				} else {
-					r.Configuration.SourceMonday.Credentials.SourceMondayAuthorizationMethodOAuth20.Subdomain = types.StringNull()
-				}
-			}
-			if resp.Configuration.SourceMonday.Credentials.SourceMondayAuthorizationMethodAPIToken != nil {
-				r.Configuration.SourceMonday.Credentials.SourceMondayAuthorizationMethodAPIToken = &SourceMondayAuthorizationMethodAPIToken{}
-				r.Configuration.SourceMonday.Credentials.SourceMondayAuthorizationMethodAPIToken.APIToken = types.StringValue(resp.Configuration.SourceMonday.Credentials.SourceMondayAuthorizationMethodAPIToken.APIToken)
-				r.Configuration.SourceMonday.Credentials.SourceMondayAuthorizationMethodAPIToken.AuthType = types.StringValue(string(resp.Configuration.SourceMonday.Credentials.SourceMondayAuthorizationMethodAPIToken.AuthType))
-			}
-		}
-		r.Configuration.SourceMonday.SourceType = types.StringValue(string(resp.Configuration.SourceMonday.SourceType))
-	}
-	if resp.Configuration.SourceMongodb != nil {
-		r.Configuration.SourceMongodb = &SourceMongodb{}
-		if resp.Configuration.SourceMongodb.AuthSource != nil {
-			r.Configuration.SourceMongodb.AuthSource = types.StringValue(*resp.Configuration.SourceMongodb.AuthSource)
-		} else {
-			r.Configuration.SourceMongodb.AuthSource = types.StringNull()
-		}
-		r.Configuration.SourceMongodb.Database = types.StringValue(resp.Configuration.SourceMongodb.Database)
-		if resp.Configuration.SourceMongodb.InstanceType == nil {
-			r.Configuration.SourceMongodb.InstanceType = nil
-		} else {
-			r.Configuration.SourceMongodb.InstanceType = &SourceMongodbMongoDbInstanceType{}
-			if resp.Configuration.SourceMongodb.InstanceType.SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance != nil {
-				r.Configuration.SourceMongodb.InstanceType.SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance = &SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance{}
-				r.Configuration.SourceMongodb.InstanceType.SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Host = types.StringValue(resp.Configuration.SourceMongodb.InstanceType.SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Host)
-				r.Configuration.SourceMongodb.InstanceType.SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Instance = types.StringValue(string(resp.Configuration.SourceMongodb.InstanceType.SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Instance))
-				r.Configuration.SourceMongodb.InstanceType.SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Port = types.Int64Value(resp.Configuration.SourceMongodb.InstanceType.SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Port)
-			}
-			if resp.Configuration.SourceMongodb.InstanceType.SourceMongodbMongoDbInstanceTypeReplicaSet != nil {
-				r.Configuration.SourceMongodb.InstanceType.SourceMongodbMongoDbInstanceTypeReplicaSet = &SourceMongodbMongoDbInstanceTypeReplicaSet{}
-				r.Configuration.SourceMongodb.InstanceType.SourceMongodbMongoDbInstanceTypeReplicaSet.Instance = types.StringValue(string(resp.Configuration.SourceMongodb.InstanceType.SourceMongodbMongoDbInstanceTypeReplicaSet.Instance))
-				if resp.Configuration.SourceMongodb.InstanceType.SourceMongodbMongoDbInstanceTypeReplicaSet.ReplicaSet != nil {
-					r.Configuration.SourceMongodb.InstanceType.SourceMongodbMongoDbInstanceTypeReplicaSet.ReplicaSet = types.StringValue(*resp.Configuration.SourceMongodb.InstanceType.SourceMongodbMongoDbInstanceTypeReplicaSet.ReplicaSet)
-				} else {
-					r.Configuration.SourceMongodb.InstanceType.SourceMongodbMongoDbInstanceTypeReplicaSet.ReplicaSet = types.StringNull()
-				}
-				r.Configuration.SourceMongodb.InstanceType.SourceMongodbMongoDbInstanceTypeReplicaSet.ServerAddresses = types.StringValue(resp.Configuration.SourceMongodb.InstanceType.SourceMongodbMongoDbInstanceTypeReplicaSet.ServerAddresses)
-			}
-			if resp.Configuration.SourceMongodb.InstanceType.SourceMongodbMongoDBInstanceTypeMongoDBAtlas != nil {
-				r.Configuration.SourceMongodb.InstanceType.SourceMongodbMongoDBInstanceTypeMongoDBAtlas = &SourceMongodbMongoDBInstanceTypeMongoDBAtlas{}
-				r.Configuration.SourceMongodb.InstanceType.SourceMongodbMongoDBInstanceTypeMongoDBAtlas.ClusterURL = types.StringValue(resp.Configuration.SourceMongodb.InstanceType.SourceMongodbMongoDBInstanceTypeMongoDBAtlas.ClusterURL)
-				r.Configuration.SourceMongodb.InstanceType.SourceMongodbMongoDBInstanceTypeMongoDBAtlas.Instance = types.StringValue(string(resp.Configuration.SourceMongodb.InstanceType.SourceMongodbMongoDBInstanceTypeMongoDBAtlas.Instance))
-			}
-		}
-		if resp.Configuration.SourceMongodb.Password != nil {
-			r.Configuration.SourceMongodb.Password = types.StringValue(*resp.Configuration.SourceMongodb.Password)
-		} else {
-			r.Configuration.SourceMongodb.Password = types.StringNull()
-		}
-		r.Configuration.SourceMongodb.SourceType = types.StringValue(string(resp.Configuration.SourceMongodb.SourceType))
-		if resp.Configuration.SourceMongodb.User != nil {
-			r.Configuration.SourceMongodb.User = types.StringValue(*resp.Configuration.SourceMongodb.User)
-		} else {
-			r.Configuration.SourceMongodb.User = types.StringNull()
-		}
-	}
-	if resp.Configuration.SourceMssql != nil {
-		r.Configuration.SourceMssql = &SourceMssql{}
-		r.Configuration.SourceMssql.Database = types.StringValue(resp.Configuration.SourceMssql.Database)
-		r.Configuration.SourceMssql.Host = types.StringValue(resp.Configuration.SourceMssql.Host)
-		if resp.Configuration.SourceMssql.JdbcURLParams != nil {
-			r.Configuration.SourceMssql.JdbcURLParams = types.StringValue(*resp.Configuration.SourceMssql.JdbcURLParams)
-		} else {
-			r.Configuration.SourceMssql.JdbcURLParams = types.StringNull()
-		}
-		if resp.Configuration.SourceMssql.Password != nil {
-			r.Configuration.SourceMssql.Password = types.StringValue(*resp.Configuration.SourceMssql.Password)
-		} else {
-			r.Configuration.SourceMssql.Password = types.StringNull()
-		}
-		r.Configuration.SourceMssql.Port = types.Int64Value(resp.Configuration.SourceMssql.Port)
-		if resp.Configuration.SourceMssql.ReplicationMethod == nil {
-			r.Configuration.SourceMssql.ReplicationMethod = nil
-		} else {
-			r.Configuration.SourceMssql.ReplicationMethod = &SourceMssqlReplicationMethod{}
-			if resp.Configuration.SourceMssql.ReplicationMethod.SourceMssqlReplicationMethodStandard != nil {
-				r.Configuration.SourceMssql.ReplicationMethod.SourceMssqlReplicationMethodStandard = &SourceMssqlReplicationMethodStandard{}
-				r.Configuration.SourceMssql.ReplicationMethod.SourceMssqlReplicationMethodStandard.Method = types.StringValue(string(resp.Configuration.SourceMssql.ReplicationMethod.SourceMssqlReplicationMethodStandard.Method))
-			}
-			if resp.Configuration.SourceMssql.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC != nil {
-				r.Configuration.SourceMssql.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC = &SourceMssqlReplicationMethodLogicalReplicationCDC{}
-				if resp.Configuration.SourceMssql.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.DataToSync != nil {
-					r.Configuration.SourceMssql.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.DataToSync = types.StringValue(string(*resp.Configuration.SourceMssql.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.DataToSync))
-				} else {
-					r.Configuration.SourceMssql.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.DataToSync = types.StringNull()
-				}
-				if resp.Configuration.SourceMssql.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds != nil {
-					r.Configuration.SourceMssql.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds = types.Int64Value(*resp.Configuration.SourceMssql.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds)
-				} else {
-					r.Configuration.SourceMssql.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds = types.Int64Null()
-				}
-				r.Configuration.SourceMssql.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.Method = types.StringValue(string(resp.Configuration.SourceMssql.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.Method))
-				if resp.Configuration.SourceMssql.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.SnapshotIsolation != nil {
-					r.Configuration.SourceMssql.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.SnapshotIsolation = types.StringValue(string(*resp.Configuration.SourceMssql.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.SnapshotIsolation))
-				} else {
-					r.Configuration.SourceMssql.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.SnapshotIsolation = types.StringNull()
-				}
-			}
-		}
-		r.Configuration.SourceMssql.Schemas = nil
-		for _, v := range resp.Configuration.SourceMssql.Schemas {
-			r.Configuration.SourceMssql.Schemas = append(r.Configuration.SourceMssql.Schemas, types.StringValue(v))
-		}
-		r.Configuration.SourceMssql.SourceType = types.StringValue(string(resp.Configuration.SourceMssql.SourceType))
-		if resp.Configuration.SourceMssql.SslMethod == nil {
-			r.Configuration.SourceMssql.SslMethod = nil
-		} else {
-			r.Configuration.SourceMssql.SslMethod = &SourceMssqlSSLMethod{}
-			if resp.Configuration.SourceMssql.SslMethod.SourceMssqlSSLMethodEncryptedTrustServerCertificate != nil {
-				r.Configuration.SourceMssql.SslMethod.SourceMssqlSSLMethodEncryptedTrustServerCertificate = &DestinationMssqlSSLMethodEncryptedTrustServerCertificate{}
-				r.Configuration.SourceMssql.SslMethod.SourceMssqlSSLMethodEncryptedTrustServerCertificate.SslMethod = types.StringValue(string(resp.Configuration.SourceMssql.SslMethod.SourceMssqlSSLMethodEncryptedTrustServerCertificate.SslMethod))
-			}
-			if resp.Configuration.SourceMssql.SslMethod.SourceMssqlSSLMethodEncryptedVerifyCertificate != nil {
-				r.Configuration.SourceMssql.SslMethod.SourceMssqlSSLMethodEncryptedVerifyCertificate = &DestinationMssqlSSLMethodEncryptedVerifyCertificate{}
-				if resp.Configuration.SourceMssql.SslMethod.SourceMssqlSSLMethodEncryptedVerifyCertificate.HostNameInCertificate != nil {
-					r.Configuration.SourceMssql.SslMethod.SourceMssqlSSLMethodEncryptedVerifyCertificate.HostNameInCertificate = types.StringValue(*resp.Configuration.SourceMssql.SslMethod.SourceMssqlSSLMethodEncryptedVerifyCertificate.HostNameInCertificate)
-				} else {
-					r.Configuration.SourceMssql.SslMethod.SourceMssqlSSLMethodEncryptedVerifyCertificate.HostNameInCertificate = types.StringNull()
-				}
-				r.Configuration.SourceMssql.SslMethod.SourceMssqlSSLMethodEncryptedVerifyCertificate.SslMethod = types.StringValue(string(resp.Configuration.SourceMssql.SslMethod.SourceMssqlSSLMethodEncryptedVerifyCertificate.SslMethod))
-			}
-		}
-		if resp.Configuration.SourceMssql.TunnelMethod == nil {
-			r.Configuration.SourceMssql.TunnelMethod = nil
-		} else {
-			r.Configuration.SourceMssql.TunnelMethod = &SourceMssqlSSHTunnelMethod{}
-			if resp.Configuration.SourceMssql.TunnelMethod.SourceMssqlSSHTunnelMethodNoTunnel != nil {
-				r.Configuration.SourceMssql.TunnelMethod.SourceMssqlSSHTunnelMethodNoTunnel = &DestinationClickhouseSSHTunnelMethodNoTunnel{}
-				r.Configuration.SourceMssql.TunnelMethod.SourceMssqlSSHTunnelMethodNoTunnel.TunnelMethod = types.StringValue(string(resp.Configuration.SourceMssql.TunnelMethod.SourceMssqlSSHTunnelMethodNoTunnel.TunnelMethod))
-			}
-			if resp.Configuration.SourceMssql.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication != nil {
-				r.Configuration.SourceMssql.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication = &DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication{}
-				r.Configuration.SourceMssql.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.SSHKey = types.StringValue(resp.Configuration.SourceMssql.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.SSHKey)
-				r.Configuration.SourceMssql.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelHost = types.StringValue(resp.Configuration.SourceMssql.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelHost)
-				r.Configuration.SourceMssql.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelMethod = types.StringValue(string(resp.Configuration.SourceMssql.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelMethod))
-				r.Configuration.SourceMssql.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelPort = types.Int64Value(resp.Configuration.SourceMssql.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelPort)
-				r.Configuration.SourceMssql.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelUser = types.StringValue(resp.Configuration.SourceMssql.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelUser)
-			}
-			if resp.Configuration.SourceMssql.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication != nil {
-				r.Configuration.SourceMssql.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication = &DestinationClickhouseSSHTunnelMethodPasswordAuthentication{}
-				r.Configuration.SourceMssql.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelHost = types.StringValue(resp.Configuration.SourceMssql.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelHost)
-				r.Configuration.SourceMssql.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelMethod = types.StringValue(string(resp.Configuration.SourceMssql.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelMethod))
-				r.Configuration.SourceMssql.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelPort = types.Int64Value(resp.Configuration.SourceMssql.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelPort)
-				r.Configuration.SourceMssql.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelUser = types.StringValue(resp.Configuration.SourceMssql.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelUser)
-				r.Configuration.SourceMssql.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelUserPassword = types.StringValue(resp.Configuration.SourceMssql.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelUserPassword)
-			}
-		}
-		r.Configuration.SourceMssql.Username = types.StringValue(resp.Configuration.SourceMssql.Username)
-	}
-	if resp.Configuration.SourceMyHours != nil {
-		r.Configuration.SourceMyHours = &SourceMyHours{}
-		r.Configuration.SourceMyHours.Email = types.StringValue(resp.Configuration.SourceMyHours.Email)
-		if resp.Configuration.SourceMyHours.LogsBatchSize != nil {
-			r.Configuration.SourceMyHours.LogsBatchSize = types.Int64Value(*resp.Configuration.SourceMyHours.LogsBatchSize)
-		} else {
-			r.Configuration.SourceMyHours.LogsBatchSize = types.Int64Null()
-		}
-		r.Configuration.SourceMyHours.Password = types.StringValue(resp.Configuration.SourceMyHours.Password)
-		r.Configuration.SourceMyHours.SourceType = types.StringValue(string(resp.Configuration.SourceMyHours.SourceType))
-		r.Configuration.SourceMyHours.StartDate = types.StringValue(resp.Configuration.SourceMyHours.StartDate)
-	}
-	if resp.Configuration.SourceMysql != nil {
-		r.Configuration.SourceMysql = &SourceMysql{}
-		r.Configuration.SourceMysql.Database = types.StringValue(resp.Configuration.SourceMysql.Database)
-		r.Configuration.SourceMysql.Host = types.StringValue(resp.Configuration.SourceMysql.Host)
-		if resp.Configuration.SourceMysql.JdbcURLParams != nil {
-			r.Configuration.SourceMysql.JdbcURLParams = types.StringValue(*resp.Configuration.SourceMysql.JdbcURLParams)
-		} else {
-			r.Configuration.SourceMysql.JdbcURLParams = types.StringNull()
-		}
-		if resp.Configuration.SourceMysql.Password != nil {
-			r.Configuration.SourceMysql.Password = types.StringValue(*resp.Configuration.SourceMysql.Password)
-		} else {
-			r.Configuration.SourceMysql.Password = types.StringNull()
-		}
-		r.Configuration.SourceMysql.Port = types.Int64Value(resp.Configuration.SourceMysql.Port)
-		if resp.Configuration.SourceMysql.ReplicationMethod.SourceMysqlReplicationMethodStandard != nil {
-			r.Configuration.SourceMysql.ReplicationMethod.SourceMysqlReplicationMethodStandard = &SourceMssqlReplicationMethodStandard{}
-			r.Configuration.SourceMysql.ReplicationMethod.SourceMysqlReplicationMethodStandard.Method = types.StringValue(string(resp.Configuration.SourceMysql.ReplicationMethod.SourceMysqlReplicationMethodStandard.Method))
-		}
-		if resp.Configuration.SourceMysql.ReplicationMethod.SourceMysqlReplicationMethodLogicalReplicationCDC != nil {
-			r.Configuration.SourceMysql.ReplicationMethod.SourceMysqlReplicationMethodLogicalReplicationCDC = &SourceMysqlReplicationMethodLogicalReplicationCDC{}
-			if resp.Configuration.SourceMysql.ReplicationMethod.SourceMysqlReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds != nil {
-				r.Configuration.SourceMysql.ReplicationMethod.SourceMysqlReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds = types.Int64Value(*resp.Configuration.SourceMysql.ReplicationMethod.SourceMysqlReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds)
-			} else {
-				r.Configuration.SourceMysql.ReplicationMethod.SourceMysqlReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds = types.Int64Null()
-			}
-			r.Configuration.SourceMysql.ReplicationMethod.SourceMysqlReplicationMethodLogicalReplicationCDC.Method = types.StringValue(string(resp.Configuration.SourceMysql.ReplicationMethod.SourceMysqlReplicationMethodLogicalReplicationCDC.Method))
-			if resp.Configuration.SourceMysql.ReplicationMethod.SourceMysqlReplicationMethodLogicalReplicationCDC.ServerTimeZone != nil {
-				r.Configuration.SourceMysql.ReplicationMethod.SourceMysqlReplicationMethodLogicalReplicationCDC.ServerTimeZone = types.StringValue(*resp.Configuration.SourceMysql.ReplicationMethod.SourceMysqlReplicationMethodLogicalReplicationCDC.ServerTimeZone)
-			} else {
-				r.Configuration.SourceMysql.ReplicationMethod.SourceMysqlReplicationMethodLogicalReplicationCDC.ServerTimeZone = types.StringNull()
-			}
-		}
-		r.Configuration.SourceMysql.SourceType = types.StringValue(string(resp.Configuration.SourceMysql.SourceType))
-		if resp.Configuration.SourceMysql.SslMode == nil {
-			r.Configuration.SourceMysql.SslMode = nil
-		} else {
-			r.Configuration.SourceMysql.SslMode = &SourceMysqlSSLModes{}
-			if resp.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesPreferred != nil {
-				r.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesPreferred = &SourceMysqlSSLModesPreferred{}
-				r.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesPreferred.Mode = types.StringValue(string(resp.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesPreferred.Mode))
-			}
-			if resp.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesRequired != nil {
-				r.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesRequired = &SourceMysqlSSLModesRequired{}
-				r.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesRequired.Mode = types.StringValue(string(resp.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesRequired.Mode))
-			}
-			if resp.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesVerifyCA != nil {
-				r.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesVerifyCA = &SourceMysqlSSLModesVerifyCA{}
-				r.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesVerifyCA.CaCertificate = types.StringValue(resp.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesVerifyCA.CaCertificate)
-				if resp.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesVerifyCA.ClientCertificate != nil {
-					r.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesVerifyCA.ClientCertificate = types.StringValue(*resp.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesVerifyCA.ClientCertificate)
-				} else {
-					r.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesVerifyCA.ClientCertificate = types.StringNull()
-				}
-				if resp.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesVerifyCA.ClientKey != nil {
-					r.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesVerifyCA.ClientKey = types.StringValue(*resp.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesVerifyCA.ClientKey)
-				} else {
-					r.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesVerifyCA.ClientKey = types.StringNull()
-				}
-				if resp.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesVerifyCA.ClientKeyPassword != nil {
-					r.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesVerifyCA.ClientKeyPassword = types.StringValue(*resp.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesVerifyCA.ClientKeyPassword)
-				} else {
-					r.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesVerifyCA.ClientKeyPassword = types.StringNull()
-				}
-				r.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesVerifyCA.Mode = types.StringValue(string(resp.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesVerifyCA.Mode))
-			}
-			if resp.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesVerifyIdentity != nil {
-				r.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesVerifyIdentity = &SourceMysqlSSLModesVerifyIdentity{}
-				r.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesVerifyIdentity.CaCertificate = types.StringValue(resp.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesVerifyIdentity.CaCertificate)
-				if resp.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesVerifyIdentity.ClientCertificate != nil {
-					r.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesVerifyIdentity.ClientCertificate = types.StringValue(*resp.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesVerifyIdentity.ClientCertificate)
-				} else {
-					r.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesVerifyIdentity.ClientCertificate = types.StringNull()
-				}
-				if resp.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesVerifyIdentity.ClientKey != nil {
-					r.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesVerifyIdentity.ClientKey = types.StringValue(*resp.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesVerifyIdentity.ClientKey)
-				} else {
-					r.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesVerifyIdentity.ClientKey = types.StringNull()
-				}
-				if resp.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesVerifyIdentity.ClientKeyPassword != nil {
-					r.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesVerifyIdentity.ClientKeyPassword = types.StringValue(*resp.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesVerifyIdentity.ClientKeyPassword)
-				} else {
-					r.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesVerifyIdentity.ClientKeyPassword = types.StringNull()
-				}
-				r.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesVerifyIdentity.Mode = types.StringValue(string(resp.Configuration.SourceMysql.SslMode.SourceMysqlSSLModesVerifyIdentity.Mode))
-			}
-		}
-		if resp.Configuration.SourceMysql.TunnelMethod == nil {
-			r.Configuration.SourceMysql.TunnelMethod = nil
-		} else {
-			r.Configuration.SourceMysql.TunnelMethod = &SourceMysqlSSHTunnelMethod{}
-			if resp.Configuration.SourceMysql.TunnelMethod.SourceMysqlSSHTunnelMethodNoTunnel != nil {
-				r.Configuration.SourceMysql.TunnelMethod.SourceMysqlSSHTunnelMethodNoTunnel = &DestinationClickhouseSSHTunnelMethodNoTunnel{}
-				r.Configuration.SourceMysql.TunnelMethod.SourceMysqlSSHTunnelMethodNoTunnel.TunnelMethod = types.StringValue(string(resp.Configuration.SourceMysql.TunnelMethod.SourceMysqlSSHTunnelMethodNoTunnel.TunnelMethod))
-			}
-			if resp.Configuration.SourceMysql.TunnelMethod.SourceMysqlSSHTunnelMethodSSHKeyAuthentication != nil {
-				r.Configuration.SourceMysql.TunnelMethod.SourceMysqlSSHTunnelMethodSSHKeyAuthentication = &DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication{}
-				r.Configuration.SourceMysql.TunnelMethod.SourceMysqlSSHTunnelMethodSSHKeyAuthentication.SSHKey = types.StringValue(resp.Configuration.SourceMysql.TunnelMethod.SourceMysqlSSHTunnelMethodSSHKeyAuthentication.SSHKey)
-				r.Configuration.SourceMysql.TunnelMethod.SourceMysqlSSHTunnelMethodSSHKeyAuthentication.TunnelHost = types.StringValue(resp.Configuration.SourceMysql.TunnelMethod.SourceMysqlSSHTunnelMethodSSHKeyAuthentication.TunnelHost)
-				r.Configuration.SourceMysql.TunnelMethod.SourceMysqlSSHTunnelMethodSSHKeyAuthentication.TunnelMethod = types.StringValue(string(resp.Configuration.SourceMysql.TunnelMethod.SourceMysqlSSHTunnelMethodSSHKeyAuthentication.TunnelMethod))
-				r.Configuration.SourceMysql.TunnelMethod.SourceMysqlSSHTunnelMethodSSHKeyAuthentication.TunnelPort = types.Int64Value(resp.Configuration.SourceMysql.TunnelMethod.SourceMysqlSSHTunnelMethodSSHKeyAuthentication.TunnelPort)
-				r.Configuration.SourceMysql.TunnelMethod.SourceMysqlSSHTunnelMethodSSHKeyAuthentication.TunnelUser = types.StringValue(resp.Configuration.SourceMysql.TunnelMethod.SourceMysqlSSHTunnelMethodSSHKeyAuthentication.TunnelUser)
-			}
-			if resp.Configuration.SourceMysql.TunnelMethod.SourceMysqlSSHTunnelMethodPasswordAuthentication != nil {
-				r.Configuration.SourceMysql.TunnelMethod.SourceMysqlSSHTunnelMethodPasswordAuthentication = &DestinationClickhouseSSHTunnelMethodPasswordAuthentication{}
-				r.Configuration.SourceMysql.TunnelMethod.SourceMysqlSSHTunnelMethodPasswordAuthentication.TunnelHost = types.StringValue(resp.Configuration.SourceMysql.TunnelMethod.SourceMysqlSSHTunnelMethodPasswordAuthentication.TunnelHost)
-				r.Configuration.SourceMysql.TunnelMethod.SourceMysqlSSHTunnelMethodPasswordAuthentication.TunnelMethod = types.StringValue(string(resp.Configuration.SourceMysql.TunnelMethod.SourceMysqlSSHTunnelMethodPasswordAuthentication.TunnelMethod))
-				r.Configuration.SourceMysql.TunnelMethod.SourceMysqlSSHTunnelMethodPasswordAuthentication.TunnelPort = types.Int64Value(resp.Configuration.SourceMysql.TunnelMethod.SourceMysqlSSHTunnelMethodPasswordAuthentication.TunnelPort)
-				r.Configuration.SourceMysql.TunnelMethod.SourceMysqlSSHTunnelMethodPasswordAuthentication.TunnelUser = types.StringValue(resp.Configuration.SourceMysql.TunnelMethod.SourceMysqlSSHTunnelMethodPasswordAuthentication.TunnelUser)
-				r.Configuration.SourceMysql.TunnelMethod.SourceMysqlSSHTunnelMethodPasswordAuthentication.TunnelUserPassword = types.StringValue(resp.Configuration.SourceMysql.TunnelMethod.SourceMysqlSSHTunnelMethodPasswordAuthentication.TunnelUserPassword)
-			}
-		}
-		r.Configuration.SourceMysql.Username = types.StringValue(resp.Configuration.SourceMysql.Username)
-	}
-	if resp.Configuration.SourceNetsuite != nil {
-		r.Configuration.SourceNetsuite = &SourceNetsuite{}
-		r.Configuration.SourceNetsuite.ConsumerKey = types.StringValue(resp.Configuration.SourceNetsuite.ConsumerKey)
-		r.Configuration.SourceNetsuite.ConsumerSecret = types.StringValue(resp.Configuration.SourceNetsuite.ConsumerSecret)
-		r.Configuration.SourceNetsuite.ObjectTypes = nil
-		for _, v := range resp.Configuration.SourceNetsuite.ObjectTypes {
-			r.Configuration.SourceNetsuite.ObjectTypes = append(r.Configuration.SourceNetsuite.ObjectTypes, types.StringValue(v))
-		}
-		r.Configuration.SourceNetsuite.Realm = types.StringValue(resp.Configuration.SourceNetsuite.Realm)
-		r.Configuration.SourceNetsuite.SourceType = types.StringValue(string(resp.Configuration.SourceNetsuite.SourceType))
-		r.Configuration.SourceNetsuite.StartDatetime = types.StringValue(resp.Configuration.SourceNetsuite.StartDatetime)
-		r.Configuration.SourceNetsuite.TokenKey = types.StringValue(resp.Configuration.SourceNetsuite.TokenKey)
-		r.Configuration.SourceNetsuite.TokenSecret = types.StringValue(resp.Configuration.SourceNetsuite.TokenSecret)
-		if resp.Configuration.SourceNetsuite.WindowInDays != nil {
-			r.Configuration.SourceNetsuite.WindowInDays = types.Int64Value(*resp.Configuration.SourceNetsuite.WindowInDays)
-		} else {
-			r.Configuration.SourceNetsuite.WindowInDays = types.Int64Null()
-		}
-	}
-	if resp.Configuration.SourceNotion != nil {
-		r.Configuration.SourceNotion = &SourceNotion{}
-		if resp.Configuration.SourceNotion.Credentials == nil {
-			r.Configuration.SourceNotion.Credentials = nil
-		} else {
-			r.Configuration.SourceNotion.Credentials = &SourceNotionAuthenticateUsing{}
-			if resp.Configuration.SourceNotion.Credentials.SourceNotionAuthenticateUsingOAuth20 != nil {
-				r.Configuration.SourceNotion.Credentials.SourceNotionAuthenticateUsingOAuth20 = &SourceNotionAuthenticateUsingOAuth20{}
-				r.Configuration.SourceNotion.Credentials.SourceNotionAuthenticateUsingOAuth20.AccessToken = types.StringValue(resp.Configuration.SourceNotion.Credentials.SourceNotionAuthenticateUsingOAuth20.AccessToken)
-				r.Configuration.SourceNotion.Credentials.SourceNotionAuthenticateUsingOAuth20.AuthType = types.StringValue(string(resp.Configuration.SourceNotion.Credentials.SourceNotionAuthenticateUsingOAuth20.AuthType))
-				r.Configuration.SourceNotion.Credentials.SourceNotionAuthenticateUsingOAuth20.ClientID = types.StringValue(resp.Configuration.SourceNotion.Credentials.SourceNotionAuthenticateUsingOAuth20.ClientID)
-				r.Configuration.SourceNotion.Credentials.SourceNotionAuthenticateUsingOAuth20.ClientSecret = types.StringValue(resp.Configuration.SourceNotion.Credentials.SourceNotionAuthenticateUsingOAuth20.ClientSecret)
-			}
-			if resp.Configuration.SourceNotion.Credentials.SourceNotionAuthenticateUsingAccessToken != nil {
-				r.Configuration.SourceNotion.Credentials.SourceNotionAuthenticateUsingAccessToken = &SourceNotionAuthenticateUsingAccessToken{}
-				r.Configuration.SourceNotion.Credentials.SourceNotionAuthenticateUsingAccessToken.AuthType = types.StringValue(string(resp.Configuration.SourceNotion.Credentials.SourceNotionAuthenticateUsingAccessToken.AuthType))
-				r.Configuration.SourceNotion.Credentials.SourceNotionAuthenticateUsingAccessToken.Token = types.StringValue(resp.Configuration.SourceNotion.Credentials.SourceNotionAuthenticateUsingAccessToken.Token)
-			}
-		}
-		r.Configuration.SourceNotion.SourceType = types.StringValue(string(resp.Configuration.SourceNotion.SourceType))
-		r.Configuration.SourceNotion.StartDate = types.StringValue(resp.Configuration.SourceNotion.StartDate.Format(time.RFC3339))
-	}
-	if resp.Configuration.SourceNytimes != nil {
-		r.Configuration.SourceNytimes = &SourceNytimes{}
-		r.Configuration.SourceNytimes.APIKey = types.StringValue(resp.Configuration.SourceNytimes.APIKey)
-		if resp.Configuration.SourceNytimes.EndDate != nil {
-			r.Configuration.SourceNytimes.EndDate = types.StringValue(resp.Configuration.SourceNytimes.EndDate.String())
-		} else {
-			r.Configuration.SourceNytimes.EndDate = types.StringNull()
-		}
-		r.Configuration.SourceNytimes.Period = types.StringValue(string(resp.Configuration.SourceNytimes.Period))
-		if resp.Configuration.SourceNytimes.ShareType != nil {
-			r.Configuration.SourceNytimes.ShareType = types.StringValue(string(*resp.Configuration.SourceNytimes.ShareType))
-		} else {
-			r.Configuration.SourceNytimes.ShareType = types.StringNull()
-		}
-		r.Configuration.SourceNytimes.SourceType = types.StringValue(string(resp.Configuration.SourceNytimes.SourceType))
-		r.Configuration.SourceNytimes.StartDate = types.StringValue(resp.Configuration.SourceNytimes.StartDate.String())
-	}
-	if resp.Configuration.SourceOkta != nil {
-		r.Configuration.SourceOkta = &SourceOkta{}
-		if resp.Configuration.SourceOkta.Credentials == nil {
-			r.Configuration.SourceOkta.Credentials = nil
-		} else {
-			r.Configuration.SourceOkta.Credentials = &SourceOktaAuthorizationMethod{}
-			if resp.Configuration.SourceOkta.Credentials.SourceOktaAuthorizationMethodOAuth20 != nil {
-				r.Configuration.SourceOkta.Credentials.SourceOktaAuthorizationMethodOAuth20 = &SourceOktaAuthorizationMethodOAuth20{}
-				r.Configuration.SourceOkta.Credentials.SourceOktaAuthorizationMethodOAuth20.AuthType = types.StringValue(string(resp.Configuration.SourceOkta.Credentials.SourceOktaAuthorizationMethodOAuth20.AuthType))
-				r.Configuration.SourceOkta.Credentials.SourceOktaAuthorizationMethodOAuth20.ClientID = types.StringValue(resp.Configuration.SourceOkta.Credentials.SourceOktaAuthorizationMethodOAuth20.ClientID)
-				r.Configuration.SourceOkta.Credentials.SourceOktaAuthorizationMethodOAuth20.ClientSecret = types.StringValue(resp.Configuration.SourceOkta.Credentials.SourceOktaAuthorizationMethodOAuth20.ClientSecret)
-				r.Configuration.SourceOkta.Credentials.SourceOktaAuthorizationMethodOAuth20.RefreshToken = types.StringValue(resp.Configuration.SourceOkta.Credentials.SourceOktaAuthorizationMethodOAuth20.RefreshToken)
-			}
-			if resp.Configuration.SourceOkta.Credentials.SourceOktaAuthorizationMethodAPIToken != nil {
-				r.Configuration.SourceOkta.Credentials.SourceOktaAuthorizationMethodAPIToken = &SourceMondayAuthorizationMethodAPIToken{}
-				r.Configuration.SourceOkta.Credentials.SourceOktaAuthorizationMethodAPIToken.APIToken = types.StringValue(resp.Configuration.SourceOkta.Credentials.SourceOktaAuthorizationMethodAPIToken.APIToken)
-				r.Configuration.SourceOkta.Credentials.SourceOktaAuthorizationMethodAPIToken.AuthType = types.StringValue(string(resp.Configuration.SourceOkta.Credentials.SourceOktaAuthorizationMethodAPIToken.AuthType))
-			}
-		}
-		if resp.Configuration.SourceOkta.Domain != nil {
-			r.Configuration.SourceOkta.Domain = types.StringValue(*resp.Configuration.SourceOkta.Domain)
-		} else {
-			r.Configuration.SourceOkta.Domain = types.StringNull()
-		}
-		r.Configuration.SourceOkta.SourceType = types.StringValue(string(resp.Configuration.SourceOkta.SourceType))
-		if resp.Configuration.SourceOkta.StartDate != nil {
-			r.Configuration.SourceOkta.StartDate = types.StringValue(*resp.Configuration.SourceOkta.StartDate)
-		} else {
-			r.Configuration.SourceOkta.StartDate = types.StringNull()
-		}
-	}
-	if resp.Configuration.SourceOmnisend != nil {
-		r.Configuration.SourceOmnisend = &SourceOmnisend{}
-		r.Configuration.SourceOmnisend.APIKey = types.StringValue(resp.Configuration.SourceOmnisend.APIKey)
-		r.Configuration.SourceOmnisend.SourceType = types.StringValue(string(resp.Configuration.SourceOmnisend.SourceType))
-	}
-	if resp.Configuration.SourceOnesignal != nil {
-		r.Configuration.SourceOnesignal = &SourceOnesignal{}
-		r.Configuration.SourceOnesignal.Applications = nil
-		for _, applicationsItem := range resp.Configuration.SourceOnesignal.Applications {
-			var applications1 SourceOnesignalApplications
-			applications1.AppAPIKey = types.StringValue(applicationsItem.AppAPIKey)
-			applications1.AppID = types.StringValue(applicationsItem.AppID)
-			if applicationsItem.AppName != nil {
-				applications1.AppName = types.StringValue(*applicationsItem.AppName)
-			} else {
-				applications1.AppName = types.StringNull()
-			}
-			r.Configuration.SourceOnesignal.Applications = append(r.Configuration.SourceOnesignal.Applications, applications1)
-		}
-		r.Configuration.SourceOnesignal.OutcomeNames = types.StringValue(resp.Configuration.SourceOnesignal.OutcomeNames)
-		r.Configuration.SourceOnesignal.SourceType = types.StringValue(string(resp.Configuration.SourceOnesignal.SourceType))
-		r.Configuration.SourceOnesignal.StartDate = types.StringValue(resp.Configuration.SourceOnesignal.StartDate.Format(time.RFC3339))
-		r.Configuration.SourceOnesignal.UserAuthKey = types.StringValue(resp.Configuration.SourceOnesignal.UserAuthKey)
-	}
-	if resp.Configuration.SourceOpenweather != nil {
-		r.Configuration.SourceOpenweather = &SourceOpenweather{}
-		r.Configuration.SourceOpenweather.Appid = types.StringValue(resp.Configuration.SourceOpenweather.Appid)
-		if resp.Configuration.SourceOpenweather.Lang != nil {
-			r.Configuration.SourceOpenweather.Lang = types.StringValue(string(*resp.Configuration.SourceOpenweather.Lang))
-		} else {
-			r.Configuration.SourceOpenweather.Lang = types.StringNull()
-		}
-		r.Configuration.SourceOpenweather.Lat = types.StringValue(resp.Configuration.SourceOpenweather.Lat)
-		r.Configuration.SourceOpenweather.Lon = types.StringValue(resp.Configuration.SourceOpenweather.Lon)
-		r.Configuration.SourceOpenweather.SourceType = types.StringValue(string(resp.Configuration.SourceOpenweather.SourceType))
-		if resp.Configuration.SourceOpenweather.Units != nil {
-			r.Configuration.SourceOpenweather.Units = types.StringValue(string(*resp.Configuration.SourceOpenweather.Units))
-		} else {
-			r.Configuration.SourceOpenweather.Units = types.StringNull()
-		}
-	}
-	if resp.Configuration.SourceOracle != nil {
-		r.Configuration.SourceOracle = &SourceOracle{}
-		if resp.Configuration.SourceOracle.ConnectionData == nil {
-			r.Configuration.SourceOracle.ConnectionData = nil
-		} else {
-			r.Configuration.SourceOracle.ConnectionData = &SourceOracleConnectBy{}
-			if resp.Configuration.SourceOracle.ConnectionData.SourceOracleConnectByServiceName != nil {
-				r.Configuration.SourceOracle.ConnectionData.SourceOracleConnectByServiceName = &SourceOracleConnectByServiceName{}
-				if resp.Configuration.SourceOracle.ConnectionData.SourceOracleConnectByServiceName.ConnectionType != nil {
-					r.Configuration.SourceOracle.ConnectionData.SourceOracleConnectByServiceName.ConnectionType = types.StringValue(string(*resp.Configuration.SourceOracle.ConnectionData.SourceOracleConnectByServiceName.ConnectionType))
-				} else {
-					r.Configuration.SourceOracle.ConnectionData.SourceOracleConnectByServiceName.ConnectionType = types.StringNull()
-				}
-				r.Configuration.SourceOracle.ConnectionData.SourceOracleConnectByServiceName.ServiceName = types.StringValue(resp.Configuration.SourceOracle.ConnectionData.SourceOracleConnectByServiceName.ServiceName)
-			}
-			if resp.Configuration.SourceOracle.ConnectionData.SourceOracleConnectBySystemIDSID != nil {
-				r.Configuration.SourceOracle.ConnectionData.SourceOracleConnectBySystemIDSID = &SourceOracleConnectBySystemIDSID{}
-				if resp.Configuration.SourceOracle.ConnectionData.SourceOracleConnectBySystemIDSID.ConnectionType != nil {
-					r.Configuration.SourceOracle.ConnectionData.SourceOracleConnectBySystemIDSID.ConnectionType = types.StringValue(string(*resp.Configuration.SourceOracle.ConnectionData.SourceOracleConnectBySystemIDSID.ConnectionType))
-				} else {
-					r.Configuration.SourceOracle.ConnectionData.SourceOracleConnectBySystemIDSID.ConnectionType = types.StringNull()
-				}
-				r.Configuration.SourceOracle.ConnectionData.SourceOracleConnectBySystemIDSID.Sid = types.StringValue(resp.Configuration.SourceOracle.ConnectionData.SourceOracleConnectBySystemIDSID.Sid)
-			}
-		}
-		if resp.Configuration.SourceOracle.Encryption.SourceOracleEncryptionNativeNetworkEncryptionNNE != nil {
-			r.Configuration.SourceOracle.Encryption.SourceOracleEncryptionNativeNetworkEncryptionNNE = &SourceOracleEncryptionNativeNetworkEncryptionNNE{}
-			if resp.Configuration.SourceOracle.Encryption.SourceOracleEncryptionNativeNetworkEncryptionNNE.EncryptionAlgorithm != nil {
-				r.Configuration.SourceOracle.Encryption.SourceOracleEncryptionNativeNetworkEncryptionNNE.EncryptionAlgorithm = types.StringValue(string(*resp.Configuration.SourceOracle.Encryption.SourceOracleEncryptionNativeNetworkEncryptionNNE.EncryptionAlgorithm))
-			} else {
-				r.Configuration.SourceOracle.Encryption.SourceOracleEncryptionNativeNetworkEncryptionNNE.EncryptionAlgorithm = types.StringNull()
-			}
-			r.Configuration.SourceOracle.Encryption.SourceOracleEncryptionNativeNetworkEncryptionNNE.EncryptionMethod = types.StringValue(string(resp.Configuration.SourceOracle.Encryption.SourceOracleEncryptionNativeNetworkEncryptionNNE.EncryptionMethod))
-		}
-		if resp.Configuration.SourceOracle.Encryption.SourceOracleEncryptionTLSEncryptedVerifyCertificate != nil {
-			r.Configuration.SourceOracle.Encryption.SourceOracleEncryptionTLSEncryptedVerifyCertificate = &SourceOracleEncryptionTLSEncryptedVerifyCertificate{}
-			r.Configuration.SourceOracle.Encryption.SourceOracleEncryptionTLSEncryptedVerifyCertificate.EncryptionMethod = types.StringValue(string(resp.Configuration.SourceOracle.Encryption.SourceOracleEncryptionTLSEncryptedVerifyCertificate.EncryptionMethod))
-			r.Configuration.SourceOracle.Encryption.SourceOracleEncryptionTLSEncryptedVerifyCertificate.SslCertificate = types.StringValue(resp.Configuration.SourceOracle.Encryption.SourceOracleEncryptionTLSEncryptedVerifyCertificate.SslCertificate)
-		}
-		r.Configuration.SourceOracle.Host = types.StringValue(resp.Configuration.SourceOracle.Host)
-		if resp.Configuration.SourceOracle.JdbcURLParams != nil {
-			r.Configuration.SourceOracle.JdbcURLParams = types.StringValue(*resp.Configuration.SourceOracle.JdbcURLParams)
-		} else {
-			r.Configuration.SourceOracle.JdbcURLParams = types.StringNull()
-		}
-		if resp.Configuration.SourceOracle.Password != nil {
-			r.Configuration.SourceOracle.Password = types.StringValue(*resp.Configuration.SourceOracle.Password)
-		} else {
-			r.Configuration.SourceOracle.Password = types.StringNull()
-		}
-		r.Configuration.SourceOracle.Port = types.Int64Value(resp.Configuration.SourceOracle.Port)
-		r.Configuration.SourceOracle.Schemas = nil
-		for _, v := range resp.Configuration.SourceOracle.Schemas {
-			r.Configuration.SourceOracle.Schemas = append(r.Configuration.SourceOracle.Schemas, types.StringValue(v))
-		}
-		r.Configuration.SourceOracle.SourceType = types.StringValue(string(resp.Configuration.SourceOracle.SourceType))
-		if resp.Configuration.SourceOracle.TunnelMethod == nil {
-			r.Configuration.SourceOracle.TunnelMethod = nil
-		} else {
-			r.Configuration.SourceOracle.TunnelMethod = &SourceOracleSSHTunnelMethod{}
-			if resp.Configuration.SourceOracle.TunnelMethod.SourceOracleSSHTunnelMethodNoTunnel != nil {
-				r.Configuration.SourceOracle.TunnelMethod.SourceOracleSSHTunnelMethodNoTunnel = &DestinationClickhouseSSHTunnelMethodNoTunnel{}
-				r.Configuration.SourceOracle.TunnelMethod.SourceOracleSSHTunnelMethodNoTunnel.TunnelMethod = types.StringValue(string(resp.Configuration.SourceOracle.TunnelMethod.SourceOracleSSHTunnelMethodNoTunnel.TunnelMethod))
-			}
-			if resp.Configuration.SourceOracle.TunnelMethod.SourceOracleSSHTunnelMethodSSHKeyAuthentication != nil {
-				r.Configuration.SourceOracle.TunnelMethod.SourceOracleSSHTunnelMethodSSHKeyAuthentication = &DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication{}
-				r.Configuration.SourceOracle.TunnelMethod.SourceOracleSSHTunnelMethodSSHKeyAuthentication.SSHKey = types.StringValue(resp.Configuration.SourceOracle.TunnelMethod.SourceOracleSSHTunnelMethodSSHKeyAuthentication.SSHKey)
-				r.Configuration.SourceOracle.TunnelMethod.SourceOracleSSHTunnelMethodSSHKeyAuthentication.TunnelHost = types.StringValue(resp.Configuration.SourceOracle.TunnelMethod.SourceOracleSSHTunnelMethodSSHKeyAuthentication.TunnelHost)
-				r.Configuration.SourceOracle.TunnelMethod.SourceOracleSSHTunnelMethodSSHKeyAuthentication.TunnelMethod = types.StringValue(string(resp.Configuration.SourceOracle.TunnelMethod.SourceOracleSSHTunnelMethodSSHKeyAuthentication.TunnelMethod))
-				r.Configuration.SourceOracle.TunnelMethod.SourceOracleSSHTunnelMethodSSHKeyAuthentication.TunnelPort = types.Int64Value(resp.Configuration.SourceOracle.TunnelMethod.SourceOracleSSHTunnelMethodSSHKeyAuthentication.TunnelPort)
-				r.Configuration.SourceOracle.TunnelMethod.SourceOracleSSHTunnelMethodSSHKeyAuthentication.TunnelUser = types.StringValue(resp.Configuration.SourceOracle.TunnelMethod.SourceOracleSSHTunnelMethodSSHKeyAuthentication.TunnelUser)
-			}
-			if resp.Configuration.SourceOracle.TunnelMethod.SourceOracleSSHTunnelMethodPasswordAuthentication != nil {
-				r.Configuration.SourceOracle.TunnelMethod.SourceOracleSSHTunnelMethodPasswordAuthentication = &DestinationClickhouseSSHTunnelMethodPasswordAuthentication{}
-				r.Configuration.SourceOracle.TunnelMethod.SourceOracleSSHTunnelMethodPasswordAuthentication.TunnelHost = types.StringValue(resp.Configuration.SourceOracle.TunnelMethod.SourceOracleSSHTunnelMethodPasswordAuthentication.TunnelHost)
-				r.Configuration.SourceOracle.TunnelMethod.SourceOracleSSHTunnelMethodPasswordAuthentication.TunnelMethod = types.StringValue(string(resp.Configuration.SourceOracle.TunnelMethod.SourceOracleSSHTunnelMethodPasswordAuthentication.TunnelMethod))
-				r.Configuration.SourceOracle.TunnelMethod.SourceOracleSSHTunnelMethodPasswordAuthentication.TunnelPort = types.Int64Value(resp.Configuration.SourceOracle.TunnelMethod.SourceOracleSSHTunnelMethodPasswordAuthentication.TunnelPort)
-				r.Configuration.SourceOracle.TunnelMethod.SourceOracleSSHTunnelMethodPasswordAuthentication.TunnelUser = types.StringValue(resp.Configuration.SourceOracle.TunnelMethod.SourceOracleSSHTunnelMethodPasswordAuthentication.TunnelUser)
-				r.Configuration.SourceOracle.TunnelMethod.SourceOracleSSHTunnelMethodPasswordAuthentication.TunnelUserPassword = types.StringValue(resp.Configuration.SourceOracle.TunnelMethod.SourceOracleSSHTunnelMethodPasswordAuthentication.TunnelUserPassword)
-			}
-		}
-		r.Configuration.SourceOracle.Username = types.StringValue(resp.Configuration.SourceOracle.Username)
-	}
-	if resp.Configuration.SourceOrb != nil {
-		r.Configuration.SourceOrb = &SourceOrb{}
-		r.Configuration.SourceOrb.APIKey = types.StringValue(resp.Configuration.SourceOrb.APIKey)
-		if resp.Configuration.SourceOrb.LookbackWindowDays != nil {
-			r.Configuration.SourceOrb.LookbackWindowDays = types.Int64Value(*resp.Configuration.SourceOrb.LookbackWindowDays)
-		} else {
-			r.Configuration.SourceOrb.LookbackWindowDays = types.Int64Null()
-		}
-		r.Configuration.SourceOrb.NumericEventPropertiesKeys = nil
-		for _, v := range resp.Configuration.SourceOrb.NumericEventPropertiesKeys {
-			r.Configuration.SourceOrb.NumericEventPropertiesKeys = append(r.Configuration.SourceOrb.NumericEventPropertiesKeys, types.StringValue(v))
-		}
-		if resp.Configuration.SourceOrb.PlanID != nil {
-			r.Configuration.SourceOrb.PlanID = types.StringValue(*resp.Configuration.SourceOrb.PlanID)
-		} else {
-			r.Configuration.SourceOrb.PlanID = types.StringNull()
-		}
-		r.Configuration.SourceOrb.SourceType = types.StringValue(string(resp.Configuration.SourceOrb.SourceType))
-		r.Configuration.SourceOrb.StartDate = types.StringValue(resp.Configuration.SourceOrb.StartDate)
-		r.Configuration.SourceOrb.StringEventPropertiesKeys = nil
-		for _, v := range resp.Configuration.SourceOrb.StringEventPropertiesKeys {
-			r.Configuration.SourceOrb.StringEventPropertiesKeys = append(r.Configuration.SourceOrb.StringEventPropertiesKeys, types.StringValue(v))
-		}
-		if resp.Configuration.SourceOrb.SubscriptionUsageGroupingKey != nil {
-			r.Configuration.SourceOrb.SubscriptionUsageGroupingKey = types.StringValue(*resp.Configuration.SourceOrb.SubscriptionUsageGroupingKey)
-		} else {
-			r.Configuration.SourceOrb.SubscriptionUsageGroupingKey = types.StringNull()
-		}
-	}
-	if resp.Configuration.SourceOrbit != nil {
-		r.Configuration.SourceOrbit = &SourceOrbit{}
-		r.Configuration.SourceOrbit.APIToken = types.StringValue(resp.Configuration.SourceOrbit.APIToken)
-		r.Configuration.SourceOrbit.SourceType = types.StringValue(string(resp.Configuration.SourceOrbit.SourceType))
-		if resp.Configuration.SourceOrbit.StartDate != nil {
-			r.Configuration.SourceOrbit.StartDate = types.StringValue(*resp.Configuration.SourceOrbit.StartDate)
-		} else {
-			r.Configuration.SourceOrbit.StartDate = types.StringNull()
-		}
-		r.Configuration.SourceOrbit.Workspace = types.StringValue(resp.Configuration.SourceOrbit.Workspace)
-	}
-	if resp.Configuration.SourceOutreach != nil {
-		r.Configuration.SourceOutreach = &SourceOutreach{}
-		r.Configuration.SourceOutreach.ClientID = types.StringValue(resp.Configuration.SourceOutreach.ClientID)
-		r.Configuration.SourceOutreach.ClientSecret = types.StringValue(resp.Configuration.SourceOutreach.ClientSecret)
-		r.Configuration.SourceOutreach.RedirectURI = types.StringValue(resp.Configuration.SourceOutreach.RedirectURI)
-		r.Configuration.SourceOutreach.RefreshToken = types.StringValue(resp.Configuration.SourceOutreach.RefreshToken)
-		r.Configuration.SourceOutreach.SourceType = types.StringValue(string(resp.Configuration.SourceOutreach.SourceType))
-		r.Configuration.SourceOutreach.StartDate = types.StringValue(resp.Configuration.SourceOutreach.StartDate)
-	}
-	if resp.Configuration.SourcePaypalTransaction != nil {
-		r.Configuration.SourcePaypalTransaction = &SourcePaypalTransaction{}
-		if resp.Configuration.SourcePaypalTransaction.ClientID != nil {
-			r.Configuration.SourcePaypalTransaction.ClientID = types.StringValue(*resp.Configuration.SourcePaypalTransaction.ClientID)
-		} else {
-			r.Configuration.SourcePaypalTransaction.ClientID = types.StringNull()
-		}
-		if resp.Configuration.SourcePaypalTransaction.ClientSecret != nil {
-			r.Configuration.SourcePaypalTransaction.ClientSecret = types.StringValue(*resp.Configuration.SourcePaypalTransaction.ClientSecret)
-		} else {
-			r.Configuration.SourcePaypalTransaction.ClientSecret = types.StringNull()
-		}
-		r.Configuration.SourcePaypalTransaction.IsSandbox = types.BoolValue(resp.Configuration.SourcePaypalTransaction.IsSandbox)
-		if resp.Configuration.SourcePaypalTransaction.RefreshToken != nil {
-			r.Configuration.SourcePaypalTransaction.RefreshToken = types.StringValue(*resp.Configuration.SourcePaypalTransaction.RefreshToken)
-		} else {
-			r.Configuration.SourcePaypalTransaction.RefreshToken = types.StringNull()
-		}
-		r.Configuration.SourcePaypalTransaction.SourceType = types.StringValue(string(resp.Configuration.SourcePaypalTransaction.SourceType))
-		r.Configuration.SourcePaypalTransaction.StartDate = types.StringValue(resp.Configuration.SourcePaypalTransaction.StartDate)
-	}
-	if resp.Configuration.SourcePaystack != nil {
-		r.Configuration.SourcePaystack = &SourcePaystack{}
-		if resp.Configuration.SourcePaystack.LookbackWindowDays != nil {
-			r.Configuration.SourcePaystack.LookbackWindowDays = types.Int64Value(*resp.Configuration.SourcePaystack.LookbackWindowDays)
-		} else {
-			r.Configuration.SourcePaystack.LookbackWindowDays = types.Int64Null()
-		}
-		r.Configuration.SourcePaystack.SecretKey = types.StringValue(resp.Configuration.SourcePaystack.SecretKey)
-		r.Configuration.SourcePaystack.SourceType = types.StringValue(string(resp.Configuration.SourcePaystack.SourceType))
-		r.Configuration.SourcePaystack.StartDate = types.StringValue(resp.Configuration.SourcePaystack.StartDate.Format(time.RFC3339))
-	}
-	if resp.Configuration.SourcePendo != nil {
-		r.Configuration.SourcePendo = &SourcePendo{}
-		r.Configuration.SourcePendo.APIKey = types.StringValue(resp.Configuration.SourcePendo.APIKey)
-		r.Configuration.SourcePendo.SourceType = types.StringValue(string(resp.Configuration.SourcePendo.SourceType))
-	}
-	if resp.Configuration.SourcePersistiq != nil {
-		r.Configuration.SourcePersistiq = &SourcePersistiq{}
-		r.Configuration.SourcePersistiq.APIKey = types.StringValue(resp.Configuration.SourcePersistiq.APIKey)
-		r.Configuration.SourcePersistiq.SourceType = types.StringValue(string(resp.Configuration.SourcePersistiq.SourceType))
-	}
-	if resp.Configuration.SourcePexelsAPI != nil {
-		r.Configuration.SourcePexelsAPI = &SourcePexelsAPI{}
-		r.Configuration.SourcePexelsAPI.APIKey = types.StringValue(resp.Configuration.SourcePexelsAPI.APIKey)
-		if resp.Configuration.SourcePexelsAPI.Color != nil {
-			r.Configuration.SourcePexelsAPI.Color = types.StringValue(*resp.Configuration.SourcePexelsAPI.Color)
-		} else {
-			r.Configuration.SourcePexelsAPI.Color = types.StringNull()
-		}
-		if resp.Configuration.SourcePexelsAPI.Locale != nil {
-			r.Configuration.SourcePexelsAPI.Locale = types.StringValue(*resp.Configuration.SourcePexelsAPI.Locale)
-		} else {
-			r.Configuration.SourcePexelsAPI.Locale = types.StringNull()
-		}
-		if resp.Configuration.SourcePexelsAPI.Orientation != nil {
-			r.Configuration.SourcePexelsAPI.Orientation = types.StringValue(*resp.Configuration.SourcePexelsAPI.Orientation)
-		} else {
-			r.Configuration.SourcePexelsAPI.Orientation = types.StringNull()
-		}
-		r.Configuration.SourcePexelsAPI.Query = types.StringValue(resp.Configuration.SourcePexelsAPI.Query)
-		if resp.Configuration.SourcePexelsAPI.Size != nil {
-			r.Configuration.SourcePexelsAPI.Size = types.StringValue(*resp.Configuration.SourcePexelsAPI.Size)
-		} else {
-			r.Configuration.SourcePexelsAPI.Size = types.StringNull()
-		}
-		r.Configuration.SourcePexelsAPI.SourceType = types.StringValue(string(resp.Configuration.SourcePexelsAPI.SourceType))
-	}
-	if resp.Configuration.SourcePinterest != nil {
-		r.Configuration.SourcePinterest = &SourcePinterest{}
-		if resp.Configuration.SourcePinterest.Credentials == nil {
-			r.Configuration.SourcePinterest.Credentials = nil
-		} else {
-			r.Configuration.SourcePinterest.Credentials = &SourcePinterestAuthorizationMethod{}
-			if resp.Configuration.SourcePinterest.Credentials.SourcePinterestAuthorizationMethodOAuth20 != nil {
-				r.Configuration.SourcePinterest.Credentials.SourcePinterestAuthorizationMethodOAuth20 = &SourcePinterestAuthorizationMethodOAuth20{}
-				r.Configuration.SourcePinterest.Credentials.SourcePinterestAuthorizationMethodOAuth20.AuthMethod = types.StringValue(string(resp.Configuration.SourcePinterest.Credentials.SourcePinterestAuthorizationMethodOAuth20.AuthMethod))
-				if resp.Configuration.SourcePinterest.Credentials.SourcePinterestAuthorizationMethodOAuth20.ClientID != nil {
-					r.Configuration.SourcePinterest.Credentials.SourcePinterestAuthorizationMethodOAuth20.ClientID = types.StringValue(*resp.Configuration.SourcePinterest.Credentials.SourcePinterestAuthorizationMethodOAuth20.ClientID)
-				} else {
-					r.Configuration.SourcePinterest.Credentials.SourcePinterestAuthorizationMethodOAuth20.ClientID = types.StringNull()
-				}
-				if resp.Configuration.SourcePinterest.Credentials.SourcePinterestAuthorizationMethodOAuth20.ClientSecret != nil {
-					r.Configuration.SourcePinterest.Credentials.SourcePinterestAuthorizationMethodOAuth20.ClientSecret = types.StringValue(*resp.Configuration.SourcePinterest.Credentials.SourcePinterestAuthorizationMethodOAuth20.ClientSecret)
-				} else {
-					r.Configuration.SourcePinterest.Credentials.SourcePinterestAuthorizationMethodOAuth20.ClientSecret = types.StringNull()
-				}
-				r.Configuration.SourcePinterest.Credentials.SourcePinterestAuthorizationMethodOAuth20.RefreshToken = types.StringValue(resp.Configuration.SourcePinterest.Credentials.SourcePinterestAuthorizationMethodOAuth20.RefreshToken)
-			}
-			if resp.Configuration.SourcePinterest.Credentials.SourcePinterestAuthorizationMethodAccessToken != nil {
-				r.Configuration.SourcePinterest.Credentials.SourcePinterestAuthorizationMethodAccessToken = &SourceLinkedinAdsAuthenticationAccessToken{}
-				r.Configuration.SourcePinterest.Credentials.SourcePinterestAuthorizationMethodAccessToken.AccessToken = types.StringValue(resp.Configuration.SourcePinterest.Credentials.SourcePinterestAuthorizationMethodAccessToken.AccessToken)
-				r.Configuration.SourcePinterest.Credentials.SourcePinterestAuthorizationMethodAccessToken.AuthMethod = types.StringValue(string(resp.Configuration.SourcePinterest.Credentials.SourcePinterestAuthorizationMethodAccessToken.AuthMethod))
-			}
-		}
-		r.Configuration.SourcePinterest.SourceType = types.StringValue(string(resp.Configuration.SourcePinterest.SourceType))
-		r.Configuration.SourcePinterest.StartDate = types.StringValue(resp.Configuration.SourcePinterest.StartDate)
-		r.Configuration.SourcePinterest.Status = nil
-		for _, v := range resp.Configuration.SourcePinterest.Status {
-			r.Configuration.SourcePinterest.Status = append(r.Configuration.SourcePinterest.Status, types.StringValue(string(v)))
-		}
-	}
-	if resp.Configuration.SourcePipedrive != nil {
-		r.Configuration.SourcePipedrive = &SourcePipedrive{}
-		if resp.Configuration.SourcePipedrive.Authorization == nil {
-			r.Configuration.SourcePipedrive.Authorization = nil
-		} else {
-			r.Configuration.SourcePipedrive.Authorization = &SourcePipedriveAPIKeyAuthentication{}
-			r.Configuration.SourcePipedrive.Authorization.APIToken = types.StringValue(resp.Configuration.SourcePipedrive.Authorization.APIToken)
-			r.Configuration.SourcePipedrive.Authorization.AuthType = types.StringValue(string(resp.Configuration.SourcePipedrive.Authorization.AuthType))
-		}
-		r.Configuration.SourcePipedrive.ReplicationStartDate = types.StringValue(resp.Configuration.SourcePipedrive.ReplicationStartDate.Format(time.RFC3339))
-		r.Configuration.SourcePipedrive.SourceType = types.StringValue(string(resp.Configuration.SourcePipedrive.SourceType))
-	}
-	if resp.Configuration.SourcePocket != nil {
-		r.Configuration.SourcePocket = &SourcePocket{}
-		r.Configuration.SourcePocket.AccessToken = types.StringValue(resp.Configuration.SourcePocket.AccessToken)
-		r.Configuration.SourcePocket.ConsumerKey = types.StringValue(resp.Configuration.SourcePocket.ConsumerKey)
-		if resp.Configuration.SourcePocket.ContentType != nil {
-			r.Configuration.SourcePocket.ContentType = types.StringValue(string(*resp.Configuration.SourcePocket.ContentType))
-		} else {
-			r.Configuration.SourcePocket.ContentType = types.StringNull()
-		}
-		if resp.Configuration.SourcePocket.DetailType != nil {
-			r.Configuration.SourcePocket.DetailType = types.StringValue(string(*resp.Configuration.SourcePocket.DetailType))
-		} else {
-			r.Configuration.SourcePocket.DetailType = types.StringNull()
-		}
-		if resp.Configuration.SourcePocket.Domain != nil {
-			r.Configuration.SourcePocket.Domain = types.StringValue(*resp.Configuration.SourcePocket.Domain)
-		} else {
-			r.Configuration.SourcePocket.Domain = types.StringNull()
-		}
-		if resp.Configuration.SourcePocket.Favorite != nil {
-			r.Configuration.SourcePocket.Favorite = types.BoolValue(*resp.Configuration.SourcePocket.Favorite)
-		} else {
-			r.Configuration.SourcePocket.Favorite = types.BoolNull()
-		}
-		if resp.Configuration.SourcePocket.Search != nil {
-			r.Configuration.SourcePocket.Search = types.StringValue(*resp.Configuration.SourcePocket.Search)
-		} else {
-			r.Configuration.SourcePocket.Search = types.StringNull()
-		}
-		if resp.Configuration.SourcePocket.Since != nil {
-			r.Configuration.SourcePocket.Since = types.StringValue(*resp.Configuration.SourcePocket.Since)
-		} else {
-			r.Configuration.SourcePocket.Since = types.StringNull()
-		}
-		if resp.Configuration.SourcePocket.Sort != nil {
-			r.Configuration.SourcePocket.Sort = types.StringValue(string(*resp.Configuration.SourcePocket.Sort))
-		} else {
-			r.Configuration.SourcePocket.Sort = types.StringNull()
-		}
-		r.Configuration.SourcePocket.SourceType = types.StringValue(string(resp.Configuration.SourcePocket.SourceType))
-		if resp.Configuration.SourcePocket.State != nil {
-			r.Configuration.SourcePocket.State = types.StringValue(string(*resp.Configuration.SourcePocket.State))
-		} else {
-			r.Configuration.SourcePocket.State = types.StringNull()
-		}
-		if resp.Configuration.SourcePocket.Tag != nil {
-			r.Configuration.SourcePocket.Tag = types.StringValue(*resp.Configuration.SourcePocket.Tag)
-		} else {
-			r.Configuration.SourcePocket.Tag = types.StringNull()
-		}
-	}
-	if resp.Configuration.SourcePolygonStockAPI != nil {
-		r.Configuration.SourcePolygonStockAPI = &SourcePolygonStockAPI{}
-		if resp.Configuration.SourcePolygonStockAPI.Adjusted != nil {
-			r.Configuration.SourcePolygonStockAPI.Adjusted = types.StringValue(*resp.Configuration.SourcePolygonStockAPI.Adjusted)
-		} else {
-			r.Configuration.SourcePolygonStockAPI.Adjusted = types.StringNull()
-		}
-		r.Configuration.SourcePolygonStockAPI.APIKey = types.StringValue(resp.Configuration.SourcePolygonStockAPI.APIKey)
-		r.Configuration.SourcePolygonStockAPI.EndDate = types.StringValue(resp.Configuration.SourcePolygonStockAPI.EndDate.String())
-		if resp.Configuration.SourcePolygonStockAPI.Limit != nil {
-			r.Configuration.SourcePolygonStockAPI.Limit = types.Int64Value(*resp.Configuration.SourcePolygonStockAPI.Limit)
-		} else {
-			r.Configuration.SourcePolygonStockAPI.Limit = types.Int64Null()
-		}
-		r.Configuration.SourcePolygonStockAPI.Multiplier = types.Int64Value(resp.Configuration.SourcePolygonStockAPI.Multiplier)
-		if resp.Configuration.SourcePolygonStockAPI.Sort != nil {
-			r.Configuration.SourcePolygonStockAPI.Sort = types.StringValue(*resp.Configuration.SourcePolygonStockAPI.Sort)
-		} else {
-			r.Configuration.SourcePolygonStockAPI.Sort = types.StringNull()
-		}
-		r.Configuration.SourcePolygonStockAPI.SourceType = types.StringValue(string(resp.Configuration.SourcePolygonStockAPI.SourceType))
-		r.Configuration.SourcePolygonStockAPI.StartDate = types.StringValue(resp.Configuration.SourcePolygonStockAPI.StartDate.String())
-		r.Configuration.SourcePolygonStockAPI.StocksTicker = types.StringValue(resp.Configuration.SourcePolygonStockAPI.StocksTicker)
-		r.Configuration.SourcePolygonStockAPI.Timespan = types.StringValue(resp.Configuration.SourcePolygonStockAPI.Timespan)
-	}
-	if resp.Configuration.SourcePostgres != nil {
-		r.Configuration.SourcePostgres = &SourcePostgres{}
-		r.Configuration.SourcePostgres.Database = types.StringValue(resp.Configuration.SourcePostgres.Database)
-		r.Configuration.SourcePostgres.Host = types.StringValue(resp.Configuration.SourcePostgres.Host)
-		if resp.Configuration.SourcePostgres.JdbcURLParams != nil {
-			r.Configuration.SourcePostgres.JdbcURLParams = types.StringValue(*resp.Configuration.SourcePostgres.JdbcURLParams)
-		} else {
-			r.Configuration.SourcePostgres.JdbcURLParams = types.StringNull()
-		}
-		if resp.Configuration.SourcePostgres.Password != nil {
-			r.Configuration.SourcePostgres.Password = types.StringValue(*resp.Configuration.SourcePostgres.Password)
-		} else {
-			r.Configuration.SourcePostgres.Password = types.StringNull()
-		}
-		r.Configuration.SourcePostgres.Port = types.Int64Value(resp.Configuration.SourcePostgres.Port)
-		if resp.Configuration.SourcePostgres.ReplicationMethod == nil {
-			r.Configuration.SourcePostgres.ReplicationMethod = nil
-		} else {
-			r.Configuration.SourcePostgres.ReplicationMethod = &SourcePostgresReplicationMethod{}
-			if resp.Configuration.SourcePostgres.ReplicationMethod.SourcePostgresReplicationMethodStandard != nil {
-				r.Configuration.SourcePostgres.ReplicationMethod.SourcePostgresReplicationMethodStandard = &SourceAlloydbReplicationMethodStandard{}
-				r.Configuration.SourcePostgres.ReplicationMethod.SourcePostgresReplicationMethodStandard.Method = types.StringValue(string(resp.Configuration.SourcePostgres.ReplicationMethod.SourcePostgresReplicationMethodStandard.Method))
-			}
-			if resp.Configuration.SourcePostgres.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC != nil {
-				r.Configuration.SourcePostgres.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC = &SourceAlloydbReplicationMethodLogicalReplicationCDC{}
-				if resp.Configuration.SourcePostgres.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds != nil {
-					r.Configuration.SourcePostgres.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds = types.Int64Value(*resp.Configuration.SourcePostgres.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds)
-				} else {
-					r.Configuration.SourcePostgres.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds = types.Int64Null()
-				}
-				if resp.Configuration.SourcePostgres.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.LsnCommitBehaviour != nil {
-					r.Configuration.SourcePostgres.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.LsnCommitBehaviour = types.StringValue(string(*resp.Configuration.SourcePostgres.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.LsnCommitBehaviour))
-				} else {
-					r.Configuration.SourcePostgres.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.LsnCommitBehaviour = types.StringNull()
-				}
-				r.Configuration.SourcePostgres.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.Method = types.StringValue(string(resp.Configuration.SourcePostgres.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.Method))
-				if resp.Configuration.SourcePostgres.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.Plugin != nil {
-					r.Configuration.SourcePostgres.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.Plugin = types.StringValue(string(*resp.Configuration.SourcePostgres.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.Plugin))
-				} else {
-					r.Configuration.SourcePostgres.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.Plugin = types.StringNull()
-				}
-				r.Configuration.SourcePostgres.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.Publication = types.StringValue(resp.Configuration.SourcePostgres.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.Publication)
-				r.Configuration.SourcePostgres.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.ReplicationSlot = types.StringValue(resp.Configuration.SourcePostgres.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.ReplicationSlot)
-			}
-		}
-		r.Configuration.SourcePostgres.Schemas = nil
-		for _, v := range resp.Configuration.SourcePostgres.Schemas {
-			r.Configuration.SourcePostgres.Schemas = append(r.Configuration.SourcePostgres.Schemas, types.StringValue(v))
-		}
-		r.Configuration.SourcePostgres.SourceType = types.StringValue(string(resp.Configuration.SourcePostgres.SourceType))
-		if resp.Configuration.SourcePostgres.SslMode == nil {
-			r.Configuration.SourcePostgres.SslMode = nil
-		} else {
-			r.Configuration.SourcePostgres.SslMode = &SourcePostgresSSLModes{}
-			if resp.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesDisable != nil {
-				r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesDisable = &SourcePostgresSSLModesDisable{}
-				r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesDisable.Mode = types.StringValue(string(resp.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesDisable.Mode))
-			}
-			if resp.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesAllow != nil {
-				r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesAllow = &SourceAlloydbSSLModesAllow{}
-				r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesAllow.Mode = types.StringValue(string(resp.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesAllow.Mode))
-			}
-			if resp.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesPrefer != nil {
-				r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesPrefer = &SourceAlloydbSSLModesPrefer{}
-				r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesPrefer.Mode = types.StringValue(string(resp.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesPrefer.Mode))
-			}
-			if resp.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesRequire != nil {
-				r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesRequire = &SourceAlloydbSSLModesRequire{}
-				r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesRequire.Mode = types.StringValue(string(resp.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesRequire.Mode))
-			}
-			if resp.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesVerifyCa != nil {
-				r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesVerifyCa = &SourceAlloydbSSLModesVerifyCa{}
-				r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesVerifyCa.CaCertificate = types.StringValue(resp.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesVerifyCa.CaCertificate)
-				if resp.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesVerifyCa.ClientCertificate != nil {
-					r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesVerifyCa.ClientCertificate = types.StringValue(*resp.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesVerifyCa.ClientCertificate)
-				} else {
-					r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesVerifyCa.ClientCertificate = types.StringNull()
-				}
-				if resp.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesVerifyCa.ClientKey != nil {
-					r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesVerifyCa.ClientKey = types.StringValue(*resp.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesVerifyCa.ClientKey)
-				} else {
-					r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesVerifyCa.ClientKey = types.StringNull()
-				}
-				if resp.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesVerifyCa.ClientKeyPassword != nil {
-					r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesVerifyCa.ClientKeyPassword = types.StringValue(*resp.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesVerifyCa.ClientKeyPassword)
-				} else {
-					r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesVerifyCa.ClientKeyPassword = types.StringNull()
-				}
-				r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesVerifyCa.Mode = types.StringValue(string(resp.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesVerifyCa.Mode))
-			}
-			if resp.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesVerifyFull != nil {
-				r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesVerifyFull = &SourceAlloydbSSLModesVerifyFull{}
-				r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesVerifyFull.CaCertificate = types.StringValue(resp.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesVerifyFull.CaCertificate)
-				if resp.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesVerifyFull.ClientCertificate != nil {
-					r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesVerifyFull.ClientCertificate = types.StringValue(*resp.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesVerifyFull.ClientCertificate)
-				} else {
-					r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesVerifyFull.ClientCertificate = types.StringNull()
-				}
-				if resp.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesVerifyFull.ClientKey != nil {
-					r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesVerifyFull.ClientKey = types.StringValue(*resp.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesVerifyFull.ClientKey)
-				} else {
-					r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesVerifyFull.ClientKey = types.StringNull()
-				}
-				if resp.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesVerifyFull.ClientKeyPassword != nil {
-					r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesVerifyFull.ClientKeyPassword = types.StringValue(*resp.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesVerifyFull.ClientKeyPassword)
-				} else {
-					r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesVerifyFull.ClientKeyPassword = types.StringNull()
-				}
-				r.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesVerifyFull.Mode = types.StringValue(string(resp.Configuration.SourcePostgres.SslMode.SourcePostgresSSLModesVerifyFull.Mode))
-			}
-		}
-		if resp.Configuration.SourcePostgres.TunnelMethod == nil {
-			r.Configuration.SourcePostgres.TunnelMethod = nil
-		} else {
-			r.Configuration.SourcePostgres.TunnelMethod = &SourcePostgresSSHTunnelMethod{}
-			if resp.Configuration.SourcePostgres.TunnelMethod.SourcePostgresSSHTunnelMethodNoTunnel != nil {
-				r.Configuration.SourcePostgres.TunnelMethod.SourcePostgresSSHTunnelMethodNoTunnel = &DestinationClickhouseSSHTunnelMethodNoTunnel{}
-				r.Configuration.SourcePostgres.TunnelMethod.SourcePostgresSSHTunnelMethodNoTunnel.TunnelMethod = types.StringValue(string(resp.Configuration.SourcePostgres.TunnelMethod.SourcePostgresSSHTunnelMethodNoTunnel.TunnelMethod))
-			}
-			if resp.Configuration.SourcePostgres.TunnelMethod.SourcePostgresSSHTunnelMethodSSHKeyAuthentication != nil {
-				r.Configuration.SourcePostgres.TunnelMethod.SourcePostgresSSHTunnelMethodSSHKeyAuthentication = &DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication{}
-				r.Configuration.SourcePostgres.TunnelMethod.SourcePostgresSSHTunnelMethodSSHKeyAuthentication.SSHKey = types.StringValue(resp.Configuration.SourcePostgres.TunnelMethod.SourcePostgresSSHTunnelMethodSSHKeyAuthentication.SSHKey)
-				r.Configuration.SourcePostgres.TunnelMethod.SourcePostgresSSHTunnelMethodSSHKeyAuthentication.TunnelHost = types.StringValue(resp.Configuration.SourcePostgres.TunnelMethod.SourcePostgresSSHTunnelMethodSSHKeyAuthentication.TunnelHost)
-				r.Configuration.SourcePostgres.TunnelMethod.SourcePostgresSSHTunnelMethodSSHKeyAuthentication.TunnelMethod = types.StringValue(string(resp.Configuration.SourcePostgres.TunnelMethod.SourcePostgresSSHTunnelMethodSSHKeyAuthentication.TunnelMethod))
-				r.Configuration.SourcePostgres.TunnelMethod.SourcePostgresSSHTunnelMethodSSHKeyAuthentication.TunnelPort = types.Int64Value(resp.Configuration.SourcePostgres.TunnelMethod.SourcePostgresSSHTunnelMethodSSHKeyAuthentication.TunnelPort)
-				r.Configuration.SourcePostgres.TunnelMethod.SourcePostgresSSHTunnelMethodSSHKeyAuthentication.TunnelUser = types.StringValue(resp.Configuration.SourcePostgres.TunnelMethod.SourcePostgresSSHTunnelMethodSSHKeyAuthentication.TunnelUser)
-			}
-			if resp.Configuration.SourcePostgres.TunnelMethod.SourcePostgresSSHTunnelMethodPasswordAuthentication != nil {
-				r.Configuration.SourcePostgres.TunnelMethod.SourcePostgresSSHTunnelMethodPasswordAuthentication = &DestinationClickhouseSSHTunnelMethodPasswordAuthentication{}
-				r.Configuration.SourcePostgres.TunnelMethod.SourcePostgresSSHTunnelMethodPasswordAuthentication.TunnelHost = types.StringValue(resp.Configuration.SourcePostgres.TunnelMethod.SourcePostgresSSHTunnelMethodPasswordAuthentication.TunnelHost)
-				r.Configuration.SourcePostgres.TunnelMethod.SourcePostgresSSHTunnelMethodPasswordAuthentication.TunnelMethod = types.StringValue(string(resp.Configuration.SourcePostgres.TunnelMethod.SourcePostgresSSHTunnelMethodPasswordAuthentication.TunnelMethod))
-				r.Configuration.SourcePostgres.TunnelMethod.SourcePostgresSSHTunnelMethodPasswordAuthentication.TunnelPort = types.Int64Value(resp.Configuration.SourcePostgres.TunnelMethod.SourcePostgresSSHTunnelMethodPasswordAuthentication.TunnelPort)
-				r.Configuration.SourcePostgres.TunnelMethod.SourcePostgresSSHTunnelMethodPasswordAuthentication.TunnelUser = types.StringValue(resp.Configuration.SourcePostgres.TunnelMethod.SourcePostgresSSHTunnelMethodPasswordAuthentication.TunnelUser)
-				r.Configuration.SourcePostgres.TunnelMethod.SourcePostgresSSHTunnelMethodPasswordAuthentication.TunnelUserPassword = types.StringValue(resp.Configuration.SourcePostgres.TunnelMethod.SourcePostgresSSHTunnelMethodPasswordAuthentication.TunnelUserPassword)
-			}
-		}
-		r.Configuration.SourcePostgres.Username = types.StringValue(resp.Configuration.SourcePostgres.Username)
-	}
-	if resp.Configuration.SourcePosthog != nil {
-		r.Configuration.SourcePosthog = &SourcePosthog{}
-		r.Configuration.SourcePosthog.APIKey = types.StringValue(resp.Configuration.SourcePosthog.APIKey)
-		if resp.Configuration.SourcePosthog.BaseURL != nil {
-			r.Configuration.SourcePosthog.BaseURL = types.StringValue(*resp.Configuration.SourcePosthog.BaseURL)
-		} else {
-			r.Configuration.SourcePosthog.BaseURL = types.StringNull()
-		}
-		r.Configuration.SourcePosthog.SourceType = types.StringValue(string(resp.Configuration.SourcePosthog.SourceType))
-		r.Configuration.SourcePosthog.StartDate = types.StringValue(resp.Configuration.SourcePosthog.StartDate.Format(time.RFC3339))
-	}
-	if resp.Configuration.SourcePostmarkapp != nil {
-		r.Configuration.SourcePostmarkapp = &SourcePostmarkapp{}
-		r.Configuration.SourcePostmarkapp.XPostmarkAccountToken = types.StringValue(resp.Configuration.SourcePostmarkapp.XPostmarkAccountToken)
-		r.Configuration.SourcePostmarkapp.XPostmarkServerToken = types.StringValue(resp.Configuration.SourcePostmarkapp.XPostmarkServerToken)
-		r.Configuration.SourcePostmarkapp.SourceType = types.StringValue(string(resp.Configuration.SourcePostmarkapp.SourceType))
-	}
-	if resp.Configuration.SourcePrestashop != nil {
-		r.Configuration.SourcePrestashop = &SourcePrestashop{}
-		r.Configuration.SourcePrestashop.AccessKey = types.StringValue(resp.Configuration.SourcePrestashop.AccessKey)
-		r.Configuration.SourcePrestashop.SourceType = types.StringValue(string(resp.Configuration.SourcePrestashop.SourceType))
-		r.Configuration.SourcePrestashop.StartDate = types.StringValue(resp.Configuration.SourcePrestashop.StartDate.String())
-		r.Configuration.SourcePrestashop.URL = types.StringValue(resp.Configuration.SourcePrestashop.URL)
-	}
-	if resp.Configuration.SourcePublicApis != nil {
-		r.Configuration.SourcePublicApis = &SourcePublicApis{}
-		r.Configuration.SourcePublicApis.SourceType = types.StringValue(string(resp.Configuration.SourcePublicApis.SourceType))
-	}
-	if resp.Configuration.SourcePunkAPI != nil {
-		r.Configuration.SourcePunkAPI = &SourcePunkAPI{}
-		r.Configuration.SourcePunkAPI.BrewedAfter = types.StringValue(resp.Configuration.SourcePunkAPI.BrewedAfter)
-		r.Configuration.SourcePunkAPI.BrewedBefore = types.StringValue(resp.Configuration.SourcePunkAPI.BrewedBefore)
-		if resp.Configuration.SourcePunkAPI.ID != nil {
-			r.Configuration.SourcePunkAPI.ID = types.StringValue(*resp.Configuration.SourcePunkAPI.ID)
-		} else {
-			r.Configuration.SourcePunkAPI.ID = types.StringNull()
-		}
-		r.Configuration.SourcePunkAPI.SourceType = types.StringValue(string(resp.Configuration.SourcePunkAPI.SourceType))
-	}
-	if resp.Configuration.SourcePypi != nil {
-		r.Configuration.SourcePypi = &SourcePypi{}
-		r.Configuration.SourcePypi.ProjectName = types.StringValue(resp.Configuration.SourcePypi.ProjectName)
-		r.Configuration.SourcePypi.SourceType = types.StringValue(string(resp.Configuration.SourcePypi.SourceType))
-		if resp.Configuration.SourcePypi.Version != nil {
-			r.Configuration.SourcePypi.Version = types.StringValue(*resp.Configuration.SourcePypi.Version)
-		} else {
-			r.Configuration.SourcePypi.Version = types.StringNull()
-		}
-	}
-	if resp.Configuration.SourceQualaroo != nil {
-		r.Configuration.SourceQualaroo = &SourceQualaroo{}
-		r.Configuration.SourceQualaroo.Key = types.StringValue(resp.Configuration.SourceQualaroo.Key)
-		r.Configuration.SourceQualaroo.SourceType = types.StringValue(string(resp.Configuration.SourceQualaroo.SourceType))
-		r.Configuration.SourceQualaroo.StartDate = types.StringValue(resp.Configuration.SourceQualaroo.StartDate)
-		r.Configuration.SourceQualaroo.SurveyIds = nil
-		for _, v := range resp.Configuration.SourceQualaroo.SurveyIds {
-			r.Configuration.SourceQualaroo.SurveyIds = append(r.Configuration.SourceQualaroo.SurveyIds, types.StringValue(v))
-		}
-		r.Configuration.SourceQualaroo.Token = types.StringValue(resp.Configuration.SourceQualaroo.Token)
-	}
-	if resp.Configuration.SourceRailz != nil {
-		r.Configuration.SourceRailz = &SourceRailz{}
-		r.Configuration.SourceRailz.ClientID = types.StringValue(resp.Configuration.SourceRailz.ClientID)
-		r.Configuration.SourceRailz.SecretKey = types.StringValue(resp.Configuration.SourceRailz.SecretKey)
-		r.Configuration.SourceRailz.SourceType = types.StringValue(string(resp.Configuration.SourceRailz.SourceType))
-		r.Configuration.SourceRailz.StartDate = types.StringValue(resp.Configuration.SourceRailz.StartDate)
-	}
-	if resp.Configuration.SourceRecharge != nil {
-		r.Configuration.SourceRecharge = &SourceRecharge{}
-		r.Configuration.SourceRecharge.AccessToken = types.StringValue(resp.Configuration.SourceRecharge.AccessToken)
-		r.Configuration.SourceRecharge.SourceType = types.StringValue(string(resp.Configuration.SourceRecharge.SourceType))
-		r.Configuration.SourceRecharge.StartDate = types.StringValue(resp.Configuration.SourceRecharge.StartDate.Format(time.RFC3339))
-	}
-	if resp.Configuration.SourceRecreation != nil {
-		r.Configuration.SourceRecreation = &SourceRecreation{}
-		r.Configuration.SourceRecreation.Apikey = types.StringValue(resp.Configuration.SourceRecreation.Apikey)
-		if resp.Configuration.SourceRecreation.QueryCampsites != nil {
-			r.Configuration.SourceRecreation.QueryCampsites = types.StringValue(*resp.Configuration.SourceRecreation.QueryCampsites)
-		} else {
-			r.Configuration.SourceRecreation.QueryCampsites = types.StringNull()
-		}
-		r.Configuration.SourceRecreation.SourceType = types.StringValue(string(resp.Configuration.SourceRecreation.SourceType))
-	}
-	if resp.Configuration.SourceRecruitee != nil {
-		r.Configuration.SourceRecruitee = &SourceRecruitee{}
-		r.Configuration.SourceRecruitee.APIKey = types.StringValue(resp.Configuration.SourceRecruitee.APIKey)
-		r.Configuration.SourceRecruitee.CompanyID = types.Int64Value(resp.Configuration.SourceRecruitee.CompanyID)
-		r.Configuration.SourceRecruitee.SourceType = types.StringValue(string(resp.Configuration.SourceRecruitee.SourceType))
-	}
-	if resp.Configuration.SourceRecurly != nil {
-		r.Configuration.SourceRecurly = &SourceRecurly{}
-		r.Configuration.SourceRecurly.APIKey = types.StringValue(resp.Configuration.SourceRecurly.APIKey)
-		if resp.Configuration.SourceRecurly.BeginTime != nil {
-			r.Configuration.SourceRecurly.BeginTime = types.StringValue(*resp.Configuration.SourceRecurly.BeginTime)
-		} else {
-			r.Configuration.SourceRecurly.BeginTime = types.StringNull()
-		}
-		if resp.Configuration.SourceRecurly.EndTime != nil {
-			r.Configuration.SourceRecurly.EndTime = types.StringValue(*resp.Configuration.SourceRecurly.EndTime)
-		} else {
-			r.Configuration.SourceRecurly.EndTime = types.StringNull()
-		}
-		r.Configuration.SourceRecurly.SourceType = types.StringValue(string(resp.Configuration.SourceRecurly.SourceType))
-	}
-	if resp.Configuration.SourceRedshift != nil {
-		r.Configuration.SourceRedshift = &SourceRedshift{}
-		r.Configuration.SourceRedshift.Database = types.StringValue(resp.Configuration.SourceRedshift.Database)
-		r.Configuration.SourceRedshift.Host = types.StringValue(resp.Configuration.SourceRedshift.Host)
-		if resp.Configuration.SourceRedshift.JdbcURLParams != nil {
-			r.Configuration.SourceRedshift.JdbcURLParams = types.StringValue(*resp.Configuration.SourceRedshift.JdbcURLParams)
-		} else {
-			r.Configuration.SourceRedshift.JdbcURLParams = types.StringNull()
-		}
-		r.Configuration.SourceRedshift.Password = types.StringValue(resp.Configuration.SourceRedshift.Password)
-		r.Configuration.SourceRedshift.Port = types.Int64Value(resp.Configuration.SourceRedshift.Port)
-		r.Configuration.SourceRedshift.Schemas = nil
-		for _, v := range resp.Configuration.SourceRedshift.Schemas {
-			r.Configuration.SourceRedshift.Schemas = append(r.Configuration.SourceRedshift.Schemas, types.StringValue(v))
-		}
-		r.Configuration.SourceRedshift.SourceType = types.StringValue(string(resp.Configuration.SourceRedshift.SourceType))
-		r.Configuration.SourceRedshift.Username = types.StringValue(resp.Configuration.SourceRedshift.Username)
-	}
-	if resp.Configuration.SourceRetently != nil {
-		r.Configuration.SourceRetently = &SourceRetently{}
-		if resp.Configuration.SourceRetently.Credentials == nil {
-			r.Configuration.SourceRetently.Credentials = nil
-		} else {
-			r.Configuration.SourceRetently.Credentials = &SourceRetentlyAuthenticationMechanism{}
-			if resp.Configuration.SourceRetently.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth != nil {
-				r.Configuration.SourceRetently.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth = &SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth{}
-				if resp.Configuration.SourceRetently.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AuthType != nil {
-					r.Configuration.SourceRetently.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AuthType = types.StringValue(string(*resp.Configuration.SourceRetently.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AuthType))
-				} else {
-					r.Configuration.SourceRetently.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AuthType = types.StringNull()
-				}
-				r.Configuration.SourceRetently.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.ClientID = types.StringValue(resp.Configuration.SourceRetently.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.ClientID)
-				r.Configuration.SourceRetently.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.ClientSecret = types.StringValue(resp.Configuration.SourceRetently.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.ClientSecret)
-				r.Configuration.SourceRetently.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.RefreshToken = types.StringValue(resp.Configuration.SourceRetently.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.RefreshToken)
-			}
-			if resp.Configuration.SourceRetently.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken != nil {
-				r.Configuration.SourceRetently.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken = &SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken{}
-				r.Configuration.SourceRetently.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.APIKey = types.StringValue(resp.Configuration.SourceRetently.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.APIKey)
-				if resp.Configuration.SourceRetently.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AuthType != nil {
-					r.Configuration.SourceRetently.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AuthType = types.StringValue(string(*resp.Configuration.SourceRetently.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AuthType))
-				} else {
-					r.Configuration.SourceRetently.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AuthType = types.StringNull()
-				}
-			}
-		}
-		r.Configuration.SourceRetently.SourceType = types.StringValue(string(resp.Configuration.SourceRetently.SourceType))
-	}
-	if resp.Configuration.SourceRkiCovid != nil {
-		r.Configuration.SourceRkiCovid = &SourceRkiCovid{}
-		r.Configuration.SourceRkiCovid.SourceType = types.StringValue(string(resp.Configuration.SourceRkiCovid.SourceType))
-		r.Configuration.SourceRkiCovid.StartDate = types.StringValue(resp.Configuration.SourceRkiCovid.StartDate)
-	}
-	if resp.Configuration.SourceRss != nil {
-		r.Configuration.SourceRss = &SourceRss{}
-		r.Configuration.SourceRss.SourceType = types.StringValue(string(resp.Configuration.SourceRss.SourceType))
-		r.Configuration.SourceRss.URL = types.StringValue(resp.Configuration.SourceRss.URL)
-	}
-	if resp.Configuration.SourceS3 != nil {
-		r.Configuration.SourceS3 = &SourceS3{}
-		r.Configuration.SourceS3.Dataset = types.StringValue(resp.Configuration.SourceS3.Dataset)
-		if resp.Configuration.SourceS3.Format == nil {
-			r.Configuration.SourceS3.Format = nil
-		} else {
-			r.Configuration.SourceS3.Format = &SourceS3FileFormat{}
-			if resp.Configuration.SourceS3.Format.SourceS3FileFormatCSV != nil {
-				r.Configuration.SourceS3.Format.SourceS3FileFormatCSV = &SourceS3FileFormatCSV{}
-				if resp.Configuration.SourceS3.Format.SourceS3FileFormatCSV.AdditionalReaderOptions != nil {
-					r.Configuration.SourceS3.Format.SourceS3FileFormatCSV.AdditionalReaderOptions = types.StringValue(*resp.Configuration.SourceS3.Format.SourceS3FileFormatCSV.AdditionalReaderOptions)
-				} else {
-					r.Configuration.SourceS3.Format.SourceS3FileFormatCSV.AdditionalReaderOptions = types.StringNull()
-				}
-				if resp.Configuration.SourceS3.Format.SourceS3FileFormatCSV.AdvancedOptions != nil {
-					r.Configuration.SourceS3.Format.SourceS3FileFormatCSV.AdvancedOptions = types.StringValue(*resp.Configuration.SourceS3.Format.SourceS3FileFormatCSV.AdvancedOptions)
-				} else {
-					r.Configuration.SourceS3.Format.SourceS3FileFormatCSV.AdvancedOptions = types.StringNull()
-				}
-				if resp.Configuration.SourceS3.Format.SourceS3FileFormatCSV.BlockSize != nil {
-					r.Configuration.SourceS3.Format.SourceS3FileFormatCSV.BlockSize = types.Int64Value(*resp.Configuration.SourceS3.Format.SourceS3FileFormatCSV.BlockSize)
-				} else {
-					r.Configuration.SourceS3.Format.SourceS3FileFormatCSV.BlockSize = types.Int64Null()
-				}
-				if resp.Configuration.SourceS3.Format.SourceS3FileFormatCSV.Delimiter != nil {
-					r.Configuration.SourceS3.Format.SourceS3FileFormatCSV.Delimiter = types.StringValue(*resp.Configuration.SourceS3.Format.SourceS3FileFormatCSV.Delimiter)
-				} else {
-					r.Configuration.SourceS3.Format.SourceS3FileFormatCSV.Delimiter = types.StringNull()
-				}
-				if resp.Configuration.SourceS3.Format.SourceS3FileFormatCSV.DoubleQuote != nil {
-					r.Configuration.SourceS3.Format.SourceS3FileFormatCSV.DoubleQuote = types.BoolValue(*resp.Configuration.SourceS3.Format.SourceS3FileFormatCSV.DoubleQuote)
-				} else {
-					r.Configuration.SourceS3.Format.SourceS3FileFormatCSV.DoubleQuote = types.BoolNull()
-				}
-				if resp.Configuration.SourceS3.Format.SourceS3FileFormatCSV.Encoding != nil {
-					r.Configuration.SourceS3.Format.SourceS3FileFormatCSV.Encoding = types.StringValue(*resp.Configuration.SourceS3.Format.SourceS3FileFormatCSV.Encoding)
-				} else {
-					r.Configuration.SourceS3.Format.SourceS3FileFormatCSV.Encoding = types.StringNull()
-				}
-				if resp.Configuration.SourceS3.Format.SourceS3FileFormatCSV.EscapeChar != nil {
-					r.Configuration.SourceS3.Format.SourceS3FileFormatCSV.EscapeChar = types.StringValue(*resp.Configuration.SourceS3.Format.SourceS3FileFormatCSV.EscapeChar)
-				} else {
-					r.Configuration.SourceS3.Format.SourceS3FileFormatCSV.EscapeChar = types.StringNull()
-				}
-				if resp.Configuration.SourceS3.Format.SourceS3FileFormatCSV.Filetype != nil {
-					r.Configuration.SourceS3.Format.SourceS3FileFormatCSV.Filetype = types.StringValue(string(*resp.Configuration.SourceS3.Format.SourceS3FileFormatCSV.Filetype))
-				} else {
-					r.Configuration.SourceS3.Format.SourceS3FileFormatCSV.Filetype = types.StringNull()
-				}
-				if resp.Configuration.SourceS3.Format.SourceS3FileFormatCSV.InferDatatypes != nil {
-					r.Configuration.SourceS3.Format.SourceS3FileFormatCSV.InferDatatypes = types.BoolValue(*resp.Configuration.SourceS3.Format.SourceS3FileFormatCSV.InferDatatypes)
-				} else {
-					r.Configuration.SourceS3.Format.SourceS3FileFormatCSV.InferDatatypes = types.BoolNull()
-				}
-				if resp.Configuration.SourceS3.Format.SourceS3FileFormatCSV.NewlinesInValues != nil {
-					r.Configuration.SourceS3.Format.SourceS3FileFormatCSV.NewlinesInValues = types.BoolValue(*resp.Configuration.SourceS3.Format.SourceS3FileFormatCSV.NewlinesInValues)
-				} else {
-					r.Configuration.SourceS3.Format.SourceS3FileFormatCSV.NewlinesInValues = types.BoolNull()
-				}
-				if resp.Configuration.SourceS3.Format.SourceS3FileFormatCSV.QuoteChar != nil {
-					r.Configuration.SourceS3.Format.SourceS3FileFormatCSV.QuoteChar = types.StringValue(*resp.Configuration.SourceS3.Format.SourceS3FileFormatCSV.QuoteChar)
-				} else {
-					r.Configuration.SourceS3.Format.SourceS3FileFormatCSV.QuoteChar = types.StringNull()
-				}
-			}
-			if resp.Configuration.SourceS3.Format.SourceS3FileFormatParquet != nil {
-				r.Configuration.SourceS3.Format.SourceS3FileFormatParquet = &SourceS3FileFormatParquet{}
-				if resp.Configuration.SourceS3.Format.SourceS3FileFormatParquet.BatchSize != nil {
-					r.Configuration.SourceS3.Format.SourceS3FileFormatParquet.BatchSize = types.Int64Value(*resp.Configuration.SourceS3.Format.SourceS3FileFormatParquet.BatchSize)
-				} else {
-					r.Configuration.SourceS3.Format.SourceS3FileFormatParquet.BatchSize = types.Int64Null()
-				}
-				if resp.Configuration.SourceS3.Format.SourceS3FileFormatParquet.BufferSize != nil {
-					r.Configuration.SourceS3.Format.SourceS3FileFormatParquet.BufferSize = types.Int64Value(*resp.Configuration.SourceS3.Format.SourceS3FileFormatParquet.BufferSize)
-				} else {
-					r.Configuration.SourceS3.Format.SourceS3FileFormatParquet.BufferSize = types.Int64Null()
-				}
-				r.Configuration.SourceS3.Format.SourceS3FileFormatParquet.Columns = nil
-				for _, v := range resp.Configuration.SourceS3.Format.SourceS3FileFormatParquet.Columns {
-					r.Configuration.SourceS3.Format.SourceS3FileFormatParquet.Columns = append(r.Configuration.SourceS3.Format.SourceS3FileFormatParquet.Columns, types.StringValue(v))
-				}
-				if resp.Configuration.SourceS3.Format.SourceS3FileFormatParquet.Filetype != nil {
-					r.Configuration.SourceS3.Format.SourceS3FileFormatParquet.Filetype = types.StringValue(string(*resp.Configuration.SourceS3.Format.SourceS3FileFormatParquet.Filetype))
-				} else {
-					r.Configuration.SourceS3.Format.SourceS3FileFormatParquet.Filetype = types.StringNull()
-				}
-			}
-			if resp.Configuration.SourceS3.Format.SourceS3FileFormatAvro != nil {
-				r.Configuration.SourceS3.Format.SourceS3FileFormatAvro = &SourceS3FileFormatAvro{}
-				if resp.Configuration.SourceS3.Format.SourceS3FileFormatAvro.Filetype != nil {
-					r.Configuration.SourceS3.Format.SourceS3FileFormatAvro.Filetype = types.StringValue(string(*resp.Configuration.SourceS3.Format.SourceS3FileFormatAvro.Filetype))
-				} else {
-					r.Configuration.SourceS3.Format.SourceS3FileFormatAvro.Filetype = types.StringNull()
-				}
-			}
-			if resp.Configuration.SourceS3.Format.SourceS3FileFormatJsonl != nil {
-				r.Configuration.SourceS3.Format.SourceS3FileFormatJsonl = &SourceS3FileFormatJsonl{}
-				if resp.Configuration.SourceS3.Format.SourceS3FileFormatJsonl.BlockSize != nil {
-					r.Configuration.SourceS3.Format.SourceS3FileFormatJsonl.BlockSize = types.Int64Value(*resp.Configuration.SourceS3.Format.SourceS3FileFormatJsonl.BlockSize)
-				} else {
-					r.Configuration.SourceS3.Format.SourceS3FileFormatJsonl.BlockSize = types.Int64Null()
-				}
-				if resp.Configuration.SourceS3.Format.SourceS3FileFormatJsonl.Filetype != nil {
-					r.Configuration.SourceS3.Format.SourceS3FileFormatJsonl.Filetype = types.StringValue(string(*resp.Configuration.SourceS3.Format.SourceS3FileFormatJsonl.Filetype))
-				} else {
-					r.Configuration.SourceS3.Format.SourceS3FileFormatJsonl.Filetype = types.StringNull()
-				}
-				if resp.Configuration.SourceS3.Format.SourceS3FileFormatJsonl.NewlinesInValues != nil {
-					r.Configuration.SourceS3.Format.SourceS3FileFormatJsonl.NewlinesInValues = types.BoolValue(*resp.Configuration.SourceS3.Format.SourceS3FileFormatJsonl.NewlinesInValues)
-				} else {
-					r.Configuration.SourceS3.Format.SourceS3FileFormatJsonl.NewlinesInValues = types.BoolNull()
-				}
-				if resp.Configuration.SourceS3.Format.SourceS3FileFormatJsonl.UnexpectedFieldBehavior != nil {
-					r.Configuration.SourceS3.Format.SourceS3FileFormatJsonl.UnexpectedFieldBehavior = types.StringValue(string(*resp.Configuration.SourceS3.Format.SourceS3FileFormatJsonl.UnexpectedFieldBehavior))
-				} else {
-					r.Configuration.SourceS3.Format.SourceS3FileFormatJsonl.UnexpectedFieldBehavior = types.StringNull()
-				}
-			}
-		}
-		r.Configuration.SourceS3.PathPattern = types.StringValue(resp.Configuration.SourceS3.PathPattern)
-		if resp.Configuration.SourceS3.Provider.AwsAccessKeyID != nil {
-			r.Configuration.SourceS3.Provider.AwsAccessKeyID = types.StringValue(*resp.Configuration.SourceS3.Provider.AwsAccessKeyID)
-		} else {
-			r.Configuration.SourceS3.Provider.AwsAccessKeyID = types.StringNull()
-		}
-		if resp.Configuration.SourceS3.Provider.AwsSecretAccessKey != nil {
-			r.Configuration.SourceS3.Provider.AwsSecretAccessKey = types.StringValue(*resp.Configuration.SourceS3.Provider.AwsSecretAccessKey)
-		} else {
-			r.Configuration.SourceS3.Provider.AwsSecretAccessKey = types.StringNull()
-		}
-		r.Configuration.SourceS3.Provider.Bucket = types.StringValue(resp.Configuration.SourceS3.Provider.Bucket)
-		if resp.Configuration.SourceS3.Provider.Endpoint != nil {
-			r.Configuration.SourceS3.Provider.Endpoint = types.StringValue(*resp.Configuration.SourceS3.Provider.Endpoint)
-		} else {
-			r.Configuration.SourceS3.Provider.Endpoint = types.StringNull()
-		}
-		if resp.Configuration.SourceS3.Provider.PathPrefix != nil {
-			r.Configuration.SourceS3.Provider.PathPrefix = types.StringValue(*resp.Configuration.SourceS3.Provider.PathPrefix)
-		} else {
-			r.Configuration.SourceS3.Provider.PathPrefix = types.StringNull()
-		}
-		if resp.Configuration.SourceS3.Schema != nil {
-			r.Configuration.SourceS3.Schema = types.StringValue(*resp.Configuration.SourceS3.Schema)
-		} else {
-			r.Configuration.SourceS3.Schema = types.StringNull()
-		}
-		r.Configuration.SourceS3.SourceType = types.StringValue(string(resp.Configuration.SourceS3.SourceType))
-	}
-	if resp.Configuration.SourceSalesforce != nil {
-		r.Configuration.SourceSalesforce = &SourceSalesforce{}
-		if resp.Configuration.SourceSalesforce.AuthType != nil {
-			r.Configuration.SourceSalesforce.AuthType = types.StringValue(string(*resp.Configuration.SourceSalesforce.AuthType))
-		} else {
-			r.Configuration.SourceSalesforce.AuthType = types.StringNull()
-		}
-		r.Configuration.SourceSalesforce.ClientID = types.StringValue(resp.Configuration.SourceSalesforce.ClientID)
-		r.Configuration.SourceSalesforce.ClientSecret = types.StringValue(resp.Configuration.SourceSalesforce.ClientSecret)
-		if resp.Configuration.SourceSalesforce.IsSandbox != nil {
-			r.Configuration.SourceSalesforce.IsSandbox = types.BoolValue(*resp.Configuration.SourceSalesforce.IsSandbox)
-		} else {
-			r.Configuration.SourceSalesforce.IsSandbox = types.BoolNull()
-		}
-		r.Configuration.SourceSalesforce.RefreshToken = types.StringValue(resp.Configuration.SourceSalesforce.RefreshToken)
-		r.Configuration.SourceSalesforce.SourceType = types.StringValue(string(resp.Configuration.SourceSalesforce.SourceType))
-		if resp.Configuration.SourceSalesforce.StartDate != nil {
-			r.Configuration.SourceSalesforce.StartDate = types.StringValue(resp.Configuration.SourceSalesforce.StartDate.Format(time.RFC3339))
-		} else {
-			r.Configuration.SourceSalesforce.StartDate = types.StringNull()
-		}
-		r.Configuration.SourceSalesforce.StreamsCriteria = nil
-		for _, streamsCriteriaItem := range resp.Configuration.SourceSalesforce.StreamsCriteria {
-			var streamsCriteria1 SourceSalesforceStreamsCriteria
-			streamsCriteria1.Criteria = types.StringValue(string(streamsCriteriaItem.Criteria))
-			streamsCriteria1.Value = types.StringValue(streamsCriteriaItem.Value)
-			r.Configuration.SourceSalesforce.StreamsCriteria = append(r.Configuration.SourceSalesforce.StreamsCriteria, streamsCriteria1)
-		}
-	}
-	if resp.Configuration.SourceSalesforceSinger != nil {
-		r.Configuration.SourceSalesforceSinger = &SourceSalesforceSinger{}
-		r.Configuration.SourceSalesforceSinger.APIType = types.StringValue(string(resp.Configuration.SourceSalesforceSinger.APIType))
-		r.Configuration.SourceSalesforceSinger.ClientID = types.StringValue(resp.Configuration.SourceSalesforceSinger.ClientID)
-		r.Configuration.SourceSalesforceSinger.ClientSecret = types.StringValue(resp.Configuration.SourceSalesforceSinger.ClientSecret)
-		if resp.Configuration.SourceSalesforceSinger.IsSandbox != nil {
-			r.Configuration.SourceSalesforceSinger.IsSandbox = types.BoolValue(*resp.Configuration.SourceSalesforceSinger.IsSandbox)
-		} else {
-			r.Configuration.SourceSalesforceSinger.IsSandbox = types.BoolNull()
-		}
-		if resp.Configuration.SourceSalesforceSinger.QuotaPercentPerRun != nil {
-			r.Configuration.SourceSalesforceSinger.QuotaPercentPerRun = types.NumberValue(big.NewFloat(*resp.Configuration.SourceSalesforceSinger.QuotaPercentPerRun))
-		} else {
-			r.Configuration.SourceSalesforceSinger.QuotaPercentPerRun = types.NumberNull()
-		}
-		if resp.Configuration.SourceSalesforceSinger.QuotaPercentTotal != nil {
-			r.Configuration.SourceSalesforceSinger.QuotaPercentTotal = types.NumberValue(big.NewFloat(*resp.Configuration.SourceSalesforceSinger.QuotaPercentTotal))
-		} else {
-			r.Configuration.SourceSalesforceSinger.QuotaPercentTotal = types.NumberNull()
-		}
-		r.Configuration.SourceSalesforceSinger.RefreshToken = types.StringValue(resp.Configuration.SourceSalesforceSinger.RefreshToken)
-		r.Configuration.SourceSalesforceSinger.SourceType = types.StringValue(string(resp.Configuration.SourceSalesforceSinger.SourceType))
-		r.Configuration.SourceSalesforceSinger.StartDate = types.StringValue(resp.Configuration.SourceSalesforceSinger.StartDate)
-	}
-	if resp.Configuration.SourceSalesloft != nil {
-		r.Configuration.SourceSalesloft = &SourceSalesloft{}
-		if resp.Configuration.SourceSalesloft.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth != nil {
-			r.Configuration.SourceSalesloft.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth = &SourceGitlabAuthorizationMethodOAuth20{}
-			r.Configuration.SourceSalesloft.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.AccessToken = types.StringValue(resp.Configuration.SourceSalesloft.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.AccessToken)
-			r.Configuration.SourceSalesloft.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.AuthType = types.StringValue(string(resp.Configuration.SourceSalesloft.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.AuthType))
-			r.Configuration.SourceSalesloft.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.ClientID = types.StringValue(resp.Configuration.SourceSalesloft.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.ClientID)
-			r.Configuration.SourceSalesloft.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.ClientSecret = types.StringValue(resp.Configuration.SourceSalesloft.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.ClientSecret)
-			r.Configuration.SourceSalesloft.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.RefreshToken = types.StringValue(resp.Configuration.SourceSalesloft.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.RefreshToken)
-			r.Configuration.SourceSalesloft.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.TokenExpiryDate = types.StringValue(resp.Configuration.SourceSalesloft.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.TokenExpiryDate.Format(time.RFC3339))
-		}
-		if resp.Configuration.SourceSalesloft.Credentials.SourceSalesloftCredentialsAuthenticateViaAPIKey != nil {
-			r.Configuration.SourceSalesloft.Credentials.SourceSalesloftCredentialsAuthenticateViaAPIKey = &SourceSalesloftCredentialsAuthenticateViaAPIKey{}
-			r.Configuration.SourceSalesloft.Credentials.SourceSalesloftCredentialsAuthenticateViaAPIKey.APIKey = types.StringValue(resp.Configuration.SourceSalesloft.Credentials.SourceSalesloftCredentialsAuthenticateViaAPIKey.APIKey)
-			r.Configuration.SourceSalesloft.Credentials.SourceSalesloftCredentialsAuthenticateViaAPIKey.AuthType = types.StringValue(string(resp.Configuration.SourceSalesloft.Credentials.SourceSalesloftCredentialsAuthenticateViaAPIKey.AuthType))
-		}
-		r.Configuration.SourceSalesloft.SourceType = types.StringValue(string(resp.Configuration.SourceSalesloft.SourceType))
-		r.Configuration.SourceSalesloft.StartDate = types.StringValue(resp.Configuration.SourceSalesloft.StartDate.Format(time.RFC3339))
-	}
-	if resp.Configuration.SourceSapFieldglass != nil {
-		r.Configuration.SourceSapFieldglass = &SourceSapFieldglass{}
-		r.Configuration.SourceSapFieldglass.APIKey = types.StringValue(resp.Configuration.SourceSapFieldglass.APIKey)
-		r.Configuration.SourceSapFieldglass.SourceType = types.StringValue(string(resp.Configuration.SourceSapFieldglass.SourceType))
-	}
-	if resp.Configuration.SourceSecoda != nil {
-		r.Configuration.SourceSecoda = &SourceSecoda{}
-		r.Configuration.SourceSecoda.APIKey = types.StringValue(resp.Configuration.SourceSecoda.APIKey)
-		r.Configuration.SourceSecoda.SourceType = types.StringValue(string(resp.Configuration.SourceSecoda.SourceType))
-	}
-	if resp.Configuration.SourceSendgrid != nil {
-		r.Configuration.SourceSendgrid = &SourceSendgrid{}
-		r.Configuration.SourceSendgrid.Apikey = types.StringValue(resp.Configuration.SourceSendgrid.Apikey)
-		r.Configuration.SourceSendgrid.SourceType = types.StringValue(string(resp.Configuration.SourceSendgrid.SourceType))
-		if resp.Configuration.SourceSendgrid.StartTime != nil {
-			r.Configuration.SourceSendgrid.StartTime = types.StringValue(resp.Configuration.SourceSendgrid.StartTime.Format(time.RFC3339))
-		} else {
-			r.Configuration.SourceSendgrid.StartTime = types.StringNull()
-		}
-	}
-	if resp.Configuration.SourceSendinblue != nil {
-		r.Configuration.SourceSendinblue = &SourceSendinblue{}
-		r.Configuration.SourceSendinblue.APIKey = types.StringValue(resp.Configuration.SourceSendinblue.APIKey)
-		r.Configuration.SourceSendinblue.SourceType = types.StringValue(string(resp.Configuration.SourceSendinblue.SourceType))
-	}
-	if resp.Configuration.SourceSenseforce != nil {
-		r.Configuration.SourceSenseforce = &SourceSenseforce{}
-		r.Configuration.SourceSenseforce.AccessToken = types.StringValue(resp.Configuration.SourceSenseforce.AccessToken)
-		r.Configuration.SourceSenseforce.BackendURL = types.StringValue(resp.Configuration.SourceSenseforce.BackendURL)
-		r.Configuration.SourceSenseforce.DatasetID = types.StringValue(resp.Configuration.SourceSenseforce.DatasetID)
-		if resp.Configuration.SourceSenseforce.SliceRange != nil {
-			r.Configuration.SourceSenseforce.SliceRange = types.Int64Value(*resp.Configuration.SourceSenseforce.SliceRange)
-		} else {
-			r.Configuration.SourceSenseforce.SliceRange = types.Int64Null()
-		}
-		r.Configuration.SourceSenseforce.SourceType = types.StringValue(string(resp.Configuration.SourceSenseforce.SourceType))
-		r.Configuration.SourceSenseforce.StartDate = types.StringValue(resp.Configuration.SourceSenseforce.StartDate.String())
-	}
-	if resp.Configuration.SourceSentry != nil {
-		r.Configuration.SourceSentry = &SourceSentry{}
-		r.Configuration.SourceSentry.AuthToken = types.StringValue(resp.Configuration.SourceSentry.AuthToken)
-		r.Configuration.SourceSentry.DiscoverFields = nil
-		for _, discoverFieldsItem := range resp.Configuration.SourceSentry.DiscoverFields {
-			var discoverFields1 types.String
-			discoverFields1Result, _ := json.Marshal(discoverFieldsItem)
-			discoverFields1 = types.StringValue(string(discoverFields1Result))
-			r.Configuration.SourceSentry.DiscoverFields = append(r.Configuration.SourceSentry.DiscoverFields, discoverFields1)
-		}
-		if resp.Configuration.SourceSentry.Hostname != nil {
-			r.Configuration.SourceSentry.Hostname = types.StringValue(*resp.Configuration.SourceSentry.Hostname)
-		} else {
-			r.Configuration.SourceSentry.Hostname = types.StringNull()
-		}
-		r.Configuration.SourceSentry.Organization = types.StringValue(resp.Configuration.SourceSentry.Organization)
-		r.Configuration.SourceSentry.Project = types.StringValue(resp.Configuration.SourceSentry.Project)
-		r.Configuration.SourceSentry.SourceType = types.StringValue(string(resp.Configuration.SourceSentry.SourceType))
-	}
-	if resp.Configuration.SourceSftp != nil {
-		r.Configuration.SourceSftp = &SourceSftp{}
-		if resp.Configuration.SourceSftp.Credentials == nil {
-			r.Configuration.SourceSftp.Credentials = nil
-		} else {
-			r.Configuration.SourceSftp.Credentials = &SourceSftpAuthenticationWildcard{}
-			if resp.Configuration.SourceSftp.Credentials.SourceSftpAuthenticationWildcardPasswordAuthentication != nil {
-				r.Configuration.SourceSftp.Credentials.SourceSftpAuthenticationWildcardPasswordAuthentication = &SourceSftpAuthenticationWildcardPasswordAuthentication{}
-				r.Configuration.SourceSftp.Credentials.SourceSftpAuthenticationWildcardPasswordAuthentication.AuthMethod = types.StringValue(string(resp.Configuration.SourceSftp.Credentials.SourceSftpAuthenticationWildcardPasswordAuthentication.AuthMethod))
-				r.Configuration.SourceSftp.Credentials.SourceSftpAuthenticationWildcardPasswordAuthentication.AuthUserPassword = types.StringValue(resp.Configuration.SourceSftp.Credentials.SourceSftpAuthenticationWildcardPasswordAuthentication.AuthUserPassword)
-			}
-			if resp.Configuration.SourceSftp.Credentials.SourceSftpAuthenticationWildcardSSHKeyAuthentication != nil {
-				r.Configuration.SourceSftp.Credentials.SourceSftpAuthenticationWildcardSSHKeyAuthentication = &SourceSftpAuthenticationWildcardSSHKeyAuthentication{}
-				r.Configuration.SourceSftp.Credentials.SourceSftpAuthenticationWildcardSSHKeyAuthentication.AuthMethod = types.StringValue(string(resp.Configuration.SourceSftp.Credentials.SourceSftpAuthenticationWildcardSSHKeyAuthentication.AuthMethod))
-				r.Configuration.SourceSftp.Credentials.SourceSftpAuthenticationWildcardSSHKeyAuthentication.AuthSSHKey = types.StringValue(resp.Configuration.SourceSftp.Credentials.SourceSftpAuthenticationWildcardSSHKeyAuthentication.AuthSSHKey)
-			}
-		}
-		if resp.Configuration.SourceSftp.FilePattern != nil {
-			r.Configuration.SourceSftp.FilePattern = types.StringValue(*resp.Configuration.SourceSftp.FilePattern)
-		} else {
-			r.Configuration.SourceSftp.FilePattern = types.StringNull()
-		}
-		if resp.Configuration.SourceSftp.FileTypes != nil {
-			r.Configuration.SourceSftp.FileTypes = types.StringValue(*resp.Configuration.SourceSftp.FileTypes)
-		} else {
-			r.Configuration.SourceSftp.FileTypes = types.StringNull()
-		}
-		if resp.Configuration.SourceSftp.FolderPath != nil {
-			r.Configuration.SourceSftp.FolderPath = types.StringValue(*resp.Configuration.SourceSftp.FolderPath)
-		} else {
-			r.Configuration.SourceSftp.FolderPath = types.StringNull()
-		}
-		r.Configuration.SourceSftp.Host = types.StringValue(resp.Configuration.SourceSftp.Host)
-		r.Configuration.SourceSftp.Port = types.Int64Value(resp.Configuration.SourceSftp.Port)
-		r.Configuration.SourceSftp.SourceType = types.StringValue(string(resp.Configuration.SourceSftp.SourceType))
-		r.Configuration.SourceSftp.User = types.StringValue(resp.Configuration.SourceSftp.User)
-	}
-	if resp.Configuration.SourceSftpBulk != nil {
-		r.Configuration.SourceSftpBulk = &SourceSftpBulk{}
-		if resp.Configuration.SourceSftpBulk.FileMostRecent != nil {
-			r.Configuration.SourceSftpBulk.FileMostRecent = types.BoolValue(*resp.Configuration.SourceSftpBulk.FileMostRecent)
-		} else {
-			r.Configuration.SourceSftpBulk.FileMostRecent = types.BoolNull()
-		}
-		if resp.Configuration.SourceSftpBulk.FilePattern != nil {
-			r.Configuration.SourceSftpBulk.FilePattern = types.StringValue(*resp.Configuration.SourceSftpBulk.FilePattern)
-		} else {
-			r.Configuration.SourceSftpBulk.FilePattern = types.StringNull()
-		}
-		if resp.Configuration.SourceSftpBulk.FileType != nil {
-			r.Configuration.SourceSftpBulk.FileType = types.StringValue(string(*resp.Configuration.SourceSftpBulk.FileType))
-		} else {
-			r.Configuration.SourceSftpBulk.FileType = types.StringNull()
-		}
-		r.Configuration.SourceSftpBulk.FolderPath = types.StringValue(resp.Configuration.SourceSftpBulk.FolderPath)
-		r.Configuration.SourceSftpBulk.Host = types.StringValue(resp.Configuration.SourceSftpBulk.Host)
-		if resp.Configuration.SourceSftpBulk.Password != nil {
-			r.Configuration.SourceSftpBulk.Password = types.StringValue(*resp.Configuration.SourceSftpBulk.Password)
-		} else {
-			r.Configuration.SourceSftpBulk.Password = types.StringNull()
-		}
-		r.Configuration.SourceSftpBulk.Port = types.Int64Value(resp.Configuration.SourceSftpBulk.Port)
-		if resp.Configuration.SourceSftpBulk.PrivateKey != nil {
-			r.Configuration.SourceSftpBulk.PrivateKey = types.StringValue(*resp.Configuration.SourceSftpBulk.PrivateKey)
-		} else {
-			r.Configuration.SourceSftpBulk.PrivateKey = types.StringNull()
-		}
-		r.Configuration.SourceSftpBulk.SourceType = types.StringValue(string(resp.Configuration.SourceSftpBulk.SourceType))
-		r.Configuration.SourceSftpBulk.StartDate = types.StringValue(resp.Configuration.SourceSftpBulk.StartDate.Format(time.RFC3339))
-		r.Configuration.SourceSftpBulk.StreamName = types.StringValue(resp.Configuration.SourceSftpBulk.StreamName)
-		r.Configuration.SourceSftpBulk.Username = types.StringValue(resp.Configuration.SourceSftpBulk.Username)
-	}
-	if resp.Configuration.SourceShopify != nil {
-		r.Configuration.SourceShopify = &SourceShopify{}
-		if resp.Configuration.SourceShopify.Credentials == nil {
-			r.Configuration.SourceShopify.Credentials = nil
-		} else {
-			r.Configuration.SourceShopify.Credentials = &SourceShopifyShopifyAuthorizationMethod{}
-			if resp.Configuration.SourceShopify.Credentials.SourceShopifyShopifyAuthorizationMethodAPIPassword != nil {
-				r.Configuration.SourceShopify.Credentials.SourceShopifyShopifyAuthorizationMethodAPIPassword = &SourceShopifyShopifyAuthorizationMethodAPIPassword{}
-				r.Configuration.SourceShopify.Credentials.SourceShopifyShopifyAuthorizationMethodAPIPassword.APIPassword = types.StringValue(resp.Configuration.SourceShopify.Credentials.SourceShopifyShopifyAuthorizationMethodAPIPassword.APIPassword)
-				r.Configuration.SourceShopify.Credentials.SourceShopifyShopifyAuthorizationMethodAPIPassword.AuthMethod = types.StringValue(string(resp.Configuration.SourceShopify.Credentials.SourceShopifyShopifyAuthorizationMethodAPIPassword.AuthMethod))
-			}
-			if resp.Configuration.SourceShopify.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20 != nil {
-				r.Configuration.SourceShopify.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20 = &SourceShopifyShopifyAuthorizationMethodOAuth20{}
-				if resp.Configuration.SourceShopify.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.AccessToken != nil {
-					r.Configuration.SourceShopify.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.AccessToken = types.StringValue(*resp.Configuration.SourceShopify.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.AccessToken)
-				} else {
-					r.Configuration.SourceShopify.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.AccessToken = types.StringNull()
-				}
-				r.Configuration.SourceShopify.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.AuthMethod = types.StringValue(string(resp.Configuration.SourceShopify.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.AuthMethod))
-				if resp.Configuration.SourceShopify.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientID != nil {
-					r.Configuration.SourceShopify.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientID = types.StringValue(*resp.Configuration.SourceShopify.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientID)
-				} else {
-					r.Configuration.SourceShopify.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientID = types.StringNull()
-				}
-				if resp.Configuration.SourceShopify.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientSecret != nil {
-					r.Configuration.SourceShopify.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientSecret = types.StringValue(*resp.Configuration.SourceShopify.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientSecret)
-				} else {
-					r.Configuration.SourceShopify.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientSecret = types.StringNull()
-				}
-			}
-		}
-		r.Configuration.SourceShopify.Shop = types.StringValue(resp.Configuration.SourceShopify.Shop)
-		r.Configuration.SourceShopify.SourceType = types.StringValue(string(resp.Configuration.SourceShopify.SourceType))
-		r.Configuration.SourceShopify.StartDate = types.StringValue(resp.Configuration.SourceShopify.StartDate)
-	}
-	if resp.Configuration.SourceShortio != nil {
-		r.Configuration.SourceShortio = &SourceShortio{}
-		r.Configuration.SourceShortio.DomainID = types.StringValue(resp.Configuration.SourceShortio.DomainID)
-		r.Configuration.SourceShortio.SecretKey = types.StringValue(resp.Configuration.SourceShortio.SecretKey)
-		r.Configuration.SourceShortio.SourceType = types.StringValue(string(resp.Configuration.SourceShortio.SourceType))
-		r.Configuration.SourceShortio.StartDate = types.StringValue(resp.Configuration.SourceShortio.StartDate)
-	}
-	if resp.Configuration.SourceSlack != nil {
-		r.Configuration.SourceSlack = &SourceSlack{}
-		r.Configuration.SourceSlack.ChannelFilter = nil
-		for _, v := range resp.Configuration.SourceSlack.ChannelFilter {
-			r.Configuration.SourceSlack.ChannelFilter = append(r.Configuration.SourceSlack.ChannelFilter, types.StringValue(v))
-		}
-		if resp.Configuration.SourceSlack.Credentials == nil {
-			r.Configuration.SourceSlack.Credentials = nil
-		} else {
-			r.Configuration.SourceSlack.Credentials = &SourceSlackAuthenticationMechanism{}
-			if resp.Configuration.SourceSlack.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth != nil {
-				r.Configuration.SourceSlack.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth = &SourceSlackAuthenticationMechanismSignInViaSlackOAuth{}
-				r.Configuration.SourceSlack.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth.AccessToken = types.StringValue(resp.Configuration.SourceSlack.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth.AccessToken)
-				r.Configuration.SourceSlack.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth.ClientID = types.StringValue(resp.Configuration.SourceSlack.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth.ClientID)
-				r.Configuration.SourceSlack.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth.ClientSecret = types.StringValue(resp.Configuration.SourceSlack.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth.ClientSecret)
-				r.Configuration.SourceSlack.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth.OptionTitle = types.StringValue(string(resp.Configuration.SourceSlack.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth.OptionTitle))
-			}
-			if resp.Configuration.SourceSlack.Credentials.SourceSlackAuthenticationMechanismAPIToken != nil {
-				r.Configuration.SourceSlack.Credentials.SourceSlackAuthenticationMechanismAPIToken = &SourceSlackAuthenticationMechanismAPIToken{}
-				r.Configuration.SourceSlack.Credentials.SourceSlackAuthenticationMechanismAPIToken.APIToken = types.StringValue(resp.Configuration.SourceSlack.Credentials.SourceSlackAuthenticationMechanismAPIToken.APIToken)
-				r.Configuration.SourceSlack.Credentials.SourceSlackAuthenticationMechanismAPIToken.OptionTitle = types.StringValue(string(resp.Configuration.SourceSlack.Credentials.SourceSlackAuthenticationMechanismAPIToken.OptionTitle))
-			}
-		}
-		r.Configuration.SourceSlack.JoinChannels = types.BoolValue(resp.Configuration.SourceSlack.JoinChannels)
-		r.Configuration.SourceSlack.LookbackWindow = types.Int64Value(resp.Configuration.SourceSlack.LookbackWindow)
-		r.Configuration.SourceSlack.SourceType = types.StringValue(string(resp.Configuration.SourceSlack.SourceType))
-		r.Configuration.SourceSlack.StartDate = types.StringValue(resp.Configuration.SourceSlack.StartDate.Format(time.RFC3339))
-	}
-	if resp.Configuration.SourceSmaily != nil {
-		r.Configuration.SourceSmaily = &SourceSmaily{}
-		r.Configuration.SourceSmaily.APIPassword = types.StringValue(resp.Configuration.SourceSmaily.APIPassword)
-		r.Configuration.SourceSmaily.APISubdomain = types.StringValue(resp.Configuration.SourceSmaily.APISubdomain)
-		r.Configuration.SourceSmaily.APIUsername = types.StringValue(resp.Configuration.SourceSmaily.APIUsername)
-		r.Configuration.SourceSmaily.SourceType = types.StringValue(string(resp.Configuration.SourceSmaily.SourceType))
-	}
-	if resp.Configuration.SourceSmartengage != nil {
-		r.Configuration.SourceSmartengage = &SourceSmartengage{}
-		r.Configuration.SourceSmartengage.APIKey = types.StringValue(resp.Configuration.SourceSmartengage.APIKey)
-		r.Configuration.SourceSmartengage.SourceType = types.StringValue(string(resp.Configuration.SourceSmartengage.SourceType))
-	}
-	if resp.Configuration.SourceSmartsheets != nil {
-		r.Configuration.SourceSmartsheets = &SourceSmartsheets{}
-		if resp.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20 != nil {
-			r.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20 = &SourceGitlabAuthorizationMethodOAuth20{}
-			r.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.AccessToken = types.StringValue(resp.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.AccessToken)
-			if resp.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.AuthType != nil {
-				r.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.AuthType = types.StringValue(string(*resp.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.AuthType))
-			} else {
-				r.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.AuthType = types.StringNull()
-			}
-			r.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.ClientID = types.StringValue(resp.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.ClientID)
-			r.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.ClientSecret = types.StringValue(resp.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.ClientSecret)
-			r.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.RefreshToken = types.StringValue(resp.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.RefreshToken)
-			r.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.TokenExpiryDate = types.StringValue(resp.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.TokenExpiryDate.Format(time.RFC3339))
-		}
-		if resp.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodAPIAccessToken != nil {
-			r.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodAPIAccessToken = &SourceGitlabAuthorizationMethodPrivateToken{}
-			r.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodAPIAccessToken.AccessToken = types.StringValue(resp.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodAPIAccessToken.AccessToken)
-			if resp.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodAPIAccessToken.AuthType != nil {
-				r.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodAPIAccessToken.AuthType = types.StringValue(string(*resp.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodAPIAccessToken.AuthType))
-			} else {
-				r.Configuration.SourceSmartsheets.Credentials.SourceSmartsheetsAuthorizationMethodAPIAccessToken.AuthType = types.StringNull()
-			}
-		}
-		r.Configuration.SourceSmartsheets.SourceType = types.StringValue(string(resp.Configuration.SourceSmartsheets.SourceType))
-		r.Configuration.SourceSmartsheets.SpreadsheetID = types.StringValue(resp.Configuration.SourceSmartsheets.SpreadsheetID)
-		if resp.Configuration.SourceSmartsheets.StartDatetime != nil {
-			r.Configuration.SourceSmartsheets.StartDatetime = types.StringValue(resp.Configuration.SourceSmartsheets.StartDatetime.Format(time.RFC3339))
-		} else {
-			r.Configuration.SourceSmartsheets.StartDatetime = types.StringNull()
-		}
-	}
-	if resp.Configuration.SourceSnapchatMarketing != nil {
-		r.Configuration.SourceSnapchatMarketing = &SourceSnapchatMarketing{}
-		r.Configuration.SourceSnapchatMarketing.ClientID = types.StringValue(resp.Configuration.SourceSnapchatMarketing.ClientID)
-		r.Configuration.SourceSnapchatMarketing.ClientSecret = types.StringValue(resp.Configuration.SourceSnapchatMarketing.ClientSecret)
-		if resp.Configuration.SourceSnapchatMarketing.EndDate != nil {
-			r.Configuration.SourceSnapchatMarketing.EndDate = types.StringValue(resp.Configuration.SourceSnapchatMarketing.EndDate.String())
-		} else {
-			r.Configuration.SourceSnapchatMarketing.EndDate = types.StringNull()
-		}
-		r.Configuration.SourceSnapchatMarketing.RefreshToken = types.StringValue(resp.Configuration.SourceSnapchatMarketing.RefreshToken)
-		r.Configuration.SourceSnapchatMarketing.SourceType = types.StringValue(string(resp.Configuration.SourceSnapchatMarketing.SourceType))
-		if resp.Configuration.SourceSnapchatMarketing.StartDate != nil {
-			r.Configuration.SourceSnapchatMarketing.StartDate = types.StringValue(resp.Configuration.SourceSnapchatMarketing.StartDate.String())
-		} else {
-			r.Configuration.SourceSnapchatMarketing.StartDate = types.StringNull()
-		}
-	}
-	if resp.Configuration.SourceSnowflake != nil {
-		r.Configuration.SourceSnowflake = &SourceSnowflake{}
-		if resp.Configuration.SourceSnowflake.Credentials == nil {
-			r.Configuration.SourceSnowflake.Credentials = nil
-		} else {
-			r.Configuration.SourceSnowflake.Credentials = &SourceSnowflakeAuthorizationMethod{}
-			if resp.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodOAuth20 != nil {
-				r.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodOAuth20 = &SourceSnowflakeAuthorizationMethodOAuth20{}
-				if resp.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.AccessToken != nil {
-					r.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.AccessToken = types.StringValue(*resp.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.AccessToken)
-				} else {
-					r.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.AccessToken = types.StringNull()
-				}
-				r.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.AuthType = types.StringValue(string(resp.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.AuthType))
-				r.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.ClientID = types.StringValue(resp.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.ClientID)
-				r.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.ClientSecret = types.StringValue(resp.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.ClientSecret)
-				if resp.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.RefreshToken != nil {
-					r.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.RefreshToken = types.StringValue(*resp.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.RefreshToken)
-				} else {
-					r.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.RefreshToken = types.StringNull()
-				}
-			}
-			if resp.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodUsernameAndPassword != nil {
-				r.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodUsernameAndPassword = &SourceSnowflakeAuthorizationMethodUsernameAndPassword{}
-				r.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodUsernameAndPassword.AuthType = types.StringValue(string(resp.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodUsernameAndPassword.AuthType))
-				r.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodUsernameAndPassword.Password = types.StringValue(resp.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodUsernameAndPassword.Password)
-				r.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodUsernameAndPassword.Username = types.StringValue(resp.Configuration.SourceSnowflake.Credentials.SourceSnowflakeAuthorizationMethodUsernameAndPassword.Username)
-			}
-		}
-		r.Configuration.SourceSnowflake.Database = types.StringValue(resp.Configuration.SourceSnowflake.Database)
-		r.Configuration.SourceSnowflake.Host = types.StringValue(resp.Configuration.SourceSnowflake.Host)
-		if resp.Configuration.SourceSnowflake.JdbcURLParams != nil {
-			r.Configuration.SourceSnowflake.JdbcURLParams = types.StringValue(*resp.Configuration.SourceSnowflake.JdbcURLParams)
-		} else {
-			r.Configuration.SourceSnowflake.JdbcURLParams = types.StringNull()
-		}
-		r.Configuration.SourceSnowflake.Role = types.StringValue(resp.Configuration.SourceSnowflake.Role)
-		if resp.Configuration.SourceSnowflake.Schema != nil {
-			r.Configuration.SourceSnowflake.Schema = types.StringValue(*resp.Configuration.SourceSnowflake.Schema)
-		} else {
-			r.Configuration.SourceSnowflake.Schema = types.StringNull()
-		}
-		r.Configuration.SourceSnowflake.SourceType = types.StringValue(string(resp.Configuration.SourceSnowflake.SourceType))
-		r.Configuration.SourceSnowflake.Warehouse = types.StringValue(resp.Configuration.SourceSnowflake.Warehouse)
-	}
-	if resp.Configuration.SourceSonarCloud != nil {
-		r.Configuration.SourceSonarCloud = &SourceSonarCloud{}
-		r.Configuration.SourceSonarCloud.ComponentKeys = nil
-		for _, componentKeysItem := range resp.Configuration.SourceSonarCloud.ComponentKeys {
-			var componentKeys1 types.String
-			componentKeys1Result, _ := json.Marshal(componentKeysItem)
-			componentKeys1 = types.StringValue(string(componentKeys1Result))
-			r.Configuration.SourceSonarCloud.ComponentKeys = append(r.Configuration.SourceSonarCloud.ComponentKeys, componentKeys1)
-		}
-		if resp.Configuration.SourceSonarCloud.EndDate != nil {
-			r.Configuration.SourceSonarCloud.EndDate = types.StringValue(resp.Configuration.SourceSonarCloud.EndDate.String())
-		} else {
-			r.Configuration.SourceSonarCloud.EndDate = types.StringNull()
-		}
-		r.Configuration.SourceSonarCloud.Organization = types.StringValue(resp.Configuration.SourceSonarCloud.Organization)
-		r.Configuration.SourceSonarCloud.SourceType = types.StringValue(string(resp.Configuration.SourceSonarCloud.SourceType))
-		if resp.Configuration.SourceSonarCloud.StartDate != nil {
-			r.Configuration.SourceSonarCloud.StartDate = types.StringValue(resp.Configuration.SourceSonarCloud.StartDate.String())
-		} else {
-			r.Configuration.SourceSonarCloud.StartDate = types.StringNull()
-		}
-		r.Configuration.SourceSonarCloud.UserToken = types.StringValue(resp.Configuration.SourceSonarCloud.UserToken)
-	}
-	if resp.Configuration.SourceSpacexAPI != nil {
-		r.Configuration.SourceSpacexAPI = &SourceSpacexAPI{}
-		if resp.Configuration.SourceSpacexAPI.ID != nil {
-			r.Configuration.SourceSpacexAPI.ID = types.StringValue(*resp.Configuration.SourceSpacexAPI.ID)
-		} else {
-			r.Configuration.SourceSpacexAPI.ID = types.StringNull()
-		}
-		if resp.Configuration.SourceSpacexAPI.Options != nil {
-			r.Configuration.SourceSpacexAPI.Options = types.StringValue(*resp.Configuration.SourceSpacexAPI.Options)
-		} else {
-			r.Configuration.SourceSpacexAPI.Options = types.StringNull()
-		}
-		r.Configuration.SourceSpacexAPI.SourceType = types.StringValue(string(resp.Configuration.SourceSpacexAPI.SourceType))
-	}
-	if resp.Configuration.SourceSquare != nil {
-		r.Configuration.SourceSquare = &SourceSquare{}
-		if resp.Configuration.SourceSquare.Credentials == nil {
-			r.Configuration.SourceSquare.Credentials = nil
-		} else {
-			r.Configuration.SourceSquare.Credentials = &SourceSquareAuthentication{}
-			if resp.Configuration.SourceSquare.Credentials.SourceSquareAuthenticationOauthAuthentication != nil {
-				r.Configuration.SourceSquare.Credentials.SourceSquareAuthenticationOauthAuthentication = &SourceSquareAuthenticationOauthAuthentication{}
-				r.Configuration.SourceSquare.Credentials.SourceSquareAuthenticationOauthAuthentication.ClientID = types.StringValue(resp.Configuration.SourceSquare.Credentials.SourceSquareAuthenticationOauthAuthentication.ClientID)
-				r.Configuration.SourceSquare.Credentials.SourceSquareAuthenticationOauthAuthentication.ClientSecret = types.StringValue(resp.Configuration.SourceSquare.Credentials.SourceSquareAuthenticationOauthAuthentication.ClientSecret)
-				if resp.Configuration.SourceSquare.Credentials.SourceSquareAuthenticationOauthAuthentication.CredentialsTitle != nil {
-					r.Configuration.SourceSquare.Credentials.SourceSquareAuthenticationOauthAuthentication.CredentialsTitle = types.StringValue(string(*resp.Configuration.SourceSquare.Credentials.SourceSquareAuthenticationOauthAuthentication.CredentialsTitle))
-				} else {
-					r.Configuration.SourceSquare.Credentials.SourceSquareAuthenticationOauthAuthentication.CredentialsTitle = types.StringNull()
-				}
-				r.Configuration.SourceSquare.Credentials.SourceSquareAuthenticationOauthAuthentication.RefreshToken = types.StringValue(resp.Configuration.SourceSquare.Credentials.SourceSquareAuthenticationOauthAuthentication.RefreshToken)
-			}
-			if resp.Configuration.SourceSquare.Credentials.SourceSquareAuthenticationAPIKey != nil {
-				r.Configuration.SourceSquare.Credentials.SourceSquareAuthenticationAPIKey = &SourceSquareAuthenticationAPIKey{}
-				r.Configuration.SourceSquare.Credentials.SourceSquareAuthenticationAPIKey.APIKey = types.StringValue(resp.Configuration.SourceSquare.Credentials.SourceSquareAuthenticationAPIKey.APIKey)
-				if resp.Configuration.SourceSquare.Credentials.SourceSquareAuthenticationAPIKey.CredentialsTitle != nil {
-					r.Configuration.SourceSquare.Credentials.SourceSquareAuthenticationAPIKey.CredentialsTitle = types.StringValue(string(*resp.Configuration.SourceSquare.Credentials.SourceSquareAuthenticationAPIKey.CredentialsTitle))
-				} else {
-					r.Configuration.SourceSquare.Credentials.SourceSquareAuthenticationAPIKey.CredentialsTitle = types.StringNull()
-				}
-			}
-		}
-		if resp.Configuration.SourceSquare.IncludeDeletedObjects != nil {
-			r.Configuration.SourceSquare.IncludeDeletedObjects = types.BoolValue(*resp.Configuration.SourceSquare.IncludeDeletedObjects)
-		} else {
-			r.Configuration.SourceSquare.IncludeDeletedObjects = types.BoolNull()
-		}
-		r.Configuration.SourceSquare.IsSandbox = types.BoolValue(resp.Configuration.SourceSquare.IsSandbox)
-		r.Configuration.SourceSquare.SourceType = types.StringValue(string(resp.Configuration.SourceSquare.SourceType))
-		if resp.Configuration.SourceSquare.StartDate != nil {
-			r.Configuration.SourceSquare.StartDate = types.StringValue(resp.Configuration.SourceSquare.StartDate.String())
-		} else {
-			r.Configuration.SourceSquare.StartDate = types.StringNull()
-		}
-	}
-	if resp.Configuration.SourceStrava != nil {
-		r.Configuration.SourceStrava = &SourceStrava{}
-		r.Configuration.SourceStrava.AthleteID = types.Int64Value(resp.Configuration.SourceStrava.AthleteID)
-		if resp.Configuration.SourceStrava.AuthType != nil {
-			r.Configuration.SourceStrava.AuthType = types.StringValue(string(*resp.Configuration.SourceStrava.AuthType))
-		} else {
-			r.Configuration.SourceStrava.AuthType = types.StringNull()
-		}
-		r.Configuration.SourceStrava.ClientID = types.StringValue(resp.Configuration.SourceStrava.ClientID)
-		r.Configuration.SourceStrava.ClientSecret = types.StringValue(resp.Configuration.SourceStrava.ClientSecret)
-		r.Configuration.SourceStrava.RefreshToken = types.StringValue(resp.Configuration.SourceStrava.RefreshToken)
-		r.Configuration.SourceStrava.SourceType = types.StringValue(string(resp.Configuration.SourceStrava.SourceType))
-		r.Configuration.SourceStrava.StartDate = types.StringValue(resp.Configuration.SourceStrava.StartDate.Format(time.RFC3339))
-	}
-	if resp.Configuration.SourceStripe != nil {
-		r.Configuration.SourceStripe = &SourceStripe{}
-		r.Configuration.SourceStripe.AccountID = types.StringValue(resp.Configuration.SourceStripe.AccountID)
-		r.Configuration.SourceStripe.ClientSecret = types.StringValue(resp.Configuration.SourceStripe.ClientSecret)
-		if resp.Configuration.SourceStripe.LookbackWindowDays != nil {
-			r.Configuration.SourceStripe.LookbackWindowDays = types.Int64Value(*resp.Configuration.SourceStripe.LookbackWindowDays)
-		} else {
-			r.Configuration.SourceStripe.LookbackWindowDays = types.Int64Null()
-		}
-		if resp.Configuration.SourceStripe.SliceRange != nil {
-			r.Configuration.SourceStripe.SliceRange = types.Int64Value(*resp.Configuration.SourceStripe.SliceRange)
-		} else {
-			r.Configuration.SourceStripe.SliceRange = types.Int64Null()
-		}
-		r.Configuration.SourceStripe.SourceType = types.StringValue(string(resp.Configuration.SourceStripe.SourceType))
-		r.Configuration.SourceStripe.StartDate = types.StringValue(resp.Configuration.SourceStripe.StartDate.Format(time.RFC3339))
-	}
-	if resp.Configuration.SourceSurveySparrow != nil {
-		r.Configuration.SourceSurveySparrow = &SourceSurveySparrow{}
-		r.Configuration.SourceSurveySparrow.AccessToken = types.StringValue(resp.Configuration.SourceSurveySparrow.AccessToken)
-		if resp.Configuration.SourceSurveySparrow.Region == nil {
-			r.Configuration.SourceSurveySparrow.Region = nil
-		} else {
-			r.Configuration.SourceSurveySparrow.Region = &SourceSurveySparrowBaseURL{}
-			if resp.Configuration.SourceSurveySparrow.Region.SourceSurveySparrowBaseURLEUBasedAccount != nil {
-				r.Configuration.SourceSurveySparrow.Region.SourceSurveySparrowBaseURLEUBasedAccount = &SourceSurveySparrowBaseURLEUBasedAccount{}
-				if resp.Configuration.SourceSurveySparrow.Region.SourceSurveySparrowBaseURLEUBasedAccount.URLBase != nil {
-					r.Configuration.SourceSurveySparrow.Region.SourceSurveySparrowBaseURLEUBasedAccount.URLBase = types.StringValue(string(*resp.Configuration.SourceSurveySparrow.Region.SourceSurveySparrowBaseURLEUBasedAccount.URLBase))
-				} else {
-					r.Configuration.SourceSurveySparrow.Region.SourceSurveySparrowBaseURLEUBasedAccount.URLBase = types.StringNull()
-				}
-			}
-			if resp.Configuration.SourceSurveySparrow.Region.SourceSurveySparrowBaseURLGlobalAccount != nil {
-				r.Configuration.SourceSurveySparrow.Region.SourceSurveySparrowBaseURLGlobalAccount = &SourceSurveySparrowBaseURLGlobalAccount{}
-				if resp.Configuration.SourceSurveySparrow.Region.SourceSurveySparrowBaseURLGlobalAccount.URLBase != nil {
-					r.Configuration.SourceSurveySparrow.Region.SourceSurveySparrowBaseURLGlobalAccount.URLBase = types.StringValue(string(*resp.Configuration.SourceSurveySparrow.Region.SourceSurveySparrowBaseURLGlobalAccount.URLBase))
-				} else {
-					r.Configuration.SourceSurveySparrow.Region.SourceSurveySparrowBaseURLGlobalAccount.URLBase = types.StringNull()
-				}
-			}
-		}
-		r.Configuration.SourceSurveySparrow.SourceType = types.StringValue(string(resp.Configuration.SourceSurveySparrow.SourceType))
-		r.Configuration.SourceSurveySparrow.SurveyID = nil
-		for _, surveyIDItem := range resp.Configuration.SourceSurveySparrow.SurveyID {
-			var surveyId1 types.String
-			surveyId1Result, _ := json.Marshal(surveyIDItem)
-			surveyId1 = types.StringValue(string(surveyId1Result))
-			r.Configuration.SourceSurveySparrow.SurveyID = append(r.Configuration.SourceSurveySparrow.SurveyID, surveyId1)
-		}
-	}
-	if resp.Configuration.SourceSurveymonkey != nil {
-		r.Configuration.SourceSurveymonkey = &SourceSurveymonkey{}
-		if resp.Configuration.SourceSurveymonkey.Credentials == nil {
-			r.Configuration.SourceSurveymonkey.Credentials = nil
-		} else {
-			r.Configuration.SourceSurveymonkey.Credentials = &SourceSurveymonkeySurveyMonkeyAuthorizationMethod{}
-			r.Configuration.SourceSurveymonkey.Credentials.AccessToken = types.StringValue(resp.Configuration.SourceSurveymonkey.Credentials.AccessToken)
-			r.Configuration.SourceSurveymonkey.Credentials.AuthMethod = types.StringValue(string(resp.Configuration.SourceSurveymonkey.Credentials.AuthMethod))
-			if resp.Configuration.SourceSurveymonkey.Credentials.ClientID != nil {
-				r.Configuration.SourceSurveymonkey.Credentials.ClientID = types.StringValue(*resp.Configuration.SourceSurveymonkey.Credentials.ClientID)
-			} else {
-				r.Configuration.SourceSurveymonkey.Credentials.ClientID = types.StringNull()
-			}
-			if resp.Configuration.SourceSurveymonkey.Credentials.ClientSecret != nil {
-				r.Configuration.SourceSurveymonkey.Credentials.ClientSecret = types.StringValue(*resp.Configuration.SourceSurveymonkey.Credentials.ClientSecret)
-			} else {
-				r.Configuration.SourceSurveymonkey.Credentials.ClientSecret = types.StringNull()
-			}
-		}
-		if resp.Configuration.SourceSurveymonkey.Origin != nil {
-			r.Configuration.SourceSurveymonkey.Origin = types.StringValue(string(*resp.Configuration.SourceSurveymonkey.Origin))
-		} else {
-			r.Configuration.SourceSurveymonkey.Origin = types.StringNull()
-		}
-		r.Configuration.SourceSurveymonkey.SourceType = types.StringValue(string(resp.Configuration.SourceSurveymonkey.SourceType))
-		r.Configuration.SourceSurveymonkey.StartDate = types.StringValue(resp.Configuration.SourceSurveymonkey.StartDate.Format(time.RFC3339))
-		r.Configuration.SourceSurveymonkey.SurveyIds = nil
-		for _, v := range resp.Configuration.SourceSurveymonkey.SurveyIds {
-			r.Configuration.SourceSurveymonkey.SurveyIds = append(r.Configuration.SourceSurveymonkey.SurveyIds, types.StringValue(v))
-		}
-	}
-	if resp.Configuration.SourceTempo != nil {
-		r.Configuration.SourceTempo = &SourceTempo{}
-		r.Configuration.SourceTempo.APIToken = types.StringValue(resp.Configuration.SourceTempo.APIToken)
-		r.Configuration.SourceTempo.SourceType = types.StringValue(string(resp.Configuration.SourceTempo.SourceType))
-	}
-	if resp.Configuration.SourceTheGuardianAPI != nil {
-		r.Configuration.SourceTheGuardianAPI = &SourceTheGuardianAPI{}
-		r.Configuration.SourceTheGuardianAPI.APIKey = types.StringValue(resp.Configuration.SourceTheGuardianAPI.APIKey)
-		if resp.Configuration.SourceTheGuardianAPI.EndDate != nil {
-			r.Configuration.SourceTheGuardianAPI.EndDate = types.StringValue(*resp.Configuration.SourceTheGuardianAPI.EndDate)
-		} else {
-			r.Configuration.SourceTheGuardianAPI.EndDate = types.StringNull()
-		}
-		if resp.Configuration.SourceTheGuardianAPI.Query != nil {
-			r.Configuration.SourceTheGuardianAPI.Query = types.StringValue(*resp.Configuration.SourceTheGuardianAPI.Query)
-		} else {
-			r.Configuration.SourceTheGuardianAPI.Query = types.StringNull()
-		}
-		if resp.Configuration.SourceTheGuardianAPI.Section != nil {
-			r.Configuration.SourceTheGuardianAPI.Section = types.StringValue(*resp.Configuration.SourceTheGuardianAPI.Section)
-		} else {
-			r.Configuration.SourceTheGuardianAPI.Section = types.StringNull()
-		}
-		r.Configuration.SourceTheGuardianAPI.SourceType = types.StringValue(string(resp.Configuration.SourceTheGuardianAPI.SourceType))
-		r.Configuration.SourceTheGuardianAPI.StartDate = types.StringValue(resp.Configuration.SourceTheGuardianAPI.StartDate)
-		if resp.Configuration.SourceTheGuardianAPI.Tag != nil {
-			r.Configuration.SourceTheGuardianAPI.Tag = types.StringValue(*resp.Configuration.SourceTheGuardianAPI.Tag)
-		} else {
-			r.Configuration.SourceTheGuardianAPI.Tag = types.StringNull()
-		}
-	}
-	if resp.Configuration.SourceTiktokMarketing != nil {
-		r.Configuration.SourceTiktokMarketing = &SourceTiktokMarketing{}
-		if resp.Configuration.SourceTiktokMarketing.Credentials == nil {
-			r.Configuration.SourceTiktokMarketing.Credentials = nil
-		} else {
-			r.Configuration.SourceTiktokMarketing.Credentials = &SourceTiktokMarketingAuthenticationMethod{}
-			if resp.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodOAuth20 != nil {
-				r.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodOAuth20 = &SourceTiktokMarketingAuthenticationMethodOAuth20{}
-				r.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodOAuth20.AccessToken = types.StringValue(resp.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodOAuth20.AccessToken)
-				if resp.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodOAuth20.AdvertiserID != nil {
-					r.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodOAuth20.AdvertiserID = types.StringValue(*resp.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodOAuth20.AdvertiserID)
-				} else {
-					r.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodOAuth20.AdvertiserID = types.StringNull()
-				}
-				r.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodOAuth20.AppID = types.StringValue(resp.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodOAuth20.AppID)
-				if resp.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodOAuth20.AuthType != nil {
-					r.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodOAuth20.AuthType = types.StringValue(string(*resp.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodOAuth20.AuthType))
-				} else {
-					r.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodOAuth20.AuthType = types.StringNull()
-				}
-				r.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodOAuth20.Secret = types.StringValue(resp.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodOAuth20.Secret)
-			}
-			if resp.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodSandboxAccessToken != nil {
-				r.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodSandboxAccessToken = &SourceTiktokMarketingAuthenticationMethodSandboxAccessToken{}
-				r.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodSandboxAccessToken.AccessToken = types.StringValue(resp.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodSandboxAccessToken.AccessToken)
-				r.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodSandboxAccessToken.AdvertiserID = types.StringValue(resp.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodSandboxAccessToken.AdvertiserID)
-				if resp.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodSandboxAccessToken.AuthType != nil {
-					r.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodSandboxAccessToken.AuthType = types.StringValue(string(*resp.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodSandboxAccessToken.AuthType))
-				} else {
-					r.Configuration.SourceTiktokMarketing.Credentials.SourceTiktokMarketingAuthenticationMethodSandboxAccessToken.AuthType = types.StringNull()
-				}
-			}
-		}
-		if resp.Configuration.SourceTiktokMarketing.EndDate != nil {
-			r.Configuration.SourceTiktokMarketing.EndDate = types.StringValue(resp.Configuration.SourceTiktokMarketing.EndDate.String())
-		} else {
-			r.Configuration.SourceTiktokMarketing.EndDate = types.StringNull()
-		}
-		if resp.Configuration.SourceTiktokMarketing.ReportGranularity != nil {
-			r.Configuration.SourceTiktokMarketing.ReportGranularity = types.StringValue(string(*resp.Configuration.SourceTiktokMarketing.ReportGranularity))
-		} else {
-			r.Configuration.SourceTiktokMarketing.ReportGranularity = types.StringNull()
-		}
-		r.Configuration.SourceTiktokMarketing.SourceType = types.StringValue(string(resp.Configuration.SourceTiktokMarketing.SourceType))
-		if resp.Configuration.SourceTiktokMarketing.StartDate != nil {
-			r.Configuration.SourceTiktokMarketing.StartDate = types.StringValue(resp.Configuration.SourceTiktokMarketing.StartDate.String())
-		} else {
-			r.Configuration.SourceTiktokMarketing.StartDate = types.StringNull()
-		}
-	}
-	if resp.Configuration.SourceTodoist != nil {
-		r.Configuration.SourceTodoist = &SourceTodoist{}
-		r.Configuration.SourceTodoist.SourceType = types.StringValue(string(resp.Configuration.SourceTodoist.SourceType))
-		r.Configuration.SourceTodoist.Token = types.StringValue(resp.Configuration.SourceTodoist.Token)
-	}
-	if resp.Configuration.SourceTrello != nil {
-		r.Configuration.SourceTrello = &SourceTrello{}
-		r.Configuration.SourceTrello.BoardIds = nil
-		for _, v := range resp.Configuration.SourceTrello.BoardIds {
-			r.Configuration.SourceTrello.BoardIds = append(r.Configuration.SourceTrello.BoardIds, types.StringValue(v))
-		}
-		r.Configuration.SourceTrello.Key = types.StringValue(resp.Configuration.SourceTrello.Key)
-		r.Configuration.SourceTrello.SourceType = types.StringValue(string(resp.Configuration.SourceTrello.SourceType))
-		r.Configuration.SourceTrello.StartDate = types.StringValue(resp.Configuration.SourceTrello.StartDate.Format(time.RFC3339))
-		r.Configuration.SourceTrello.Token = types.StringValue(resp.Configuration.SourceTrello.Token)
-	}
-	if resp.Configuration.SourceTrustpilot != nil {
-		r.Configuration.SourceTrustpilot = &SourceTrustpilot{}
-		r.Configuration.SourceTrustpilot.BusinessUnits = nil
-		for _, v := range resp.Configuration.SourceTrustpilot.BusinessUnits {
-			r.Configuration.SourceTrustpilot.BusinessUnits = append(r.Configuration.SourceTrustpilot.BusinessUnits, types.StringValue(v))
-		}
-		if resp.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodOAuth20 != nil {
-			r.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodOAuth20 = &SourceGitlabAuthorizationMethodOAuth20{}
-			r.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.AccessToken = types.StringValue(resp.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.AccessToken)
-			if resp.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.AuthType != nil {
-				r.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.AuthType = types.StringValue(string(*resp.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.AuthType))
-			} else {
-				r.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.AuthType = types.StringNull()
-			}
-			r.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.ClientID = types.StringValue(resp.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.ClientID)
-			r.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.ClientSecret = types.StringValue(resp.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.ClientSecret)
-			r.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.RefreshToken = types.StringValue(resp.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.RefreshToken)
-			r.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.TokenExpiryDate = types.StringValue(resp.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.TokenExpiryDate.Format(time.RFC3339))
-		}
-		if resp.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodAPIKey != nil {
-			r.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodAPIKey = &SourceTrustpilotAuthorizationMethodAPIKey{}
-			if resp.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodAPIKey.AuthType != nil {
-				r.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodAPIKey.AuthType = types.StringValue(string(*resp.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodAPIKey.AuthType))
-			} else {
-				r.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodAPIKey.AuthType = types.StringNull()
-			}
-			r.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodAPIKey.ClientID = types.StringValue(resp.Configuration.SourceTrustpilot.Credentials.SourceTrustpilotAuthorizationMethodAPIKey.ClientID)
-		}
-		r.Configuration.SourceTrustpilot.SourceType = types.StringValue(string(resp.Configuration.SourceTrustpilot.SourceType))
-		r.Configuration.SourceTrustpilot.StartDate = types.StringValue(resp.Configuration.SourceTrustpilot.StartDate)
-	}
-	if resp.Configuration.SourceTvmazeSchedule != nil {
-		r.Configuration.SourceTvmazeSchedule = &SourceTvmazeSchedule{}
-		r.Configuration.SourceTvmazeSchedule.DomesticScheduleCountryCode = types.StringValue(resp.Configuration.SourceTvmazeSchedule.DomesticScheduleCountryCode)
-		if resp.Configuration.SourceTvmazeSchedule.EndDate != nil {
-			r.Configuration.SourceTvmazeSchedule.EndDate = types.StringValue(*resp.Configuration.SourceTvmazeSchedule.EndDate)
-		} else {
-			r.Configuration.SourceTvmazeSchedule.EndDate = types.StringNull()
-		}
-		r.Configuration.SourceTvmazeSchedule.SourceType = types.StringValue(string(resp.Configuration.SourceTvmazeSchedule.SourceType))
-		r.Configuration.SourceTvmazeSchedule.StartDate = types.StringValue(resp.Configuration.SourceTvmazeSchedule.StartDate)
-		if resp.Configuration.SourceTvmazeSchedule.WebScheduleCountryCode != nil {
-			r.Configuration.SourceTvmazeSchedule.WebScheduleCountryCode = types.StringValue(*resp.Configuration.SourceTvmazeSchedule.WebScheduleCountryCode)
-		} else {
-			r.Configuration.SourceTvmazeSchedule.WebScheduleCountryCode = types.StringNull()
-		}
-	}
-	if resp.Configuration.SourceTwilio != nil {
-		r.Configuration.SourceTwilio = &SourceTwilio{}
-		r.Configuration.SourceTwilio.AccountSid = types.StringValue(resp.Configuration.SourceTwilio.AccountSid)
-		r.Configuration.SourceTwilio.AuthToken = types.StringValue(resp.Configuration.SourceTwilio.AuthToken)
-		if resp.Configuration.SourceTwilio.LookbackWindow != nil {
-			r.Configuration.SourceTwilio.LookbackWindow = types.Int64Value(*resp.Configuration.SourceTwilio.LookbackWindow)
-		} else {
-			r.Configuration.SourceTwilio.LookbackWindow = types.Int64Null()
-		}
-		r.Configuration.SourceTwilio.SourceType = types.StringValue(string(resp.Configuration.SourceTwilio.SourceType))
-		r.Configuration.SourceTwilio.StartDate = types.StringValue(resp.Configuration.SourceTwilio.StartDate.Format(time.RFC3339))
-	}
-	if resp.Configuration.SourceTwilioTaskrouter != nil {
-		r.Configuration.SourceTwilioTaskrouter = &SourceTwilioTaskrouter{}
-		r.Configuration.SourceTwilioTaskrouter.AccountSid = types.StringValue(resp.Configuration.SourceTwilioTaskrouter.AccountSid)
-		r.Configuration.SourceTwilioTaskrouter.AuthToken = types.StringValue(resp.Configuration.SourceTwilioTaskrouter.AuthToken)
-		r.Configuration.SourceTwilioTaskrouter.SourceType = types.StringValue(string(resp.Configuration.SourceTwilioTaskrouter.SourceType))
-	}
-	if resp.Configuration.SourceTwitter != nil {
-		r.Configuration.SourceTwitter = &SourceTwitter{}
-		r.Configuration.SourceTwitter.APIKey = types.StringValue(resp.Configuration.SourceTwitter.APIKey)
-		if resp.Configuration.SourceTwitter.EndDate != nil {
-			r.Configuration.SourceTwitter.EndDate = types.StringValue(resp.Configuration.SourceTwitter.EndDate.Format(time.RFC3339))
-		} else {
-			r.Configuration.SourceTwitter.EndDate = types.StringNull()
-		}
-		r.Configuration.SourceTwitter.Query = types.StringValue(resp.Configuration.SourceTwitter.Query)
-		r.Configuration.SourceTwitter.SourceType = types.StringValue(string(resp.Configuration.SourceTwitter.SourceType))
-		if resp.Configuration.SourceTwitter.StartDate != nil {
-			r.Configuration.SourceTwitter.StartDate = types.StringValue(resp.Configuration.SourceTwitter.StartDate.Format(time.RFC3339))
-		} else {
-			r.Configuration.SourceTwitter.StartDate = types.StringNull()
-		}
-	}
-	if resp.Configuration.SourceTypeform != nil {
-		r.Configuration.SourceTypeform = &SourceTypeform{}
-		r.Configuration.SourceTypeform.FormIds = nil
-		for _, v := range resp.Configuration.SourceTypeform.FormIds {
-			r.Configuration.SourceTypeform.FormIds = append(r.Configuration.SourceTypeform.FormIds, types.StringValue(v))
-		}
-		r.Configuration.SourceTypeform.SourceType = types.StringValue(string(resp.Configuration.SourceTypeform.SourceType))
-		r.Configuration.SourceTypeform.StartDate = types.StringValue(resp.Configuration.SourceTypeform.StartDate.Format(time.RFC3339))
-		r.Configuration.SourceTypeform.Token = types.StringValue(resp.Configuration.SourceTypeform.Token)
-	}
-	if resp.Configuration.SourceUsCensus != nil {
-		r.Configuration.SourceUsCensus = &SourceUsCensus{}
-		r.Configuration.SourceUsCensus.APIKey = types.StringValue(resp.Configuration.SourceUsCensus.APIKey)
-		if resp.Configuration.SourceUsCensus.QueryParams != nil {
-			r.Configuration.SourceUsCensus.QueryParams = types.StringValue(*resp.Configuration.SourceUsCensus.QueryParams)
-		} else {
-			r.Configuration.SourceUsCensus.QueryParams = types.StringNull()
-		}
-		r.Configuration.SourceUsCensus.QueryPath = types.StringValue(resp.Configuration.SourceUsCensus.QueryPath)
-		r.Configuration.SourceUsCensus.SourceType = types.StringValue(string(resp.Configuration.SourceUsCensus.SourceType))
-	}
-	if resp.Configuration.SourceVantage != nil {
-		r.Configuration.SourceVantage = &SourceVantage{}
-		r.Configuration.SourceVantage.AccessToken = types.StringValue(resp.Configuration.SourceVantage.AccessToken)
-		r.Configuration.SourceVantage.SourceType = types.StringValue(string(resp.Configuration.SourceVantage.SourceType))
-	}
-	if resp.Configuration.SourceWebflow != nil {
-		r.Configuration.SourceWebflow = &SourceWebflow{}
-		r.Configuration.SourceWebflow.APIKey = types.StringValue(resp.Configuration.SourceWebflow.APIKey)
-		r.Configuration.SourceWebflow.SiteID = types.StringValue(resp.Configuration.SourceWebflow.SiteID)
-		r.Configuration.SourceWebflow.SourceType = types.StringValue(string(resp.Configuration.SourceWebflow.SourceType))
-	}
-	if resp.Configuration.SourceWhiskyHunter != nil {
-		r.Configuration.SourceWhiskyHunter = &SourceWhiskyHunter{}
-		r.Configuration.SourceWhiskyHunter.SourceType = types.StringValue(string(resp.Configuration.SourceWhiskyHunter.SourceType))
-	}
-	if resp.Configuration.SourceWikipediaPageviews != nil {
-		r.Configuration.SourceWikipediaPageviews = &SourceWikipediaPageviews{}
-		r.Configuration.SourceWikipediaPageviews.Access = types.StringValue(resp.Configuration.SourceWikipediaPageviews.Access)
-		r.Configuration.SourceWikipediaPageviews.Agent = types.StringValue(resp.Configuration.SourceWikipediaPageviews.Agent)
-		r.Configuration.SourceWikipediaPageviews.Article = types.StringValue(resp.Configuration.SourceWikipediaPageviews.Article)
-		r.Configuration.SourceWikipediaPageviews.Country = types.StringValue(resp.Configuration.SourceWikipediaPageviews.Country)
-		r.Configuration.SourceWikipediaPageviews.End = types.StringValue(resp.Configuration.SourceWikipediaPageviews.End)
-		r.Configuration.SourceWikipediaPageviews.Project = types.StringValue(resp.Configuration.SourceWikipediaPageviews.Project)
-		r.Configuration.SourceWikipediaPageviews.SourceType = types.StringValue(string(resp.Configuration.SourceWikipediaPageviews.SourceType))
-		r.Configuration.SourceWikipediaPageviews.Start = types.StringValue(resp.Configuration.SourceWikipediaPageviews.Start)
-	}
-	if resp.Configuration.SourceWoocommerce != nil {
-		r.Configuration.SourceWoocommerce = &SourceWoocommerce{}
-		r.Configuration.SourceWoocommerce.APIKey = types.StringValue(resp.Configuration.SourceWoocommerce.APIKey)
-		r.Configuration.SourceWoocommerce.APISecret = types.StringValue(resp.Configuration.SourceWoocommerce.APISecret)
-		r.Configuration.SourceWoocommerce.Shop = types.StringValue(resp.Configuration.SourceWoocommerce.Shop)
-		r.Configuration.SourceWoocommerce.SourceType = types.StringValue(string(resp.Configuration.SourceWoocommerce.SourceType))
-		r.Configuration.SourceWoocommerce.StartDate = types.StringValue(resp.Configuration.SourceWoocommerce.StartDate.String())
-	}
-	if resp.Configuration.SourceXero != nil {
-		r.Configuration.SourceXero = &SourceXero{}
-		r.Configuration.SourceXero.Authentication.AccessToken = types.StringValue(resp.Configuration.SourceXero.Authentication.AccessToken)
-		r.Configuration.SourceXero.Authentication.ClientID = types.StringValue(resp.Configuration.SourceXero.Authentication.ClientID)
-		r.Configuration.SourceXero.Authentication.ClientSecret = types.StringValue(resp.Configuration.SourceXero.Authentication.ClientSecret)
-		r.Configuration.SourceXero.Authentication.RefreshToken = types.StringValue(resp.Configuration.SourceXero.Authentication.RefreshToken)
-		r.Configuration.SourceXero.Authentication.TokenExpiryDate = types.StringValue(resp.Configuration.SourceXero.Authentication.TokenExpiryDate)
-		r.Configuration.SourceXero.SourceType = types.StringValue(string(resp.Configuration.SourceXero.SourceType))
-		r.Configuration.SourceXero.StartDate = types.StringValue(resp.Configuration.SourceXero.StartDate.Format(time.RFC3339))
-		r.Configuration.SourceXero.TenantID = types.StringValue(resp.Configuration.SourceXero.TenantID)
-	}
-	if resp.Configuration.SourceXkcd != nil {
-		r.Configuration.SourceXkcd = &SourceXkcd{}
-		r.Configuration.SourceXkcd.SourceType = types.StringValue(string(resp.Configuration.SourceXkcd.SourceType))
-	}
-	if resp.Configuration.SourceYandexMetrica != nil {
-		r.Configuration.SourceYandexMetrica = &SourceYandexMetrica{}
-		r.Configuration.SourceYandexMetrica.AuthToken = types.StringValue(resp.Configuration.SourceYandexMetrica.AuthToken)
-		r.Configuration.SourceYandexMetrica.CounterID = types.StringValue(resp.Configuration.SourceYandexMetrica.CounterID)
-		if resp.Configuration.SourceYandexMetrica.EndDate != nil {
-			r.Configuration.SourceYandexMetrica.EndDate = types.StringValue(resp.Configuration.SourceYandexMetrica.EndDate.String())
-		} else {
-			r.Configuration.SourceYandexMetrica.EndDate = types.StringNull()
-		}
-		r.Configuration.SourceYandexMetrica.SourceType = types.StringValue(string(resp.Configuration.SourceYandexMetrica.SourceType))
-		r.Configuration.SourceYandexMetrica.StartDate = types.StringValue(resp.Configuration.SourceYandexMetrica.StartDate.String())
-	}
-	if resp.Configuration.SourceYounium != nil {
-		r.Configuration.SourceYounium = &SourceYounium{}
-		r.Configuration.SourceYounium.LegalEntity = types.StringValue(resp.Configuration.SourceYounium.LegalEntity)
-		r.Configuration.SourceYounium.Password = types.StringValue(resp.Configuration.SourceYounium.Password)
-		if resp.Configuration.SourceYounium.Playground != nil {
-			r.Configuration.SourceYounium.Playground = types.BoolValue(*resp.Configuration.SourceYounium.Playground)
-		} else {
-			r.Configuration.SourceYounium.Playground = types.BoolNull()
-		}
-		r.Configuration.SourceYounium.SourceType = types.StringValue(string(resp.Configuration.SourceYounium.SourceType))
-		r.Configuration.SourceYounium.Username = types.StringValue(resp.Configuration.SourceYounium.Username)
-	}
-	if resp.Configuration.SourceYoutubeAnalytics != nil {
-		r.Configuration.SourceYoutubeAnalytics = &SourceYoutubeAnalytics{}
-		r.Configuration.SourceYoutubeAnalytics.Credentials.ClientID = types.StringValue(resp.Configuration.SourceYoutubeAnalytics.Credentials.ClientID)
-		r.Configuration.SourceYoutubeAnalytics.Credentials.ClientSecret = types.StringValue(resp.Configuration.SourceYoutubeAnalytics.Credentials.ClientSecret)
-		r.Configuration.SourceYoutubeAnalytics.Credentials.RefreshToken = types.StringValue(resp.Configuration.SourceYoutubeAnalytics.Credentials.RefreshToken)
-		r.Configuration.SourceYoutubeAnalytics.SourceType = types.StringValue(string(resp.Configuration.SourceYoutubeAnalytics.SourceType))
-	}
-	if resp.Configuration.SourceZendeskChat != nil {
-		r.Configuration.SourceZendeskChat = &SourceZendeskChat{}
-		if resp.Configuration.SourceZendeskChat.Credentials == nil {
-			r.Configuration.SourceZendeskChat.Credentials = nil
-		} else {
-			r.Configuration.SourceZendeskChat.Credentials = &SourceZendeskChatAuthorizationMethod{}
-			if resp.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodOAuth20 != nil {
-				r.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodOAuth20 = &SourceZendeskChatAuthorizationMethodOAuth20{}
-				if resp.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.AccessToken != nil {
-					r.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.AccessToken = types.StringValue(*resp.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.AccessToken)
-				} else {
-					r.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.AccessToken = types.StringNull()
-				}
-				if resp.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.ClientID != nil {
-					r.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.ClientID = types.StringValue(*resp.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.ClientID)
-				} else {
-					r.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.ClientID = types.StringNull()
-				}
-				if resp.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.ClientSecret != nil {
-					r.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.ClientSecret = types.StringValue(*resp.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.ClientSecret)
-				} else {
-					r.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.ClientSecret = types.StringNull()
-				}
-				r.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.Credentials = types.StringValue(string(resp.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.Credentials))
-				if resp.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.RefreshToken != nil {
-					r.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.RefreshToken = types.StringValue(*resp.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.RefreshToken)
-				} else {
-					r.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.RefreshToken = types.StringNull()
-				}
-			}
-			if resp.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodAccessToken != nil {
-				r.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodAccessToken = &SourceZendeskChatAuthorizationMethodAccessToken{}
-				r.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodAccessToken.AccessToken = types.StringValue(resp.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodAccessToken.AccessToken)
-				r.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodAccessToken.Credentials = types.StringValue(string(resp.Configuration.SourceZendeskChat.Credentials.SourceZendeskChatAuthorizationMethodAccessToken.Credentials))
-			}
-		}
-		r.Configuration.SourceZendeskChat.SourceType = types.StringValue(string(resp.Configuration.SourceZendeskChat.SourceType))
-		r.Configuration.SourceZendeskChat.StartDate = types.StringValue(resp.Configuration.SourceZendeskChat.StartDate.Format(time.RFC3339))
-		if resp.Configuration.SourceZendeskChat.Subdomain != nil {
-			r.Configuration.SourceZendeskChat.Subdomain = types.StringValue(*resp.Configuration.SourceZendeskChat.Subdomain)
-		} else {
-			r.Configuration.SourceZendeskChat.Subdomain = types.StringNull()
-		}
-	}
-	if resp.Configuration.SourceZendeskSunshine != nil {
-		r.Configuration.SourceZendeskSunshine = &SourceZendeskSunshine{}
-		if resp.Configuration.SourceZendeskSunshine.Credentials == nil {
-			r.Configuration.SourceZendeskSunshine.Credentials = nil
-		} else {
-			r.Configuration.SourceZendeskSunshine.Credentials = &SourceZendeskSunshineAuthorizationMethod{}
-			if resp.Configuration.SourceZendeskSunshine.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20 != nil {
-				r.Configuration.SourceZendeskSunshine.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20 = &SourceZendeskSunshineAuthorizationMethodOAuth20{}
-				r.Configuration.SourceZendeskSunshine.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20.AccessToken = types.StringValue(resp.Configuration.SourceZendeskSunshine.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20.AccessToken)
-				r.Configuration.SourceZendeskSunshine.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20.AuthMethod = types.StringValue(string(resp.Configuration.SourceZendeskSunshine.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20.AuthMethod))
-				r.Configuration.SourceZendeskSunshine.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20.ClientID = types.StringValue(resp.Configuration.SourceZendeskSunshine.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20.ClientID)
-				r.Configuration.SourceZendeskSunshine.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20.ClientSecret = types.StringValue(resp.Configuration.SourceZendeskSunshine.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20.ClientSecret)
-			}
-			if resp.Configuration.SourceZendeskSunshine.Credentials.SourceZendeskSunshineAuthorizationMethodAPIToken != nil {
-				r.Configuration.SourceZendeskSunshine.Credentials.SourceZendeskSunshineAuthorizationMethodAPIToken = &SourceZendeskSunshineAuthorizationMethodAPIToken{}
-				r.Configuration.SourceZendeskSunshine.Credentials.SourceZendeskSunshineAuthorizationMethodAPIToken.APIToken = types.StringValue(resp.Configuration.SourceZendeskSunshine.Credentials.SourceZendeskSunshineAuthorizationMethodAPIToken.APIToken)
-				r.Configuration.SourceZendeskSunshine.Credentials.SourceZendeskSunshineAuthorizationMethodAPIToken.AuthMethod = types.StringValue(string(resp.Configuration.SourceZendeskSunshine.Credentials.SourceZendeskSunshineAuthorizationMethodAPIToken.AuthMethod))
-				r.Configuration.SourceZendeskSunshine.Credentials.SourceZendeskSunshineAuthorizationMethodAPIToken.Email = types.StringValue(resp.Configuration.SourceZendeskSunshine.Credentials.SourceZendeskSunshineAuthorizationMethodAPIToken.Email)
-			}
-		}
-		r.Configuration.SourceZendeskSunshine.SourceType = types.StringValue(string(resp.Configuration.SourceZendeskSunshine.SourceType))
-		r.Configuration.SourceZendeskSunshine.StartDate = types.StringValue(resp.Configuration.SourceZendeskSunshine.StartDate)
-		r.Configuration.SourceZendeskSunshine.Subdomain = types.StringValue(resp.Configuration.SourceZendeskSunshine.Subdomain)
-	}
-	if resp.Configuration.SourceZendeskSupport != nil {
-		r.Configuration.SourceZendeskSupport = &SourceZendeskSupport{}
-		if resp.Configuration.SourceZendeskSupport.Credentials == nil {
-			r.Configuration.SourceZendeskSupport.Credentials = nil
-		} else {
-			r.Configuration.SourceZendeskSupport.Credentials = &SourceZendeskSupportAuthentication{}
-			if resp.Configuration.SourceZendeskSupport.Credentials.SourceZendeskSupportAuthenticationOAuth20 != nil {
-				r.Configuration.SourceZendeskSupport.Credentials.SourceZendeskSupportAuthenticationOAuth20 = &SourceZendeskSupportAuthenticationOAuth20{}
-				r.Configuration.SourceZendeskSupport.Credentials.SourceZendeskSupportAuthenticationOAuth20.AccessToken = types.StringValue(resp.Configuration.SourceZendeskSupport.Credentials.SourceZendeskSupportAuthenticationOAuth20.AccessToken)
-				if resp.Configuration.SourceZendeskSupport.Credentials.SourceZendeskSupportAuthenticationOAuth20.Credentials != nil {
-					r.Configuration.SourceZendeskSupport.Credentials.SourceZendeskSupportAuthenticationOAuth20.Credentials = types.StringValue(string(*resp.Configuration.SourceZendeskSupport.Credentials.SourceZendeskSupportAuthenticationOAuth20.Credentials))
-				} else {
-					r.Configuration.SourceZendeskSupport.Credentials.SourceZendeskSupportAuthenticationOAuth20.Credentials = types.StringNull()
-				}
-			}
-			if resp.Configuration.SourceZendeskSupport.Credentials.SourceZendeskSupportAuthenticationAPIToken != nil {
-				r.Configuration.SourceZendeskSupport.Credentials.SourceZendeskSupportAuthenticationAPIToken = &SourceZendeskSupportAuthenticationAPIToken{}
-				r.Configuration.SourceZendeskSupport.Credentials.SourceZendeskSupportAuthenticationAPIToken.APIToken = types.StringValue(resp.Configuration.SourceZendeskSupport.Credentials.SourceZendeskSupportAuthenticationAPIToken.APIToken)
-				if resp.Configuration.SourceZendeskSupport.Credentials.SourceZendeskSupportAuthenticationAPIToken.Credentials != nil {
-					r.Configuration.SourceZendeskSupport.Credentials.SourceZendeskSupportAuthenticationAPIToken.Credentials = types.StringValue(string(*resp.Configuration.SourceZendeskSupport.Credentials.SourceZendeskSupportAuthenticationAPIToken.Credentials))
-				} else {
-					r.Configuration.SourceZendeskSupport.Credentials.SourceZendeskSupportAuthenticationAPIToken.Credentials = types.StringNull()
-				}
-				r.Configuration.SourceZendeskSupport.Credentials.SourceZendeskSupportAuthenticationAPIToken.Email = types.StringValue(resp.Configuration.SourceZendeskSupport.Credentials.SourceZendeskSupportAuthenticationAPIToken.Email)
-			}
-		}
-		if resp.Configuration.SourceZendeskSupport.IgnorePagination != nil {
-			r.Configuration.SourceZendeskSupport.IgnorePagination = types.BoolValue(*resp.Configuration.SourceZendeskSupport.IgnorePagination)
-		} else {
-			r.Configuration.SourceZendeskSupport.IgnorePagination = types.BoolNull()
-		}
-		r.Configuration.SourceZendeskSupport.SourceType = types.StringValue(string(resp.Configuration.SourceZendeskSupport.SourceType))
-		r.Configuration.SourceZendeskSupport.StartDate = types.StringValue(resp.Configuration.SourceZendeskSupport.StartDate.Format(time.RFC3339))
-		r.Configuration.SourceZendeskSupport.Subdomain = types.StringValue(resp.Configuration.SourceZendeskSupport.Subdomain)
-	}
-	if resp.Configuration.SourceZendeskTalk != nil {
-		r.Configuration.SourceZendeskTalk = &SourceZendeskTalk{}
-		if resp.Configuration.SourceZendeskTalk.Credentials == nil {
-			r.Configuration.SourceZendeskTalk.Credentials = nil
-		} else {
-			r.Configuration.SourceZendeskTalk.Credentials = &SourceZendeskTalkAuthentication{}
-			if resp.Configuration.SourceZendeskTalk.Credentials.SourceZendeskTalkAuthenticationAPIToken != nil {
-				r.Configuration.SourceZendeskTalk.Credentials.SourceZendeskTalkAuthenticationAPIToken = &SourceZendeskTalkAuthenticationAPIToken{}
-				r.Configuration.SourceZendeskTalk.Credentials.SourceZendeskTalkAuthenticationAPIToken.APIToken = types.StringValue(resp.Configuration.SourceZendeskTalk.Credentials.SourceZendeskTalkAuthenticationAPIToken.APIToken)
-				if resp.Configuration.SourceZendeskTalk.Credentials.SourceZendeskTalkAuthenticationAPIToken.AuthType != nil {
-					r.Configuration.SourceZendeskTalk.Credentials.SourceZendeskTalkAuthenticationAPIToken.AuthType = types.StringValue(string(*resp.Configuration.SourceZendeskTalk.Credentials.SourceZendeskTalkAuthenticationAPIToken.AuthType))
-				} else {
-					r.Configuration.SourceZendeskTalk.Credentials.SourceZendeskTalkAuthenticationAPIToken.AuthType = types.StringNull()
-				}
-				r.Configuration.SourceZendeskTalk.Credentials.SourceZendeskTalkAuthenticationAPIToken.Email = types.StringValue(resp.Configuration.SourceZendeskTalk.Credentials.SourceZendeskTalkAuthenticationAPIToken.Email)
-			}
-			if resp.Configuration.SourceZendeskTalk.Credentials.SourceZendeskTalkAuthenticationOAuth20 != nil {
-				r.Configuration.SourceZendeskTalk.Credentials.SourceZendeskTalkAuthenticationOAuth20 = &SourceZendeskTalkAuthenticationOAuth20{}
-				r.Configuration.SourceZendeskTalk.Credentials.SourceZendeskTalkAuthenticationOAuth20.AccessToken = types.StringValue(resp.Configuration.SourceZendeskTalk.Credentials.SourceZendeskTalkAuthenticationOAuth20.AccessToken)
-				if resp.Configuration.SourceZendeskTalk.Credentials.SourceZendeskTalkAuthenticationOAuth20.AuthType != nil {
-					r.Configuration.SourceZendeskTalk.Credentials.SourceZendeskTalkAuthenticationOAuth20.AuthType = types.StringValue(string(*resp.Configuration.SourceZendeskTalk.Credentials.SourceZendeskTalkAuthenticationOAuth20.AuthType))
-				} else {
-					r.Configuration.SourceZendeskTalk.Credentials.SourceZendeskTalkAuthenticationOAuth20.AuthType = types.StringNull()
-				}
-			}
-		}
-		r.Configuration.SourceZendeskTalk.SourceType = types.StringValue(string(resp.Configuration.SourceZendeskTalk.SourceType))
-		r.Configuration.SourceZendeskTalk.StartDate = types.StringValue(resp.Configuration.SourceZendeskTalk.StartDate.Format(time.RFC3339))
-		r.Configuration.SourceZendeskTalk.Subdomain = types.StringValue(resp.Configuration.SourceZendeskTalk.Subdomain)
-	}
-	if resp.Configuration.SourceZenloop != nil {
-		r.Configuration.SourceZenloop = &SourceZenloop{}
-		r.Configuration.SourceZenloop.APIToken = types.StringValue(resp.Configuration.SourceZenloop.APIToken)
-		if resp.Configuration.SourceZenloop.DateFrom != nil {
-			r.Configuration.SourceZenloop.DateFrom = types.StringValue(*resp.Configuration.SourceZenloop.DateFrom)
-		} else {
-			r.Configuration.SourceZenloop.DateFrom = types.StringNull()
-		}
-		r.Configuration.SourceZenloop.SourceType = types.StringValue(string(resp.Configuration.SourceZenloop.SourceType))
-		if resp.Configuration.SourceZenloop.SurveyGroupID != nil {
-			r.Configuration.SourceZenloop.SurveyGroupID = types.StringValue(*resp.Configuration.SourceZenloop.SurveyGroupID)
-		} else {
-			r.Configuration.SourceZenloop.SurveyGroupID = types.StringNull()
-		}
-		if resp.Configuration.SourceZenloop.SurveyID != nil {
-			r.Configuration.SourceZenloop.SurveyID = types.StringValue(*resp.Configuration.SourceZenloop.SurveyID)
-		} else {
-			r.Configuration.SourceZenloop.SurveyID = types.StringNull()
-		}
-	}
-	if resp.Configuration.SourceZohoCrm != nil {
-		r.Configuration.SourceZohoCrm = &SourceZohoCrm{}
-		r.Configuration.SourceZohoCrm.ClientID = types.StringValue(resp.Configuration.SourceZohoCrm.ClientID)
-		r.Configuration.SourceZohoCrm.ClientSecret = types.StringValue(resp.Configuration.SourceZohoCrm.ClientSecret)
-		r.Configuration.SourceZohoCrm.DcRegion = types.StringValue(string(resp.Configuration.SourceZohoCrm.DcRegion))
-		r.Configuration.SourceZohoCrm.Edition = types.StringValue(string(resp.Configuration.SourceZohoCrm.Edition))
-		r.Configuration.SourceZohoCrm.Environment = types.StringValue(string(resp.Configuration.SourceZohoCrm.Environment))
-		r.Configuration.SourceZohoCrm.RefreshToken = types.StringValue(resp.Configuration.SourceZohoCrm.RefreshToken)
-		r.Configuration.SourceZohoCrm.SourceType = types.StringValue(string(resp.Configuration.SourceZohoCrm.SourceType))
-		if resp.Configuration.SourceZohoCrm.StartDatetime != nil {
-			r.Configuration.SourceZohoCrm.StartDatetime = types.StringValue(resp.Configuration.SourceZohoCrm.StartDatetime.Format(time.RFC3339))
-		} else {
-			r.Configuration.SourceZohoCrm.StartDatetime = types.StringNull()
-		}
-	}
-	if resp.Configuration.SourceZoom != nil {
-		r.Configuration.SourceZoom = &SourceZoom{}
-		r.Configuration.SourceZoom.JwtToken = types.StringValue(resp.Configuration.SourceZoom.JwtToken)
-		r.Configuration.SourceZoom.SourceType = types.StringValue(string(resp.Configuration.SourceZoom.SourceType))
-	}
-	if resp.Configuration.SourceZuora != nil {
-		r.Configuration.SourceZuora = &SourceZuora{}
-		r.Configuration.SourceZuora.ClientID = types.StringValue(resp.Configuration.SourceZuora.ClientID)
-		r.Configuration.SourceZuora.ClientSecret = types.StringValue(resp.Configuration.SourceZuora.ClientSecret)
-		if resp.Configuration.SourceZuora.IsSandbox != nil {
-			r.Configuration.SourceZuora.IsSandbox = types.BoolValue(*resp.Configuration.SourceZuora.IsSandbox)
-		} else {
-			r.Configuration.SourceZuora.IsSandbox = types.BoolNull()
-		}
-		r.Configuration.SourceZuora.SourceType = types.StringValue(string(resp.Configuration.SourceZuora.SourceType))
-		r.Configuration.SourceZuora.StartDate = types.StringValue(resp.Configuration.SourceZuora.StartDate)
-		if resp.Configuration.SourceZuora.WindowInDays != nil {
-			r.Configuration.SourceZuora.WindowInDays = types.Int64Value(*resp.Configuration.SourceZuora.WindowInDays)
-		} else {
-			r.Configuration.SourceZuora.WindowInDays = types.Int64Null()
-		}
-	}
+func (r *SourceResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
-	if resp.SecretID != nil {
-		r.SecretID = types.StringValue(*resp.SecretID)
-	} else {
-		r.SecretID = types.StringNull()
-	}
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
-
 }

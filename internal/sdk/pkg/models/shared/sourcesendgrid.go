@@ -14,17 +14,21 @@ const (
 	SourceSendgridSendgridEnumSendgrid SourceSendgridSendgridEnum = "sendgrid"
 )
 
+func (e SourceSendgridSendgridEnum) ToPointer() *SourceSendgridSendgridEnum {
+	return &e
+}
+
 func (e *SourceSendgridSendgridEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "sendgrid":
-		*e = SourceSendgridSendgridEnum(s)
+		*e = SourceSendgridSendgridEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSendgridSendgridEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceSendgridSendgridEnum: %v", v)
 	}
 }
 

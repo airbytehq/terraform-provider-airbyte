@@ -14,17 +14,21 @@ const (
 	SourcePaystackPaystackEnumPaystack SourcePaystackPaystackEnum = "paystack"
 )
 
+func (e SourcePaystackPaystackEnum) ToPointer() *SourcePaystackPaystackEnum {
+	return &e
+}
+
 func (e *SourcePaystackPaystackEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "paystack":
-		*e = SourcePaystackPaystackEnum(s)
+		*e = SourcePaystackPaystackEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePaystackPaystackEnum: %s", s)
+		return fmt.Errorf("invalid value for SourcePaystackPaystackEnum: %v", v)
 	}
 }
 

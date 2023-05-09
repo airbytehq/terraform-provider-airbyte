@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"time"
 )
 
 type SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessTokenAuthTypeEnum string
@@ -15,17 +16,21 @@ const (
 	SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessTokenAuthTypeEnumToken SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessTokenAuthTypeEnum = "Token"
 )
 
+func (e SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessTokenAuthTypeEnum) ToPointer() *SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessTokenAuthTypeEnum {
+	return &e
+}
+
 func (e *SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessTokenAuthTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "Token":
-		*e = SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessTokenAuthTypeEnum(s)
+		*e = SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessTokenAuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessTokenAuthTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessTokenAuthTypeEnum: %v", v)
 	}
 }
 
@@ -34,6 +39,53 @@ type SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken str
 	// Log into Harvest and then create new <a href="https://id.getharvest.com/developers"> personal access token</a>.
 	APIToken string                                                                               `json:"api_token"`
 	AuthType *SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessTokenAuthTypeEnum `json:"auth_type,omitempty"`
+
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type _SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken
+
+func (c *SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken) UnmarshalJSON(bs []byte) error {
+	data := _SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "api_token")
+	delete(additionalFields, "auth_type")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuthAuthTypeEnum string
@@ -42,17 +94,21 @@ const (
 	SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuthAuthTypeEnumClient SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuthAuthTypeEnum = "Client"
 )
 
+func (e SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuthAuthTypeEnum) ToPointer() *SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuthAuthTypeEnum {
+	return &e
+}
+
 func (e *SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuthAuthTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "Client":
-		*e = SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuthAuthTypeEnum(s)
+		*e = SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuthAuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuthAuthTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuthAuthTypeEnum: %v", v)
 	}
 }
 
@@ -65,6 +121,55 @@ type SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth struct {
 	ClientSecret string `json:"client_secret"`
 	// Refresh Token to renew the expired Access Token.
 	RefreshToken string `json:"refresh_token"`
+
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type _SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth
+
+func (c *SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth) UnmarshalJSON(bs []byte) error {
+	data := _SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "auth_type")
+	delete(additionalFields, "client_id")
+	delete(additionalFields, "client_secret")
+	delete(additionalFields, "refresh_token")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type SourceHarvestAuthenticationMechanismType string
@@ -141,17 +246,21 @@ const (
 	SourceHarvestHarvestEnumHarvest SourceHarvestHarvestEnum = "harvest"
 )
 
+func (e SourceHarvestHarvestEnum) ToPointer() *SourceHarvestHarvestEnum {
+	return &e
+}
+
 func (e *SourceHarvestHarvestEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "harvest":
-		*e = SourceHarvestHarvestEnum(s)
+		*e = SourceHarvestHarvestEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceHarvestHarvestEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceHarvestHarvestEnum: %v", v)
 	}
 }
 
@@ -162,8 +271,8 @@ type SourceHarvest struct {
 	// Choose how to authenticate to Harvest.
 	Credentials *SourceHarvestAuthenticationMechanism `json:"credentials,omitempty"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data after this date will not be replicated.
-	ReplicationEndDate *string `json:"replication_end_date,omitempty"`
+	ReplicationEndDate *time.Time `json:"replication_end_date,omitempty"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
-	ReplicationStartDate string                   `json:"replication_start_date"`
+	ReplicationStartDate time.Time                `json:"replication_start_date"`
 	SourceType           SourceHarvestHarvestEnum `json:"sourceType"`
 }

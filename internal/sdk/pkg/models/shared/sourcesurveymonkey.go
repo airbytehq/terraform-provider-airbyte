@@ -14,17 +14,21 @@ const (
 	SourceSurveymonkeySurveyMonkeyAuthorizationMethodAuthMethodEnumOauth20 SourceSurveymonkeySurveyMonkeyAuthorizationMethodAuthMethodEnum = "oauth2.0"
 )
 
+func (e SourceSurveymonkeySurveyMonkeyAuthorizationMethodAuthMethodEnum) ToPointer() *SourceSurveymonkeySurveyMonkeyAuthorizationMethodAuthMethodEnum {
+	return &e
+}
+
 func (e *SourceSurveymonkeySurveyMonkeyAuthorizationMethodAuthMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "oauth2.0":
-		*e = SourceSurveymonkeySurveyMonkeyAuthorizationMethodAuthMethodEnum(s)
+		*e = SourceSurveymonkeySurveyMonkeyAuthorizationMethodAuthMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSurveymonkeySurveyMonkeyAuthorizationMethodAuthMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceSurveymonkeySurveyMonkeyAuthorizationMethodAuthMethodEnum: %v", v)
 	}
 }
 
@@ -48,21 +52,25 @@ const (
 	SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccountEnumCanada SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccountEnum = "Canada"
 )
 
+func (e SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccountEnum) ToPointer() *SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccountEnum {
+	return &e
+}
+
 func (e *SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccountEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "USA":
 		fallthrough
 	case "Europe":
 		fallthrough
 	case "Canada":
-		*e = SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccountEnum(s)
+		*e = SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccountEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccountEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccountEnum: %v", v)
 	}
 }
 
@@ -72,17 +80,21 @@ const (
 	SourceSurveymonkeySurveymonkeyEnumSurveymonkey SourceSurveymonkeySurveymonkeyEnum = "surveymonkey"
 )
 
+func (e SourceSurveymonkeySurveymonkeyEnum) ToPointer() *SourceSurveymonkeySurveymonkeyEnum {
+	return &e
+}
+
 func (e *SourceSurveymonkeySurveymonkeyEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "surveymonkey":
-		*e = SourceSurveymonkeySurveymonkeyEnum(s)
+		*e = SourceSurveymonkeySurveymonkeyEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSurveymonkeySurveymonkeyEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceSurveymonkeySurveymonkeyEnum: %v", v)
 	}
 }
 

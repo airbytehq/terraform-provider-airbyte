@@ -13,17 +13,21 @@ const (
 	SourceOutreachOutreachEnumOutreach SourceOutreachOutreachEnum = "outreach"
 )
 
+func (e SourceOutreachOutreachEnum) ToPointer() *SourceOutreachOutreachEnum {
+	return &e
+}
+
 func (e *SourceOutreachOutreachEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "outreach":
-		*e = SourceOutreachOutreachEnum(s)
+		*e = SourceOutreachOutreachEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceOutreachOutreachEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceOutreachOutreachEnum: %v", v)
 	}
 }
 

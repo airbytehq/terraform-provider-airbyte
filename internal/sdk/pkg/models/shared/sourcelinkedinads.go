@@ -16,17 +16,21 @@ const (
 	SourceLinkedinAdsAuthenticationAccessTokenAuthMethodEnumAccessToken SourceLinkedinAdsAuthenticationAccessTokenAuthMethodEnum = "access_token"
 )
 
+func (e SourceLinkedinAdsAuthenticationAccessTokenAuthMethodEnum) ToPointer() *SourceLinkedinAdsAuthenticationAccessTokenAuthMethodEnum {
+	return &e
+}
+
 func (e *SourceLinkedinAdsAuthenticationAccessTokenAuthMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "access_token":
-		*e = SourceLinkedinAdsAuthenticationAccessTokenAuthMethodEnum(s)
+		*e = SourceLinkedinAdsAuthenticationAccessTokenAuthMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceLinkedinAdsAuthenticationAccessTokenAuthMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceLinkedinAdsAuthenticationAccessTokenAuthMethodEnum: %v", v)
 	}
 }
 
@@ -42,17 +46,21 @@ const (
 	SourceLinkedinAdsAuthenticationOAuth20AuthMethodEnumOAuth20 SourceLinkedinAdsAuthenticationOAuth20AuthMethodEnum = "oAuth2.0"
 )
 
+func (e SourceLinkedinAdsAuthenticationOAuth20AuthMethodEnum) ToPointer() *SourceLinkedinAdsAuthenticationOAuth20AuthMethodEnum {
+	return &e
+}
+
 func (e *SourceLinkedinAdsAuthenticationOAuth20AuthMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "oAuth2.0":
-		*e = SourceLinkedinAdsAuthenticationOAuth20AuthMethodEnum(s)
+		*e = SourceLinkedinAdsAuthenticationOAuth20AuthMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceLinkedinAdsAuthenticationOAuth20AuthMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceLinkedinAdsAuthenticationOAuth20AuthMethodEnum: %v", v)
 	}
 }
 
@@ -140,17 +148,21 @@ const (
 	SourceLinkedinAdsLinkedinAdsEnumLinkedinAds SourceLinkedinAdsLinkedinAdsEnum = "linkedin-ads"
 )
 
+func (e SourceLinkedinAdsLinkedinAdsEnum) ToPointer() *SourceLinkedinAdsLinkedinAdsEnum {
+	return &e
+}
+
 func (e *SourceLinkedinAdsLinkedinAdsEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "linkedin-ads":
-		*e = SourceLinkedinAdsLinkedinAdsEnum(s)
+		*e = SourceLinkedinAdsLinkedinAdsEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceLinkedinAdsLinkedinAdsEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceLinkedinAdsLinkedinAdsEnum: %v", v)
 	}
 }
 

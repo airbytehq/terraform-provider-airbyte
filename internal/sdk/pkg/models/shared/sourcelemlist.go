@@ -13,17 +13,21 @@ const (
 	SourceLemlistLemlistEnumLemlist SourceLemlistLemlistEnum = "lemlist"
 )
 
+func (e SourceLemlistLemlistEnum) ToPointer() *SourceLemlistLemlistEnum {
+	return &e
+}
+
 func (e *SourceLemlistLemlistEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "lemlist":
-		*e = SourceLemlistLemlistEnum(s)
+		*e = SourceLemlistLemlistEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceLemlistLemlistEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceLemlistLemlistEnum: %v", v)
 	}
 }
 

@@ -13,17 +13,21 @@ const (
 	SourceApifyDatasetApifyDatasetEnumApifyDataset SourceApifyDatasetApifyDatasetEnum = "apify-dataset"
 )
 
+func (e SourceApifyDatasetApifyDatasetEnum) ToPointer() *SourceApifyDatasetApifyDatasetEnum {
+	return &e
+}
+
 func (e *SourceApifyDatasetApifyDatasetEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "apify-dataset":
-		*e = SourceApifyDatasetApifyDatasetEnum(s)
+		*e = SourceApifyDatasetApifyDatasetEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceApifyDatasetApifyDatasetEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceApifyDatasetApifyDatasetEnum: %v", v)
 	}
 }
 

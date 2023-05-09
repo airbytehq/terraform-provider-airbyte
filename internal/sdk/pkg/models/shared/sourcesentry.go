@@ -13,17 +13,21 @@ const (
 	SourceSentrySentryEnumSentry SourceSentrySentryEnum = "sentry"
 )
 
+func (e SourceSentrySentryEnum) ToPointer() *SourceSentrySentryEnum {
+	return &e
+}
+
 func (e *SourceSentrySentryEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "sentry":
-		*e = SourceSentrySentryEnum(s)
+		*e = SourceSentrySentryEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSentrySentryEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceSentrySentryEnum: %v", v)
 	}
 }
 

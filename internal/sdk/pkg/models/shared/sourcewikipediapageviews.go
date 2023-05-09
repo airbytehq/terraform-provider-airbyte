@@ -13,17 +13,21 @@ const (
 	SourceWikipediaPageviewsWikipediaPageviewsEnumWikipediaPageviews SourceWikipediaPageviewsWikipediaPageviewsEnum = "wikipedia-pageviews"
 )
 
+func (e SourceWikipediaPageviewsWikipediaPageviewsEnum) ToPointer() *SourceWikipediaPageviewsWikipediaPageviewsEnum {
+	return &e
+}
+
 func (e *SourceWikipediaPageviewsWikipediaPageviewsEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "wikipedia-pageviews":
-		*e = SourceWikipediaPageviewsWikipediaPageviewsEnum(s)
+		*e = SourceWikipediaPageviewsWikipediaPageviewsEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceWikipediaPageviewsWikipediaPageviewsEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceWikipediaPageviewsWikipediaPageviewsEnum: %v", v)
 	}
 }
 

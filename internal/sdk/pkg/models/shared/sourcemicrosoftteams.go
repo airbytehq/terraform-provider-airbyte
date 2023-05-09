@@ -15,17 +15,21 @@ const (
 	SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftAuthTypeEnumToken SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftAuthTypeEnum = "Token"
 )
 
+func (e SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftAuthTypeEnum) ToPointer() *SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftAuthTypeEnum {
+	return &e
+}
+
 func (e *SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftAuthTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "Token":
-		*e = SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftAuthTypeEnum(s)
+		*e = SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftAuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftAuthTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftAuthTypeEnum: %v", v)
 	}
 }
 
@@ -46,17 +50,21 @@ const (
 	SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20AuthTypeEnumClient SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20AuthTypeEnum = "Client"
 )
 
+func (e SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20AuthTypeEnum) ToPointer() *SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20AuthTypeEnum {
+	return &e
+}
+
 func (e *SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20AuthTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "Client":
-		*e = SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20AuthTypeEnum(s)
+		*e = SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20AuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20AuthTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20AuthTypeEnum: %v", v)
 	}
 }
 
@@ -147,17 +155,21 @@ const (
 	SourceMicrosoftTeamsMicrosoftTeamsEnumMicrosoftTeams SourceMicrosoftTeamsMicrosoftTeamsEnum = "microsoft-teams"
 )
 
+func (e SourceMicrosoftTeamsMicrosoftTeamsEnum) ToPointer() *SourceMicrosoftTeamsMicrosoftTeamsEnum {
+	return &e
+}
+
 func (e *SourceMicrosoftTeamsMicrosoftTeamsEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "microsoft-teams":
-		*e = SourceMicrosoftTeamsMicrosoftTeamsEnum(s)
+		*e = SourceMicrosoftTeamsMicrosoftTeamsEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMicrosoftTeamsMicrosoftTeamsEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceMicrosoftTeamsMicrosoftTeamsEnum: %v", v)
 	}
 }
 

@@ -13,17 +13,21 @@ const (
 	SourceVantageVantageEnumVantage SourceVantageVantageEnum = "vantage"
 )
 
+func (e SourceVantageVantageEnum) ToPointer() *SourceVantageVantageEnum {
+	return &e
+}
+
 func (e *SourceVantageVantageEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "vantage":
-		*e = SourceVantageVantageEnum(s)
+		*e = SourceVantageVantageEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceVantageVantageEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceVantageVantageEnum: %v", v)
 	}
 }
 

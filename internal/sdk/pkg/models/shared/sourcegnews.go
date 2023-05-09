@@ -43,12 +43,16 @@ const (
 	SourceGnewsCountryEnumUs SourceGnewsCountryEnum = "us"
 )
 
+func (e SourceGnewsCountryEnum) ToPointer() *SourceGnewsCountryEnum {
+	return &e
+}
+
 func (e *SourceGnewsCountryEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "au":
 		fallthrough
 	case "br":
@@ -108,10 +112,10 @@ func (e *SourceGnewsCountryEnum) UnmarshalJSON(data []byte) error {
 	case "gb":
 		fallthrough
 	case "us":
-		*e = SourceGnewsCountryEnum(s)
+		*e = SourceGnewsCountryEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGnewsCountryEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceGnewsCountryEnum: %v", v)
 	}
 }
 
@@ -123,21 +127,25 @@ const (
 	SourceGnewsInEnumContent     SourceGnewsInEnum = "content"
 )
 
+func (e SourceGnewsInEnum) ToPointer() *SourceGnewsInEnum {
+	return &e
+}
+
 func (e *SourceGnewsInEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "title":
 		fallthrough
 	case "description":
 		fallthrough
 	case "content":
-		*e = SourceGnewsInEnum(s)
+		*e = SourceGnewsInEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGnewsInEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceGnewsInEnum: %v", v)
 	}
 }
 
@@ -168,12 +176,16 @@ const (
 	SourceGnewsLanguageEnumUk SourceGnewsLanguageEnum = "uk"
 )
 
+func (e SourceGnewsLanguageEnum) ToPointer() *SourceGnewsLanguageEnum {
+	return &e
+}
+
 func (e *SourceGnewsLanguageEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "ar":
 		fallthrough
 	case "zh":
@@ -217,10 +229,10 @@ func (e *SourceGnewsLanguageEnum) UnmarshalJSON(data []byte) error {
 	case "te":
 		fallthrough
 	case "uk":
-		*e = SourceGnewsLanguageEnum(s)
+		*e = SourceGnewsLanguageEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGnewsLanguageEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceGnewsLanguageEnum: %v", v)
 	}
 }
 
@@ -232,27 +244,29 @@ const (
 	SourceGnewsNullableEnumContent     SourceGnewsNullableEnum = "content"
 )
 
+func (e SourceGnewsNullableEnum) ToPointer() *SourceGnewsNullableEnum {
+	return &e
+}
+
 func (e *SourceGnewsNullableEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "title":
 		fallthrough
 	case "description":
 		fallthrough
 	case "content":
-		*e = SourceGnewsNullableEnum(s)
+		*e = SourceGnewsNullableEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGnewsNullableEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceGnewsNullableEnum: %v", v)
 	}
 }
 
-// SourceGnewsSortByEnum - This parameter allows you to choose with which type of sorting the articles should be returned. Two values  are possible:
-//   - publishedAt = sort by publication date, the articles with the most recent publication date are returned first
-//   - relevance = sort by best match to keywords, the articles with the best match are returned first
+// SourceGnewsSortByEnum - This parameter allows you to choose with which type of sorting the articles should be returned. Two values  are possible: - publishedAt = sort by publication date, the articles with the most recent publication date are returned first - relevance = sort by best match to keywords, the articles with the best match are returned first
 type SourceGnewsSortByEnum string
 
 const (
@@ -260,19 +274,23 @@ const (
 	SourceGnewsSortByEnumRelevance   SourceGnewsSortByEnum = "relevance"
 )
 
+func (e SourceGnewsSortByEnum) ToPointer() *SourceGnewsSortByEnum {
+	return &e
+}
+
 func (e *SourceGnewsSortByEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "publishedAt":
 		fallthrough
 	case "relevance":
-		*e = SourceGnewsSortByEnum(s)
+		*e = SourceGnewsSortByEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGnewsSortByEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceGnewsSortByEnum: %v", v)
 	}
 }
 
@@ -282,17 +300,21 @@ const (
 	SourceGnewsGnewsEnumGnews SourceGnewsGnewsEnum = "gnews"
 )
 
+func (e SourceGnewsGnewsEnum) ToPointer() *SourceGnewsGnewsEnum {
+	return &e
+}
+
 func (e *SourceGnewsGnewsEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "gnews":
-		*e = SourceGnewsGnewsEnum(s)
+		*e = SourceGnewsGnewsEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGnewsGnewsEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceGnewsGnewsEnum: %v", v)
 	}
 }
 
@@ -311,12 +333,16 @@ const (
 	SourceGnewsTopHeadlinesTopicEnumHealth        SourceGnewsTopHeadlinesTopicEnum = "health"
 )
 
+func (e SourceGnewsTopHeadlinesTopicEnum) ToPointer() *SourceGnewsTopHeadlinesTopicEnum {
+	return &e
+}
+
 func (e *SourceGnewsTopHeadlinesTopicEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "breaking-news":
 		fallthrough
 	case "world":
@@ -334,10 +360,10 @@ func (e *SourceGnewsTopHeadlinesTopicEnum) UnmarshalJSON(data []byte) error {
 	case "science":
 		fallthrough
 	case "health":
-		*e = SourceGnewsTopHeadlinesTopicEnum(s)
+		*e = SourceGnewsTopHeadlinesTopicEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGnewsTopHeadlinesTopicEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceGnewsTopHeadlinesTopicEnum: %v", v)
 	}
 }
 
@@ -354,42 +380,14 @@ type SourceGnews struct {
 	Language *SourceGnewsLanguageEnum `json:"language,omitempty"`
 	// This parameter allows you to specify the attributes that you allow to return null values. The attributes that  can be set are title, description and content. It is possible to combine several attributes
 	Nullable []SourceGnewsNullableEnum `json:"nullable,omitempty"`
-	// This parameter allows you to specify your search keywords to find the news articles you are looking for. The keywords will be used to return the most relevant articles. It is possible to use logical operators  with keywords. - Phrase Search Operator: This operator allows you to make an exact search. Keywords surrounded by
-	//   quotation marks are used to search for articles with the exact same keyword sequence.
-	//   For example the query: "Apple iPhone" will return articles matching at least once this sequence of keywords.
-	// - Logical AND Operator: This operator allows you to make sure that several keywords are all used in the article
-	//   search. By default the space character acts as an AND operator, it is possible to replace the space character
-	//   by AND to obtain the same result. For example the query: Apple Microsoft is equivalent to Apple AND Microsoft
-	// - Logical OR Operator: This operator allows you to retrieve articles matching the keyword a or the keyword b.
-	//   It is important to note that this operator has a higher precedence than the AND operator. For example the
-	//   query: Apple OR Microsoft will return all articles matching the keyword Apple as well as all articles matching
-	//   the keyword Microsoft
-	// - Logical NOT Operator: This operator allows you to remove from the results the articles corresponding to the
-	//   specified keywords. To use it, you need to add NOT in front of each word or phrase surrounded by quotes.
-	//   For example the query: Apple NOT iPhone will return all articles matching the keyword Apple but not the keyword
-	//   iPhone
+	// This parameter allows you to specify your search keywords to find the news articles you are looking for. The keywords will be used to return the most relevant articles. It is possible to use logical operators  with keywords. - Phrase Search Operator: This operator allows you to make an exact search. Keywords surrounded by quotation marks are used to search for articles with the exact same keyword sequence.  For example the query: "Apple iPhone" will return articles matching at least once this sequence of keywords. - Logical AND Operator: This operator allows you to make sure that several keywords are all used in the article search. By default the space character acts as an AND operator, it is possible to replace the space character by AND to obtain the same result. For example the query: Apple Microsoft is equivalent to Apple AND Microsoft - Logical OR Operator: This operator allows you to retrieve articles matching the keyword a or the keyword b. It is important to note that this operator has a higher precedence than the AND operator. For example the query: Apple OR Microsoft will return all articles matching the keyword Apple as well as all articles matching the keyword Microsoft - Logical NOT Operator: This operator allows you to remove from the results the articles corresponding to the specified keywords. To use it, you need to add NOT in front of each word or phrase surrounded by quotes. For example the query: Apple NOT iPhone will return all articles matching the keyword Apple but not the keyword iPhone
 	Query string `json:"query"`
-	// This parameter allows you to choose with which type of sorting the articles should be returned. Two values  are possible:
-	//   - publishedAt = sort by publication date, the articles with the most recent publication date are returned first
-	//   - relevance = sort by best match to keywords, the articles with the best match are returned first
+	// This parameter allows you to choose with which type of sorting the articles should be returned. Two values  are possible: - publishedAt = sort by publication date, the articles with the most recent publication date are returned first - relevance = sort by best match to keywords, the articles with the best match are returned first
 	Sortby     *SourceGnewsSortByEnum `json:"sortby,omitempty"`
 	SourceType SourceGnewsGnewsEnum   `json:"sourceType"`
 	// This parameter allows you to filter the articles that have a publication date greater than or equal to the  specified value. The date must respect the following format: YYYY-MM-DD hh:mm:ss (in UTC)
 	StartDate *string `json:"start_date,omitempty"`
-	// This parameter allows you to specify your search keywords to find the news articles you are looking for. The keywords will be used to return the most relevant articles. It is possible to use logical operators  with keywords. - Phrase Search Operator: This operator allows you to make an exact search. Keywords surrounded by
-	//   quotation marks are used to search for articles with the exact same keyword sequence.
-	//   For example the query: "Apple iPhone" will return articles matching at least once this sequence of keywords.
-	// - Logical AND Operator: This operator allows you to make sure that several keywords are all used in the article
-	//   search. By default the space character acts as an AND operator, it is possible to replace the space character
-	//   by AND to obtain the same result. For example the query: Apple Microsoft is equivalent to Apple AND Microsoft
-	// - Logical OR Operator: This operator allows you to retrieve articles matching the keyword a or the keyword b.
-	//   It is important to note that this operator has a higher precedence than the AND operator. For example the
-	//   query: Apple OR Microsoft will return all articles matching the keyword Apple as well as all articles matching
-	//   the keyword Microsoft
-	// - Logical NOT Operator: This operator allows you to remove from the results the articles corresponding to the
-	//   specified keywords. To use it, you need to add NOT in front of each word or phrase surrounded by quotes.
-	//   For example the query: Apple NOT iPhone will return all articles matching the keyword Apple but not the keyword
-	//   iPhone
+	// This parameter allows you to specify your search keywords to find the news articles you are looking for. The keywords will be used to return the most relevant articles. It is possible to use logical operators  with keywords. - Phrase Search Operator: This operator allows you to make an exact search. Keywords surrounded by quotation marks are used to search for articles with the exact same keyword sequence.  For example the query: "Apple iPhone" will return articles matching at least once this sequence of keywords. - Logical AND Operator: This operator allows you to make sure that several keywords are all used in the article search. By default the space character acts as an AND operator, it is possible to replace the space character by AND to obtain the same result. For example the query: Apple Microsoft is equivalent to Apple AND Microsoft - Logical OR Operator: This operator allows you to retrieve articles matching the keyword a or the keyword b. It is important to note that this operator has a higher precedence than the AND operator. For example the query: Apple OR Microsoft will return all articles matching the keyword Apple as well as all articles matching the keyword Microsoft - Logical NOT Operator: This operator allows you to remove from the results the articles corresponding to the specified keywords. To use it, you need to add NOT in front of each word or phrase surrounded by quotes. For example the query: Apple NOT iPhone will return all articles matching the keyword Apple but not the keyword iPhone
 	TopHeadlinesQuery *string `json:"top_headlines_query,omitempty"`
 	// This parameter allows you to change the category for the request.
 	TopHeadlinesTopic *SourceGnewsTopHeadlinesTopicEnum `json:"top_headlines_topic,omitempty"`

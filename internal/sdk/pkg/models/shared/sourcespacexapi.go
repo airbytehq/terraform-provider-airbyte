@@ -13,17 +13,21 @@ const (
 	SourceSpacexAPISpacexAPIEnumSpacexAPI SourceSpacexAPISpacexAPIEnum = "spacex-api"
 )
 
+func (e SourceSpacexAPISpacexAPIEnum) ToPointer() *SourceSpacexAPISpacexAPIEnum {
+	return &e
+}
+
 func (e *SourceSpacexAPISpacexAPIEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "spacex-api":
-		*e = SourceSpacexAPISpacexAPIEnum(s)
+		*e = SourceSpacexAPISpacexAPIEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSpacexAPISpacexAPIEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceSpacexAPISpacexAPIEnum: %v", v)
 	}
 }
 

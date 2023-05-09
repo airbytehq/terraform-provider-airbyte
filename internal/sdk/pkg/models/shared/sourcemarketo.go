@@ -5,6 +5,7 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"time"
 )
 
 type SourceMarketoMarketoEnum string
@@ -13,17 +14,21 @@ const (
 	SourceMarketoMarketoEnumMarketo SourceMarketoMarketoEnum = "marketo"
 )
 
+func (e SourceMarketoMarketoEnum) ToPointer() *SourceMarketoMarketoEnum {
+	return &e
+}
+
 func (e *SourceMarketoMarketoEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "marketo":
-		*e = SourceMarketoMarketoEnum(s)
+		*e = SourceMarketoMarketoEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMarketoMarketoEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceMarketoMarketoEnum: %v", v)
 	}
 }
 
@@ -37,5 +42,5 @@ type SourceMarketo struct {
 	DomainURL  string                   `json:"domain_url"`
 	SourceType SourceMarketoMarketoEnum `json:"sourceType"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
-	StartDate string `json:"start_date"`
+	StartDate time.Time `json:"start_date"`
 }

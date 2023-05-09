@@ -15,17 +15,21 @@ const (
 	DestinationMssqlMssqlEnumMssql DestinationMssqlMssqlEnum = "mssql"
 )
 
+func (e DestinationMssqlMssqlEnum) ToPointer() *DestinationMssqlMssqlEnum {
+	return &e
+}
+
 func (e *DestinationMssqlMssqlEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "mssql":
-		*e = DestinationMssqlMssqlEnum(s)
+		*e = DestinationMssqlMssqlEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationMssqlMssqlEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationMssqlMssqlEnum: %v", v)
 	}
 }
 
@@ -35,17 +39,21 @@ const (
 	DestinationMssqlSSLMethodEncryptedVerifyCertificateSSLMethodEnumEncryptedVerifyCertificate DestinationMssqlSSLMethodEncryptedVerifyCertificateSSLMethodEnum = "encrypted_verify_certificate"
 )
 
+func (e DestinationMssqlSSLMethodEncryptedVerifyCertificateSSLMethodEnum) ToPointer() *DestinationMssqlSSLMethodEncryptedVerifyCertificateSSLMethodEnum {
+	return &e
+}
+
 func (e *DestinationMssqlSSLMethodEncryptedVerifyCertificateSSLMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "encrypted_verify_certificate":
-		*e = DestinationMssqlSSLMethodEncryptedVerifyCertificateSSLMethodEnum(s)
+		*e = DestinationMssqlSSLMethodEncryptedVerifyCertificateSSLMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationMssqlSSLMethodEncryptedVerifyCertificateSSLMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationMssqlSSLMethodEncryptedVerifyCertificateSSLMethodEnum: %v", v)
 	}
 }
 
@@ -62,17 +70,21 @@ const (
 	DestinationMssqlSSLMethodEncryptedTrustServerCertificateSSLMethodEnumEncryptedTrustServerCertificate DestinationMssqlSSLMethodEncryptedTrustServerCertificateSSLMethodEnum = "encrypted_trust_server_certificate"
 )
 
+func (e DestinationMssqlSSLMethodEncryptedTrustServerCertificateSSLMethodEnum) ToPointer() *DestinationMssqlSSLMethodEncryptedTrustServerCertificateSSLMethodEnum {
+	return &e
+}
+
 func (e *DestinationMssqlSSLMethodEncryptedTrustServerCertificateSSLMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "encrypted_trust_server_certificate":
-		*e = DestinationMssqlSSLMethodEncryptedTrustServerCertificateSSLMethodEnum(s)
+		*e = DestinationMssqlSSLMethodEncryptedTrustServerCertificateSSLMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationMssqlSSLMethodEncryptedTrustServerCertificateSSLMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationMssqlSSLMethodEncryptedTrustServerCertificateSSLMethodEnum: %v", v)
 	}
 }
 
@@ -156,17 +168,21 @@ const (
 	DestinationMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnumSSHPasswordAuth DestinationMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum = "SSH_PASSWORD_AUTH"
 )
 
+func (e DestinationMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) ToPointer() *DestinationMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum {
+	return &e
+}
+
 func (e *DestinationMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "SSH_PASSWORD_AUTH":
-		*e = DestinationMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(s)
+		*e = DestinationMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum: %v", v)
 	}
 }
 
@@ -191,17 +207,21 @@ const (
 	DestinationMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnumSSHKeyAuth DestinationMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum = "SSH_KEY_AUTH"
 )
 
+func (e DestinationMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) ToPointer() *DestinationMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum {
+	return &e
+}
+
 func (e *DestinationMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "SSH_KEY_AUTH":
-		*e = DestinationMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(s)
+		*e = DestinationMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum: %v", v)
 	}
 }
 
@@ -226,17 +246,21 @@ const (
 	DestinationMssqlSSHTunnelMethodNoTunnelTunnelMethodEnumNoTunnel DestinationMssqlSSHTunnelMethodNoTunnelTunnelMethodEnum = "NO_TUNNEL"
 )
 
+func (e DestinationMssqlSSHTunnelMethodNoTunnelTunnelMethodEnum) ToPointer() *DestinationMssqlSSHTunnelMethodNoTunnelTunnelMethodEnum {
+	return &e
+}
+
 func (e *DestinationMssqlSSHTunnelMethodNoTunnelTunnelMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "NO_TUNNEL":
-		*e = DestinationMssqlSSHTunnelMethodNoTunnelTunnelMethodEnum(s)
+		*e = DestinationMssqlSSHTunnelMethodNoTunnelTunnelMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationMssqlSSHTunnelMethodNoTunnelTunnelMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationMssqlSSHTunnelMethodNoTunnelTunnelMethodEnum: %v", v)
 	}
 }
 

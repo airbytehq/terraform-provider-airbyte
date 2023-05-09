@@ -15,17 +15,21 @@ const (
 	SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthenticationAuthTypeEnumService SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthenticationAuthTypeEnum = "Service"
 )
 
+func (e SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthenticationAuthTypeEnum) ToPointer() *SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthenticationAuthTypeEnum {
+	return &e
+}
+
 func (e *SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthenticationAuthTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "Service":
-		*e = SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthenticationAuthTypeEnum(s)
+		*e = SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthenticationAuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthenticationAuthTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthenticationAuthTypeEnum: %v", v)
 	}
 }
 
@@ -42,17 +46,21 @@ const (
 	SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauthAuthTypeEnumClient SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauthAuthTypeEnum = "Client"
 )
 
+func (e SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauthAuthTypeEnum) ToPointer() *SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauthAuthTypeEnum {
+	return &e
+}
+
 func (e *SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauthAuthTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "Client":
-		*e = SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauthAuthTypeEnum(s)
+		*e = SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauthAuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauthAuthTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauthAuthTypeEnum: %v", v)
 	}
 }
 
@@ -143,17 +151,21 @@ const (
 	SourceGoogleAnalyticsV4GoogleAnalyticsV4EnumGoogleAnalyticsV4 SourceGoogleAnalyticsV4GoogleAnalyticsV4Enum = "google-analytics-v4"
 )
 
+func (e SourceGoogleAnalyticsV4GoogleAnalyticsV4Enum) ToPointer() *SourceGoogleAnalyticsV4GoogleAnalyticsV4Enum {
+	return &e
+}
+
 func (e *SourceGoogleAnalyticsV4GoogleAnalyticsV4Enum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "google-analytics-v4":
-		*e = SourceGoogleAnalyticsV4GoogleAnalyticsV4Enum(s)
+		*e = SourceGoogleAnalyticsV4GoogleAnalyticsV4Enum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGoogleAnalyticsV4GoogleAnalyticsV4Enum: %s", s)
+		return fmt.Errorf("invalid value for SourceGoogleAnalyticsV4GoogleAnalyticsV4Enum: %v", v)
 	}
 }
 

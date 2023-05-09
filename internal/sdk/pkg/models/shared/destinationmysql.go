@@ -15,17 +15,21 @@ const (
 	DestinationMysqlMysqlEnumMysql DestinationMysqlMysqlEnum = "mysql"
 )
 
+func (e DestinationMysqlMysqlEnum) ToPointer() *DestinationMysqlMysqlEnum {
+	return &e
+}
+
 func (e *DestinationMysqlMysqlEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "mysql":
-		*e = DestinationMysqlMysqlEnum(s)
+		*e = DestinationMysqlMysqlEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationMysqlMysqlEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationMysqlMysqlEnum: %v", v)
 	}
 }
 
@@ -36,17 +40,21 @@ const (
 	DestinationMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnumSSHPasswordAuth DestinationMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum = "SSH_PASSWORD_AUTH"
 )
 
+func (e DestinationMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) ToPointer() *DestinationMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum {
+	return &e
+}
+
 func (e *DestinationMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "SSH_PASSWORD_AUTH":
-		*e = DestinationMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(s)
+		*e = DestinationMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum: %v", v)
 	}
 }
 
@@ -71,17 +79,21 @@ const (
 	DestinationMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnumSSHKeyAuth DestinationMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum = "SSH_KEY_AUTH"
 )
 
+func (e DestinationMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) ToPointer() *DestinationMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum {
+	return &e
+}
+
 func (e *DestinationMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "SSH_KEY_AUTH":
-		*e = DestinationMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(s)
+		*e = DestinationMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum: %v", v)
 	}
 }
 
@@ -106,17 +118,21 @@ const (
 	DestinationMysqlSSHTunnelMethodNoTunnelTunnelMethodEnumNoTunnel DestinationMysqlSSHTunnelMethodNoTunnelTunnelMethodEnum = "NO_TUNNEL"
 )
 
+func (e DestinationMysqlSSHTunnelMethodNoTunnelTunnelMethodEnum) ToPointer() *DestinationMysqlSSHTunnelMethodNoTunnelTunnelMethodEnum {
+	return &e
+}
+
 func (e *DestinationMysqlSSHTunnelMethodNoTunnelTunnelMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "NO_TUNNEL":
-		*e = DestinationMysqlSSHTunnelMethodNoTunnelTunnelMethodEnum(s)
+		*e = DestinationMysqlSSHTunnelMethodNoTunnelTunnelMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationMysqlSSHTunnelMethodNoTunnelTunnelMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationMysqlSSHTunnelMethodNoTunnelTunnelMethodEnum: %v", v)
 	}
 }
 

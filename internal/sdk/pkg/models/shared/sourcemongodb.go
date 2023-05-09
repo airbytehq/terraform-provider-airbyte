@@ -15,17 +15,21 @@ const (
 	SourceMongodbMongoDBInstanceTypeMongoDBAtlasInstanceEnumAtlas SourceMongodbMongoDBInstanceTypeMongoDBAtlasInstanceEnum = "atlas"
 )
 
+func (e SourceMongodbMongoDBInstanceTypeMongoDBAtlasInstanceEnum) ToPointer() *SourceMongodbMongoDBInstanceTypeMongoDBAtlasInstanceEnum {
+	return &e
+}
+
 func (e *SourceMongodbMongoDBInstanceTypeMongoDBAtlasInstanceEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "atlas":
-		*e = SourceMongodbMongoDBInstanceTypeMongoDBAtlasInstanceEnum(s)
+		*e = SourceMongodbMongoDBInstanceTypeMongoDBAtlasInstanceEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMongodbMongoDBInstanceTypeMongoDBAtlasInstanceEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceMongodbMongoDBInstanceTypeMongoDBAtlasInstanceEnum: %v", v)
 	}
 }
 
@@ -42,17 +46,21 @@ const (
 	SourceMongodbMongoDbInstanceTypeReplicaSetInstanceEnumReplica SourceMongodbMongoDbInstanceTypeReplicaSetInstanceEnum = "replica"
 )
 
+func (e SourceMongodbMongoDbInstanceTypeReplicaSetInstanceEnum) ToPointer() *SourceMongodbMongoDbInstanceTypeReplicaSetInstanceEnum {
+	return &e
+}
+
 func (e *SourceMongodbMongoDbInstanceTypeReplicaSetInstanceEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "replica":
-		*e = SourceMongodbMongoDbInstanceTypeReplicaSetInstanceEnum(s)
+		*e = SourceMongodbMongoDbInstanceTypeReplicaSetInstanceEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMongodbMongoDbInstanceTypeReplicaSetInstanceEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceMongodbMongoDbInstanceTypeReplicaSetInstanceEnum: %v", v)
 	}
 }
 
@@ -71,17 +79,21 @@ const (
 	SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstanceEnumStandalone SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstanceEnum = "standalone"
 )
 
+func (e SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstanceEnum) ToPointer() *SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstanceEnum {
+	return &e
+}
+
 func (e *SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstanceEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "standalone":
-		*e = SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstanceEnum(s)
+		*e = SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstanceEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstanceEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstanceEnum: %v", v)
 	}
 }
 
@@ -192,17 +204,21 @@ const (
 	SourceMongodbMongodbEnumMongodb SourceMongodbMongodbEnum = "mongodb"
 )
 
+func (e SourceMongodbMongodbEnum) ToPointer() *SourceMongodbMongodbEnum {
+	return &e
+}
+
 func (e *SourceMongodbMongodbEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "mongodb":
-		*e = SourceMongodbMongodbEnum(s)
+		*e = SourceMongodbMongodbEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMongodbMongodbEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceMongodbMongodbEnum: %v", v)
 	}
 }
 

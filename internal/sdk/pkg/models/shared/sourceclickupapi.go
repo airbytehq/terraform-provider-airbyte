@@ -13,17 +13,21 @@ const (
 	SourceClickupAPIClickupAPIEnumClickupAPI SourceClickupAPIClickupAPIEnum = "clickup-api"
 )
 
+func (e SourceClickupAPIClickupAPIEnum) ToPointer() *SourceClickupAPIClickupAPIEnum {
+	return &e
+}
+
 func (e *SourceClickupAPIClickupAPIEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "clickup-api":
-		*e = SourceClickupAPIClickupAPIEnum(s)
+		*e = SourceClickupAPIClickupAPIEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceClickupAPIClickupAPIEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceClickupAPIClickupAPIEnum: %v", v)
 	}
 }
 

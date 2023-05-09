@@ -13,17 +13,21 @@ const (
 	SourcePunkAPIPunkAPIEnumPunkAPI SourcePunkAPIPunkAPIEnum = "punk-api"
 )
 
+func (e SourcePunkAPIPunkAPIEnum) ToPointer() *SourcePunkAPIPunkAPIEnum {
+	return &e
+}
+
 func (e *SourcePunkAPIPunkAPIEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "punk-api":
-		*e = SourcePunkAPIPunkAPIEnum(s)
+		*e = SourcePunkAPIPunkAPIEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePunkAPIPunkAPIEnum: %s", s)
+		return fmt.Errorf("invalid value for SourcePunkAPIPunkAPIEnum: %v", v)
 	}
 }
 

@@ -16,17 +16,21 @@ const (
 	SourceSmartsheetsAuthorizationMethodAPIAccessTokenAuthTypeEnumAccessToken SourceSmartsheetsAuthorizationMethodAPIAccessTokenAuthTypeEnum = "access_token"
 )
 
+func (e SourceSmartsheetsAuthorizationMethodAPIAccessTokenAuthTypeEnum) ToPointer() *SourceSmartsheetsAuthorizationMethodAPIAccessTokenAuthTypeEnum {
+	return &e
+}
+
 func (e *SourceSmartsheetsAuthorizationMethodAPIAccessTokenAuthTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "access_token":
-		*e = SourceSmartsheetsAuthorizationMethodAPIAccessTokenAuthTypeEnum(s)
+		*e = SourceSmartsheetsAuthorizationMethodAPIAccessTokenAuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSmartsheetsAuthorizationMethodAPIAccessTokenAuthTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceSmartsheetsAuthorizationMethodAPIAccessTokenAuthTypeEnum: %v", v)
 	}
 }
 
@@ -42,17 +46,21 @@ const (
 	SourceSmartsheetsAuthorizationMethodOAuth20AuthTypeEnumOauth20 SourceSmartsheetsAuthorizationMethodOAuth20AuthTypeEnum = "oauth2.0"
 )
 
+func (e SourceSmartsheetsAuthorizationMethodOAuth20AuthTypeEnum) ToPointer() *SourceSmartsheetsAuthorizationMethodOAuth20AuthTypeEnum {
+	return &e
+}
+
 func (e *SourceSmartsheetsAuthorizationMethodOAuth20AuthTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "oauth2.0":
-		*e = SourceSmartsheetsAuthorizationMethodOAuth20AuthTypeEnum(s)
+		*e = SourceSmartsheetsAuthorizationMethodOAuth20AuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSmartsheetsAuthorizationMethodOAuth20AuthTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceSmartsheetsAuthorizationMethodOAuth20AuthTypeEnum: %v", v)
 	}
 }
 
@@ -144,17 +152,21 @@ const (
 	SourceSmartsheetsSmartsheetsEnumSmartsheets SourceSmartsheetsSmartsheetsEnum = "smartsheets"
 )
 
+func (e SourceSmartsheetsSmartsheetsEnum) ToPointer() *SourceSmartsheetsSmartsheetsEnum {
+	return &e
+}
+
 func (e *SourceSmartsheetsSmartsheetsEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "smartsheets":
-		*e = SourceSmartsheetsSmartsheetsEnum(s)
+		*e = SourceSmartsheetsSmartsheetsEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSmartsheetsSmartsheetsEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceSmartsheetsSmartsheetsEnum: %v", v)
 	}
 }
 

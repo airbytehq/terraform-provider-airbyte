@@ -15,17 +15,21 @@ const (
 	DestinationAzureBlobStorageAzureBlobStorageEnumAzureBlobStorage DestinationAzureBlobStorageAzureBlobStorageEnum = "azure-blob-storage"
 )
 
+func (e DestinationAzureBlobStorageAzureBlobStorageEnum) ToPointer() *DestinationAzureBlobStorageAzureBlobStorageEnum {
+	return &e
+}
+
 func (e *DestinationAzureBlobStorageAzureBlobStorageEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "azure-blob-storage":
-		*e = DestinationAzureBlobStorageAzureBlobStorageEnum(s)
+		*e = DestinationAzureBlobStorageAzureBlobStorageEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationAzureBlobStorageAzureBlobStorageEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationAzureBlobStorageAzureBlobStorageEnum: %v", v)
 	}
 }
 
@@ -35,17 +39,21 @@ const (
 	DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnumJsonl DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum = "JSONL"
 )
 
+func (e DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum) ToPointer() *DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum {
+	return &e
+}
+
 func (e *DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "JSONL":
-		*e = DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum(s)
+		*e = DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum: %v", v)
 	}
 }
 
@@ -62,19 +70,23 @@ const (
 	DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValuesNormalizationFlatteningEnumRootLevelFlattening DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValuesNormalizationFlatteningEnum = "Root level flattening"
 )
 
+func (e DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValuesNormalizationFlatteningEnum) ToPointer() *DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValuesNormalizationFlatteningEnum {
+	return &e
+}
+
 func (e *DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValuesNormalizationFlatteningEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "No flattening":
 		fallthrough
 	case "Root level flattening":
-		*e = DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValuesNormalizationFlatteningEnum(s)
+		*e = DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValuesNormalizationFlatteningEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValuesNormalizationFlatteningEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValuesNormalizationFlatteningEnum: %v", v)
 	}
 }
 
@@ -84,17 +96,21 @@ const (
 	DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValuesFormatTypeEnumCsv DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValuesFormatTypeEnum = "CSV"
 )
 
+func (e DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValuesFormatTypeEnum) ToPointer() *DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValuesFormatTypeEnum {
+	return &e
+}
+
 func (e *DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValuesFormatTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "CSV":
-		*e = DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValuesFormatTypeEnum(s)
+		*e = DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValuesFormatTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValuesFormatTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValuesFormatTypeEnum: %v", v)
 	}
 }
 

@@ -14,17 +14,21 @@ const (
 	SourceStripeStripeEnumStripe SourceStripeStripeEnum = "stripe"
 )
 
+func (e SourceStripeStripeEnum) ToPointer() *SourceStripeStripeEnum {
+	return &e
+}
+
 func (e *SourceStripeStripeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "stripe":
-		*e = SourceStripeStripeEnum(s)
+		*e = SourceStripeStripeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceStripeStripeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceStripeStripeEnum: %v", v)
 	}
 }
 

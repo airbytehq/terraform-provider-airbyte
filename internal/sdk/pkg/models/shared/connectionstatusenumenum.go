@@ -15,20 +15,24 @@ const (
 	ConnectionStatusEnumEnumDeprecated ConnectionStatusEnumEnum = "deprecated"
 )
 
+func (e ConnectionStatusEnumEnum) ToPointer() *ConnectionStatusEnumEnum {
+	return &e
+}
+
 func (e *ConnectionStatusEnumEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "active":
 		fallthrough
 	case "inactive":
 		fallthrough
 	case "deprecated":
-		*e = ConnectionStatusEnumEnum(s)
+		*e = ConnectionStatusEnumEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for ConnectionStatusEnumEnum: %s", s)
+		return fmt.Errorf("invalid value for ConnectionStatusEnumEnum: %v", v)
 	}
 }

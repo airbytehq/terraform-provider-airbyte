@@ -14,6 +14,7 @@ type SourceConfiguration struct {
 	SourceAsana                       *SourceAsana                       `tfsdk:"source_asana"`
 	SourceAuth0                       *SourceAuth0                       `tfsdk:"source_auth0"`
 	SourceAwsCloudtrail               *SourceAwsCloudtrail               `tfsdk:"source_aws_cloudtrail"`
+	SourceAzureBlobStorage            *SourceAzureBlobStorage            `tfsdk:"source_azure_blob_storage"`
 	SourceAzureTable                  *SourceAzureTable                  `tfsdk:"source_azure_table"`
 	SourceBambooHr                    *SourceBambooHr                    `tfsdk:"source_bamboo_hr"`
 	SourceBigcommerce                 *SourceBigcommerce                 `tfsdk:"source_bigcommerce"`
@@ -125,6 +126,7 @@ type SourceConfiguration struct {
 	SourcePunkAPI                     *SourcePunkAPI                     `tfsdk:"source_punk_api"`
 	SourcePypi                        *SourcePypi                        `tfsdk:"source_pypi"`
 	SourceQualaroo                    *SourceQualaroo                    `tfsdk:"source_qualaroo"`
+	SourceQuickbooks                  *SourceQuickbooks                  `tfsdk:"source_quickbooks"`
 	SourceRailz                       *SourceRailz                       `tfsdk:"source_railz"`
 	SourceRecharge                    *SourceRecharge                    `tfsdk:"source_recharge"`
 	SourceRecreation                  *SourceRecreation                  `tfsdk:"source_recreation"`

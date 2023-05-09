@@ -16,17 +16,21 @@ const (
 	SourceSftpAuthenticationWildcardSSHKeyAuthenticationAuthMethodEnumSSHKeyAuth SourceSftpAuthenticationWildcardSSHKeyAuthenticationAuthMethodEnum = "SSH_KEY_AUTH"
 )
 
+func (e SourceSftpAuthenticationWildcardSSHKeyAuthenticationAuthMethodEnum) ToPointer() *SourceSftpAuthenticationWildcardSSHKeyAuthenticationAuthMethodEnum {
+	return &e
+}
+
 func (e *SourceSftpAuthenticationWildcardSSHKeyAuthenticationAuthMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "SSH_KEY_AUTH":
-		*e = SourceSftpAuthenticationWildcardSSHKeyAuthenticationAuthMethodEnum(s)
+		*e = SourceSftpAuthenticationWildcardSSHKeyAuthenticationAuthMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSftpAuthenticationWildcardSSHKeyAuthenticationAuthMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceSftpAuthenticationWildcardSSHKeyAuthenticationAuthMethodEnum: %v", v)
 	}
 }
 
@@ -45,17 +49,21 @@ const (
 	SourceSftpAuthenticationWildcardPasswordAuthenticationAuthMethodEnumSSHPasswordAuth SourceSftpAuthenticationWildcardPasswordAuthenticationAuthMethodEnum = "SSH_PASSWORD_AUTH"
 )
 
+func (e SourceSftpAuthenticationWildcardPasswordAuthenticationAuthMethodEnum) ToPointer() *SourceSftpAuthenticationWildcardPasswordAuthenticationAuthMethodEnum {
+	return &e
+}
+
 func (e *SourceSftpAuthenticationWildcardPasswordAuthenticationAuthMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "SSH_PASSWORD_AUTH":
-		*e = SourceSftpAuthenticationWildcardPasswordAuthenticationAuthMethodEnum(s)
+		*e = SourceSftpAuthenticationWildcardPasswordAuthenticationAuthMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSftpAuthenticationWildcardPasswordAuthenticationAuthMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceSftpAuthenticationWildcardPasswordAuthenticationAuthMethodEnum: %v", v)
 	}
 }
 
@@ -141,17 +149,21 @@ const (
 	SourceSftpSftpEnumSftp SourceSftpSftpEnum = "sftp"
 )
 
+func (e SourceSftpSftpEnum) ToPointer() *SourceSftpSftpEnum {
+	return &e
+}
+
 func (e *SourceSftpSftpEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "sftp":
-		*e = SourceSftpSftpEnum(s)
+		*e = SourceSftpSftpEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSftpSftpEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceSftpSftpEnum: %v", v)
 	}
 }
 

@@ -15,17 +15,21 @@ const (
 	DestinationElasticsearchAuthenticationMethodUsernamePasswordMethodEnumBasic DestinationElasticsearchAuthenticationMethodUsernamePasswordMethodEnum = "basic"
 )
 
+func (e DestinationElasticsearchAuthenticationMethodUsernamePasswordMethodEnum) ToPointer() *DestinationElasticsearchAuthenticationMethodUsernamePasswordMethodEnum {
+	return &e
+}
+
 func (e *DestinationElasticsearchAuthenticationMethodUsernamePasswordMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "basic":
-		*e = DestinationElasticsearchAuthenticationMethodUsernamePasswordMethodEnum(s)
+		*e = DestinationElasticsearchAuthenticationMethodUsernamePasswordMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationElasticsearchAuthenticationMethodUsernamePasswordMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationElasticsearchAuthenticationMethodUsernamePasswordMethodEnum: %v", v)
 	}
 }
 
@@ -44,17 +48,21 @@ const (
 	DestinationElasticsearchAuthenticationMethodAPIKeySecretMethodEnumSecret DestinationElasticsearchAuthenticationMethodAPIKeySecretMethodEnum = "secret"
 )
 
+func (e DestinationElasticsearchAuthenticationMethodAPIKeySecretMethodEnum) ToPointer() *DestinationElasticsearchAuthenticationMethodAPIKeySecretMethodEnum {
+	return &e
+}
+
 func (e *DestinationElasticsearchAuthenticationMethodAPIKeySecretMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "secret":
-		*e = DestinationElasticsearchAuthenticationMethodAPIKeySecretMethodEnum(s)
+		*e = DestinationElasticsearchAuthenticationMethodAPIKeySecretMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationElasticsearchAuthenticationMethodAPIKeySecretMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationElasticsearchAuthenticationMethodAPIKeySecretMethodEnum: %v", v)
 	}
 }
 
@@ -141,17 +149,21 @@ const (
 	DestinationElasticsearchElasticsearchEnumElasticsearch DestinationElasticsearchElasticsearchEnum = "elasticsearch"
 )
 
+func (e DestinationElasticsearchElasticsearchEnum) ToPointer() *DestinationElasticsearchElasticsearchEnum {
+	return &e
+}
+
 func (e *DestinationElasticsearchElasticsearchEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "elasticsearch":
-		*e = DestinationElasticsearchElasticsearchEnum(s)
+		*e = DestinationElasticsearchElasticsearchEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationElasticsearchElasticsearchEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationElasticsearchElasticsearchEnum: %v", v)
 	}
 }
 

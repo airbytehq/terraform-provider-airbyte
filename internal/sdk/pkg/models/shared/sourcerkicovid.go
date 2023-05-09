@@ -13,17 +13,21 @@ const (
 	SourceRkiCovidRkiCovidEnumRkiCovid SourceRkiCovidRkiCovidEnum = "rki-covid"
 )
 
+func (e SourceRkiCovidRkiCovidEnum) ToPointer() *SourceRkiCovidRkiCovidEnum {
+	return &e
+}
+
 func (e *SourceRkiCovidRkiCovidEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "rki-covid":
-		*e = SourceRkiCovidRkiCovidEnum(s)
+		*e = SourceRkiCovidRkiCovidEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceRkiCovidRkiCovidEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceRkiCovidRkiCovidEnum: %v", v)
 	}
 }
 

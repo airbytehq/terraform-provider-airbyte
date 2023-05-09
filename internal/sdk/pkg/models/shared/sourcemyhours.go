@@ -13,17 +13,21 @@ const (
 	SourceMyHoursMyHoursEnumMyHours SourceMyHoursMyHoursEnum = "my-hours"
 )
 
+func (e SourceMyHoursMyHoursEnum) ToPointer() *SourceMyHoursMyHoursEnum {
+	return &e
+}
+
 func (e *SourceMyHoursMyHoursEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "my-hours":
-		*e = SourceMyHoursMyHoursEnum(s)
+		*e = SourceMyHoursMyHoursEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMyHoursMyHoursEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceMyHoursMyHoursEnum: %v", v)
 	}
 }
 

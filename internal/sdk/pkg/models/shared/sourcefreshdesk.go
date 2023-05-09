@@ -14,17 +14,21 @@ const (
 	SourceFreshdeskFreshdeskEnumFreshdesk SourceFreshdeskFreshdeskEnum = "freshdesk"
 )
 
+func (e SourceFreshdeskFreshdeskEnum) ToPointer() *SourceFreshdeskFreshdeskEnum {
+	return &e
+}
+
 func (e *SourceFreshdeskFreshdeskEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "freshdesk":
-		*e = SourceFreshdeskFreshdeskEnum(s)
+		*e = SourceFreshdeskFreshdeskEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFreshdeskFreshdeskEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceFreshdeskFreshdeskEnum: %v", v)
 	}
 }
 

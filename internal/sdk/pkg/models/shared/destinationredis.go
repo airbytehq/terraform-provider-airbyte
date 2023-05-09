@@ -16,17 +16,21 @@ const (
 	DestinationRedisCacheTypeEnumHash DestinationRedisCacheTypeEnum = "hash"
 )
 
+func (e DestinationRedisCacheTypeEnum) ToPointer() *DestinationRedisCacheTypeEnum {
+	return &e
+}
+
 func (e *DestinationRedisCacheTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "hash":
-		*e = DestinationRedisCacheTypeEnum(s)
+		*e = DestinationRedisCacheTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationRedisCacheTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationRedisCacheTypeEnum: %v", v)
 	}
 }
 
@@ -36,17 +40,21 @@ const (
 	DestinationRedisRedisEnumRedis DestinationRedisRedisEnum = "redis"
 )
 
+func (e DestinationRedisRedisEnum) ToPointer() *DestinationRedisRedisEnum {
+	return &e
+}
+
 func (e *DestinationRedisRedisEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "redis":
-		*e = DestinationRedisRedisEnum(s)
+		*e = DestinationRedisRedisEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationRedisRedisEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationRedisRedisEnum: %v", v)
 	}
 }
 
@@ -56,17 +64,21 @@ const (
 	DestinationRedisSSLModesVerifyFullModeEnumVerifyFull DestinationRedisSSLModesVerifyFullModeEnum = "verify-full"
 )
 
+func (e DestinationRedisSSLModesVerifyFullModeEnum) ToPointer() *DestinationRedisSSLModesVerifyFullModeEnum {
+	return &e
+}
+
 func (e *DestinationRedisSSLModesVerifyFullModeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "verify-full":
-		*e = DestinationRedisSSLModesVerifyFullModeEnum(s)
+		*e = DestinationRedisSSLModesVerifyFullModeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationRedisSSLModesVerifyFullModeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationRedisSSLModesVerifyFullModeEnum: %v", v)
 	}
 }
 
@@ -89,17 +101,21 @@ const (
 	DestinationRedisSSLModesDisableModeEnumDisable DestinationRedisSSLModesDisableModeEnum = "disable"
 )
 
+func (e DestinationRedisSSLModesDisableModeEnum) ToPointer() *DestinationRedisSSLModesDisableModeEnum {
+	return &e
+}
+
 func (e *DestinationRedisSSLModesDisableModeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "disable":
-		*e = DestinationRedisSSLModesDisableModeEnum(s)
+		*e = DestinationRedisSSLModesDisableModeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationRedisSSLModesDisableModeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationRedisSSLModesDisableModeEnum: %v", v)
 	}
 }
 
@@ -183,17 +199,21 @@ const (
 	DestinationRedisSSHTunnelMethodPasswordAuthenticationTunnelMethodEnumSSHPasswordAuth DestinationRedisSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum = "SSH_PASSWORD_AUTH"
 )
 
+func (e DestinationRedisSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) ToPointer() *DestinationRedisSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum {
+	return &e
+}
+
 func (e *DestinationRedisSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "SSH_PASSWORD_AUTH":
-		*e = DestinationRedisSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(s)
+		*e = DestinationRedisSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationRedisSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationRedisSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum: %v", v)
 	}
 }
 
@@ -218,17 +238,21 @@ const (
 	DestinationRedisSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnumSSHKeyAuth DestinationRedisSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum = "SSH_KEY_AUTH"
 )
 
+func (e DestinationRedisSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) ToPointer() *DestinationRedisSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum {
+	return &e
+}
+
 func (e *DestinationRedisSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "SSH_KEY_AUTH":
-		*e = DestinationRedisSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(s)
+		*e = DestinationRedisSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationRedisSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationRedisSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum: %v", v)
 	}
 }
 
@@ -253,17 +277,21 @@ const (
 	DestinationRedisSSHTunnelMethodNoTunnelTunnelMethodEnumNoTunnel DestinationRedisSSHTunnelMethodNoTunnelTunnelMethodEnum = "NO_TUNNEL"
 )
 
+func (e DestinationRedisSSHTunnelMethodNoTunnelTunnelMethodEnum) ToPointer() *DestinationRedisSSHTunnelMethodNoTunnelTunnelMethodEnum {
+	return &e
+}
+
 func (e *DestinationRedisSSHTunnelMethodNoTunnelTunnelMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "NO_TUNNEL":
-		*e = DestinationRedisSSHTunnelMethodNoTunnelTunnelMethodEnum(s)
+		*e = DestinationRedisSSHTunnelMethodNoTunnelTunnelMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationRedisSSHTunnelMethodNoTunnelTunnelMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationRedisSSHTunnelMethodNoTunnelTunnelMethodEnum: %v", v)
 	}
 }
 
@@ -378,8 +406,7 @@ type DestinationRedis struct {
 	Port int64 `json:"port"`
 	// Indicates whether SSL encryption protocol will be used to connect to Redis. It is recommended to use SSL connection if possible.
 	Ssl *bool `json:"ssl,omitempty"`
-	// SSL connection modes.
-	//   <li><b>verify-full</b> - This is the most secure mode. Always require encryption and verifies the identity of the source database server
+	// SSL connection modes. <li><b>verify-full</b> - This is the most secure mode. Always require encryption and verifies the identity of the source database server
 	SslMode *DestinationRedisSSLModes `json:"ssl_mode,omitempty"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod *DestinationRedisSSHTunnelMethod `json:"tunnel_method,omitempty"`

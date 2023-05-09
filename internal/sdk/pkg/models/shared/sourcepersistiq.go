@@ -13,17 +13,21 @@ const (
 	SourcePersistiqPersistiqEnumPersistiq SourcePersistiqPersistiqEnum = "persistiq"
 )
 
+func (e SourcePersistiqPersistiqEnum) ToPointer() *SourcePersistiqPersistiqEnum {
+	return &e
+}
+
 func (e *SourcePersistiqPersistiqEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "persistiq":
-		*e = SourcePersistiqPersistiqEnum(s)
+		*e = SourcePersistiqPersistiqEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePersistiqPersistiqEnum: %s", s)
+		return fmt.Errorf("invalid value for SourcePersistiqPersistiqEnum: %v", v)
 	}
 }
 

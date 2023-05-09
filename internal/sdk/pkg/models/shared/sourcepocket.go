@@ -16,21 +16,25 @@ const (
 	SourcePocketContentTypeEnumImage   SourcePocketContentTypeEnum = "image"
 )
 
+func (e SourcePocketContentTypeEnum) ToPointer() *SourcePocketContentTypeEnum {
+	return &e
+}
+
 func (e *SourcePocketContentTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "article":
 		fallthrough
 	case "video":
 		fallthrough
 	case "image":
-		*e = SourcePocketContentTypeEnum(s)
+		*e = SourcePocketContentTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePocketContentTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourcePocketContentTypeEnum: %v", v)
 	}
 }
 
@@ -42,19 +46,23 @@ const (
 	SourcePocketDetailTypeEnumComplete SourcePocketDetailTypeEnum = "complete"
 )
 
+func (e SourcePocketDetailTypeEnum) ToPointer() *SourcePocketDetailTypeEnum {
+	return &e
+}
+
 func (e *SourcePocketDetailTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "simple":
 		fallthrough
 	case "complete":
-		*e = SourcePocketDetailTypeEnum(s)
+		*e = SourcePocketDetailTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePocketDetailTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourcePocketDetailTypeEnum: %v", v)
 	}
 }
 
@@ -68,12 +76,16 @@ const (
 	SourcePocketSortByEnumSite   SourcePocketSortByEnum = "site"
 )
 
+func (e SourcePocketSortByEnum) ToPointer() *SourcePocketSortByEnum {
+	return &e
+}
+
 func (e *SourcePocketSortByEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "newest":
 		fallthrough
 	case "oldest":
@@ -81,10 +93,10 @@ func (e *SourcePocketSortByEnum) UnmarshalJSON(data []byte) error {
 	case "title":
 		fallthrough
 	case "site":
-		*e = SourcePocketSortByEnum(s)
+		*e = SourcePocketSortByEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePocketSortByEnum: %s", s)
+		return fmt.Errorf("invalid value for SourcePocketSortByEnum: %v", v)
 	}
 }
 
@@ -94,17 +106,21 @@ const (
 	SourcePocketPocketEnumPocket SourcePocketPocketEnum = "pocket"
 )
 
+func (e SourcePocketPocketEnum) ToPointer() *SourcePocketPocketEnum {
+	return &e
+}
+
 func (e *SourcePocketPocketEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "pocket":
-		*e = SourcePocketPocketEnum(s)
+		*e = SourcePocketPocketEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePocketPocketEnum: %s", s)
+		return fmt.Errorf("invalid value for SourcePocketPocketEnum: %v", v)
 	}
 }
 
@@ -117,21 +133,25 @@ const (
 	SourcePocketStateEnumAll     SourcePocketStateEnum = "all"
 )
 
+func (e SourcePocketStateEnum) ToPointer() *SourcePocketStateEnum {
+	return &e
+}
+
 func (e *SourcePocketStateEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "unread":
 		fallthrough
 	case "archive":
 		fallthrough
 	case "all":
-		*e = SourcePocketStateEnum(s)
+		*e = SourcePocketStateEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePocketStateEnum: %s", s)
+		return fmt.Errorf("invalid value for SourcePocketStateEnum: %v", v)
 	}
 }
 

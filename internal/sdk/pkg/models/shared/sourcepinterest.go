@@ -15,17 +15,21 @@ const (
 	SourcePinterestAuthorizationMethodAccessTokenAuthMethodEnumAccessToken SourcePinterestAuthorizationMethodAccessTokenAuthMethodEnum = "access_token"
 )
 
+func (e SourcePinterestAuthorizationMethodAccessTokenAuthMethodEnum) ToPointer() *SourcePinterestAuthorizationMethodAccessTokenAuthMethodEnum {
+	return &e
+}
+
 func (e *SourcePinterestAuthorizationMethodAccessTokenAuthMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "access_token":
-		*e = SourcePinterestAuthorizationMethodAccessTokenAuthMethodEnum(s)
+		*e = SourcePinterestAuthorizationMethodAccessTokenAuthMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePinterestAuthorizationMethodAccessTokenAuthMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourcePinterestAuthorizationMethodAccessTokenAuthMethodEnum: %v", v)
 	}
 }
 
@@ -41,17 +45,21 @@ const (
 	SourcePinterestAuthorizationMethodOAuth20AuthMethodEnumOauth20 SourcePinterestAuthorizationMethodOAuth20AuthMethodEnum = "oauth2.0"
 )
 
+func (e SourcePinterestAuthorizationMethodOAuth20AuthMethodEnum) ToPointer() *SourcePinterestAuthorizationMethodOAuth20AuthMethodEnum {
+	return &e
+}
+
 func (e *SourcePinterestAuthorizationMethodOAuth20AuthMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "oauth2.0":
-		*e = SourcePinterestAuthorizationMethodOAuth20AuthMethodEnum(s)
+		*e = SourcePinterestAuthorizationMethodOAuth20AuthMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePinterestAuthorizationMethodOAuth20AuthMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourcePinterestAuthorizationMethodOAuth20AuthMethodEnum: %v", v)
 	}
 }
 
@@ -139,17 +147,21 @@ const (
 	SourcePinterestPinterestEnumPinterest SourcePinterestPinterestEnum = "pinterest"
 )
 
+func (e SourcePinterestPinterestEnum) ToPointer() *SourcePinterestPinterestEnum {
+	return &e
+}
+
 func (e *SourcePinterestPinterestEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "pinterest":
-		*e = SourcePinterestPinterestEnum(s)
+		*e = SourcePinterestPinterestEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePinterestPinterestEnum: %s", s)
+		return fmt.Errorf("invalid value for SourcePinterestPinterestEnum: %v", v)
 	}
 }
 
@@ -161,21 +173,25 @@ const (
 	SourcePinterestStatusEnumArchived SourcePinterestStatusEnum = "ARCHIVED"
 )
 
+func (e SourcePinterestStatusEnum) ToPointer() *SourcePinterestStatusEnum {
+	return &e
+}
+
 func (e *SourcePinterestStatusEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "ACTIVE":
 		fallthrough
 	case "PAUSED":
 		fallthrough
 	case "ARCHIVED":
-		*e = SourcePinterestStatusEnum(s)
+		*e = SourcePinterestStatusEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePinterestStatusEnum: %s", s)
+		return fmt.Errorf("invalid value for SourcePinterestStatusEnum: %v", v)
 	}
 }
 

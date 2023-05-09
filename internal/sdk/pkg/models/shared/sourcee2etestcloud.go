@@ -15,17 +15,21 @@ const (
 	SourceE2eTestCloudMockCatalogMultiSchemaTypeEnumMultiStream SourceE2eTestCloudMockCatalogMultiSchemaTypeEnum = "MULTI_STREAM"
 )
 
+func (e SourceE2eTestCloudMockCatalogMultiSchemaTypeEnum) ToPointer() *SourceE2eTestCloudMockCatalogMultiSchemaTypeEnum {
+	return &e
+}
+
 func (e *SourceE2eTestCloudMockCatalogMultiSchemaTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "MULTI_STREAM":
-		*e = SourceE2eTestCloudMockCatalogMultiSchemaTypeEnum(s)
+		*e = SourceE2eTestCloudMockCatalogMultiSchemaTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceE2eTestCloudMockCatalogMultiSchemaTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceE2eTestCloudMockCatalogMultiSchemaTypeEnum: %v", v)
 	}
 }
 
@@ -42,17 +46,21 @@ const (
 	SourceE2eTestCloudMockCatalogSingleSchemaTypeEnumSingleStream SourceE2eTestCloudMockCatalogSingleSchemaTypeEnum = "SINGLE_STREAM"
 )
 
+func (e SourceE2eTestCloudMockCatalogSingleSchemaTypeEnum) ToPointer() *SourceE2eTestCloudMockCatalogSingleSchemaTypeEnum {
+	return &e
+}
+
 func (e *SourceE2eTestCloudMockCatalogSingleSchemaTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "SINGLE_STREAM":
-		*e = SourceE2eTestCloudMockCatalogSingleSchemaTypeEnum(s)
+		*e = SourceE2eTestCloudMockCatalogSingleSchemaTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceE2eTestCloudMockCatalogSingleSchemaTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceE2eTestCloudMockCatalogSingleSchemaTypeEnum: %v", v)
 	}
 }
 
@@ -141,17 +149,21 @@ const (
 	SourceE2eTestCloudE2eTestCloudEnumE2eTestCloud SourceE2eTestCloudE2eTestCloudEnum = "e2e-test-cloud"
 )
 
+func (e SourceE2eTestCloudE2eTestCloudEnum) ToPointer() *SourceE2eTestCloudE2eTestCloudEnum {
+	return &e
+}
+
 func (e *SourceE2eTestCloudE2eTestCloudEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "e2e-test-cloud":
-		*e = SourceE2eTestCloudE2eTestCloudEnum(s)
+		*e = SourceE2eTestCloudE2eTestCloudEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceE2eTestCloudE2eTestCloudEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceE2eTestCloudE2eTestCloudEnum: %v", v)
 	}
 }
 
@@ -161,17 +173,21 @@ const (
 	SourceE2eTestCloudTypeEnumContinuousFeed SourceE2eTestCloudTypeEnum = "CONTINUOUS_FEED"
 )
 
+func (e SourceE2eTestCloudTypeEnum) ToPointer() *SourceE2eTestCloudTypeEnum {
+	return &e
+}
+
 func (e *SourceE2eTestCloudTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "CONTINUOUS_FEED":
-		*e = SourceE2eTestCloudTypeEnum(s)
+		*e = SourceE2eTestCloudTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceE2eTestCloudTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceE2eTestCloudTypeEnum: %v", v)
 	}
 }
 

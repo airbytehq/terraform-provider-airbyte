@@ -14,17 +14,21 @@ const (
 	SourceYandexMetricaYandexMetricaEnumYandexMetrica SourceYandexMetricaYandexMetricaEnum = "yandex-metrica"
 )
 
+func (e SourceYandexMetricaYandexMetricaEnum) ToPointer() *SourceYandexMetricaYandexMetricaEnum {
+	return &e
+}
+
 func (e *SourceYandexMetricaYandexMetricaEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "yandex-metrica":
-		*e = SourceYandexMetricaYandexMetricaEnum(s)
+		*e = SourceYandexMetricaYandexMetricaEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceYandexMetricaYandexMetricaEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceYandexMetricaYandexMetricaEnum: %v", v)
 	}
 }
 

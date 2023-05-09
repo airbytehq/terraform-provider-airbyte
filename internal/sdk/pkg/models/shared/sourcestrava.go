@@ -14,17 +14,21 @@ const (
 	SourceStravaAuthTypeEnumClient SourceStravaAuthTypeEnum = "Client"
 )
 
+func (e SourceStravaAuthTypeEnum) ToPointer() *SourceStravaAuthTypeEnum {
+	return &e
+}
+
 func (e *SourceStravaAuthTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "Client":
-		*e = SourceStravaAuthTypeEnum(s)
+		*e = SourceStravaAuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceStravaAuthTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceStravaAuthTypeEnum: %v", v)
 	}
 }
 
@@ -34,17 +38,21 @@ const (
 	SourceStravaStravaEnumStrava SourceStravaStravaEnum = "strava"
 )
 
+func (e SourceStravaStravaEnum) ToPointer() *SourceStravaStravaEnum {
+	return &e
+}
+
 func (e *SourceStravaStravaEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "strava":
-		*e = SourceStravaStravaEnum(s)
+		*e = SourceStravaStravaEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceStravaStravaEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceStravaStravaEnum: %v", v)
 	}
 }
 

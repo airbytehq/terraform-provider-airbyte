@@ -23,12 +23,16 @@ const (
 	SourceFileSecureFileFormatEnumYaml        SourceFileSecureFileFormatEnum = "yaml"
 )
 
+func (e SourceFileSecureFileFormatEnum) ToPointer() *SourceFileSecureFileFormatEnum {
+	return &e
+}
+
 func (e *SourceFileSecureFileFormatEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "csv":
 		fallthrough
 	case "json":
@@ -44,10 +48,10 @@ func (e *SourceFileSecureFileFormatEnum) UnmarshalJSON(data []byte) error {
 	case "parquet":
 		fallthrough
 	case "yaml":
-		*e = SourceFileSecureFileFormatEnum(s)
+		*e = SourceFileSecureFileFormatEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFileSecureFileFormatEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceFileSecureFileFormatEnum: %v", v)
 	}
 }
 
@@ -57,17 +61,21 @@ const (
 	SourceFileSecureStorageProviderSFTPSecureFileTransferProtocolStorageEnumSftp SourceFileSecureStorageProviderSFTPSecureFileTransferProtocolStorageEnum = "SFTP"
 )
 
+func (e SourceFileSecureStorageProviderSFTPSecureFileTransferProtocolStorageEnum) ToPointer() *SourceFileSecureStorageProviderSFTPSecureFileTransferProtocolStorageEnum {
+	return &e
+}
+
 func (e *SourceFileSecureStorageProviderSFTPSecureFileTransferProtocolStorageEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "SFTP":
-		*e = SourceFileSecureStorageProviderSFTPSecureFileTransferProtocolStorageEnum(s)
+		*e = SourceFileSecureStorageProviderSFTPSecureFileTransferProtocolStorageEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFileSecureStorageProviderSFTPSecureFileTransferProtocolStorageEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceFileSecureStorageProviderSFTPSecureFileTransferProtocolStorageEnum: %v", v)
 	}
 }
 
@@ -86,17 +94,21 @@ const (
 	SourceFileSecureStorageProviderSCPSecureCopyProtocolStorageEnumScp SourceFileSecureStorageProviderSCPSecureCopyProtocolStorageEnum = "SCP"
 )
 
+func (e SourceFileSecureStorageProviderSCPSecureCopyProtocolStorageEnum) ToPointer() *SourceFileSecureStorageProviderSCPSecureCopyProtocolStorageEnum {
+	return &e
+}
+
 func (e *SourceFileSecureStorageProviderSCPSecureCopyProtocolStorageEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "SCP":
-		*e = SourceFileSecureStorageProviderSCPSecureCopyProtocolStorageEnum(s)
+		*e = SourceFileSecureStorageProviderSCPSecureCopyProtocolStorageEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFileSecureStorageProviderSCPSecureCopyProtocolStorageEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceFileSecureStorageProviderSCPSecureCopyProtocolStorageEnum: %v", v)
 	}
 }
 
@@ -115,17 +127,21 @@ const (
 	SourceFileSecureStorageProviderSSHSecureShellStorageEnumSSH SourceFileSecureStorageProviderSSHSecureShellStorageEnum = "SSH"
 )
 
+func (e SourceFileSecureStorageProviderSSHSecureShellStorageEnum) ToPointer() *SourceFileSecureStorageProviderSSHSecureShellStorageEnum {
+	return &e
+}
+
 func (e *SourceFileSecureStorageProviderSSHSecureShellStorageEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "SSH":
-		*e = SourceFileSecureStorageProviderSSHSecureShellStorageEnum(s)
+		*e = SourceFileSecureStorageProviderSSHSecureShellStorageEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFileSecureStorageProviderSSHSecureShellStorageEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceFileSecureStorageProviderSSHSecureShellStorageEnum: %v", v)
 	}
 }
 
@@ -144,17 +160,21 @@ const (
 	SourceFileSecureStorageProviderAzBlobAzureBlobStorageStorageEnumAzBlob SourceFileSecureStorageProviderAzBlobAzureBlobStorageStorageEnum = "AzBlob"
 )
 
+func (e SourceFileSecureStorageProviderAzBlobAzureBlobStorageStorageEnum) ToPointer() *SourceFileSecureStorageProviderAzBlobAzureBlobStorageStorageEnum {
+	return &e
+}
+
 func (e *SourceFileSecureStorageProviderAzBlobAzureBlobStorageStorageEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "AzBlob":
-		*e = SourceFileSecureStorageProviderAzBlobAzureBlobStorageStorageEnum(s)
+		*e = SourceFileSecureStorageProviderAzBlobAzureBlobStorageStorageEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFileSecureStorageProviderAzBlobAzureBlobStorageStorageEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceFileSecureStorageProviderAzBlobAzureBlobStorageStorageEnum: %v", v)
 	}
 }
 
@@ -175,17 +195,21 @@ const (
 	SourceFileSecureStorageProviderS3AmazonWebServicesStorageEnumS3 SourceFileSecureStorageProviderS3AmazonWebServicesStorageEnum = "S3"
 )
 
+func (e SourceFileSecureStorageProviderS3AmazonWebServicesStorageEnum) ToPointer() *SourceFileSecureStorageProviderS3AmazonWebServicesStorageEnum {
+	return &e
+}
+
 func (e *SourceFileSecureStorageProviderS3AmazonWebServicesStorageEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "S3":
-		*e = SourceFileSecureStorageProviderS3AmazonWebServicesStorageEnum(s)
+		*e = SourceFileSecureStorageProviderS3AmazonWebServicesStorageEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFileSecureStorageProviderS3AmazonWebServicesStorageEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceFileSecureStorageProviderS3AmazonWebServicesStorageEnum: %v", v)
 	}
 }
 
@@ -204,17 +228,21 @@ const (
 	SourceFileSecureStorageProviderGCSGoogleCloudStorageStorageEnumGcs SourceFileSecureStorageProviderGCSGoogleCloudStorageStorageEnum = "GCS"
 )
 
+func (e SourceFileSecureStorageProviderGCSGoogleCloudStorageStorageEnum) ToPointer() *SourceFileSecureStorageProviderGCSGoogleCloudStorageStorageEnum {
+	return &e
+}
+
 func (e *SourceFileSecureStorageProviderGCSGoogleCloudStorageStorageEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "GCS":
-		*e = SourceFileSecureStorageProviderGCSGoogleCloudStorageStorageEnum(s)
+		*e = SourceFileSecureStorageProviderGCSGoogleCloudStorageStorageEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFileSecureStorageProviderGCSGoogleCloudStorageStorageEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceFileSecureStorageProviderGCSGoogleCloudStorageStorageEnum: %v", v)
 	}
 }
 
@@ -231,17 +259,21 @@ const (
 	SourceFileSecureStorageProviderHTTPSPublicWebStorageEnumHTTPS SourceFileSecureStorageProviderHTTPSPublicWebStorageEnum = "HTTPS"
 )
 
+func (e SourceFileSecureStorageProviderHTTPSPublicWebStorageEnum) ToPointer() *SourceFileSecureStorageProviderHTTPSPublicWebStorageEnum {
+	return &e
+}
+
 func (e *SourceFileSecureStorageProviderHTTPSPublicWebStorageEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "HTTPS":
-		*e = SourceFileSecureStorageProviderHTTPSPublicWebStorageEnum(s)
+		*e = SourceFileSecureStorageProviderHTTPSPublicWebStorageEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFileSecureStorageProviderHTTPSPublicWebStorageEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceFileSecureStorageProviderHTTPSPublicWebStorageEnum: %v", v)
 	}
 }
 
@@ -446,17 +478,21 @@ const (
 	SourceFileSecureFileSecureEnumFileSecure SourceFileSecureFileSecureEnum = "file-secure"
 )
 
+func (e SourceFileSecureFileSecureEnum) ToPointer() *SourceFileSecureFileSecureEnum {
+	return &e
+}
+
 func (e *SourceFileSecureFileSecureEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "file-secure":
-		*e = SourceFileSecureFileSecureEnum(s)
+		*e = SourceFileSecureFileSecureEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFileSecureFileSecureEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceFileSecureFileSecureEnum: %v", v)
 	}
 }
 

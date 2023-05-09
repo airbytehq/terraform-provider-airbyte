@@ -14,17 +14,21 @@ const (
 	SourceBrazeBrazeEnumBraze SourceBrazeBrazeEnum = "braze"
 )
 
+func (e SourceBrazeBrazeEnum) ToPointer() *SourceBrazeBrazeEnum {
+	return &e
+}
+
 func (e *SourceBrazeBrazeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "braze":
-		*e = SourceBrazeBrazeEnum(s)
+		*e = SourceBrazeBrazeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceBrazeBrazeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceBrazeBrazeEnum: %v", v)
 	}
 }
 

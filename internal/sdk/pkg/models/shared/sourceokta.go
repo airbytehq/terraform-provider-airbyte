@@ -15,17 +15,21 @@ const (
 	SourceOktaAuthorizationMethodAPITokenAuthTypeEnumAPIToken SourceOktaAuthorizationMethodAPITokenAuthTypeEnum = "api_token"
 )
 
+func (e SourceOktaAuthorizationMethodAPITokenAuthTypeEnum) ToPointer() *SourceOktaAuthorizationMethodAPITokenAuthTypeEnum {
+	return &e
+}
+
 func (e *SourceOktaAuthorizationMethodAPITokenAuthTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "api_token":
-		*e = SourceOktaAuthorizationMethodAPITokenAuthTypeEnum(s)
+		*e = SourceOktaAuthorizationMethodAPITokenAuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceOktaAuthorizationMethodAPITokenAuthTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceOktaAuthorizationMethodAPITokenAuthTypeEnum: %v", v)
 	}
 }
 
@@ -41,17 +45,21 @@ const (
 	SourceOktaAuthorizationMethodOAuth20AuthTypeEnumOauth20 SourceOktaAuthorizationMethodOAuth20AuthTypeEnum = "oauth2.0"
 )
 
+func (e SourceOktaAuthorizationMethodOAuth20AuthTypeEnum) ToPointer() *SourceOktaAuthorizationMethodOAuth20AuthTypeEnum {
+	return &e
+}
+
 func (e *SourceOktaAuthorizationMethodOAuth20AuthTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "oauth2.0":
-		*e = SourceOktaAuthorizationMethodOAuth20AuthTypeEnum(s)
+		*e = SourceOktaAuthorizationMethodOAuth20AuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceOktaAuthorizationMethodOAuth20AuthTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceOktaAuthorizationMethodOAuth20AuthTypeEnum: %v", v)
 	}
 }
 
@@ -139,17 +147,21 @@ const (
 	SourceOktaOktaEnumOkta SourceOktaOktaEnum = "okta"
 )
 
+func (e SourceOktaOktaEnum) ToPointer() *SourceOktaOktaEnum {
+	return &e
+}
+
 func (e *SourceOktaOktaEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "okta":
-		*e = SourceOktaOktaEnum(s)
+		*e = SourceOktaOktaEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceOktaOktaEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceOktaOktaEnum: %v", v)
 	}
 }
 

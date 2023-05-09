@@ -15,17 +15,21 @@ const (
 	DestinationOracleOracleEnumOracle DestinationOracleOracleEnum = "oracle"
 )
 
+func (e DestinationOracleOracleEnum) ToPointer() *DestinationOracleOracleEnum {
+	return &e
+}
+
 func (e *DestinationOracleOracleEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "oracle":
-		*e = DestinationOracleOracleEnum(s)
+		*e = DestinationOracleOracleEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationOracleOracleEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationOracleOracleEnum: %v", v)
 	}
 }
 
@@ -36,17 +40,21 @@ const (
 	DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethodEnumSSHPasswordAuth DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum = "SSH_PASSWORD_AUTH"
 )
 
+func (e DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) ToPointer() *DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum {
+	return &e
+}
+
 func (e *DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "SSH_PASSWORD_AUTH":
-		*e = DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(s)
+		*e = DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum: %v", v)
 	}
 }
 
@@ -71,17 +79,21 @@ const (
 	DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnumSSHKeyAuth DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum = "SSH_KEY_AUTH"
 )
 
+func (e DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) ToPointer() *DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum {
+	return &e
+}
+
 func (e *DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "SSH_KEY_AUTH":
-		*e = DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(s)
+		*e = DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum: %v", v)
 	}
 }
 
@@ -106,17 +118,21 @@ const (
 	DestinationOracleSSHTunnelMethodNoTunnelTunnelMethodEnumNoTunnel DestinationOracleSSHTunnelMethodNoTunnelTunnelMethodEnum = "NO_TUNNEL"
 )
 
+func (e DestinationOracleSSHTunnelMethodNoTunnelTunnelMethodEnum) ToPointer() *DestinationOracleSSHTunnelMethodNoTunnelTunnelMethodEnum {
+	return &e
+}
+
 func (e *DestinationOracleSSHTunnelMethodNoTunnelTunnelMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "NO_TUNNEL":
-		*e = DestinationOracleSSHTunnelMethodNoTunnelTunnelMethodEnum(s)
+		*e = DestinationOracleSSHTunnelMethodNoTunnelTunnelMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationOracleSSHTunnelMethodNoTunnelTunnelMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationOracleSSHTunnelMethodNoTunnelTunnelMethodEnum: %v", v)
 	}
 }
 

@@ -2,11 +2,55 @@
 
 package shared
 
+import (
+	"encoding/json"
+	"fmt"
+)
+
+// ConnectionCreateRequestNamespaceDefinitionEnum - Define the location where the data will be stored in the destination
+type ConnectionCreateRequestNamespaceDefinitionEnum string
+
+const (
+	ConnectionCreateRequestNamespaceDefinitionEnumSource       ConnectionCreateRequestNamespaceDefinitionEnum = "source"
+	ConnectionCreateRequestNamespaceDefinitionEnumDestination  ConnectionCreateRequestNamespaceDefinitionEnum = "destination"
+	ConnectionCreateRequestNamespaceDefinitionEnumCustomFormat ConnectionCreateRequestNamespaceDefinitionEnum = "custom_format"
+)
+
+func (e ConnectionCreateRequestNamespaceDefinitionEnum) ToPointer() *ConnectionCreateRequestNamespaceDefinitionEnum {
+	return &e
+}
+
+func (e *ConnectionCreateRequestNamespaceDefinitionEnum) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "source":
+		fallthrough
+	case "destination":
+		fallthrough
+	case "custom_format":
+		*e = ConnectionCreateRequestNamespaceDefinitionEnum(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for ConnectionCreateRequestNamespaceDefinitionEnum: %v", v)
+	}
+}
+
 type ConnectionCreateRequest struct {
-	DestinationID string             `json:"destinationId"`
-	Geography     *GeographyEnumEnum `json:"geography,omitempty"`
+	// A list of configured stream options for a connection.
+	Configurations *StreamConfigurations `json:"configurations,omitempty"`
+	DataResidency  *GeographyEnumEnum    `json:"dataResidency,omitempty"`
+	DestinationID  string                `json:"destinationId"`
 	// Optional name of the connection
 	Name *string `json:"name,omitempty"`
+	// Define the location where the data will be stored in the destination
+	NamespaceDefinition *ConnectionCreateRequestNamespaceDefinitionEnum `json:"namespaceDefinition,omitempty"`
+	// Used when namespaceDefinition is 'custom_format'. If blank then behaves like namespaceDefinition = 'destination'. If "${SOURCE_NAMESPACE}" then behaves like namespaceDefinition = 'source'.
+	NamespaceFormat *string `json:"namespaceFormat,omitempty"`
+	// Prefix that will be prepended to the name of each stream when it is written to the destination (ex. “airbyte_” causes “projects” => “airbyte_projects”).
+	Prefix *string `json:"prefix,omitempty"`
 	// schedule for when the the connection should run, per the schedule type
 	Schedule *ConnectionScheduleCreate `json:"schedule,omitempty"`
 	SourceID string                    `json:"sourceId"`

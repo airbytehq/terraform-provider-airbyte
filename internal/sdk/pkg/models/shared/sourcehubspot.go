@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"time"
 )
 
 // SourceHubspotAuthenticationPrivateAppCredentialsEnum - Name of the credentials set
@@ -16,17 +17,21 @@ const (
 	SourceHubspotAuthenticationPrivateAppCredentialsEnumPrivateAppCredentials SourceHubspotAuthenticationPrivateAppCredentialsEnum = "Private App Credentials"
 )
 
+func (e SourceHubspotAuthenticationPrivateAppCredentialsEnum) ToPointer() *SourceHubspotAuthenticationPrivateAppCredentialsEnum {
+	return &e
+}
+
 func (e *SourceHubspotAuthenticationPrivateAppCredentialsEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "Private App Credentials":
-		*e = SourceHubspotAuthenticationPrivateAppCredentialsEnum(s)
+		*e = SourceHubspotAuthenticationPrivateAppCredentialsEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceHubspotAuthenticationPrivateAppCredentialsEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceHubspotAuthenticationPrivateAppCredentialsEnum: %v", v)
 	}
 }
 
@@ -45,17 +50,21 @@ const (
 	SourceHubspotAuthenticationOAuthCredentialsEnumOAuthCredentials SourceHubspotAuthenticationOAuthCredentialsEnum = "OAuth Credentials"
 )
 
+func (e SourceHubspotAuthenticationOAuthCredentialsEnum) ToPointer() *SourceHubspotAuthenticationOAuthCredentialsEnum {
+	return &e
+}
+
 func (e *SourceHubspotAuthenticationOAuthCredentialsEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "OAuth Credentials":
-		*e = SourceHubspotAuthenticationOAuthCredentialsEnum(s)
+		*e = SourceHubspotAuthenticationOAuthCredentialsEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceHubspotAuthenticationOAuthCredentialsEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceHubspotAuthenticationOAuthCredentialsEnum: %v", v)
 	}
 }
 
@@ -145,17 +154,21 @@ const (
 	SourceHubspotHubspotEnumHubspot SourceHubspotHubspotEnum = "hubspot"
 )
 
+func (e SourceHubspotHubspotEnum) ToPointer() *SourceHubspotHubspotEnum {
+	return &e
+}
+
 func (e *SourceHubspotHubspotEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "hubspot":
-		*e = SourceHubspotHubspotEnum(s)
+		*e = SourceHubspotHubspotEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceHubspotHubspotEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceHubspotHubspotEnum: %v", v)
 	}
 }
 
@@ -165,5 +178,5 @@ type SourceHubspot struct {
 	Credentials SourceHubspotAuthentication `json:"credentials"`
 	SourceType  SourceHubspotHubspotEnum    `json:"sourceType"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
-	StartDate string `json:"start_date"`
+	StartDate time.Time `json:"start_date"`
 }

@@ -15,17 +15,21 @@ const (
 	SourceMysqlReplicationMethodLogicalReplicationCDCMethodEnumCdc SourceMysqlReplicationMethodLogicalReplicationCDCMethodEnum = "CDC"
 )
 
+func (e SourceMysqlReplicationMethodLogicalReplicationCDCMethodEnum) ToPointer() *SourceMysqlReplicationMethodLogicalReplicationCDCMethodEnum {
+	return &e
+}
+
 func (e *SourceMysqlReplicationMethodLogicalReplicationCDCMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "CDC":
-		*e = SourceMysqlReplicationMethodLogicalReplicationCDCMethodEnum(s)
+		*e = SourceMysqlReplicationMethodLogicalReplicationCDCMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMysqlReplicationMethodLogicalReplicationCDCMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceMysqlReplicationMethodLogicalReplicationCDCMethodEnum: %v", v)
 	}
 }
 
@@ -44,17 +48,21 @@ const (
 	SourceMysqlReplicationMethodStandardMethodEnumStandard SourceMysqlReplicationMethodStandardMethodEnum = "STANDARD"
 )
 
+func (e SourceMysqlReplicationMethodStandardMethodEnum) ToPointer() *SourceMysqlReplicationMethodStandardMethodEnum {
+	return &e
+}
+
 func (e *SourceMysqlReplicationMethodStandardMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "STANDARD":
-		*e = SourceMysqlReplicationMethodStandardMethodEnum(s)
+		*e = SourceMysqlReplicationMethodStandardMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMysqlReplicationMethodStandardMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceMysqlReplicationMethodStandardMethodEnum: %v", v)
 	}
 }
 
@@ -137,17 +145,21 @@ const (
 	SourceMysqlMysqlEnumMysql SourceMysqlMysqlEnum = "mysql"
 )
 
+func (e SourceMysqlMysqlEnum) ToPointer() *SourceMysqlMysqlEnum {
+	return &e
+}
+
 func (e *SourceMysqlMysqlEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "mysql":
-		*e = SourceMysqlMysqlEnum(s)
+		*e = SourceMysqlMysqlEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMysqlMysqlEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceMysqlMysqlEnum: %v", v)
 	}
 }
 
@@ -157,17 +169,21 @@ const (
 	SourceMysqlSSLModesVerifyIdentityModeEnumVerifyIdentity SourceMysqlSSLModesVerifyIdentityModeEnum = "verify_identity"
 )
 
+func (e SourceMysqlSSLModesVerifyIdentityModeEnum) ToPointer() *SourceMysqlSSLModesVerifyIdentityModeEnum {
+	return &e
+}
+
 func (e *SourceMysqlSSLModesVerifyIdentityModeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "verify_identity":
-		*e = SourceMysqlSSLModesVerifyIdentityModeEnum(s)
+		*e = SourceMysqlSSLModesVerifyIdentityModeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMysqlSSLModesVerifyIdentityModeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceMysqlSSLModesVerifyIdentityModeEnum: %v", v)
 	}
 }
 
@@ -190,17 +206,21 @@ const (
 	SourceMysqlSSLModesVerifyCAModeEnumVerifyCa SourceMysqlSSLModesVerifyCAModeEnum = "verify_ca"
 )
 
+func (e SourceMysqlSSLModesVerifyCAModeEnum) ToPointer() *SourceMysqlSSLModesVerifyCAModeEnum {
+	return &e
+}
+
 func (e *SourceMysqlSSLModesVerifyCAModeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "verify_ca":
-		*e = SourceMysqlSSLModesVerifyCAModeEnum(s)
+		*e = SourceMysqlSSLModesVerifyCAModeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMysqlSSLModesVerifyCAModeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceMysqlSSLModesVerifyCAModeEnum: %v", v)
 	}
 }
 
@@ -223,17 +243,21 @@ const (
 	SourceMysqlSSLModesRequiredModeEnumRequired SourceMysqlSSLModesRequiredModeEnum = "required"
 )
 
+func (e SourceMysqlSSLModesRequiredModeEnum) ToPointer() *SourceMysqlSSLModesRequiredModeEnum {
+	return &e
+}
+
 func (e *SourceMysqlSSLModesRequiredModeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "required":
-		*e = SourceMysqlSSLModesRequiredModeEnum(s)
+		*e = SourceMysqlSSLModesRequiredModeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMysqlSSLModesRequiredModeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceMysqlSSLModesRequiredModeEnum: %v", v)
 	}
 }
 
@@ -248,17 +272,21 @@ const (
 	SourceMysqlSSLModesPreferredModeEnumPreferred SourceMysqlSSLModesPreferredModeEnum = "preferred"
 )
 
+func (e SourceMysqlSSLModesPreferredModeEnum) ToPointer() *SourceMysqlSSLModesPreferredModeEnum {
+	return &e
+}
+
 func (e *SourceMysqlSSLModesPreferredModeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "preferred":
-		*e = SourceMysqlSSLModesPreferredModeEnum(s)
+		*e = SourceMysqlSSLModesPreferredModeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMysqlSSLModesPreferredModeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceMysqlSSLModesPreferredModeEnum: %v", v)
 	}
 }
 
@@ -390,17 +418,21 @@ const (
 	SourceMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnumSSHPasswordAuth SourceMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum = "SSH_PASSWORD_AUTH"
 )
 
+func (e SourceMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) ToPointer() *SourceMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum {
+	return &e
+}
+
 func (e *SourceMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "SSH_PASSWORD_AUTH":
-		*e = SourceMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(s)
+		*e = SourceMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum: %v", v)
 	}
 }
 
@@ -425,17 +457,21 @@ const (
 	SourceMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnumSSHKeyAuth SourceMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum = "SSH_KEY_AUTH"
 )
 
+func (e SourceMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) ToPointer() *SourceMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum {
+	return &e
+}
+
 func (e *SourceMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "SSH_KEY_AUTH":
-		*e = SourceMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(s)
+		*e = SourceMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum: %v", v)
 	}
 }
 
@@ -460,17 +496,21 @@ const (
 	SourceMysqlSSHTunnelMethodNoTunnelTunnelMethodEnumNoTunnel SourceMysqlSSHTunnelMethodNoTunnelTunnelMethodEnum = "NO_TUNNEL"
 )
 
+func (e SourceMysqlSSHTunnelMethodNoTunnelTunnelMethodEnum) ToPointer() *SourceMysqlSSHTunnelMethodNoTunnelTunnelMethodEnum {
+	return &e
+}
+
 func (e *SourceMysqlSSHTunnelMethodNoTunnelTunnelMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "NO_TUNNEL":
-		*e = SourceMysqlSSHTunnelMethodNoTunnelTunnelMethodEnum(s)
+		*e = SourceMysqlSSHTunnelMethodNoTunnelTunnelMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMysqlSSHTunnelMethodNoTunnelTunnelMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceMysqlSSHTunnelMethodNoTunnelTunnelMethodEnum: %v", v)
 	}
 }
 

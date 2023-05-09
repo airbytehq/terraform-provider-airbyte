@@ -13,17 +13,21 @@ const (
 	SourceGreenhouseGreenhouseEnumGreenhouse SourceGreenhouseGreenhouseEnum = "greenhouse"
 )
 
+func (e SourceGreenhouseGreenhouseEnum) ToPointer() *SourceGreenhouseGreenhouseEnum {
+	return &e
+}
+
 func (e *SourceGreenhouseGreenhouseEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "greenhouse":
-		*e = SourceGreenhouseGreenhouseEnum(s)
+		*e = SourceGreenhouseGreenhouseEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGreenhouseGreenhouseEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceGreenhouseGreenhouseEnum: %v", v)
 	}
 }
 

@@ -9,7 +9,6 @@ import (
 )
 
 // SourceFacebookMarketingInsightConfigValidActionBreakdownsEnum - Generic enumeration.
-//
 // Derive from this class to define new enumerations.
 type SourceFacebookMarketingInsightConfigValidActionBreakdownsEnum string
 
@@ -26,12 +25,16 @@ const (
 	SourceFacebookMarketingInsightConfigValidActionBreakdownsEnumActionVideoType           SourceFacebookMarketingInsightConfigValidActionBreakdownsEnum = "action_video_type"
 )
 
+func (e SourceFacebookMarketingInsightConfigValidActionBreakdownsEnum) ToPointer() *SourceFacebookMarketingInsightConfigValidActionBreakdownsEnum {
+	return &e
+}
+
 func (e *SourceFacebookMarketingInsightConfigValidActionBreakdownsEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "action_canvas_component_name":
 		fallthrough
 	case "action_carousel_card_id":
@@ -51,15 +54,14 @@ func (e *SourceFacebookMarketingInsightConfigValidActionBreakdownsEnum) Unmarsha
 	case "action_video_sound":
 		fallthrough
 	case "action_video_type":
-		*e = SourceFacebookMarketingInsightConfigValidActionBreakdownsEnum(s)
+		*e = SourceFacebookMarketingInsightConfigValidActionBreakdownsEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFacebookMarketingInsightConfigValidActionBreakdownsEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceFacebookMarketingInsightConfigValidActionBreakdownsEnum: %v", v)
 	}
 }
 
 // SourceFacebookMarketingInsightConfigValidBreakdownsEnum - Generic enumeration.
-//
 // Derive from this class to define new enumerations.
 type SourceFacebookMarketingInsightConfigValidBreakdownsEnum string
 
@@ -93,12 +95,16 @@ const (
 	SourceFacebookMarketingInsightConfigValidBreakdownsEnumVideoAsset                                SourceFacebookMarketingInsightConfigValidBreakdownsEnum = "video_asset"
 )
 
+func (e SourceFacebookMarketingInsightConfigValidBreakdownsEnum) ToPointer() *SourceFacebookMarketingInsightConfigValidBreakdownsEnum {
+	return &e
+}
+
 func (e *SourceFacebookMarketingInsightConfigValidBreakdownsEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "ad_format_asset":
 		fallthrough
 	case "age":
@@ -152,15 +158,14 @@ func (e *SourceFacebookMarketingInsightConfigValidBreakdownsEnum) UnmarshalJSON(
 	case "title_asset":
 		fallthrough
 	case "video_asset":
-		*e = SourceFacebookMarketingInsightConfigValidBreakdownsEnum(s)
+		*e = SourceFacebookMarketingInsightConfigValidBreakdownsEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFacebookMarketingInsightConfigValidBreakdownsEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceFacebookMarketingInsightConfigValidBreakdownsEnum: %v", v)
 	}
 }
 
 // SourceFacebookMarketingInsightConfigValidEnumsEnum - Generic enumeration.
-//
 // Derive from this class to define new enumerations.
 type SourceFacebookMarketingInsightConfigValidEnumsEnum string
 
@@ -298,12 +303,16 @@ const (
 	SourceFacebookMarketingInsightConfigValidEnumsEnumWishBid                                 SourceFacebookMarketingInsightConfigValidEnumsEnum = "wish_bid"
 )
 
+func (e SourceFacebookMarketingInsightConfigValidEnumsEnum) ToPointer() *SourceFacebookMarketingInsightConfigValidEnumsEnum {
+	return &e
+}
+
 func (e *SourceFacebookMarketingInsightConfigValidEnumsEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "account_currency":
 		fallthrough
 	case "account_id":
@@ -565,10 +574,10 @@ func (e *SourceFacebookMarketingInsightConfigValidEnumsEnum) UnmarshalJSON(data 
 	case "website_purchase_roas":
 		fallthrough
 	case "wish_bid":
-		*e = SourceFacebookMarketingInsightConfigValidEnumsEnum(s)
+		*e = SourceFacebookMarketingInsightConfigValidEnumsEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFacebookMarketingInsightConfigValidEnumsEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceFacebookMarketingInsightConfigValidEnumsEnum: %v", v)
 	}
 }
 
@@ -582,12 +591,16 @@ const (
 	SourceFacebookMarketingInsightConfigLevelEnumAccount  SourceFacebookMarketingInsightConfigLevelEnum = "account"
 )
 
+func (e SourceFacebookMarketingInsightConfigLevelEnum) ToPointer() *SourceFacebookMarketingInsightConfigLevelEnum {
+	return &e
+}
+
 func (e *SourceFacebookMarketingInsightConfigLevelEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "ad":
 		fallthrough
 	case "adset":
@@ -595,10 +608,10 @@ func (e *SourceFacebookMarketingInsightConfigLevelEnum) UnmarshalJSON(data []byt
 	case "campaign":
 		fallthrough
 	case "account":
-		*e = SourceFacebookMarketingInsightConfigLevelEnum(s)
+		*e = SourceFacebookMarketingInsightConfigLevelEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFacebookMarketingInsightConfigLevelEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceFacebookMarketingInsightConfigLevelEnum: %v", v)
 	}
 }
 
@@ -630,17 +643,21 @@ const (
 	SourceFacebookMarketingFacebookMarketingEnumFacebookMarketing SourceFacebookMarketingFacebookMarketingEnum = "facebook-marketing"
 )
 
+func (e SourceFacebookMarketingFacebookMarketingEnum) ToPointer() *SourceFacebookMarketingFacebookMarketingEnum {
+	return &e
+}
+
 func (e *SourceFacebookMarketingFacebookMarketingEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "facebook-marketing":
-		*e = SourceFacebookMarketingFacebookMarketingEnum(s)
+		*e = SourceFacebookMarketingFacebookMarketingEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFacebookMarketingFacebookMarketingEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceFacebookMarketingFacebookMarketingEnum: %v", v)
 	}
 }
 

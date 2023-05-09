@@ -15,17 +15,21 @@ const (
 	DestinationMariadbColumnstoreMariadbColumnstoreEnumMariadbColumnstore DestinationMariadbColumnstoreMariadbColumnstoreEnum = "mariadb-columnstore"
 )
 
+func (e DestinationMariadbColumnstoreMariadbColumnstoreEnum) ToPointer() *DestinationMariadbColumnstoreMariadbColumnstoreEnum {
+	return &e
+}
+
 func (e *DestinationMariadbColumnstoreMariadbColumnstoreEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "mariadb-columnstore":
-		*e = DestinationMariadbColumnstoreMariadbColumnstoreEnum(s)
+		*e = DestinationMariadbColumnstoreMariadbColumnstoreEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationMariadbColumnstoreMariadbColumnstoreEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationMariadbColumnstoreMariadbColumnstoreEnum: %v", v)
 	}
 }
 
@@ -36,17 +40,21 @@ const (
 	DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthenticationTunnelMethodEnumSSHPasswordAuth DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum = "SSH_PASSWORD_AUTH"
 )
 
+func (e DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) ToPointer() *DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum {
+	return &e
+}
+
 func (e *DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "SSH_PASSWORD_AUTH":
-		*e = DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(s)
+		*e = DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum: %v", v)
 	}
 }
 
@@ -71,17 +79,21 @@ const (
 	DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnumSSHKeyAuth DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum = "SSH_KEY_AUTH"
 )
 
+func (e DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) ToPointer() *DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum {
+	return &e
+}
+
 func (e *DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "SSH_KEY_AUTH":
-		*e = DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(s)
+		*e = DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum: %v", v)
 	}
 }
 
@@ -106,17 +118,21 @@ const (
 	DestinationMariadbColumnstoreSSHTunnelMethodNoTunnelTunnelMethodEnumNoTunnel DestinationMariadbColumnstoreSSHTunnelMethodNoTunnelTunnelMethodEnum = "NO_TUNNEL"
 )
 
+func (e DestinationMariadbColumnstoreSSHTunnelMethodNoTunnelTunnelMethodEnum) ToPointer() *DestinationMariadbColumnstoreSSHTunnelMethodNoTunnelTunnelMethodEnum {
+	return &e
+}
+
 func (e *DestinationMariadbColumnstoreSSHTunnelMethodNoTunnelTunnelMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "NO_TUNNEL":
-		*e = DestinationMariadbColumnstoreSSHTunnelMethodNoTunnelTunnelMethodEnum(s)
+		*e = DestinationMariadbColumnstoreSSHTunnelMethodNoTunnelTunnelMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationMariadbColumnstoreSSHTunnelMethodNoTunnelTunnelMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationMariadbColumnstoreSSHTunnelMethodNoTunnelTunnelMethodEnum: %v", v)
 	}
 }
 

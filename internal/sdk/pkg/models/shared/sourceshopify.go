@@ -15,17 +15,21 @@ const (
 	SourceShopifyShopifyAuthorizationMethodOAuth20AuthMethodEnumOauth20 SourceShopifyShopifyAuthorizationMethodOAuth20AuthMethodEnum = "oauth2.0"
 )
 
+func (e SourceShopifyShopifyAuthorizationMethodOAuth20AuthMethodEnum) ToPointer() *SourceShopifyShopifyAuthorizationMethodOAuth20AuthMethodEnum {
+	return &e
+}
+
 func (e *SourceShopifyShopifyAuthorizationMethodOAuth20AuthMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "oauth2.0":
-		*e = SourceShopifyShopifyAuthorizationMethodOAuth20AuthMethodEnum(s)
+		*e = SourceShopifyShopifyAuthorizationMethodOAuth20AuthMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceShopifyShopifyAuthorizationMethodOAuth20AuthMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceShopifyShopifyAuthorizationMethodOAuth20AuthMethodEnum: %v", v)
 	}
 }
 
@@ -46,17 +50,21 @@ const (
 	SourceShopifyShopifyAuthorizationMethodAPIPasswordAuthMethodEnumAPIPassword SourceShopifyShopifyAuthorizationMethodAPIPasswordAuthMethodEnum = "api_password"
 )
 
+func (e SourceShopifyShopifyAuthorizationMethodAPIPasswordAuthMethodEnum) ToPointer() *SourceShopifyShopifyAuthorizationMethodAPIPasswordAuthMethodEnum {
+	return &e
+}
+
 func (e *SourceShopifyShopifyAuthorizationMethodAPIPasswordAuthMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "api_password":
-		*e = SourceShopifyShopifyAuthorizationMethodAPIPasswordAuthMethodEnum(s)
+		*e = SourceShopifyShopifyAuthorizationMethodAPIPasswordAuthMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceShopifyShopifyAuthorizationMethodAPIPasswordAuthMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceShopifyShopifyAuthorizationMethodAPIPasswordAuthMethodEnum: %v", v)
 	}
 }
 
@@ -141,17 +149,21 @@ const (
 	SourceShopifyShopifyEnumShopify SourceShopifyShopifyEnum = "shopify"
 )
 
+func (e SourceShopifyShopifyEnum) ToPointer() *SourceShopifyShopifyEnum {
+	return &e
+}
+
 func (e *SourceShopifyShopifyEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "shopify":
-		*e = SourceShopifyShopifyEnum(s)
+		*e = SourceShopifyShopifyEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceShopifyShopifyEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceShopifyShopifyEnum: %v", v)
 	}
 }
 

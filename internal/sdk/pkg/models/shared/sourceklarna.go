@@ -16,21 +16,25 @@ const (
 	SourceKlarnaRegionEnumOc SourceKlarnaRegionEnum = "oc"
 )
 
+func (e SourceKlarnaRegionEnum) ToPointer() *SourceKlarnaRegionEnum {
+	return &e
+}
+
 func (e *SourceKlarnaRegionEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "eu":
 		fallthrough
 	case "us":
 		fallthrough
 	case "oc":
-		*e = SourceKlarnaRegionEnum(s)
+		*e = SourceKlarnaRegionEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceKlarnaRegionEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceKlarnaRegionEnum: %v", v)
 	}
 }
 
@@ -40,17 +44,21 @@ const (
 	SourceKlarnaKlarnaEnumKlarna SourceKlarnaKlarnaEnum = "klarna"
 )
 
+func (e SourceKlarnaKlarnaEnum) ToPointer() *SourceKlarnaKlarnaEnum {
+	return &e
+}
+
 func (e *SourceKlarnaKlarnaEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "klarna":
-		*e = SourceKlarnaKlarnaEnum(s)
+		*e = SourceKlarnaKlarnaEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceKlarnaKlarnaEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceKlarnaKlarnaEnum: %v", v)
 	}
 }
 

@@ -18,12 +18,16 @@ const (
 	SourceBraintreeEnvironmentEnumProduction  SourceBraintreeEnvironmentEnum = "Production"
 )
 
+func (e SourceBraintreeEnvironmentEnum) ToPointer() *SourceBraintreeEnvironmentEnum {
+	return &e
+}
+
 func (e *SourceBraintreeEnvironmentEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "Development":
 		fallthrough
 	case "Sandbox":
@@ -31,10 +35,10 @@ func (e *SourceBraintreeEnvironmentEnum) UnmarshalJSON(data []byte) error {
 	case "Qa":
 		fallthrough
 	case "Production":
-		*e = SourceBraintreeEnvironmentEnum(s)
+		*e = SourceBraintreeEnvironmentEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceBraintreeEnvironmentEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceBraintreeEnvironmentEnum: %v", v)
 	}
 }
 
@@ -44,17 +48,21 @@ const (
 	SourceBraintreeBraintreeEnumBraintree SourceBraintreeBraintreeEnum = "braintree"
 )
 
+func (e SourceBraintreeBraintreeEnum) ToPointer() *SourceBraintreeBraintreeEnum {
+	return &e
+}
+
 func (e *SourceBraintreeBraintreeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "braintree":
-		*e = SourceBraintreeBraintreeEnum(s)
+		*e = SourceBraintreeBraintreeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceBraintreeBraintreeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceBraintreeBraintreeEnum: %v", v)
 	}
 }
 

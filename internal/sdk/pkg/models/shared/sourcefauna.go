@@ -15,24 +15,25 @@ const (
 	SourceFaunaCollectionDeletionModeEnabledDeletionModeEnumDeletedField SourceFaunaCollectionDeletionModeEnabledDeletionModeEnum = "deleted_field"
 )
 
+func (e SourceFaunaCollectionDeletionModeEnabledDeletionModeEnum) ToPointer() *SourceFaunaCollectionDeletionModeEnabledDeletionModeEnum {
+	return &e
+}
+
 func (e *SourceFaunaCollectionDeletionModeEnabledDeletionModeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "deleted_field":
-		*e = SourceFaunaCollectionDeletionModeEnabledDeletionModeEnum(s)
+		*e = SourceFaunaCollectionDeletionModeEnabledDeletionModeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFaunaCollectionDeletionModeEnabledDeletionModeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceFaunaCollectionDeletionModeEnabledDeletionModeEnum: %v", v)
 	}
 }
 
-// SourceFaunaCollectionDeletionModeEnabled - <b>This only applies to incremental syncs.</b> <br>
-// Enabling deletion mode informs your destination of deleted documents.<br>
-// Disabled - Leave this feature disabled, and ignore deleted documents.<br>
-// Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted.
+// SourceFaunaCollectionDeletionModeEnabled - <b>This only applies to incremental syncs.</b> <br> Enabling deletion mode informs your destination of deleted documents.<br> Disabled - Leave this feature disabled, and ignore deleted documents.<br> Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted.
 type SourceFaunaCollectionDeletionModeEnabled struct {
 	// Name of the "deleted at" column.
 	Column       string                                                   `json:"column"`
@@ -45,24 +46,25 @@ const (
 	SourceFaunaCollectionDeletionModeDisabledDeletionModeEnumIgnore SourceFaunaCollectionDeletionModeDisabledDeletionModeEnum = "ignore"
 )
 
+func (e SourceFaunaCollectionDeletionModeDisabledDeletionModeEnum) ToPointer() *SourceFaunaCollectionDeletionModeDisabledDeletionModeEnum {
+	return &e
+}
+
 func (e *SourceFaunaCollectionDeletionModeDisabledDeletionModeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "ignore":
-		*e = SourceFaunaCollectionDeletionModeDisabledDeletionModeEnum(s)
+		*e = SourceFaunaCollectionDeletionModeDisabledDeletionModeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFaunaCollectionDeletionModeDisabledDeletionModeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceFaunaCollectionDeletionModeDisabledDeletionModeEnum: %v", v)
 	}
 }
 
-// SourceFaunaCollectionDeletionModeDisabled - <b>This only applies to incremental syncs.</b> <br>
-// Enabling deletion mode informs your destination of deleted documents.<br>
-// Disabled - Leave this feature disabled, and ignore deleted documents.<br>
-// Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted.
+// SourceFaunaCollectionDeletionModeDisabled - <b>This only applies to incremental syncs.</b> <br> Enabling deletion mode informs your destination of deleted documents.<br> Disabled - Leave this feature disabled, and ignore deleted documents.<br> Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted.
 type SourceFaunaCollectionDeletionModeDisabled struct {
 	DeletionMode SourceFaunaCollectionDeletionModeDisabledDeletionModeEnum `json:"deletion_mode"`
 }
@@ -137,14 +139,9 @@ func (u SourceFaunaCollectionDeletionMode) MarshalJSON() ([]byte, error) {
 
 // SourceFaunaCollection - Settings for the Fauna Collection.
 type SourceFaunaCollection struct {
-	// <b>This only applies to incremental syncs.</b> <br>
-	// Enabling deletion mode informs your destination of deleted documents.<br>
-	// Disabled - Leave this feature disabled, and ignore deleted documents.<br>
-	// Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted.
+	// <b>This only applies to incremental syncs.</b> <br> Enabling deletion mode informs your destination of deleted documents.<br> Disabled - Leave this feature disabled, and ignore deleted documents.<br> Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted.
 	Deletions SourceFaunaCollectionDeletionMode `json:"deletions"`
-	// The page size used when reading documents from the database. The larger the page size, the faster the connector processes documents. However, if a page is too large, the connector may fail. <br>
-	// Choose your page size based on how large the documents are. <br>
-	// See <a href="https://docs.fauna.com/fauna/current/learn/understanding/types#page">the docs</a>.
+	// The page size used when reading documents from the database. The larger the page size, the faster the connector processes documents. However, if a page is too large, the connector may fail. <br> Choose your page size based on how large the documents are. <br> See <a href="https://docs.fauna.com/fauna/current/learn/understanding/types#page">the docs</a>.
 	PageSize int64 `json:"page_size"`
 }
 
@@ -154,17 +151,21 @@ const (
 	SourceFaunaFaunaEnumFauna SourceFaunaFaunaEnum = "fauna"
 )
 
+func (e SourceFaunaFaunaEnum) ToPointer() *SourceFaunaFaunaEnum {
+	return &e
+}
+
 func (e *SourceFaunaFaunaEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "fauna":
-		*e = SourceFaunaFaunaEnum(s)
+		*e = SourceFaunaFaunaEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFaunaFaunaEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceFaunaFaunaEnum: %v", v)
 	}
 }
 

@@ -13,17 +13,21 @@ const (
 	SourceSmartengageSmartengageEnumSmartengage SourceSmartengageSmartengageEnum = "smartengage"
 )
 
+func (e SourceSmartengageSmartengageEnum) ToPointer() *SourceSmartengageSmartengageEnum {
+	return &e
+}
+
 func (e *SourceSmartengageSmartengageEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "smartengage":
-		*e = SourceSmartengageSmartengageEnum(s)
+		*e = SourceSmartengageSmartengageEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSmartengageSmartengageEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceSmartengageSmartengageEnum: %v", v)
 	}
 }
 

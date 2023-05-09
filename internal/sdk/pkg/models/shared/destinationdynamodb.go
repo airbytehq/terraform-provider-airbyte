@@ -13,17 +13,21 @@ const (
 	DestinationDynamodbDynamodbEnumDynamodb DestinationDynamodbDynamodbEnum = "dynamodb"
 )
 
+func (e DestinationDynamodbDynamodbEnum) ToPointer() *DestinationDynamodbDynamodbEnum {
+	return &e
+}
+
 func (e *DestinationDynamodbDynamodbEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "dynamodb":
-		*e = DestinationDynamodbDynamodbEnum(s)
+		*e = DestinationDynamodbDynamodbEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationDynamodbDynamodbEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationDynamodbDynamodbEnum: %v", v)
 	}
 }
 
@@ -59,12 +63,16 @@ const (
 	DestinationDynamodbDynamoDBRegionEnumUsGovWest1   DestinationDynamodbDynamoDBRegionEnum = "us-gov-west-1"
 )
 
+func (e DestinationDynamodbDynamoDBRegionEnum) ToPointer() *DestinationDynamodbDynamoDBRegionEnum {
+	return &e
+}
+
 func (e *DestinationDynamodbDynamoDBRegionEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "":
 		fallthrough
 	case "us-east-1":
@@ -116,10 +124,10 @@ func (e *DestinationDynamodbDynamoDBRegionEnum) UnmarshalJSON(data []byte) error
 	case "us-gov-east-1":
 		fallthrough
 	case "us-gov-west-1":
-		*e = DestinationDynamodbDynamoDBRegionEnum(s)
+		*e = DestinationDynamodbDynamoDBRegionEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationDynamodbDynamoDBRegionEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationDynamodbDynamoDBRegionEnum: %v", v)
 	}
 }
 

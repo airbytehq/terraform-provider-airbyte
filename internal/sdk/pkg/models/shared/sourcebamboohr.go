@@ -13,17 +13,21 @@ const (
 	SourceBambooHrBambooHrEnumBambooHr SourceBambooHrBambooHrEnum = "bamboo-hr"
 )
 
+func (e SourceBambooHrBambooHrEnum) ToPointer() *SourceBambooHrBambooHrEnum {
+	return &e
+}
+
 func (e *SourceBambooHrBambooHrEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "bamboo-hr":
-		*e = SourceBambooHrBambooHrEnum(s)
+		*e = SourceBambooHrBambooHrEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceBambooHrBambooHrEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceBambooHrBambooHrEnum: %v", v)
 	}
 }
 

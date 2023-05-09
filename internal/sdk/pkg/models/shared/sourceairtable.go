@@ -16,17 +16,21 @@ const (
 	SourceAirtableAuthenticationPersonalAccessTokenAuthMethodEnumAPIKey SourceAirtableAuthenticationPersonalAccessTokenAuthMethodEnum = "api_key"
 )
 
+func (e SourceAirtableAuthenticationPersonalAccessTokenAuthMethodEnum) ToPointer() *SourceAirtableAuthenticationPersonalAccessTokenAuthMethodEnum {
+	return &e
+}
+
 func (e *SourceAirtableAuthenticationPersonalAccessTokenAuthMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "api_key":
-		*e = SourceAirtableAuthenticationPersonalAccessTokenAuthMethodEnum(s)
+		*e = SourceAirtableAuthenticationPersonalAccessTokenAuthMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAirtableAuthenticationPersonalAccessTokenAuthMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceAirtableAuthenticationPersonalAccessTokenAuthMethodEnum: %v", v)
 	}
 }
 
@@ -42,17 +46,21 @@ const (
 	SourceAirtableAuthenticationOAuth20AuthMethodEnumOauth20 SourceAirtableAuthenticationOAuth20AuthMethodEnum = "oauth2.0"
 )
 
+func (e SourceAirtableAuthenticationOAuth20AuthMethodEnum) ToPointer() *SourceAirtableAuthenticationOAuth20AuthMethodEnum {
+	return &e
+}
+
 func (e *SourceAirtableAuthenticationOAuth20AuthMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "oauth2.0":
-		*e = SourceAirtableAuthenticationOAuth20AuthMethodEnum(s)
+		*e = SourceAirtableAuthenticationOAuth20AuthMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAirtableAuthenticationOAuth20AuthMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceAirtableAuthenticationOAuth20AuthMethodEnum: %v", v)
 	}
 }
 
@@ -144,17 +152,21 @@ const (
 	SourceAirtableAirtableEnumAirtable SourceAirtableAirtableEnum = "airtable"
 )
 
+func (e SourceAirtableAirtableEnum) ToPointer() *SourceAirtableAirtableEnum {
+	return &e
+}
+
 func (e *SourceAirtableAirtableEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "airtable":
-		*e = SourceAirtableAirtableEnum(s)
+		*e = SourceAirtableAirtableEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAirtableAirtableEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceAirtableAirtableEnum: %v", v)
 	}
 }
 

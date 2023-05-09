@@ -20,17 +20,21 @@ const (
 	SourceOnesignalOnesignalEnumOnesignal SourceOnesignalOnesignalEnum = "onesignal"
 )
 
+func (e SourceOnesignalOnesignalEnum) ToPointer() *SourceOnesignalOnesignalEnum {
+	return &e
+}
+
 func (e *SourceOnesignalOnesignalEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "onesignal":
-		*e = SourceOnesignalOnesignalEnum(s)
+		*e = SourceOnesignalOnesignalEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceOnesignalOnesignalEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceOnesignalOnesignalEnum: %v", v)
 	}
 }
 

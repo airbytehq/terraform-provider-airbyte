@@ -13,17 +13,21 @@ const (
 	SourceFacebookPagesFacebookPagesEnumFacebookPages SourceFacebookPagesFacebookPagesEnum = "facebook-pages"
 )
 
+func (e SourceFacebookPagesFacebookPagesEnum) ToPointer() *SourceFacebookPagesFacebookPagesEnum {
+	return &e
+}
+
 func (e *SourceFacebookPagesFacebookPagesEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "facebook-pages":
-		*e = SourceFacebookPagesFacebookPagesEnum(s)
+		*e = SourceFacebookPagesFacebookPagesEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFacebookPagesFacebookPagesEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceFacebookPagesFacebookPagesEnum: %v", v)
 	}
 }
 

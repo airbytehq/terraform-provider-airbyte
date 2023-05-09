@@ -15,17 +15,21 @@ const (
 	SourceLinkedinPagesAuthenticationAccessTokenAuthMethodEnumAccessToken SourceLinkedinPagesAuthenticationAccessTokenAuthMethodEnum = "access_token"
 )
 
+func (e SourceLinkedinPagesAuthenticationAccessTokenAuthMethodEnum) ToPointer() *SourceLinkedinPagesAuthenticationAccessTokenAuthMethodEnum {
+	return &e
+}
+
 func (e *SourceLinkedinPagesAuthenticationAccessTokenAuthMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "access_token":
-		*e = SourceLinkedinPagesAuthenticationAccessTokenAuthMethodEnum(s)
+		*e = SourceLinkedinPagesAuthenticationAccessTokenAuthMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceLinkedinPagesAuthenticationAccessTokenAuthMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceLinkedinPagesAuthenticationAccessTokenAuthMethodEnum: %v", v)
 	}
 }
 
@@ -41,17 +45,21 @@ const (
 	SourceLinkedinPagesAuthenticationOAuth20AuthMethodEnumOAuth20 SourceLinkedinPagesAuthenticationOAuth20AuthMethodEnum = "oAuth2.0"
 )
 
+func (e SourceLinkedinPagesAuthenticationOAuth20AuthMethodEnum) ToPointer() *SourceLinkedinPagesAuthenticationOAuth20AuthMethodEnum {
+	return &e
+}
+
 func (e *SourceLinkedinPagesAuthenticationOAuth20AuthMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "oAuth2.0":
-		*e = SourceLinkedinPagesAuthenticationOAuth20AuthMethodEnum(s)
+		*e = SourceLinkedinPagesAuthenticationOAuth20AuthMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceLinkedinPagesAuthenticationOAuth20AuthMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceLinkedinPagesAuthenticationOAuth20AuthMethodEnum: %v", v)
 	}
 }
 
@@ -139,17 +147,21 @@ const (
 	SourceLinkedinPagesLinkedinPagesEnumLinkedinPages SourceLinkedinPagesLinkedinPagesEnum = "linkedin-pages"
 )
 
+func (e SourceLinkedinPagesLinkedinPagesEnum) ToPointer() *SourceLinkedinPagesLinkedinPagesEnum {
+	return &e
+}
+
 func (e *SourceLinkedinPagesLinkedinPagesEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "linkedin-pages":
-		*e = SourceLinkedinPagesLinkedinPagesEnum(s)
+		*e = SourceLinkedinPagesLinkedinPagesEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceLinkedinPagesLinkedinPagesEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceLinkedinPagesLinkedinPagesEnum: %v", v)
 	}
 }
 

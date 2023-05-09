@@ -15,17 +15,21 @@ const (
 	DestinationSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeEnumUsernameAndPassword DestinationSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeEnum = "Username and Password"
 )
 
+func (e DestinationSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeEnum) ToPointer() *DestinationSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeEnum {
+	return &e
+}
+
 func (e *DestinationSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "Username and Password":
-		*e = DestinationSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeEnum(s)
+		*e = DestinationSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeEnum: %v", v)
 	}
 }
 
@@ -41,17 +45,21 @@ const (
 	DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthTypeEnumKeyPairAuthentication DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthTypeEnum = "Key Pair Authentication"
 )
 
+func (e DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthTypeEnum) ToPointer() *DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthTypeEnum {
+	return &e
+}
+
 func (e *DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "Key Pair Authentication":
-		*e = DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthTypeEnum(s)
+		*e = DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthTypeEnum: %v", v)
 	}
 }
 
@@ -69,17 +77,21 @@ const (
 	DestinationSnowflakeAuthorizationMethodOAuth20AuthTypeEnumOAuth20 DestinationSnowflakeAuthorizationMethodOAuth20AuthTypeEnum = "OAuth2.0"
 )
 
+func (e DestinationSnowflakeAuthorizationMethodOAuth20AuthTypeEnum) ToPointer() *DestinationSnowflakeAuthorizationMethodOAuth20AuthTypeEnum {
+	return &e
+}
+
 func (e *DestinationSnowflakeAuthorizationMethodOAuth20AuthTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "OAuth2.0":
-		*e = DestinationSnowflakeAuthorizationMethodOAuth20AuthTypeEnum(s)
+		*e = DestinationSnowflakeAuthorizationMethodOAuth20AuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationSnowflakeAuthorizationMethodOAuth20AuthTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationSnowflakeAuthorizationMethodOAuth20AuthTypeEnum: %v", v)
 	}
 }
 
@@ -193,17 +205,21 @@ const (
 	DestinationSnowflakeSnowflakeEnumSnowflake DestinationSnowflakeSnowflakeEnum = "snowflake"
 )
 
+func (e DestinationSnowflakeSnowflakeEnum) ToPointer() *DestinationSnowflakeSnowflakeEnum {
+	return &e
+}
+
 func (e *DestinationSnowflakeSnowflakeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "snowflake":
-		*e = DestinationSnowflakeSnowflakeEnum(s)
+		*e = DestinationSnowflakeSnowflakeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationSnowflakeSnowflakeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationSnowflakeSnowflakeEnum: %v", v)
 	}
 }
 
@@ -213,17 +229,21 @@ const (
 	DestinationSnowflakeDataStagingMethodAzureBlobStorageStagingMethodEnumAzureBlobStaging DestinationSnowflakeDataStagingMethodAzureBlobStorageStagingMethodEnum = "Azure Blob Staging"
 )
 
+func (e DestinationSnowflakeDataStagingMethodAzureBlobStorageStagingMethodEnum) ToPointer() *DestinationSnowflakeDataStagingMethodAzureBlobStorageStagingMethodEnum {
+	return &e
+}
+
 func (e *DestinationSnowflakeDataStagingMethodAzureBlobStorageStagingMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "Azure Blob Staging":
-		*e = DestinationSnowflakeDataStagingMethodAzureBlobStorageStagingMethodEnum(s)
+		*e = DestinationSnowflakeDataStagingMethodAzureBlobStorageStagingMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationSnowflakeDataStagingMethodAzureBlobStorageStagingMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationSnowflakeDataStagingMethodAzureBlobStorageStagingMethodEnum: %v", v)
 	}
 }
 
@@ -246,17 +266,21 @@ const (
 	DestinationSnowflakeDataStagingMethodGoogleCloudStorageStagingMethodEnumGcsStaging DestinationSnowflakeDataStagingMethodGoogleCloudStorageStagingMethodEnum = "GCS Staging"
 )
 
+func (e DestinationSnowflakeDataStagingMethodGoogleCloudStorageStagingMethodEnum) ToPointer() *DestinationSnowflakeDataStagingMethodGoogleCloudStorageStagingMethodEnum {
+	return &e
+}
+
 func (e *DestinationSnowflakeDataStagingMethodGoogleCloudStorageStagingMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "GCS Staging":
-		*e = DestinationSnowflakeDataStagingMethodGoogleCloudStorageStagingMethodEnum(s)
+		*e = DestinationSnowflakeDataStagingMethodGoogleCloudStorageStagingMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationSnowflakeDataStagingMethodGoogleCloudStorageStagingMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationSnowflakeDataStagingMethodGoogleCloudStorageStagingMethodEnum: %v", v)
 	}
 }
 
@@ -277,17 +301,21 @@ const (
 	DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionTypeEnumAesCbcEnvelope DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionTypeEnum = "aes_cbc_envelope"
 )
 
+func (e DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionTypeEnum) ToPointer() *DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionTypeEnum {
+	return &e
+}
+
 func (e *DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "aes_cbc_envelope":
-		*e = DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionTypeEnum(s)
+		*e = DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionTypeEnum: %v", v)
 	}
 }
 
@@ -304,17 +332,21 @@ const (
 	DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryptionEncryptionTypeEnumNone DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryptionEncryptionTypeEnum = "none"
 )
 
+func (e DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryptionEncryptionTypeEnum) ToPointer() *DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryptionEncryptionTypeEnum {
+	return &e
+}
+
 func (e *DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryptionEncryptionTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "none":
-		*e = DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryptionEncryptionTypeEnum(s)
+		*e = DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryptionEncryptionTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryptionEncryptionTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryptionEncryptionTypeEnum: %v", v)
 	}
 }
 
@@ -397,17 +429,21 @@ const (
 	DestinationSnowflakeDataStagingMethodAWSS3StagingMethodEnumS3Staging DestinationSnowflakeDataStagingMethodAWSS3StagingMethodEnum = "S3 Staging"
 )
 
+func (e DestinationSnowflakeDataStagingMethodAWSS3StagingMethodEnum) ToPointer() *DestinationSnowflakeDataStagingMethodAWSS3StagingMethodEnum {
+	return &e
+}
+
 func (e *DestinationSnowflakeDataStagingMethodAWSS3StagingMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "S3 Staging":
-		*e = DestinationSnowflakeDataStagingMethodAWSS3StagingMethodEnum(s)
+		*e = DestinationSnowflakeDataStagingMethodAWSS3StagingMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationSnowflakeDataStagingMethodAWSS3StagingMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationSnowflakeDataStagingMethodAWSS3StagingMethodEnum: %v", v)
 	}
 }
 
@@ -441,12 +477,16 @@ const (
 	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnumMeSouth1     DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum = "me-south-1"
 )
 
+func (e DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum) ToPointer() *DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum {
+	return &e
+}
+
 func (e *DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "":
 		fallthrough
 	case "us-east-1":
@@ -494,10 +534,10 @@ func (e *DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum) Un
 	case "sa-east-1":
 		fallthrough
 	case "me-south-1":
-		*e = DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum(s)
+		*e = DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum: %v", v)
 	}
 }
 
@@ -526,17 +566,21 @@ const (
 	DestinationSnowflakeDataStagingMethodRecommendedInternalStagingMethodEnumInternalStaging DestinationSnowflakeDataStagingMethodRecommendedInternalStagingMethodEnum = "Internal Staging"
 )
 
+func (e DestinationSnowflakeDataStagingMethodRecommendedInternalStagingMethodEnum) ToPointer() *DestinationSnowflakeDataStagingMethodRecommendedInternalStagingMethodEnum {
+	return &e
+}
+
 func (e *DestinationSnowflakeDataStagingMethodRecommendedInternalStagingMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "Internal Staging":
-		*e = DestinationSnowflakeDataStagingMethodRecommendedInternalStagingMethodEnum(s)
+		*e = DestinationSnowflakeDataStagingMethodRecommendedInternalStagingMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationSnowflakeDataStagingMethodRecommendedInternalStagingMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationSnowflakeDataStagingMethodRecommendedInternalStagingMethodEnum: %v", v)
 	}
 }
 
@@ -551,17 +595,21 @@ const (
 	DestinationSnowflakeDataStagingMethodSelectAnotherOptionMethodEnumStandard DestinationSnowflakeDataStagingMethodSelectAnotherOptionMethodEnum = "Standard"
 )
 
+func (e DestinationSnowflakeDataStagingMethodSelectAnotherOptionMethodEnum) ToPointer() *DestinationSnowflakeDataStagingMethodSelectAnotherOptionMethodEnum {
+	return &e
+}
+
 func (e *DestinationSnowflakeDataStagingMethodSelectAnotherOptionMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "Standard":
-		*e = DestinationSnowflakeDataStagingMethodSelectAnotherOptionMethodEnum(s)
+		*e = DestinationSnowflakeDataStagingMethodSelectAnotherOptionMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationSnowflakeDataStagingMethodSelectAnotherOptionMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationSnowflakeDataStagingMethodSelectAnotherOptionMethodEnum: %v", v)
 	}
 }
 

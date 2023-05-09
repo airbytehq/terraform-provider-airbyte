@@ -13,17 +13,21 @@ const (
 	SourceShortioShortioEnumShortio SourceShortioShortioEnum = "shortio"
 )
 
+func (e SourceShortioShortioEnum) ToPointer() *SourceShortioShortioEnum {
+	return &e
+}
+
 func (e *SourceShortioShortioEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "shortio":
-		*e = SourceShortioShortioEnum(s)
+		*e = SourceShortioShortioEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceShortioShortioEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceShortioShortioEnum: %v", v)
 	}
 }
 

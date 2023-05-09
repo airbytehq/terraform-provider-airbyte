@@ -15,17 +15,21 @@ const (
 	DestinationDatabricksDataSourceAzureBlobStorageDataSourceTypeEnumAzureBlobStorage DestinationDatabricksDataSourceAzureBlobStorageDataSourceTypeEnum = "AZURE_BLOB_STORAGE"
 )
 
+func (e DestinationDatabricksDataSourceAzureBlobStorageDataSourceTypeEnum) ToPointer() *DestinationDatabricksDataSourceAzureBlobStorageDataSourceTypeEnum {
+	return &e
+}
+
 func (e *DestinationDatabricksDataSourceAzureBlobStorageDataSourceTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "AZURE_BLOB_STORAGE":
-		*e = DestinationDatabricksDataSourceAzureBlobStorageDataSourceTypeEnum(s)
+		*e = DestinationDatabricksDataSourceAzureBlobStorageDataSourceTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationDatabricksDataSourceAzureBlobStorageDataSourceTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationDatabricksDataSourceAzureBlobStorageDataSourceTypeEnum: %v", v)
 	}
 }
 
@@ -48,17 +52,21 @@ const (
 	DestinationDatabricksDataSourceAmazonS3DataSourceTypeEnumS3Storage DestinationDatabricksDataSourceAmazonS3DataSourceTypeEnum = "S3_STORAGE"
 )
 
+func (e DestinationDatabricksDataSourceAmazonS3DataSourceTypeEnum) ToPointer() *DestinationDatabricksDataSourceAmazonS3DataSourceTypeEnum {
+	return &e
+}
+
 func (e *DestinationDatabricksDataSourceAmazonS3DataSourceTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "S3_STORAGE":
-		*e = DestinationDatabricksDataSourceAmazonS3DataSourceTypeEnum(s)
+		*e = DestinationDatabricksDataSourceAmazonS3DataSourceTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationDatabricksDataSourceAmazonS3DataSourceTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationDatabricksDataSourceAmazonS3DataSourceTypeEnum: %v", v)
 	}
 }
 
@@ -94,12 +102,16 @@ const (
 	DestinationDatabricksDataSourceAmazonS3S3BucketRegionEnumUsGovWest1   DestinationDatabricksDataSourceAmazonS3S3BucketRegionEnum = "us-gov-west-1"
 )
 
+func (e DestinationDatabricksDataSourceAmazonS3S3BucketRegionEnum) ToPointer() *DestinationDatabricksDataSourceAmazonS3S3BucketRegionEnum {
+	return &e
+}
+
 func (e *DestinationDatabricksDataSourceAmazonS3S3BucketRegionEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "":
 		fallthrough
 	case "us-east-1":
@@ -151,10 +163,10 @@ func (e *DestinationDatabricksDataSourceAmazonS3S3BucketRegionEnum) UnmarshalJSO
 	case "us-gov-east-1":
 		fallthrough
 	case "us-gov-west-1":
-		*e = DestinationDatabricksDataSourceAmazonS3S3BucketRegionEnum(s)
+		*e = DestinationDatabricksDataSourceAmazonS3S3BucketRegionEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationDatabricksDataSourceAmazonS3S3BucketRegionEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationDatabricksDataSourceAmazonS3S3BucketRegionEnum: %v", v)
 	}
 }
 
@@ -181,17 +193,21 @@ const (
 	DestinationDatabricksDataSourceRecommendedManagedTablesDataSourceTypeEnumManagedTablesStorage DestinationDatabricksDataSourceRecommendedManagedTablesDataSourceTypeEnum = "MANAGED_TABLES_STORAGE"
 )
 
+func (e DestinationDatabricksDataSourceRecommendedManagedTablesDataSourceTypeEnum) ToPointer() *DestinationDatabricksDataSourceRecommendedManagedTablesDataSourceTypeEnum {
+	return &e
+}
+
 func (e *DestinationDatabricksDataSourceRecommendedManagedTablesDataSourceTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "MANAGED_TABLES_STORAGE":
-		*e = DestinationDatabricksDataSourceRecommendedManagedTablesDataSourceTypeEnum(s)
+		*e = DestinationDatabricksDataSourceRecommendedManagedTablesDataSourceTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationDatabricksDataSourceRecommendedManagedTablesDataSourceTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationDatabricksDataSourceRecommendedManagedTablesDataSourceTypeEnum: %v", v)
 	}
 }
 
@@ -298,17 +314,21 @@ const (
 	DestinationDatabricksDatabricksEnumDatabricks DestinationDatabricksDatabricksEnum = "databricks"
 )
 
+func (e DestinationDatabricksDatabricksEnum) ToPointer() *DestinationDatabricksDatabricksEnum {
+	return &e
+}
+
 func (e *DestinationDatabricksDatabricksEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "databricks":
-		*e = DestinationDatabricksDatabricksEnum(s)
+		*e = DestinationDatabricksDatabricksEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationDatabricksDatabricksEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationDatabricksDatabricksEnum: %v", v)
 	}
 }
 

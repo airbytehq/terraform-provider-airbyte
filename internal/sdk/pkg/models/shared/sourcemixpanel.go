@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"time"
 )
 
 type SourceMixpanelAuthenticationWildcardProjectSecretOptionTitleEnum string
@@ -15,17 +16,21 @@ const (
 	SourceMixpanelAuthenticationWildcardProjectSecretOptionTitleEnumProjectSecret SourceMixpanelAuthenticationWildcardProjectSecretOptionTitleEnum = "Project Secret"
 )
 
+func (e SourceMixpanelAuthenticationWildcardProjectSecretOptionTitleEnum) ToPointer() *SourceMixpanelAuthenticationWildcardProjectSecretOptionTitleEnum {
+	return &e
+}
+
 func (e *SourceMixpanelAuthenticationWildcardProjectSecretOptionTitleEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "Project Secret":
-		*e = SourceMixpanelAuthenticationWildcardProjectSecretOptionTitleEnum(s)
+		*e = SourceMixpanelAuthenticationWildcardProjectSecretOptionTitleEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMixpanelAuthenticationWildcardProjectSecretOptionTitleEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceMixpanelAuthenticationWildcardProjectSecretOptionTitleEnum: %v", v)
 	}
 }
 
@@ -42,17 +47,21 @@ const (
 	SourceMixpanelAuthenticationWildcardServiceAccountOptionTitleEnumServiceAccount SourceMixpanelAuthenticationWildcardServiceAccountOptionTitleEnum = "Service Account"
 )
 
+func (e SourceMixpanelAuthenticationWildcardServiceAccountOptionTitleEnum) ToPointer() *SourceMixpanelAuthenticationWildcardServiceAccountOptionTitleEnum {
+	return &e
+}
+
 func (e *SourceMixpanelAuthenticationWildcardServiceAccountOptionTitleEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "Service Account":
-		*e = SourceMixpanelAuthenticationWildcardServiceAccountOptionTitleEnum(s)
+		*e = SourceMixpanelAuthenticationWildcardServiceAccountOptionTitleEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMixpanelAuthenticationWildcardServiceAccountOptionTitleEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceMixpanelAuthenticationWildcardServiceAccountOptionTitleEnum: %v", v)
 	}
 }
 
@@ -141,19 +150,23 @@ const (
 	SourceMixpanelRegionEnumEu SourceMixpanelRegionEnum = "EU"
 )
 
+func (e SourceMixpanelRegionEnum) ToPointer() *SourceMixpanelRegionEnum {
+	return &e
+}
+
 func (e *SourceMixpanelRegionEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "US":
 		fallthrough
 	case "EU":
-		*e = SourceMixpanelRegionEnum(s)
+		*e = SourceMixpanelRegionEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMixpanelRegionEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceMixpanelRegionEnum: %v", v)
 	}
 }
 
@@ -163,17 +176,21 @@ const (
 	SourceMixpanelMixpanelEnumMixpanel SourceMixpanelMixpanelEnum = "mixpanel"
 )
 
+func (e SourceMixpanelMixpanelEnum) ToPointer() *SourceMixpanelMixpanelEnum {
+	return &e
+}
+
 func (e *SourceMixpanelMixpanelEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "mixpanel":
-		*e = SourceMixpanelMixpanelEnum(s)
+		*e = SourceMixpanelMixpanelEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMixpanelMixpanelEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceMixpanelMixpanelEnum: %v", v)
 	}
 }
 
@@ -186,7 +203,7 @@ type SourceMixpanel struct {
 	// Defines window size in days, that used to slice through data. You can reduce it, if amount of data in each window is too big for your environment.
 	DateWindowSize *int64 `json:"date_window_size,omitempty"`
 	// The date in the format YYYY-MM-DD. Any data after this date will not be replicated. Left empty to always sync to most recent date
-	EndDate *string `json:"end_date,omitempty"`
+	EndDate *time.Time `json:"end_date,omitempty"`
 	// Your project ID number. See the <a href="https://help.mixpanel.com/hc/en-us/articles/115004490503-Project-Settings#project-id">docs</a> for more information on how to obtain this.
 	ProjectID *int64 `json:"project_id,omitempty"`
 	// Time zone in which integer date times are stored. The project timezone may be found in the project settings in the <a href="https://help.mixpanel.com/hc/en-us/articles/115004547203-Manage-Timezones-for-Projects-in-Mixpanel">Mixpanel console</a>.
@@ -197,5 +214,5 @@ type SourceMixpanel struct {
 	SelectPropertiesByDefault *bool                      `json:"select_properties_by_default,omitempty"`
 	SourceType                SourceMixpanelMixpanelEnum `json:"sourceType"`
 	// The date in the format YYYY-MM-DD. Any data before this date will not be replicated. If this option is not set, the connector will replicate data from up to one year ago by default.
-	StartDate *string `json:"start_date,omitempty"`
+	StartDate *time.Time `json:"start_date,omitempty"`
 }

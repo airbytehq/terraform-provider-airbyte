@@ -16,17 +16,21 @@ const (
 	SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitleEnumOAuthCredentials SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitleEnum = "OAuth Credentials"
 )
 
+func (e SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitleEnum) ToPointer() *SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitleEnum {
+	return &e
+}
+
 func (e *SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitleEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "OAuth Credentials":
-		*e = SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitleEnum(s)
+		*e = SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitleEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitleEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitleEnum: %v", v)
 	}
 }
 
@@ -46,17 +50,21 @@ const (
 	SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitleEnumPatCredentials SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitleEnum = "PAT Credentials"
 )
 
+func (e SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitleEnum) ToPointer() *SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitleEnum {
+	return &e
+}
+
 func (e *SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitleEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "PAT Credentials":
-		*e = SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitleEnum(s)
+		*e = SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitleEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitleEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitleEnum: %v", v)
 	}
 }
 
@@ -142,17 +150,21 @@ const (
 	SourceAsanaAsanaEnumAsana SourceAsanaAsanaEnum = "asana"
 )
 
+func (e SourceAsanaAsanaEnum) ToPointer() *SourceAsanaAsanaEnum {
+	return &e
+}
+
 func (e *SourceAsanaAsanaEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "asana":
-		*e = SourceAsanaAsanaEnum(s)
+		*e = SourceAsanaAsanaEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAsanaAsanaEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceAsanaAsanaEnum: %v", v)
 	}
 }
 

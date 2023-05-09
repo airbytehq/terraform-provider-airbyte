@@ -13,17 +13,21 @@ const (
 	SourceNetsuiteNetsuiteEnumNetsuite SourceNetsuiteNetsuiteEnum = "netsuite"
 )
 
+func (e SourceNetsuiteNetsuiteEnum) ToPointer() *SourceNetsuiteNetsuiteEnum {
+	return &e
+}
+
 func (e *SourceNetsuiteNetsuiteEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "netsuite":
-		*e = SourceNetsuiteNetsuiteEnum(s)
+		*e = SourceNetsuiteNetsuiteEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceNetsuiteNetsuiteEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceNetsuiteNetsuiteEnum: %v", v)
 	}
 }
 

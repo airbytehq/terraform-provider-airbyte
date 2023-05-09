@@ -13,17 +13,21 @@ const (
 	SourceK6CloudK6CloudEnumK6Cloud SourceK6CloudK6CloudEnum = "k6-cloud"
 )
 
+func (e SourceK6CloudK6CloudEnum) ToPointer() *SourceK6CloudK6CloudEnum {
+	return &e
+}
+
 func (e *SourceK6CloudK6CloudEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "k6-cloud":
-		*e = SourceK6CloudK6CloudEnum(s)
+		*e = SourceK6CloudK6CloudEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceK6CloudK6CloudEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceK6CloudK6CloudEnum: %v", v)
 	}
 }
 

@@ -15,17 +15,21 @@ const (
 	SourceS3FileFormatJsonlFiletypeEnumJsonl SourceS3FileFormatJsonlFiletypeEnum = "jsonl"
 )
 
+func (e SourceS3FileFormatJsonlFiletypeEnum) ToPointer() *SourceS3FileFormatJsonlFiletypeEnum {
+	return &e
+}
+
 func (e *SourceS3FileFormatJsonlFiletypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "jsonl":
-		*e = SourceS3FileFormatJsonlFiletypeEnum(s)
+		*e = SourceS3FileFormatJsonlFiletypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceS3FileFormatJsonlFiletypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceS3FileFormatJsonlFiletypeEnum: %v", v)
 	}
 }
 
@@ -38,21 +42,25 @@ const (
 	SourceS3FileFormatJsonlUnexpectedFieldBehaviorEnumError  SourceS3FileFormatJsonlUnexpectedFieldBehaviorEnum = "error"
 )
 
+func (e SourceS3FileFormatJsonlUnexpectedFieldBehaviorEnum) ToPointer() *SourceS3FileFormatJsonlUnexpectedFieldBehaviorEnum {
+	return &e
+}
+
 func (e *SourceS3FileFormatJsonlUnexpectedFieldBehaviorEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "ignore":
 		fallthrough
 	case "infer":
 		fallthrough
 	case "error":
-		*e = SourceS3FileFormatJsonlUnexpectedFieldBehaviorEnum(s)
+		*e = SourceS3FileFormatJsonlUnexpectedFieldBehaviorEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceS3FileFormatJsonlUnexpectedFieldBehaviorEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceS3FileFormatJsonlUnexpectedFieldBehaviorEnum: %v", v)
 	}
 }
 
@@ -73,17 +81,21 @@ const (
 	SourceS3FileFormatAvroFiletypeEnumAvro SourceS3FileFormatAvroFiletypeEnum = "avro"
 )
 
+func (e SourceS3FileFormatAvroFiletypeEnum) ToPointer() *SourceS3FileFormatAvroFiletypeEnum {
+	return &e
+}
+
 func (e *SourceS3FileFormatAvroFiletypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "avro":
-		*e = SourceS3FileFormatAvroFiletypeEnum(s)
+		*e = SourceS3FileFormatAvroFiletypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceS3FileFormatAvroFiletypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceS3FileFormatAvroFiletypeEnum: %v", v)
 	}
 }
 
@@ -98,17 +110,21 @@ const (
 	SourceS3FileFormatParquetFiletypeEnumParquet SourceS3FileFormatParquetFiletypeEnum = "parquet"
 )
 
+func (e SourceS3FileFormatParquetFiletypeEnum) ToPointer() *SourceS3FileFormatParquetFiletypeEnum {
+	return &e
+}
+
 func (e *SourceS3FileFormatParquetFiletypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "parquet":
-		*e = SourceS3FileFormatParquetFiletypeEnum(s)
+		*e = SourceS3FileFormatParquetFiletypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceS3FileFormatParquetFiletypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceS3FileFormatParquetFiletypeEnum: %v", v)
 	}
 }
 
@@ -129,17 +145,21 @@ const (
 	SourceS3FileFormatCSVFiletypeEnumCsv SourceS3FileFormatCSVFiletypeEnum = "csv"
 )
 
+func (e SourceS3FileFormatCSVFiletypeEnum) ToPointer() *SourceS3FileFormatCSVFiletypeEnum {
+	return &e
+}
+
 func (e *SourceS3FileFormatCSVFiletypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "csv":
-		*e = SourceS3FileFormatCSVFiletypeEnum(s)
+		*e = SourceS3FileFormatCSVFiletypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceS3FileFormatCSVFiletypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceS3FileFormatCSVFiletypeEnum: %v", v)
 	}
 }
 
@@ -151,7 +171,7 @@ type SourceS3FileFormatCSV struct {
 	AdvancedOptions *string `json:"advanced_options,omitempty"`
 	// The chunk size in bytes to process at a time in memory from each file. If your data is particularly wide and failing during schema detection, increasing this should solve it. Beware of raising this too high as you could hit OOM errors.
 	BlockSize *int64 `json:"block_size,omitempty"`
-	// The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.
+	// The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '	'.
 	Delimiter *string `json:"delimiter,omitempty"`
 	// Whether two quotes in a quoted CSV value denote a single quote in the data.
 	DoubleQuote *bool `json:"double_quote,omitempty"`
@@ -304,17 +324,21 @@ const (
 	SourceS3S3EnumS3 SourceS3S3Enum = "s3"
 )
 
+func (e SourceS3S3Enum) ToPointer() *SourceS3S3Enum {
+	return &e
+}
+
 func (e *SourceS3S3Enum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "s3":
-		*e = SourceS3S3Enum(s)
+		*e = SourceS3S3Enum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceS3S3Enum: %s", s)
+		return fmt.Errorf("invalid value for SourceS3S3Enum: %v", v)
 	}
 }
 

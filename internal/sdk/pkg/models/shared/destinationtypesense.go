@@ -13,17 +13,21 @@ const (
 	DestinationTypesenseTypesenseEnumTypesense DestinationTypesenseTypesenseEnum = "typesense"
 )
 
+func (e DestinationTypesenseTypesenseEnum) ToPointer() *DestinationTypesenseTypesenseEnum {
+	return &e
+}
+
 func (e *DestinationTypesenseTypesenseEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "typesense":
-		*e = DestinationTypesenseTypesenseEnum(s)
+		*e = DestinationTypesenseTypesenseEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationTypesenseTypesenseEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationTypesenseTypesenseEnum: %v", v)
 	}
 }
 

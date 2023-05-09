@@ -13,17 +13,21 @@ const (
 	SourceGoogleWorkspaceAdminReportsGoogleWorkspaceAdminReportsEnumGoogleWorkspaceAdminReports SourceGoogleWorkspaceAdminReportsGoogleWorkspaceAdminReportsEnum = "google-workspace-admin-reports"
 )
 
+func (e SourceGoogleWorkspaceAdminReportsGoogleWorkspaceAdminReportsEnum) ToPointer() *SourceGoogleWorkspaceAdminReportsGoogleWorkspaceAdminReportsEnum {
+	return &e
+}
+
 func (e *SourceGoogleWorkspaceAdminReportsGoogleWorkspaceAdminReportsEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "google-workspace-admin-reports":
-		*e = SourceGoogleWorkspaceAdminReportsGoogleWorkspaceAdminReportsEnum(s)
+		*e = SourceGoogleWorkspaceAdminReportsGoogleWorkspaceAdminReportsEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGoogleWorkspaceAdminReportsGoogleWorkspaceAdminReportsEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceGoogleWorkspaceAdminReportsGoogleWorkspaceAdminReportsEnum: %v", v)
 	}
 }
 

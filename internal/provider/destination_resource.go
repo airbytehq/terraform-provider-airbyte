@@ -7,13 +7,9 @@ import (
 	"context"
 	"fmt"
 
+	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/boolplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -38,9 +34,11 @@ type DestinationResource struct {
 
 // DestinationResourceModel describes the resource data model.
 type DestinationResourceModel struct {
-	Configuration DestinationConfiguration `tfsdk:"configuration"`
-	Name          types.String             `tfsdk:"name"`
-	WorkspaceID   types.String             `tfsdk:"workspace_id"`
+	Configuration   DestinationConfiguration `tfsdk:"configuration"`
+	DestinationID   types.String             `tfsdk:"destination_id"`
+	DestinationType types.String             `tfsdk:"destination_type"`
+	Name            types.String             `tfsdk:"name"`
+	WorkspaceID     types.String             `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -53,30 +51,16 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplace(),
-				},
-				Required: true,
+				Computed: true,
 				Attributes: map[string]schema.Attribute{
 					"destination_amazon_sqs": schema.SingleNestedAttribute{
 						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
-						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"access_key": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"destination_type": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"amazon-sqs",
@@ -85,36 +69,18 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"message_body_key": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"message_delay": schema.Int64Attribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"message_group_id": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"queue_url": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"region": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"us-east-1",
@@ -148,59 +114,30 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"secret_key": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 						},
 						Description: `The values required to configure the destination.`,
 					},
 					"destination_aws_datalake": schema.SingleNestedAttribute{
 						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
-						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"aws_account_id": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"bucket_name": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"bucket_prefix": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"credentials": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Attributes: map[string]schema.Attribute{
 									"destination_aws_datalake_authentication_mode_iam_role": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"credentials_title": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"IAM Role",
@@ -209,38 +146,22 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												Description: `Name of the credentials`,
 											},
 											"role_arn": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 										},
 										Description: `Choose How to Authenticate to AWS.`,
 									},
 									"destination_aws_datalake_authentication_mode_iam_user": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"aws_access_key_id": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"aws_secret_access_key": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"credentials_title": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"IAM User",
@@ -257,10 +178,7 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"destination_type": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"aws-datalake",
@@ -269,24 +187,12 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"format": schema.SingleNestedAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"destination_aws_datalake_output_format_wildcard_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"compression_codec": schema.StringAttribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Optional: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"UNCOMPRESSED",
@@ -296,10 +202,7 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												Description: `The compression algorithm used to compress data.`,
 											},
 											"format_type": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"JSONL",
@@ -311,17 +214,9 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"destination_aws_datalake_output_format_wildcard_parquet_columnar_storage": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"compression_codec": schema.StringAttribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Optional: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"UNCOMPRESSED",
@@ -333,10 +228,7 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												Description: `The compression algorithm used to compress data.`,
 											},
 											"format_type": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"Parquet",
@@ -353,44 +245,21 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"glue_catalog_float_as_decimal": schema.BoolAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Bool{
-									boolplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"lakeformation_database_default_tag_key": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"lakeformation_database_default_tag_values": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"lakeformation_database_name": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"lakeformation_governed_tables": schema.BoolAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Bool{
-									boolplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"partitioning": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"NO PARTITIONING",
@@ -405,10 +274,7 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								Description: `Partition data by cursor fields when a cursor field is a date`,
 							},
 							"region": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"",
@@ -446,56 +312,27 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 					},
 					"destination_azure_blob_storage": schema.SingleNestedAttribute{
 						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
-						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"azure_blob_storage_account_key": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"azure_blob_storage_account_name": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"azure_blob_storage_container_name": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"azure_blob_storage_endpoint_domain_name": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"azure_blob_storage_output_buffer_size": schema.Int64Attribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"azure_blob_storage_spill_size": schema.Int64Attribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"destination_type": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"azure-blob-storage",
@@ -503,23 +340,13 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"format": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Attributes: map[string]schema.Attribute{
 									"destination_azure_blob_storage_output_format_csv_comma_separated_values": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"flattening": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"No flattening",
@@ -529,10 +356,7 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												Description: `Whether the input json data should be normalized (flattened) in the output CSV. Please refer to docs for details.`,
 											},
 											"format_type": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"CSV",
@@ -544,16 +368,9 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"destination_azure_blob_storage_output_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"format_type": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"JSONL",
@@ -573,36 +390,18 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 					},
 					"destination_bigquery": schema.SingleNestedAttribute{
 						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
-						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"big_query_client_buffer_size_mb": schema.Int64Attribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"credentials_json": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"dataset_id": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"dataset_location": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"US",
@@ -618,20 +417,29 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 										"asia-southeast2",
 										"australia-southeast1",
 										"australia-southeast2",
+										"europe-central1",
 										"europe-central2",
 										"europe-north1",
+										"europe-southwest1",
 										"europe-west1",
 										"europe-west2",
 										"europe-west3",
 										"europe-west4",
 										"europe-west6",
+										"europe-west7",
+										"europe-west8",
+										"europe-west9",
+										"me-west1",
 										"northamerica-northeast1",
 										"northamerica-northeast2",
 										"southamerica-east1",
 										"southamerica-west1",
 										"us-central1",
 										"us-east1",
+										"us-east2",
+										"us-east3",
 										"us-east4",
+										"us-east5",
 										"us-west1",
 										"us-west2",
 										"us-west3",
@@ -641,10 +449,7 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								Description: `The location of the dataset. Warning: Changes made after creation will not be applied. Read more <a href="https://cloud.google.com/bigquery/docs/locations">here</a>.`,
 							},
 							"destination_type": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"bigquery",
@@ -653,23 +458,12 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"loading_method": schema.SingleNestedAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"destination_bigquery_loading_method_standard_inserts": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"Standard",
@@ -681,29 +475,15 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"destination_bigquery_loading_method_gcs_staging": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"credential": schema.SingleNestedAttribute{
-												PlanModifiers: []planmodifier.Object{
-													objectplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Attributes: map[string]schema.Attribute{
 													"destination_bigquery_loading_method_gcs_staging_credential_hmac_key": schema.SingleNestedAttribute{
 														Computed: true,
-														PlanModifiers: []planmodifier.Object{
-															objectplanmodifier.RequiresReplace(),
-														},
-														Optional: true,
 														Attributes: map[string]schema.Attribute{
 															"credential_type": schema.StringAttribute{
-																PlanModifiers: []planmodifier.String{
-																	stringplanmodifier.RequiresReplace(),
-																},
-																Required: true,
+																Computed: true,
 																Validators: []validator.String{
 																	stringvalidator.OneOf(
 																		"HMAC_KEY",
@@ -711,16 +491,10 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 																},
 															},
 															"hmac_key_access_id": schema.StringAttribute{
-																PlanModifiers: []planmodifier.String{
-																	stringplanmodifier.RequiresReplace(),
-																},
-																Required: true,
+																Computed: true,
 															},
 															"hmac_key_secret": schema.StringAttribute{
-																PlanModifiers: []planmodifier.String{
-																	stringplanmodifier.RequiresReplace(),
-																},
-																Required: true,
+																Computed: true,
 															},
 														},
 														Description: `An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>.`,
@@ -731,23 +505,13 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												},
 											},
 											"gcs_bucket_name": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"gcs_bucket_path": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"keep_files_in_gcs_bucket": schema.StringAttribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Optional: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"Delete all tmp files from GCS",
@@ -757,10 +521,7 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												Description: `This upload method is supposed to temporary store records in GCS bucket. By this select you can chose if these records should be removed from GCS when migration has finished. The default "Delete all tmp files from GCS" value is used if not set explicitly.`,
 											},
 											"method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"GCS Staging",
@@ -776,17 +537,10 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"project_id": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"transformation_priority": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"interactive",
@@ -800,37 +554,18 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 					},
 					"destination_bigquery_denormalized": schema.SingleNestedAttribute{
 						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
-						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"big_query_client_buffer_size_mb": schema.Int64Attribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"credentials_json": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"dataset_id": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"dataset_location": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"US",
@@ -846,20 +581,29 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 										"asia-southeast2",
 										"australia-southeast1",
 										"australia-southeast2",
+										"europe-central1",
 										"europe-central2",
 										"europe-north1",
+										"europe-southwest1",
 										"europe-west1",
 										"europe-west2",
 										"europe-west3",
 										"europe-west4",
 										"europe-west6",
+										"europe-west7",
+										"europe-west8",
+										"europe-west9",
+										"me-west1",
 										"northamerica-northeast1",
 										"northamerica-northeast2",
 										"southamerica-east1",
 										"southamerica-west1",
 										"us-central1",
 										"us-east1",
+										"us-east2",
+										"us-east3",
 										"us-east4",
+										"us-east5",
 										"us-west1",
 										"us-west2",
 										"us-west3",
@@ -869,10 +613,7 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								Description: `The location of the dataset. Warning: Changes made after creation will not be applied. The default "US" value is used if not set explicitly. Read more <a href="https://cloud.google.com/bigquery/docs/locations">here</a>.`,
 							},
 							"destination_type": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"bigquery-denormalized",
@@ -881,23 +622,12 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"loading_method": schema.SingleNestedAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"destination_bigquery_denormalized_loading_method_standard_inserts": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"Standard",
@@ -909,29 +639,15 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"destination_bigquery_denormalized_loading_method_gcs_staging": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"credential": schema.SingleNestedAttribute{
-												PlanModifiers: []planmodifier.Object{
-													objectplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Attributes: map[string]schema.Attribute{
 													"destination_bigquery_denormalized_loading_method_gcs_staging_credential_hmac_key": schema.SingleNestedAttribute{
 														Computed: true,
-														PlanModifiers: []planmodifier.Object{
-															objectplanmodifier.RequiresReplace(),
-														},
-														Optional: true,
 														Attributes: map[string]schema.Attribute{
 															"credential_type": schema.StringAttribute{
-																PlanModifiers: []planmodifier.String{
-																	stringplanmodifier.RequiresReplace(),
-																},
-																Required: true,
+																Computed: true,
 																Validators: []validator.String{
 																	stringvalidator.OneOf(
 																		"HMAC_KEY",
@@ -939,16 +655,10 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 																},
 															},
 															"hmac_key_access_id": schema.StringAttribute{
-																PlanModifiers: []planmodifier.String{
-																	stringplanmodifier.RequiresReplace(),
-																},
-																Required: true,
+																Computed: true,
 															},
 															"hmac_key_secret": schema.StringAttribute{
-																PlanModifiers: []planmodifier.String{
-																	stringplanmodifier.RequiresReplace(),
-																},
-																Required: true,
+																Computed: true,
 															},
 														},
 														Description: `An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>.`,
@@ -959,23 +669,13 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												},
 											},
 											"gcs_bucket_name": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"gcs_bucket_path": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"keep_files_in_gcs_bucket": schema.StringAttribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Optional: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"Delete all tmp files from GCS",
@@ -985,10 +685,7 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												Description: `This upload method is supposed to temporary store records in GCS bucket. By this select you can chose if these records should be removed from GCS when migration has finished. The default "Delete all tmp files from GCS" value is used if not set explicitly.`,
 											},
 											"method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"GCS Staging",
@@ -1004,39 +701,22 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"project_id": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 						},
 						Description: `The values required to configure the destination.`,
 					},
 					"destination_cassandra": schema.SingleNestedAttribute{
 						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
-						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"address": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"datacenter": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"destination_type": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"cassandra",
@@ -1044,57 +724,31 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"keyspace": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"password": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"port": schema.Int64Attribute{
-								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"replication": schema.Int64Attribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"username": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 						},
 						Description: `The values required to configure the destination.`,
 					},
 					"destination_clickhouse": schema.SingleNestedAttribute{
 						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
-						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"database": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"destination_type": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"clickhouse",
@@ -1102,50 +756,25 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"host": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"jdbc_url_params": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"password": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"port": schema.Int64Attribute{
-								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"tunnel_method": schema.SingleNestedAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"destination_clickhouse_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"tunnel_method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"NO_TUNNEL",
@@ -1158,28 +787,15 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"destination_clickhouse_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"ssh_key": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_host": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"SSH_KEY_AUTH",
@@ -1188,38 +804,22 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												Description: `Connect through a jump server tunnel host using username and ssh key`,
 											},
 											"tunnel_port": schema.Int64Attribute{
-												PlanModifiers: []planmodifier.Int64{
-													int64planmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_user": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 										},
 										Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 									},
 									"destination_clickhouse_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"tunnel_host": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"SSH_PASSWORD_AUTH",
@@ -1228,22 +828,13 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												Description: `Connect through a jump server tunnel host using username and password authentication`,
 											},
 											"tunnel_port": schema.Int64Attribute{
-												PlanModifiers: []planmodifier.Int64{
-													int64planmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_user": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_user_password": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 										},
 										Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -1254,38 +845,22 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"username": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 						},
 						Description: `The values required to configure the destination.`,
 					},
 					"destination_convex": schema.SingleNestedAttribute{
 						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
-						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"access_key": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"deployment_url": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"destination_type": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"convex",
@@ -1297,22 +872,12 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 					},
 					"destination_databend": schema.SingleNestedAttribute{
 						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
-						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"database": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"destination_type": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"databend",
@@ -1320,72 +885,37 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"host": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"password": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"port": schema.Int64Attribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"table": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"username": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 						},
 						Description: `The values required to configure the destination.`,
 					},
 					"destination_databricks": schema.SingleNestedAttribute{
 						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
-						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"accept_terms": schema.BoolAttribute{
-								PlanModifiers: []planmodifier.Bool{
-									boolplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"data_source": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Attributes: map[string]schema.Attribute{
 									"destination_databricks_data_source_recommended_managed_tables": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"data_source_type": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"MANAGED_TABLES_STORAGE",
@@ -1397,16 +927,9 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"destination_databricks_data_source_amazon_s3": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"data_source_type": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"S3_STORAGE",
@@ -1415,34 +938,18 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 											},
 											"file_name_pattern": schema.StringAttribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Optional: true,
 											},
 											"s3_access_key_id": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"s3_bucket_name": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"s3_bucket_path": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"s3_bucket_region": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"",
@@ -1476,51 +983,28 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												Description: `The region of the S3 staging bucket to use if utilising a copy strategy.`,
 											},
 											"s3_secret_access_key": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 										},
 										Description: `Storage on which the delta lake is built.`,
 									},
 									"destination_databricks_data_source_azure_blob_storage": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"azure_blob_storage_account_name": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"azure_blob_storage_container_name": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"azure_blob_storage_endpoint_domain_name": schema.StringAttribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Optional: true,
 											},
 											"azure_blob_storage_sas_token": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"data_source_type": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"AZURE_BLOB_STORAGE",
@@ -1537,41 +1021,21 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"database": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"databricks_http_path": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"databricks_personal_access_token": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"databricks_port": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"databricks_server_hostname": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"destination_type": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"databricks",
@@ -1580,39 +1044,21 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"purge_staging_data": schema.BoolAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Bool{
-									boolplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"schema": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 						},
 						Description: `The values required to configure the destination.`,
 					},
 					"destination_dynamodb": schema.SingleNestedAttribute{
 						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
-						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"access_key_id": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"destination_type": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"dynamodb",
@@ -1621,16 +1067,9 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"dynamodb_endpoint": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"dynamodb_region": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"",
@@ -1664,58 +1103,31 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								Description: `The region of the DynamoDB.`,
 							},
 							"dynamodb_table_name_prefix": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"secret_access_key": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 						},
 						Description: `The values required to configure the destination.`,
 					},
 					"destination_elasticsearch": schema.SingleNestedAttribute{
 						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
-						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"authentication_method": schema.SingleNestedAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"destination_elasticsearch_authentication_method_api_key_secret": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"api_key_id": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"api_key_secret": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"secret",
@@ -1727,16 +1139,9 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"destination_elasticsearch_authentication_method_username_password": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"basic",
@@ -1744,16 +1149,10 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												},
 											},
 											"password": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"username": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 										},
 										Description: `Basic auth header with a username and password`,
@@ -1765,16 +1164,9 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"ca_certificate": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"destination_type": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"elasticsearch",
@@ -1782,46 +1174,25 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"endpoint": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"upsert": schema.BoolAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Bool{
-									boolplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 						},
 						Description: `The values required to configure the destination.`,
 					},
 					"destination_firebolt": schema.SingleNestedAttribute{
 						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
-						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"account": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"database": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"destination_type": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"firebolt",
@@ -1830,37 +1201,18 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"engine": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"host": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"loading_method": schema.SingleNestedAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"destination_firebolt_loading_method_sql_inserts": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"SQL",
@@ -1872,28 +1224,15 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"destination_firebolt_loading_method_external_table_via_s3": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"aws_key_id": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"aws_key_secret": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"S3",
@@ -1901,16 +1240,10 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												},
 											},
 											"s3_bucket": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"s3_region": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 										},
 										Description: `Loading method used to select the way data will be uploaded to Firebolt`,
@@ -1921,39 +1254,22 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"password": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"username": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 						},
 						Description: `The values required to configure the destination.`,
 					},
 					"destination_firestore": schema.SingleNestedAttribute{
 						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
-						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"credentials_json": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"destination_type": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"firestore",
@@ -1961,39 +1277,22 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"project_id": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 						},
 						Description: `The values required to configure the destination.`,
 					},
 					"destination_gcs": schema.SingleNestedAttribute{
 						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
-						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"credential": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Attributes: map[string]schema.Attribute{
 									"destination_gcs_authentication_hmac_key": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"credential_type": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"HMAC_KEY",
@@ -2001,16 +1300,10 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												},
 											},
 											"hmac_key_access_id": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"hmac_key_secret": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 										},
 										Description: `An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>.`,
@@ -2021,10 +1314,7 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"destination_type": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"gcs",
@@ -2032,36 +1322,19 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"format": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Attributes: map[string]schema.Attribute{
 									"destination_gcs_output_format_avro_apache_avro": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"compression_codec": schema.SingleNestedAttribute{
-												PlanModifiers: []planmodifier.Object{
-													objectplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Attributes: map[string]schema.Attribute{
 													"destination_gcs_output_format_avro_apache_avro_compression_codec_no_compression": schema.SingleNestedAttribute{
 														Computed: true,
-														PlanModifiers: []planmodifier.Object{
-															objectplanmodifier.RequiresReplace(),
-														},
-														Optional: true,
 														Attributes: map[string]schema.Attribute{
 															"codec": schema.StringAttribute{
-																PlanModifiers: []planmodifier.String{
-																	stringplanmodifier.RequiresReplace(),
-																},
-																Required: true,
+																Computed: true,
 																Validators: []validator.String{
 																	stringvalidator.OneOf(
 																		"no compression",
@@ -2073,16 +1346,9 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 													},
 													"destination_gcs_output_format_avro_apache_avro_compression_codec_deflate": schema.SingleNestedAttribute{
 														Computed: true,
-														PlanModifiers: []planmodifier.Object{
-															objectplanmodifier.RequiresReplace(),
-														},
-														Optional: true,
 														Attributes: map[string]schema.Attribute{
 															"codec": schema.StringAttribute{
-																PlanModifiers: []planmodifier.String{
-																	stringplanmodifier.RequiresReplace(),
-																},
-																Required: true,
+																Computed: true,
 																Validators: []validator.String{
 																	stringvalidator.OneOf(
 																		"Deflate",
@@ -2091,26 +1357,15 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 															},
 															"compression_level": schema.Int64Attribute{
 																Computed: true,
-																PlanModifiers: []planmodifier.Int64{
-																	int64planmodifier.RequiresReplace(),
-																},
-																Optional: true,
 															},
 														},
 														Description: `The compression algorithm used to compress data. Default to no compression.`,
 													},
 													"destination_gcs_output_format_avro_apache_avro_compression_codec_bzip2": schema.SingleNestedAttribute{
 														Computed: true,
-														PlanModifiers: []planmodifier.Object{
-															objectplanmodifier.RequiresReplace(),
-														},
-														Optional: true,
 														Attributes: map[string]schema.Attribute{
 															"codec": schema.StringAttribute{
-																PlanModifiers: []planmodifier.String{
-																	stringplanmodifier.RequiresReplace(),
-																},
-																Required: true,
+																Computed: true,
 																Validators: []validator.String{
 																	stringvalidator.OneOf(
 																		"bzip2",
@@ -2122,16 +1377,9 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 													},
 													"destination_gcs_output_format_avro_apache_avro_compression_codec_xz": schema.SingleNestedAttribute{
 														Computed: true,
-														PlanModifiers: []planmodifier.Object{
-															objectplanmodifier.RequiresReplace(),
-														},
-														Optional: true,
 														Attributes: map[string]schema.Attribute{
 															"codec": schema.StringAttribute{
-																PlanModifiers: []planmodifier.String{
-																	stringplanmodifier.RequiresReplace(),
-																},
-																Required: true,
+																Computed: true,
 																Validators: []validator.String{
 																	stringvalidator.OneOf(
 																		"xz",
@@ -2140,26 +1388,15 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 															},
 															"compression_level": schema.Int64Attribute{
 																Computed: true,
-																PlanModifiers: []planmodifier.Int64{
-																	int64planmodifier.RequiresReplace(),
-																},
-																Optional: true,
 															},
 														},
 														Description: `The compression algorithm used to compress data. Default to no compression.`,
 													},
 													"destination_gcs_output_format_avro_apache_avro_compression_codec_zstandard": schema.SingleNestedAttribute{
 														Computed: true,
-														PlanModifiers: []planmodifier.Object{
-															objectplanmodifier.RequiresReplace(),
-														},
-														Optional: true,
 														Attributes: map[string]schema.Attribute{
 															"codec": schema.StringAttribute{
-																PlanModifiers: []planmodifier.String{
-																	stringplanmodifier.RequiresReplace(),
-																},
-																Required: true,
+																Computed: true,
 																Validators: []validator.String{
 																	stringvalidator.OneOf(
 																		"zstandard",
@@ -2168,33 +1405,18 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 															},
 															"compression_level": schema.Int64Attribute{
 																Computed: true,
-																PlanModifiers: []planmodifier.Int64{
-																	int64planmodifier.RequiresReplace(),
-																},
-																Optional: true,
 															},
 															"include_checksum": schema.BoolAttribute{
 																Computed: true,
-																PlanModifiers: []planmodifier.Bool{
-																	boolplanmodifier.RequiresReplace(),
-																},
-																Optional: true,
 															},
 														},
 														Description: `The compression algorithm used to compress data. Default to no compression.`,
 													},
 													"destination_gcs_output_format_avro_apache_avro_compression_codec_snappy": schema.SingleNestedAttribute{
 														Computed: true,
-														PlanModifiers: []planmodifier.Object{
-															objectplanmodifier.RequiresReplace(),
-														},
-														Optional: true,
 														Attributes: map[string]schema.Attribute{
 															"codec": schema.StringAttribute{
-																PlanModifiers: []planmodifier.String{
-																	stringplanmodifier.RequiresReplace(),
-																},
-																Required: true,
+																Computed: true,
 																Validators: []validator.String{
 																	stringvalidator.OneOf(
 																		"snappy",
@@ -2210,10 +1432,7 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												},
 											},
 											"format_type": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"Avro",
@@ -2225,31 +1444,15 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"destination_gcs_output_format_csv_comma_separated_values": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"compression": schema.SingleNestedAttribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.Object{
-													objectplanmodifier.RequiresReplace(),
-												},
-												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"destination_gcs_output_format_csv_comma_separated_values_compression_no_compression": schema.SingleNestedAttribute{
 														Computed: true,
-														PlanModifiers: []planmodifier.Object{
-															objectplanmodifier.RequiresReplace(),
-														},
-														Optional: true,
 														Attributes: map[string]schema.Attribute{
 															"compression_type": schema.StringAttribute{
 																Computed: true,
-																PlanModifiers: []planmodifier.String{
-																	stringplanmodifier.RequiresReplace(),
-																},
-																Optional: true,
 																Validators: []validator.String{
 																	stringvalidator.OneOf(
 																		"No Compression",
@@ -2261,17 +1464,9 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 													},
 													"destination_gcs_output_format_csv_comma_separated_values_compression_gzip": schema.SingleNestedAttribute{
 														Computed: true,
-														PlanModifiers: []planmodifier.Object{
-															objectplanmodifier.RequiresReplace(),
-														},
-														Optional: true,
 														Attributes: map[string]schema.Attribute{
 															"compression_type": schema.StringAttribute{
 																Computed: true,
-																PlanModifiers: []planmodifier.String{
-																	stringplanmodifier.RequiresReplace(),
-																},
-																Optional: true,
 																Validators: []validator.String{
 																	stringvalidator.OneOf(
 																		"GZIP",
@@ -2288,10 +1483,6 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 											},
 											"flattening": schema.StringAttribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Optional: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"No flattening",
@@ -2301,10 +1492,7 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												Description: `Whether the input JSON data should be normalized (flattened) in the output CSV. Please refer to docs for details.`,
 											},
 											"format_type": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"CSV",
@@ -2316,31 +1504,15 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"destination_gcs_output_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"compression": schema.SingleNestedAttribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.Object{
-													objectplanmodifier.RequiresReplace(),
-												},
-												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"destination_gcs_output_format_json_lines_newline_delimited_json_compression_no_compression": schema.SingleNestedAttribute{
 														Computed: true,
-														PlanModifiers: []planmodifier.Object{
-															objectplanmodifier.RequiresReplace(),
-														},
-														Optional: true,
 														Attributes: map[string]schema.Attribute{
 															"compression_type": schema.StringAttribute{
 																Computed: true,
-																PlanModifiers: []planmodifier.String{
-																	stringplanmodifier.RequiresReplace(),
-																},
-																Optional: true,
 																Validators: []validator.String{
 																	stringvalidator.OneOf(
 																		"No Compression",
@@ -2352,17 +1524,9 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 													},
 													"destination_gcs_output_format_json_lines_newline_delimited_json_compression_gzip": schema.SingleNestedAttribute{
 														Computed: true,
-														PlanModifiers: []planmodifier.Object{
-															objectplanmodifier.RequiresReplace(),
-														},
-														Optional: true,
 														Attributes: map[string]schema.Attribute{
 															"compression_type": schema.StringAttribute{
 																Computed: true,
-																PlanModifiers: []planmodifier.String{
-																	stringplanmodifier.RequiresReplace(),
-																},
-																Optional: true,
 																Validators: []validator.String{
 																	stringvalidator.OneOf(
 																		"GZIP",
@@ -2378,10 +1542,7 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												},
 											},
 											"format_type": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"JSONL",
@@ -2393,24 +1554,12 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"destination_gcs_output_format_parquet_columnar_storage": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"block_size_mb": schema.Int64Attribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.Int64{
-													int64planmodifier.RequiresReplace(),
-												},
-												Optional: true,
 											},
 											"compression_codec": schema.StringAttribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Optional: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"UNCOMPRESSED",
@@ -2426,23 +1575,12 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 											},
 											"dictionary_encoding": schema.BoolAttribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.Bool{
-													boolplanmodifier.RequiresReplace(),
-												},
-												Optional: true,
 											},
 											"dictionary_page_size_kb": schema.Int64Attribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.Int64{
-													int64planmodifier.RequiresReplace(),
-												},
-												Optional: true,
 											},
 											"format_type": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"Parquet",
@@ -2451,17 +1589,9 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 											},
 											"max_padding_size_mb": schema.Int64Attribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.Int64{
-													int64planmodifier.RequiresReplace(),
-												},
-												Optional: true,
 											},
 											"page_size_kb": schema.Int64Attribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.Int64{
-													int64planmodifier.RequiresReplace(),
-												},
-												Optional: true,
 											},
 										},
 										Description: `Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.`,
@@ -2472,23 +1602,13 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"gcs_bucket_name": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"gcs_bucket_path": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"gcs_bucket_region": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"northamerica-northeast1",
@@ -2535,43 +1655,24 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 					},
 					"destination_google_sheets": schema.SingleNestedAttribute{
 						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
-						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"credentials": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Attributes: map[string]schema.Attribute{
 									"client_id": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
-										Required: true,
+										Computed: true,
 									},
 									"client_secret": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
-										Required: true,
+										Computed: true,
 									},
 									"refresh_token": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
-										Required: true,
+										Computed: true,
 									},
 								},
 								Description: `Google API Credentials for connecting to Google Sheets and Google Drive APIs`,
 							},
 							"destination_type": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"google-sheets",
@@ -2579,32 +1680,19 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"spreadsheet_id": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 						},
 						Description: `The values required to configure the destination.`,
 					},
 					"destination_keen": schema.SingleNestedAttribute{
 						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
-						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"api_key": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"destination_type": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"keen",
@@ -2613,44 +1701,24 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"infer_timestamp": schema.BoolAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Bool{
-									boolplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"project_id": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 						},
 						Description: `The values required to configure the destination.`,
 					},
 					"destination_kinesis": schema.SingleNestedAttribute{
 						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
-						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"access_key": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"buffer_size": schema.Int64Attribute{
-								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"destination_type": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"kinesis",
@@ -2658,50 +1726,28 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"endpoint": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"private_key": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"region": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"shard_count": schema.Int64Attribute{
-								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 						},
 						Description: `The values required to configure the destination.`,
 					},
 					"destination_mariadb_columnstore": schema.SingleNestedAttribute{
 						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
-						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"database": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"destination_type": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"mariadb-columnstore",
@@ -2709,50 +1755,25 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"host": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"jdbc_url_params": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"password": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"port": schema.Int64Attribute{
-								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"tunnel_method": schema.SingleNestedAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"destination_mariadb_columnstore_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"tunnel_method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"NO_TUNNEL",
@@ -2765,28 +1786,15 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"destination_mariadb_columnstore_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"ssh_key": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_host": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"SSH_KEY_AUTH",
@@ -2795,38 +1803,22 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												Description: `Connect through a jump server tunnel host using username and ssh key`,
 											},
 											"tunnel_port": schema.Int64Attribute{
-												PlanModifiers: []planmodifier.Int64{
-													int64planmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_user": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 										},
 										Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 									},
 									"destination_mariadb_columnstore_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"tunnel_host": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"SSH_PASSWORD_AUTH",
@@ -2835,22 +1827,13 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												Description: `Connect through a jump server tunnel host using username and password authentication`,
 											},
 											"tunnel_port": schema.Int64Attribute{
-												PlanModifiers: []planmodifier.Int64{
-													int64planmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_user": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_user_password": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 										},
 										Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -2861,33 +1844,19 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"username": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 						},
 						Description: `The values required to configure the destination.`,
 					},
 					"destination_meilisearch": schema.SingleNestedAttribute{
 						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
-						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"api_key": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"destination_type": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"meilisearch",
@@ -2895,39 +1864,22 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"host": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 						},
 						Description: `The values required to configure the destination.`,
 					},
 					"destination_mongodb": schema.SingleNestedAttribute{
 						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
-						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"auth_type": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Attributes: map[string]schema.Attribute{
 									"destination_mongodb_authorization_type_none": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"authorization": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"none",
@@ -2939,16 +1891,9 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"destination_mongodb_authorization_type_login_password": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"authorization": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"login/password",
@@ -2956,16 +1901,10 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												},
 											},
 											"password": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"username": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 										},
 										Description: `Login/Password.`,
@@ -2976,16 +1915,10 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"database": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"destination_type": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"mongodb",
@@ -2994,29 +1927,15 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"instance_type": schema.SingleNestedAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"destination_mongodb_mongo_db_instance_type_standalone_mongo_db_instance": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"host": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"instance": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"standalone",
@@ -3024,26 +1943,16 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												},
 											},
 											"port": schema.Int64Attribute{
-												PlanModifiers: []planmodifier.Int64{
-													int64planmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 										},
 										Description: `MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.`,
 									},
 									"destination_mongodb_mongo_db_instance_type_replica_set": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"instance": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"replica",
@@ -3052,38 +1961,21 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 											},
 											"replica_set": schema.StringAttribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Optional: true,
 											},
 											"server_addresses": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 										},
 										Description: `MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.`,
 									},
 									"destination_mongodb_mongo_db_instance_type_mongo_db_atlas": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"cluster_url": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"instance": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"atlas",
@@ -3100,23 +1992,12 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"tunnel_method": schema.SingleNestedAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"destination_mongodb_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"tunnel_method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"NO_TUNNEL",
@@ -3129,28 +2010,15 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"destination_mongodb_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"ssh_key": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_host": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"SSH_KEY_AUTH",
@@ -3159,38 +2027,22 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												Description: `Connect through a jump server tunnel host using username and ssh key`,
 											},
 											"tunnel_port": schema.Int64Attribute{
-												PlanModifiers: []planmodifier.Int64{
-													int64planmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_user": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 										},
 										Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 									},
 									"destination_mongodb_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"tunnel_host": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"SSH_PASSWORD_AUTH",
@@ -3199,22 +2051,13 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												Description: `Connect through a jump server tunnel host using username and password authentication`,
 											},
 											"tunnel_port": schema.Int64Attribute{
-												PlanModifiers: []planmodifier.Int64{
-													int64planmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_user": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_user_password": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 										},
 										Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -3229,22 +2072,12 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 					},
 					"destination_mssql": schema.SingleNestedAttribute{
 						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
-						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"database": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"destination_type": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"mssql",
@@ -3252,56 +2085,28 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"host": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"jdbc_url_params": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"password": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"port": schema.Int64Attribute{
-								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"schema": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"ssl_method": schema.SingleNestedAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"destination_mssql_ssl_method_encrypted_trust_server_certificate_": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"ssl_method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"encrypted_trust_server_certificate",
@@ -3313,23 +2118,12 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"destination_mssql_ssl_method_encrypted_verify_certificate_": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"host_name_in_certificate": schema.StringAttribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Optional: true,
 											},
 											"ssl_method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"encrypted_verify_certificate",
@@ -3346,23 +2140,12 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"tunnel_method": schema.SingleNestedAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"destination_mssql_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"tunnel_method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"NO_TUNNEL",
@@ -3375,28 +2158,15 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"destination_mssql_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"ssh_key": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_host": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"SSH_KEY_AUTH",
@@ -3405,38 +2175,22 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												Description: `Connect through a jump server tunnel host using username and ssh key`,
 											},
 											"tunnel_port": schema.Int64Attribute{
-												PlanModifiers: []planmodifier.Int64{
-													int64planmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_user": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 										},
 										Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 									},
 									"destination_mssql_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"tunnel_host": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"SSH_PASSWORD_AUTH",
@@ -3445,22 +2199,13 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												Description: `Connect through a jump server tunnel host using username and password authentication`,
 											},
 											"tunnel_port": schema.Int64Attribute{
-												PlanModifiers: []planmodifier.Int64{
-													int64planmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_user": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_user_password": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 										},
 										Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -3471,32 +2216,19 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"username": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 						},
 						Description: `The values required to configure the destination.`,
 					},
 					"destination_mysql": schema.SingleNestedAttribute{
 						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
-						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"database": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"destination_type": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"mysql",
@@ -3504,50 +2236,25 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"host": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"jdbc_url_params": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"password": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"port": schema.Int64Attribute{
-								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"tunnel_method": schema.SingleNestedAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"destination_mysql_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"tunnel_method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"NO_TUNNEL",
@@ -3560,28 +2267,15 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"destination_mysql_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"ssh_key": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_host": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"SSH_KEY_AUTH",
@@ -3590,38 +2284,22 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												Description: `Connect through a jump server tunnel host using username and ssh key`,
 											},
 											"tunnel_port": schema.Int64Attribute{
-												PlanModifiers: []planmodifier.Int64{
-													int64planmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_user": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 										},
 										Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 									},
 									"destination_mysql_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"tunnel_host": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"SSH_PASSWORD_AUTH",
@@ -3630,22 +2308,13 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												Description: `Connect through a jump server tunnel host using username and password authentication`,
 											},
 											"tunnel_port": schema.Int64Attribute{
-												PlanModifiers: []planmodifier.Int64{
-													int64planmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_user": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_user_password": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 										},
 										Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -3656,26 +2325,16 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"username": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 						},
 						Description: `The values required to configure the destination.`,
 					},
 					"destination_oracle": schema.SingleNestedAttribute{
 						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
-						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_type": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"oracle",
@@ -3683,63 +2342,31 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"host": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"jdbc_url_params": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"password": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"port": schema.Int64Attribute{
-								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"schema": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"sid": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"tunnel_method": schema.SingleNestedAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"destination_oracle_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"tunnel_method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"NO_TUNNEL",
@@ -3752,28 +2379,15 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"destination_oracle_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"ssh_key": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_host": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"SSH_KEY_AUTH",
@@ -3782,38 +2396,22 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												Description: `Connect through a jump server tunnel host using username and ssh key`,
 											},
 											"tunnel_port": schema.Int64Attribute{
-												PlanModifiers: []planmodifier.Int64{
-													int64planmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_user": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 										},
 										Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 									},
 									"destination_oracle_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"tunnel_host": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"SSH_PASSWORD_AUTH",
@@ -3822,22 +2420,13 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												Description: `Connect through a jump server tunnel host using username and password authentication`,
 											},
 											"tunnel_port": schema.Int64Attribute{
-												PlanModifiers: []planmodifier.Int64{
-													int64planmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_user": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_user_password": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 										},
 										Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -3848,32 +2437,19 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"username": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 						},
 						Description: `The values required to configure the destination.`,
 					},
 					"destination_postgres": schema.SingleNestedAttribute{
 						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
-						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"database": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"destination_type": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"postgres",
@@ -3881,56 +2457,28 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"host": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"jdbc_url_params": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"password": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"port": schema.Int64Attribute{
-								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"schema": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"ssl_mode": schema.SingleNestedAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"destination_postgres_ssl_modes_disable": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"mode": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"disable",
@@ -3942,16 +2490,9 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"destination_postgres_ssl_modes_allow": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"mode": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"allow",
@@ -3963,16 +2504,9 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"destination_postgres_ssl_modes_prefer": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"mode": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"prefer",
@@ -3984,16 +2518,9 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"destination_postgres_ssl_modes_require": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"mode": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"require",
@@ -4005,29 +2532,15 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"destination_postgres_ssl_modes_verify_ca": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"ca_certificate": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"client_key_password": schema.StringAttribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Optional: true,
 											},
 											"mode": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"verify-ca",
@@ -4039,41 +2552,21 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"destination_postgres_ssl_modes_verify_full": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"ca_certificate": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"client_certificate": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"client_key": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"client_key_password": schema.StringAttribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Optional: true,
 											},
 											"mode": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"verify-full",
@@ -4090,23 +2583,12 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"tunnel_method": schema.SingleNestedAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"destination_postgres_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"tunnel_method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"NO_TUNNEL",
@@ -4119,28 +2601,15 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"destination_postgres_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"ssh_key": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_host": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"SSH_KEY_AUTH",
@@ -4149,38 +2618,22 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												Description: `Connect through a jump server tunnel host using username and ssh key`,
 											},
 											"tunnel_port": schema.Int64Attribute{
-												PlanModifiers: []planmodifier.Int64{
-													int64planmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_user": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 										},
 										Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 									},
 									"destination_postgres_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"tunnel_host": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"SSH_PASSWORD_AUTH",
@@ -4189,22 +2642,13 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												Description: `Connect through a jump server tunnel host using username and password authentication`,
 											},
 											"tunnel_port": schema.Int64Attribute{
-												PlanModifiers: []planmodifier.Int64{
-													int64planmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_user": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_user_password": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 										},
 										Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -4215,59 +2659,31 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"username": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 						},
 						Description: `The values required to configure the destination.`,
 					},
 					"destination_pubsub": schema.SingleNestedAttribute{
 						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
-						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"batching_delay_threshold": schema.Int64Attribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"batching_element_count_threshold": schema.Int64Attribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"batching_enabled": schema.BoolAttribute{
-								PlanModifiers: []planmodifier.Bool{
-									boolplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"batching_request_bytes_threshold": schema.Int64Attribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"credentials_json": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"destination_type": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"pubsub",
@@ -4275,68 +2691,37 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"ordering_enabled": schema.BoolAttribute{
-								PlanModifiers: []planmodifier.Bool{
-									boolplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"project_id": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"topic_id": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 						},
 						Description: `The values required to configure the destination.`,
 					},
 					"destination_pulsar": schema.SingleNestedAttribute{
 						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
-						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"batching_enabled": schema.BoolAttribute{
-								PlanModifiers: []planmodifier.Bool{
-									boolplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"batching_max_messages": schema.Int64Attribute{
-								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"batching_max_publish_delay": schema.Int64Attribute{
-								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"block_if_queue_full": schema.BoolAttribute{
-								PlanModifiers: []planmodifier.Bool{
-									boolplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"brokers": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"compression_type": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"NONE",
@@ -4349,10 +2734,7 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								Description: `Compression type for the producer.`,
 							},
 							"destination_type": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"pulsar",
@@ -4360,67 +2742,34 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"max_pending_messages": schema.Int64Attribute{
-								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"max_pending_messages_across_partitions": schema.Int64Attribute{
-								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"producer_name": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"producer_sync": schema.BoolAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Bool{
-									boolplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"send_timeout_ms": schema.Int64Attribute{
-								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"topic_namespace": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"topic_pattern": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"topic_tenant": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"topic_test": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"topic_type": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"persistent",
@@ -4430,26 +2779,16 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								Description: `It identifies type of topic. Pulsar supports two kind of topics: persistent and non-persistent. In persistent topic, all messages are durably persisted on disk (that means on multiple disks unless the broker is standalone), whereas non-persistent topic does not persist message into storage disk.`,
 							},
 							"use_tls": schema.BoolAttribute{
-								PlanModifiers: []planmodifier.Bool{
-									boolplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 						},
 						Description: `The values required to configure the destination.`,
 					},
 					"destination_rabbitmq": schema.SingleNestedAttribute{
 						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
-						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_type": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"rabbitmq",
@@ -4458,73 +2797,36 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"exchange": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"host": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"password": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"port": schema.Int64Attribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"routing_key": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"ssl": schema.BoolAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Bool{
-									boolplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"username": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"virtual_host": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 						},
 						Description: `The values required to configure the destination.`,
 					},
 					"destination_redis": schema.SingleNestedAttribute{
 						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
-						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"cache_type": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"hash",
@@ -4533,10 +2835,7 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								Description: `Redis cache type to store data in.`,
 							},
 							"destination_type": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"redis",
@@ -4544,50 +2843,25 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"host": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"password": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"port": schema.Int64Attribute{
-								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"ssl": schema.BoolAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Bool{
-									boolplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"ssl_mode": schema.SingleNestedAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"destination_redis_ssl_modes_disable": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"mode": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"disable",
@@ -4599,41 +2873,21 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"destination_redis_ssl_modes_verify_full": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"ca_certificate": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"client_certificate": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"client_key": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"client_key_password": schema.StringAttribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Optional: true,
 											},
 											"mode": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"verify-full",
@@ -4650,23 +2904,12 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"tunnel_method": schema.SingleNestedAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"destination_redis_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"tunnel_method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"NO_TUNNEL",
@@ -4679,28 +2922,15 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"destination_redis_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"ssh_key": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_host": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"SSH_KEY_AUTH",
@@ -4709,38 +2939,22 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												Description: `Connect through a jump server tunnel host using username and ssh key`,
 											},
 											"tunnel_port": schema.Int64Attribute{
-												PlanModifiers: []planmodifier.Int64{
-													int64planmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_user": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 										},
 										Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 									},
 									"destination_redis_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"tunnel_host": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"SSH_PASSWORD_AUTH",
@@ -4749,22 +2963,13 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												Description: `Connect through a jump server tunnel host using username and password authentication`,
 											},
 											"tunnel_port": schema.Int64Attribute{
-												PlanModifiers: []planmodifier.Int64{
-													int64planmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_user": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_user_password": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 										},
 										Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -4775,32 +2980,19 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"username": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 						},
 						Description: `The values required to configure the destination.`,
 					},
 					"destination_redshift": schema.SingleNestedAttribute{
 						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
-						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"database": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"destination_type": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"redshift",
@@ -4808,55 +3000,28 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"host": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"jdbc_url_params": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"password": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"port": schema.Int64Attribute{
-								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"schema": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"tunnel_method": schema.SingleNestedAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"destination_redshift_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"tunnel_method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"NO_TUNNEL",
@@ -4869,28 +3034,15 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"destination_redshift_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"ssh_key": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_host": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"SSH_KEY_AUTH",
@@ -4899,38 +3051,22 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												Description: `Connect through a jump server tunnel host using username and ssh key`,
 											},
 											"tunnel_port": schema.Int64Attribute{
-												PlanModifiers: []planmodifier.Int64{
-													int64planmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_user": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 										},
 										Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 									},
 									"destination_redshift_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"tunnel_host": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"SSH_PASSWORD_AUTH",
@@ -4939,22 +3075,13 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												Description: `Connect through a jump server tunnel host using username and password authentication`,
 											},
 											"tunnel_port": schema.Int64Attribute{
-												PlanModifiers: []planmodifier.Int64{
-													int64planmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_user": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"tunnel_user_password": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 										},
 										Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -4966,23 +3093,12 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"uploading_method": schema.SingleNestedAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"destination_redshift_uploading_method_standard": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"Standard",
@@ -4994,36 +3110,18 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"destination_redshift_uploading_method_s3_staging": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"access_key_id": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"encryption": schema.SingleNestedAttribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.Object{
-													objectplanmodifier.RequiresReplace(),
-												},
-												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"destination_redshift_uploading_method_s3_staging_encryption_no_encryption": schema.SingleNestedAttribute{
 														Computed: true,
-														PlanModifiers: []planmodifier.Object{
-															objectplanmodifier.RequiresReplace(),
-														},
-														Optional: true,
 														Attributes: map[string]schema.Attribute{
 															"encryption_type": schema.StringAttribute{
-																PlanModifiers: []planmodifier.String{
-																	stringplanmodifier.RequiresReplace(),
-																},
-																Required: true,
+																Computed: true,
 																Validators: []validator.String{
 																	stringvalidator.OneOf(
 																		"none",
@@ -5035,16 +3133,9 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 													},
 													"destination_redshift_uploading_method_s3_staging_encryption_aes_cbc_envelope_encryption": schema.SingleNestedAttribute{
 														Computed: true,
-														PlanModifiers: []planmodifier.Object{
-															objectplanmodifier.RequiresReplace(),
-														},
-														Optional: true,
 														Attributes: map[string]schema.Attribute{
 															"encryption_type": schema.StringAttribute{
-																PlanModifiers: []planmodifier.String{
-																	stringplanmodifier.RequiresReplace(),
-																},
-																Required: true,
+																Computed: true,
 																Validators: []validator.String{
 																	stringvalidator.OneOf(
 																		"aes_cbc_envelope",
@@ -5053,10 +3144,6 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 															},
 															"key_encrypting_key": schema.StringAttribute{
 																Computed: true,
-																PlanModifiers: []planmodifier.String{
-																	stringplanmodifier.RequiresReplace(),
-																},
-																Optional: true,
 															},
 														},
 														Description: `Staging data will be encrypted using AES-CBC envelope encryption.`,
@@ -5068,23 +3155,12 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 											},
 											"file_buffer_count": schema.Int64Attribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.Int64{
-													int64planmodifier.RequiresReplace(),
-												},
-												Optional: true,
 											},
 											"file_name_pattern": schema.StringAttribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Optional: true,
 											},
 											"method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"S3 Staging",
@@ -5093,29 +3169,15 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 											},
 											"purge_staging_data": schema.BoolAttribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.Bool{
-													boolplanmodifier.RequiresReplace(),
-												},
-												Optional: true,
 											},
 											"s3_bucket_name": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"s3_bucket_path": schema.StringAttribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Optional: true,
 											},
 											"s3_bucket_region": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"",
@@ -5147,10 +3209,7 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												Description: `The region of the S3 staging bucket to use if utilising a COPY strategy. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html#:~:text=In-,Region,-%2C%20choose%20the%20AWS">AWS docs</a> for details.`,
 											},
 											"secret_access_key": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 										},
 										Description: `The method how the data will be uploaded to the database.`,
@@ -5161,39 +3220,22 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"username": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 						},
 						Description: `The values required to configure the destination.`,
 					},
 					"destination_rockset": schema.SingleNestedAttribute{
 						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
-						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"api_key": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"api_server": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"destination_type": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"rockset",
@@ -5201,33 +3243,19 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"workspace": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 						},
 						Description: `The values required to configure the destination.`,
 					},
 					"destination_s3": schema.SingleNestedAttribute{
 						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
-						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"access_key_id": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"destination_type": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"s3",
@@ -5236,42 +3264,21 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"file_name_pattern": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"format": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Attributes: map[string]schema.Attribute{
 									"destination_s3_output_format_avro_apache_avro": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"compression_codec": schema.SingleNestedAttribute{
-												PlanModifiers: []planmodifier.Object{
-													objectplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Attributes: map[string]schema.Attribute{
 													"destination_s3_output_format_avro_apache_avro_compression_codec_no_compression": schema.SingleNestedAttribute{
 														Computed: true,
-														PlanModifiers: []planmodifier.Object{
-															objectplanmodifier.RequiresReplace(),
-														},
-														Optional: true,
 														Attributes: map[string]schema.Attribute{
 															"codec": schema.StringAttribute{
-																PlanModifiers: []planmodifier.String{
-																	stringplanmodifier.RequiresReplace(),
-																},
-																Required: true,
+																Computed: true,
 																Validators: []validator.String{
 																	stringvalidator.OneOf(
 																		"no compression",
@@ -5283,16 +3290,9 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 													},
 													"destination_s3_output_format_avro_apache_avro_compression_codec_deflate": schema.SingleNestedAttribute{
 														Computed: true,
-														PlanModifiers: []planmodifier.Object{
-															objectplanmodifier.RequiresReplace(),
-														},
-														Optional: true,
 														Attributes: map[string]schema.Attribute{
 															"codec": schema.StringAttribute{
-																PlanModifiers: []planmodifier.String{
-																	stringplanmodifier.RequiresReplace(),
-																},
-																Required: true,
+																Computed: true,
 																Validators: []validator.String{
 																	stringvalidator.OneOf(
 																		"Deflate",
@@ -5300,26 +3300,16 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 																},
 															},
 															"compression_level": schema.Int64Attribute{
-																PlanModifiers: []planmodifier.Int64{
-																	int64planmodifier.RequiresReplace(),
-																},
-																Required: true,
+																Computed: true,
 															},
 														},
 														Description: `The compression algorithm used to compress data. Default to no compression.`,
 													},
 													"destination_s3_output_format_avro_apache_avro_compression_codec_bzip2": schema.SingleNestedAttribute{
 														Computed: true,
-														PlanModifiers: []planmodifier.Object{
-															objectplanmodifier.RequiresReplace(),
-														},
-														Optional: true,
 														Attributes: map[string]schema.Attribute{
 															"codec": schema.StringAttribute{
-																PlanModifiers: []planmodifier.String{
-																	stringplanmodifier.RequiresReplace(),
-																},
-																Required: true,
+																Computed: true,
 																Validators: []validator.String{
 																	stringvalidator.OneOf(
 																		"bzip2",
@@ -5331,16 +3321,9 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 													},
 													"destination_s3_output_format_avro_apache_avro_compression_codec_xz": schema.SingleNestedAttribute{
 														Computed: true,
-														PlanModifiers: []planmodifier.Object{
-															objectplanmodifier.RequiresReplace(),
-														},
-														Optional: true,
 														Attributes: map[string]schema.Attribute{
 															"codec": schema.StringAttribute{
-																PlanModifiers: []planmodifier.String{
-																	stringplanmodifier.RequiresReplace(),
-																},
-																Required: true,
+																Computed: true,
 																Validators: []validator.String{
 																	stringvalidator.OneOf(
 																		"xz",
@@ -5348,26 +3331,16 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 																},
 															},
 															"compression_level": schema.Int64Attribute{
-																PlanModifiers: []planmodifier.Int64{
-																	int64planmodifier.RequiresReplace(),
-																},
-																Required: true,
+																Computed: true,
 															},
 														},
 														Description: `The compression algorithm used to compress data. Default to no compression.`,
 													},
 													"destination_s3_output_format_avro_apache_avro_compression_codec_zstandard": schema.SingleNestedAttribute{
 														Computed: true,
-														PlanModifiers: []planmodifier.Object{
-															objectplanmodifier.RequiresReplace(),
-														},
-														Optional: true,
 														Attributes: map[string]schema.Attribute{
 															"codec": schema.StringAttribute{
-																PlanModifiers: []planmodifier.String{
-																	stringplanmodifier.RequiresReplace(),
-																},
-																Required: true,
+																Computed: true,
 																Validators: []validator.String{
 																	stringvalidator.OneOf(
 																		"zstandard",
@@ -5375,33 +3348,19 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 																},
 															},
 															"compression_level": schema.Int64Attribute{
-																PlanModifiers: []planmodifier.Int64{
-																	int64planmodifier.RequiresReplace(),
-																},
-																Required: true,
+																Computed: true,
 															},
 															"include_checksum": schema.BoolAttribute{
 																Computed: true,
-																PlanModifiers: []planmodifier.Bool{
-																	boolplanmodifier.RequiresReplace(),
-																},
-																Optional: true,
 															},
 														},
 														Description: `The compression algorithm used to compress data. Default to no compression.`,
 													},
 													"destination_s3_output_format_avro_apache_avro_compression_codec_snappy": schema.SingleNestedAttribute{
 														Computed: true,
-														PlanModifiers: []planmodifier.Object{
-															objectplanmodifier.RequiresReplace(),
-														},
-														Optional: true,
 														Attributes: map[string]schema.Attribute{
 															"codec": schema.StringAttribute{
-																PlanModifiers: []planmodifier.String{
-																	stringplanmodifier.RequiresReplace(),
-																},
-																Required: true,
+																Computed: true,
 																Validators: []validator.String{
 																	stringvalidator.OneOf(
 																		"snappy",
@@ -5417,10 +3376,7 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												},
 											},
 											"format_type": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"Avro",
@@ -5432,31 +3388,15 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"destination_s3_output_format_csv_comma_separated_values": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"compression": schema.SingleNestedAttribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.Object{
-													objectplanmodifier.RequiresReplace(),
-												},
-												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"destination_s3_output_format_csv_comma_separated_values_compression_no_compression": schema.SingleNestedAttribute{
 														Computed: true,
-														PlanModifiers: []planmodifier.Object{
-															objectplanmodifier.RequiresReplace(),
-														},
-														Optional: true,
 														Attributes: map[string]schema.Attribute{
 															"compression_type": schema.StringAttribute{
 																Computed: true,
-																PlanModifiers: []planmodifier.String{
-																	stringplanmodifier.RequiresReplace(),
-																},
-																Optional: true,
 																Validators: []validator.String{
 																	stringvalidator.OneOf(
 																		"No Compression",
@@ -5468,17 +3408,9 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 													},
 													"destination_s3_output_format_csv_comma_separated_values_compression_gzip": schema.SingleNestedAttribute{
 														Computed: true,
-														PlanModifiers: []planmodifier.Object{
-															objectplanmodifier.RequiresReplace(),
-														},
-														Optional: true,
 														Attributes: map[string]schema.Attribute{
 															"compression_type": schema.StringAttribute{
 																Computed: true,
-																PlanModifiers: []planmodifier.String{
-																	stringplanmodifier.RequiresReplace(),
-																},
-																Optional: true,
 																Validators: []validator.String{
 																	stringvalidator.OneOf(
 																		"GZIP",
@@ -5494,10 +3426,7 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												},
 											},
 											"flattening": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"No flattening",
@@ -5507,10 +3436,7 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												Description: `Whether the input json data should be normalized (flattened) in the output CSV. Please refer to docs for details.`,
 											},
 											"format_type": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"CSV",
@@ -5522,31 +3448,15 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"destination_s3_output_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"compression": schema.SingleNestedAttribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.Object{
-													objectplanmodifier.RequiresReplace(),
-												},
-												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"destination_s3_output_format_json_lines_newline_delimited_json_compression_no_compression": schema.SingleNestedAttribute{
 														Computed: true,
-														PlanModifiers: []planmodifier.Object{
-															objectplanmodifier.RequiresReplace(),
-														},
-														Optional: true,
 														Attributes: map[string]schema.Attribute{
 															"compression_type": schema.StringAttribute{
 																Computed: true,
-																PlanModifiers: []planmodifier.String{
-																	stringplanmodifier.RequiresReplace(),
-																},
-																Optional: true,
 																Validators: []validator.String{
 																	stringvalidator.OneOf(
 																		"No Compression",
@@ -5558,17 +3468,9 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 													},
 													"destination_s3_output_format_json_lines_newline_delimited_json_compression_gzip": schema.SingleNestedAttribute{
 														Computed: true,
-														PlanModifiers: []planmodifier.Object{
-															objectplanmodifier.RequiresReplace(),
-														},
-														Optional: true,
 														Attributes: map[string]schema.Attribute{
 															"compression_type": schema.StringAttribute{
 																Computed: true,
-																PlanModifiers: []planmodifier.String{
-																	stringplanmodifier.RequiresReplace(),
-																},
-																Optional: true,
 																Validators: []validator.String{
 																	stringvalidator.OneOf(
 																		"GZIP",
@@ -5585,10 +3487,6 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 											},
 											"flattening": schema.StringAttribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Optional: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"No flattening",
@@ -5598,10 +3496,7 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												Description: `Whether the input json data should be normalized (flattened) in the output JSON Lines. Please refer to docs for details.`,
 											},
 											"format_type": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"JSONL",
@@ -5613,24 +3508,12 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"destination_s3_output_format_parquet_columnar_storage": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"block_size_mb": schema.Int64Attribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.Int64{
-													int64planmodifier.RequiresReplace(),
-												},
-												Optional: true,
 											},
 											"compression_codec": schema.StringAttribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Optional: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"UNCOMPRESSED",
@@ -5646,23 +3529,12 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 											},
 											"dictionary_encoding": schema.BoolAttribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.Bool{
-													boolplanmodifier.RequiresReplace(),
-												},
-												Optional: true,
 											},
 											"dictionary_page_size_kb": schema.Int64Attribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.Int64{
-													int64planmodifier.RequiresReplace(),
-												},
-												Optional: true,
 											},
 											"format_type": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"Parquet",
@@ -5671,17 +3543,9 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 											},
 											"max_padding_size_mb": schema.Int64Attribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.Int64{
-													int64planmodifier.RequiresReplace(),
-												},
-												Optional: true,
 											},
 											"page_size_kb": schema.Int64Attribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.Int64{
-													int64planmodifier.RequiresReplace(),
-												},
-												Optional: true,
 											},
 										},
 										Description: `Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details`,
@@ -5692,22 +3556,13 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"s3_bucket_name": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"s3_bucket_path": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"s3_bucket_region": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"",
@@ -5742,47 +3597,24 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"s3_endpoint": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"s3_path_format": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"secret_access_key": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 						},
 						Description: `The values required to configure the destination.`,
 					},
 					"destination_s3_glue": schema.SingleNestedAttribute{
 						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
-						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"access_key_id": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"destination_type": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"s3-glue",
@@ -5791,44 +3623,21 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"file_name_pattern": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"format": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Attributes: map[string]schema.Attribute{
 									"destination_s3_glue_output_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"compression": schema.SingleNestedAttribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.Object{
-													objectplanmodifier.RequiresReplace(),
-												},
-												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"destination_s3_glue_output_format_json_lines_newline_delimited_json_compression_no_compression": schema.SingleNestedAttribute{
 														Computed: true,
-														PlanModifiers: []planmodifier.Object{
-															objectplanmodifier.RequiresReplace(),
-														},
-														Optional: true,
 														Attributes: map[string]schema.Attribute{
 															"compression_type": schema.StringAttribute{
 																Computed: true,
-																PlanModifiers: []planmodifier.String{
-																	stringplanmodifier.RequiresReplace(),
-																},
-																Optional: true,
 																Validators: []validator.String{
 																	stringvalidator.OneOf(
 																		"No Compression",
@@ -5840,17 +3649,9 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 													},
 													"destination_s3_glue_output_format_json_lines_newline_delimited_json_compression_gzip": schema.SingleNestedAttribute{
 														Computed: true,
-														PlanModifiers: []planmodifier.Object{
-															objectplanmodifier.RequiresReplace(),
-														},
-														Optional: true,
 														Attributes: map[string]schema.Attribute{
 															"compression_type": schema.StringAttribute{
 																Computed: true,
-																PlanModifiers: []planmodifier.String{
-																	stringplanmodifier.RequiresReplace(),
-																},
-																Optional: true,
 																Validators: []validator.String{
 																	stringvalidator.OneOf(
 																		"GZIP",
@@ -5865,18 +3666,18 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 													validators.ExactlyOneChild(),
 												},
 											},
-											"flatten_data": schema.BoolAttribute{
+											"flattening": schema.StringAttribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.Bool{
-													boolplanmodifier.RequiresReplace(),
+												Validators: []validator.String{
+													stringvalidator.OneOf(
+														"No flattening",
+														"Root level flattening",
+													),
 												},
-												Optional: true,
+												Description: `Whether the input json data should be normalized (flattened) in the output JSON Lines. Please refer to docs for details.`,
 											},
 											"format_type": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"JSONL",
@@ -5892,16 +3693,10 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"glue_database": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"glue_serialization_library": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"org.openx.data.jsonserde.JsonSerDe",
@@ -5911,22 +3706,13 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								Description: `The library that your query engine will use for reading and writing data in your lake.`,
 							},
 							"s3_bucket_name": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"s3_bucket_path": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"s3_bucket_region": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"",
@@ -5961,46 +3747,24 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"s3_endpoint": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"s3_path_format": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"secret_access_key": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 						},
 						Description: `The values required to configure the destination.`,
 					},
 					"destination_scylla": schema.SingleNestedAttribute{
 						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
-						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"address": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"destination_type": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"scylla",
@@ -6008,51 +3772,28 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"keyspace": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"password": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"port": schema.Int64Attribute{
-								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"replication": schema.Int64Attribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"username": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 						},
 						Description: `The values required to configure the destination.`,
 					},
 					"destination_sftp_json": schema.SingleNestedAttribute{
 						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
-						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_type": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"sftp-json",
@@ -6060,72 +3801,37 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"destination_path": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"host": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"password": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"port": schema.Int64Attribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"username": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 						},
 						Description: `The values required to configure the destination.`,
 					},
 					"destination_snowflake": schema.SingleNestedAttribute{
 						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
-						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"credentials": schema.SingleNestedAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"destination_snowflake_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"access_token": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"auth_type": schema.StringAttribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Optional: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"OAuth2.0",
@@ -6134,39 +3840,20 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 											},
 											"client_id": schema.StringAttribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Optional: true,
 											},
 											"client_secret": schema.StringAttribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Optional: true,
 											},
 											"refresh_token": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 										},
 									},
 									"destination_snowflake_authorization_method_key_pair_authentication": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"auth_type": schema.StringAttribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Optional: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"Key Pair Authentication",
@@ -6174,33 +3861,18 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												},
 											},
 											"private_key": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"private_key_password": schema.StringAttribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Optional: true,
 											},
 										},
 									},
 									"destination_snowflake_authorization_method_username_and_password": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"auth_type": schema.StringAttribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Optional: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"Username and Password",
@@ -6208,10 +3880,7 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												},
 											},
 											"password": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 										},
 									},
@@ -6221,16 +3890,10 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"database": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"destination_type": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"snowflake",
@@ -6239,43 +3902,21 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"file_buffer_count": schema.Int64Attribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"host": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"jdbc_url_params": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"loading_method": schema.SingleNestedAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"destination_snowflake_data_staging_method_select_another_option": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"Standard",
@@ -6287,16 +3928,9 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"destination_snowflake_data_staging_method_recommended_internal_staging": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"Internal Staging",
@@ -6308,36 +3942,18 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"destination_snowflake_data_staging_method_aws_s3_staging": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"access_key_id": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"encryption": schema.SingleNestedAttribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.Object{
-													objectplanmodifier.RequiresReplace(),
-												},
-												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"destination_snowflake_data_staging_method_aws_s3_staging_encryption_no_encryption": schema.SingleNestedAttribute{
 														Computed: true,
-														PlanModifiers: []planmodifier.Object{
-															objectplanmodifier.RequiresReplace(),
-														},
-														Optional: true,
 														Attributes: map[string]schema.Attribute{
 															"encryption_type": schema.StringAttribute{
-																PlanModifiers: []planmodifier.String{
-																	stringplanmodifier.RequiresReplace(),
-																},
-																Required: true,
+																Computed: true,
 																Validators: []validator.String{
 																	stringvalidator.OneOf(
 																		"none",
@@ -6349,16 +3965,9 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 													},
 													"destination_snowflake_data_staging_method_aws_s3_staging_encryption_aes_cbc_envelope_encryption": schema.SingleNestedAttribute{
 														Computed: true,
-														PlanModifiers: []planmodifier.Object{
-															objectplanmodifier.RequiresReplace(),
-														},
-														Optional: true,
 														Attributes: map[string]schema.Attribute{
 															"encryption_type": schema.StringAttribute{
-																PlanModifiers: []planmodifier.String{
-																	stringplanmodifier.RequiresReplace(),
-																},
-																Required: true,
+																Computed: true,
 																Validators: []validator.String{
 																	stringvalidator.OneOf(
 																		"aes_cbc_envelope",
@@ -6367,10 +3976,6 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 															},
 															"key_encrypting_key": schema.StringAttribute{
 																Computed: true,
-																PlanModifiers: []planmodifier.String{
-																	stringplanmodifier.RequiresReplace(),
-																},
-																Optional: true,
 															},
 														},
 														Description: `Staging data will be encrypted using AES-CBC envelope encryption.`,
@@ -6382,16 +3987,9 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 											},
 											"file_name_pattern": schema.StringAttribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Optional: true,
 											},
 											"method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"S3 Staging",
@@ -6400,23 +3998,12 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 											},
 											"purge_staging_data": schema.BoolAttribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.Bool{
-													boolplanmodifier.RequiresReplace(),
-												},
-												Optional: true,
 											},
 											"s3_bucket_name": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"s3_bucket_region": schema.StringAttribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Optional: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"",
@@ -6448,38 +4035,22 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												Description: `Enter the region where your S3 bucket resides`,
 											},
 											"secret_access_key": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 										},
 										Description: `Recommended for large production workloads for better speed and scalability.`,
 									},
 									"destination_snowflake_data_staging_method_google_cloud_storage_staging": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"bucket_name": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"credentials_json": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"GCS Staging",
@@ -6487,51 +4058,28 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 												},
 											},
 											"project_id": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 										},
 										Description: `Recommended for large production workloads for better speed and scalability.`,
 									},
 									"destination_snowflake_data_staging_method_azure_blob_storage_staging": schema.SingleNestedAttribute{
 										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
-										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"azure_blob_storage_account_name": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"azure_blob_storage_container_name": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"azure_blob_storage_endpoint_domain_name": schema.StringAttribute{
 												Computed: true,
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Optional: true,
 											},
 											"azure_blob_storage_sas_token": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 											},
 											"method": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
-												Required: true,
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"Azure Blob Staging",
@@ -6547,57 +4095,31 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"role": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"schema": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"username": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"warehouse": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 						},
 						Description: `The values required to configure the destination.`,
 					},
 					"destination_typesense": schema.SingleNestedAttribute{
 						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
-						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"api_key": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"batch_size": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"destination_type": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 								Validators: []validator.String{
 									stringvalidator.OneOf(
 										"typesense",
@@ -6605,24 +4127,13 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"host": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Required: true,
+								Computed: true,
 							},
 							"port": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 							"protocol": schema.StringAttribute{
 								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
-								Optional: true,
 							},
 						},
 						Description: `The values required to configure the destination.`,
@@ -6632,17 +4143,17 @@ func (r *DestinationResource) Schema(ctx context.Context, req resource.SchemaReq
 					validators.ExactlyOneChild(),
 				},
 			},
+			"destination_id": schema.StringAttribute{
+				Computed: true,
+			},
+			"destination_type": schema.StringAttribute{
+				Computed: true,
+			},
 			"name": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
-				Required: true,
+				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
-				Required: true,
+				Computed: true,
 			},
 		},
 	}
@@ -6686,7 +4197,7 @@ func (r *DestinationResource) Create(ctx context.Context, req resource.CreateReq
 		return
 	}
 
-	request := *data.ToSDKType()
+	request := *data.ToCreateSDKType()
 	res, err := r.client.Destinations.CreateDestination(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
@@ -6700,6 +4211,11 @@ func (r *DestinationResource) Create(ctx context.Context, req resource.CreateReq
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
+	if res.DestinationResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+		return
+	}
+	data.RefreshFromCreateResponse(res.DestinationResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -6731,18 +4247,7 @@ func (r *DestinationResource) Read(ctx context.Context, req resource.ReadRequest
 
 func (r *DestinationResource) Update(ctx context.Context, req resource.UpdateRequest, resp *resource.UpdateResponse) {
 	var data *DestinationResourceModel
-	var item types.Object
-
-	resp.Diagnostics.Append(req.Plan.Get(ctx, &item)...)
-	if resp.Diagnostics.HasError() {
-		return
-	}
-
-	resp.Diagnostics.Append(item.As(ctx, &data, basetypes.ObjectAsOptions{
-		UnhandledNullAsEmpty:    true,
-		UnhandledUnknownAsEmpty: true,
-	})...)
-
+	merge(ctx, req, resp, &data)
 	if resp.Diagnostics.HasError() {
 		return
 	}
@@ -6771,7 +4276,24 @@ func (r *DestinationResource) Delete(ctx context.Context, req resource.DeleteReq
 		return
 	}
 
-	// Not Implemented; entity does not have a configured DELETE operation
+	destinationID := data.DestinationID.ValueString()
+	request := operations.DeleteDestinationRequest{
+		DestinationID: destinationID,
+	}
+	res, err := r.client.Destinations.DeleteDestination(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode != 204 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
+
 }
 
 func (r *DestinationResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {

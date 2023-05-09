@@ -13,17 +13,21 @@ const (
 	SourceDatascopeDatascopeEnumDatascope SourceDatascopeDatascopeEnum = "datascope"
 )
 
+func (e SourceDatascopeDatascopeEnum) ToPointer() *SourceDatascopeDatascopeEnum {
+	return &e
+}
+
 func (e *SourceDatascopeDatascopeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "datascope":
-		*e = SourceDatascopeDatascopeEnum(s)
+		*e = SourceDatascopeDatascopeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceDatascopeDatascopeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceDatascopeDatascopeEnum: %v", v)
 	}
 }
 

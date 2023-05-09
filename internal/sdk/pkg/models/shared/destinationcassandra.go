@@ -13,17 +13,21 @@ const (
 	DestinationCassandraCassandraEnumCassandra DestinationCassandraCassandraEnum = "cassandra"
 )
 
+func (e DestinationCassandraCassandraEnum) ToPointer() *DestinationCassandraCassandraEnum {
+	return &e
+}
+
 func (e *DestinationCassandraCassandraEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "cassandra":
-		*e = DestinationCassandraCassandraEnum(s)
+		*e = DestinationCassandraCassandraEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationCassandraCassandraEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationCassandraCassandraEnum: %v", v)
 	}
 }
 

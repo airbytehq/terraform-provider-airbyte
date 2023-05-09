@@ -13,17 +13,21 @@ const (
 	SourceDremioDremioEnumDremio SourceDremioDremioEnum = "dremio"
 )
 
+func (e SourceDremioDremioEnum) ToPointer() *SourceDremioDremioEnum {
+	return &e
+}
+
 func (e *SourceDremioDremioEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "dremio":
-		*e = SourceDremioDremioEnum(s)
+		*e = SourceDremioDremioEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceDremioDremioEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceDremioDremioEnum: %v", v)
 	}
 }
 

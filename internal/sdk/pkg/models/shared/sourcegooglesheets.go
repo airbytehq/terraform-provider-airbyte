@@ -15,17 +15,21 @@ const (
 	SourceGoogleSheetsAuthenticationServiceAccountKeyAuthenticationAuthTypeEnumService SourceGoogleSheetsAuthenticationServiceAccountKeyAuthenticationAuthTypeEnum = "Service"
 )
 
+func (e SourceGoogleSheetsAuthenticationServiceAccountKeyAuthenticationAuthTypeEnum) ToPointer() *SourceGoogleSheetsAuthenticationServiceAccountKeyAuthenticationAuthTypeEnum {
+	return &e
+}
+
 func (e *SourceGoogleSheetsAuthenticationServiceAccountKeyAuthenticationAuthTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "Service":
-		*e = SourceGoogleSheetsAuthenticationServiceAccountKeyAuthenticationAuthTypeEnum(s)
+		*e = SourceGoogleSheetsAuthenticationServiceAccountKeyAuthenticationAuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGoogleSheetsAuthenticationServiceAccountKeyAuthenticationAuthTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceGoogleSheetsAuthenticationServiceAccountKeyAuthenticationAuthTypeEnum: %v", v)
 	}
 }
 
@@ -42,17 +46,21 @@ const (
 	SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuthAuthTypeEnumClient SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuthAuthTypeEnum = "Client"
 )
 
+func (e SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuthAuthTypeEnum) ToPointer() *SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuthAuthTypeEnum {
+	return &e
+}
+
 func (e *SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuthAuthTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "Client":
-		*e = SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuthAuthTypeEnum(s)
+		*e = SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuthAuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuthAuthTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuthAuthTypeEnum: %v", v)
 	}
 }
 
@@ -141,17 +149,21 @@ const (
 	SourceGoogleSheetsGoogleSheetsEnumGoogleSheets SourceGoogleSheetsGoogleSheetsEnum = "google-sheets"
 )
 
+func (e SourceGoogleSheetsGoogleSheetsEnum) ToPointer() *SourceGoogleSheetsGoogleSheetsEnum {
+	return &e
+}
+
 func (e *SourceGoogleSheetsGoogleSheetsEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "google-sheets":
-		*e = SourceGoogleSheetsGoogleSheetsEnum(s)
+		*e = SourceGoogleSheetsGoogleSheetsEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGoogleSheetsGoogleSheetsEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceGoogleSheetsGoogleSheetsEnum: %v", v)
 	}
 }
 

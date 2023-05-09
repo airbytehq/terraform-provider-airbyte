@@ -15,17 +15,21 @@ const (
 	DestinationFireboltFireboltEnumFirebolt DestinationFireboltFireboltEnum = "firebolt"
 )
 
+func (e DestinationFireboltFireboltEnum) ToPointer() *DestinationFireboltFireboltEnum {
+	return &e
+}
+
 func (e *DestinationFireboltFireboltEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "firebolt":
-		*e = DestinationFireboltFireboltEnum(s)
+		*e = DestinationFireboltFireboltEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationFireboltFireboltEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationFireboltFireboltEnum: %v", v)
 	}
 }
 
@@ -35,17 +39,21 @@ const (
 	DestinationFireboltLoadingMethodExternalTableViaS3MethodEnumS3 DestinationFireboltLoadingMethodExternalTableViaS3MethodEnum = "S3"
 )
 
+func (e DestinationFireboltLoadingMethodExternalTableViaS3MethodEnum) ToPointer() *DestinationFireboltLoadingMethodExternalTableViaS3MethodEnum {
+	return &e
+}
+
 func (e *DestinationFireboltLoadingMethodExternalTableViaS3MethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "S3":
-		*e = DestinationFireboltLoadingMethodExternalTableViaS3MethodEnum(s)
+		*e = DestinationFireboltLoadingMethodExternalTableViaS3MethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationFireboltLoadingMethodExternalTableViaS3MethodEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationFireboltLoadingMethodExternalTableViaS3MethodEnum: %v", v)
 	}
 }
 
@@ -68,17 +76,21 @@ const (
 	DestinationFireboltLoadingMethodSQLInsertsMethodEnumSQL DestinationFireboltLoadingMethodSQLInsertsMethodEnum = "SQL"
 )
 
+func (e DestinationFireboltLoadingMethodSQLInsertsMethodEnum) ToPointer() *DestinationFireboltLoadingMethodSQLInsertsMethodEnum {
+	return &e
+}
+
 func (e *DestinationFireboltLoadingMethodSQLInsertsMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "SQL":
-		*e = DestinationFireboltLoadingMethodSQLInsertsMethodEnum(s)
+		*e = DestinationFireboltLoadingMethodSQLInsertsMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationFireboltLoadingMethodSQLInsertsMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationFireboltLoadingMethodSQLInsertsMethodEnum: %v", v)
 	}
 }
 

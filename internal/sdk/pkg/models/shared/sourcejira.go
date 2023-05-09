@@ -14,17 +14,21 @@ const (
 	SourceJiraJiraEnumJira SourceJiraJiraEnum = "jira"
 )
 
+func (e SourceJiraJiraEnum) ToPointer() *SourceJiraJiraEnum {
+	return &e
+}
+
 func (e *SourceJiraJiraEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "jira":
-		*e = SourceJiraJiraEnum(s)
+		*e = SourceJiraJiraEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceJiraJiraEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceJiraJiraEnum: %v", v)
 	}
 }
 
@@ -32,7 +36,7 @@ func (e *SourceJiraJiraEnum) UnmarshalJSON(data []byte) error {
 type SourceJira struct {
 	// Jira API Token. See the <a href="https://docs.airbyte.com/integrations/sources/jira">docs</a> for more information on how to generate this key.
 	APIToken string `json:"api_token"`
-	// The Domain for your Jira account, e.g. airbyteio.atlassian.net
+	// The Domain for your Jira account, e.g. airbyteio.atlassian.net, airbyteio.jira.com, jira.your-domain.com
 	Domain string `json:"domain"`
 	// The user email for your Jira account.
 	Email string `json:"email"`

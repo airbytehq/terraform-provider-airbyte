@@ -13,17 +13,21 @@ const (
 	SourceTheGuardianAPITheGuardianAPIEnumTheGuardianAPI SourceTheGuardianAPITheGuardianAPIEnum = "the-guardian-api"
 )
 
+func (e SourceTheGuardianAPITheGuardianAPIEnum) ToPointer() *SourceTheGuardianAPITheGuardianAPIEnum {
+	return &e
+}
+
 func (e *SourceTheGuardianAPITheGuardianAPIEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "the-guardian-api":
-		*e = SourceTheGuardianAPITheGuardianAPIEnum(s)
+		*e = SourceTheGuardianAPITheGuardianAPIEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceTheGuardianAPITheGuardianAPIEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceTheGuardianAPITheGuardianAPIEnum: %v", v)
 	}
 }
 

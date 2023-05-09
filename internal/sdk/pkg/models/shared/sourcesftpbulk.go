@@ -16,19 +16,23 @@ const (
 	SourceSftpBulkFileTypeEnumJSON SourceSftpBulkFileTypeEnum = "json"
 )
 
+func (e SourceSftpBulkFileTypeEnum) ToPointer() *SourceSftpBulkFileTypeEnum {
+	return &e
+}
+
 func (e *SourceSftpBulkFileTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "csv":
 		fallthrough
 	case "json":
-		*e = SourceSftpBulkFileTypeEnum(s)
+		*e = SourceSftpBulkFileTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSftpBulkFileTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceSftpBulkFileTypeEnum: %v", v)
 	}
 }
 
@@ -38,17 +42,21 @@ const (
 	SourceSftpBulkSftpBulkEnumSftpBulk SourceSftpBulkSftpBulkEnum = "sftp-bulk"
 )
 
+func (e SourceSftpBulkSftpBulkEnum) ToPointer() *SourceSftpBulkSftpBulkEnum {
+	return &e
+}
+
 func (e *SourceSftpBulkSftpBulkEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "sftp-bulk":
-		*e = SourceSftpBulkSftpBulkEnum(s)
+		*e = SourceSftpBulkSftpBulkEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSftpBulkSftpBulkEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceSftpBulkSftpBulkEnum: %v", v)
 	}
 }
 

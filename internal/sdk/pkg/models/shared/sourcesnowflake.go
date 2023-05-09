@@ -15,17 +15,21 @@ const (
 	SourceSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeEnumUsernamePassword SourceSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeEnum = "username/password"
 )
 
+func (e SourceSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeEnum) ToPointer() *SourceSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeEnum {
+	return &e
+}
+
 func (e *SourceSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "username/password":
-		*e = SourceSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeEnum(s)
+		*e = SourceSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeEnum: %v", v)
 	}
 }
 
@@ -43,17 +47,21 @@ const (
 	SourceSnowflakeAuthorizationMethodOAuth20AuthTypeEnumOAuth SourceSnowflakeAuthorizationMethodOAuth20AuthTypeEnum = "OAuth"
 )
 
+func (e SourceSnowflakeAuthorizationMethodOAuth20AuthTypeEnum) ToPointer() *SourceSnowflakeAuthorizationMethodOAuth20AuthTypeEnum {
+	return &e
+}
+
 func (e *SourceSnowflakeAuthorizationMethodOAuth20AuthTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "OAuth":
-		*e = SourceSnowflakeAuthorizationMethodOAuth20AuthTypeEnum(s)
+		*e = SourceSnowflakeAuthorizationMethodOAuth20AuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSnowflakeAuthorizationMethodOAuth20AuthTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceSnowflakeAuthorizationMethodOAuth20AuthTypeEnum: %v", v)
 	}
 }
 
@@ -143,17 +151,21 @@ const (
 	SourceSnowflakeSnowflakeEnumSnowflake SourceSnowflakeSnowflakeEnum = "snowflake"
 )
 
+func (e SourceSnowflakeSnowflakeEnum) ToPointer() *SourceSnowflakeSnowflakeEnum {
+	return &e
+}
+
 func (e *SourceSnowflakeSnowflakeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "snowflake":
-		*e = SourceSnowflakeSnowflakeEnum(s)
+		*e = SourceSnowflakeSnowflakeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSnowflakeSnowflakeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceSnowflakeSnowflakeEnum: %v", v)
 	}
 }
 

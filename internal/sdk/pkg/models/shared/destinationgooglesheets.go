@@ -23,17 +23,21 @@ const (
 	DestinationGoogleSheetsGoogleSheetsEnumGoogleSheets DestinationGoogleSheetsGoogleSheetsEnum = "google-sheets"
 )
 
+func (e DestinationGoogleSheetsGoogleSheetsEnum) ToPointer() *DestinationGoogleSheetsGoogleSheetsEnum {
+	return &e
+}
+
 func (e *DestinationGoogleSheetsGoogleSheetsEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "google-sheets":
-		*e = DestinationGoogleSheetsGoogleSheetsEnum(s)
+		*e = DestinationGoogleSheetsGoogleSheetsEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationGoogleSheetsGoogleSheetsEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationGoogleSheetsGoogleSheetsEnum: %v", v)
 	}
 }
 

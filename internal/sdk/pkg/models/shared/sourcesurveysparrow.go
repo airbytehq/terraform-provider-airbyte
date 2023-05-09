@@ -15,17 +15,21 @@ const (
 	SourceSurveySparrowBaseURLGlobalAccountURLBaseEnumHTTPSAPISurveysparrowComV3 SourceSurveySparrowBaseURLGlobalAccountURLBaseEnum = "https://api.surveysparrow.com/v3"
 )
 
+func (e SourceSurveySparrowBaseURLGlobalAccountURLBaseEnum) ToPointer() *SourceSurveySparrowBaseURLGlobalAccountURLBaseEnum {
+	return &e
+}
+
 func (e *SourceSurveySparrowBaseURLGlobalAccountURLBaseEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "https://api.surveysparrow.com/v3":
-		*e = SourceSurveySparrowBaseURLGlobalAccountURLBaseEnum(s)
+		*e = SourceSurveySparrowBaseURLGlobalAccountURLBaseEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSurveySparrowBaseURLGlobalAccountURLBaseEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceSurveySparrowBaseURLGlobalAccountURLBaseEnum: %v", v)
 	}
 }
 
@@ -40,17 +44,21 @@ const (
 	SourceSurveySparrowBaseURLEUBasedAccountURLBaseEnumHTTPSEuAPISurveysparrowComV3 SourceSurveySparrowBaseURLEUBasedAccountURLBaseEnum = "https://eu-api.surveysparrow.com/v3"
 )
 
+func (e SourceSurveySparrowBaseURLEUBasedAccountURLBaseEnum) ToPointer() *SourceSurveySparrowBaseURLEUBasedAccountURLBaseEnum {
+	return &e
+}
+
 func (e *SourceSurveySparrowBaseURLEUBasedAccountURLBaseEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "https://eu-api.surveysparrow.com/v3":
-		*e = SourceSurveySparrowBaseURLEUBasedAccountURLBaseEnum(s)
+		*e = SourceSurveySparrowBaseURLEUBasedAccountURLBaseEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSurveySparrowBaseURLEUBasedAccountURLBaseEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceSurveySparrowBaseURLEUBasedAccountURLBaseEnum: %v", v)
 	}
 }
 
@@ -133,17 +141,21 @@ const (
 	SourceSurveySparrowSurveySparrowEnumSurveySparrow SourceSurveySparrowSurveySparrowEnum = "survey-sparrow"
 )
 
+func (e SourceSurveySparrowSurveySparrowEnum) ToPointer() *SourceSurveySparrowSurveySparrowEnum {
+	return &e
+}
+
 func (e *SourceSurveySparrowSurveySparrowEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "survey-sparrow":
-		*e = SourceSurveySparrowSurveySparrowEnum(s)
+		*e = SourceSurveySparrowSurveySparrowEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSurveySparrowSurveySparrowEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceSurveySparrowSurveySparrowEnum: %v", v)
 	}
 }
 

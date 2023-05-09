@@ -3,6 +3,7 @@
 package provider
 
 type SourceAlloydbSSLModes struct {
+	SourceAlloydbSSLModesDisable    *SourceAlloydbSSLModesDisable    `tfsdk:"source_alloydb_ssl_modes_disable"`
 	SourceAlloydbSSLModesAllow      *SourceAlloydbSSLModesAllow      `tfsdk:"source_alloydb_ssl_modes_allow"`
 	SourceAlloydbSSLModesPrefer     *SourceAlloydbSSLModesPrefer     `tfsdk:"source_alloydb_ssl_modes_prefer"`
 	SourceAlloydbSSLModesRequire    *SourceAlloydbSSLModesRequire    `tfsdk:"source_alloydb_ssl_modes_require"`

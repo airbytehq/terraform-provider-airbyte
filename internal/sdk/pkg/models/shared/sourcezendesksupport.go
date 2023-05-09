@@ -16,17 +16,21 @@ const (
 	SourceZendeskSupportAuthenticationAPITokenCredentialsEnumAPIToken SourceZendeskSupportAuthenticationAPITokenCredentialsEnum = "api_token"
 )
 
+func (e SourceZendeskSupportAuthenticationAPITokenCredentialsEnum) ToPointer() *SourceZendeskSupportAuthenticationAPITokenCredentialsEnum {
+	return &e
+}
+
 func (e *SourceZendeskSupportAuthenticationAPITokenCredentialsEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "api_token":
-		*e = SourceZendeskSupportAuthenticationAPITokenCredentialsEnum(s)
+		*e = SourceZendeskSupportAuthenticationAPITokenCredentialsEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZendeskSupportAuthenticationAPITokenCredentialsEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceZendeskSupportAuthenticationAPITokenCredentialsEnum: %v", v)
 	}
 }
 
@@ -37,6 +41,54 @@ type SourceZendeskSupportAuthenticationAPIToken struct {
 	Credentials *SourceZendeskSupportAuthenticationAPITokenCredentialsEnum `json:"credentials,omitempty"`
 	// The user email for your Zendesk account.
 	Email string `json:"email"`
+
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type _SourceZendeskSupportAuthenticationAPIToken SourceZendeskSupportAuthenticationAPIToken
+
+func (c *SourceZendeskSupportAuthenticationAPIToken) UnmarshalJSON(bs []byte) error {
+	data := _SourceZendeskSupportAuthenticationAPIToken{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = SourceZendeskSupportAuthenticationAPIToken(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "api_token")
+	delete(additionalFields, "credentials")
+	delete(additionalFields, "email")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c SourceZendeskSupportAuthenticationAPIToken) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_SourceZendeskSupportAuthenticationAPIToken(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type SourceZendeskSupportAuthenticationOAuth20CredentialsEnum string
@@ -45,17 +97,21 @@ const (
 	SourceZendeskSupportAuthenticationOAuth20CredentialsEnumOauth20 SourceZendeskSupportAuthenticationOAuth20CredentialsEnum = "oauth2.0"
 )
 
+func (e SourceZendeskSupportAuthenticationOAuth20CredentialsEnum) ToPointer() *SourceZendeskSupportAuthenticationOAuth20CredentialsEnum {
+	return &e
+}
+
 func (e *SourceZendeskSupportAuthenticationOAuth20CredentialsEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "oauth2.0":
-		*e = SourceZendeskSupportAuthenticationOAuth20CredentialsEnum(s)
+		*e = SourceZendeskSupportAuthenticationOAuth20CredentialsEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZendeskSupportAuthenticationOAuth20CredentialsEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceZendeskSupportAuthenticationOAuth20CredentialsEnum: %v", v)
 	}
 }
 
@@ -64,6 +120,53 @@ type SourceZendeskSupportAuthenticationOAuth20 struct {
 	// The value of the API token generated. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk-support">docs</a> for more information.
 	AccessToken string                                                    `json:"access_token"`
 	Credentials *SourceZendeskSupportAuthenticationOAuth20CredentialsEnum `json:"credentials,omitempty"`
+
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type _SourceZendeskSupportAuthenticationOAuth20 SourceZendeskSupportAuthenticationOAuth20
+
+func (c *SourceZendeskSupportAuthenticationOAuth20) UnmarshalJSON(bs []byte) error {
+	data := _SourceZendeskSupportAuthenticationOAuth20{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = SourceZendeskSupportAuthenticationOAuth20(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "access_token")
+	delete(additionalFields, "credentials")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c SourceZendeskSupportAuthenticationOAuth20) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_SourceZendeskSupportAuthenticationOAuth20(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type SourceZendeskSupportAuthenticationType string
@@ -140,17 +243,21 @@ const (
 	SourceZendeskSupportZendeskSupportEnumZendeskSupport SourceZendeskSupportZendeskSupportEnum = "zendesk-support"
 )
 
+func (e SourceZendeskSupportZendeskSupportEnum) ToPointer() *SourceZendeskSupportZendeskSupportEnum {
+	return &e
+}
+
 func (e *SourceZendeskSupportZendeskSupportEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "zendesk-support":
-		*e = SourceZendeskSupportZendeskSupportEnum(s)
+		*e = SourceZendeskSupportZendeskSupportEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZendeskSupportZendeskSupportEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceZendeskSupportZendeskSupportEnum: %v", v)
 	}
 }
 

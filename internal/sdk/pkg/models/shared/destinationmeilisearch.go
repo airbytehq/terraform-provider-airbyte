@@ -13,17 +13,21 @@ const (
 	DestinationMeilisearchMeilisearchEnumMeilisearch DestinationMeilisearchMeilisearchEnum = "meilisearch"
 )
 
+func (e DestinationMeilisearchMeilisearchEnum) ToPointer() *DestinationMeilisearchMeilisearchEnum {
+	return &e
+}
+
 func (e *DestinationMeilisearchMeilisearchEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "meilisearch":
-		*e = DestinationMeilisearchMeilisearchEnum(s)
+		*e = DestinationMeilisearchMeilisearchEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationMeilisearchMeilisearchEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationMeilisearchMeilisearchEnum: %v", v)
 	}
 }
 

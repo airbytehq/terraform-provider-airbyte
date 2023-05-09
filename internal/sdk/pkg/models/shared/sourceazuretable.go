@@ -13,17 +13,21 @@ const (
 	SourceAzureTableAzureTableEnumAzureTable SourceAzureTableAzureTableEnum = "azure-table"
 )
 
+func (e SourceAzureTableAzureTableEnum) ToPointer() *SourceAzureTableAzureTableEnum {
+	return &e
+}
+
 func (e *SourceAzureTableAzureTableEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "azure-table":
-		*e = SourceAzureTableAzureTableEnum(s)
+		*e = SourceAzureTableAzureTableEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAzureTableAzureTableEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceAzureTableAzureTableEnum: %v", v)
 	}
 }
 

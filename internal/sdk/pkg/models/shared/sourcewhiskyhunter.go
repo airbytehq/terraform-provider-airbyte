@@ -13,17 +13,21 @@ const (
 	SourceWhiskyHunterWhiskyHunterEnumWhiskyHunter SourceWhiskyHunterWhiskyHunterEnum = "whisky-hunter"
 )
 
+func (e SourceWhiskyHunterWhiskyHunterEnum) ToPointer() *SourceWhiskyHunterWhiskyHunterEnum {
+	return &e
+}
+
 func (e *SourceWhiskyHunterWhiskyHunterEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "whisky-hunter":
-		*e = SourceWhiskyHunterWhiskyHunterEnum(s)
+		*e = SourceWhiskyHunterWhiskyHunterEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceWhiskyHunterWhiskyHunterEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceWhiskyHunterWhiskyHunterEnum: %v", v)
 	}
 }
 

@@ -16,17 +16,21 @@ const (
 	SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthTypeEnumSandboxAccessToken SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthTypeEnum = "sandbox_access_token"
 )
 
+func (e SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthTypeEnum) ToPointer() *SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthTypeEnum {
+	return &e
+}
+
 func (e *SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "sandbox_access_token":
-		*e = SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthTypeEnum(s)
+		*e = SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthTypeEnum: %v", v)
 	}
 }
 
@@ -45,17 +49,21 @@ const (
 	SourceTiktokMarketingAuthenticationMethodOAuth20AuthTypeEnumOauth20 SourceTiktokMarketingAuthenticationMethodOAuth20AuthTypeEnum = "oauth2.0"
 )
 
+func (e SourceTiktokMarketingAuthenticationMethodOAuth20AuthTypeEnum) ToPointer() *SourceTiktokMarketingAuthenticationMethodOAuth20AuthTypeEnum {
+	return &e
+}
+
 func (e *SourceTiktokMarketingAuthenticationMethodOAuth20AuthTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "oauth2.0":
-		*e = SourceTiktokMarketingAuthenticationMethodOAuth20AuthTypeEnum(s)
+		*e = SourceTiktokMarketingAuthenticationMethodOAuth20AuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceTiktokMarketingAuthenticationMethodOAuth20AuthTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceTiktokMarketingAuthenticationMethodOAuth20AuthTypeEnum: %v", v)
 	}
 }
 
@@ -140,62 +148,39 @@ func (u SourceTiktokMarketingAuthenticationMethod) MarshalJSON() ([]byte, error)
 	return nil, nil
 }
 
-// SourceTiktokMarketingReportAggregationGranularityEnum - The granularity used for aggregating performance data in reports. See <a href="https://docs.airbyte.com/integrations/sources/tiktok-marketing/#report-aggregation">the docs</a>.
-type SourceTiktokMarketingReportAggregationGranularityEnum string
-
-const (
-	SourceTiktokMarketingReportAggregationGranularityEnumLifetime SourceTiktokMarketingReportAggregationGranularityEnum = "LIFETIME"
-	SourceTiktokMarketingReportAggregationGranularityEnumDay      SourceTiktokMarketingReportAggregationGranularityEnum = "DAY"
-	SourceTiktokMarketingReportAggregationGranularityEnumHour     SourceTiktokMarketingReportAggregationGranularityEnum = "HOUR"
-)
-
-func (e *SourceTiktokMarketingReportAggregationGranularityEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
-		return err
-	}
-	switch s {
-	case "LIFETIME":
-		fallthrough
-	case "DAY":
-		fallthrough
-	case "HOUR":
-		*e = SourceTiktokMarketingReportAggregationGranularityEnum(s)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceTiktokMarketingReportAggregationGranularityEnum: %s", s)
-	}
-}
-
 type SourceTiktokMarketingTiktokMarketingEnum string
 
 const (
 	SourceTiktokMarketingTiktokMarketingEnumTiktokMarketing SourceTiktokMarketingTiktokMarketingEnum = "tiktok-marketing"
 )
 
+func (e SourceTiktokMarketingTiktokMarketingEnum) ToPointer() *SourceTiktokMarketingTiktokMarketingEnum {
+	return &e
+}
+
 func (e *SourceTiktokMarketingTiktokMarketingEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "tiktok-marketing":
-		*e = SourceTiktokMarketingTiktokMarketingEnum(s)
+		*e = SourceTiktokMarketingTiktokMarketingEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceTiktokMarketingTiktokMarketingEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceTiktokMarketingTiktokMarketingEnum: %v", v)
 	}
 }
 
 // SourceTiktokMarketing - The values required to configure the source.
 type SourceTiktokMarketing struct {
+	// The attribution window in days.
+	AttributionWindow *int64 `json:"attribution_window,omitempty"`
 	// Authentication method
 	Credentials *SourceTiktokMarketingAuthenticationMethod `json:"credentials,omitempty"`
 	// The date until which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DD. All data generated between start_date and this date will be replicated. Not setting this option will result in always syncing the data till the current date.
-	EndDate *types.Date `json:"end_date,omitempty"`
-	// The granularity used for aggregating performance data in reports. See <a href="https://docs.airbyte.com/integrations/sources/tiktok-marketing/#report-aggregation">the docs</a>.
-	ReportGranularity *SourceTiktokMarketingReportAggregationGranularityEnum `json:"report_granularity,omitempty"`
-	SourceType        SourceTiktokMarketingTiktokMarketingEnum               `json:"sourceType"`
+	EndDate    *types.Date                              `json:"end_date,omitempty"`
+	SourceType SourceTiktokMarketingTiktokMarketingEnum `json:"sourceType"`
 	// The Start Date in format: YYYY-MM-DD. Any data before this date will not be replicated. If this parameter is not set, all data will be replicated.
 	StartDate *types.Date `json:"start_date,omitempty"`
 }

@@ -16,17 +16,21 @@ const (
 	SourceSlackAuthenticationMechanismAPITokenOptionTitleEnumAPITokenCredentials SourceSlackAuthenticationMechanismAPITokenOptionTitleEnum = "API Token Credentials"
 )
 
+func (e SourceSlackAuthenticationMechanismAPITokenOptionTitleEnum) ToPointer() *SourceSlackAuthenticationMechanismAPITokenOptionTitleEnum {
+	return &e
+}
+
 func (e *SourceSlackAuthenticationMechanismAPITokenOptionTitleEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "API Token Credentials":
-		*e = SourceSlackAuthenticationMechanismAPITokenOptionTitleEnum(s)
+		*e = SourceSlackAuthenticationMechanismAPITokenOptionTitleEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSlackAuthenticationMechanismAPITokenOptionTitleEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceSlackAuthenticationMechanismAPITokenOptionTitleEnum: %v", v)
 	}
 }
 
@@ -43,17 +47,21 @@ const (
 	SourceSlackAuthenticationMechanismSignInViaSlackOAuthOptionTitleEnumDefaultOAuth20Authorization SourceSlackAuthenticationMechanismSignInViaSlackOAuthOptionTitleEnum = "Default OAuth2.0 authorization"
 )
 
+func (e SourceSlackAuthenticationMechanismSignInViaSlackOAuthOptionTitleEnum) ToPointer() *SourceSlackAuthenticationMechanismSignInViaSlackOAuthOptionTitleEnum {
+	return &e
+}
+
 func (e *SourceSlackAuthenticationMechanismSignInViaSlackOAuthOptionTitleEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "Default OAuth2.0 authorization":
-		*e = SourceSlackAuthenticationMechanismSignInViaSlackOAuthOptionTitleEnum(s)
+		*e = SourceSlackAuthenticationMechanismSignInViaSlackOAuthOptionTitleEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSlackAuthenticationMechanismSignInViaSlackOAuthOptionTitleEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceSlackAuthenticationMechanismSignInViaSlackOAuthOptionTitleEnum: %v", v)
 	}
 }
 
@@ -142,17 +150,21 @@ const (
 	SourceSlackSlackEnumSlack SourceSlackSlackEnum = "slack"
 )
 
+func (e SourceSlackSlackEnum) ToPointer() *SourceSlackSlackEnum {
+	return &e
+}
+
 func (e *SourceSlackSlackEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "slack":
-		*e = SourceSlackSlackEnum(s)
+		*e = SourceSlackSlackEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSlackSlackEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceSlackSlackEnum: %v", v)
 	}
 }
 

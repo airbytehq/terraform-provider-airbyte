@@ -7,19 +7,71 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
-func (r *ConnectionResourceModel) ToSDKType() *shared.ConnectionCreateRequest {
-	destinationID := r.DestinationID.ValueString()
-	geography := new(shared.GeographyEnumEnum)
-	if !r.Geography.IsUnknown() && !r.Geography.IsNull() {
-		*geography = shared.GeographyEnumEnum(r.Geography.ValueString())
-	} else {
-		geography = nil
+func (r *ConnectionResourceModel) ToCreateSDKType() *shared.ConnectionCreateRequest {
+	var configurations *shared.StreamConfigurations
+	if r.Configurations != nil {
+		streams := make([]shared.StreamConfiguration, 0)
+		for _, streamsItem := range r.Configurations.Streams {
+			cursorField := make([]string, 0)
+			for _, cursorFieldItem := range streamsItem.CursorField {
+				cursorField = append(cursorField, cursorFieldItem.ValueString())
+			}
+			name := streamsItem.Name.ValueString()
+			primaryKey := make([][]string, 0)
+			for _, primaryKeyItem := range streamsItem.PrimaryKey {
+				primaryKeyTmp := make([]string, 0)
+				for _, item := range primaryKeyItem {
+					primaryKeyTmp = append(primaryKeyTmp, item.ValueString())
+				}
+				primaryKey = append(primaryKey, primaryKeyTmp)
+			}
+			syncMode := new(shared.ConnectionSyncModeEnumEnum)
+			if !streamsItem.SyncMode.IsUnknown() && !streamsItem.SyncMode.IsNull() {
+				*syncMode = shared.ConnectionSyncModeEnumEnum(streamsItem.SyncMode.ValueString())
+			} else {
+				syncMode = nil
+			}
+			streams = append(streams, shared.StreamConfiguration{
+				CursorField: cursorField,
+				Name:        name,
+				PrimaryKey:  primaryKey,
+				SyncMode:    syncMode,
+			})
+		}
+		configurations = &shared.StreamConfigurations{
+			Streams: streams,
+		}
 	}
-	name := new(string)
-	if !r.Name.IsUnknown() && !r.Name.IsNull() {
-		*name = r.Name.ValueString()
+	dataResidency := new(shared.GeographyEnumEnum)
+	if !r.DataResidency.IsUnknown() && !r.DataResidency.IsNull() {
+		*dataResidency = shared.GeographyEnumEnum(r.DataResidency.ValueString())
 	} else {
-		name = nil
+		dataResidency = nil
+	}
+	destinationID := r.DestinationID.ValueString()
+	name1 := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name1 = r.Name.ValueString()
+	} else {
+		name1 = nil
+	}
+	namespaceDefinition := new(shared.ConnectionCreateRequestNamespaceDefinitionEnum)
+	if !r.NamespaceDefinition.IsUnknown() && !r.NamespaceDefinition.IsNull() {
+		*namespaceDefinition = shared.ConnectionCreateRequestNamespaceDefinitionEnum(r.NamespaceDefinition.ValueString())
+	} else {
+		namespaceDefinition = nil
+	}
+	namespaceFormat := new(string)
+	if !r.NamespaceFormat.IsUnknown() && !r.NamespaceFormat.IsNull() {
+		*namespaceFormat = r.NamespaceFormat.ValueString()
+	} else {
+		namespaceFormat = nil
+	}
+	prefix := new(string)
+	if !r.Prefix.IsUnknown() && !r.Prefix.IsNull() {
+		*prefix = r.Prefix.ValueString()
+	} else {
+		prefix = nil
 	}
 	var schedule *shared.ConnectionScheduleCreate
 	if r.Schedule != nil {
@@ -37,39 +89,31 @@ func (r *ConnectionResourceModel) ToSDKType() *shared.ConnectionCreateRequest {
 	}
 	sourceID := r.SourceID.ValueString()
 	out := shared.ConnectionCreateRequest{
-		DestinationID: destinationID,
-		Geography:     geography,
-		Name:          name,
-		Schedule:      schedule,
-		SourceID:      sourceID,
+		Configurations:      configurations,
+		DataResidency:       dataResidency,
+		DestinationID:       destinationID,
+		Name:                name1,
+		NamespaceDefinition: namespaceDefinition,
+		NamespaceFormat:     namespaceFormat,
+		Prefix:              prefix,
+		Schedule:            schedule,
+		SourceID:            sourceID,
 	}
 	return &out
-
 }
 
-func (r *ConnectionResourceModel) RefreshFromSDKType(resp *shared.ConnectionCreateRequest) {
+func (r *ConnectionResourceModel) RefreshFromCreateResponse(resp *shared.ConnectionResponse) {
+	r.ConnectionID = types.StringValue(resp.ConnectionID)
+	r.DataResidency = types.StringValue(string(resp.DataResidency))
 	r.DestinationID = types.StringValue(resp.DestinationID)
-	if resp.Geography != nil {
-		r.Geography = types.StringValue(string(*resp.Geography))
+	r.Name = types.StringValue(resp.Name)
+	if resp.Schedule.CronExpression != nil {
+		r.Schedule.CronExpression = types.StringValue(*resp.Schedule.CronExpression)
 	} else {
-		r.Geography = types.StringNull()
+		r.Schedule.CronExpression = types.StringNull()
 	}
-	if resp.Name != nil {
-		r.Name = types.StringValue(*resp.Name)
-	} else {
-		r.Name = types.StringNull()
-	}
-	if resp.Schedule == nil {
-		r.Schedule = nil
-	} else {
-		r.Schedule = &ConnectionScheduleCreate{}
-		if resp.Schedule.CronExpression != nil {
-			r.Schedule.CronExpression = types.StringValue(*resp.Schedule.CronExpression)
-		} else {
-			r.Schedule.CronExpression = types.StringNull()
-		}
-		r.Schedule.ScheduleType = types.StringValue(string(resp.Schedule.ScheduleType))
-	}
+	r.Schedule.ScheduleType = types.StringValue(string(resp.Schedule.ScheduleType))
 	r.SourceID = types.StringValue(resp.SourceID)
-
+	r.Status = types.StringValue(string(resp.Status))
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

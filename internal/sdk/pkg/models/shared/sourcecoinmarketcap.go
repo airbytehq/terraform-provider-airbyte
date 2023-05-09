@@ -15,19 +15,23 @@ const (
 	SourceCoinmarketcapDataTypeEnumHistorical SourceCoinmarketcapDataTypeEnum = "historical"
 )
 
+func (e SourceCoinmarketcapDataTypeEnum) ToPointer() *SourceCoinmarketcapDataTypeEnum {
+	return &e
+}
+
 func (e *SourceCoinmarketcapDataTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "latest":
 		fallthrough
 	case "historical":
-		*e = SourceCoinmarketcapDataTypeEnum(s)
+		*e = SourceCoinmarketcapDataTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceCoinmarketcapDataTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceCoinmarketcapDataTypeEnum: %v", v)
 	}
 }
 
@@ -37,17 +41,21 @@ const (
 	SourceCoinmarketcapCoinmarketcapEnumCoinmarketcap SourceCoinmarketcapCoinmarketcapEnum = "coinmarketcap"
 )
 
+func (e SourceCoinmarketcapCoinmarketcapEnum) ToPointer() *SourceCoinmarketcapCoinmarketcapEnum {
+	return &e
+}
+
 func (e *SourceCoinmarketcapCoinmarketcapEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "coinmarketcap":
-		*e = SourceCoinmarketcapCoinmarketcapEnum(s)
+		*e = SourceCoinmarketcapCoinmarketcapEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceCoinmarketcapCoinmarketcapEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceCoinmarketcapCoinmarketcapEnum: %v", v)
 	}
 }
 

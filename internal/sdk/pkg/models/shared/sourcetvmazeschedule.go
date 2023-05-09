@@ -13,17 +13,21 @@ const (
 	SourceTvmazeScheduleTvmazeScheduleEnumTvmazeSchedule SourceTvmazeScheduleTvmazeScheduleEnum = "tvmaze-schedule"
 )
 
+func (e SourceTvmazeScheduleTvmazeScheduleEnum) ToPointer() *SourceTvmazeScheduleTvmazeScheduleEnum {
+	return &e
+}
+
 func (e *SourceTvmazeScheduleTvmazeScheduleEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "tvmaze-schedule":
-		*e = SourceTvmazeScheduleTvmazeScheduleEnum(s)
+		*e = SourceTvmazeScheduleTvmazeScheduleEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceTvmazeScheduleTvmazeScheduleEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceTvmazeScheduleTvmazeScheduleEnum: %v", v)
 	}
 }
 
@@ -32,14 +36,10 @@ type SourceTvmazeSchedule struct {
 	// Country code for domestic TV schedule retrieval.
 	DomesticScheduleCountryCode string `json:"domestic_schedule_country_code"`
 	// End date for TV schedule retrieval. May be in the future. Optional.
-	//
 	EndDate    *string                                `json:"end_date,omitempty"`
 	SourceType SourceTvmazeScheduleTvmazeScheduleEnum `json:"sourceType"`
 	// Start date for TV schedule retrieval. May be in the future.
 	StartDate string `json:"start_date"`
-	// ISO 3166-1 country code for web TV schedule retrieval. Leave blank for
-	// all countries plus global web channels (e.g. Netflix). Alternatively,
-	// set to 'global' for just global web channels.
-	//
+	// ISO 3166-1 country code for web TV schedule retrieval. Leave blank for all countries plus global web channels (e.g. Netflix). Alternatively, set to 'global' for just global web channels.
 	WebScheduleCountryCode *string `json:"web_schedule_country_code,omitempty"`
 }

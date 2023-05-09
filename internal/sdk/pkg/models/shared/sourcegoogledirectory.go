@@ -13,17 +13,21 @@ const (
 	SourceGoogleDirectoryGoogleDirectoryEnumGoogleDirectory SourceGoogleDirectoryGoogleDirectoryEnum = "google-directory"
 )
 
+func (e SourceGoogleDirectoryGoogleDirectoryEnum) ToPointer() *SourceGoogleDirectoryGoogleDirectoryEnum {
+	return &e
+}
+
 func (e *SourceGoogleDirectoryGoogleDirectoryEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "google-directory":
-		*e = SourceGoogleDirectoryGoogleDirectoryEnum(s)
+		*e = SourceGoogleDirectoryGoogleDirectoryEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGoogleDirectoryGoogleDirectoryEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceGoogleDirectoryGoogleDirectoryEnum: %v", v)
 	}
 }
 

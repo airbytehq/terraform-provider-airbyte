@@ -14,17 +14,21 @@ const (
 	SourceTwitterTwitterEnumTwitter SourceTwitterTwitterEnum = "twitter"
 )
 
+func (e SourceTwitterTwitterEnum) ToPointer() *SourceTwitterTwitterEnum {
+	return &e
+}
+
 func (e *SourceTwitterTwitterEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "twitter":
-		*e = SourceTwitterTwitterEnum(s)
+		*e = SourceTwitterTwitterEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceTwitterTwitterEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceTwitterTwitterEnum: %v", v)
 	}
 }
 

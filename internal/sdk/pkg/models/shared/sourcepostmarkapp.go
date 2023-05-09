@@ -13,17 +13,21 @@ const (
 	SourcePostmarkappPostmarkappEnumPostmarkapp SourcePostmarkappPostmarkappEnum = "postmarkapp"
 )
 
+func (e SourcePostmarkappPostmarkappEnum) ToPointer() *SourcePostmarkappPostmarkappEnum {
+	return &e
+}
+
 func (e *SourcePostmarkappPostmarkappEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "postmarkapp":
-		*e = SourcePostmarkappPostmarkappEnum(s)
+		*e = SourcePostmarkappPostmarkappEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostmarkappPostmarkappEnum: %s", s)
+		return fmt.Errorf("invalid value for SourcePostmarkappPostmarkappEnum: %v", v)
 	}
 }
 

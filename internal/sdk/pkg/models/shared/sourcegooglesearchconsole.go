@@ -16,17 +16,21 @@ const (
 	SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthenticationAuthTypeEnumService SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthenticationAuthTypeEnum = "Service"
 )
 
+func (e SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthenticationAuthTypeEnum) ToPointer() *SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthenticationAuthTypeEnum {
+	return &e
+}
+
 func (e *SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthenticationAuthTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "Service":
-		*e = SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthenticationAuthTypeEnum(s)
+		*e = SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthenticationAuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthenticationAuthTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthenticationAuthTypeEnum: %v", v)
 	}
 }
 
@@ -44,17 +48,21 @@ const (
 	SourceGoogleSearchConsoleAuthenticationTypeOAuthAuthTypeEnumClient SourceGoogleSearchConsoleAuthenticationTypeOAuthAuthTypeEnum = "Client"
 )
 
+func (e SourceGoogleSearchConsoleAuthenticationTypeOAuthAuthTypeEnum) ToPointer() *SourceGoogleSearchConsoleAuthenticationTypeOAuthAuthTypeEnum {
+	return &e
+}
+
 func (e *SourceGoogleSearchConsoleAuthenticationTypeOAuthAuthTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "Client":
-		*e = SourceGoogleSearchConsoleAuthenticationTypeOAuthAuthTypeEnum(s)
+		*e = SourceGoogleSearchConsoleAuthenticationTypeOAuthAuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGoogleSearchConsoleAuthenticationTypeOAuthAuthTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceGoogleSearchConsoleAuthenticationTypeOAuthAuthTypeEnum: %v", v)
 	}
 }
 
@@ -144,17 +152,21 @@ const (
 	SourceGoogleSearchConsoleGoogleSearchConsoleEnumGoogleSearchConsole SourceGoogleSearchConsoleGoogleSearchConsoleEnum = "google-search-console"
 )
 
+func (e SourceGoogleSearchConsoleGoogleSearchConsoleEnum) ToPointer() *SourceGoogleSearchConsoleGoogleSearchConsoleEnum {
+	return &e
+}
+
 func (e *SourceGoogleSearchConsoleGoogleSearchConsoleEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "google-search-console":
-		*e = SourceGoogleSearchConsoleGoogleSearchConsoleEnum(s)
+		*e = SourceGoogleSearchConsoleGoogleSearchConsoleEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGoogleSearchConsoleGoogleSearchConsoleEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceGoogleSearchConsoleGoogleSearchConsoleEnum: %v", v)
 	}
 }
 

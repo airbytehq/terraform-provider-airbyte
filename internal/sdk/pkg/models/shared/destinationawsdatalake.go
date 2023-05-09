@@ -16,17 +16,21 @@ const (
 	DestinationAwsDatalakeAuthenticationModeIAMUserCredentialsTitleEnumIamUser DestinationAwsDatalakeAuthenticationModeIAMUserCredentialsTitleEnum = "IAM User"
 )
 
+func (e DestinationAwsDatalakeAuthenticationModeIAMUserCredentialsTitleEnum) ToPointer() *DestinationAwsDatalakeAuthenticationModeIAMUserCredentialsTitleEnum {
+	return &e
+}
+
 func (e *DestinationAwsDatalakeAuthenticationModeIAMUserCredentialsTitleEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "IAM User":
-		*e = DestinationAwsDatalakeAuthenticationModeIAMUserCredentialsTitleEnum(s)
+		*e = DestinationAwsDatalakeAuthenticationModeIAMUserCredentialsTitleEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationAwsDatalakeAuthenticationModeIAMUserCredentialsTitleEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationAwsDatalakeAuthenticationModeIAMUserCredentialsTitleEnum: %v", v)
 	}
 }
 
@@ -47,17 +51,21 @@ const (
 	DestinationAwsDatalakeAuthenticationModeIAMRoleCredentialsTitleEnumIamRole DestinationAwsDatalakeAuthenticationModeIAMRoleCredentialsTitleEnum = "IAM Role"
 )
 
+func (e DestinationAwsDatalakeAuthenticationModeIAMRoleCredentialsTitleEnum) ToPointer() *DestinationAwsDatalakeAuthenticationModeIAMRoleCredentialsTitleEnum {
+	return &e
+}
+
 func (e *DestinationAwsDatalakeAuthenticationModeIAMRoleCredentialsTitleEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "IAM Role":
-		*e = DestinationAwsDatalakeAuthenticationModeIAMRoleCredentialsTitleEnum(s)
+		*e = DestinationAwsDatalakeAuthenticationModeIAMRoleCredentialsTitleEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationAwsDatalakeAuthenticationModeIAMRoleCredentialsTitleEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationAwsDatalakeAuthenticationModeIAMRoleCredentialsTitleEnum: %v", v)
 	}
 }
 
@@ -143,17 +151,21 @@ const (
 	DestinationAwsDatalakeAwsDatalakeEnumAwsDatalake DestinationAwsDatalakeAwsDatalakeEnum = "aws-datalake"
 )
 
+func (e DestinationAwsDatalakeAwsDatalakeEnum) ToPointer() *DestinationAwsDatalakeAwsDatalakeEnum {
+	return &e
+}
+
 func (e *DestinationAwsDatalakeAwsDatalakeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "aws-datalake":
-		*e = DestinationAwsDatalakeAwsDatalakeEnum(s)
+		*e = DestinationAwsDatalakeAwsDatalakeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationAwsDatalakeAwsDatalakeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationAwsDatalakeAwsDatalakeEnum: %v", v)
 	}
 }
 
@@ -167,12 +179,16 @@ const (
 	DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageCompressionCodecOptionalEnumZstd         DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageCompressionCodecOptionalEnum = "ZSTD"
 )
 
+func (e DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageCompressionCodecOptionalEnum) ToPointer() *DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageCompressionCodecOptionalEnum {
+	return &e
+}
+
 func (e *DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageCompressionCodecOptionalEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "UNCOMPRESSED":
 		fallthrough
 	case "SNAPPY":
@@ -180,10 +196,10 @@ func (e *DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageCompres
 	case "GZIP":
 		fallthrough
 	case "ZSTD":
-		*e = DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageCompressionCodecOptionalEnum(s)
+		*e = DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageCompressionCodecOptionalEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageCompressionCodecOptionalEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageCompressionCodecOptionalEnum: %v", v)
 	}
 }
 
@@ -193,17 +209,21 @@ const (
 	DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageFormatTypeWildcardEnumParquet DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageFormatTypeWildcardEnum = "Parquet"
 )
 
+func (e DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageFormatTypeWildcardEnum) ToPointer() *DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageFormatTypeWildcardEnum {
+	return &e
+}
+
 func (e *DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageFormatTypeWildcardEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "Parquet":
-		*e = DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageFormatTypeWildcardEnum(s)
+		*e = DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageFormatTypeWildcardEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageFormatTypeWildcardEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageFormatTypeWildcardEnum: %v", v)
 	}
 }
 
@@ -222,19 +242,23 @@ const (
 	DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONCompressionCodecOptionalEnumGzip         DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONCompressionCodecOptionalEnum = "GZIP"
 )
 
+func (e DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONCompressionCodecOptionalEnum) ToPointer() *DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONCompressionCodecOptionalEnum {
+	return &e
+}
+
 func (e *DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONCompressionCodecOptionalEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "UNCOMPRESSED":
 		fallthrough
 	case "GZIP":
-		*e = DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONCompressionCodecOptionalEnum(s)
+		*e = DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONCompressionCodecOptionalEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONCompressionCodecOptionalEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONCompressionCodecOptionalEnum: %v", v)
 	}
 }
 
@@ -244,17 +268,21 @@ const (
 	DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONFormatTypeWildcardEnumJsonl DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONFormatTypeWildcardEnum = "JSONL"
 )
 
+func (e DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONFormatTypeWildcardEnum) ToPointer() *DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONFormatTypeWildcardEnum {
+	return &e
+}
+
 func (e *DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONFormatTypeWildcardEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "JSONL":
-		*e = DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONFormatTypeWildcardEnum(s)
+		*e = DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONFormatTypeWildcardEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONFormatTypeWildcardEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONFormatTypeWildcardEnum: %v", v)
 	}
 }
 
@@ -346,12 +374,16 @@ const (
 	DestinationAwsDatalakeChooseHowToPartitionDataEnumYearMonthDay   DestinationAwsDatalakeChooseHowToPartitionDataEnum = "YEAR/MONTH/DAY"
 )
 
+func (e DestinationAwsDatalakeChooseHowToPartitionDataEnum) ToPointer() *DestinationAwsDatalakeChooseHowToPartitionDataEnum {
+	return &e
+}
+
 func (e *DestinationAwsDatalakeChooseHowToPartitionDataEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "NO PARTITIONING":
 		fallthrough
 	case "DATE":
@@ -365,10 +397,10 @@ func (e *DestinationAwsDatalakeChooseHowToPartitionDataEnum) UnmarshalJSON(data 
 	case "YEAR/MONTH":
 		fallthrough
 	case "YEAR/MONTH/DAY":
-		*e = DestinationAwsDatalakeChooseHowToPartitionDataEnum(s)
+		*e = DestinationAwsDatalakeChooseHowToPartitionDataEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationAwsDatalakeChooseHowToPartitionDataEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationAwsDatalakeChooseHowToPartitionDataEnum: %v", v)
 	}
 }
 
@@ -404,12 +436,16 @@ const (
 	DestinationAwsDatalakeS3BucketRegionEnumUsGovWest1   DestinationAwsDatalakeS3BucketRegionEnum = "us-gov-west-1"
 )
 
+func (e DestinationAwsDatalakeS3BucketRegionEnum) ToPointer() *DestinationAwsDatalakeS3BucketRegionEnum {
+	return &e
+}
+
 func (e *DestinationAwsDatalakeS3BucketRegionEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "":
 		fallthrough
 	case "us-east-1":
@@ -461,10 +497,10 @@ func (e *DestinationAwsDatalakeS3BucketRegionEnum) UnmarshalJSON(data []byte) er
 	case "us-gov-east-1":
 		fallthrough
 	case "us-gov-west-1":
-		*e = DestinationAwsDatalakeS3BucketRegionEnum(s)
+		*e = DestinationAwsDatalakeS3BucketRegionEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationAwsDatalakeS3BucketRegionEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationAwsDatalakeS3BucketRegionEnum: %v", v)
 	}
 }
 

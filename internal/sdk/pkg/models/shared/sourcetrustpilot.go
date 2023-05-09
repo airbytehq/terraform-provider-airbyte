@@ -16,17 +16,21 @@ const (
 	SourceTrustpilotAuthorizationMethodAPIKeyAuthTypeEnumApikey SourceTrustpilotAuthorizationMethodAPIKeyAuthTypeEnum = "apikey"
 )
 
+func (e SourceTrustpilotAuthorizationMethodAPIKeyAuthTypeEnum) ToPointer() *SourceTrustpilotAuthorizationMethodAPIKeyAuthTypeEnum {
+	return &e
+}
+
 func (e *SourceTrustpilotAuthorizationMethodAPIKeyAuthTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "apikey":
-		*e = SourceTrustpilotAuthorizationMethodAPIKeyAuthTypeEnum(s)
+		*e = SourceTrustpilotAuthorizationMethodAPIKeyAuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceTrustpilotAuthorizationMethodAPIKeyAuthTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceTrustpilotAuthorizationMethodAPIKeyAuthTypeEnum: %v", v)
 	}
 }
 
@@ -43,17 +47,21 @@ const (
 	SourceTrustpilotAuthorizationMethodOAuth20AuthTypeEnumOauth20 SourceTrustpilotAuthorizationMethodOAuth20AuthTypeEnum = "oauth2.0"
 )
 
+func (e SourceTrustpilotAuthorizationMethodOAuth20AuthTypeEnum) ToPointer() *SourceTrustpilotAuthorizationMethodOAuth20AuthTypeEnum {
+	return &e
+}
+
 func (e *SourceTrustpilotAuthorizationMethodOAuth20AuthTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "oauth2.0":
-		*e = SourceTrustpilotAuthorizationMethodOAuth20AuthTypeEnum(s)
+		*e = SourceTrustpilotAuthorizationMethodOAuth20AuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceTrustpilotAuthorizationMethodOAuth20AuthTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceTrustpilotAuthorizationMethodOAuth20AuthTypeEnum: %v", v)
 	}
 }
 
@@ -145,17 +153,21 @@ const (
 	SourceTrustpilotTrustpilotEnumTrustpilot SourceTrustpilotTrustpilotEnum = "trustpilot"
 )
 
+func (e SourceTrustpilotTrustpilotEnum) ToPointer() *SourceTrustpilotTrustpilotEnum {
+	return &e
+}
+
 func (e *SourceTrustpilotTrustpilotEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "trustpilot":
-		*e = SourceTrustpilotTrustpilotEnum(s)
+		*e = SourceTrustpilotTrustpilotEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceTrustpilotTrustpilotEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceTrustpilotTrustpilotEnum: %v", v)
 	}
 }
 

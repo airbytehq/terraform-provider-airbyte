@@ -15,17 +15,21 @@ const (
 	SourceAuth0AuthenticationMethodOAuth2AccessTokenAuthenticationMethodEnumOauth2AccessToken SourceAuth0AuthenticationMethodOAuth2AccessTokenAuthenticationMethodEnum = "oauth2_access_token"
 )
 
+func (e SourceAuth0AuthenticationMethodOAuth2AccessTokenAuthenticationMethodEnum) ToPointer() *SourceAuth0AuthenticationMethodOAuth2AccessTokenAuthenticationMethodEnum {
+	return &e
+}
+
 func (e *SourceAuth0AuthenticationMethodOAuth2AccessTokenAuthenticationMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "oauth2_access_token":
-		*e = SourceAuth0AuthenticationMethodOAuth2AccessTokenAuthenticationMethodEnum(s)
+		*e = SourceAuth0AuthenticationMethodOAuth2AccessTokenAuthenticationMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAuth0AuthenticationMethodOAuth2AccessTokenAuthenticationMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceAuth0AuthenticationMethodOAuth2AccessTokenAuthenticationMethodEnum: %v", v)
 	}
 }
 
@@ -41,17 +45,21 @@ const (
 	SourceAuth0AuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethodEnumOauth2ConfidentialApplication SourceAuth0AuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethodEnum = "oauth2_confidential_application"
 )
 
+func (e SourceAuth0AuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethodEnum) ToPointer() *SourceAuth0AuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethodEnum {
+	return &e
+}
+
 func (e *SourceAuth0AuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "oauth2_confidential_application":
-		*e = SourceAuth0AuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethodEnum(s)
+		*e = SourceAuth0AuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAuth0AuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceAuth0AuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethodEnum: %v", v)
 	}
 }
 
@@ -139,17 +147,21 @@ const (
 	SourceAuth0Auth0EnumAuth0 SourceAuth0Auth0Enum = "auth0"
 )
 
+func (e SourceAuth0Auth0Enum) ToPointer() *SourceAuth0Auth0Enum {
+	return &e
+}
+
 func (e *SourceAuth0Auth0Enum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "auth0":
-		*e = SourceAuth0Auth0Enum(s)
+		*e = SourceAuth0Auth0Enum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAuth0Auth0Enum: %s", s)
+		return fmt.Errorf("invalid value for SourceAuth0Auth0Enum: %v", v)
 	}
 }
 

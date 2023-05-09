@@ -16,17 +16,21 @@ const (
 	SourceNotionAuthenticateUsingAccessTokenAuthTypeEnumToken SourceNotionAuthenticateUsingAccessTokenAuthTypeEnum = "token"
 )
 
+func (e SourceNotionAuthenticateUsingAccessTokenAuthTypeEnum) ToPointer() *SourceNotionAuthenticateUsingAccessTokenAuthTypeEnum {
+	return &e
+}
+
 func (e *SourceNotionAuthenticateUsingAccessTokenAuthTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "token":
-		*e = SourceNotionAuthenticateUsingAccessTokenAuthTypeEnum(s)
+		*e = SourceNotionAuthenticateUsingAccessTokenAuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceNotionAuthenticateUsingAccessTokenAuthTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceNotionAuthenticateUsingAccessTokenAuthTypeEnum: %v", v)
 	}
 }
 
@@ -43,17 +47,21 @@ const (
 	SourceNotionAuthenticateUsingOAuth20AuthTypeEnumOAuth20 SourceNotionAuthenticateUsingOAuth20AuthTypeEnum = "OAuth2.0"
 )
 
+func (e SourceNotionAuthenticateUsingOAuth20AuthTypeEnum) ToPointer() *SourceNotionAuthenticateUsingOAuth20AuthTypeEnum {
+	return &e
+}
+
 func (e *SourceNotionAuthenticateUsingOAuth20AuthTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "OAuth2.0":
-		*e = SourceNotionAuthenticateUsingOAuth20AuthTypeEnum(s)
+		*e = SourceNotionAuthenticateUsingOAuth20AuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceNotionAuthenticateUsingOAuth20AuthTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceNotionAuthenticateUsingOAuth20AuthTypeEnum: %v", v)
 	}
 }
 
@@ -142,17 +150,21 @@ const (
 	SourceNotionNotionEnumNotion SourceNotionNotionEnum = "notion"
 )
 
+func (e SourceNotionNotionEnum) ToPointer() *SourceNotionNotionEnum {
+	return &e
+}
+
 func (e *SourceNotionNotionEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "notion":
-		*e = SourceNotionNotionEnum(s)
+		*e = SourceNotionNotionEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceNotionNotionEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceNotionNotionEnum: %v", v)
 	}
 }
 

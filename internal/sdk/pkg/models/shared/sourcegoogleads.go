@@ -34,17 +34,21 @@ const (
 	SourceGoogleAdsGoogleAdsEnumGoogleAds SourceGoogleAdsGoogleAdsEnum = "google-ads"
 )
 
+func (e SourceGoogleAdsGoogleAdsEnum) ToPointer() *SourceGoogleAdsGoogleAdsEnum {
+	return &e
+}
+
 func (e *SourceGoogleAdsGoogleAdsEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "google-ads":
-		*e = SourceGoogleAdsGoogleAdsEnum(s)
+		*e = SourceGoogleAdsGoogleAdsEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGoogleAdsGoogleAdsEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceGoogleAdsGoogleAdsEnum: %v", v)
 	}
 }
 

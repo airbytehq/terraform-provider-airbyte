@@ -16,17 +16,21 @@ const (
 	SourceSalesloftCredentialsAuthenticateViaAPIKeyAuthTypeEnumAPIKey SourceSalesloftCredentialsAuthenticateViaAPIKeyAuthTypeEnum = "api_key"
 )
 
+func (e SourceSalesloftCredentialsAuthenticateViaAPIKeyAuthTypeEnum) ToPointer() *SourceSalesloftCredentialsAuthenticateViaAPIKeyAuthTypeEnum {
+	return &e
+}
+
 func (e *SourceSalesloftCredentialsAuthenticateViaAPIKeyAuthTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "api_key":
-		*e = SourceSalesloftCredentialsAuthenticateViaAPIKeyAuthTypeEnum(s)
+		*e = SourceSalesloftCredentialsAuthenticateViaAPIKeyAuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSalesloftCredentialsAuthenticateViaAPIKeyAuthTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceSalesloftCredentialsAuthenticateViaAPIKeyAuthTypeEnum: %v", v)
 	}
 }
 
@@ -42,17 +46,21 @@ const (
 	SourceSalesloftCredentialsAuthenticateViaOAuthAuthTypeEnumOauth20 SourceSalesloftCredentialsAuthenticateViaOAuthAuthTypeEnum = "oauth2.0"
 )
 
+func (e SourceSalesloftCredentialsAuthenticateViaOAuthAuthTypeEnum) ToPointer() *SourceSalesloftCredentialsAuthenticateViaOAuthAuthTypeEnum {
+	return &e
+}
+
 func (e *SourceSalesloftCredentialsAuthenticateViaOAuthAuthTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "oauth2.0":
-		*e = SourceSalesloftCredentialsAuthenticateViaOAuthAuthTypeEnum(s)
+		*e = SourceSalesloftCredentialsAuthenticateViaOAuthAuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSalesloftCredentialsAuthenticateViaOAuthAuthTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceSalesloftCredentialsAuthenticateViaOAuthAuthTypeEnum: %v", v)
 	}
 }
 
@@ -144,17 +152,21 @@ const (
 	SourceSalesloftSalesloftEnumSalesloft SourceSalesloftSalesloftEnum = "salesloft"
 )
 
+func (e SourceSalesloftSalesloftEnum) ToPointer() *SourceSalesloftSalesloftEnum {
+	return &e
+}
+
 func (e *SourceSalesloftSalesloftEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "salesloft":
-		*e = SourceSalesloftSalesloftEnum(s)
+		*e = SourceSalesloftSalesloftEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSalesloftSalesloftEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceSalesloftSalesloftEnum: %v", v)
 	}
 }
 

@@ -17,19 +17,23 @@ const (
 	SourceMssqlReplicationMethodLogicalReplicationCDCDataToSyncEnumNewChangesOnly SourceMssqlReplicationMethodLogicalReplicationCDCDataToSyncEnum = "New Changes Only"
 )
 
+func (e SourceMssqlReplicationMethodLogicalReplicationCDCDataToSyncEnum) ToPointer() *SourceMssqlReplicationMethodLogicalReplicationCDCDataToSyncEnum {
+	return &e
+}
+
 func (e *SourceMssqlReplicationMethodLogicalReplicationCDCDataToSyncEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "Existing and New":
 		fallthrough
 	case "New Changes Only":
-		*e = SourceMssqlReplicationMethodLogicalReplicationCDCDataToSyncEnum(s)
+		*e = SourceMssqlReplicationMethodLogicalReplicationCDCDataToSyncEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMssqlReplicationMethodLogicalReplicationCDCDataToSyncEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceMssqlReplicationMethodLogicalReplicationCDCDataToSyncEnum: %v", v)
 	}
 }
 
@@ -39,17 +43,21 @@ const (
 	SourceMssqlReplicationMethodLogicalReplicationCDCMethodEnumCdc SourceMssqlReplicationMethodLogicalReplicationCDCMethodEnum = "CDC"
 )
 
+func (e SourceMssqlReplicationMethodLogicalReplicationCDCMethodEnum) ToPointer() *SourceMssqlReplicationMethodLogicalReplicationCDCMethodEnum {
+	return &e
+}
+
 func (e *SourceMssqlReplicationMethodLogicalReplicationCDCMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "CDC":
-		*e = SourceMssqlReplicationMethodLogicalReplicationCDCMethodEnum(s)
+		*e = SourceMssqlReplicationMethodLogicalReplicationCDCMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMssqlReplicationMethodLogicalReplicationCDCMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceMssqlReplicationMethodLogicalReplicationCDCMethodEnum: %v", v)
 	}
 }
 
@@ -61,19 +69,23 @@ const (
 	SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevelEnumReadCommitted SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevelEnum = "Read Committed"
 )
 
+func (e SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevelEnum) ToPointer() *SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevelEnum {
+	return &e
+}
+
 func (e *SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevelEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "Snapshot":
 		fallthrough
 	case "Read Committed":
-		*e = SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevelEnum(s)
+		*e = SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevelEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevelEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevelEnum: %v", v)
 	}
 }
 
@@ -94,17 +106,21 @@ const (
 	SourceMssqlReplicationMethodStandardMethodEnumStandard SourceMssqlReplicationMethodStandardMethodEnum = "STANDARD"
 )
 
+func (e SourceMssqlReplicationMethodStandardMethodEnum) ToPointer() *SourceMssqlReplicationMethodStandardMethodEnum {
+	return &e
+}
+
 func (e *SourceMssqlReplicationMethodStandardMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "STANDARD":
-		*e = SourceMssqlReplicationMethodStandardMethodEnum(s)
+		*e = SourceMssqlReplicationMethodStandardMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMssqlReplicationMethodStandardMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceMssqlReplicationMethodStandardMethodEnum: %v", v)
 	}
 }
 
@@ -187,17 +203,21 @@ const (
 	SourceMssqlMssqlEnumMssql SourceMssqlMssqlEnum = "mssql"
 )
 
+func (e SourceMssqlMssqlEnum) ToPointer() *SourceMssqlMssqlEnum {
+	return &e
+}
+
 func (e *SourceMssqlMssqlEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "mssql":
-		*e = SourceMssqlMssqlEnum(s)
+		*e = SourceMssqlMssqlEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMssqlMssqlEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceMssqlMssqlEnum: %v", v)
 	}
 }
 
@@ -207,17 +227,21 @@ const (
 	SourceMssqlSSLMethodEncryptedVerifyCertificateSSLMethodEnumEncryptedVerifyCertificate SourceMssqlSSLMethodEncryptedVerifyCertificateSSLMethodEnum = "encrypted_verify_certificate"
 )
 
+func (e SourceMssqlSSLMethodEncryptedVerifyCertificateSSLMethodEnum) ToPointer() *SourceMssqlSSLMethodEncryptedVerifyCertificateSSLMethodEnum {
+	return &e
+}
+
 func (e *SourceMssqlSSLMethodEncryptedVerifyCertificateSSLMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "encrypted_verify_certificate":
-		*e = SourceMssqlSSLMethodEncryptedVerifyCertificateSSLMethodEnum(s)
+		*e = SourceMssqlSSLMethodEncryptedVerifyCertificateSSLMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMssqlSSLMethodEncryptedVerifyCertificateSSLMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceMssqlSSLMethodEncryptedVerifyCertificateSSLMethodEnum: %v", v)
 	}
 }
 
@@ -234,17 +258,21 @@ const (
 	SourceMssqlSSLMethodEncryptedTrustServerCertificateSSLMethodEnumEncryptedTrustServerCertificate SourceMssqlSSLMethodEncryptedTrustServerCertificateSSLMethodEnum = "encrypted_trust_server_certificate"
 )
 
+func (e SourceMssqlSSLMethodEncryptedTrustServerCertificateSSLMethodEnum) ToPointer() *SourceMssqlSSLMethodEncryptedTrustServerCertificateSSLMethodEnum {
+	return &e
+}
+
 func (e *SourceMssqlSSLMethodEncryptedTrustServerCertificateSSLMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "encrypted_trust_server_certificate":
-		*e = SourceMssqlSSLMethodEncryptedTrustServerCertificateSSLMethodEnum(s)
+		*e = SourceMssqlSSLMethodEncryptedTrustServerCertificateSSLMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMssqlSSLMethodEncryptedTrustServerCertificateSSLMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceMssqlSSLMethodEncryptedTrustServerCertificateSSLMethodEnum: %v", v)
 	}
 }
 
@@ -328,17 +356,21 @@ const (
 	SourceMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnumSSHPasswordAuth SourceMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum = "SSH_PASSWORD_AUTH"
 )
 
+func (e SourceMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) ToPointer() *SourceMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum {
+	return &e
+}
+
 func (e *SourceMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "SSH_PASSWORD_AUTH":
-		*e = SourceMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(s)
+		*e = SourceMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum: %v", v)
 	}
 }
 
@@ -363,17 +395,21 @@ const (
 	SourceMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnumSSHKeyAuth SourceMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum = "SSH_KEY_AUTH"
 )
 
+func (e SourceMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) ToPointer() *SourceMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum {
+	return &e
+}
+
 func (e *SourceMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "SSH_KEY_AUTH":
-		*e = SourceMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(s)
+		*e = SourceMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum: %v", v)
 	}
 }
 
@@ -398,17 +434,21 @@ const (
 	SourceMssqlSSHTunnelMethodNoTunnelTunnelMethodEnumNoTunnel SourceMssqlSSHTunnelMethodNoTunnelTunnelMethodEnum = "NO_TUNNEL"
 )
 
+func (e SourceMssqlSSHTunnelMethodNoTunnelTunnelMethodEnum) ToPointer() *SourceMssqlSSHTunnelMethodNoTunnelTunnelMethodEnum {
+	return &e
+}
+
 func (e *SourceMssqlSSHTunnelMethodNoTunnelTunnelMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "NO_TUNNEL":
-		*e = SourceMssqlSSHTunnelMethodNoTunnelTunnelMethodEnum(s)
+		*e = SourceMssqlSSHTunnelMethodNoTunnelTunnelMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMssqlSSHTunnelMethodNoTunnelTunnelMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceMssqlSSHTunnelMethodNoTunnelTunnelMethodEnum: %v", v)
 	}
 }
 

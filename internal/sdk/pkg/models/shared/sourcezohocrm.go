@@ -20,12 +20,16 @@ const (
 	SourceZohoCrmDataCenterLocationEnumJp SourceZohoCrmDataCenterLocationEnum = "JP"
 )
 
+func (e SourceZohoCrmDataCenterLocationEnum) ToPointer() *SourceZohoCrmDataCenterLocationEnum {
+	return &e
+}
+
 func (e *SourceZohoCrmDataCenterLocationEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "US":
 		fallthrough
 	case "AU":
@@ -37,10 +41,10 @@ func (e *SourceZohoCrmDataCenterLocationEnum) UnmarshalJSON(data []byte) error {
 	case "CN":
 		fallthrough
 	case "JP":
-		*e = SourceZohoCrmDataCenterLocationEnum(s)
+		*e = SourceZohoCrmDataCenterLocationEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZohoCrmDataCenterLocationEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceZohoCrmDataCenterLocationEnum: %v", v)
 	}
 }
 
@@ -55,12 +59,16 @@ const (
 	SourceZohoCRMZohoCRMEditionEnumUltimate     SourceZohoCRMZohoCRMEditionEnum = "Ultimate"
 )
 
+func (e SourceZohoCRMZohoCRMEditionEnum) ToPointer() *SourceZohoCRMZohoCRMEditionEnum {
+	return &e
+}
+
 func (e *SourceZohoCRMZohoCRMEditionEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "Free":
 		fallthrough
 	case "Standard":
@@ -70,10 +78,10 @@ func (e *SourceZohoCRMZohoCRMEditionEnum) UnmarshalJSON(data []byte) error {
 	case "Enterprise":
 		fallthrough
 	case "Ultimate":
-		*e = SourceZohoCRMZohoCRMEditionEnum(s)
+		*e = SourceZohoCRMZohoCRMEditionEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZohoCRMZohoCRMEditionEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceZohoCRMZohoCRMEditionEnum: %v", v)
 	}
 }
 
@@ -86,21 +94,25 @@ const (
 	SourceZohoCrmEnvironmentEnumSandbox    SourceZohoCrmEnvironmentEnum = "Sandbox"
 )
 
+func (e SourceZohoCrmEnvironmentEnum) ToPointer() *SourceZohoCrmEnvironmentEnum {
+	return &e
+}
+
 func (e *SourceZohoCrmEnvironmentEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "Production":
 		fallthrough
 	case "Developer":
 		fallthrough
 	case "Sandbox":
-		*e = SourceZohoCrmEnvironmentEnum(s)
+		*e = SourceZohoCrmEnvironmentEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZohoCrmEnvironmentEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceZohoCrmEnvironmentEnum: %v", v)
 	}
 }
 
@@ -110,17 +122,21 @@ const (
 	SourceZohoCrmZohoCrmEnumZohoCrm SourceZohoCrmZohoCrmEnum = "zoho-crm"
 )
 
+func (e SourceZohoCrmZohoCrmEnum) ToPointer() *SourceZohoCrmZohoCrmEnum {
+	return &e
+}
+
 func (e *SourceZohoCrmZohoCrmEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "zoho-crm":
-		*e = SourceZohoCrmZohoCrmEnum(s)
+		*e = SourceZohoCrmZohoCrmEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZohoCrmZohoCrmEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceZohoCrmZohoCrmEnum: %v", v)
 	}
 }
 

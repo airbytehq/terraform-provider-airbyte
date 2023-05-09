@@ -14,6 +14,54 @@ type SourceYoutubeAnalyticsAuthenticateViaOAuth20 struct {
 	ClientSecret string `json:"client_secret"`
 	// A refresh token generated using the above client ID and secret
 	RefreshToken string `json:"refresh_token"`
+
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type _SourceYoutubeAnalyticsAuthenticateViaOAuth20 SourceYoutubeAnalyticsAuthenticateViaOAuth20
+
+func (c *SourceYoutubeAnalyticsAuthenticateViaOAuth20) UnmarshalJSON(bs []byte) error {
+	data := _SourceYoutubeAnalyticsAuthenticateViaOAuth20{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = SourceYoutubeAnalyticsAuthenticateViaOAuth20(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "client_id")
+	delete(additionalFields, "client_secret")
+	delete(additionalFields, "refresh_token")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c SourceYoutubeAnalyticsAuthenticateViaOAuth20) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_SourceYoutubeAnalyticsAuthenticateViaOAuth20(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type SourceYoutubeAnalyticsYoutubeAnalyticsEnum string
@@ -22,17 +70,21 @@ const (
 	SourceYoutubeAnalyticsYoutubeAnalyticsEnumYoutubeAnalytics SourceYoutubeAnalyticsYoutubeAnalyticsEnum = "youtube-analytics"
 )
 
+func (e SourceYoutubeAnalyticsYoutubeAnalyticsEnum) ToPointer() *SourceYoutubeAnalyticsYoutubeAnalyticsEnum {
+	return &e
+}
+
 func (e *SourceYoutubeAnalyticsYoutubeAnalyticsEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "youtube-analytics":
-		*e = SourceYoutubeAnalyticsYoutubeAnalyticsEnum(s)
+		*e = SourceYoutubeAnalyticsYoutubeAnalyticsEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceYoutubeAnalyticsYoutubeAnalyticsEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceYoutubeAnalyticsYoutubeAnalyticsEnum: %v", v)
 	}
 }
 

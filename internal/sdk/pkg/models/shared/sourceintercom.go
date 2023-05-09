@@ -14,17 +14,21 @@ const (
 	SourceIntercomIntercomEnumIntercom SourceIntercomIntercomEnum = "intercom"
 )
 
+func (e SourceIntercomIntercomEnum) ToPointer() *SourceIntercomIntercomEnum {
+	return &e
+}
+
 func (e *SourceIntercomIntercomEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "intercom":
-		*e = SourceIntercomIntercomEnum(s)
+		*e = SourceIntercomIntercomEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceIntercomIntercomEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceIntercomIntercomEnum: %v", v)
 	}
 }
 

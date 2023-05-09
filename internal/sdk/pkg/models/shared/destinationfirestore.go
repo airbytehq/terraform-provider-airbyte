@@ -13,17 +13,21 @@ const (
 	DestinationFirestoreFirestoreEnumFirestore DestinationFirestoreFirestoreEnum = "firestore"
 )
 
+func (e DestinationFirestoreFirestoreEnum) ToPointer() *DestinationFirestoreFirestoreEnum {
+	return &e
+}
+
 func (e *DestinationFirestoreFirestoreEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "firestore":
-		*e = DestinationFirestoreFirestoreEnum(s)
+		*e = DestinationFirestoreFirestoreEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationFirestoreFirestoreEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationFirestoreFirestoreEnum: %v", v)
 	}
 }
 

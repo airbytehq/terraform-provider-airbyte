@@ -17,19 +17,23 @@ const (
 	SourceAlloydbReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnumAfterLoadingDataInTheDestination SourceAlloydbReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnum = "After loading Data in the destination"
 )
 
+func (e SourceAlloydbReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnum) ToPointer() *SourceAlloydbReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnum {
+	return &e
+}
+
 func (e *SourceAlloydbReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "While reading Data":
 		fallthrough
 	case "After loading Data in the destination":
-		*e = SourceAlloydbReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnum(s)
+		*e = SourceAlloydbReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAlloydbReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceAlloydbReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnum: %v", v)
 	}
 }
 
@@ -39,17 +43,21 @@ const (
 	SourceAlloydbReplicationMethodLogicalReplicationCDCMethodEnumCdc SourceAlloydbReplicationMethodLogicalReplicationCDCMethodEnum = "CDC"
 )
 
+func (e SourceAlloydbReplicationMethodLogicalReplicationCDCMethodEnum) ToPointer() *SourceAlloydbReplicationMethodLogicalReplicationCDCMethodEnum {
+	return &e
+}
+
 func (e *SourceAlloydbReplicationMethodLogicalReplicationCDCMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "CDC":
-		*e = SourceAlloydbReplicationMethodLogicalReplicationCDCMethodEnum(s)
+		*e = SourceAlloydbReplicationMethodLogicalReplicationCDCMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAlloydbReplicationMethodLogicalReplicationCDCMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceAlloydbReplicationMethodLogicalReplicationCDCMethodEnum: %v", v)
 	}
 }
 
@@ -60,17 +68,21 @@ const (
 	SourceAlloydbReplicationMethodLogicalReplicationCDCPluginEnumPgoutput SourceAlloydbReplicationMethodLogicalReplicationCDCPluginEnum = "pgoutput"
 )
 
+func (e SourceAlloydbReplicationMethodLogicalReplicationCDCPluginEnum) ToPointer() *SourceAlloydbReplicationMethodLogicalReplicationCDCPluginEnum {
+	return &e
+}
+
 func (e *SourceAlloydbReplicationMethodLogicalReplicationCDCPluginEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "pgoutput":
-		*e = SourceAlloydbReplicationMethodLogicalReplicationCDCPluginEnum(s)
+		*e = SourceAlloydbReplicationMethodLogicalReplicationCDCPluginEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAlloydbReplicationMethodLogicalReplicationCDCPluginEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceAlloydbReplicationMethodLogicalReplicationCDCPluginEnum: %v", v)
 	}
 }
 
@@ -87,6 +99,57 @@ type SourceAlloydbReplicationMethodLogicalReplicationCDC struct {
 	Publication string `json:"publication"`
 	// A plugin logical replication slot. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-3-create-replication-slot">replication slots</a>.
 	ReplicationSlot string `json:"replication_slot"`
+
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type _SourceAlloydbReplicationMethodLogicalReplicationCDC SourceAlloydbReplicationMethodLogicalReplicationCDC
+
+func (c *SourceAlloydbReplicationMethodLogicalReplicationCDC) UnmarshalJSON(bs []byte) error {
+	data := _SourceAlloydbReplicationMethodLogicalReplicationCDC{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = SourceAlloydbReplicationMethodLogicalReplicationCDC(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "initial_waiting_seconds")
+	delete(additionalFields, "lsn_commit_behaviour")
+	delete(additionalFields, "method")
+	delete(additionalFields, "plugin")
+	delete(additionalFields, "publication")
+	delete(additionalFields, "replication_slot")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c SourceAlloydbReplicationMethodLogicalReplicationCDC) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_SourceAlloydbReplicationMethodLogicalReplicationCDC(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type SourceAlloydbReplicationMethodStandardMethodEnum string
@@ -95,17 +158,21 @@ const (
 	SourceAlloydbReplicationMethodStandardMethodEnumStandard SourceAlloydbReplicationMethodStandardMethodEnum = "Standard"
 )
 
+func (e SourceAlloydbReplicationMethodStandardMethodEnum) ToPointer() *SourceAlloydbReplicationMethodStandardMethodEnum {
+	return &e
+}
+
 func (e *SourceAlloydbReplicationMethodStandardMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "Standard":
-		*e = SourceAlloydbReplicationMethodStandardMethodEnum(s)
+		*e = SourceAlloydbReplicationMethodStandardMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAlloydbReplicationMethodStandardMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceAlloydbReplicationMethodStandardMethodEnum: %v", v)
 	}
 }
 
@@ -188,17 +255,21 @@ const (
 	SourceAlloydbAlloydbEnumAlloydb SourceAlloydbAlloydbEnum = "alloydb"
 )
 
+func (e SourceAlloydbAlloydbEnum) ToPointer() *SourceAlloydbAlloydbEnum {
+	return &e
+}
+
 func (e *SourceAlloydbAlloydbEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "alloydb":
-		*e = SourceAlloydbAlloydbEnum(s)
+		*e = SourceAlloydbAlloydbEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAlloydbAlloydbEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceAlloydbAlloydbEnum: %v", v)
 	}
 }
 
@@ -208,17 +279,21 @@ const (
 	SourceAlloydbSSLModesVerifyFullModeEnumVerifyFull SourceAlloydbSSLModesVerifyFullModeEnum = "verify-full"
 )
 
+func (e SourceAlloydbSSLModesVerifyFullModeEnum) ToPointer() *SourceAlloydbSSLModesVerifyFullModeEnum {
+	return &e
+}
+
 func (e *SourceAlloydbSSLModesVerifyFullModeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "verify-full":
-		*e = SourceAlloydbSSLModesVerifyFullModeEnum(s)
+		*e = SourceAlloydbSSLModesVerifyFullModeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAlloydbSSLModesVerifyFullModeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceAlloydbSSLModesVerifyFullModeEnum: %v", v)
 	}
 }
 
@@ -233,6 +308,56 @@ type SourceAlloydbSSLModesVerifyFull struct {
 	// Password for keystorage. If you do not add it - the password will be generated automatically.
 	ClientKeyPassword *string                                 `json:"client_key_password,omitempty"`
 	Mode              SourceAlloydbSSLModesVerifyFullModeEnum `json:"mode"`
+
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type _SourceAlloydbSSLModesVerifyFull SourceAlloydbSSLModesVerifyFull
+
+func (c *SourceAlloydbSSLModesVerifyFull) UnmarshalJSON(bs []byte) error {
+	data := _SourceAlloydbSSLModesVerifyFull{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = SourceAlloydbSSLModesVerifyFull(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "ca_certificate")
+	delete(additionalFields, "client_certificate")
+	delete(additionalFields, "client_key")
+	delete(additionalFields, "client_key_password")
+	delete(additionalFields, "mode")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c SourceAlloydbSSLModesVerifyFull) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_SourceAlloydbSSLModesVerifyFull(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type SourceAlloydbSSLModesVerifyCaModeEnum string
@@ -241,17 +366,21 @@ const (
 	SourceAlloydbSSLModesVerifyCaModeEnumVerifyCa SourceAlloydbSSLModesVerifyCaModeEnum = "verify-ca"
 )
 
+func (e SourceAlloydbSSLModesVerifyCaModeEnum) ToPointer() *SourceAlloydbSSLModesVerifyCaModeEnum {
+	return &e
+}
+
 func (e *SourceAlloydbSSLModesVerifyCaModeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "verify-ca":
-		*e = SourceAlloydbSSLModesVerifyCaModeEnum(s)
+		*e = SourceAlloydbSSLModesVerifyCaModeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAlloydbSSLModesVerifyCaModeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceAlloydbSSLModesVerifyCaModeEnum: %v", v)
 	}
 }
 
@@ -266,6 +395,56 @@ type SourceAlloydbSSLModesVerifyCa struct {
 	// Password for keystorage. If you do not add it - the password will be generated automatically.
 	ClientKeyPassword *string                               `json:"client_key_password,omitempty"`
 	Mode              SourceAlloydbSSLModesVerifyCaModeEnum `json:"mode"`
+
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type _SourceAlloydbSSLModesVerifyCa SourceAlloydbSSLModesVerifyCa
+
+func (c *SourceAlloydbSSLModesVerifyCa) UnmarshalJSON(bs []byte) error {
+	data := _SourceAlloydbSSLModesVerifyCa{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = SourceAlloydbSSLModesVerifyCa(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "ca_certificate")
+	delete(additionalFields, "client_certificate")
+	delete(additionalFields, "client_key")
+	delete(additionalFields, "client_key_password")
+	delete(additionalFields, "mode")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c SourceAlloydbSSLModesVerifyCa) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_SourceAlloydbSSLModesVerifyCa(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type SourceAlloydbSSLModesRequireModeEnum string
@@ -274,23 +453,73 @@ const (
 	SourceAlloydbSSLModesRequireModeEnumRequire SourceAlloydbSSLModesRequireModeEnum = "require"
 )
 
+func (e SourceAlloydbSSLModesRequireModeEnum) ToPointer() *SourceAlloydbSSLModesRequireModeEnum {
+	return &e
+}
+
 func (e *SourceAlloydbSSLModesRequireModeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "require":
-		*e = SourceAlloydbSSLModesRequireModeEnum(s)
+		*e = SourceAlloydbSSLModesRequireModeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAlloydbSSLModesRequireModeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceAlloydbSSLModesRequireModeEnum: %v", v)
 	}
 }
 
 // SourceAlloydbSSLModesRequire - Always require encryption. If the source database server does not support encryption, connection will fail.
 type SourceAlloydbSSLModesRequire struct {
 	Mode SourceAlloydbSSLModesRequireModeEnum `json:"mode"`
+
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type _SourceAlloydbSSLModesRequire SourceAlloydbSSLModesRequire
+
+func (c *SourceAlloydbSSLModesRequire) UnmarshalJSON(bs []byte) error {
+	data := _SourceAlloydbSSLModesRequire{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = SourceAlloydbSSLModesRequire(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "mode")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c SourceAlloydbSSLModesRequire) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_SourceAlloydbSSLModesRequire(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type SourceAlloydbSSLModesPreferModeEnum string
@@ -299,23 +528,73 @@ const (
 	SourceAlloydbSSLModesPreferModeEnumPrefer SourceAlloydbSSLModesPreferModeEnum = "prefer"
 )
 
+func (e SourceAlloydbSSLModesPreferModeEnum) ToPointer() *SourceAlloydbSSLModesPreferModeEnum {
+	return &e
+}
+
 func (e *SourceAlloydbSSLModesPreferModeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "prefer":
-		*e = SourceAlloydbSSLModesPreferModeEnum(s)
+		*e = SourceAlloydbSSLModesPreferModeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAlloydbSSLModesPreferModeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceAlloydbSSLModesPreferModeEnum: %v", v)
 	}
 }
 
 // SourceAlloydbSSLModesPrefer - Allows unencrypted connection only if the source database does not support encryption.
 type SourceAlloydbSSLModesPrefer struct {
 	Mode SourceAlloydbSSLModesPreferModeEnum `json:"mode"`
+
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type _SourceAlloydbSSLModesPrefer SourceAlloydbSSLModesPrefer
+
+func (c *SourceAlloydbSSLModesPrefer) UnmarshalJSON(bs []byte) error {
+	data := _SourceAlloydbSSLModesPrefer{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = SourceAlloydbSSLModesPrefer(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "mode")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c SourceAlloydbSSLModesPrefer) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_SourceAlloydbSSLModesPrefer(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type SourceAlloydbSSLModesAllowModeEnum string
@@ -324,28 +603,154 @@ const (
 	SourceAlloydbSSLModesAllowModeEnumAllow SourceAlloydbSSLModesAllowModeEnum = "allow"
 )
 
+func (e SourceAlloydbSSLModesAllowModeEnum) ToPointer() *SourceAlloydbSSLModesAllowModeEnum {
+	return &e
+}
+
 func (e *SourceAlloydbSSLModesAllowModeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "allow":
-		*e = SourceAlloydbSSLModesAllowModeEnum(s)
+		*e = SourceAlloydbSSLModesAllowModeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAlloydbSSLModesAllowModeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceAlloydbSSLModesAllowModeEnum: %v", v)
 	}
 }
 
 // SourceAlloydbSSLModesAllow - Enables encryption only when required by the source database.
 type SourceAlloydbSSLModesAllow struct {
 	Mode SourceAlloydbSSLModesAllowModeEnum `json:"mode"`
+
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type _SourceAlloydbSSLModesAllow SourceAlloydbSSLModesAllow
+
+func (c *SourceAlloydbSSLModesAllow) UnmarshalJSON(bs []byte) error {
+	data := _SourceAlloydbSSLModesAllow{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = SourceAlloydbSSLModesAllow(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "mode")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c SourceAlloydbSSLModesAllow) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_SourceAlloydbSSLModesAllow(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
+}
+
+type SourceAlloydbSSLModesDisableModeEnum string
+
+const (
+	SourceAlloydbSSLModesDisableModeEnumDisable SourceAlloydbSSLModesDisableModeEnum = "disable"
+)
+
+func (e SourceAlloydbSSLModesDisableModeEnum) ToPointer() *SourceAlloydbSSLModesDisableModeEnum {
+	return &e
+}
+
+func (e *SourceAlloydbSSLModesDisableModeEnum) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "disable":
+		*e = SourceAlloydbSSLModesDisableModeEnum(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceAlloydbSSLModesDisableModeEnum: %v", v)
+	}
+}
+
+// SourceAlloydbSSLModesDisable - Disables encryption of communication between Airbyte and source database.
+type SourceAlloydbSSLModesDisable struct {
+	Mode SourceAlloydbSSLModesDisableModeEnum `json:"mode"`
+
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type _SourceAlloydbSSLModesDisable SourceAlloydbSSLModesDisable
+
+func (c *SourceAlloydbSSLModesDisable) UnmarshalJSON(bs []byte) error {
+	data := _SourceAlloydbSSLModesDisable{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = SourceAlloydbSSLModesDisable(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "mode")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c SourceAlloydbSSLModesDisable) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_SourceAlloydbSSLModesDisable(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type SourceAlloydbSSLModesType string
 
 const (
+	SourceAlloydbSSLModesTypeSourceAlloydbSSLModesDisable    SourceAlloydbSSLModesType = "source-alloydb_SSL Modes_disable"
 	SourceAlloydbSSLModesTypeSourceAlloydbSSLModesAllow      SourceAlloydbSSLModesType = "source-alloydb_SSL Modes_allow"
 	SourceAlloydbSSLModesTypeSourceAlloydbSSLModesPrefer     SourceAlloydbSSLModesType = "source-alloydb_SSL Modes_prefer"
 	SourceAlloydbSSLModesTypeSourceAlloydbSSLModesRequire    SourceAlloydbSSLModesType = "source-alloydb_SSL Modes_require"
@@ -354,6 +759,7 @@ const (
 )
 
 type SourceAlloydbSSLModes struct {
+	SourceAlloydbSSLModesDisable    *SourceAlloydbSSLModesDisable
 	SourceAlloydbSSLModesAllow      *SourceAlloydbSSLModesAllow
 	SourceAlloydbSSLModesPrefer     *SourceAlloydbSSLModesPrefer
 	SourceAlloydbSSLModesRequire    *SourceAlloydbSSLModesRequire
@@ -361,6 +767,15 @@ type SourceAlloydbSSLModes struct {
 	SourceAlloydbSSLModesVerifyFull *SourceAlloydbSSLModesVerifyFull
 
 	Type SourceAlloydbSSLModesType
+}
+
+func CreateSourceAlloydbSSLModesSourceAlloydbSSLModesDisable(sourceAlloydbSSLModesDisable SourceAlloydbSSLModesDisable) SourceAlloydbSSLModes {
+	typ := SourceAlloydbSSLModesTypeSourceAlloydbSSLModesDisable
+
+	return SourceAlloydbSSLModes{
+		SourceAlloydbSSLModesDisable: &sourceAlloydbSSLModesDisable,
+		Type:                         typ,
+	}
 }
 
 func CreateSourceAlloydbSSLModesSourceAlloydbSSLModesAllow(sourceAlloydbSSLModesAllow SourceAlloydbSSLModesAllow) SourceAlloydbSSLModes {
@@ -411,6 +826,15 @@ func CreateSourceAlloydbSSLModesSourceAlloydbSSLModesVerifyFull(sourceAlloydbSSL
 func (u *SourceAlloydbSSLModes) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
+	sourceAlloydbSSLModesDisable := new(SourceAlloydbSSLModesDisable)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceAlloydbSSLModesDisable); err == nil {
+		u.SourceAlloydbSSLModesDisable = sourceAlloydbSSLModesDisable
+		u.Type = SourceAlloydbSSLModesTypeSourceAlloydbSSLModesDisable
+		return nil
+	}
+
 	sourceAlloydbSSLModesAllow := new(SourceAlloydbSSLModesAllow)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -460,6 +884,10 @@ func (u *SourceAlloydbSSLModes) UnmarshalJSON(data []byte) error {
 }
 
 func (u SourceAlloydbSSLModes) MarshalJSON() ([]byte, error) {
+	if u.SourceAlloydbSSLModesDisable != nil {
+		return json.Marshal(u.SourceAlloydbSSLModesDisable)
+	}
+
 	if u.SourceAlloydbSSLModesAllow != nil {
 		return json.Marshal(u.SourceAlloydbSSLModesAllow)
 	}
@@ -490,17 +918,21 @@ const (
 	SourceAlloydbSSHTunnelMethodPasswordAuthenticationTunnelMethodEnumSSHPasswordAuth SourceAlloydbSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum = "SSH_PASSWORD_AUTH"
 )
 
+func (e SourceAlloydbSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) ToPointer() *SourceAlloydbSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum {
+	return &e
+}
+
 func (e *SourceAlloydbSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "SSH_PASSWORD_AUTH":
-		*e = SourceAlloydbSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(s)
+		*e = SourceAlloydbSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAlloydbSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceAlloydbSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum: %v", v)
 	}
 }
 
@@ -525,17 +957,21 @@ const (
 	SourceAlloydbSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnumSSHKeyAuth SourceAlloydbSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum = "SSH_KEY_AUTH"
 )
 
+func (e SourceAlloydbSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) ToPointer() *SourceAlloydbSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum {
+	return &e
+}
+
 func (e *SourceAlloydbSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "SSH_KEY_AUTH":
-		*e = SourceAlloydbSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(s)
+		*e = SourceAlloydbSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAlloydbSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceAlloydbSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum: %v", v)
 	}
 }
 
@@ -560,17 +996,21 @@ const (
 	SourceAlloydbSSHTunnelMethodNoTunnelTunnelMethodEnumNoTunnel SourceAlloydbSSHTunnelMethodNoTunnelTunnelMethodEnum = "NO_TUNNEL"
 )
 
+func (e SourceAlloydbSSHTunnelMethodNoTunnelTunnelMethodEnum) ToPointer() *SourceAlloydbSSHTunnelMethodNoTunnelTunnelMethodEnum {
+	return &e
+}
+
 func (e *SourceAlloydbSSHTunnelMethodNoTunnelTunnelMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "NO_TUNNEL":
-		*e = SourceAlloydbSSHTunnelMethodNoTunnelTunnelMethodEnum(s)
+		*e = SourceAlloydbSSHTunnelMethodNoTunnelTunnelMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAlloydbSSHTunnelMethodNoTunnelTunnelMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceAlloydbSSHTunnelMethodNoTunnelTunnelMethodEnum: %v", v)
 	}
 }
 
@@ -689,8 +1129,7 @@ type SourceAlloydb struct {
 	// The list of schemas (case sensitive) to sync from. Defaults to public.
 	Schemas    []string                 `json:"schemas,omitempty"`
 	SourceType SourceAlloydbAlloydbEnum `json:"sourceType"`
-	// SSL connection modes.
-	//   Read more <a href="https://jdbc.postgresql.org/documentation/head/ssl-client.html"> in the docs</a>.
+	// SSL connection modes. Read more <a href="https://jdbc.postgresql.org/documentation/head/ssl-client.html"> in the docs</a>.
 	SslMode *SourceAlloydbSSLModes `json:"ssl_mode,omitempty"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod *SourceAlloydbSSHTunnelMethod `json:"tunnel_method,omitempty"`

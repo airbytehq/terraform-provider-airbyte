@@ -15,19 +15,23 @@ const (
 	SourceSalesforceSingerAPITypeEnumRest SourceSalesforceSingerAPITypeEnum = "REST"
 )
 
+func (e SourceSalesforceSingerAPITypeEnum) ToPointer() *SourceSalesforceSingerAPITypeEnum {
+	return &e
+}
+
 func (e *SourceSalesforceSingerAPITypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "BULK":
 		fallthrough
 	case "REST":
-		*e = SourceSalesforceSingerAPITypeEnum(s)
+		*e = SourceSalesforceSingerAPITypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSalesforceSingerAPITypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceSalesforceSingerAPITypeEnum: %v", v)
 	}
 }
 
@@ -37,17 +41,21 @@ const (
 	SourceSalesforceSingerSalesforceSingerEnumSalesforceSinger SourceSalesforceSingerSalesforceSingerEnum = "salesforce-singer"
 )
 
+func (e SourceSalesforceSingerSalesforceSingerEnum) ToPointer() *SourceSalesforceSingerSalesforceSingerEnum {
+	return &e
+}
+
 func (e *SourceSalesforceSingerSalesforceSingerEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "salesforce-singer":
-		*e = SourceSalesforceSingerSalesforceSingerEnum(s)
+		*e = SourceSalesforceSingerSalesforceSingerEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSalesforceSingerSalesforceSingerEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceSalesforceSingerSalesforceSingerEnum: %v", v)
 	}
 }
 

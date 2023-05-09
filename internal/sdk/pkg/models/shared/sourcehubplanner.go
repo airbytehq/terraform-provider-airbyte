@@ -13,17 +13,21 @@ const (
 	SourceHubplannerHubplannerEnumHubplanner SourceHubplannerHubplannerEnum = "hubplanner"
 )
 
+func (e SourceHubplannerHubplannerEnum) ToPointer() *SourceHubplannerHubplannerEnum {
+	return &e
+}
+
 func (e *SourceHubplannerHubplannerEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "hubplanner":
-		*e = SourceHubplannerHubplannerEnum(s)
+		*e = SourceHubplannerHubplannerEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceHubplannerHubplannerEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceHubplannerHubplannerEnum: %v", v)
 	}
 }
 

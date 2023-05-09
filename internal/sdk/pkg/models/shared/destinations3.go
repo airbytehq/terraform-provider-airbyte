@@ -15,17 +15,21 @@ const (
 	DestinationS3S3EnumS3 DestinationS3S3Enum = "s3"
 )
 
+func (e DestinationS3S3Enum) ToPointer() *DestinationS3S3Enum {
+	return &e
+}
+
 func (e *DestinationS3S3Enum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "s3":
-		*e = DestinationS3S3Enum(s)
+		*e = DestinationS3S3Enum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3S3Enum: %s", s)
+		return fmt.Errorf("invalid value for DestinationS3S3Enum: %v", v)
 	}
 }
 
@@ -42,12 +46,16 @@ const (
 	DestinationS3OutputFormatParquetColumnarStorageCompressionCodecEnumZstd         DestinationS3OutputFormatParquetColumnarStorageCompressionCodecEnum = "ZSTD"
 )
 
+func (e DestinationS3OutputFormatParquetColumnarStorageCompressionCodecEnum) ToPointer() *DestinationS3OutputFormatParquetColumnarStorageCompressionCodecEnum {
+	return &e
+}
+
 func (e *DestinationS3OutputFormatParquetColumnarStorageCompressionCodecEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "UNCOMPRESSED":
 		fallthrough
 	case "SNAPPY":
@@ -61,10 +69,10 @@ func (e *DestinationS3OutputFormatParquetColumnarStorageCompressionCodecEnum) Un
 	case "LZ4":
 		fallthrough
 	case "ZSTD":
-		*e = DestinationS3OutputFormatParquetColumnarStorageCompressionCodecEnum(s)
+		*e = DestinationS3OutputFormatParquetColumnarStorageCompressionCodecEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3OutputFormatParquetColumnarStorageCompressionCodecEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationS3OutputFormatParquetColumnarStorageCompressionCodecEnum: %v", v)
 	}
 }
 
@@ -74,17 +82,21 @@ const (
 	DestinationS3OutputFormatParquetColumnarStorageFormatTypeEnumParquet DestinationS3OutputFormatParquetColumnarStorageFormatTypeEnum = "Parquet"
 )
 
+func (e DestinationS3OutputFormatParquetColumnarStorageFormatTypeEnum) ToPointer() *DestinationS3OutputFormatParquetColumnarStorageFormatTypeEnum {
+	return &e
+}
+
 func (e *DestinationS3OutputFormatParquetColumnarStorageFormatTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "Parquet":
-		*e = DestinationS3OutputFormatParquetColumnarStorageFormatTypeEnum(s)
+		*e = DestinationS3OutputFormatParquetColumnarStorageFormatTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3OutputFormatParquetColumnarStorageFormatTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationS3OutputFormatParquetColumnarStorageFormatTypeEnum: %v", v)
 	}
 }
 
@@ -111,17 +123,21 @@ const (
 	DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnumGzip DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum = "GZIP"
 )
 
+func (e DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum) ToPointer() *DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum {
+	return &e
+}
+
 func (e *DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "GZIP":
-		*e = DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum(s)
+		*e = DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum: %v", v)
 	}
 }
 
@@ -136,17 +152,21 @@ const (
 	DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnumNoCompression DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum = "No Compression"
 )
 
+func (e DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum) ToPointer() *DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum {
+	return &e
+}
+
 func (e *DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "No Compression":
-		*e = DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum(s)
+		*e = DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum: %v", v)
 	}
 }
 
@@ -231,19 +251,23 @@ const (
 	DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFlatteningEnumRootLevelFlattening DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFlatteningEnum = "Root level flattening"
 )
 
+func (e DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFlatteningEnum) ToPointer() *DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFlatteningEnum {
+	return &e
+}
+
 func (e *DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFlatteningEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "No flattening":
 		fallthrough
 	case "Root level flattening":
-		*e = DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFlatteningEnum(s)
+		*e = DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFlatteningEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFlatteningEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFlatteningEnum: %v", v)
 	}
 }
 
@@ -253,17 +277,21 @@ const (
 	DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnumJsonl DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum = "JSONL"
 )
 
+func (e DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum) ToPointer() *DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum {
+	return &e
+}
+
 func (e *DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "JSONL":
-		*e = DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum(s)
+		*e = DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum: %v", v)
 	}
 }
 
@@ -282,17 +310,21 @@ const (
 	DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionTypeEnumGzip DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionTypeEnum = "GZIP"
 )
 
+func (e DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionTypeEnum) ToPointer() *DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionTypeEnum {
+	return &e
+}
+
 func (e *DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "GZIP":
-		*e = DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionTypeEnum(s)
+		*e = DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionTypeEnum: %v", v)
 	}
 }
 
@@ -307,17 +339,21 @@ const (
 	DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionTypeEnumNoCompression DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionTypeEnum = "No Compression"
 )
 
+func (e DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionTypeEnum) ToPointer() *DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionTypeEnum {
+	return &e
+}
+
 func (e *DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "No Compression":
-		*e = DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionTypeEnum(s)
+		*e = DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionTypeEnum: %v", v)
 	}
 }
 
@@ -402,19 +438,23 @@ const (
 	DestinationS3OutputFormatCSVCommaSeparatedValuesFlatteningEnumRootLevelFlattening DestinationS3OutputFormatCSVCommaSeparatedValuesFlatteningEnum = "Root level flattening"
 )
 
+func (e DestinationS3OutputFormatCSVCommaSeparatedValuesFlatteningEnum) ToPointer() *DestinationS3OutputFormatCSVCommaSeparatedValuesFlatteningEnum {
+	return &e
+}
+
 func (e *DestinationS3OutputFormatCSVCommaSeparatedValuesFlatteningEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "No flattening":
 		fallthrough
 	case "Root level flattening":
-		*e = DestinationS3OutputFormatCSVCommaSeparatedValuesFlatteningEnum(s)
+		*e = DestinationS3OutputFormatCSVCommaSeparatedValuesFlatteningEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3OutputFormatCSVCommaSeparatedValuesFlatteningEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationS3OutputFormatCSVCommaSeparatedValuesFlatteningEnum: %v", v)
 	}
 }
 
@@ -424,17 +464,21 @@ const (
 	DestinationS3OutputFormatCSVCommaSeparatedValuesFormatTypeEnumCsv DestinationS3OutputFormatCSVCommaSeparatedValuesFormatTypeEnum = "CSV"
 )
 
+func (e DestinationS3OutputFormatCSVCommaSeparatedValuesFormatTypeEnum) ToPointer() *DestinationS3OutputFormatCSVCommaSeparatedValuesFormatTypeEnum {
+	return &e
+}
+
 func (e *DestinationS3OutputFormatCSVCommaSeparatedValuesFormatTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "CSV":
-		*e = DestinationS3OutputFormatCSVCommaSeparatedValuesFormatTypeEnum(s)
+		*e = DestinationS3OutputFormatCSVCommaSeparatedValuesFormatTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3OutputFormatCSVCommaSeparatedValuesFormatTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationS3OutputFormatCSVCommaSeparatedValuesFormatTypeEnum: %v", v)
 	}
 }
 
@@ -453,17 +497,21 @@ const (
 	DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappyCodecEnumSnappy DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappyCodecEnum = "snappy"
 )
 
+func (e DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappyCodecEnum) ToPointer() *DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappyCodecEnum {
+	return &e
+}
+
 func (e *DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappyCodecEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "snappy":
-		*e = DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappyCodecEnum(s)
+		*e = DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappyCodecEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappyCodecEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappyCodecEnum: %v", v)
 	}
 }
 
@@ -478,17 +526,21 @@ const (
 	DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandardCodecEnumZstandard DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandardCodecEnum = "zstandard"
 )
 
+func (e DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandardCodecEnum) ToPointer() *DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandardCodecEnum {
+	return &e
+}
+
 func (e *DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandardCodecEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "zstandard":
-		*e = DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandardCodecEnum(s)
+		*e = DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandardCodecEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandardCodecEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandardCodecEnum: %v", v)
 	}
 }
 
@@ -507,17 +559,21 @@ const (
 	DestinationS3OutputFormatAvroApacheAvroCompressionCodecXzCodecEnumXz DestinationS3OutputFormatAvroApacheAvroCompressionCodecXzCodecEnum = "xz"
 )
 
+func (e DestinationS3OutputFormatAvroApacheAvroCompressionCodecXzCodecEnum) ToPointer() *DestinationS3OutputFormatAvroApacheAvroCompressionCodecXzCodecEnum {
+	return &e
+}
+
 func (e *DestinationS3OutputFormatAvroApacheAvroCompressionCodecXzCodecEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "xz":
-		*e = DestinationS3OutputFormatAvroApacheAvroCompressionCodecXzCodecEnum(s)
+		*e = DestinationS3OutputFormatAvroApacheAvroCompressionCodecXzCodecEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3OutputFormatAvroApacheAvroCompressionCodecXzCodecEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationS3OutputFormatAvroApacheAvroCompressionCodecXzCodecEnum: %v", v)
 	}
 }
 
@@ -534,17 +590,21 @@ const (
 	DestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2CodecEnumBzip2 DestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2CodecEnum = "bzip2"
 )
 
+func (e DestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2CodecEnum) ToPointer() *DestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2CodecEnum {
+	return &e
+}
+
 func (e *DestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2CodecEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "bzip2":
-		*e = DestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2CodecEnum(s)
+		*e = DestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2CodecEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2CodecEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2CodecEnum: %v", v)
 	}
 }
 
@@ -559,17 +619,21 @@ const (
 	DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflateCodecEnumDeflate DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflateCodecEnum = "Deflate"
 )
 
+func (e DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflateCodecEnum) ToPointer() *DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflateCodecEnum {
+	return &e
+}
+
 func (e *DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflateCodecEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "Deflate":
-		*e = DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflateCodecEnum(s)
+		*e = DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflateCodecEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflateCodecEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflateCodecEnum: %v", v)
 	}
 }
 
@@ -586,17 +650,21 @@ const (
 	DestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompressionCodecEnumNoCompression DestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompressionCodecEnum = "no compression"
 )
 
+func (e DestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompressionCodecEnum) ToPointer() *DestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompressionCodecEnum {
+	return &e
+}
+
 func (e *DestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompressionCodecEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "no compression":
-		*e = DestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompressionCodecEnum(s)
+		*e = DestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompressionCodecEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompressionCodecEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompressionCodecEnum: %v", v)
 	}
 }
 
@@ -775,17 +843,21 @@ const (
 	DestinationS3OutputFormatAvroApacheAvroFormatTypeEnumAvro DestinationS3OutputFormatAvroApacheAvroFormatTypeEnum = "Avro"
 )
 
+func (e DestinationS3OutputFormatAvroApacheAvroFormatTypeEnum) ToPointer() *DestinationS3OutputFormatAvroApacheAvroFormatTypeEnum {
+	return &e
+}
+
 func (e *DestinationS3OutputFormatAvroApacheAvroFormatTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "Avro":
-		*e = DestinationS3OutputFormatAvroApacheAvroFormatTypeEnum(s)
+		*e = DestinationS3OutputFormatAvroApacheAvroFormatTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3OutputFormatAvroApacheAvroFormatTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationS3OutputFormatAvroApacheAvroFormatTypeEnum: %v", v)
 	}
 }
 
@@ -944,12 +1016,16 @@ const (
 	DestinationS3S3BucketRegionEnumUsGovWest1   DestinationS3S3BucketRegionEnum = "us-gov-west-1"
 )
 
+func (e DestinationS3S3BucketRegionEnum) ToPointer() *DestinationS3S3BucketRegionEnum {
+	return &e
+}
+
 func (e *DestinationS3S3BucketRegionEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "":
 		fallthrough
 	case "us-east-1":
@@ -1001,10 +1077,10 @@ func (e *DestinationS3S3BucketRegionEnum) UnmarshalJSON(data []byte) error {
 	case "us-gov-east-1":
 		fallthrough
 	case "us-gov-west-1":
-		*e = DestinationS3S3BucketRegionEnum(s)
+		*e = DestinationS3S3BucketRegionEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3S3BucketRegionEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationS3S3BucketRegionEnum: %v", v)
 	}
 }
 

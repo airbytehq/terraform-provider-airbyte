@@ -15,17 +15,21 @@ const (
 	SourceMondayAuthorizationMethodAPITokenAuthTypeEnumAPIToken SourceMondayAuthorizationMethodAPITokenAuthTypeEnum = "api_token"
 )
 
+func (e SourceMondayAuthorizationMethodAPITokenAuthTypeEnum) ToPointer() *SourceMondayAuthorizationMethodAPITokenAuthTypeEnum {
+	return &e
+}
+
 func (e *SourceMondayAuthorizationMethodAPITokenAuthTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "api_token":
-		*e = SourceMondayAuthorizationMethodAPITokenAuthTypeEnum(s)
+		*e = SourceMondayAuthorizationMethodAPITokenAuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMondayAuthorizationMethodAPITokenAuthTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceMondayAuthorizationMethodAPITokenAuthTypeEnum: %v", v)
 	}
 }
 
@@ -41,17 +45,21 @@ const (
 	SourceMondayAuthorizationMethodOAuth20AuthTypeEnumOauth20 SourceMondayAuthorizationMethodOAuth20AuthTypeEnum = "oauth2.0"
 )
 
+func (e SourceMondayAuthorizationMethodOAuth20AuthTypeEnum) ToPointer() *SourceMondayAuthorizationMethodOAuth20AuthTypeEnum {
+	return &e
+}
+
 func (e *SourceMondayAuthorizationMethodOAuth20AuthTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "oauth2.0":
-		*e = SourceMondayAuthorizationMethodOAuth20AuthTypeEnum(s)
+		*e = SourceMondayAuthorizationMethodOAuth20AuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMondayAuthorizationMethodOAuth20AuthTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceMondayAuthorizationMethodOAuth20AuthTypeEnum: %v", v)
 	}
 }
 
@@ -141,17 +149,21 @@ const (
 	SourceMondayMondayEnumMonday SourceMondayMondayEnum = "monday"
 )
 
+func (e SourceMondayMondayEnum) ToPointer() *SourceMondayMondayEnum {
+	return &e
+}
+
 func (e *SourceMondayMondayEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "monday":
-		*e = SourceMondayMondayEnum(s)
+		*e = SourceMondayMondayEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMondayMondayEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceMondayMondayEnum: %v", v)
 	}
 }
 

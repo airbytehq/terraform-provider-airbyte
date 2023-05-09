@@ -13,17 +13,21 @@ const (
 	SourceGlassfrogGlassfrogEnumGlassfrog SourceGlassfrogGlassfrogEnum = "glassfrog"
 )
 
+func (e SourceGlassfrogGlassfrogEnum) ToPointer() *SourceGlassfrogGlassfrogEnum {
+	return &e
+}
+
 func (e *SourceGlassfrogGlassfrogEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "glassfrog":
-		*e = SourceGlassfrogGlassfrogEnum(s)
+		*e = SourceGlassfrogGlassfrogEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGlassfrogGlassfrogEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceGlassfrogGlassfrogEnum: %v", v)
 	}
 }
 

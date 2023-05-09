@@ -13,17 +13,21 @@ const (
 	SourceConfigcatConfigcatEnumConfigcat SourceConfigcatConfigcatEnum = "configcat"
 )
 
+func (e SourceConfigcatConfigcatEnum) ToPointer() *SourceConfigcatConfigcatEnum {
+	return &e
+}
+
 func (e *SourceConfigcatConfigcatEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "configcat":
-		*e = SourceConfigcatConfigcatEnum(s)
+		*e = SourceConfigcatConfigcatEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceConfigcatConfigcatEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceConfigcatConfigcatEnum: %v", v)
 	}
 }
 

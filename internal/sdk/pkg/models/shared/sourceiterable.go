@@ -14,17 +14,21 @@ const (
 	SourceIterableIterableEnumIterable SourceIterableIterableEnum = "iterable"
 )
 
+func (e SourceIterableIterableEnum) ToPointer() *SourceIterableIterableEnum {
+	return &e
+}
+
 func (e *SourceIterableIterableEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "iterable":
-		*e = SourceIterableIterableEnum(s)
+		*e = SourceIterableIterableEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceIterableIterableEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceIterableIterableEnum: %v", v)
 	}
 }
 

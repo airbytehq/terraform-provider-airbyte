@@ -13,17 +13,21 @@ const (
 	SourcePypiPypiEnumPypi SourcePypiPypiEnum = "pypi"
 )
 
+func (e SourcePypiPypiEnum) ToPointer() *SourcePypiPypiEnum {
+	return &e
+}
+
 func (e *SourcePypiPypiEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "pypi":
-		*e = SourcePypiPypiEnum(s)
+		*e = SourcePypiPypiEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePypiPypiEnum: %s", s)
+		return fmt.Errorf("invalid value for SourcePypiPypiEnum: %v", v)
 	}
 }
 

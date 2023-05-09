@@ -16,17 +16,21 @@ const (
 	SourceZendeskTalkAuthenticationOAuth20AuthTypeEnumOauth20 SourceZendeskTalkAuthenticationOAuth20AuthTypeEnum = "oauth2.0"
 )
 
+func (e SourceZendeskTalkAuthenticationOAuth20AuthTypeEnum) ToPointer() *SourceZendeskTalkAuthenticationOAuth20AuthTypeEnum {
+	return &e
+}
+
 func (e *SourceZendeskTalkAuthenticationOAuth20AuthTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "oauth2.0":
-		*e = SourceZendeskTalkAuthenticationOAuth20AuthTypeEnum(s)
+		*e = SourceZendeskTalkAuthenticationOAuth20AuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZendeskTalkAuthenticationOAuth20AuthTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceZendeskTalkAuthenticationOAuth20AuthTypeEnum: %v", v)
 	}
 }
 
@@ -35,6 +39,53 @@ type SourceZendeskTalkAuthenticationOAuth20 struct {
 	// The value of the API token generated. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk-talk">docs</a> for more information.
 	AccessToken string                                              `json:"access_token"`
 	AuthType    *SourceZendeskTalkAuthenticationOAuth20AuthTypeEnum `json:"auth_type,omitempty"`
+
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type _SourceZendeskTalkAuthenticationOAuth20 SourceZendeskTalkAuthenticationOAuth20
+
+func (c *SourceZendeskTalkAuthenticationOAuth20) UnmarshalJSON(bs []byte) error {
+	data := _SourceZendeskTalkAuthenticationOAuth20{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = SourceZendeskTalkAuthenticationOAuth20(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "access_token")
+	delete(additionalFields, "auth_type")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c SourceZendeskTalkAuthenticationOAuth20) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_SourceZendeskTalkAuthenticationOAuth20(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type SourceZendeskTalkAuthenticationAPITokenAuthTypeEnum string
@@ -43,17 +94,21 @@ const (
 	SourceZendeskTalkAuthenticationAPITokenAuthTypeEnumAPIToken SourceZendeskTalkAuthenticationAPITokenAuthTypeEnum = "api_token"
 )
 
+func (e SourceZendeskTalkAuthenticationAPITokenAuthTypeEnum) ToPointer() *SourceZendeskTalkAuthenticationAPITokenAuthTypeEnum {
+	return &e
+}
+
 func (e *SourceZendeskTalkAuthenticationAPITokenAuthTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "api_token":
-		*e = SourceZendeskTalkAuthenticationAPITokenAuthTypeEnum(s)
+		*e = SourceZendeskTalkAuthenticationAPITokenAuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZendeskTalkAuthenticationAPITokenAuthTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceZendeskTalkAuthenticationAPITokenAuthTypeEnum: %v", v)
 	}
 }
 
@@ -64,6 +119,54 @@ type SourceZendeskTalkAuthenticationAPIToken struct {
 	AuthType *SourceZendeskTalkAuthenticationAPITokenAuthTypeEnum `json:"auth_type,omitempty"`
 	// The user email for your Zendesk account.
 	Email string `json:"email"`
+
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type _SourceZendeskTalkAuthenticationAPIToken SourceZendeskTalkAuthenticationAPIToken
+
+func (c *SourceZendeskTalkAuthenticationAPIToken) UnmarshalJSON(bs []byte) error {
+	data := _SourceZendeskTalkAuthenticationAPIToken{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = SourceZendeskTalkAuthenticationAPIToken(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "api_token")
+	delete(additionalFields, "auth_type")
+	delete(additionalFields, "email")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c SourceZendeskTalkAuthenticationAPIToken) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_SourceZendeskTalkAuthenticationAPIToken(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type SourceZendeskTalkAuthenticationType string
@@ -140,17 +243,21 @@ const (
 	SourceZendeskTalkZendeskTalkEnumZendeskTalk SourceZendeskTalkZendeskTalkEnum = "zendesk-talk"
 )
 
+func (e SourceZendeskTalkZendeskTalkEnum) ToPointer() *SourceZendeskTalkZendeskTalkEnum {
+	return &e
+}
+
 func (e *SourceZendeskTalkZendeskTalkEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "zendesk-talk":
-		*e = SourceZendeskTalkZendeskTalkEnum(s)
+		*e = SourceZendeskTalkZendeskTalkEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZendeskTalkZendeskTalkEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceZendeskTalkZendeskTalkEnum: %v", v)
 	}
 }
 

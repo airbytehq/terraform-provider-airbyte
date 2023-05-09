@@ -13,17 +13,21 @@ const (
 	SourceZoomZoomEnumZoom SourceZoomZoomEnum = "zoom"
 )
 
+func (e SourceZoomZoomEnum) ToPointer() *SourceZoomZoomEnum {
+	return &e
+}
+
 func (e *SourceZoomZoomEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "zoom":
-		*e = SourceZoomZoomEnum(s)
+		*e = SourceZoomZoomEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZoomZoomEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceZoomZoomEnum: %v", v)
 	}
 }
 

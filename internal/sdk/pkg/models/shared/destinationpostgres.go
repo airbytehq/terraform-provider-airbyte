@@ -15,17 +15,21 @@ const (
 	DestinationPostgresPostgresEnumPostgres DestinationPostgresPostgresEnum = "postgres"
 )
 
+func (e DestinationPostgresPostgresEnum) ToPointer() *DestinationPostgresPostgresEnum {
+	return &e
+}
+
 func (e *DestinationPostgresPostgresEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "postgres":
-		*e = DestinationPostgresPostgresEnum(s)
+		*e = DestinationPostgresPostgresEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationPostgresPostgresEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationPostgresPostgresEnum: %v", v)
 	}
 }
 
@@ -35,17 +39,21 @@ const (
 	DestinationPostgresSSLModesVerifyFullModeEnumVerifyFull DestinationPostgresSSLModesVerifyFullModeEnum = "verify-full"
 )
 
+func (e DestinationPostgresSSLModesVerifyFullModeEnum) ToPointer() *DestinationPostgresSSLModesVerifyFullModeEnum {
+	return &e
+}
+
 func (e *DestinationPostgresSSLModesVerifyFullModeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "verify-full":
-		*e = DestinationPostgresSSLModesVerifyFullModeEnum(s)
+		*e = DestinationPostgresSSLModesVerifyFullModeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationPostgresSSLModesVerifyFullModeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationPostgresSSLModesVerifyFullModeEnum: %v", v)
 	}
 }
 
@@ -68,17 +76,21 @@ const (
 	DestinationPostgresSSLModesVerifyCaModeEnumVerifyCa DestinationPostgresSSLModesVerifyCaModeEnum = "verify-ca"
 )
 
+func (e DestinationPostgresSSLModesVerifyCaModeEnum) ToPointer() *DestinationPostgresSSLModesVerifyCaModeEnum {
+	return &e
+}
+
 func (e *DestinationPostgresSSLModesVerifyCaModeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "verify-ca":
-		*e = DestinationPostgresSSLModesVerifyCaModeEnum(s)
+		*e = DestinationPostgresSSLModesVerifyCaModeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationPostgresSSLModesVerifyCaModeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationPostgresSSLModesVerifyCaModeEnum: %v", v)
 	}
 }
 
@@ -97,17 +109,21 @@ const (
 	DestinationPostgresSSLModesRequireModeEnumRequire DestinationPostgresSSLModesRequireModeEnum = "require"
 )
 
+func (e DestinationPostgresSSLModesRequireModeEnum) ToPointer() *DestinationPostgresSSLModesRequireModeEnum {
+	return &e
+}
+
 func (e *DestinationPostgresSSLModesRequireModeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "require":
-		*e = DestinationPostgresSSLModesRequireModeEnum(s)
+		*e = DestinationPostgresSSLModesRequireModeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationPostgresSSLModesRequireModeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationPostgresSSLModesRequireModeEnum: %v", v)
 	}
 }
 
@@ -122,17 +138,21 @@ const (
 	DestinationPostgresSSLModesPreferModeEnumPrefer DestinationPostgresSSLModesPreferModeEnum = "prefer"
 )
 
+func (e DestinationPostgresSSLModesPreferModeEnum) ToPointer() *DestinationPostgresSSLModesPreferModeEnum {
+	return &e
+}
+
 func (e *DestinationPostgresSSLModesPreferModeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "prefer":
-		*e = DestinationPostgresSSLModesPreferModeEnum(s)
+		*e = DestinationPostgresSSLModesPreferModeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationPostgresSSLModesPreferModeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationPostgresSSLModesPreferModeEnum: %v", v)
 	}
 }
 
@@ -147,17 +167,21 @@ const (
 	DestinationPostgresSSLModesAllowModeEnumAllow DestinationPostgresSSLModesAllowModeEnum = "allow"
 )
 
+func (e DestinationPostgresSSLModesAllowModeEnum) ToPointer() *DestinationPostgresSSLModesAllowModeEnum {
+	return &e
+}
+
 func (e *DestinationPostgresSSLModesAllowModeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "allow":
-		*e = DestinationPostgresSSLModesAllowModeEnum(s)
+		*e = DestinationPostgresSSLModesAllowModeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationPostgresSSLModesAllowModeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationPostgresSSLModesAllowModeEnum: %v", v)
 	}
 }
 
@@ -172,17 +196,21 @@ const (
 	DestinationPostgresSSLModesDisableModeEnumDisable DestinationPostgresSSLModesDisableModeEnum = "disable"
 )
 
+func (e DestinationPostgresSSLModesDisableModeEnum) ToPointer() *DestinationPostgresSSLModesDisableModeEnum {
+	return &e
+}
+
 func (e *DestinationPostgresSSLModesDisableModeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "disable":
-		*e = DestinationPostgresSSLModesDisableModeEnum(s)
+		*e = DestinationPostgresSSLModesDisableModeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationPostgresSSLModesDisableModeEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationPostgresSSLModesDisableModeEnum: %v", v)
 	}
 }
 
@@ -362,17 +390,21 @@ const (
 	DestinationPostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodEnumSSHPasswordAuth DestinationPostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum = "SSH_PASSWORD_AUTH"
 )
 
+func (e DestinationPostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) ToPointer() *DestinationPostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum {
+	return &e
+}
+
 func (e *DestinationPostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "SSH_PASSWORD_AUTH":
-		*e = DestinationPostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(s)
+		*e = DestinationPostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationPostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationPostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum: %v", v)
 	}
 }
 
@@ -397,17 +429,21 @@ const (
 	DestinationPostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnumSSHKeyAuth DestinationPostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum = "SSH_KEY_AUTH"
 )
 
+func (e DestinationPostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) ToPointer() *DestinationPostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum {
+	return &e
+}
+
 func (e *DestinationPostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "SSH_KEY_AUTH":
-		*e = DestinationPostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(s)
+		*e = DestinationPostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationPostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationPostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum: %v", v)
 	}
 }
 
@@ -432,17 +468,21 @@ const (
 	DestinationPostgresSSHTunnelMethodNoTunnelTunnelMethodEnumNoTunnel DestinationPostgresSSHTunnelMethodNoTunnelTunnelMethodEnum = "NO_TUNNEL"
 )
 
+func (e DestinationPostgresSSHTunnelMethodNoTunnelTunnelMethodEnum) ToPointer() *DestinationPostgresSSHTunnelMethodNoTunnelTunnelMethodEnum {
+	return &e
+}
+
 func (e *DestinationPostgresSSHTunnelMethodNoTunnelTunnelMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "NO_TUNNEL":
-		*e = DestinationPostgresSSHTunnelMethodNoTunnelTunnelMethodEnum(s)
+		*e = DestinationPostgresSSHTunnelMethodNoTunnelTunnelMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationPostgresSSHTunnelMethodNoTunnelTunnelMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationPostgresSSHTunnelMethodNoTunnelTunnelMethodEnum: %v", v)
 	}
 }
 
@@ -559,14 +599,7 @@ type DestinationPostgres struct {
 	Port int64 `json:"port"`
 	// The default schema tables are written to if the source does not specify a namespace. The usual value for this field is "public".
 	Schema string `json:"schema"`
-	// SSL connection modes.
-	//  <b>disable</b> - Chose this mode to disable encryption of communication between Airbyte and destination database
-	//  <b>allow</b> - Chose this mode to enable encryption only when required by the source database
-	//  <b>prefer</b> - Chose this mode to allow unencrypted connection only if the source database does not support encryption
-	//  <b>require</b> - Chose this mode to always require encryption. If the source database server does not support encryption, connection will fail
-	//   <b>verify-ca</b> - Chose this mode to always require encryption and to verify that the source database server has a valid SSL certificate
-	//   <b>verify-full</b> - This is the most secure mode. Chose this mode to always require encryption and to verify the identity of the source database server
-	//  See more information - <a href="https://jdbc.postgresql.org/documentation/head/ssl-client.html"> in the docs</a>.
+	// SSL connection modes. <b>disable</b> - Chose this mode to disable encryption of communication between Airbyte and destination database <b>allow</b> - Chose this mode to enable encryption only when required by the source database <b>prefer</b> - Chose this mode to allow unencrypted connection only if the source database does not support encryption <b>require</b> - Chose this mode to always require encryption. If the source database server does not support encryption, connection will fail <b>verify-ca</b> - Chose this mode to always require encryption and to verify that the source database server has a valid SSL certificate <b>verify-full</b> - This is the most secure mode. Chose this mode to always require encryption and to verify the identity of the source database server See more information - <a href="https://jdbc.postgresql.org/documentation/head/ssl-client.html"> in the docs</a>.
 	SslMode *DestinationPostgresSSLModes `json:"ssl_mode,omitempty"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod *DestinationPostgresSSHTunnelMethod `json:"tunnel_method,omitempty"`

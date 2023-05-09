@@ -6,6 +6,6 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON struct {
 	Compression *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompression `tfsdk:"compression"`
-	FlattenData types.Bool                                                             `tfsdk:"flatten_data"`
+	Flattening  types.String                                                           `tfsdk:"flattening"`
 	FormatType  types.String                                                           `tfsdk:"format_type"`
 }

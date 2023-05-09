@@ -13,17 +13,21 @@ const (
 	SourceConfluenceConfluenceEnumConfluence SourceConfluenceConfluenceEnum = "confluence"
 )
 
+func (e SourceConfluenceConfluenceEnum) ToPointer() *SourceConfluenceConfluenceEnum {
+	return &e
+}
+
 func (e *SourceConfluenceConfluenceEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "confluence":
-		*e = SourceConfluenceConfluenceEnum(s)
+		*e = SourceConfluenceConfluenceEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceConfluenceConfluenceEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceConfluenceConfluenceEnum: %v", v)
 	}
 }
 

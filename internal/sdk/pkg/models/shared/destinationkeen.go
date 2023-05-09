@@ -13,17 +13,21 @@ const (
 	DestinationKeenKeenEnumKeen DestinationKeenKeenEnum = "keen"
 )
 
+func (e DestinationKeenKeenEnum) ToPointer() *DestinationKeenKeenEnum {
+	return &e
+}
+
 func (e *DestinationKeenKeenEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "keen":
-		*e = DestinationKeenKeenEnum(s)
+		*e = DestinationKeenKeenEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationKeenKeenEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationKeenKeenEnum: %v", v)
 	}
 }
 

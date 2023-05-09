@@ -16,19 +16,23 @@ const (
 	SourceChargebeeProductCatalogEnumTwo0 SourceChargebeeProductCatalogEnum = "2.0"
 )
 
+func (e SourceChargebeeProductCatalogEnum) ToPointer() *SourceChargebeeProductCatalogEnum {
+	return &e
+}
+
 func (e *SourceChargebeeProductCatalogEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "1.0":
 		fallthrough
 	case "2.0":
-		*e = SourceChargebeeProductCatalogEnum(s)
+		*e = SourceChargebeeProductCatalogEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceChargebeeProductCatalogEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceChargebeeProductCatalogEnum: %v", v)
 	}
 }
 
@@ -38,17 +42,21 @@ const (
 	SourceChargebeeChargebeeEnumChargebee SourceChargebeeChargebeeEnum = "chargebee"
 )
 
+func (e SourceChargebeeChargebeeEnum) ToPointer() *SourceChargebeeChargebeeEnum {
+	return &e
+}
+
 func (e *SourceChargebeeChargebeeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "chargebee":
-		*e = SourceChargebeeChargebeeEnum(s)
+		*e = SourceChargebeeChargebeeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceChargebeeChargebeeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceChargebeeChargebeeEnum: %v", v)
 	}
 }
 

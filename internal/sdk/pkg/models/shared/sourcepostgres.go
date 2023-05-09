@@ -17,19 +17,23 @@ const (
 	SourcePostgresReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnumAfterLoadingDataInTheDestination SourcePostgresReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnum = "After loading Data in the destination"
 )
 
+func (e SourcePostgresReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnum) ToPointer() *SourcePostgresReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnum {
+	return &e
+}
+
 func (e *SourcePostgresReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "While reading Data":
 		fallthrough
 	case "After loading Data in the destination":
-		*e = SourcePostgresReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnum(s)
+		*e = SourcePostgresReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnum: %s", s)
+		return fmt.Errorf("invalid value for SourcePostgresReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnum: %v", v)
 	}
 }
 
@@ -39,17 +43,21 @@ const (
 	SourcePostgresReplicationMethodLogicalReplicationCDCMethodEnumCdc SourcePostgresReplicationMethodLogicalReplicationCDCMethodEnum = "CDC"
 )
 
+func (e SourcePostgresReplicationMethodLogicalReplicationCDCMethodEnum) ToPointer() *SourcePostgresReplicationMethodLogicalReplicationCDCMethodEnum {
+	return &e
+}
+
 func (e *SourcePostgresReplicationMethodLogicalReplicationCDCMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "CDC":
-		*e = SourcePostgresReplicationMethodLogicalReplicationCDCMethodEnum(s)
+		*e = SourcePostgresReplicationMethodLogicalReplicationCDCMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresReplicationMethodLogicalReplicationCDCMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourcePostgresReplicationMethodLogicalReplicationCDCMethodEnum: %v", v)
 	}
 }
 
@@ -60,17 +68,21 @@ const (
 	SourcePostgresReplicationMethodLogicalReplicationCDCPluginEnumPgoutput SourcePostgresReplicationMethodLogicalReplicationCDCPluginEnum = "pgoutput"
 )
 
+func (e SourcePostgresReplicationMethodLogicalReplicationCDCPluginEnum) ToPointer() *SourcePostgresReplicationMethodLogicalReplicationCDCPluginEnum {
+	return &e
+}
+
 func (e *SourcePostgresReplicationMethodLogicalReplicationCDCPluginEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "pgoutput":
-		*e = SourcePostgresReplicationMethodLogicalReplicationCDCPluginEnum(s)
+		*e = SourcePostgresReplicationMethodLogicalReplicationCDCPluginEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresReplicationMethodLogicalReplicationCDCPluginEnum: %s", s)
+		return fmt.Errorf("invalid value for SourcePostgresReplicationMethodLogicalReplicationCDCPluginEnum: %v", v)
 	}
 }
 
@@ -87,6 +99,57 @@ type SourcePostgresReplicationMethodLogicalReplicationCDC struct {
 	Publication string `json:"publication"`
 	// A plugin logical replication slot. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-3-create-replication-slot">replication slots</a>.
 	ReplicationSlot string `json:"replication_slot"`
+
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type _SourcePostgresReplicationMethodLogicalReplicationCDC SourcePostgresReplicationMethodLogicalReplicationCDC
+
+func (c *SourcePostgresReplicationMethodLogicalReplicationCDC) UnmarshalJSON(bs []byte) error {
+	data := _SourcePostgresReplicationMethodLogicalReplicationCDC{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = SourcePostgresReplicationMethodLogicalReplicationCDC(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "initial_waiting_seconds")
+	delete(additionalFields, "lsn_commit_behaviour")
+	delete(additionalFields, "method")
+	delete(additionalFields, "plugin")
+	delete(additionalFields, "publication")
+	delete(additionalFields, "replication_slot")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c SourcePostgresReplicationMethodLogicalReplicationCDC) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_SourcePostgresReplicationMethodLogicalReplicationCDC(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type SourcePostgresReplicationMethodStandardMethodEnum string
@@ -95,17 +158,21 @@ const (
 	SourcePostgresReplicationMethodStandardMethodEnumStandard SourcePostgresReplicationMethodStandardMethodEnum = "Standard"
 )
 
+func (e SourcePostgresReplicationMethodStandardMethodEnum) ToPointer() *SourcePostgresReplicationMethodStandardMethodEnum {
+	return &e
+}
+
 func (e *SourcePostgresReplicationMethodStandardMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "Standard":
-		*e = SourcePostgresReplicationMethodStandardMethodEnum(s)
+		*e = SourcePostgresReplicationMethodStandardMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresReplicationMethodStandardMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourcePostgresReplicationMethodStandardMethodEnum: %v", v)
 	}
 }
 
@@ -188,17 +255,21 @@ const (
 	SourcePostgresPostgresEnumPostgres SourcePostgresPostgresEnum = "postgres"
 )
 
+func (e SourcePostgresPostgresEnum) ToPointer() *SourcePostgresPostgresEnum {
+	return &e
+}
+
 func (e *SourcePostgresPostgresEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "postgres":
-		*e = SourcePostgresPostgresEnum(s)
+		*e = SourcePostgresPostgresEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresPostgresEnum: %s", s)
+		return fmt.Errorf("invalid value for SourcePostgresPostgresEnum: %v", v)
 	}
 }
 
@@ -208,17 +279,21 @@ const (
 	SourcePostgresSSLModesVerifyFullModeEnumVerifyFull SourcePostgresSSLModesVerifyFullModeEnum = "verify-full"
 )
 
+func (e SourcePostgresSSLModesVerifyFullModeEnum) ToPointer() *SourcePostgresSSLModesVerifyFullModeEnum {
+	return &e
+}
+
 func (e *SourcePostgresSSLModesVerifyFullModeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "verify-full":
-		*e = SourcePostgresSSLModesVerifyFullModeEnum(s)
+		*e = SourcePostgresSSLModesVerifyFullModeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresSSLModesVerifyFullModeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourcePostgresSSLModesVerifyFullModeEnum: %v", v)
 	}
 }
 
@@ -233,6 +308,56 @@ type SourcePostgresSSLModesVerifyFull struct {
 	// Password for keystorage. If you do not add it - the password will be generated automatically.
 	ClientKeyPassword *string                                  `json:"client_key_password,omitempty"`
 	Mode              SourcePostgresSSLModesVerifyFullModeEnum `json:"mode"`
+
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type _SourcePostgresSSLModesVerifyFull SourcePostgresSSLModesVerifyFull
+
+func (c *SourcePostgresSSLModesVerifyFull) UnmarshalJSON(bs []byte) error {
+	data := _SourcePostgresSSLModesVerifyFull{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = SourcePostgresSSLModesVerifyFull(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "ca_certificate")
+	delete(additionalFields, "client_certificate")
+	delete(additionalFields, "client_key")
+	delete(additionalFields, "client_key_password")
+	delete(additionalFields, "mode")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c SourcePostgresSSLModesVerifyFull) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_SourcePostgresSSLModesVerifyFull(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type SourcePostgresSSLModesVerifyCaModeEnum string
@@ -241,17 +366,21 @@ const (
 	SourcePostgresSSLModesVerifyCaModeEnumVerifyCa SourcePostgresSSLModesVerifyCaModeEnum = "verify-ca"
 )
 
+func (e SourcePostgresSSLModesVerifyCaModeEnum) ToPointer() *SourcePostgresSSLModesVerifyCaModeEnum {
+	return &e
+}
+
 func (e *SourcePostgresSSLModesVerifyCaModeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "verify-ca":
-		*e = SourcePostgresSSLModesVerifyCaModeEnum(s)
+		*e = SourcePostgresSSLModesVerifyCaModeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresSSLModesVerifyCaModeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourcePostgresSSLModesVerifyCaModeEnum: %v", v)
 	}
 }
 
@@ -266,6 +395,56 @@ type SourcePostgresSSLModesVerifyCa struct {
 	// Password for keystorage. If you do not add it - the password will be generated automatically.
 	ClientKeyPassword *string                                `json:"client_key_password,omitempty"`
 	Mode              SourcePostgresSSLModesVerifyCaModeEnum `json:"mode"`
+
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type _SourcePostgresSSLModesVerifyCa SourcePostgresSSLModesVerifyCa
+
+func (c *SourcePostgresSSLModesVerifyCa) UnmarshalJSON(bs []byte) error {
+	data := _SourcePostgresSSLModesVerifyCa{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = SourcePostgresSSLModesVerifyCa(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "ca_certificate")
+	delete(additionalFields, "client_certificate")
+	delete(additionalFields, "client_key")
+	delete(additionalFields, "client_key_password")
+	delete(additionalFields, "mode")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c SourcePostgresSSLModesVerifyCa) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_SourcePostgresSSLModesVerifyCa(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type SourcePostgresSSLModesRequireModeEnum string
@@ -274,23 +453,73 @@ const (
 	SourcePostgresSSLModesRequireModeEnumRequire SourcePostgresSSLModesRequireModeEnum = "require"
 )
 
+func (e SourcePostgresSSLModesRequireModeEnum) ToPointer() *SourcePostgresSSLModesRequireModeEnum {
+	return &e
+}
+
 func (e *SourcePostgresSSLModesRequireModeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "require":
-		*e = SourcePostgresSSLModesRequireModeEnum(s)
+		*e = SourcePostgresSSLModesRequireModeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresSSLModesRequireModeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourcePostgresSSLModesRequireModeEnum: %v", v)
 	}
 }
 
 // SourcePostgresSSLModesRequire - Always require encryption. If the source database server does not support encryption, connection will fail.
 type SourcePostgresSSLModesRequire struct {
 	Mode SourcePostgresSSLModesRequireModeEnum `json:"mode"`
+
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type _SourcePostgresSSLModesRequire SourcePostgresSSLModesRequire
+
+func (c *SourcePostgresSSLModesRequire) UnmarshalJSON(bs []byte) error {
+	data := _SourcePostgresSSLModesRequire{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = SourcePostgresSSLModesRequire(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "mode")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c SourcePostgresSSLModesRequire) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_SourcePostgresSSLModesRequire(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type SourcePostgresSSLModesPreferModeEnum string
@@ -299,23 +528,73 @@ const (
 	SourcePostgresSSLModesPreferModeEnumPrefer SourcePostgresSSLModesPreferModeEnum = "prefer"
 )
 
+func (e SourcePostgresSSLModesPreferModeEnum) ToPointer() *SourcePostgresSSLModesPreferModeEnum {
+	return &e
+}
+
 func (e *SourcePostgresSSLModesPreferModeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "prefer":
-		*e = SourcePostgresSSLModesPreferModeEnum(s)
+		*e = SourcePostgresSSLModesPreferModeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresSSLModesPreferModeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourcePostgresSSLModesPreferModeEnum: %v", v)
 	}
 }
 
 // SourcePostgresSSLModesPrefer - Allows unencrypted connection only if the source database does not support encryption.
 type SourcePostgresSSLModesPrefer struct {
 	Mode SourcePostgresSSLModesPreferModeEnum `json:"mode"`
+
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type _SourcePostgresSSLModesPrefer SourcePostgresSSLModesPrefer
+
+func (c *SourcePostgresSSLModesPrefer) UnmarshalJSON(bs []byte) error {
+	data := _SourcePostgresSSLModesPrefer{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = SourcePostgresSSLModesPrefer(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "mode")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c SourcePostgresSSLModesPrefer) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_SourcePostgresSSLModesPrefer(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type SourcePostgresSSLModesAllowModeEnum string
@@ -324,23 +603,73 @@ const (
 	SourcePostgresSSLModesAllowModeEnumAllow SourcePostgresSSLModesAllowModeEnum = "allow"
 )
 
+func (e SourcePostgresSSLModesAllowModeEnum) ToPointer() *SourcePostgresSSLModesAllowModeEnum {
+	return &e
+}
+
 func (e *SourcePostgresSSLModesAllowModeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "allow":
-		*e = SourcePostgresSSLModesAllowModeEnum(s)
+		*e = SourcePostgresSSLModesAllowModeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresSSLModesAllowModeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourcePostgresSSLModesAllowModeEnum: %v", v)
 	}
 }
 
 // SourcePostgresSSLModesAllow - Enables encryption only when required by the source database.
 type SourcePostgresSSLModesAllow struct {
 	Mode SourcePostgresSSLModesAllowModeEnum `json:"mode"`
+
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type _SourcePostgresSSLModesAllow SourcePostgresSSLModesAllow
+
+func (c *SourcePostgresSSLModesAllow) UnmarshalJSON(bs []byte) error {
+	data := _SourcePostgresSSLModesAllow{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = SourcePostgresSSLModesAllow(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "mode")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c SourcePostgresSSLModesAllow) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_SourcePostgresSSLModesAllow(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type SourcePostgresSSLModesDisableModeEnum string
@@ -349,23 +678,73 @@ const (
 	SourcePostgresSSLModesDisableModeEnumDisable SourcePostgresSSLModesDisableModeEnum = "disable"
 )
 
+func (e SourcePostgresSSLModesDisableModeEnum) ToPointer() *SourcePostgresSSLModesDisableModeEnum {
+	return &e
+}
+
 func (e *SourcePostgresSSLModesDisableModeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "disable":
-		*e = SourcePostgresSSLModesDisableModeEnum(s)
+		*e = SourcePostgresSSLModesDisableModeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresSSLModesDisableModeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourcePostgresSSLModesDisableModeEnum: %v", v)
 	}
 }
 
 // SourcePostgresSSLModesDisable - Disables encryption of communication between Airbyte and source database.
 type SourcePostgresSSLModesDisable struct {
 	Mode SourcePostgresSSLModesDisableModeEnum `json:"mode"`
+
+	AdditionalProperties map[string]interface{} `json:"-"`
+}
+type _SourcePostgresSSLModesDisable SourcePostgresSSLModesDisable
+
+func (c *SourcePostgresSSLModesDisable) UnmarshalJSON(bs []byte) error {
+	data := _SourcePostgresSSLModesDisable{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = SourcePostgresSSLModesDisable(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "mode")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c SourcePostgresSSLModesDisable) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_SourcePostgresSSLModesDisable(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type SourcePostgresSSLModesType string
@@ -539,17 +918,21 @@ const (
 	SourcePostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodEnumSSHPasswordAuth SourcePostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum = "SSH_PASSWORD_AUTH"
 )
 
+func (e SourcePostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) ToPointer() *SourcePostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum {
+	return &e
+}
+
 func (e *SourcePostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "SSH_PASSWORD_AUTH":
-		*e = SourcePostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(s)
+		*e = SourcePostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourcePostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum: %v", v)
 	}
 }
 
@@ -574,17 +957,21 @@ const (
 	SourcePostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnumSSHKeyAuth SourcePostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum = "SSH_KEY_AUTH"
 )
 
+func (e SourcePostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) ToPointer() *SourcePostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum {
+	return &e
+}
+
 func (e *SourcePostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "SSH_KEY_AUTH":
-		*e = SourcePostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(s)
+		*e = SourcePostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourcePostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum: %v", v)
 	}
 }
 
@@ -609,17 +996,21 @@ const (
 	SourcePostgresSSHTunnelMethodNoTunnelTunnelMethodEnumNoTunnel SourcePostgresSSHTunnelMethodNoTunnelTunnelMethodEnum = "NO_TUNNEL"
 )
 
+func (e SourcePostgresSSHTunnelMethodNoTunnelTunnelMethodEnum) ToPointer() *SourcePostgresSSHTunnelMethodNoTunnelTunnelMethodEnum {
+	return &e
+}
+
 func (e *SourcePostgresSSHTunnelMethodNoTunnelTunnelMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "NO_TUNNEL":
-		*e = SourcePostgresSSHTunnelMethodNoTunnelTunnelMethodEnum(s)
+		*e = SourcePostgresSSHTunnelMethodNoTunnelTunnelMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresSSHTunnelMethodNoTunnelTunnelMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourcePostgresSSHTunnelMethodNoTunnelTunnelMethodEnum: %v", v)
 	}
 }
 
@@ -738,8 +1129,7 @@ type SourcePostgres struct {
 	// The list of schemas (case sensitive) to sync from. Defaults to public.
 	Schemas    []string                   `json:"schemas,omitempty"`
 	SourceType SourcePostgresPostgresEnum `json:"sourceType"`
-	// SSL connection modes.
-	//   Read more <a href="https://jdbc.postgresql.org/documentation/head/ssl-client.html"> in the docs</a>.
+	// SSL connection modes. Read more <a href="https://jdbc.postgresql.org/documentation/head/ssl-client.html"> in the docs</a>.
 	SslMode *SourcePostgresSSLModes `json:"ssl_mode,omitempty"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod *SourcePostgresSSHTunnelMethod `json:"tunnel_method,omitempty"`

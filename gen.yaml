@@ -1,10 +1,10 @@
 configVersion: 1.0.0
 generation:
-  telemetryEnabled: false
   sdkClassName: SDK
   singleTagPerOp: false
+  telemetryEnabled: false
 terraform:
   version: 0.0.1
   author: airbytehq
+  baseServerURL: https://api.airbyte.com/v1/
   packageName: airbyte
-  serverURL: https://api.airbyte.com/v1/

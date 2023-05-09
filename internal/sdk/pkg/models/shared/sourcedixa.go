@@ -13,17 +13,21 @@ const (
 	SourceDixaDixaEnumDixa SourceDixaDixaEnum = "dixa"
 )
 
+func (e SourceDixaDixaEnum) ToPointer() *SourceDixaDixaEnum {
+	return &e
+}
+
 func (e *SourceDixaDixaEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "dixa":
-		*e = SourceDixaDixaEnum(s)
+		*e = SourceDixaDixaEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceDixaDixaEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceDixaDixaEnum: %v", v)
 	}
 }
 

@@ -14,17 +14,21 @@ const (
 	SourceBingAdsAuthMethodEnumOauth20 SourceBingAdsAuthMethodEnum = "oauth2.0"
 )
 
+func (e SourceBingAdsAuthMethodEnum) ToPointer() *SourceBingAdsAuthMethodEnum {
+	return &e
+}
+
 func (e *SourceBingAdsAuthMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "oauth2.0":
-		*e = SourceBingAdsAuthMethodEnum(s)
+		*e = SourceBingAdsAuthMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceBingAdsAuthMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceBingAdsAuthMethodEnum: %v", v)
 	}
 }
 
@@ -34,17 +38,21 @@ const (
 	SourceBingAdsBingAdsEnumBingAds SourceBingAdsBingAdsEnum = "bing-ads"
 )
 
+func (e SourceBingAdsBingAdsEnum) ToPointer() *SourceBingAdsBingAdsEnum {
+	return &e
+}
+
 func (e *SourceBingAdsBingAdsEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "bing-ads":
-		*e = SourceBingAdsBingAdsEnum(s)
+		*e = SourceBingAdsBingAdsEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceBingAdsBingAdsEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceBingAdsBingAdsEnum: %v", v)
 	}
 }
 

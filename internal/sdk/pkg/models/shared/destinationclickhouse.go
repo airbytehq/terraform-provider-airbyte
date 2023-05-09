@@ -15,17 +15,21 @@ const (
 	DestinationClickhouseClickhouseEnumClickhouse DestinationClickhouseClickhouseEnum = "clickhouse"
 )
 
+func (e DestinationClickhouseClickhouseEnum) ToPointer() *DestinationClickhouseClickhouseEnum {
+	return &e
+}
+
 func (e *DestinationClickhouseClickhouseEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "clickhouse":
-		*e = DestinationClickhouseClickhouseEnum(s)
+		*e = DestinationClickhouseClickhouseEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationClickhouseClickhouseEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationClickhouseClickhouseEnum: %v", v)
 	}
 }
 
@@ -36,17 +40,21 @@ const (
 	DestinationClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethodEnumSSHPasswordAuth DestinationClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum = "SSH_PASSWORD_AUTH"
 )
 
+func (e DestinationClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) ToPointer() *DestinationClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum {
+	return &e
+}
+
 func (e *DestinationClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "SSH_PASSWORD_AUTH":
-		*e = DestinationClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(s)
+		*e = DestinationClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum: %v", v)
 	}
 }
 
@@ -71,17 +79,21 @@ const (
 	DestinationClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnumSSHKeyAuth DestinationClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum = "SSH_KEY_AUTH"
 )
 
+func (e DestinationClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) ToPointer() *DestinationClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum {
+	return &e
+}
+
 func (e *DestinationClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "SSH_KEY_AUTH":
-		*e = DestinationClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(s)
+		*e = DestinationClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum: %v", v)
 	}
 }
 
@@ -106,17 +118,21 @@ const (
 	DestinationClickhouseSSHTunnelMethodNoTunnelTunnelMethodEnumNoTunnel DestinationClickhouseSSHTunnelMethodNoTunnelTunnelMethodEnum = "NO_TUNNEL"
 )
 
+func (e DestinationClickhouseSSHTunnelMethodNoTunnelTunnelMethodEnum) ToPointer() *DestinationClickhouseSSHTunnelMethodNoTunnelTunnelMethodEnum {
+	return &e
+}
+
 func (e *DestinationClickhouseSSHTunnelMethodNoTunnelTunnelMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "NO_TUNNEL":
-		*e = DestinationClickhouseSSHTunnelMethodNoTunnelTunnelMethodEnum(s)
+		*e = DestinationClickhouseSSHTunnelMethodNoTunnelTunnelMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationClickhouseSSHTunnelMethodNoTunnelTunnelMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for DestinationClickhouseSSHTunnelMethodNoTunnelTunnelMethodEnum: %v", v)
 	}
 }
 

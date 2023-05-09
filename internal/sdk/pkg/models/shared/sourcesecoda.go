@@ -13,17 +13,21 @@ const (
 	SourceSecodaSecodaEnumSecoda SourceSecodaSecodaEnum = "secoda"
 )
 
+func (e SourceSecodaSecodaEnum) ToPointer() *SourceSecodaSecodaEnum {
+	return &e
+}
+
 func (e *SourceSecodaSecodaEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "secoda":
-		*e = SourceSecodaSecodaEnum(s)
+		*e = SourceSecodaSecodaEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSecodaSecodaEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceSecodaSecodaEnum: %v", v)
 	}
 }
 

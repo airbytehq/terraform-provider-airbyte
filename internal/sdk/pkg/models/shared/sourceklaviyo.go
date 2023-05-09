@@ -14,17 +14,21 @@ const (
 	SourceKlaviyoKlaviyoEnumKlaviyo SourceKlaviyoKlaviyoEnum = "klaviyo"
 )
 
+func (e SourceKlaviyoKlaviyoEnum) ToPointer() *SourceKlaviyoKlaviyoEnum {
+	return &e
+}
+
 func (e *SourceKlaviyoKlaviyoEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "klaviyo":
-		*e = SourceKlaviyoKlaviyoEnum(s)
+		*e = SourceKlaviyoKlaviyoEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceKlaviyoKlaviyoEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceKlaviyoKlaviyoEnum: %v", v)
 	}
 }
 

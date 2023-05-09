@@ -13,17 +13,21 @@ const (
 	SourceMetabaseMetabaseEnumMetabase SourceMetabaseMetabaseEnum = "metabase"
 )
 
+func (e SourceMetabaseMetabaseEnum) ToPointer() *SourceMetabaseMetabaseEnum {
+	return &e
+}
+
 func (e *SourceMetabaseMetabaseEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "metabase":
-		*e = SourceMetabaseMetabaseEnum(s)
+		*e = SourceMetabaseMetabaseEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMetabaseMetabaseEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceMetabaseMetabaseEnum: %v", v)
 	}
 }
 
@@ -32,12 +36,7 @@ type SourceMetabase struct {
 	// URL to your metabase instance API
 	InstanceAPIURL string  `json:"instance_api_url"`
 	Password       *string `json:"password,omitempty"`
-	// To generate your session token, you need to run the following command: ``` curl -X POST \
-	//   -H "Content-Type: application/json" \
-	//   -d '{"username": "person@metabase.com", "password": "fakepassword"}' \
-	//   http://localhost:3000/api/session
-	// ``` Then copy the value of the `id` field returned by a successful call to that API.
-	// Note that by default, sessions are good for 14 days and needs to be regenerated.
+	// To generate your session token, you need to run the following command: ``` curl -X POST -H "Content-Type: application/json" -d '{"username": "person@metabase.com", "password": "fakepassword"}' http://localhost:3000/api/session ``` Then copy the value of the `id` field returned by a successful call to that API. Note that by default, sessions are good for 14 days and needs to be regenerated.
 	SessionToken *string                    `json:"session_token,omitempty"`
 	SourceType   SourceMetabaseMetabaseEnum `json:"sourceType"`
 	Username     *string                    `json:"username,omitempty"`

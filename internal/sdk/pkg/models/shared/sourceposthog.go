@@ -14,17 +14,21 @@ const (
 	SourcePosthogPosthogEnumPosthog SourcePosthogPosthogEnum = "posthog"
 )
 
+func (e SourcePosthogPosthogEnum) ToPointer() *SourcePosthogPosthogEnum {
+	return &e
+}
+
 func (e *SourcePosthogPosthogEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "posthog":
-		*e = SourcePosthogPosthogEnum(s)
+		*e = SourcePosthogPosthogEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePosthogPosthogEnum: %s", s)
+		return fmt.Errorf("invalid value for SourcePosthogPosthogEnum: %v", v)
 	}
 }
 

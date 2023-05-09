@@ -13,17 +13,21 @@ const (
 	SourceAmazonAdsAuthTypeEnumOauth20 SourceAmazonAdsAuthTypeEnum = "oauth2.0"
 )
 
+func (e SourceAmazonAdsAuthTypeEnum) ToPointer() *SourceAmazonAdsAuthTypeEnum {
+	return &e
+}
+
 func (e *SourceAmazonAdsAuthTypeEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "oauth2.0":
-		*e = SourceAmazonAdsAuthTypeEnum(s)
+		*e = SourceAmazonAdsAuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAmazonAdsAuthTypeEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceAmazonAdsAuthTypeEnum: %v", v)
 	}
 }
 
@@ -36,21 +40,25 @@ const (
 	SourceAmazonAdsRegionEnumFe SourceAmazonAdsRegionEnum = "FE"
 )
 
+func (e SourceAmazonAdsRegionEnum) ToPointer() *SourceAmazonAdsRegionEnum {
+	return &e
+}
+
 func (e *SourceAmazonAdsRegionEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "NA":
 		fallthrough
 	case "EU":
 		fallthrough
 	case "FE":
-		*e = SourceAmazonAdsRegionEnum(s)
+		*e = SourceAmazonAdsRegionEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAmazonAdsRegionEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceAmazonAdsRegionEnum: %v", v)
 	}
 }
 
@@ -67,12 +75,16 @@ const (
 	SourceAmazonAdsReportRecordTypesEnumTargets       SourceAmazonAdsReportRecordTypesEnum = "targets"
 )
 
+func (e SourceAmazonAdsReportRecordTypesEnum) ToPointer() *SourceAmazonAdsReportRecordTypesEnum {
+	return &e
+}
+
 func (e *SourceAmazonAdsReportRecordTypesEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "adGroups":
 		fallthrough
 	case "asins":
@@ -88,10 +100,10 @@ func (e *SourceAmazonAdsReportRecordTypesEnum) UnmarshalJSON(data []byte) error 
 	case "productAds":
 		fallthrough
 	case "targets":
-		*e = SourceAmazonAdsReportRecordTypesEnum(s)
+		*e = SourceAmazonAdsReportRecordTypesEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAmazonAdsReportRecordTypesEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceAmazonAdsReportRecordTypesEnum: %v", v)
 	}
 }
 
@@ -101,17 +113,21 @@ const (
 	SourceAmazonAdsAmazonAdsEnumAmazonAds SourceAmazonAdsAmazonAdsEnum = "amazon-ads"
 )
 
+func (e SourceAmazonAdsAmazonAdsEnum) ToPointer() *SourceAmazonAdsAmazonAdsEnum {
+	return &e
+}
+
 func (e *SourceAmazonAdsAmazonAdsEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "amazon-ads":
-		*e = SourceAmazonAdsAmazonAdsEnum(s)
+		*e = SourceAmazonAdsAmazonAdsEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAmazonAdsAmazonAdsEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceAmazonAdsAmazonAdsEnum: %v", v)
 	}
 }
 
@@ -123,21 +139,25 @@ const (
 	SourceAmazonAdsStateFilterEnumArchived SourceAmazonAdsStateFilterEnum = "archived"
 )
 
+func (e SourceAmazonAdsStateFilterEnum) ToPointer() *SourceAmazonAdsStateFilterEnum {
+	return &e
+}
+
 func (e *SourceAmazonAdsStateFilterEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "enabled":
 		fallthrough
 	case "paused":
 		fallthrough
 	case "archived":
-		*e = SourceAmazonAdsStateFilterEnum(s)
+		*e = SourceAmazonAdsStateFilterEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAmazonAdsStateFilterEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceAmazonAdsStateFilterEnum: %v", v)
 	}
 }
 

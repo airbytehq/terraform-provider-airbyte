@@ -15,17 +15,21 @@ const (
 	SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethodEnumAPIToken SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethodEnum = "api_token"
 )
 
+func (e SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethodEnum) ToPointer() *SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethodEnum {
+	return &e
+}
+
 func (e *SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "api_token":
-		*e = SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethodEnum(s)
+		*e = SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethodEnum: %v", v)
 	}
 }
 
@@ -43,17 +47,21 @@ const (
 	SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethodEnumOauth20 SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethodEnum = "oauth2.0"
 )
 
+func (e SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethodEnum) ToPointer() *SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethodEnum {
+	return &e
+}
+
 func (e *SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethodEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "oauth2.0":
-		*e = SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethodEnum(s)
+		*e = SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethodEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethodEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethodEnum: %v", v)
 	}
 }
 
@@ -141,17 +149,21 @@ const (
 	SourceZendeskSunshineZendeskSunshineEnumZendeskSunshine SourceZendeskSunshineZendeskSunshineEnum = "zendesk-sunshine"
 )
 
+func (e SourceZendeskSunshineZendeskSunshineEnum) ToPointer() *SourceZendeskSunshineZendeskSunshineEnum {
+	return &e
+}
+
 func (e *SourceZendeskSunshineZendeskSunshineEnum) UnmarshalJSON(data []byte) error {
-	var s string
-	if err := json.Unmarshal(data, &s); err != nil {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
-	switch s {
+	switch v {
 	case "zendesk-sunshine":
-		*e = SourceZendeskSunshineZendeskSunshineEnum(s)
+		*e = SourceZendeskSunshineZendeskSunshineEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZendeskSunshineZendeskSunshineEnum: %s", s)
+		return fmt.Errorf("invalid value for SourceZendeskSunshineZendeskSunshineEnum: %v", v)
 	}
 }
 

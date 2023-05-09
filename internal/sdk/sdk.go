@@ -28,6 +28,7 @@ type SDK struct {
 	Destinations *destinations
 	Jobs         *jobs
 	Sources      *sources
+	Streams      *streams
 	Workspaces   *workspaces
 
 	// Non-idiomatic field names below are to namespace fields from the fields names above to avoid name conflicts
@@ -129,6 +130,15 @@ func New(opts ...SDKOption) *SDK {
 	)
 
 	sdk.Sources = newSources(
+		sdk._defaultClient,
+		sdk._securityClient,
+		sdk._serverURL,
+		sdk._language,
+		sdk._sdkVersion,
+		sdk._genVersion,
+	)
+
+	sdk.Streams = newStreams(
 		sdk._defaultClient,
 		sdk._securityClient,
 		sdk._serverURL,
