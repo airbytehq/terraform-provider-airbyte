@@ -1,5 +1,5 @@
 .PHONY: all docs
-all: docs speakeasy
+all: speakeasy docs
 
 speakeasy:
 	speakeasy generate sdk --lang terraform -o . -s airbyte.yaml
