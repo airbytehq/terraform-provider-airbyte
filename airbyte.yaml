@@ -221,6 +221,7 @@ paths:
       x-use-speakeasy-middleware: true
   /connections:
     post:
+      x-speakeasy-entity-operation: Connection#create
       requestBody:
         content:
           application/json:
@@ -311,6 +312,7 @@ paths:
     get:
       tags:
         - "Connections"
+      x-speakeasy-entity-operation: Connection#read
       responses:
         "200":
           content:
@@ -333,6 +335,7 @@ paths:
       summary: "Get Connection details"
       x-use-speakeasy-middleware: true
     delete:
+      x-speakeasy-entity-operation: Connection#delete
       tags:
         - "Connections"
       responses:
@@ -16010,6 +16013,7 @@ components:
             jobType: "sync"
             startTime: "2023-03-25T01:30:50Z"
     ConnectionCreateRequest:
+      x-speakeasy-entity: Connection
       required:
         - "sourceId"
         - "destinationId"
@@ -16137,6 +16141,7 @@ components:
       example:
         host: "test.snowflake.com"
     ConnectionResponse:
+      x-speakeasy-entity: Connection
       title: "Root Type for ConnectionResponse"
       description: "Provides details of a single connection."
       type: "object"

@@ -5,6 +5,9 @@ internal/sdk/sources.go
 internal/sdk/streams.go
 internal/sdk/workspaces.go
 internal/sdk/sdk.go
+internal/provider/type_stream_configuration.go
+internal/provider/type_stream_configurations.go
+internal/provider/type_connection_schedule_create.go
 internal/provider/type_destination_amazon_sqs.go
 internal/provider/type_destination_aws_datalake_authentication_mode_iam_role.go
 internal/provider/type_destination_aws_datalake_authentication_mode_iam_user.go
@@ -1743,8 +1746,11 @@ internal/sdk/pkg/models/shared/workspacecreaterequest.go
 internal/sdk/pkg/models/shared/workspacesresponse.go
 internal/sdk/pkg/models/shared/workspaceupdaterequest.go
 internal/sdk/pkg/models/shared/security.go
+internal/sdk/pkg/models/shared/connectionresponseroottypeforconnectionresponse.go
 USAGE.md
 internal/provider/provider.go
+internal/provider/connection_resource.go
+internal/provider/connection_resource_sdk.go
 internal/provider/destination_amazonsqs_resource.go
 internal/provider/destination_amazonsqs_resource_sdk.go
 internal/provider/destination_awsdatalake_resource.go
