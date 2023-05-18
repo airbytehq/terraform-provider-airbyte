@@ -168,7 +168,6 @@ func (e *SourceNotionNotionEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceNotion - The values required to configure the source.
 type SourceNotion struct {
 	// Pick an authentication method.
 	Credentials *SourceNotionAuthenticateUsing `json:"credentials,omitempty"`

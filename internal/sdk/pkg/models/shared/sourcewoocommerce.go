@@ -32,7 +32,6 @@ func (e *SourceWoocommerceWoocommerceEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceWoocommerce - The values required to configure the source.
 type SourceWoocommerce struct {
 	// Customer Key for API in WooCommerce shop
 	APIKey string `json:"api_key"`

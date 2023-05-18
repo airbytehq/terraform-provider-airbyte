@@ -32,7 +32,6 @@ func (e *SourceSnapchatMarketingSnapchatMarketingEnum) UnmarshalJSON(data []byte
 	}
 }
 
-// SourceSnapchatMarketing - The values required to configure the source.
 type SourceSnapchatMarketing struct {
 	// The Client ID of your Snapchat developer application.
 	ClientID string `json:"client_id"`

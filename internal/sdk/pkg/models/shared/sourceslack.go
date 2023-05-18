@@ -168,7 +168,6 @@ func (e *SourceSlackSlackEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceSlack - The values required to configure the source.
 type SourceSlack struct {
 	// A channel name list (without leading '#' char) which limit the channels from which you'd like to sync. Empty list means no filter.
 	ChannelFilter []string `json:"channel_filter,omitempty"`
@@ -176,7 +175,7 @@ type SourceSlack struct {
 	Credentials *SourceSlackAuthenticationMechanism `json:"credentials,omitempty"`
 	// Whether to join all channels or to sync data only from channels the bot is already in.  If false, you'll need to manually add the bot to all the channels from which you'd like to sync messages.
 	JoinChannels bool `json:"join_channels"`
-	// How far into the past to look for messages in threads.
+	// How far into the past to look for messages in threads, default is 0 days
 	LookbackWindow int64                `json:"lookback_window"`
 	SourceType     SourceSlackSlackEnum `json:"sourceType"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.

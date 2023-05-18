@@ -32,7 +32,6 @@ func (e *SourceMarketoMarketoEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceMarketo - The values required to configure the source.
 type SourceMarketo struct {
 	// The Client ID of your Marketo developer application. See <a href="https://docs.airbyte.com/integrations/sources/marketo"> the docs </a> for info on how to obtain this.
 	ClientID string `json:"client_id"`

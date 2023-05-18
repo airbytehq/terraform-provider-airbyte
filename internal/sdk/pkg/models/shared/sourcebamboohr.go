@@ -31,7 +31,6 @@ func (e *SourceBambooHrBambooHrEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceBambooHr - The values required to configure the source.
 type SourceBambooHr struct {
 	// Api key of bamboo hr
 	APIKey string `json:"api_key"`

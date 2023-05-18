@@ -393,7 +393,6 @@ func (u DestinationRedisSSHTunnelMethod) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-// DestinationRedis - The values required to configure the destination.
 type DestinationRedis struct {
 	// Redis cache type to store data in.
 	CacheType       DestinationRedisCacheTypeEnum `json:"cache_type"`
@@ -406,7 +405,8 @@ type DestinationRedis struct {
 	Port int64 `json:"port"`
 	// Indicates whether SSL encryption protocol will be used to connect to Redis. It is recommended to use SSL connection if possible.
 	Ssl *bool `json:"ssl,omitempty"`
-	// SSL connection modes. <li><b>verify-full</b> - This is the most secure mode. Always require encryption and verifies the identity of the source database server
+	// SSL connection modes.
+	//   <li><b>verify-full</b> - This is the most secure mode. Always require encryption and verifies the identity of the source database server
 	SslMode *DestinationRedisSSLModes `json:"ssl_mode,omitempty"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod *DestinationRedisSSHTunnelMethod `json:"tunnel_method,omitempty"`

@@ -31,7 +31,6 @@ func (e *SourceQualarooQualarooEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceQualaroo - The values required to configure the source.
 type SourceQualaroo struct {
 	// A Qualaroo token. See the <a href="https://help.qualaroo.com/hc/en-us/articles/201969438-The-REST-Reporting-API">docs</a> for instructions on how to generate it.
 	Key        string                     `json:"key"`

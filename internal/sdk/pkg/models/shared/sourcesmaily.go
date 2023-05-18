@@ -31,7 +31,6 @@ func (e *SourceSmailySmailyEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceSmaily - The values required to configure the source.
 type SourceSmaily struct {
 	// API user password. See https://smaily.com/help/api/general/create-api-user/
 	APIPassword string `json:"api_password"`

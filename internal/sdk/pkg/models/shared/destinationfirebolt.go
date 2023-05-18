@@ -167,7 +167,6 @@ func (u DestinationFireboltLoadingMethod) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-// DestinationFirebolt - The values required to configure the destination.
 type DestinationFirebolt struct {
 	// Firebolt account to login.
 	Account *string `json:"account,omitempty"`

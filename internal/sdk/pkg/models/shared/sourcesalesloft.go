@@ -170,7 +170,6 @@ func (e *SourceSalesloftSalesloftEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceSalesloft - The values required to configure the source.
 type SourceSalesloft struct {
 	Credentials SourceSalesloftCredentials   `json:"credentials"`
 	SourceType  SourceSalesloftSalesloftEnum `json:"sourceType"`

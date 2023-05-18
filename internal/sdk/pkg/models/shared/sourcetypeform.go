@@ -32,7 +32,6 @@ func (e *SourceTypeformTypeformEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceTypeform - The values required to configure the source.
 type SourceTypeform struct {
 	// When this parameter is set, the connector will replicate data only from the input forms. Otherwise, all forms in your Typeform account will be replicated. You can find form IDs in your form URLs. For example, in the URL "https://mysite.typeform.com/to/u6nXL7" the form_id is u6nXL7. You can find form URLs on Share panel
 	FormIds    []string                   `json:"form_ids,omitempty"`

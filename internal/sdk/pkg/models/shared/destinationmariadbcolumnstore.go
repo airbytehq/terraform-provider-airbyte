@@ -234,7 +234,6 @@ func (u DestinationMariadbColumnstoreSSHTunnelMethod) MarshalJSON() ([]byte, err
 	return nil, nil
 }
 
-// DestinationMariadbColumnstore - The values required to configure the destination.
 type DestinationMariadbColumnstore struct {
 	// Name of the database.
 	Database        string                                              `json:"database"`

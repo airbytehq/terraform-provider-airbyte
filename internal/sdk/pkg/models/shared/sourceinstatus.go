@@ -31,7 +31,6 @@ func (e *SourceInstatusInstatusEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceInstatus - The values required to configure the source.
 type SourceInstatus struct {
 	// Instatus REST API key
 	APIKey     string                     `json:"api_key"`

@@ -234,7 +234,6 @@ func (u SourceClickhouseSSHTunnelMethod) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-// SourceClickhouse - The values required to configure the source.
 type SourceClickhouse struct {
 	// The name of the database.
 	Database string `json:"database"`

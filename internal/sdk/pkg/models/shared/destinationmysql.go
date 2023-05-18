@@ -234,7 +234,6 @@ func (u DestinationMysqlSSHTunnelMethod) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-// DestinationMysql - The values required to configure the destination.
 type DestinationMysql struct {
 	// Name of the database.
 	Database        string                    `json:"database"`

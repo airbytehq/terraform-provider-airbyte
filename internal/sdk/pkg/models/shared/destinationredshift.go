@@ -600,7 +600,6 @@ func (u DestinationRedshiftUploadingMethod) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-// DestinationRedshift - The values required to configure the destination.
 type DestinationRedshift struct {
 	// Name of the database.
 	Database        string                          `json:"database"`

@@ -106,7 +106,6 @@ func (e *SourceAzureBlobStorageAzureBlobStorageEnum) UnmarshalJSON(data []byte) 
 	}
 }
 
-// SourceAzureBlobStorage - The values required to configure the source.
 type SourceAzureBlobStorage struct {
 	// The Azure blob storage account key.
 	AzureBlobStorageAccountKey string `json:"azure_blob_storage_account_key"`

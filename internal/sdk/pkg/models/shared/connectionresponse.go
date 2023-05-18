@@ -8,6 +8,12 @@ type ConnectionResponse struct {
 	DataResidency GeographyEnumEnum `json:"dataResidency"`
 	DestinationID string            `json:"destinationId"`
 	Name          string            `json:"name"`
+	// Define the location where the data will be stored in the destination
+	NamespaceDefinition *NamespaceDefinitionEnumEnum `json:"namespaceDefinition,omitempty"`
+	NamespaceFormat     *string                      `json:"namespaceFormat,omitempty"`
+	// Set how Airbyte handles syncs when it detects a non-breaking schema change in the source
+	NonBreakingSchemaUpdatesBehavior *NonBreakingSchemaUpdatesBehaviorEnumEnum `json:"nonBreakingSchemaUpdatesBehavior,omitempty"`
+	Prefix                           *string                                   `json:"prefix,omitempty"`
 	// schedule for when the the connection should run, per the schedule type
 	Schedule    ConnectionScheduleResponse `json:"schedule"`
 	SourceID    string                     `json:"sourceId"`

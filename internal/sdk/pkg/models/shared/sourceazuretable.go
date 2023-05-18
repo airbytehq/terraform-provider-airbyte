@@ -31,7 +31,6 @@ func (e *SourceAzureTableAzureTableEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceAzureTable - The values required to configure the source.
 type SourceAzureTable struct {
 	SourceType SourceAzureTableAzureTableEnum `json:"sourceType"`
 	// Azure Table Storage Access Key. See the <a href="https://docs.airbyte.com/integrations/sources/azure-table">docs</a> for more information on how to obtain this key.

@@ -89,7 +89,7 @@ func (s *connections) CreateConnection(ctx context.Context, request shared.Conne
 	return res, nil
 }
 
-// DeleteConnection - Get Connection details
+// DeleteConnection - Delete a Connection
 func (s *connections) DeleteConnection(ctx context.Context, request operations.DeleteConnectionRequest) (*operations.DeleteConnectionResponse, error) {
 	baseURL := s.serverURL
 	url, err := utils.GenerateURL(ctx, baseURL, "/connections/{connectionId}", request, nil)

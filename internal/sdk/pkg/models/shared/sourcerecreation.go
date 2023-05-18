@@ -31,7 +31,6 @@ func (e *SourceRecreationRecreationEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceRecreation - The values required to configure the source.
 type SourceRecreation struct {
 	// API Key
 	Apikey         string                         `json:"apikey"`

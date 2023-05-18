@@ -165,7 +165,6 @@ func (e *SourceOktaOktaEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceOkta - The values required to configure the source.
 type SourceOkta struct {
 	Credentials *SourceOktaAuthorizationMethod `json:"credentials,omitempty"`
 	// The Okta domain. See the <a href="https://docs.airbyte.com/integrations/sources/okta">docs</a> for instructions on how to find it.

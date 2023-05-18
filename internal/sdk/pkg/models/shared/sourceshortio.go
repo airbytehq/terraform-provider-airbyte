@@ -31,7 +31,6 @@ func (e *SourceShortioShortioEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceShortio - The values required to configure the source.
 type SourceShortio struct {
 	DomainID string `json:"domain_id"`
 	// Short.io Secret Key

@@ -96,7 +96,6 @@ func (e *DestinationPulsarTopicTypeEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// DestinationPulsar - The values required to configure the destination.
 type DestinationPulsar struct {
 	// Control whether automatic batching of messages is enabled for the producer.
 	BatchingEnabled bool `json:"batching_enabled"`

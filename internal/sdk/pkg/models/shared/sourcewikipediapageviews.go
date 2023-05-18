@@ -31,7 +31,6 @@ func (e *SourceWikipediaPageviewsWikipediaPageviewsEnum) UnmarshalJSON(data []by
 	}
 }
 
-// SourceWikipediaPageviews - The values required to configure the source.
 type SourceWikipediaPageviews struct {
 	// If you want to filter by access method, use one of desktop, mobile-app or mobile-web. If you are interested in pageviews regardless of access method, use all-access.
 	Access string `json:"access"`

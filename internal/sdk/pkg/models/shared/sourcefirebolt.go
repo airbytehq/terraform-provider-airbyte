@@ -31,7 +31,6 @@ func (e *SourceFireboltFireboltEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceFirebolt - The values required to configure the source.
 type SourceFirebolt struct {
 	// Firebolt account to login.
 	Account *string `json:"account,omitempty"`

@@ -170,7 +170,6 @@ func (e *SourceSmartsheetsSmartsheetsEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceSmartsheets - The values required to configure the source.
 type SourceSmartsheets struct {
 	Credentials SourceSmartsheetsAuthorizationMethod `json:"credentials"`
 	SourceType  SourceSmartsheetsSmartsheetsEnum     `json:"sourceType"`

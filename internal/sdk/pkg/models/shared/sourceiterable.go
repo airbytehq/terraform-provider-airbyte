@@ -32,7 +32,6 @@ func (e *SourceIterableIterableEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceIterable - The values required to configure the source.
 type SourceIterable struct {
 	// Iterable API Key. See the <a href="https://docs.airbyte.com/integrations/sources/iterable">docs</a> for more information on how to obtain this key.
 	APIKey     string                     `json:"api_key"`

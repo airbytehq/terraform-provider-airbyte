@@ -165,7 +165,6 @@ func (e *SourceAuth0Auth0Enum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceAuth0 - The values required to configure the source.
 type SourceAuth0 struct {
 	// The Authentication API is served over HTTPS. All URLs referenced in the documentation have the following base `https://YOUR_DOMAIN`
 	BaseURL     string                          `json:"base_url"`

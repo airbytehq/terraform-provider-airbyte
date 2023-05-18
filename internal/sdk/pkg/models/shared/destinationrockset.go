@@ -31,7 +31,6 @@ func (e *DestinationRocksetRocksetEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// DestinationRockset - The values required to configure the destination.
 type DestinationRockset struct {
 	// Rockset api key
 	APIKey string `json:"api_key"`

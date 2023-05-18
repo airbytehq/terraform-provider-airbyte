@@ -52,7 +52,6 @@ func (e *SourceGoogleAdsGoogleAdsEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceGoogleAds - The values required to configure the source.
 type SourceGoogleAds struct {
 	// A conversion window is the period of time after an ad interaction (such as an ad click or video view) during which a conversion, such as a purchase, is recorded in Google Ads. For more information, see Google's <a href="https://support.google.com/google-ads/answer/3123169?hl=en">documentation</a>.
 	ConversionWindowDays *int64                           `json:"conversion_window_days,omitempty"`

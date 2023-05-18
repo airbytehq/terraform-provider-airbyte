@@ -7,5 +7,4 @@ type DestinationSnowflakeDataStagingMethod struct {
 	DestinationSnowflakeDataStagingMethodRecommendedInternalStaging *DestinationSnowflakeDataStagingMethodRecommendedInternalStaging `tfsdk:"destination_snowflake_data_staging_method_recommended_internal_staging"`
 	DestinationSnowflakeDataStagingMethodAWSS3Staging               *DestinationSnowflakeDataStagingMethodAWSS3Staging               `tfsdk:"destination_snowflake_data_staging_method_aws_s3_staging"`
 	DestinationSnowflakeDataStagingMethodGoogleCloudStorageStaging  *DestinationSnowflakeDataStagingMethodGoogleCloudStorageStaging  `tfsdk:"destination_snowflake_data_staging_method_google_cloud_storage_staging"`
-	DestinationSnowflakeDataStagingMethodAzureBlobStorageStaging    *DestinationSnowflakeDataStagingMethodAzureBlobStorageStaging    `tfsdk:"destination_snowflake_data_staging_method_azure_blob_storage_staging"`
 }

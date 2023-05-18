@@ -31,7 +31,6 @@ func (e *SourceZenloopZenloopEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceZenloop - The values required to configure the source.
 type SourceZenloop struct {
 	// Zenloop API Token. You can get the API token in settings page <a href="https://app.zenloop.com/settings/api">here</a>
 	APIToken string `json:"api_token"`

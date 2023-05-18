@@ -32,7 +32,6 @@ func (e *SourceIntercomIntercomEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceIntercom - The values required to configure the source.
 type SourceIntercom struct {
 	// Access token for making authenticated requests. See the <a href="https://developers.intercom.com/building-apps/docs/authentication-types#how-to-get-your-access-token">Intercom docs</a> for more information.
 	AccessToken string                     `json:"access_token"`

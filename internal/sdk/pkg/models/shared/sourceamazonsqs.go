@@ -128,7 +128,6 @@ func (e *SourceAmazonSqsAmazonSqsEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceAmazonSqs - The values required to configure the source.
 type SourceAmazonSqs struct {
 	// The Access Key ID of the AWS IAM Role to use for pulling messages
 	AccessKey *string `json:"access_key,omitempty"`

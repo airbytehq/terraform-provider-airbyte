@@ -31,7 +31,6 @@ func (e *SourceRecruiteeRecruiteeEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceRecruitee - The values required to configure the source.
 type SourceRecruitee struct {
 	// Recruitee API Key. See <a href="https://docs.recruitee.com/reference/getting-started#generate-api-token">here</a>.
 	APIKey string `json:"api_key"`

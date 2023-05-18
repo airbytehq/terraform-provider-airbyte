@@ -131,7 +131,6 @@ func (e *SourceDynamodbDynamodbEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceDynamodb - The values required to configure the source.
 type SourceDynamodb struct {
 	// The access key id to access Dynamodb. Airbyte requires read permissions to the database
 	AccessKeyID string `json:"access_key_id"`

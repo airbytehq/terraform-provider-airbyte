@@ -12,7 +12,7 @@ import (
 // ServerList contains the list of servers available to the SDK
 var ServerList = []string{
 	// Airbyte API v1
-	"https://api.airbyte.com/v1/",
+	"https://api.airbyte.com/v1",
 }
 
 // HTTPClient provides an interface for suplying the SDK with a custom HTTP client

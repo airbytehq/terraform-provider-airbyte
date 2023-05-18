@@ -45,7 +45,6 @@ func (e *SourceXeroXeroEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceXero - The values required to configure the source.
 type SourceXero struct {
 	Authentication SourceXeroAuthenticateViaXeroOAuth `json:"authentication"`
 	SourceType     SourceXeroXeroEnum                 `json:"sourceType"`

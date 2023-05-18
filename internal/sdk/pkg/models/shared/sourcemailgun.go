@@ -32,7 +32,6 @@ func (e *SourceMailgunMailgunEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceMailgun - The values required to configure the source.
 type SourceMailgun struct {
 	// Domain region code. 'EU' or 'US' are possible values. The default is 'US'.
 	DomainRegion *string `json:"domain_region,omitempty"`

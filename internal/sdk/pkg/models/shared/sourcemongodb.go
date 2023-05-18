@@ -222,7 +222,6 @@ func (e *SourceMongodbMongodbEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceMongodb - The values required to configure the source.
 type SourceMongodb struct {
 	// The authentication source where the user information is stored.
 	AuthSource *string `json:"auth_source,omitempty"`

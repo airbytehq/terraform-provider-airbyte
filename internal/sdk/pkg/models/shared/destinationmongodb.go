@@ -553,7 +553,6 @@ func (u DestinationMongodbSSHTunnelMethod) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-// DestinationMongodb - The values required to configure the destination.
 type DestinationMongodb struct {
 	// Authorization type.
 	AuthType DestinationMongodbAuthorizationType `json:"auth_type"`

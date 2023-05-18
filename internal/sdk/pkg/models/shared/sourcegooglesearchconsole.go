@@ -170,7 +170,6 @@ func (e *SourceGoogleSearchConsoleGoogleSearchConsoleEnum) UnmarshalJSON(data []
 	}
 }
 
-// SourceGoogleSearchConsole - The values required to configure the source.
 type SourceGoogleSearchConsole struct {
 	Authorization SourceGoogleSearchConsoleAuthenticationType `json:"authorization"`
 	// A JSON array describing the custom reports you want to sync from Google Search Console. See <a href="https://docs.airbyte.com/integrations/sources/google-search-console#step-2-set-up-the-google-search-console-connector-in-airbyte">the docs</a> for more information about the exact format you can use to fill out this field.

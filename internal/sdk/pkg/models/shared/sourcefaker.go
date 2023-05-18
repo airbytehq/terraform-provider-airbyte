@@ -31,7 +31,6 @@ func (e *SourceFakerFakerEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceFaker - The values required to configure the source.
 type SourceFaker struct {
 	// How many users should be generated in total.  This setting does not apply to the purchases or products stream.
 	Count int64 `json:"count"`

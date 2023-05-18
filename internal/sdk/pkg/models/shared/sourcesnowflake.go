@@ -169,7 +169,6 @@ func (e *SourceSnowflakeSnowflakeEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceSnowflake - The values required to configure the source.
 type SourceSnowflake struct {
 	Credentials *SourceSnowflakeAuthorizationMethod `json:"credentials,omitempty"`
 	// The database you created for Airbyte to access data.

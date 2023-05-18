@@ -62,7 +62,6 @@ func (e *SourcePipedrivePipedriveEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourcePipedrive - The values required to configure the source.
 type SourcePipedrive struct {
 	Authorization *SourcePipedriveAPIKeyAuthentication `json:"authorization,omitempty"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. When specified and not None, then stream will behave as incremental

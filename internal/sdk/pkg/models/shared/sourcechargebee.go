@@ -60,7 +60,6 @@ func (e *SourceChargebeeChargebeeEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceChargebee - The values required to configure the source.
 type SourceChargebee struct {
 	// Product Catalog version of your Chargebee site. Instructions on how to find your version you may find <a href="https://apidocs.chargebee.com/docs/api?prod_cat_ver=2">here</a> under `API Version` section.
 	ProductCatalog SourceChargebeeProductCatalogEnum `json:"product_catalog"`

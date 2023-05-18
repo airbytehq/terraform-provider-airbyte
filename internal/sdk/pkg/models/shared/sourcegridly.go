@@ -31,7 +31,6 @@ func (e *SourceGridlyGridlyEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceGridly - The values required to configure the source.
 type SourceGridly struct {
 	APIKey string `json:"api_key"`
 	// ID of a grid, or can be ID of a branch

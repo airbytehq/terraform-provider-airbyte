@@ -32,7 +32,6 @@ func (e *SourceTwitterTwitterEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceTwitter - The values required to configure the source.
 type SourceTwitter struct {
 	// App only Bearer Token. See the <a href="https://developer.twitter.com/en/docs/authentication/oauth-2-0/bearer-tokens">docs</a> for more information on how to obtain this token.
 	APIKey string `json:"api_key"`

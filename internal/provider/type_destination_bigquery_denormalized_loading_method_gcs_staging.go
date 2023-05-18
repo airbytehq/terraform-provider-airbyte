@@ -6,6 +6,7 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DestinationBigqueryDenormalizedLoadingMethodGCSStaging struct {
 	Credential           DestinationBigqueryDenormalizedLoadingMethodGCSStagingCredential `tfsdk:"credential"`
+	FileBufferCount      types.Int64                                                      `tfsdk:"file_buffer_count"`
 	GcsBucketName        types.String                                                     `tfsdk:"gcs_bucket_name"`
 	GcsBucketPath        types.String                                                     `tfsdk:"gcs_bucket_path"`
 	KeepFilesInGcsBucket types.String                                                     `tfsdk:"keep_files_in_gcs_bucket"`

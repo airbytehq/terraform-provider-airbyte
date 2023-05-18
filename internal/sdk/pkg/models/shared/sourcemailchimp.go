@@ -165,7 +165,6 @@ func (e *SourceMailchimpMailchimpEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceMailchimp - The values required to configure the source.
 type SourceMailchimp struct {
 	CampaignID  *string                        `json:"campaign_id,omitempty"`
 	Credentials *SourceMailchimpAuthentication `json:"credentials,omitempty"`

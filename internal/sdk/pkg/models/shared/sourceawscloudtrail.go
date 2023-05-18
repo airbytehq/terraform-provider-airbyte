@@ -32,7 +32,6 @@ func (e *SourceAwsCloudtrailAwsCloudtrailEnum) UnmarshalJSON(data []byte) error 
 	}
 }
 
-// SourceAwsCloudtrail - The values required to configure the source.
 type SourceAwsCloudtrail struct {
 	// AWS CloudTrail Access Key ID. See the <a href="https://docs.airbyte.com/integrations/sources/aws-cloudtrail">docs</a> for more information on how to obtain this key.
 	AwsKeyID string `json:"aws_key_id"`

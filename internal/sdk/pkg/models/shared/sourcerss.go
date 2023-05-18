@@ -31,7 +31,6 @@ func (e *SourceRssRssEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceRss - The values required to configure the source.
 type SourceRss struct {
 	SourceType SourceRssRssEnum `json:"sourceType"`
 	// RSS Feed URL

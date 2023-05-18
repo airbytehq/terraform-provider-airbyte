@@ -32,7 +32,6 @@ func (e *SourceYandexMetricaYandexMetricaEnum) UnmarshalJSON(data []byte) error 
 	}
 }
 
-// SourceYandexMetrica - The values required to configure the source.
 type SourceYandexMetrica struct {
 	// Your Yandex Metrica API access token
 	AuthToken string `json:"auth_token"`

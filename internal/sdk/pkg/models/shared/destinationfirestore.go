@@ -31,7 +31,6 @@ func (e *DestinationFirestoreFirestoreEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// DestinationFirestore - The values required to configure the destination.
 type DestinationFirestore struct {
 	// The contents of the JSON service account key. Check out the <a href="https://docs.airbyte.io/integrations/destinations/firestore">docs</a> if you need help generating this key. Default credentials will be used if this field is left empty.
 	CredentialsJSON *string                           `json:"credentials_json,omitempty"`

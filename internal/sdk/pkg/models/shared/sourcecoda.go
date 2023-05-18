@@ -31,7 +31,6 @@ func (e *SourceCodaCodaEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceCoda - The values required to configure the source.
 type SourceCoda struct {
 	// Bearer token
 	AuthToken  string             `json:"auth_token"`

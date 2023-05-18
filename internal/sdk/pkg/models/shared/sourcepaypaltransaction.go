@@ -5,6 +5,7 @@ package shared
 import (
 	"encoding/json"
 	"fmt"
+	"time"
 )
 
 type SourcePaypalTransactionPaypalTransactionEnum string
@@ -31,7 +32,6 @@ func (e *SourcePaypalTransactionPaypalTransactionEnum) UnmarshalJSON(data []byte
 	}
 }
 
-// SourcePaypalTransaction - The values required to configure the source.
 type SourcePaypalTransaction struct {
 	// The Client ID of your Paypal developer application.
 	ClientID *string `json:"client_id,omitempty"`
@@ -43,5 +43,5 @@ type SourcePaypalTransaction struct {
 	RefreshToken *string                                      `json:"refresh_token,omitempty"`
 	SourceType   SourcePaypalTransactionPaypalTransactionEnum `json:"sourceType"`
 	// Start Date for data extraction in <a href="https://datatracker.ietf.org/doc/html/rfc3339#section-5.6">ISO format</a>. Date must be in range from 3 years till 12 hrs before present time.
-	StartDate string `json:"start_date"`
+	StartDate time.Time `json:"start_date"`
 }

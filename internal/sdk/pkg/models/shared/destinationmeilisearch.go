@@ -31,7 +31,6 @@ func (e *DestinationMeilisearchMeilisearchEnum) UnmarshalJSON(data []byte) error
 	}
 }
 
-// DestinationMeilisearch - The values required to configure the destination.
 type DestinationMeilisearch struct {
 	// MeiliSearch API Key. See the <a href="https://docs.airbyte.com/integrations/destinations/meilisearch">docs</a> for more information on how to obtain this key.
 	APIKey          *string                               `json:"api_key,omitempty"`

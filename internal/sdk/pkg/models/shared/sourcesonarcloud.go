@@ -32,7 +32,6 @@ func (e *SourceSonarCloudSonarCloudEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceSonarCloud - The values required to configure the source.
 type SourceSonarCloud struct {
 	// Comma-separated list of component keys.
 	ComponentKeys []interface{} `json:"component_keys"`

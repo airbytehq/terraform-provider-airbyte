@@ -496,7 +496,6 @@ func (e *SourceFileSecureFileSecureEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceFileSecure - The values required to configure the source.
 type SourceFileSecure struct {
 	// The Name of the final table to replicate this file into (should include letters, numbers dash and underscores only).
 	DatasetName string `json:"dataset_name"`

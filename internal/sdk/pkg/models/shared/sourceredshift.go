@@ -31,7 +31,6 @@ func (e *SourceRedshiftRedshiftEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceRedshift - The values required to configure the source.
 type SourceRedshift struct {
 	// Name of the database.
 	Database string `json:"database"`

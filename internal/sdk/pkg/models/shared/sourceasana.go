@@ -168,7 +168,6 @@ func (e *SourceAsanaAsanaEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceAsana - The values required to configure the source.
 type SourceAsana struct {
 	// Choose how to authenticate to Github
 	Credentials *SourceAsanaAuthenticationMechanism `json:"credentials,omitempty"`

@@ -31,7 +31,6 @@ func (e *SourceXkcdXkcdEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceXkcd - The values required to configure the source.
 type SourceXkcd struct {
 	SourceType SourceXkcdXkcdEnum `json:"sourceType"`
 }

@@ -32,7 +32,6 @@ func (e *SourceDelightedDelightedEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceDelighted - The values required to configure the source.
 type SourceDelighted struct {
 	// A Delighted API key.
 	APIKey string `json:"api_key"`

@@ -31,7 +31,6 @@ func (e *SourceOmnisendOmnisendEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceOmnisend - The values required to configure the source.
 type SourceOmnisend struct {
 	// API Key
 	APIKey     string                     `json:"api_key"`

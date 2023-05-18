@@ -31,7 +31,6 @@ func (e *SourcePunkAPIPunkAPIEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourcePunkAPI - The values required to configure the source.
 type SourcePunkAPI struct {
 	// To extract specific data with Unique ID
 	BrewedAfter string `json:"brewed_after"`

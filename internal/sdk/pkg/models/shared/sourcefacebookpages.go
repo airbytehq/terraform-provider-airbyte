@@ -31,7 +31,6 @@ func (e *SourceFacebookPagesFacebookPagesEnum) UnmarshalJSON(data []byte) error 
 	}
 }
 
-// SourceFacebookPages - The values required to configure the source.
 type SourceFacebookPages struct {
 	// Facebook Page Access Token
 	AccessToken string `json:"access_token"`

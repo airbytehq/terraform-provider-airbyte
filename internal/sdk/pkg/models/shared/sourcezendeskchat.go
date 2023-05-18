@@ -168,7 +168,6 @@ func (e *SourceZendeskChatZendeskChatEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceZendeskChat - The values required to configure the source.
 type SourceZendeskChat struct {
 	Credentials *SourceZendeskChatAuthorizationMethod `json:"credentials,omitempty"`
 	SourceType  SourceZendeskChatZendeskChatEnum      `json:"sourceType"`

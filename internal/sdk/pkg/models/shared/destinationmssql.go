@@ -362,7 +362,6 @@ func (u DestinationMssqlSSHTunnelMethod) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-// DestinationMssql - The values required to configure the destination.
 type DestinationMssql struct {
 	// The name of the MSSQL database.
 	Database        string                    `json:"database"`

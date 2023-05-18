@@ -31,7 +31,6 @@ func (e *SourceOutreachOutreachEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceOutreach - The values required to configure the source.
 type SourceOutreach struct {
 	// The Client ID of your Outreach developer application.
 	ClientID string `json:"client_id"`

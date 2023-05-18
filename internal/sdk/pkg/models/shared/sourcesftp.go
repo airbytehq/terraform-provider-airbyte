@@ -167,7 +167,6 @@ func (e *SourceSftpSftpEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceSftp - The values required to configure the source.
 type SourceSftp struct {
 	// The server authentication method
 	Credentials *SourceSftpAuthenticationWildcard `json:"credentials,omitempty"`

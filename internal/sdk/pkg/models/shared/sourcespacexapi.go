@@ -31,7 +31,6 @@ func (e *SourceSpacexAPISpacexAPIEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceSpacexAPI - The values required to configure the source.
 type SourceSpacexAPI struct {
 	ID         *string                      `json:"id,omitempty"`
 	Options    *string                      `json:"options,omitempty"`

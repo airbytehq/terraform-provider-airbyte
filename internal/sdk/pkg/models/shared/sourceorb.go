@@ -31,7 +31,6 @@ func (e *SourceOrbOrbEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceOrb - The values required to configure the source.
 type SourceOrb struct {
 	// Orb API Key, issued from the Orb admin console.
 	APIKey string `json:"api_key"`

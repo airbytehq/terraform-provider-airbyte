@@ -66,7 +66,6 @@ func (e *SourceChartmogulChartmogulEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceChartmogul - The values required to configure the source.
 type SourceChartmogul struct {
 	// Your Chartmogul API key. See <a href="https://help.chartmogul.com/hc/en-us/articles/4407796325906-Creating-and-Managing-API-keys#creating-an-api-key"> the docs </a> for info on how to obtain this.
 	APIKey string `json:"api_key"`

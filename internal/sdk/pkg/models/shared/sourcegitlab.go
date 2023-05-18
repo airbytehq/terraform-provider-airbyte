@@ -170,7 +170,6 @@ func (e *SourceGitlabGitlabEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceGitlab - The values required to configure the source.
 type SourceGitlab struct {
 	// Please enter your basic URL from GitLab instance.
 	APIURL      string                          `json:"api_url"`

@@ -32,7 +32,6 @@ func (e *SourceKlaviyoKlaviyoEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceKlaviyo - The values required to configure the source.
 type SourceKlaviyo struct {
 	// Klaviyo API Key. See our <a href="https://docs.airbyte.com/integrations/sources/klaviyo">docs</a> if you need help finding this key.
 	APIKey     string                   `json:"api_key"`

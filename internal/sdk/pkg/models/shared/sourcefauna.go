@@ -33,7 +33,10 @@ func (e *SourceFaunaCollectionDeletionModeEnabledDeletionModeEnum) UnmarshalJSON
 	}
 }
 
-// SourceFaunaCollectionDeletionModeEnabled - <b>This only applies to incremental syncs.</b> <br> Enabling deletion mode informs your destination of deleted documents.<br> Disabled - Leave this feature disabled, and ignore deleted documents.<br> Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted.
+// SourceFaunaCollectionDeletionModeEnabled - <b>This only applies to incremental syncs.</b> <br>
+// Enabling deletion mode informs your destination of deleted documents.<br>
+// Disabled - Leave this feature disabled, and ignore deleted documents.<br>
+// Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted.
 type SourceFaunaCollectionDeletionModeEnabled struct {
 	// Name of the "deleted at" column.
 	Column       string                                                   `json:"column"`
@@ -64,7 +67,10 @@ func (e *SourceFaunaCollectionDeletionModeDisabledDeletionModeEnum) UnmarshalJSO
 	}
 }
 
-// SourceFaunaCollectionDeletionModeDisabled - <b>This only applies to incremental syncs.</b> <br> Enabling deletion mode informs your destination of deleted documents.<br> Disabled - Leave this feature disabled, and ignore deleted documents.<br> Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted.
+// SourceFaunaCollectionDeletionModeDisabled - <b>This only applies to incremental syncs.</b> <br>
+// Enabling deletion mode informs your destination of deleted documents.<br>
+// Disabled - Leave this feature disabled, and ignore deleted documents.<br>
+// Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted.
 type SourceFaunaCollectionDeletionModeDisabled struct {
 	DeletionMode SourceFaunaCollectionDeletionModeDisabledDeletionModeEnum `json:"deletion_mode"`
 }
@@ -139,9 +145,14 @@ func (u SourceFaunaCollectionDeletionMode) MarshalJSON() ([]byte, error) {
 
 // SourceFaunaCollection - Settings for the Fauna Collection.
 type SourceFaunaCollection struct {
-	// <b>This only applies to incremental syncs.</b> <br> Enabling deletion mode informs your destination of deleted documents.<br> Disabled - Leave this feature disabled, and ignore deleted documents.<br> Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted.
+	// <b>This only applies to incremental syncs.</b> <br>
+	// Enabling deletion mode informs your destination of deleted documents.<br>
+	// Disabled - Leave this feature disabled, and ignore deleted documents.<br>
+	// Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted.
 	Deletions SourceFaunaCollectionDeletionMode `json:"deletions"`
-	// The page size used when reading documents from the database. The larger the page size, the faster the connector processes documents. However, if a page is too large, the connector may fail. <br> Choose your page size based on how large the documents are. <br> See <a href="https://docs.fauna.com/fauna/current/learn/understanding/types#page">the docs</a>.
+	// The page size used when reading documents from the database. The larger the page size, the faster the connector processes documents. However, if a page is too large, the connector may fail. <br>
+	// Choose your page size based on how large the documents are. <br>
+	// See <a href="https://docs.fauna.com/fauna/current/learn/understanding/types#page">the docs</a>.
 	PageSize int64 `json:"page_size"`
 }
 
@@ -169,7 +180,6 @@ func (e *SourceFaunaFaunaEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceFauna - The values required to configure the source.
 type SourceFauna struct {
 	// Settings for the Fauna Collection.
 	Collection *SourceFaunaCollection `json:"collection,omitempty"`

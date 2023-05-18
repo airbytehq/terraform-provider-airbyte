@@ -31,15 +31,18 @@ func (e *SourceTvmazeScheduleTvmazeScheduleEnum) UnmarshalJSON(data []byte) erro
 	}
 }
 
-// SourceTvmazeSchedule - The values required to configure the source.
 type SourceTvmazeSchedule struct {
 	// Country code for domestic TV schedule retrieval.
 	DomesticScheduleCountryCode string `json:"domestic_schedule_country_code"`
 	// End date for TV schedule retrieval. May be in the future. Optional.
+	//
 	EndDate    *string                                `json:"end_date,omitempty"`
 	SourceType SourceTvmazeScheduleTvmazeScheduleEnum `json:"sourceType"`
 	// Start date for TV schedule retrieval. May be in the future.
 	StartDate string `json:"start_date"`
-	// ISO 3166-1 country code for web TV schedule retrieval. Leave blank for all countries plus global web channels (e.g. Netflix). Alternatively, set to 'global' for just global web channels.
+	// ISO 3166-1 country code for web TV schedule retrieval. Leave blank for
+	// all countries plus global web channels (e.g. Netflix). Alternatively,
+	// set to 'global' for just global web channels.
+	//
 	WebScheduleCountryCode *string `json:"web_schedule_country_code,omitempty"`
 }

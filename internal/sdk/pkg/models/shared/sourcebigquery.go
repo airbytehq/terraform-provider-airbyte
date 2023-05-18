@@ -31,7 +31,6 @@ func (e *SourceBigqueryBigqueryEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceBigquery - The values required to configure the source.
 type SourceBigquery struct {
 	// The contents of your Service Account Key JSON file. See the <a href="https://docs.airbyte.com/integrations/sources/bigquery#setup-the-bigquery-source-in-airbyte">docs</a> for more information on how to obtain this key.
 	CredentialsJSON string `json:"credentials_json"`

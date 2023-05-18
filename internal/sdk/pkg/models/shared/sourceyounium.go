@@ -31,7 +31,6 @@ func (e *SourceYouniumYouniumEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceYounium - The values required to configure the source.
 type SourceYounium struct {
 	// Legal Entity that data should be pulled from
 	LegalEntity string `json:"legal_entity"`

@@ -31,7 +31,6 @@ func (e *DestinationCassandraCassandraEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// DestinationCassandra - The values required to configure the destination.
 type DestinationCassandra struct {
 	// Address to connect to.
 	Address string `json:"address"`

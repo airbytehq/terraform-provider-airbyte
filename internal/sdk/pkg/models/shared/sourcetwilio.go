@@ -32,7 +32,6 @@ func (e *SourceTwilioTwilioEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceTwilio - The values required to configure the source.
 type SourceTwilio struct {
 	// Twilio account SID
 	AccountSid string `json:"account_sid"`

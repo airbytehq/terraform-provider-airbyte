@@ -31,7 +31,6 @@ func (e *SourceWebflowWebflowEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceWebflow - The values required to configure the source.
 type SourceWebflow struct {
 	// The API token for authenticating to Webflow. See https://university.webflow.com/lesson/intro-to-the-webflow-api
 	APIKey string `json:"api_key"`

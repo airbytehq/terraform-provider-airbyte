@@ -32,7 +32,6 @@ func (e *SourceLinnworksLinnworksEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceLinnworks - The values required to configure the source.
 type SourceLinnworks struct {
 	// Linnworks Application ID
 	ApplicationID string `json:"application_id"`

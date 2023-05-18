@@ -523,7 +523,6 @@ func (u SourceOracleSSHTunnelMethod) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-// SourceOracle - The values required to configure the source.
 type SourceOracle struct {
 	// Connect data that will be used for DB connection
 	ConnectionData *SourceOracleConnectBy `json:"connection_data,omitempty"`
@@ -535,7 +534,10 @@ type SourceOracle struct {
 	JdbcURLParams *string `json:"jdbc_url_params,omitempty"`
 	// The password associated with the username.
 	Password *string `json:"password,omitempty"`
-	// Port of the database. Oracle Corporations recommends the following port numbers: 1521 - Default listening port for client connections to the listener. 2484 - Recommended and officially registered listening port for client connections to the listener using TCP/IP with SSL
+	// Port of the database.
+	// Oracle Corporations recommends the following port numbers:
+	// 1521 - Default listening port for client connections to the listener.
+	// 2484 - Recommended and officially registered listening port for client connections to the listener using TCP/IP with SSL
 	Port int64 `json:"port"`
 	// The list of schemas to sync from. Defaults to user. Case sensitive.
 	Schemas    []string               `json:"schemas,omitempty"`

@@ -31,7 +31,6 @@ func (e *DestinationDatabendDatabendEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// DestinationDatabend - The values required to configure the destination.
 type DestinationDatabend struct {
 	// Name of the database.
 	Database        string                          `json:"database"`

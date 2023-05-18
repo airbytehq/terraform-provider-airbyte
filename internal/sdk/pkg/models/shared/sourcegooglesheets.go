@@ -167,7 +167,6 @@ func (e *SourceGoogleSheetsGoogleSheetsEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceGoogleSheets - The values required to configure the source.
 type SourceGoogleSheets struct {
 	// Credentials for connecting to the Google Sheets API
 	Credentials SourceGoogleSheetsAuthentication `json:"credentials"`

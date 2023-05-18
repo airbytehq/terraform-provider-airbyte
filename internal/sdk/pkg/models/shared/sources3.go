@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"time"
 )
 
 type SourceS3FileFormatJsonlFiletypeEnum string
@@ -171,7 +172,7 @@ type SourceS3FileFormatCSV struct {
 	AdvancedOptions *string `json:"advanced_options,omitempty"`
 	// The chunk size in bytes to process at a time in memory from each file. If your data is particularly wide and failing during schema detection, increasing this should solve it. Beware of raising this too high as you could hit OOM errors.
 	BlockSize *int64 `json:"block_size,omitempty"`
-	// The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '	'.
+	// The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.
 	Delimiter *string `json:"delimiter,omitempty"`
 	// Whether two quotes in a quoted CSV value denote a single quote in the data.
 	DoubleQuote *bool `json:"double_quote,omitempty"`
@@ -316,6 +317,8 @@ type SourceS3S3AmazonWebServices struct {
 	Endpoint *string `json:"endpoint,omitempty"`
 	// By providing a path-like prefix (e.g. myFolder/thisTable/) under which all the relevant files sit, we can optimize finding these in S3. This is optional but recommended if your bucket contains many folders/files which you don't need to replicate.
 	PathPrefix *string `json:"path_prefix,omitempty"`
+	// UTC date and time in the format 2017-01-25T00:00:00Z. Any file modified before this date will not be replicated.
+	StartDate *time.Time `json:"start_date,omitempty"`
 }
 
 type SourceS3S3Enum string
@@ -342,7 +345,6 @@ func (e *SourceS3S3Enum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceS3 - The values required to configure the source.
 type SourceS3 struct {
 	// The name of the stream you would like this source to output. Can contain letters, numbers, or underscores.
 	Dataset string `json:"dataset"`

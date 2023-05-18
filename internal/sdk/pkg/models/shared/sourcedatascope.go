@@ -31,7 +31,6 @@ func (e *SourceDatascopeDatascopeEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceDatascope - The values required to configure the source.
 type SourceDatascope struct {
 	// API Key
 	APIKey     string                       `json:"api_key"`

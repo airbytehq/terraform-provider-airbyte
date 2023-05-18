@@ -31,7 +31,6 @@ func (e *SourceSecodaSecodaEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceSecoda - The values required to configure the source.
 type SourceSecoda struct {
 	// Your API Access Key. See <a href="https://docs.secoda.co/secoda-api/authentication">here</a>. The key is case sensitive.
 	APIKey     string                 `json:"api_key"`

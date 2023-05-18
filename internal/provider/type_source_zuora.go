@@ -5,10 +5,11 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceZuora struct {
-	ClientID     types.String `tfsdk:"client_id"`
-	ClientSecret types.String `tfsdk:"client_secret"`
-	IsSandbox    types.Bool   `tfsdk:"is_sandbox"`
-	SourceType   types.String `tfsdk:"source_type"`
-	StartDate    types.String `tfsdk:"start_date"`
-	WindowInDays types.Int64  `tfsdk:"window_in_days"`
+	ClientID       types.String `tfsdk:"client_id"`
+	ClientSecret   types.String `tfsdk:"client_secret"`
+	DataQuery      types.String `tfsdk:"data_query"`
+	SourceType     types.String `tfsdk:"source_type"`
+	StartDate      types.String `tfsdk:"start_date"`
+	TenantEndpoint types.String `tfsdk:"tenant_endpoint"`
+	WindowInDays   types.String `tfsdk:"window_in_days"`
 }

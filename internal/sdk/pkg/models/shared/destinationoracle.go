@@ -234,7 +234,6 @@ func (u DestinationOracleSSHTunnelMethod) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-// DestinationOracle - The values required to configure the destination.
 type DestinationOracle struct {
 	DestinationType DestinationOracleOracleEnum `json:"destinationType"`
 	// The hostname of the database.

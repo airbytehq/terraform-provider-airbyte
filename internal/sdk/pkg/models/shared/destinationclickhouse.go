@@ -234,7 +234,6 @@ func (u DestinationClickhouseSSHTunnelMethod) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-// DestinationClickhouse - The values required to configure the destination.
 type DestinationClickhouse struct {
 	// Name of the database.
 	Database        string                              `json:"database"`

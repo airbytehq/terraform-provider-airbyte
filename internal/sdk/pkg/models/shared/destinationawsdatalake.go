@@ -504,7 +504,6 @@ func (e *DestinationAwsDatalakeS3BucketRegionEnum) UnmarshalJSON(data []byte) er
 	}
 }
 
-// DestinationAwsDatalake - The values required to configure the destination.
 type DestinationAwsDatalake struct {
 	// target aws account id
 	AwsAccountID *string `json:"aws_account_id,omitempty"`

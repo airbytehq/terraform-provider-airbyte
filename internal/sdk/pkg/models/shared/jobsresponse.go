@@ -5,6 +5,6 @@ package shared
 // JobsResponse - List all the Jobs by connectionId.
 type JobsResponse struct {
 	Data     []JobResponse `json:"data"`
-	Next     string        `json:"next"`
-	Previous string        `json:"previous"`
+	Next     *string       `json:"next,omitempty"`
+	Previous *string       `json:"previous,omitempty"`
 }

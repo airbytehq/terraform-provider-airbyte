@@ -264,7 +264,6 @@ func (e *SourceHarvestHarvestEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceHarvest - The values required to configure the source.
 type SourceHarvest struct {
 	// Harvest account ID. Required for all Harvest requests in pair with Personal Access Token
 	AccountID string `json:"account_id"`

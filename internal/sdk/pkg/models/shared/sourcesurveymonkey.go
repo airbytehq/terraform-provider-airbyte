@@ -98,7 +98,6 @@ func (e *SourceSurveymonkeySurveymonkeyEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceSurveymonkey - The values required to configure the source.
 type SourceSurveymonkey struct {
 	// The authorization method to use to retrieve data from SurveyMonkey
 	Credentials *SourceSurveymonkeySurveyMonkeyAuthorizationMethod `json:"credentials,omitempty"`

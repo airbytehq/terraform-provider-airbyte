@@ -31,7 +31,6 @@ func (e *SourceTempoTempoEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceTempo - The values required to configure the source.
 type SourceTempo struct {
 	// Tempo API Token. Go to Tempo>Settings, scroll down to Data Access and select API integration.
 	APIToken   string               `json:"api_token"`

@@ -131,7 +131,6 @@ func (e *DestinationDynamodbDynamoDBRegionEnum) UnmarshalJSON(data []byte) error
 	}
 }
 
-// DestinationDynamodb - The values required to configure the destination.
 type DestinationDynamodb struct {
 	// The access key id to access the DynamoDB. Airbyte requires Read and Write permissions to the DynamoDB.
 	AccessKeyID     string                          `json:"access_key_id"`

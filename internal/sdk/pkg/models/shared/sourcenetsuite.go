@@ -31,7 +31,6 @@ func (e *SourceNetsuiteNetsuiteEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceNetsuite - The values required to configure the source.
 type SourceNetsuite struct {
 	// Consumer key associated with your integration
 	ConsumerKey string `json:"consumer_key"`

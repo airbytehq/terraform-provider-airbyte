@@ -165,7 +165,6 @@ func (e *SourceLinkedinPagesLinkedinPagesEnum) UnmarshalJSON(data []byte) error 
 	}
 }
 
-// SourceLinkedinPages - The values required to configure the source.
 type SourceLinkedinPages struct {
 	Credentials *SourceLinkedinPagesAuthentication `json:"credentials,omitempty"`
 	// Specify the Organization ID

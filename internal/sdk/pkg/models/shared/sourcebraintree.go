@@ -66,7 +66,6 @@ func (e *SourceBraintreeBraintreeEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceBraintree - The values required to configure the source.
 type SourceBraintree struct {
 	// Environment specifies where the data will come from.
 	Environment SourceBraintreeEnvironmentEnum `json:"environment"`

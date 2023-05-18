@@ -31,7 +31,6 @@ func (e *SourcePublicApisPublicApisEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourcePublicApis - The values required to configure the source.
 type SourcePublicApis struct {
 	SourceType SourcePublicApisPublicApisEnum `json:"sourceType"`
 }

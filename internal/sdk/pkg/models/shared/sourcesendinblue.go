@@ -31,7 +31,6 @@ func (e *SourceSendinblueSendinblueEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceSendinblue - The values required to configure the source.
 type SourceSendinblue struct {
 	// Your API Key. See <a href="https://developers.sendinblue.com/docs/getting-started">here</a>.
 	APIKey     string                         `json:"api_key"`

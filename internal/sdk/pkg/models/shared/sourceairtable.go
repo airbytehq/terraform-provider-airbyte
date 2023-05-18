@@ -170,7 +170,6 @@ func (e *SourceAirtableAirtableEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceAirtable - The values required to configure the source.
 type SourceAirtable struct {
 	Credentials *SourceAirtableAuthentication `json:"credentials,omitempty"`
 	SourceType  SourceAirtableAirtableEnum    `json:"sourceType"`

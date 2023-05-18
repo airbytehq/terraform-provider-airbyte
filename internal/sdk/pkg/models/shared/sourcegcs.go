@@ -31,7 +31,6 @@ func (e *SourceGcsGcsEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceGcs - The values required to configure the source.
 type SourceGcs struct {
 	// GCS bucket name
 	GcsBucket string `json:"gcs_bucket"`

@@ -31,7 +31,6 @@ func (e *DestinationConvexConvexEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// DestinationConvex - The values required to configure the destination.
 type DestinationConvex struct {
 	// API access key used to send data to a Convex deployment.
 	AccessKey string `json:"access_key"`

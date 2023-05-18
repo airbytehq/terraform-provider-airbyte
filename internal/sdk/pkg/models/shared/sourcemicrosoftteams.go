@@ -173,7 +173,6 @@ func (e *SourceMicrosoftTeamsMicrosoftTeamsEnum) UnmarshalJSON(data []byte) erro
 	}
 }
 
-// SourceMicrosoftTeams - The values required to configure the source.
 type SourceMicrosoftTeams struct {
 	// Choose how to authenticate to Microsoft
 	Credentials *SourceMicrosoftTeamsAuthenticationMechanism `json:"credentials,omitempty"`

@@ -31,7 +31,6 @@ func (e *SourceZoomZoomEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceZoom - The values required to configure the source.
 type SourceZoom struct {
 	// JWT Token
 	JwtToken   string             `json:"jwt_token"`

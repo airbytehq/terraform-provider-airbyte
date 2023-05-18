@@ -261,7 +261,6 @@ func (e *SourceZendeskSupportZendeskSupportEnum) UnmarshalJSON(data []byte) erro
 	}
 }
 
-// SourceZendeskSupport - The values required to configure the source.
 type SourceZendeskSupport struct {
 	// Zendesk service provides two authentication methods. Choose between: `OAuth2.0` or `API token`.
 	Credentials *SourceZendeskSupportAuthentication `json:"credentials,omitempty"`

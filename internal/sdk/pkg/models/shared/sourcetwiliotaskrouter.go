@@ -31,7 +31,6 @@ func (e *SourceTwilioTaskrouterTwilioTaskrouterEnum) UnmarshalJSON(data []byte) 
 	}
 }
 
-// SourceTwilioTaskrouter - The values required to configure the source.
 type SourceTwilioTaskrouter struct {
 	// Twilio Account ID
 	AccountSid string `json:"account_sid"`

@@ -204,13 +204,21 @@ func parseSecuritySchemeValue(client *SecurityClient, schemeTag *securityTag, se
 	case "http":
 		switch schemeTag.SubType {
 		case "bearer":
-			client.headers[secTag.Name] = valToString(val)
+			client.headers[secTag.Name] = prefixBearer(valToString(val))
 		default:
 			panic("not supported")
 		}
 	default:
 		panic("not supported")
 	}
+}
+
+func prefixBearer(authHeaderValue string) string {
+	if strings.HasPrefix(strings.ToLower(authHeaderValue), "bearer ") {
+		return authHeaderValue
+	}
+
+	return fmt.Sprintf("Bearer %s", authHeaderValue)
 }
 
 func parseBasicAuthScheme(client *SecurityClient, scheme interface{}) {

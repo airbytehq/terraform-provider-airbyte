@@ -1112,7 +1112,6 @@ func (u SourcePostgresSSHTunnelMethod) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-// SourcePostgres - The values required to configure the source.
 type SourcePostgres struct {
 	// Name of the database.
 	Database string `json:"database"`
@@ -1129,7 +1128,8 @@ type SourcePostgres struct {
 	// The list of schemas (case sensitive) to sync from. Defaults to public.
 	Schemas    []string                   `json:"schemas,omitempty"`
 	SourceType SourcePostgresPostgresEnum `json:"sourceType"`
-	// SSL connection modes. Read more <a href="https://jdbc.postgresql.org/documentation/head/ssl-client.html"> in the docs</a>.
+	// SSL connection modes.
+	//   Read more <a href="https://jdbc.postgresql.org/documentation/head/ssl-client.html"> in the docs</a>.
 	SslMode *SourcePostgresSSLModes `json:"ssl_mode,omitempty"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod *SourcePostgresSSHTunnelMethod `json:"tunnel_method,omitempty"`

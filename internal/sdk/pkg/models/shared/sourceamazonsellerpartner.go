@@ -171,7 +171,6 @@ func (e *SourceAmazonSellerPartnerAmazonSellerPartnerEnum) UnmarshalJSON(data []
 	}
 }
 
-// SourceAmazonSellerPartner - The values required to configure the source.
 type SourceAmazonSellerPartner struct {
 	// Your Amazon App ID
 	AppID    string                                 `json:"app_id"`

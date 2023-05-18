@@ -31,7 +31,6 @@ func (e *DestinationRabbitmqRabbitmqEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// DestinationRabbitmq - The values required to configure the destination.
 type DestinationRabbitmq struct {
 	DestinationType DestinationRabbitmqRabbitmqEnum `json:"destinationType"`
 	// The exchange name.

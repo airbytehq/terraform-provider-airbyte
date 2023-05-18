@@ -10,68 +10,68 @@ import (
 	"fmt"
 )
 
-type SourceSquareAuthenticationAPIKeyCredentialsTitleEnum string
+type SourceSquareAuthenticationAPIKeyAuthTypeEnum string
 
 const (
-	SourceSquareAuthenticationAPIKeyCredentialsTitleEnumAPIKey SourceSquareAuthenticationAPIKeyCredentialsTitleEnum = "API Key"
+	SourceSquareAuthenticationAPIKeyAuthTypeEnumAPIKey SourceSquareAuthenticationAPIKeyAuthTypeEnum = "API Key"
 )
 
-func (e SourceSquareAuthenticationAPIKeyCredentialsTitleEnum) ToPointer() *SourceSquareAuthenticationAPIKeyCredentialsTitleEnum {
+func (e SourceSquareAuthenticationAPIKeyAuthTypeEnum) ToPointer() *SourceSquareAuthenticationAPIKeyAuthTypeEnum {
 	return &e
 }
 
-func (e *SourceSquareAuthenticationAPIKeyCredentialsTitleEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceSquareAuthenticationAPIKeyAuthTypeEnum) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "API Key":
-		*e = SourceSquareAuthenticationAPIKeyCredentialsTitleEnum(v)
+		*e = SourceSquareAuthenticationAPIKeyAuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSquareAuthenticationAPIKeyCredentialsTitleEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceSquareAuthenticationAPIKeyAuthTypeEnum: %v", v)
 	}
 }
 
 // SourceSquareAuthenticationAPIKey - Choose how to authenticate to Square.
 type SourceSquareAuthenticationAPIKey struct {
 	// The API key for a Square application
-	APIKey           string                                                `json:"api_key"`
-	CredentialsTitle *SourceSquareAuthenticationAPIKeyCredentialsTitleEnum `json:"credentials_title,omitempty"`
+	APIKey   string                                       `json:"api_key"`
+	AuthType SourceSquareAuthenticationAPIKeyAuthTypeEnum `json:"auth_type"`
 }
 
-type SourceSquareAuthenticationOauthAuthenticationCredentialsTitleEnum string
+type SourceSquareAuthenticationOauthAuthenticationAuthTypeEnum string
 
 const (
-	SourceSquareAuthenticationOauthAuthenticationCredentialsTitleEnumOAuthCredentials SourceSquareAuthenticationOauthAuthenticationCredentialsTitleEnum = "OAuth Credentials"
+	SourceSquareAuthenticationOauthAuthenticationAuthTypeEnumOAuth SourceSquareAuthenticationOauthAuthenticationAuthTypeEnum = "OAuth"
 )
 
-func (e SourceSquareAuthenticationOauthAuthenticationCredentialsTitleEnum) ToPointer() *SourceSquareAuthenticationOauthAuthenticationCredentialsTitleEnum {
+func (e SourceSquareAuthenticationOauthAuthenticationAuthTypeEnum) ToPointer() *SourceSquareAuthenticationOauthAuthenticationAuthTypeEnum {
 	return &e
 }
 
-func (e *SourceSquareAuthenticationOauthAuthenticationCredentialsTitleEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceSquareAuthenticationOauthAuthenticationAuthTypeEnum) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
-	case "OAuth Credentials":
-		*e = SourceSquareAuthenticationOauthAuthenticationCredentialsTitleEnum(v)
+	case "OAuth":
+		*e = SourceSquareAuthenticationOauthAuthenticationAuthTypeEnum(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSquareAuthenticationOauthAuthenticationCredentialsTitleEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceSquareAuthenticationOauthAuthenticationAuthTypeEnum: %v", v)
 	}
 }
 
 // SourceSquareAuthenticationOauthAuthentication - Choose how to authenticate to Square.
 type SourceSquareAuthenticationOauthAuthentication struct {
+	AuthType SourceSquareAuthenticationOauthAuthenticationAuthTypeEnum `json:"auth_type"`
 	// The Square-issued ID of your application
 	ClientID string `json:"client_id"`
 	// The Square-issued application secret for your application
-	ClientSecret     string                                                             `json:"client_secret"`
-	CredentialsTitle *SourceSquareAuthenticationOauthAuthenticationCredentialsTitleEnum `json:"credentials_title,omitempty"`
+	ClientSecret string `json:"client_secret"`
 	// A refresh token generated using the above client ID and secret
 	RefreshToken string `json:"refresh_token"`
 }
@@ -168,7 +168,6 @@ func (e *SourceSquareSquareEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceSquare - The values required to configure the source.
 type SourceSquare struct {
 	// Choose how to authenticate to Square.
 	Credentials *SourceSquareAuthentication `json:"credentials,omitempty"`

@@ -32,7 +32,6 @@ func (e *SourceCloseComCloseComEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceCloseCom - The values required to configure the source.
 type SourceCloseCom struct {
 	// Close.com API key (usually starts with 'api_'; find yours <a href="https://app.close.com/settings/api/">here</a>).
 	APIKey     string                     `json:"api_key"`

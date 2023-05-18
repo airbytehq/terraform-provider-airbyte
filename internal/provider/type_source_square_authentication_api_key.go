@@ -5,6 +5,6 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceSquareAuthenticationAPIKey struct {
-	APIKey           types.String `tfsdk:"api_key"`
-	CredentialsTitle types.String `tfsdk:"credentials_title"`
+	APIKey   types.String `tfsdk:"api_key"`
+	AuthType types.String `tfsdk:"auth_type"`
 }

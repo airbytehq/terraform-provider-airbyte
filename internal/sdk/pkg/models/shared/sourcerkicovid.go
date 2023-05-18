@@ -31,7 +31,6 @@ func (e *SourceRkiCovidRkiCovidEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceRkiCovid - The values required to configure the source.
 type SourceRkiCovid struct {
 	SourceType SourceRkiCovidRkiCovidEnum `json:"sourceType"`
 	// UTC date in the format 2017-01-25. Any data before this date will not be replicated.

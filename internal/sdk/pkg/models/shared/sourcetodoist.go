@@ -31,7 +31,6 @@ func (e *SourceTodoistTodoistEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceTodoist - The values required to configure the source.
 type SourceTodoist struct {
 	SourceType SourceTodoistTodoistEnum `json:"sourceType"`
 	// Your API Token. See <a href="https://todoist.com/app/settings/integrations/">here</a>. The token is case sensitive.

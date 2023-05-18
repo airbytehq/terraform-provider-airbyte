@@ -31,7 +31,6 @@ func (e *DestinationKeenKeenEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// DestinationKeen - The values required to configure the destination.
 type DestinationKeen struct {
 	// To get Keen Master API Key, navigate to the Access tab from the left-hand, side panel and check the Project Details section.
 	APIKey          string                  `json:"api_key"`

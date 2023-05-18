@@ -223,43 +223,6 @@ func (e *DestinationSnowflakeSnowflakeEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-type DestinationSnowflakeDataStagingMethodAzureBlobStorageStagingMethodEnum string
-
-const (
-	DestinationSnowflakeDataStagingMethodAzureBlobStorageStagingMethodEnumAzureBlobStaging DestinationSnowflakeDataStagingMethodAzureBlobStorageStagingMethodEnum = "Azure Blob Staging"
-)
-
-func (e DestinationSnowflakeDataStagingMethodAzureBlobStorageStagingMethodEnum) ToPointer() *DestinationSnowflakeDataStagingMethodAzureBlobStorageStagingMethodEnum {
-	return &e
-}
-
-func (e *DestinationSnowflakeDataStagingMethodAzureBlobStorageStagingMethodEnum) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "Azure Blob Staging":
-		*e = DestinationSnowflakeDataStagingMethodAzureBlobStorageStagingMethodEnum(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for DestinationSnowflakeDataStagingMethodAzureBlobStorageStagingMethodEnum: %v", v)
-	}
-}
-
-// DestinationSnowflakeDataStagingMethodAzureBlobStorageStaging - Recommended for large production workloads for better speed and scalability.
-type DestinationSnowflakeDataStagingMethodAzureBlobStorageStaging struct {
-	// Enter your Azure Blob Storage account name
-	AzureBlobStorageAccountName string `json:"azure_blob_storage_account_name"`
-	// Enter your Azure Blob Storage <a href="https://docs.microsoft.com/en-us/rest/api/storageservices/naming-and-referencing-containers--blobs--and-metadata#container-names">container name</a>
-	AzureBlobStorageContainerName string `json:"azure_blob_storage_container_name"`
-	// Enter the Azure Blob Storage <a href="https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview#storage-account-endpoints">endpoint domain name</a>
-	AzureBlobStorageEndpointDomainName *string `json:"azure_blob_storage_endpoint_domain_name,omitempty"`
-	// Enter the <a href="https://docs.snowflake.com/en/user-guide/data-load-azure-config.html#option-2-generating-a-sas-token">Shared access signature</a> (SAS) token to grant Snowflake limited access to objects in your Azure Blob Storage account
-	AzureBlobStorageSasToken string                                                                 `json:"azure_blob_storage_sas_token"`
-	Method                   DestinationSnowflakeDataStagingMethodAzureBlobStorageStagingMethodEnum `json:"method"`
-}
-
 type DestinationSnowflakeDataStagingMethodGoogleCloudStorageStagingMethodEnum string
 
 const (
@@ -625,7 +588,6 @@ const (
 	DestinationSnowflakeDataStagingMethodTypeDestinationSnowflakeDataStagingMethodRecommendedInternalStaging DestinationSnowflakeDataStagingMethodType = "destination-snowflake_Data Staging Method_[Recommended] Internal Staging"
 	DestinationSnowflakeDataStagingMethodTypeDestinationSnowflakeDataStagingMethodAWSS3Staging               DestinationSnowflakeDataStagingMethodType = "destination-snowflake_Data Staging Method_AWS S3 Staging"
 	DestinationSnowflakeDataStagingMethodTypeDestinationSnowflakeDataStagingMethodGoogleCloudStorageStaging  DestinationSnowflakeDataStagingMethodType = "destination-snowflake_Data Staging Method_Google Cloud Storage Staging"
-	DestinationSnowflakeDataStagingMethodTypeDestinationSnowflakeDataStagingMethodAzureBlobStorageStaging    DestinationSnowflakeDataStagingMethodType = "destination-snowflake_Data Staging Method_Azure Blob Storage Staging"
 )
 
 type DestinationSnowflakeDataStagingMethod struct {
@@ -633,7 +595,6 @@ type DestinationSnowflakeDataStagingMethod struct {
 	DestinationSnowflakeDataStagingMethodRecommendedInternalStaging *DestinationSnowflakeDataStagingMethodRecommendedInternalStaging
 	DestinationSnowflakeDataStagingMethodAWSS3Staging               *DestinationSnowflakeDataStagingMethodAWSS3Staging
 	DestinationSnowflakeDataStagingMethodGoogleCloudStorageStaging  *DestinationSnowflakeDataStagingMethodGoogleCloudStorageStaging
-	DestinationSnowflakeDataStagingMethodAzureBlobStorageStaging    *DestinationSnowflakeDataStagingMethodAzureBlobStorageStaging
 
 	Type DestinationSnowflakeDataStagingMethodType
 }
@@ -670,15 +631,6 @@ func CreateDestinationSnowflakeDataStagingMethodDestinationSnowflakeDataStagingM
 
 	return DestinationSnowflakeDataStagingMethod{
 		DestinationSnowflakeDataStagingMethodGoogleCloudStorageStaging: &destinationSnowflakeDataStagingMethodGoogleCloudStorageStaging,
-		Type: typ,
-	}
-}
-
-func CreateDestinationSnowflakeDataStagingMethodDestinationSnowflakeDataStagingMethodAzureBlobStorageStaging(destinationSnowflakeDataStagingMethodAzureBlobStorageStaging DestinationSnowflakeDataStagingMethodAzureBlobStorageStaging) DestinationSnowflakeDataStagingMethod {
-	typ := DestinationSnowflakeDataStagingMethodTypeDestinationSnowflakeDataStagingMethodAzureBlobStorageStaging
-
-	return DestinationSnowflakeDataStagingMethod{
-		DestinationSnowflakeDataStagingMethodAzureBlobStorageStaging: &destinationSnowflakeDataStagingMethodAzureBlobStorageStaging,
 		Type: typ,
 	}
 }
@@ -722,15 +674,6 @@ func (u *DestinationSnowflakeDataStagingMethod) UnmarshalJSON(data []byte) error
 		return nil
 	}
 
-	destinationSnowflakeDataStagingMethodAzureBlobStorageStaging := new(DestinationSnowflakeDataStagingMethodAzureBlobStorageStaging)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationSnowflakeDataStagingMethodAzureBlobStorageStaging); err == nil {
-		u.DestinationSnowflakeDataStagingMethodAzureBlobStorageStaging = destinationSnowflakeDataStagingMethodAzureBlobStorageStaging
-		u.Type = DestinationSnowflakeDataStagingMethodTypeDestinationSnowflakeDataStagingMethodAzureBlobStorageStaging
-		return nil
-	}
-
 	return errors.New("could not unmarshal into supported union types")
 }
 
@@ -751,14 +694,9 @@ func (u DestinationSnowflakeDataStagingMethod) MarshalJSON() ([]byte, error) {
 		return json.Marshal(u.DestinationSnowflakeDataStagingMethodGoogleCloudStorageStaging)
 	}
 
-	if u.DestinationSnowflakeDataStagingMethodAzureBlobStorageStaging != nil {
-		return json.Marshal(u.DestinationSnowflakeDataStagingMethodAzureBlobStorageStaging)
-	}
-
 	return nil, nil
 }
 
-// DestinationSnowflake - The values required to configure the destination.
 type DestinationSnowflake struct {
 	Credentials *DestinationSnowflakeAuthorizationMethod `json:"credentials,omitempty"`
 	// Enter the name of the <a href="https://docs.snowflake.com/en/sql-reference/ddl-database.html#database-schema-share-ddl">database</a> you want to sync data into

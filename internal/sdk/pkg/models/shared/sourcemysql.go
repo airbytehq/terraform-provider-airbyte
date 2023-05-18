@@ -612,7 +612,6 @@ func (u SourceMysqlSSHTunnelMethod) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-// SourceMysql - The values required to configure the source.
 type SourceMysql struct {
 	// The database name.
 	Database string `json:"database"`

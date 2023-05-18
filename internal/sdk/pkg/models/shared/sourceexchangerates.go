@@ -32,7 +32,6 @@ func (e *SourceExchangeRatesExchangeRatesEnum) UnmarshalJSON(data []byte) error 
 	}
 }
 
-// SourceExchangeRates - The values required to configure the source.
 type SourceExchangeRates struct {
 	// Your API Key. See <a href="https://apilayer.com/marketplace/exchangerates_data-api">here</a>. The key is case sensitive.
 	AccessKey string `json:"access_key"`

@@ -31,7 +31,6 @@ func (e *SourceLaunchdarklyLaunchdarklyEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceLaunchdarkly - The values required to configure the source.
 type SourceLaunchdarkly struct {
 	// Your Access token. See <a href="https://apidocs.launchdarkly.com/#section/Overview/Authentication">here</a>.
 	AccessToken string                             `json:"access_token"`

@@ -32,7 +32,6 @@ func (e *SourceBrazeBrazeEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceBraze - The values required to configure the source.
 type SourceBraze struct {
 	// Braze REST API key
 	APIKey     string               `json:"api_key"`

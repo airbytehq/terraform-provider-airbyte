@@ -189,7 +189,6 @@ func (u DestinationAzureBlobStorageOutputFormat) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-// DestinationAzureBlobStorage - The values required to configure the destination.
 type DestinationAzureBlobStorage struct {
 	// The Azure blob storage account key.
 	AzureBlobStorageAccountKey string `json:"azure_blob_storage_account_key"`

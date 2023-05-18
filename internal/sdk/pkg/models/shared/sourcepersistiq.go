@@ -31,7 +31,6 @@ func (e *SourcePersistiqPersistiqEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourcePersistiq - The values required to configure the source.
 type SourcePersistiq struct {
 	// PersistIq API Key. See the <a href="https://apidocs.persistiq.com/#authentication">docs</a> for more information on where to find that key.
 	APIKey     string                       `json:"api_key"`

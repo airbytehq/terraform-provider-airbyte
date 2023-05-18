@@ -31,7 +31,6 @@ func (e *SourcePypiPypiEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourcePypi - The values required to configure the source.
 type SourcePypi struct {
 	// Name of the project/package. Can only be in lowercase with hyphen. This is the name used using pip command for installing the package.
 	ProjectName string             `json:"project_name"`

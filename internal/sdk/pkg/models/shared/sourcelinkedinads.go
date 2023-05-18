@@ -166,7 +166,6 @@ func (e *SourceLinkedinAdsLinkedinAdsEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceLinkedinAds - The values required to configure the source.
 type SourceLinkedinAds struct {
 	// Specify the account IDs separated by a space, to pull the data from. Leave empty, if you want to pull the data from all associated accounts. See the <a href="https://www.linkedin.com/help/linkedin/answer/a424270/find-linkedin-ads-account-details?lang=en">LinkedIn Ads docs</a> for more info.
 	AccountIds  []int64                          `json:"account_ids,omitempty"`

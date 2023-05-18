@@ -550,7 +550,6 @@ func (u SourceMssqlSSHTunnelMethod) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-// SourceMssql - The values required to configure the source.
 type SourceMssql struct {
 	// The name of the database.
 	Database string `json:"database"`

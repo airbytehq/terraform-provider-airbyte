@@ -167,7 +167,6 @@ func (e *SourceZendeskSunshineZendeskSunshineEnum) UnmarshalJSON(data []byte) er
 	}
 }
 
-// SourceZendeskSunshine - The values required to configure the source.
 type SourceZendeskSunshine struct {
 	Credentials *SourceZendeskSunshineAuthorizationMethod `json:"credentials,omitempty"`
 	SourceType  SourceZendeskSunshineZendeskSunshineEnum  `json:"sourceType"`

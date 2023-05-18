@@ -60,7 +60,6 @@ func (e *SourceSftpBulkSftpBulkEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceSftpBulk - The values required to configure the source.
 type SourceSftpBulk struct {
 	// Sync only the most recent file for the configured folder path and file pattern
 	FileMostRecent *bool `json:"file_most_recent,omitempty"`
@@ -77,7 +76,9 @@ type SourceSftpBulk struct {
 	// The server port
 	Port int64 `json:"port"`
 	// The private key
-	PrivateKey *string                    `json:"private_key,omitempty"`
+	PrivateKey *string `json:"private_key,omitempty"`
+	// The separator used in the CSV files. Define None if you want to use the Sniffer functionality
+	Separator  *string                    `json:"separator,omitempty"`
 	SourceType SourceSftpBulkSftpBulkEnum `json:"sourceType"`
 	// The date from which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 	StartDate time.Time `json:"start_date"`

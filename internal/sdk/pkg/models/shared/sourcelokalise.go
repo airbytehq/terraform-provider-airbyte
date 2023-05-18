@@ -31,7 +31,6 @@ func (e *SourceLokaliseLokaliseEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceLokalise - The values required to configure the source.
 type SourceLokalise struct {
 	// Lokalise API Key with read-access. Available at Profile settings > API tokens. See <a href="https://docs.lokalise.com/en/articles/1929556-api-tokens">here</a>.
 	APIKey string `json:"api_key"`

@@ -31,7 +31,6 @@ func (e *SourceFreshsalesFreshsalesEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceFreshsales - The values required to configure the source.
 type SourceFreshsales struct {
 	// Freshsales API Key. See <a href="https://crmsupport.freshworks.com/support/solutions/articles/50000002503-how-to-find-my-api-key-">here</a>. The key is case sensitive.
 	APIKey string `json:"api_key"`

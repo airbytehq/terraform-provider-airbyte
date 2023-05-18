@@ -31,7 +31,6 @@ func (e *SourceKustomerSingerKustomerSingerEnum) UnmarshalJSON(data []byte) erro
 	}
 }
 
-// SourceKustomerSinger - The values required to configure the source.
 type SourceKustomerSinger struct {
 	// Kustomer API Token. See the <a href="https://developer.kustomer.com/kustomer-api-docs/reference/authentication">docs</a> on how to obtain this
 	APIToken   string                                 `json:"api_token"`

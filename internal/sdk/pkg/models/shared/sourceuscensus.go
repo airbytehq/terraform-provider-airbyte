@@ -31,7 +31,6 @@ func (e *SourceUsCensusUsCensusEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceUsCensus - The values required to configure the source.
 type SourceUsCensus struct {
 	// Your API Key. Get your key <a href="https://api.census.gov/data/key_signup.html">here</a>.
 	APIKey string `json:"api_key"`

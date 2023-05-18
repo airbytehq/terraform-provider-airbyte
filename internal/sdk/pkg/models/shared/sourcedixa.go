@@ -31,7 +31,6 @@ func (e *SourceDixaDixaEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceDixa - The values required to configure the source.
 type SourceDixa struct {
 	// Dixa API token
 	APIToken string `json:"api_token"`

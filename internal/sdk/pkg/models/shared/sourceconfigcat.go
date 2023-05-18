@@ -31,7 +31,6 @@ func (e *SourceConfigcatConfigcatEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceConfigcat - The values required to configure the source.
 type SourceConfigcat struct {
 	// Basic auth password. See <a href="https://api.configcat.com/docs/#section/Authentication">here</a>.
 	Password   string                       `json:"password"`

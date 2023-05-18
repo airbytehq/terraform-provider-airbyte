@@ -128,7 +128,6 @@ func (e *DestinationAmazonSqsAWSRegionEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// DestinationAmazonSqs - The values required to configure the destination.
 type DestinationAmazonSqs struct {
 	// The Access Key ID of the AWS IAM Role to use for sending  messages
 	AccessKey       *string                           `json:"access_key,omitempty"`

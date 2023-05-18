@@ -172,7 +172,6 @@ func (e *SourceTiktokMarketingTiktokMarketingEnum) UnmarshalJSON(data []byte) er
 	}
 }
 
-// SourceTiktokMarketing - The values required to configure the source.
 type SourceTiktokMarketing struct {
 	// The attribution window in days.
 	AttributionWindow *int64 `json:"attribution_window,omitempty"`

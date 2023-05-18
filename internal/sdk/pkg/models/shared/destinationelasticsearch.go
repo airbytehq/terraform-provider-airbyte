@@ -167,7 +167,6 @@ func (e *DestinationElasticsearchElasticsearchEnum) UnmarshalJSON(data []byte) e
 	}
 }
 
-// DestinationElasticsearch - The values required to configure the destination.
 type DestinationElasticsearch struct {
 	// The type of authentication to be used
 	AuthenticationMethod *DestinationElasticsearchAuthenticationMethod `json:"authenticationMethod,omitempty"`

@@ -10,6 +10,8 @@ import (
 type GetStreamPropertiesRequest struct {
 	// ID of the destination
 	DestinationID string `queryParam:"style=form,explode=true,name=destinationId"`
+	// If true pull the latest schema from the source, else pull from cache (default false)
+	IgnoreCache *bool `queryParam:"style=form,explode=true,name=ignoreCache"`
 	// ID of the source
 	SourceID string `queryParam:"style=form,explode=true,name=sourceId"`
 }

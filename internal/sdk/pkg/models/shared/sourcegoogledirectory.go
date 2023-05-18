@@ -31,7 +31,6 @@ func (e *SourceGoogleDirectoryGoogleDirectoryEnum) UnmarshalJSON(data []byte) er
 	}
 }
 
-// SourceGoogleDirectory - The values required to configure the source.
 type SourceGoogleDirectory struct {
 	// The contents of the JSON service account key. See the <a href="https://developers.google.com/admin-sdk/directory/v1/guides/delegation">docs</a> for more information on how to generate this key.
 	CredentialsJSON string `json:"credentials_json"`

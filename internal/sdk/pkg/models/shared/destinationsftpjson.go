@@ -31,7 +31,6 @@ func (e *DestinationSftpJSONSftpJSONEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// DestinationSftpJSON - The values required to configure the destination.
 type DestinationSftpJSON struct {
 	DestinationType DestinationSftpJSONSftpJSONEnum `json:"destinationType"`
 	// Path to the directory where json files will be written.

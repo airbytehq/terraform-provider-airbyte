@@ -88,7 +88,6 @@ func (e *SourceNytimesNytimesEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceNytimes - The values required to configure the source.
 type SourceNytimes struct {
 	// API Key
 	APIKey string `json:"api_key"`

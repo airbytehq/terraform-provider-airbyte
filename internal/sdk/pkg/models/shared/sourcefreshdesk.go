@@ -32,7 +32,6 @@ func (e *SourceFreshdeskFreshdeskEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceFreshdesk - The values required to configure the source.
 type SourceFreshdesk struct {
 	// Freshdesk API Key. See the <a href="https://docs.airbyte.com/integrations/sources/freshdesk">docs</a> for more information on how to obtain this key.
 	APIKey string `json:"api_key"`

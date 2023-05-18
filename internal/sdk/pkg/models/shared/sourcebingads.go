@@ -56,7 +56,6 @@ func (e *SourceBingAdsBingAdsEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceBingAds - The values required to configure the source.
 type SourceBingAds struct {
 	AuthMethod *SourceBingAdsAuthMethodEnum `json:"auth_method,omitempty"`
 	// The Client ID of your Microsoft Advertising developer application.
@@ -65,6 +64,8 @@ type SourceBingAds struct {
 	ClientSecret *string `json:"client_secret,omitempty"`
 	// Developer token associated with user. See more info <a href="https://docs.microsoft.com/en-us/advertising/guides/get-started?view=bingads-13#get-developer-token"> in the docs</a>.
 	DeveloperToken string `json:"developer_token"`
+	// Also known as attribution or conversion window. How far into the past to look for records (in days). If your conversion window has an hours/minutes granularity, round it up to the number of days exceeding. Used only for performance report streams in incremental mode.
+	LookbackWindow *int64 `json:"lookback_window,omitempty"`
 	// Refresh Token to renew the expired Access Token.
 	RefreshToken string `json:"refresh_token"`
 	// The start date from which to begin replicating report data. Any data generated before this date will not be replicated in reports. This is a UTC date in YYYY-MM-DD format.

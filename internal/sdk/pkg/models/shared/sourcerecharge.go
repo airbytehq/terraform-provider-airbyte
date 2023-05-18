@@ -32,7 +32,6 @@ func (e *SourceRechargeRechargeEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceRecharge - The values required to configure the source.
 type SourceRecharge struct {
 	// The value of the Access Token generated. See the <a href="https://docs.airbyte.com/integrations/sources/recharge">docs</a> for more information.
 	AccessToken string                     `json:"access_token"`

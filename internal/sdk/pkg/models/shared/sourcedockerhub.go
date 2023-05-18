@@ -31,7 +31,6 @@ func (e *SourceDockerhubDockerhubEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceDockerhub - The values required to configure the source.
 type SourceDockerhub struct {
 	// Username of DockerHub person or organization (for https://hub.docker.com/v2/repositories/USERNAME/ API call)
 	DockerUsername string                       `json:"docker_username"`

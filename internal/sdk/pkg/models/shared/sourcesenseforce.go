@@ -32,7 +32,6 @@ func (e *SourceSenseforceSenseforceEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceSenseforce - The values required to configure the source.
 type SourceSenseforce struct {
 	// Your API access token. See <a href="https://manual.senseforce.io/manual/sf-platform/public-api/get-your-access-token/">here</a>. The toke is case sensitive.
 	AccessToken string `json:"access_token"`

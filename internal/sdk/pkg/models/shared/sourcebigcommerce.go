@@ -31,7 +31,6 @@ func (e *SourceBigcommerceBigcommerceEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceBigcommerce - The values required to configure the source.
 type SourceBigcommerce struct {
 	// Access Token for making authenticated requests.
 	AccessToken string                           `json:"access_token"`

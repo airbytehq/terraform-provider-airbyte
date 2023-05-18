@@ -171,7 +171,6 @@ func (e *SourceTrustpilotTrustpilotEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceTrustpilot - The values required to configure the source.
 type SourceTrustpilot struct {
 	// The names of business units which shall be synchronized. Some streams e.g. configured_business_units or private_reviews use this configuration.
 	BusinessUnits []string                            `json:"business_units"`

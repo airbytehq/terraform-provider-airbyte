@@ -31,7 +31,6 @@ func (e *SourceSapFieldglassSapFieldglassEnum) UnmarshalJSON(data []byte) error 
 	}
 }
 
-// SourceSapFieldglass - The values required to configure the source.
 type SourceSapFieldglass struct {
 	// API Key
 	APIKey     string                               `json:"api_key"`

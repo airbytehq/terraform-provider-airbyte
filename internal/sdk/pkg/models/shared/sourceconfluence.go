@@ -31,7 +31,6 @@ func (e *SourceConfluenceConfluenceEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceConfluence - The values required to configure the source.
 type SourceConfluence struct {
 	// Please follow the Jira confluence for generating an API token: <a href="https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/">generating an API token</a>.
 	APIToken string `json:"api_token"`

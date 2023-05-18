@@ -31,7 +31,6 @@ func (e *SourcePexelsAPIPexelsAPIEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourcePexelsAPI - The values required to configure the source.
 type SourcePexelsAPI struct {
 	// API key is required to access pexels api, For getting your's goto https://www.pexels.com/api/documentation and create account for free.
 	APIKey string `json:"api_key"`

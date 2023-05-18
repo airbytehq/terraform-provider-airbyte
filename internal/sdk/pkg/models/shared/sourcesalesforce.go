@@ -106,7 +106,6 @@ type SourceSalesforceStreamsCriteria struct {
 	Value    string                                            `json:"value"`
 }
 
-// SourceSalesforce - The values required to configure the source.
 type SourceSalesforce struct {
 	AuthType *SourceSalesforceAuthTypeEnum `json:"auth_type,omitempty"`
 	// Enter your Salesforce developer application's <a href="https://developer.salesforce.com/forums/?id=9062I000000DLgbQAG">Client ID</a>

@@ -31,7 +31,6 @@ func (e *SourceApifyDatasetApifyDatasetEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceApifyDataset - The values required to configure the source.
 type SourceApifyDataset struct {
 	// If set to true, only clean items will be downloaded from the dataset. See description of what clean means in <a href="https://docs.apify.com/api/v2#/reference/datasets/item-collection/get-items">Apify API docs</a>. If not sure, set clean to false.
 	Clean *bool `json:"clean,omitempty"`

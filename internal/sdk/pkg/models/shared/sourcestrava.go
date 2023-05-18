@@ -56,7 +56,6 @@ func (e *SourceStravaStravaEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceStrava - The values required to configure the source.
 type SourceStrava struct {
 	// The Athlete ID of your Strava developer application.
 	AthleteID int64                     `json:"athlete_id"`

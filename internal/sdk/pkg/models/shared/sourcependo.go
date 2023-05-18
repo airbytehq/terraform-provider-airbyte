@@ -31,7 +31,6 @@ func (e *SourcePendoPendoEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourcePendo - The values required to configure the source.
 type SourcePendo struct {
 	APIKey     string               `json:"api_key"`
 	SourceType SourcePendoPendoEnum `json:"sourceType"`

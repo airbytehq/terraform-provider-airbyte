@@ -59,21 +59,29 @@ func (e *SourceCoinAPICoinAPIEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceCoinAPI - The values required to configure the source.
 type SourceCoinAPI struct {
 	// API Key
 	APIKey string `json:"api_key"`
-	// The end date in ISO 8601 format. If not supplied, data will be returned from the start date to the current time, or when the count of result elements reaches its limit.
+	// The end date in ISO 8601 format. If not supplied, data will be returned
+	// from the start date to the current time, or when the count of result
+	// elements reaches its limit.
+	//
 	EndDate *string `json:"end_date,omitempty"`
 	// The environment to use. Either sandbox or production.
+	//
 	Environment SourceCoinAPIEnvironmentEnum `json:"environment"`
-	// The maximum number of elements to return. If not supplied, the default is 100. For numbers larger than 100, each 100 items is counted as one request for pricing purposes. Maximum value is 100000.
+	// The maximum number of elements to return. If not supplied, the default
+	// is 100. For numbers larger than 100, each 100 items is counted as one
+	// request for pricing purposes. Maximum value is 100000.
+	//
 	Limit *int64 `json:"limit,omitempty"`
 	// The period to use. See the documentation for a list. https://docs.coinapi.io/#list-all-periods-get
 	Period     string                   `json:"period"`
 	SourceType SourceCoinAPICoinAPIEnum `json:"sourceType"`
 	// The start date in ISO 8601 format.
 	StartDate string `json:"start_date"`
-	// The symbol ID to use. See the documentation for a list. https://docs.coinapi.io/#list-all-symbols-get
+	// The symbol ID to use. See the documentation for a list.
+	// https://docs.coinapi.io/#list-all-symbols-get
+	//
 	SymbolID string `json:"symbol_id"`
 }

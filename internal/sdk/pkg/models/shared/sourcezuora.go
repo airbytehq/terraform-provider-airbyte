@@ -7,6 +7,34 @@ import (
 	"fmt"
 )
 
+// SourceZuoraDataQueryTypeEnum - Choose between `Live`, or `Unlimited` - the optimized, replicated database at 12 hours freshness for high volume extraction <a href="https://knowledgecenter.zuora.com/Central_Platform/Query/Data_Query/A_Overview_of_Data_Query#Query_Processing_Limitations">Link</a>
+type SourceZuoraDataQueryTypeEnum string
+
+const (
+	SourceZuoraDataQueryTypeEnumLive      SourceZuoraDataQueryTypeEnum = "Live"
+	SourceZuoraDataQueryTypeEnumUnlimited SourceZuoraDataQueryTypeEnum = "Unlimited"
+)
+
+func (e SourceZuoraDataQueryTypeEnum) ToPointer() *SourceZuoraDataQueryTypeEnum {
+	return &e
+}
+
+func (e *SourceZuoraDataQueryTypeEnum) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Live":
+		fallthrough
+	case "Unlimited":
+		*e = SourceZuoraDataQueryTypeEnum(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceZuoraDataQueryTypeEnum: %v", v)
+	}
+}
+
 type SourceZuoraZuoraEnum string
 
 const (
@@ -31,17 +59,67 @@ func (e *SourceZuoraZuoraEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceZuora - The values required to configure the source.
+// SourceZuoraTenantEndpointLocationEnum - Please choose the right endpoint where your Tenant is located. More info by this <a href="https://www.zuora.com/developer/api-reference/#section/Introduction/Access-to-the-API">Link</a>
+type SourceZuoraTenantEndpointLocationEnum string
+
+const (
+	SourceZuoraTenantEndpointLocationEnumUsProduction      SourceZuoraTenantEndpointLocationEnum = "US Production"
+	SourceZuoraTenantEndpointLocationEnumUsCloudProduction SourceZuoraTenantEndpointLocationEnum = "US Cloud Production"
+	SourceZuoraTenantEndpointLocationEnumUsAPISandbox      SourceZuoraTenantEndpointLocationEnum = "US API Sandbox"
+	SourceZuoraTenantEndpointLocationEnumUsCloudAPISandbox SourceZuoraTenantEndpointLocationEnum = "US Cloud API Sandbox"
+	SourceZuoraTenantEndpointLocationEnumUsCentralSandbox  SourceZuoraTenantEndpointLocationEnum = "US Central Sandbox"
+	SourceZuoraTenantEndpointLocationEnumUsPerformanceTest SourceZuoraTenantEndpointLocationEnum = "US Performance Test"
+	SourceZuoraTenantEndpointLocationEnumEuProduction      SourceZuoraTenantEndpointLocationEnum = "EU Production"
+	SourceZuoraTenantEndpointLocationEnumEuAPISandbox      SourceZuoraTenantEndpointLocationEnum = "EU API Sandbox"
+	SourceZuoraTenantEndpointLocationEnumEuCentralSandbox  SourceZuoraTenantEndpointLocationEnum = "EU Central Sandbox"
+)
+
+func (e SourceZuoraTenantEndpointLocationEnum) ToPointer() *SourceZuoraTenantEndpointLocationEnum {
+	return &e
+}
+
+func (e *SourceZuoraTenantEndpointLocationEnum) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "US Production":
+		fallthrough
+	case "US Cloud Production":
+		fallthrough
+	case "US API Sandbox":
+		fallthrough
+	case "US Cloud API Sandbox":
+		fallthrough
+	case "US Central Sandbox":
+		fallthrough
+	case "US Performance Test":
+		fallthrough
+	case "EU Production":
+		fallthrough
+	case "EU API Sandbox":
+		fallthrough
+	case "EU Central Sandbox":
+		*e = SourceZuoraTenantEndpointLocationEnum(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceZuoraTenantEndpointLocationEnum: %v", v)
+	}
+}
+
 type SourceZuora struct {
-	// Client ID
+	// Your OAuth user Client ID
 	ClientID string `json:"client_id"`
-	// Client Secret
+	// Your OAuth user Client Secret
 	ClientSecret string `json:"client_secret"`
-	// Defines whether use the SANDBOX or PRODUCTION environment.
-	IsSandbox  *bool                `json:"is_sandbox,omitempty"`
-	SourceType SourceZuoraZuoraEnum `json:"sourceType"`
+	// Choose between `Live`, or `Unlimited` - the optimized, replicated database at 12 hours freshness for high volume extraction <a href="https://knowledgecenter.zuora.com/Central_Platform/Query/Data_Query/A_Overview_of_Data_Query#Query_Processing_Limitations">Link</a>
+	DataQuery  SourceZuoraDataQueryTypeEnum `json:"data_query"`
+	SourceType SourceZuoraZuoraEnum         `json:"sourceType"`
 	// Start Date in format: YYYY-MM-DD
 	StartDate string `json:"start_date"`
-	// The amount of days for each data-chunk begining from start_date. Bigger the value - faster the fetch. (Min=1, as for a Day; Max=364, as for a Year).
-	WindowInDays *int64 `json:"window_in_days,omitempty"`
+	// Please choose the right endpoint where your Tenant is located. More info by this <a href="https://www.zuora.com/developer/api-reference/#section/Introduction/Access-to-the-API">Link</a>
+	TenantEndpoint SourceZuoraTenantEndpointLocationEnum `json:"tenant_endpoint"`
+	// The amount of days for each data-chunk begining from start_date. Bigger the value - faster the fetch. (0.1 - as for couple of hours, 1 - as for a Day; 364 - as for a Year).
+	WindowInDays *string `json:"window_in_days,omitempty"`
 }

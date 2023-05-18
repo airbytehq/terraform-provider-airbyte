@@ -31,7 +31,6 @@ func (e *SourcePostmarkappPostmarkappEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourcePostmarkapp - The values required to configure the source.
 type SourcePostmarkapp struct {
 	// API Key for account
 	XPostmarkAccountToken string `json:"X-Postmark-Account-Token"`

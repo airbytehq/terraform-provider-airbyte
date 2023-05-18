@@ -9,6 +9,7 @@ import (
 )
 
 // SourceFacebookMarketingInsightConfigValidActionBreakdownsEnum - Generic enumeration.
+//
 // Derive from this class to define new enumerations.
 type SourceFacebookMarketingInsightConfigValidActionBreakdownsEnum string
 
@@ -62,6 +63,7 @@ func (e *SourceFacebookMarketingInsightConfigValidActionBreakdownsEnum) Unmarsha
 }
 
 // SourceFacebookMarketingInsightConfigValidBreakdownsEnum - Generic enumeration.
+//
 // Derive from this class to define new enumerations.
 type SourceFacebookMarketingInsightConfigValidBreakdownsEnum string
 
@@ -166,6 +168,7 @@ func (e *SourceFacebookMarketingInsightConfigValidBreakdownsEnum) UnmarshalJSON(
 }
 
 // SourceFacebookMarketingInsightConfigValidEnumsEnum - Generic enumeration.
+//
 // Derive from this class to define new enumerations.
 type SourceFacebookMarketingInsightConfigValidEnumsEnum string
 
@@ -661,7 +664,6 @@ func (e *SourceFacebookMarketingFacebookMarketingEnum) UnmarshalJSON(data []byte
 	}
 }
 
-// SourceFacebookMarketing - The values required to configure the source.
 type SourceFacebookMarketing struct {
 	// The value of the generated access token. From your App’s Dashboard, click on "Marketing API" then "Tools". Select permissions <b>ads_management, ads_read, read_insights, business_management</b>. Then click on "Get token". See the <a href="https://docs.airbyte.com/integrations/sources/facebook-marketing">docs</a> for more information.
 	AccessToken string `json:"access_token"`
@@ -672,7 +674,7 @@ type SourceFacebookMarketing struct {
 	// A list which contains ad statistics entries, each entry must have a name and can contains fields, breakdowns or action_breakdowns. Click on "add" to fill this field.
 	CustomInsights []SourceFacebookMarketingInsightConfig `json:"custom_insights,omitempty"`
 	// The date until which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DDT00:00:00Z. All data generated between the start date and this end date will be replicated. Not setting this option will result in always syncing the latest data.
-	EndDate *string `json:"end_date,omitempty"`
+	EndDate *time.Time `json:"end_date,omitempty"`
 	// Set to active if you want to fetch the thumbnail_url and store the result in thumbnail_data_url for each Ad Creative.
 	FetchThumbnailImages *bool `json:"fetch_thumbnail_images,omitempty"`
 	// Set to active if you want to include data from deleted Campaigns, Ads, and AdSets.

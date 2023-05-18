@@ -31,7 +31,6 @@ func (e *SourceGreenhouseGreenhouseEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceGreenhouse - The values required to configure the source.
 type SourceGreenhouse struct {
 	// Greenhouse API Key. See the <a href="https://docs.airbyte.com/integrations/sources/greenhouse">docs</a> for more information on how to generate this key.
 	APIKey     string                         `json:"api_key"`

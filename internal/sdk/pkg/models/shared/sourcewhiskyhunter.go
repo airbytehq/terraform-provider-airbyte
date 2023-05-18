@@ -31,7 +31,6 @@ func (e *SourceWhiskyHunterWhiskyHunterEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceWhiskyHunter - The values required to configure the source.
 type SourceWhiskyHunter struct {
 	SourceType SourceWhiskyHunterWhiskyHunterEnum `json:"sourceType"`
 }

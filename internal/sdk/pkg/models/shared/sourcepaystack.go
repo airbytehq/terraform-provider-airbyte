@@ -32,7 +32,6 @@ func (e *SourcePaystackPaystackEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourcePaystack - The values required to configure the source.
 type SourcePaystack struct {
 	// When set, the connector will always reload data from the past N days, where N is the value set here. This is useful if your data is updated after creation.
 	LookbackWindowDays *int64 `json:"lookback_window_days,omitempty"`

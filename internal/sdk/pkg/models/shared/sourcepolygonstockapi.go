@@ -32,7 +32,6 @@ func (e *SourcePolygonStockAPIPolygonStockAPIEnum) UnmarshalJSON(data []byte) er
 	}
 }
 
-// SourcePolygonStockAPI - The values required to configure the source.
 type SourcePolygonStockAPI struct {
 	// Determines whether or not the results are adjusted for splits. By default, results are adjusted and set to true. Set this to false to get results that are NOT adjusted for splits.
 	Adjusted *string `json:"adjusted,omitempty"`

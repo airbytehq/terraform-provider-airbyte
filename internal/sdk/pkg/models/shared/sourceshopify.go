@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/types"
 	"bytes"
 	"encoding/json"
 	"errors"
@@ -167,7 +168,6 @@ func (e *SourceShopifyShopifyEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceShopify - The values required to configure the source.
 type SourceShopify struct {
 	// The authorization method to use to retrieve data from Shopify
 	Credentials *SourceShopifyShopifyAuthorizationMethod `json:"credentials,omitempty"`
@@ -175,5 +175,5 @@ type SourceShopify struct {
 	Shop       string                   `json:"shop"`
 	SourceType SourceShopifyShopifyEnum `json:"sourceType"`
 	// The date you would like to replicate data from. Format: YYYY-MM-DD. Any data before this date will not be replicated.
-	StartDate string `json:"start_date"`
+	StartDate types.Date `json:"start_date"`
 }

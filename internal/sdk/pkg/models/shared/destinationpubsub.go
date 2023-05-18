@@ -31,7 +31,6 @@ func (e *DestinationPubsubPubsubEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// DestinationPubsub - The values required to configure the destination.
 type DestinationPubsub struct {
 	// Number of ms before the buffer is flushed
 	BatchingDelayThreshold *int64 `json:"batching_delay_threshold,omitempty"`

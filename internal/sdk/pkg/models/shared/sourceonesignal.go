@@ -38,7 +38,6 @@ func (e *SourceOnesignalOnesignalEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceOnesignal - The values required to configure the source.
 type SourceOnesignal struct {
 	// Applications keys, see the <a href="https://documentation.onesignal.com/docs/accounts-and-keys">docs</a> for more information on how to obtain this data
 	Applications []SourceOnesignalApplications `json:"applications"`

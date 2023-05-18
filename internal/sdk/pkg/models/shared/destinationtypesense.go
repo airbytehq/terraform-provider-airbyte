@@ -31,7 +31,6 @@ func (e *DestinationTypesenseTypesenseEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// DestinationTypesense - The values required to configure the destination.
 type DestinationTypesense struct {
 	// Typesense API Key
 	APIKey string `json:"api_key"`

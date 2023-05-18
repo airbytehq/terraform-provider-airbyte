@@ -31,7 +31,6 @@ func (e *SourceTheGuardianAPITheGuardianAPIEnum) UnmarshalJSON(data []byte) erro
 	}
 }
 
-// SourceTheGuardianAPI - The values required to configure the source.
 type SourceTheGuardianAPI struct {
 	// Your API Key. See <a href="https://open-platform.theguardian.com/access/">here</a>. The key is case sensitive.
 	APIKey string `json:"api_key"`

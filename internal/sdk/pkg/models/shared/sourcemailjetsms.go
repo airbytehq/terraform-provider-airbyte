@@ -31,7 +31,6 @@ func (e *SourceMailjetSmsMailjetSmsEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceMailjetSms - The values required to configure the source.
 type SourceMailjetSms struct {
 	// Retrieve SMS messages created before the specified timestamp. Required format - Unix timestamp.
 	EndDate    *int64                         `json:"end_date,omitempty"`

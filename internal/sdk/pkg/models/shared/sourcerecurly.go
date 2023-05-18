@@ -31,7 +31,6 @@ func (e *SourceRecurlyRecurlyEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceRecurly - The values required to configure the source.
 type SourceRecurly struct {
 	// Recurly API Key. See the  <a href="https://docs.airbyte.com/integrations/sources/recurly">docs</a> for more information on how to generate this key.
 	APIKey string `json:"api_key"`

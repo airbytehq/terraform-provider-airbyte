@@ -194,7 +194,6 @@ func (e *SourceMixpanelMixpanelEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceMixpanel - The values required to configure the source.
 type SourceMixpanel struct {
 	//  A period of time for attributing results to ads and the lookback period after those actions occur during which ad results are counted. Default attribution window is 5 days.
 	AttributionWindow *int64 `json:"attribution_window,omitempty"`

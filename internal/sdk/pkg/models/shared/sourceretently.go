@@ -263,7 +263,6 @@ func (e *SourceRetentlyRetentlyEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceRetently - The values required to configure the source.
 type SourceRetently struct {
 	// Choose how to authenticate to Retently
 	Credentials *SourceRetentlyAuthenticationMechanism `json:"credentials,omitempty"`

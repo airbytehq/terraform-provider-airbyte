@@ -31,7 +31,6 @@ func (e *SourcePokeapiPokeapiEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourcePokeapi - The values required to configure the source.
 type SourcePokeapi struct {
 	// Pokemon requested from the API.
 	PokemonName string                   `json:"pokemon_name"`

@@ -31,7 +31,6 @@ func (e *SourceGetlagoGetlagoEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceGetlago - The values required to configure the source.
 type SourceGetlago struct {
 	// Your API Key. See <a href="https://doc.getlago.com/docs/api/intro">here</a>.
 	APIKey     string                   `json:"api_key"`

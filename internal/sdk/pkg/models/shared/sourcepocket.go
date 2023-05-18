@@ -155,7 +155,6 @@ func (e *SourcePocketStateEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourcePocket - The values required to configure the source.
 type SourcePocket struct {
 	// The user's Pocket access token.
 	AccessToken string `json:"access_token"`

@@ -59,7 +59,6 @@ func (e *SourceCoinmarketcapCoinmarketcapEnum) UnmarshalJSON(data []byte) error 
 	}
 }
 
-// SourceCoinmarketcap - The values required to configure the source.
 type SourceCoinmarketcap struct {
 	// Your API Key. See <a href="https://coinmarketcap.com/api/documentation/v1/#section/Authentication">here</a>. The token is case sensitive.
 	APIKey string `json:"api_key"`

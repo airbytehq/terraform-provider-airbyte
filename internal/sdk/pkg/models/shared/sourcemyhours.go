@@ -31,7 +31,6 @@ func (e *SourceMyHoursMyHoursEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceMyHours - The values required to configure the source.
 type SourceMyHours struct {
 	// Your My Hours username
 	Email string `json:"email"`

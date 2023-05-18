@@ -31,7 +31,6 @@ func (e *DestinationScyllaScyllaEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// DestinationScylla - The values required to configure the destination.
 type DestinationScylla struct {
 	// Address to connect to.
 	Address         string                      `json:"address"`

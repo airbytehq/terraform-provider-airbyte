@@ -31,7 +31,6 @@ func (e *SourceGoogleWorkspaceAdminReportsGoogleWorkspaceAdminReportsEnum) Unmar
 	}
 }
 
-// SourceGoogleWorkspaceAdminReports - The values required to configure the source.
 type SourceGoogleWorkspaceAdminReports struct {
 	// The contents of the JSON service account key. See the <a href="https://developers.google.com/admin-sdk/reports/v1/guides/delegation">docs</a> for more information on how to generate this key.
 	CredentialsJSON string `json:"credentials_json"`

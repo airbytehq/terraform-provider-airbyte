@@ -31,7 +31,6 @@ func (e *DestinationKinesisKinesisEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// DestinationKinesis - The values required to configure the destination.
 type DestinationKinesis struct {
 	// Generate the AWS Access Key for current user.
 	AccessKey string `json:"accessKey"`

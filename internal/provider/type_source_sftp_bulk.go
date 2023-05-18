@@ -13,6 +13,7 @@ type SourceSftpBulk struct {
 	Password       types.String `tfsdk:"password"`
 	Port           types.Int64  `tfsdk:"port"`
 	PrivateKey     types.String `tfsdk:"private_key"`
+	Separator      types.String `tfsdk:"separator"`
 	SourceType     types.String `tfsdk:"source_type"`
 	StartDate      types.String `tfsdk:"start_date"`
 	StreamName     types.String `tfsdk:"stream_name"`

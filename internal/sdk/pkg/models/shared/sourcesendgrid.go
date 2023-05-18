@@ -32,7 +32,6 @@ func (e *SourceSendgridSendgridEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceSendgrid - The values required to configure the source.
 type SourceSendgrid struct {
 	// API Key, use <a href="https://app.sendgrid.com/settings/api_keys/">admin</a> to generate this key.
 	Apikey     string                     `json:"apikey"`

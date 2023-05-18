@@ -164,7 +164,6 @@ func (e *SourceGithubGithubEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceGithub - The values required to configure the source.
 type SourceGithub struct {
 	// Space-delimited list of GitHub repository branches to pull commits for, e.g. `airbytehq/airbyte/master`. If no branches are specified for a repository, the default branch will be pulled.
 	Branch *string `json:"branch,omitempty"`
@@ -173,8 +172,10 @@ type SourceGithub struct {
 	// The Github connector contains several streams with a large amount of data. The page size of such streams depends on the size of your repository. We recommended that you specify values between 10 and 30.
 	PageSizeForLargeStreams *int64 `json:"page_size_for_large_streams,omitempty"`
 	// Space-delimited list of GitHub organizations/repositories, e.g. `airbytehq/airbyte` for single repository, `airbytehq/*` for get all repositories from organization and `airbytehq/airbyte airbytehq/another-repo` for multiple repositories.
-	Repository string                 `json:"repository"`
-	SourceType SourceGithubGithubEnum `json:"sourceType"`
+	Repository string `json:"repository"`
+	// The GitHub API allows for a maximum of 5000 requests per hour (15000 for Github Enterprise). You can specify a lower value to limit your use of the API quota.
+	RequestsPerHour *int64                 `json:"requests_per_hour,omitempty"`
+	SourceType      SourceGithubGithubEnum `json:"sourceType"`
 	// The date from which you'd like to replicate data from GitHub in the format YYYY-MM-DDT00:00:00Z. For the streams which support this configuration, only data generated on or after the start date will be replicated. This field doesn't apply to all streams, see the <a href="https://docs.airbyte.com/integrations/sources/github">docs</a> for more info
 	StartDate time.Time `json:"start_date"`
 }

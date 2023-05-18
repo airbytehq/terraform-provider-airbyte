@@ -392,7 +392,6 @@ func (e *DestinationS3GlueS3BucketRegionEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// DestinationS3Glue - The values required to configure the destination.
 type DestinationS3Glue struct {
 	// The access key ID to access the S3 bucket. Airbyte requires Read and Write permissions to the given bucket. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">here</a>.
 	AccessKeyID     *string                     `json:"access_key_id,omitempty"`

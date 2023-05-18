@@ -31,7 +31,6 @@ func (e *SourceGlassfrogGlassfrogEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceGlassfrog - The values required to configure the source.
 type SourceGlassfrog struct {
 	// API key provided by Glassfrog
 	APIKey     string                       `json:"api_key"`

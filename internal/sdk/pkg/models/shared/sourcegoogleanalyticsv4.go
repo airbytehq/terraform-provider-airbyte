@@ -169,7 +169,6 @@ func (e *SourceGoogleAnalyticsV4GoogleAnalyticsV4Enum) UnmarshalJSON(data []byte
 	}
 }
 
-// SourceGoogleAnalyticsV4 - The values required to configure the source.
 type SourceGoogleAnalyticsV4 struct {
 	// Credentials for the service
 	Credentials *SourceGoogleAnalyticsV4Credentials `json:"credentials,omitempty"`

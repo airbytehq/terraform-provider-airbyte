@@ -140,7 +140,6 @@ func (e *SourceZohoCrmZohoCrmEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceZohoCrm - The values required to configure the source.
 type SourceZohoCrm struct {
 	// OAuth2.0 Client ID
 	ClientID string `json:"client_id"`

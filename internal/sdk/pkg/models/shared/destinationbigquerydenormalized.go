@@ -308,6 +308,8 @@ func (e *DestinationBigqueryDenormalizedLoadingMethodGCSStagingMethodEnum) Unmar
 type DestinationBigqueryDenormalizedLoadingMethodGCSStaging struct {
 	// An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>.
 	Credential DestinationBigqueryDenormalizedLoadingMethodGCSStagingCredential `json:"credential"`
+	// Number of file buffers allocated for writing data. Increasing this number is beneficial for connections using Change Data Capture (CDC) and up to the number of streams within a connection. Increasing the number of file buffers past the maximum number of streams has deteriorating effects
+	FileBufferCount *int64 `json:"file_buffer_count,omitempty"`
 	// The name of the GCS bucket. Read more <a href="https://cloud.google.com/storage/docs/naming-buckets">here</a>.
 	GcsBucketName string `json:"gcs_bucket_name"`
 	// Directory under the GCS bucket where data will be written. Read more <a href="https://cloud.google.com/storage/docs/locations">here</a>.
@@ -414,7 +416,6 @@ func (u DestinationBigqueryDenormalizedLoadingMethod) MarshalJSON() ([]byte, err
 	return nil, nil
 }
 
-// DestinationBigqueryDenormalized - The values required to configure the destination.
 type DestinationBigqueryDenormalized struct {
 	// Google BigQuery client's chunk (buffer) size (MIN=1, MAX = 15) for each table. The size that will be written by a single RPC. Written data will be buffered and only flushed upon reaching this size or closing the channel. The default 15MB value is used if not set explicitly. Read more <a href="https://googleapis.dev/python/bigquery/latest/generated/google.cloud.bigquery.client.Client.html">here</a>.
 	BigQueryClientBufferSizeMb *int64 `json:"big_query_client_buffer_size_mb,omitempty"`

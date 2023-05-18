@@ -31,7 +31,6 @@ func (e *SourceGoogleWebfontsGoogleWebfontsEnum) UnmarshalJSON(data []byte) erro
 	}
 }
 
-// SourceGoogleWebfonts - The values required to configure the source.
 type SourceGoogleWebfonts struct {
 	// Optional, Available params- json, media, proto
 	Alt *string `json:"alt,omitempty"`

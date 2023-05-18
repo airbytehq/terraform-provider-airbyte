@@ -31,7 +31,6 @@ func (e *SourceIp2whoisIp2whoisEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceIp2whois - The values required to configure the source.
 type SourceIp2whois struct {
 	// Your API Key. See <a href="https://www.ip2whois.com/developers-api">here</a>.
 	APIKey *string `json:"api_key,omitempty"`

@@ -32,7 +32,6 @@ func (e *SourceTrelloTrelloEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceTrello - The values required to configure the source.
 type SourceTrello struct {
 	// IDs of the boards to replicate data from. If left empty, data from all boards to which you have access will be replicated.
 	BoardIds []string `json:"board_ids,omitempty"`

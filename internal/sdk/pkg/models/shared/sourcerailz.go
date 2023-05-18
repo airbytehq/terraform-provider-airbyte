@@ -31,7 +31,6 @@ func (e *SourceRailzRailzEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceRailz - The values required to configure the source.
 type SourceRailz struct {
 	// Client ID (client_id)
 	ClientID string `json:"client_id"`

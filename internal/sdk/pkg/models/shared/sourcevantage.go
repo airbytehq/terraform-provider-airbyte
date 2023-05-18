@@ -31,7 +31,6 @@ func (e *SourceVantageVantageEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceVantage - The values required to configure the source.
 type SourceVantage struct {
 	// Your API Access token. See <a href="https://vantage.readme.io/reference/authentication">here</a>.
 	AccessToken string                   `json:"access_token"`

@@ -62,7 +62,6 @@ func (e *SourceKlarnaKlarnaEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceKlarna - The values required to configure the source.
 type SourceKlarna struct {
 	// A string which is associated with your Merchant ID and is used to authorize use of Klarna's APIs (https://developers.klarna.com/api/#authentication)
 	Password string `json:"password"`

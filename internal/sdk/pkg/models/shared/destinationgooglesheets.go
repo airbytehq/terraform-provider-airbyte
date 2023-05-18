@@ -41,7 +41,6 @@ func (e *DestinationGoogleSheetsGoogleSheetsEnum) UnmarshalJSON(data []byte) err
 	}
 }
 
-// DestinationGoogleSheets - The values required to configure the destination.
 type DestinationGoogleSheets struct {
 	// Google API Credentials for connecting to Google Sheets and Google Drive APIs
 	Credentials     DestinationGoogleSheetsAuthenticationViaGoogleOAuth `json:"credentials"`

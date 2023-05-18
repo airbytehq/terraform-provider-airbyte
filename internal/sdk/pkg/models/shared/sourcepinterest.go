@@ -195,11 +195,10 @@ func (e *SourcePinterestStatusEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourcePinterest - The values required to configure the source.
 type SourcePinterest struct {
 	Credentials *SourcePinterestAuthorizationMethod `json:"credentials,omitempty"`
 	SourceType  SourcePinterestPinterestEnum        `json:"sourceType"`
-	// A date in the format YYYY-MM-DD. If you have not set a date, it would be defaulted to latest allowed date by api (914 days from today).
+	// A date in the format YYYY-MM-DD. If you have not set a date, it would be defaulted to latest allowed date by api (89 days from today).
 	StartDate string `json:"start_date"`
 	// Entity statuses based off of campaigns, ad_groups, and ads. If you do not have a status set, it will be ignored completely.
 	Status []SourcePinterestStatusEnum `json:"status,omitempty"`

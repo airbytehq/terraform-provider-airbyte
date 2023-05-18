@@ -332,7 +332,6 @@ func (e *DestinationDatabricksDatabricksEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// DestinationDatabricks - The values required to configure the destination.
 type DestinationDatabricks struct {
 	// You must agree to the Databricks JDBC Driver <a href="https://databricks.com/jdbc-odbc-driver-license">Terms & Conditions</a> to use this connector.
 	AcceptTerms bool `json:"accept_terms"`

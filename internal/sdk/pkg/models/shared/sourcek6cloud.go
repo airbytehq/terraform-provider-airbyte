@@ -31,7 +31,6 @@ func (e *SourceK6CloudK6CloudEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceK6Cloud - The values required to configure the source.
 type SourceK6Cloud struct {
 	// Your API Token. See <a href="https://k6.io/docs/cloud/integrations/token/">here</a>. The key is case sensitive.
 	APIToken   string                   `json:"api_token"`

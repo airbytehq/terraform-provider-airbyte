@@ -88,7 +88,6 @@ func (e *SourceYoutubeAnalyticsYoutubeAnalyticsEnum) UnmarshalJSON(data []byte) 
 	}
 }
 
-// SourceYoutubeAnalytics - The values required to configure the source.
 type SourceYoutubeAnalytics struct {
 	Credentials SourceYoutubeAnalyticsAuthenticateViaOAuth20 `json:"credentials"`
 	SourceType  SourceYoutubeAnalyticsYoutubeAnalyticsEnum   `json:"sourceType"`

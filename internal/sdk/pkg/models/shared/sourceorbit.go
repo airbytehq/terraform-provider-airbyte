@@ -31,7 +31,6 @@ func (e *SourceOrbitOrbitEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceOrbit - The values required to configure the source.
 type SourceOrbit struct {
 	// Authorizes you to work with Orbit workspaces associated with the token.
 	APIToken   string               `json:"api_token"`

@@ -118,7 +118,6 @@ func (e *SourceQuickbooksQuickbooksEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceQuickbooks - The values required to configure the source.
 type SourceQuickbooks struct {
 	Credentials SourceQuickbooksAuthorizationMethod `json:"credentials"`
 	// Determines whether to use the sandbox or production environment.

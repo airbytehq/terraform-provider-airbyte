@@ -31,7 +31,6 @@ func (e *SourceDremioDremioEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceDremio - The values required to configure the source.
 type SourceDremio struct {
 	// API Key that is generated when you authenticate to Dremio API
 	APIKey string `json:"api_key"`

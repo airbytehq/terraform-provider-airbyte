@@ -231,7 +231,6 @@ func (e *SourceOpenweatherUnitsEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceOpenweather - The values required to configure the source.
 type SourceOpenweather struct {
 	// Your OpenWeather API Key. See <a href="https://openweathermap.org/api">here</a>. The key is case sensitive.
 	Appid string `json:"appid"`

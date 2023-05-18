@@ -31,7 +31,6 @@ func (e *SourceSentrySentryEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceSentry - The values required to configure the source.
 type SourceSentry struct {
 	// Log into Sentry and then <a href="https://sentry.io/settings/account/api/auth-tokens/">create authentication tokens</a>.For self-hosted, you can find or create authentication tokens by visiting "{instance_url_prefix}/settings/account/api/auth-tokens/"
 	AuthToken string `json:"auth_token"`

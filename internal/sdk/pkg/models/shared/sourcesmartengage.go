@@ -31,7 +31,6 @@ func (e *SourceSmartengageSmartengageEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceSmartengage - The values required to configure the source.
 type SourceSmartengage struct {
 	// API Key
 	APIKey     string                           `json:"api_key"`

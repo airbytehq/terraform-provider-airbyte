@@ -191,7 +191,6 @@ func (e *SourceE2eTestCloudTypeEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceE2eTestCloud - The values required to configure the source.
 type SourceE2eTestCloud struct {
 	// Number of records to emit per stream. Min 1. Max 100 billion.
 	MaxMessages int64 `json:"max_messages"`

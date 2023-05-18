@@ -159,7 +159,6 @@ func (e *SourceSurveySparrowSurveySparrowEnum) UnmarshalJSON(data []byte) error 
 	}
 }
 
-// SourceSurveySparrow - The values required to configure the source.
 type SourceSurveySparrow struct {
 	// Your access token. See <a href="https://developers.surveysparrow.com/rest-apis#authentication">here</a>. The key is case sensitive.
 	AccessToken string `json:"access_token"`

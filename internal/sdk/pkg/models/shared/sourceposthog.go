@@ -32,7 +32,6 @@ func (e *SourcePosthogPosthogEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourcePosthog - The values required to configure the source.
 type SourcePosthog struct {
 	// API Key. See the <a href="https://docs.airbyte.com/integrations/sources/posthog">docs</a> for information on how to generate this key.
 	APIKey string `json:"api_key"`

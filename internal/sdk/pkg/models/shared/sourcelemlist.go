@@ -31,7 +31,6 @@ func (e *SourceLemlistLemlistEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceLemlist - The values required to configure the source.
 type SourceLemlist struct {
 	// Lemlist API key.
 	APIKey     string                   `json:"api_key"`

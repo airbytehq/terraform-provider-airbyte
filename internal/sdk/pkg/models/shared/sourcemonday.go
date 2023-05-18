@@ -167,7 +167,6 @@ func (e *SourceMondayMondayEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceMonday - The values required to configure the source.
 type SourceMonday struct {
 	Credentials *SourceMondayAuthorizationMethod `json:"credentials,omitempty"`
 	SourceType  SourceMondayMondayEnum           `json:"sourceType"`

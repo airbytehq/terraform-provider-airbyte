@@ -32,7 +32,6 @@ func (e *SourceStripeStripeEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceStripe - The values required to configure the source.
 type SourceStripe struct {
 	// Your Stripe account ID (starts with 'acct_', find yours <a href="https://dashboard.stripe.com/settings/account">here</a>).
 	AccountID string `json:"account_id"`

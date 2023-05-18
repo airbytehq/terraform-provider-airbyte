@@ -161,7 +161,6 @@ func (e *SourceAmazonAdsStateFilterEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceAmazonAds - The values required to configure the source.
 type SourceAmazonAds struct {
 	AuthType *SourceAmazonAdsAuthTypeEnum `json:"auth_type,omitempty"`
 	// The client ID of your Amazon Ads developer application. See the <a href="https://advertising.amazon.com/API/docs/en-us/get-started/generate-api-tokens#retrieve-your-client-id-and-client-secret">docs</a> for more information.

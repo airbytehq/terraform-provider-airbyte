@@ -172,7 +172,6 @@ func (e *SourceHubspotHubspotEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceHubspot - The values required to configure the source.
 type SourceHubspot struct {
 	// Choose how to authenticate to HubSpot.
 	Credentials SourceHubspotAuthentication `json:"credentials"`

@@ -31,7 +31,6 @@ func (e *SourceClickupAPIClickupAPIEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceClickupAPI - The values required to configure the source.
 type SourceClickupAPI struct {
 	// Every ClickUp API call required authentication. This field is your personal API token. See <a href="https://clickup.com/api/developer-portal/authentication/#personal-token">here</a>.
 	APIToken string `json:"api_token"`

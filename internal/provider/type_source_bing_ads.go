@@ -9,6 +9,7 @@ type SourceBingAds struct {
 	ClientID         types.String `tfsdk:"client_id"`
 	ClientSecret     types.String `tfsdk:"client_secret"`
 	DeveloperToken   types.String `tfsdk:"developer_token"`
+	LookbackWindow   types.Int64  `tfsdk:"lookback_window"`
 	RefreshToken     types.String `tfsdk:"refresh_token"`
 	ReportsStartDate types.String `tfsdk:"reports_start_date"`
 	SourceType       types.String `tfsdk:"source_type"`

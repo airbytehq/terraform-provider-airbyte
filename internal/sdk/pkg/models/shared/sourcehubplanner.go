@@ -31,7 +31,6 @@ func (e *SourceHubplannerHubplannerEnum) UnmarshalJSON(data []byte) error {
 	}
 }
 
-// SourceHubplanner - The values required to configure the source.
 type SourceHubplanner struct {
 	// Hubplanner API key. See https://github.com/hubplanner/API#authentication for more details.
 	APIKey     string                         `json:"api_key"`
