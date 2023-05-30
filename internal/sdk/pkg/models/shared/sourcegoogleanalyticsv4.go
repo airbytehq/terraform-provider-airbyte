@@ -9,66 +9,66 @@ import (
 	"fmt"
 )
 
-type SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthenticationAuthTypeEnum string
+type SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthenticationAuthType string
 
 const (
-	SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthenticationAuthTypeEnumService SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthenticationAuthTypeEnum = "Service"
+	SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthenticationAuthTypeService SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthenticationAuthType = "Service"
 )
 
-func (e SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthenticationAuthTypeEnum) ToPointer() *SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthenticationAuthTypeEnum {
+func (e SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthenticationAuthType) ToPointer() *SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthenticationAuthType {
 	return &e
 }
 
-func (e *SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthenticationAuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthenticationAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Service":
-		*e = SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthenticationAuthTypeEnum(v)
+		*e = SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthenticationAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthenticationAuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthenticationAuthType: %v", v)
 	}
 }
 
 // SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthentication - Credentials for the service
 type SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthentication struct {
-	AuthType *SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthenticationAuthTypeEnum `json:"auth_type,omitempty"`
+	AuthType *SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthenticationAuthType `json:"auth_type,omitempty"`
 	// The JSON key of the service account to use for authorization
 	CredentialsJSON string `json:"credentials_json"`
 }
 
-type SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauthAuthTypeEnum string
+type SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauthAuthType string
 
 const (
-	SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauthAuthTypeEnumClient SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauthAuthTypeEnum = "Client"
+	SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauthAuthTypeClient SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauthAuthType = "Client"
 )
 
-func (e SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauthAuthTypeEnum) ToPointer() *SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauthAuthTypeEnum {
+func (e SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauthAuthType) ToPointer() *SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauthAuthType {
 	return &e
 }
 
-func (e *SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauthAuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauthAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Client":
-		*e = SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauthAuthTypeEnum(v)
+		*e = SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauthAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauthAuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauthAuthType: %v", v)
 	}
 }
 
 // SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth - Credentials for the service
 type SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth struct {
 	// Access Token for making authenticated requests.
-	AccessToken *string                                                                   `json:"access_token,omitempty"`
-	AuthType    *SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauthAuthTypeEnum `json:"auth_type,omitempty"`
+	AccessToken *string                                                               `json:"access_token,omitempty"`
+	AuthType    *SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauthAuthType `json:"auth_type,omitempty"`
 	// The Client ID of your Google Analytics developer application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your Google Analytics developer application.
@@ -145,27 +145,27 @@ func (u SourceGoogleAnalyticsV4Credentials) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-type SourceGoogleAnalyticsV4GoogleAnalyticsV4Enum string
+type SourceGoogleAnalyticsV4GoogleAnalyticsV4 string
 
 const (
-	SourceGoogleAnalyticsV4GoogleAnalyticsV4EnumGoogleAnalyticsV4 SourceGoogleAnalyticsV4GoogleAnalyticsV4Enum = "google-analytics-v4"
+	SourceGoogleAnalyticsV4GoogleAnalyticsV4GoogleAnalyticsV4 SourceGoogleAnalyticsV4GoogleAnalyticsV4 = "google-analytics-v4"
 )
 
-func (e SourceGoogleAnalyticsV4GoogleAnalyticsV4Enum) ToPointer() *SourceGoogleAnalyticsV4GoogleAnalyticsV4Enum {
+func (e SourceGoogleAnalyticsV4GoogleAnalyticsV4) ToPointer() *SourceGoogleAnalyticsV4GoogleAnalyticsV4 {
 	return &e
 }
 
-func (e *SourceGoogleAnalyticsV4GoogleAnalyticsV4Enum) UnmarshalJSON(data []byte) error {
+func (e *SourceGoogleAnalyticsV4GoogleAnalyticsV4) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "google-analytics-v4":
-		*e = SourceGoogleAnalyticsV4GoogleAnalyticsV4Enum(v)
+		*e = SourceGoogleAnalyticsV4GoogleAnalyticsV4(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGoogleAnalyticsV4GoogleAnalyticsV4Enum: %v", v)
+		return fmt.Errorf("invalid value for SourceGoogleAnalyticsV4GoogleAnalyticsV4: %v", v)
 	}
 }
 
@@ -173,8 +173,8 @@ type SourceGoogleAnalyticsV4 struct {
 	// Credentials for the service
 	Credentials *SourceGoogleAnalyticsV4Credentials `json:"credentials,omitempty"`
 	// A JSON array describing the custom reports you want to sync from Google Analytics. See <a href="https://docs.airbyte.com/integrations/sources/google-analytics-v4#data-processing-latency">the docs</a> for more information about the exact format you can use to fill out this field.
-	CustomReports *string                                      `json:"custom_reports,omitempty"`
-	SourceType    SourceGoogleAnalyticsV4GoogleAnalyticsV4Enum `json:"sourceType"`
+	CustomReports *string                                  `json:"custom_reports,omitempty"`
+	SourceType    SourceGoogleAnalyticsV4GoogleAnalyticsV4 `json:"sourceType"`
 	// The date in the format YYYY-MM-DD. Any data before this date will not be replicated.
 	StartDate string `json:"start_date"`
 	// The ID for the Google Analytics View you want to fetch data from. This can be found from the <a href="https://ga-dev-tools.appspot.com/account-explorer/">Google Analytics Account Explorer</a>.

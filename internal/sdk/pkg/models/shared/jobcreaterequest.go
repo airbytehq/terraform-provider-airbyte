@@ -6,5 +6,5 @@ package shared
 type JobCreateRequest struct {
 	ConnectionID string `json:"connectionId"`
 	// Enum that describes the different types of jobs that the platform runs.
-	JobType JobTypeEnumEnum `json:"jobType"`
+	JobType JobTypeEnum `json:"jobType"`
 }

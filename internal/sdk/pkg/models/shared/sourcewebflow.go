@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type SourceWebflowWebflowEnum string
+type SourceWebflowWebflow string
 
 const (
-	SourceWebflowWebflowEnumWebflow SourceWebflowWebflowEnum = "webflow"
+	SourceWebflowWebflowWebflow SourceWebflowWebflow = "webflow"
 )
 
-func (e SourceWebflowWebflowEnum) ToPointer() *SourceWebflowWebflowEnum {
+func (e SourceWebflowWebflow) ToPointer() *SourceWebflowWebflow {
 	return &e
 }
 
-func (e *SourceWebflowWebflowEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceWebflowWebflow) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "webflow":
-		*e = SourceWebflowWebflowEnum(v)
+		*e = SourceWebflowWebflow(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceWebflowWebflowEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceWebflowWebflow: %v", v)
 	}
 }
 
@@ -35,6 +35,6 @@ type SourceWebflow struct {
 	// The API token for authenticating to Webflow. See https://university.webflow.com/lesson/intro-to-the-webflow-api
 	APIKey string `json:"api_key"`
 	// The id of the Webflow site you are requesting data from. See https://developers.webflow.com/#sites
-	SiteID     string                   `json:"site_id"`
-	SourceType SourceWebflowWebflowEnum `json:"sourceType"`
+	SiteID     string               `json:"site_id"`
+	SourceType SourceWebflowWebflow `json:"sourceType"`
 }

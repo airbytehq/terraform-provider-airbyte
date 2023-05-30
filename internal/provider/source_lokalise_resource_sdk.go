@@ -4,12 +4,13 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceLokaliseResourceModel) ToCreateSDKType() *shared.SourceLokaliseCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	projectID := r.Configuration.ProjectID.ValueString()
-	sourceType := shared.SourceLokaliseLokaliseEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceLokaliseLokalise(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceLokalise{
 		APIKey:     apiKey,
 		ProjectID:  projectID,
@@ -35,4 +36,11 @@ func (r *SourceLokaliseResourceModel) ToCreateSDKType() *shared.SourceLokaliseCr
 func (r *SourceLokaliseResourceModel) ToDeleteSDKType() *shared.SourceLokaliseCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceLokaliseResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

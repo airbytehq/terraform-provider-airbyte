@@ -5,6 +5,7 @@ package provider
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	customTypes "airbyte/internal/sdk/pkg/types"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceShopifyResourceModel) ToCreateSDKType() *shared.SourceShopifyCreateRequest {
@@ -12,7 +13,7 @@ func (r *SourceShopifyResourceModel) ToCreateSDKType() *shared.SourceShopifyCrea
 	var sourceShopifyShopifyAuthorizationMethodAPIPassword *shared.SourceShopifyShopifyAuthorizationMethodAPIPassword
 	if r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodAPIPassword != nil {
 		apiPassword := r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodAPIPassword.APIPassword.ValueString()
-		authMethod := shared.SourceShopifyShopifyAuthorizationMethodAPIPasswordAuthMethodEnum(r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodAPIPassword.AuthMethod.ValueString())
+		authMethod := shared.SourceShopifyShopifyAuthorizationMethodAPIPasswordAuthMethod(r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodAPIPassword.AuthMethod.ValueString())
 		sourceShopifyShopifyAuthorizationMethodAPIPassword = &shared.SourceShopifyShopifyAuthorizationMethodAPIPassword{
 			APIPassword: apiPassword,
 			AuthMethod:  authMethod,
@@ -31,7 +32,7 @@ func (r *SourceShopifyResourceModel) ToCreateSDKType() *shared.SourceShopifyCrea
 		} else {
 			accessToken = nil
 		}
-		authMethod1 := shared.SourceShopifyShopifyAuthorizationMethodOAuth20AuthMethodEnum(r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.AuthMethod.ValueString())
+		authMethod1 := shared.SourceShopifyShopifyAuthorizationMethodOAuth20AuthMethod(r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.AuthMethod.ValueString())
 		clientID := new(string)
 		if !r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientID.IsNull() {
 			*clientID = r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientID.ValueString()
@@ -57,8 +58,8 @@ func (r *SourceShopifyResourceModel) ToCreateSDKType() *shared.SourceShopifyCrea
 		}
 	}
 	shop := r.Configuration.Shop.ValueString()
-	sourceType := shared.SourceShopifyShopifyEnum(r.Configuration.SourceType.ValueString())
-	startDate, _ := customTypes.NewDate(r.Configuration.StartDate.ValueString())
+	sourceType := shared.SourceShopifyShopify(r.Configuration.SourceType.ValueString())
+	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceShopify{
 		Credentials: credentials,
 		Shop:        shop,
@@ -85,4 +86,11 @@ func (r *SourceShopifyResourceModel) ToCreateSDKType() *shared.SourceShopifyCrea
 func (r *SourceShopifyResourceModel) ToDeleteSDKType() *shared.SourceShopifyCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceShopifyResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

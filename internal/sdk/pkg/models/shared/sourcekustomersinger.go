@@ -7,34 +7,34 @@ import (
 	"fmt"
 )
 
-type SourceKustomerSingerKustomerSingerEnum string
+type SourceKustomerSingerKustomerSinger string
 
 const (
-	SourceKustomerSingerKustomerSingerEnumKustomerSinger SourceKustomerSingerKustomerSingerEnum = "kustomer-singer"
+	SourceKustomerSingerKustomerSingerKustomerSinger SourceKustomerSingerKustomerSinger = "kustomer-singer"
 )
 
-func (e SourceKustomerSingerKustomerSingerEnum) ToPointer() *SourceKustomerSingerKustomerSingerEnum {
+func (e SourceKustomerSingerKustomerSinger) ToPointer() *SourceKustomerSingerKustomerSinger {
 	return &e
 }
 
-func (e *SourceKustomerSingerKustomerSingerEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceKustomerSingerKustomerSinger) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "kustomer-singer":
-		*e = SourceKustomerSingerKustomerSingerEnum(v)
+		*e = SourceKustomerSingerKustomerSinger(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceKustomerSingerKustomerSingerEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceKustomerSingerKustomerSinger: %v", v)
 	}
 }
 
 type SourceKustomerSinger struct {
 	// Kustomer API Token. See the <a href="https://developer.kustomer.com/kustomer-api-docs/reference/authentication">docs</a> on how to obtain this
-	APIToken   string                                 `json:"api_token"`
-	SourceType SourceKustomerSingerKustomerSingerEnum `json:"sourceType"`
+	APIToken   string                             `json:"api_token"`
+	SourceType SourceKustomerSingerKustomerSinger `json:"sourceType"`
 	// The date from which you'd like to replicate the data
 	StartDate string `json:"start_date"`
 }

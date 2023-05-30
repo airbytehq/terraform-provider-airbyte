@@ -9,99 +9,99 @@ import (
 	"fmt"
 )
 
-type SourceMongodbMongoDBInstanceTypeMongoDBAtlasInstanceEnum string
+type SourceMongodbMongoDBInstanceTypeMongoDBAtlasInstance string
 
 const (
-	SourceMongodbMongoDBInstanceTypeMongoDBAtlasInstanceEnumAtlas SourceMongodbMongoDBInstanceTypeMongoDBAtlasInstanceEnum = "atlas"
+	SourceMongodbMongoDBInstanceTypeMongoDBAtlasInstanceAtlas SourceMongodbMongoDBInstanceTypeMongoDBAtlasInstance = "atlas"
 )
 
-func (e SourceMongodbMongoDBInstanceTypeMongoDBAtlasInstanceEnum) ToPointer() *SourceMongodbMongoDBInstanceTypeMongoDBAtlasInstanceEnum {
+func (e SourceMongodbMongoDBInstanceTypeMongoDBAtlasInstance) ToPointer() *SourceMongodbMongoDBInstanceTypeMongoDBAtlasInstance {
 	return &e
 }
 
-func (e *SourceMongodbMongoDBInstanceTypeMongoDBAtlasInstanceEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceMongodbMongoDBInstanceTypeMongoDBAtlasInstance) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "atlas":
-		*e = SourceMongodbMongoDBInstanceTypeMongoDBAtlasInstanceEnum(v)
+		*e = SourceMongodbMongoDBInstanceTypeMongoDBAtlasInstance(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMongodbMongoDBInstanceTypeMongoDBAtlasInstanceEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceMongodbMongoDBInstanceTypeMongoDBAtlasInstance: %v", v)
 	}
 }
 
 // SourceMongodbMongoDBInstanceTypeMongoDBAtlas - The MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.
 type SourceMongodbMongoDBInstanceTypeMongoDBAtlas struct {
 	// The URL of a cluster to connect to.
-	ClusterURL string                                                   `json:"cluster_url"`
-	Instance   SourceMongodbMongoDBInstanceTypeMongoDBAtlasInstanceEnum `json:"instance"`
+	ClusterURL string                                               `json:"cluster_url"`
+	Instance   SourceMongodbMongoDBInstanceTypeMongoDBAtlasInstance `json:"instance"`
 }
 
-type SourceMongodbMongoDbInstanceTypeReplicaSetInstanceEnum string
+type SourceMongodbMongoDbInstanceTypeReplicaSetInstance string
 
 const (
-	SourceMongodbMongoDbInstanceTypeReplicaSetInstanceEnumReplica SourceMongodbMongoDbInstanceTypeReplicaSetInstanceEnum = "replica"
+	SourceMongodbMongoDbInstanceTypeReplicaSetInstanceReplica SourceMongodbMongoDbInstanceTypeReplicaSetInstance = "replica"
 )
 
-func (e SourceMongodbMongoDbInstanceTypeReplicaSetInstanceEnum) ToPointer() *SourceMongodbMongoDbInstanceTypeReplicaSetInstanceEnum {
+func (e SourceMongodbMongoDbInstanceTypeReplicaSetInstance) ToPointer() *SourceMongodbMongoDbInstanceTypeReplicaSetInstance {
 	return &e
 }
 
-func (e *SourceMongodbMongoDbInstanceTypeReplicaSetInstanceEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceMongodbMongoDbInstanceTypeReplicaSetInstance) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "replica":
-		*e = SourceMongodbMongoDbInstanceTypeReplicaSetInstanceEnum(v)
+		*e = SourceMongodbMongoDbInstanceTypeReplicaSetInstance(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMongodbMongoDbInstanceTypeReplicaSetInstanceEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceMongodbMongoDbInstanceTypeReplicaSetInstance: %v", v)
 	}
 }
 
 // SourceMongodbMongoDbInstanceTypeReplicaSet - The MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.
 type SourceMongodbMongoDbInstanceTypeReplicaSet struct {
-	Instance SourceMongodbMongoDbInstanceTypeReplicaSetInstanceEnum `json:"instance"`
+	Instance SourceMongodbMongoDbInstanceTypeReplicaSetInstance `json:"instance"`
 	// A replica set in MongoDB is a group of mongod processes that maintain the same data set.
 	ReplicaSet *string `json:"replica_set,omitempty"`
 	// The members of a replica set. Please specify `host`:`port` of each member separated by comma.
 	ServerAddresses string `json:"server_addresses"`
 }
 
-type SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstanceEnum string
+type SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstance string
 
 const (
-	SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstanceEnumStandalone SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstanceEnum = "standalone"
+	SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstanceStandalone SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstance = "standalone"
 )
 
-func (e SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstanceEnum) ToPointer() *SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstanceEnum {
+func (e SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstance) ToPointer() *SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstance {
 	return &e
 }
 
-func (e *SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstanceEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstance) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "standalone":
-		*e = SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstanceEnum(v)
+		*e = SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstance(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstanceEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstance: %v", v)
 	}
 }
 
 // SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance - The MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.
 type SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance struct {
 	// The host name of the Mongo database.
-	Host     string                                                                `json:"host"`
-	Instance SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstanceEnum `json:"instance"`
+	Host     string                                                            `json:"host"`
+	Instance SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstance `json:"instance"`
 	// The port of the Mongo database.
 	Port int64 `json:"port"`
 }
@@ -198,27 +198,27 @@ func (u SourceMongodbMongoDbInstanceType) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-type SourceMongodbMongodbEnum string
+type SourceMongodbMongodb string
 
 const (
-	SourceMongodbMongodbEnumMongodb SourceMongodbMongodbEnum = "mongodb"
+	SourceMongodbMongodbMongodb SourceMongodbMongodb = "mongodb"
 )
 
-func (e SourceMongodbMongodbEnum) ToPointer() *SourceMongodbMongodbEnum {
+func (e SourceMongodbMongodb) ToPointer() *SourceMongodbMongodb {
 	return &e
 }
 
-func (e *SourceMongodbMongodbEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceMongodbMongodb) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "mongodb":
-		*e = SourceMongodbMongodbEnum(v)
+		*e = SourceMongodbMongodb(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMongodbMongodbEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceMongodbMongodb: %v", v)
 	}
 }
 
@@ -230,8 +230,8 @@ type SourceMongodb struct {
 	// The MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.
 	InstanceType *SourceMongodbMongoDbInstanceType `json:"instance_type,omitempty"`
 	// The password associated with this username.
-	Password   *string                  `json:"password,omitempty"`
-	SourceType SourceMongodbMongodbEnum `json:"sourceType"`
+	Password   *string              `json:"password,omitempty"`
+	SourceType SourceMongodbMongodb `json:"sourceType"`
 	// The username which is used to access the database.
 	User *string `json:"user,omitempty"`
 }

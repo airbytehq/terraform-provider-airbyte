@@ -8,72 +8,72 @@ import (
 	"time"
 )
 
-type SourceSalesforceAuthTypeEnum string
+type SourceSalesforceAuthType string
 
 const (
-	SourceSalesforceAuthTypeEnumClient SourceSalesforceAuthTypeEnum = "Client"
+	SourceSalesforceAuthTypeClient SourceSalesforceAuthType = "Client"
 )
 
-func (e SourceSalesforceAuthTypeEnum) ToPointer() *SourceSalesforceAuthTypeEnum {
+func (e SourceSalesforceAuthType) ToPointer() *SourceSalesforceAuthType {
 	return &e
 }
 
-func (e *SourceSalesforceAuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceSalesforceAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Client":
-		*e = SourceSalesforceAuthTypeEnum(v)
+		*e = SourceSalesforceAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSalesforceAuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceSalesforceAuthType: %v", v)
 	}
 }
 
-type SourceSalesforceSalesforceEnum string
+type SourceSalesforceSalesforce string
 
 const (
-	SourceSalesforceSalesforceEnumSalesforce SourceSalesforceSalesforceEnum = "salesforce"
+	SourceSalesforceSalesforceSalesforce SourceSalesforceSalesforce = "salesforce"
 )
 
-func (e SourceSalesforceSalesforceEnum) ToPointer() *SourceSalesforceSalesforceEnum {
+func (e SourceSalesforceSalesforce) ToPointer() *SourceSalesforceSalesforce {
 	return &e
 }
 
-func (e *SourceSalesforceSalesforceEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceSalesforceSalesforce) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "salesforce":
-		*e = SourceSalesforceSalesforceEnum(v)
+		*e = SourceSalesforceSalesforce(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSalesforceSalesforceEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceSalesforceSalesforce: %v", v)
 	}
 }
 
-type SourceSalesforceStreamsCriteriaSearchCriteriaEnum string
+type SourceSalesforceStreamsCriteriaSearchCriteria string
 
 const (
-	SourceSalesforceStreamsCriteriaSearchCriteriaEnumStartsWith    SourceSalesforceStreamsCriteriaSearchCriteriaEnum = "starts with"
-	SourceSalesforceStreamsCriteriaSearchCriteriaEnumEndsWith      SourceSalesforceStreamsCriteriaSearchCriteriaEnum = "ends with"
-	SourceSalesforceStreamsCriteriaSearchCriteriaEnumContains      SourceSalesforceStreamsCriteriaSearchCriteriaEnum = "contains"
-	SourceSalesforceStreamsCriteriaSearchCriteriaEnumExacts        SourceSalesforceStreamsCriteriaSearchCriteriaEnum = "exacts"
-	SourceSalesforceStreamsCriteriaSearchCriteriaEnumStartsNotWith SourceSalesforceStreamsCriteriaSearchCriteriaEnum = "starts not with"
-	SourceSalesforceStreamsCriteriaSearchCriteriaEnumEndsNotWith   SourceSalesforceStreamsCriteriaSearchCriteriaEnum = "ends not with"
-	SourceSalesforceStreamsCriteriaSearchCriteriaEnumNotContains   SourceSalesforceStreamsCriteriaSearchCriteriaEnum = "not contains"
-	SourceSalesforceStreamsCriteriaSearchCriteriaEnumNotExacts     SourceSalesforceStreamsCriteriaSearchCriteriaEnum = "not exacts"
+	SourceSalesforceStreamsCriteriaSearchCriteriaStartsWith    SourceSalesforceStreamsCriteriaSearchCriteria = "starts with"
+	SourceSalesforceStreamsCriteriaSearchCriteriaEndsWith      SourceSalesforceStreamsCriteriaSearchCriteria = "ends with"
+	SourceSalesforceStreamsCriteriaSearchCriteriaContains      SourceSalesforceStreamsCriteriaSearchCriteria = "contains"
+	SourceSalesforceStreamsCriteriaSearchCriteriaExacts        SourceSalesforceStreamsCriteriaSearchCriteria = "exacts"
+	SourceSalesforceStreamsCriteriaSearchCriteriaStartsNotWith SourceSalesforceStreamsCriteriaSearchCriteria = "starts not with"
+	SourceSalesforceStreamsCriteriaSearchCriteriaEndsNotWith   SourceSalesforceStreamsCriteriaSearchCriteria = "ends not with"
+	SourceSalesforceStreamsCriteriaSearchCriteriaNotContains   SourceSalesforceStreamsCriteriaSearchCriteria = "not contains"
+	SourceSalesforceStreamsCriteriaSearchCriteriaNotExacts     SourceSalesforceStreamsCriteriaSearchCriteria = "not exacts"
 )
 
-func (e SourceSalesforceStreamsCriteriaSearchCriteriaEnum) ToPointer() *SourceSalesforceStreamsCriteriaSearchCriteriaEnum {
+func (e SourceSalesforceStreamsCriteriaSearchCriteria) ToPointer() *SourceSalesforceStreamsCriteriaSearchCriteria {
 	return &e
 }
 
-func (e *SourceSalesforceStreamsCriteriaSearchCriteriaEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceSalesforceStreamsCriteriaSearchCriteria) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -94,20 +94,20 @@ func (e *SourceSalesforceStreamsCriteriaSearchCriteriaEnum) UnmarshalJSON(data [
 	case "not contains":
 		fallthrough
 	case "not exacts":
-		*e = SourceSalesforceStreamsCriteriaSearchCriteriaEnum(v)
+		*e = SourceSalesforceStreamsCriteriaSearchCriteria(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSalesforceStreamsCriteriaSearchCriteriaEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceSalesforceStreamsCriteriaSearchCriteria: %v", v)
 	}
 }
 
 type SourceSalesforceStreamsCriteria struct {
-	Criteria SourceSalesforceStreamsCriteriaSearchCriteriaEnum `json:"criteria"`
-	Value    string                                            `json:"value"`
+	Criteria SourceSalesforceStreamsCriteriaSearchCriteria `json:"criteria"`
+	Value    string                                        `json:"value"`
 }
 
 type SourceSalesforce struct {
-	AuthType *SourceSalesforceAuthTypeEnum `json:"auth_type,omitempty"`
+	AuthType *SourceSalesforceAuthType `json:"auth_type,omitempty"`
 	// Enter your Salesforce developer application's <a href="https://developer.salesforce.com/forums/?id=9062I000000DLgbQAG">Client ID</a>
 	ClientID string `json:"client_id"`
 	// Enter your Salesforce developer application's <a href="https://developer.salesforce.com/forums/?id=9062I000000DLgbQAG">Client secret</a>
@@ -115,8 +115,8 @@ type SourceSalesforce struct {
 	// Toggle if you're using a <a href="https://help.salesforce.com/s/articleView?id=sf.deploy_sandboxes_parent.htm&type=5">Salesforce Sandbox</a>
 	IsSandbox *bool `json:"is_sandbox,omitempty"`
 	// Enter your application's <a href="https://developer.salesforce.com/docs/atlas.en-us.mobile_sdk.meta/mobile_sdk/oauth_refresh_token_flow.htm">Salesforce Refresh Token</a> used for Airbyte to access your Salesforce account.
-	RefreshToken string                         `json:"refresh_token"`
-	SourceType   SourceSalesforceSalesforceEnum `json:"sourceType"`
+	RefreshToken string                     `json:"refresh_token"`
+	SourceType   SourceSalesforceSalesforce `json:"sourceType"`
 	// Enter the date in the YYYY-MM-DD format. Airbyte will replicate the data added on and after this date. If this field is blank, Airbyte will replicate the data for last two years.
 	StartDate *time.Time `json:"start_date,omitempty"`
 	// Filter streams relevant to you

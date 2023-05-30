@@ -4,10 +4,11 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceWhiskyHunterResourceModel) ToCreateSDKType() *shared.SourceWhiskyHunterCreateRequest {
-	sourceType := shared.SourceWhiskyHunterWhiskyHunterEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceWhiskyHunterWhiskyHunter(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceWhiskyHunter{
 		SourceType: sourceType,
 	}
@@ -31,4 +32,11 @@ func (r *SourceWhiskyHunterResourceModel) ToCreateSDKType() *shared.SourceWhisky
 func (r *SourceWhiskyHunterResourceModel) ToDeleteSDKType() *shared.SourceWhiskyHunterCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceWhiskyHunterResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

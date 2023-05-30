@@ -9,62 +9,62 @@ import (
 	"fmt"
 )
 
-type SourcePinterestAuthorizationMethodAccessTokenAuthMethodEnum string
+type SourcePinterestAuthorizationMethodAccessTokenAuthMethod string
 
 const (
-	SourcePinterestAuthorizationMethodAccessTokenAuthMethodEnumAccessToken SourcePinterestAuthorizationMethodAccessTokenAuthMethodEnum = "access_token"
+	SourcePinterestAuthorizationMethodAccessTokenAuthMethodAccessToken SourcePinterestAuthorizationMethodAccessTokenAuthMethod = "access_token"
 )
 
-func (e SourcePinterestAuthorizationMethodAccessTokenAuthMethodEnum) ToPointer() *SourcePinterestAuthorizationMethodAccessTokenAuthMethodEnum {
+func (e SourcePinterestAuthorizationMethodAccessTokenAuthMethod) ToPointer() *SourcePinterestAuthorizationMethodAccessTokenAuthMethod {
 	return &e
 }
 
-func (e *SourcePinterestAuthorizationMethodAccessTokenAuthMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *SourcePinterestAuthorizationMethodAccessTokenAuthMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "access_token":
-		*e = SourcePinterestAuthorizationMethodAccessTokenAuthMethodEnum(v)
+		*e = SourcePinterestAuthorizationMethodAccessTokenAuthMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePinterestAuthorizationMethodAccessTokenAuthMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for SourcePinterestAuthorizationMethodAccessTokenAuthMethod: %v", v)
 	}
 }
 
 type SourcePinterestAuthorizationMethodAccessToken struct {
 	// The Access Token to make authenticated requests.
-	AccessToken string                                                      `json:"access_token"`
-	AuthMethod  SourcePinterestAuthorizationMethodAccessTokenAuthMethodEnum `json:"auth_method"`
+	AccessToken string                                                  `json:"access_token"`
+	AuthMethod  SourcePinterestAuthorizationMethodAccessTokenAuthMethod `json:"auth_method"`
 }
 
-type SourcePinterestAuthorizationMethodOAuth20AuthMethodEnum string
+type SourcePinterestAuthorizationMethodOAuth20AuthMethod string
 
 const (
-	SourcePinterestAuthorizationMethodOAuth20AuthMethodEnumOauth20 SourcePinterestAuthorizationMethodOAuth20AuthMethodEnum = "oauth2.0"
+	SourcePinterestAuthorizationMethodOAuth20AuthMethodOauth20 SourcePinterestAuthorizationMethodOAuth20AuthMethod = "oauth2.0"
 )
 
-func (e SourcePinterestAuthorizationMethodOAuth20AuthMethodEnum) ToPointer() *SourcePinterestAuthorizationMethodOAuth20AuthMethodEnum {
+func (e SourcePinterestAuthorizationMethodOAuth20AuthMethod) ToPointer() *SourcePinterestAuthorizationMethodOAuth20AuthMethod {
 	return &e
 }
 
-func (e *SourcePinterestAuthorizationMethodOAuth20AuthMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *SourcePinterestAuthorizationMethodOAuth20AuthMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "oauth2.0":
-		*e = SourcePinterestAuthorizationMethodOAuth20AuthMethodEnum(v)
+		*e = SourcePinterestAuthorizationMethodOAuth20AuthMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePinterestAuthorizationMethodOAuth20AuthMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for SourcePinterestAuthorizationMethodOAuth20AuthMethod: %v", v)
 	}
 }
 
 type SourcePinterestAuthorizationMethodOAuth20 struct {
-	AuthMethod SourcePinterestAuthorizationMethodOAuth20AuthMethodEnum `json:"auth_method"`
+	AuthMethod SourcePinterestAuthorizationMethodOAuth20AuthMethod `json:"auth_method"`
 	// The Client ID of your OAuth application
 	ClientID *string `json:"client_id,omitempty"`
 	// The Client Secret of your OAuth application.
@@ -141,43 +141,43 @@ func (u SourcePinterestAuthorizationMethod) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-type SourcePinterestPinterestEnum string
+type SourcePinterestPinterest string
 
 const (
-	SourcePinterestPinterestEnumPinterest SourcePinterestPinterestEnum = "pinterest"
+	SourcePinterestPinterestPinterest SourcePinterestPinterest = "pinterest"
 )
 
-func (e SourcePinterestPinterestEnum) ToPointer() *SourcePinterestPinterestEnum {
+func (e SourcePinterestPinterest) ToPointer() *SourcePinterestPinterest {
 	return &e
 }
 
-func (e *SourcePinterestPinterestEnum) UnmarshalJSON(data []byte) error {
+func (e *SourcePinterestPinterest) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "pinterest":
-		*e = SourcePinterestPinterestEnum(v)
+		*e = SourcePinterestPinterest(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePinterestPinterestEnum: %v", v)
+		return fmt.Errorf("invalid value for SourcePinterestPinterest: %v", v)
 	}
 }
 
-type SourcePinterestStatusEnum string
+type SourcePinterestStatus string
 
 const (
-	SourcePinterestStatusEnumActive   SourcePinterestStatusEnum = "ACTIVE"
-	SourcePinterestStatusEnumPaused   SourcePinterestStatusEnum = "PAUSED"
-	SourcePinterestStatusEnumArchived SourcePinterestStatusEnum = "ARCHIVED"
+	SourcePinterestStatusActive   SourcePinterestStatus = "ACTIVE"
+	SourcePinterestStatusPaused   SourcePinterestStatus = "PAUSED"
+	SourcePinterestStatusArchived SourcePinterestStatus = "ARCHIVED"
 )
 
-func (e SourcePinterestStatusEnum) ToPointer() *SourcePinterestStatusEnum {
+func (e SourcePinterestStatus) ToPointer() *SourcePinterestStatus {
 	return &e
 }
 
-func (e *SourcePinterestStatusEnum) UnmarshalJSON(data []byte) error {
+func (e *SourcePinterestStatus) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -188,18 +188,18 @@ func (e *SourcePinterestStatusEnum) UnmarshalJSON(data []byte) error {
 	case "PAUSED":
 		fallthrough
 	case "ARCHIVED":
-		*e = SourcePinterestStatusEnum(v)
+		*e = SourcePinterestStatus(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePinterestStatusEnum: %v", v)
+		return fmt.Errorf("invalid value for SourcePinterestStatus: %v", v)
 	}
 }
 
 type SourcePinterest struct {
 	Credentials *SourcePinterestAuthorizationMethod `json:"credentials,omitempty"`
-	SourceType  SourcePinterestPinterestEnum        `json:"sourceType"`
+	SourceType  SourcePinterestPinterest            `json:"sourceType"`
 	// A date in the format YYYY-MM-DD. If you have not set a date, it would be defaulted to latest allowed date by api (89 days from today).
 	StartDate string `json:"start_date"`
 	// Entity statuses based off of campaigns, ad_groups, and ads. If you do not have a status set, it will be ignored completely.
-	Status []SourcePinterestStatusEnum `json:"status,omitempty"`
+	Status []SourcePinterestStatus `json:"status,omitempty"`
 }

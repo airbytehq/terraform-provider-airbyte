@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type SourceApifyDatasetApifyDatasetEnum string
+type SourceApifyDatasetApifyDataset string
 
 const (
-	SourceApifyDatasetApifyDatasetEnumApifyDataset SourceApifyDatasetApifyDatasetEnum = "apify-dataset"
+	SourceApifyDatasetApifyDatasetApifyDataset SourceApifyDatasetApifyDataset = "apify-dataset"
 )
 
-func (e SourceApifyDatasetApifyDatasetEnum) ToPointer() *SourceApifyDatasetApifyDatasetEnum {
+func (e SourceApifyDatasetApifyDataset) ToPointer() *SourceApifyDatasetApifyDataset {
 	return &e
 }
 
-func (e *SourceApifyDatasetApifyDatasetEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceApifyDatasetApifyDataset) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "apify-dataset":
-		*e = SourceApifyDatasetApifyDatasetEnum(v)
+		*e = SourceApifyDatasetApifyDataset(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceApifyDatasetApifyDatasetEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceApifyDatasetApifyDataset: %v", v)
 	}
 }
 
@@ -35,6 +35,6 @@ type SourceApifyDataset struct {
 	// If set to true, only clean items will be downloaded from the dataset. See description of what clean means in <a href="https://docs.apify.com/api/v2#/reference/datasets/item-collection/get-items">Apify API docs</a>. If not sure, set clean to false.
 	Clean *bool `json:"clean,omitempty"`
 	// ID of the dataset you would like to load to Airbyte.
-	DatasetID  string                             `json:"datasetId"`
-	SourceType SourceApifyDatasetApifyDatasetEnum `json:"sourceType"`
+	DatasetID  string                         `json:"datasetId"`
+	SourceType SourceApifyDatasetApifyDataset `json:"sourceType"`
 }

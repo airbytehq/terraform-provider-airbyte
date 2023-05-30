@@ -4,15 +4,16 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceOracleResourceModel) ToCreateSDKType() *shared.SourceOracleCreateRequest {
 	var connectionData *shared.SourceOracleConnectBy
 	var sourceOracleConnectByServiceName *shared.SourceOracleConnectByServiceName
 	if r.Configuration.ConnectionData.SourceOracleConnectByServiceName != nil {
-		connectionType := new(shared.SourceOracleConnectByServiceNameConnectionTypeEnum)
+		connectionType := new(shared.SourceOracleConnectByServiceNameConnectionType)
 		if !r.Configuration.ConnectionData.SourceOracleConnectByServiceName.ConnectionType.IsUnknown() && !r.Configuration.ConnectionData.SourceOracleConnectByServiceName.ConnectionType.IsNull() {
-			*connectionType = shared.SourceOracleConnectByServiceNameConnectionTypeEnum(r.Configuration.ConnectionData.SourceOracleConnectByServiceName.ConnectionType.ValueString())
+			*connectionType = shared.SourceOracleConnectByServiceNameConnectionType(r.Configuration.ConnectionData.SourceOracleConnectByServiceName.ConnectionType.ValueString())
 		} else {
 			connectionType = nil
 		}
@@ -29,9 +30,9 @@ func (r *SourceOracleResourceModel) ToCreateSDKType() *shared.SourceOracleCreate
 	}
 	var sourceOracleConnectBySystemIDSID *shared.SourceOracleConnectBySystemIDSID
 	if r.Configuration.ConnectionData.SourceOracleConnectBySystemIDSID != nil {
-		connectionType1 := new(shared.SourceOracleConnectBySystemIDSIDConnectionTypeEnum)
+		connectionType1 := new(shared.SourceOracleConnectBySystemIDSIDConnectionType)
 		if !r.Configuration.ConnectionData.SourceOracleConnectBySystemIDSID.ConnectionType.IsUnknown() && !r.Configuration.ConnectionData.SourceOracleConnectBySystemIDSID.ConnectionType.IsNull() {
-			*connectionType1 = shared.SourceOracleConnectBySystemIDSIDConnectionTypeEnum(r.Configuration.ConnectionData.SourceOracleConnectBySystemIDSID.ConnectionType.ValueString())
+			*connectionType1 = shared.SourceOracleConnectBySystemIDSIDConnectionType(r.Configuration.ConnectionData.SourceOracleConnectBySystemIDSID.ConnectionType.ValueString())
 		} else {
 			connectionType1 = nil
 		}
@@ -49,13 +50,13 @@ func (r *SourceOracleResourceModel) ToCreateSDKType() *shared.SourceOracleCreate
 	var encryption shared.SourceOracleEncryption
 	var sourceOracleEncryptionNativeNetworkEncryptionNNE *shared.SourceOracleEncryptionNativeNetworkEncryptionNNE
 	if r.Configuration.Encryption.SourceOracleEncryptionNativeNetworkEncryptionNNE != nil {
-		encryptionAlgorithm := new(shared.SourceOracleEncryptionNativeNetworkEncryptionNNEEncryptionAlgorithmEnum)
+		encryptionAlgorithm := new(shared.SourceOracleEncryptionNativeNetworkEncryptionNNEEncryptionAlgorithm)
 		if !r.Configuration.Encryption.SourceOracleEncryptionNativeNetworkEncryptionNNE.EncryptionAlgorithm.IsUnknown() && !r.Configuration.Encryption.SourceOracleEncryptionNativeNetworkEncryptionNNE.EncryptionAlgorithm.IsNull() {
-			*encryptionAlgorithm = shared.SourceOracleEncryptionNativeNetworkEncryptionNNEEncryptionAlgorithmEnum(r.Configuration.Encryption.SourceOracleEncryptionNativeNetworkEncryptionNNE.EncryptionAlgorithm.ValueString())
+			*encryptionAlgorithm = shared.SourceOracleEncryptionNativeNetworkEncryptionNNEEncryptionAlgorithm(r.Configuration.Encryption.SourceOracleEncryptionNativeNetworkEncryptionNNE.EncryptionAlgorithm.ValueString())
 		} else {
 			encryptionAlgorithm = nil
 		}
-		encryptionMethod := shared.SourceOracleEncryptionNativeNetworkEncryptionNNEEncryptionMethodEnum(r.Configuration.Encryption.SourceOracleEncryptionNativeNetworkEncryptionNNE.EncryptionMethod.ValueString())
+		encryptionMethod := shared.SourceOracleEncryptionNativeNetworkEncryptionNNEEncryptionMethod(r.Configuration.Encryption.SourceOracleEncryptionNativeNetworkEncryptionNNE.EncryptionMethod.ValueString())
 		sourceOracleEncryptionNativeNetworkEncryptionNNE = &shared.SourceOracleEncryptionNativeNetworkEncryptionNNE{
 			EncryptionAlgorithm: encryptionAlgorithm,
 			EncryptionMethod:    encryptionMethod,
@@ -68,7 +69,7 @@ func (r *SourceOracleResourceModel) ToCreateSDKType() *shared.SourceOracleCreate
 	}
 	var sourceOracleEncryptionTLSEncryptedVerifyCertificate *shared.SourceOracleEncryptionTLSEncryptedVerifyCertificate
 	if r.Configuration.Encryption.SourceOracleEncryptionTLSEncryptedVerifyCertificate != nil {
-		encryptionMethod1 := shared.SourceOracleEncryptionTLSEncryptedVerifyCertificateEncryptionMethodEnum(r.Configuration.Encryption.SourceOracleEncryptionTLSEncryptedVerifyCertificate.EncryptionMethod.ValueString())
+		encryptionMethod1 := shared.SourceOracleEncryptionTLSEncryptedVerifyCertificateEncryptionMethod(r.Configuration.Encryption.SourceOracleEncryptionTLSEncryptedVerifyCertificate.EncryptionMethod.ValueString())
 		sslCertificate := r.Configuration.Encryption.SourceOracleEncryptionTLSEncryptedVerifyCertificate.SslCertificate.ValueString()
 		sourceOracleEncryptionTLSEncryptedVerifyCertificate = &shared.SourceOracleEncryptionTLSEncryptedVerifyCertificate{
 			EncryptionMethod: encryptionMethod1,
@@ -98,11 +99,11 @@ func (r *SourceOracleResourceModel) ToCreateSDKType() *shared.SourceOracleCreate
 	for _, schemasItem := range r.Configuration.Schemas {
 		schemas = append(schemas, schemasItem.ValueString())
 	}
-	sourceType := shared.SourceOracleOracleEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceOracleOracle(r.Configuration.SourceType.ValueString())
 	var tunnelMethod *shared.SourceOracleSSHTunnelMethod
 	var sourceOracleSSHTunnelMethodNoTunnel *shared.SourceOracleSSHTunnelMethodNoTunnel
 	if r.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodNoTunnel != nil {
-		tunnelMethod1 := shared.SourceOracleSSHTunnelMethodNoTunnelTunnelMethodEnum(r.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
+		tunnelMethod1 := shared.SourceOracleSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
 		sourceOracleSSHTunnelMethodNoTunnel = &shared.SourceOracleSSHTunnelMethodNoTunnel{
 			TunnelMethod: tunnelMethod1,
 		}
@@ -116,7 +117,7 @@ func (r *SourceOracleResourceModel) ToCreateSDKType() *shared.SourceOracleCreate
 	if r.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodSSHKeyAuthentication != nil {
 		sshKey := r.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodSSHKeyAuthentication.SSHKey.ValueString()
 		tunnelHost := r.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
-		tunnelMethod2 := shared.SourceOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(r.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
+		tunnelMethod2 := shared.SourceOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
 		tunnelPort := r.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
 		tunnelUser := r.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
 		sourceOracleSSHTunnelMethodSSHKeyAuthentication = &shared.SourceOracleSSHTunnelMethodSSHKeyAuthentication{
@@ -135,7 +136,7 @@ func (r *SourceOracleResourceModel) ToCreateSDKType() *shared.SourceOracleCreate
 	var sourceOracleSSHTunnelMethodPasswordAuthentication *shared.SourceOracleSSHTunnelMethodPasswordAuthentication
 	if r.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodPasswordAuthentication != nil {
 		tunnelHost1 := r.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
-		tunnelMethod3 := shared.SourceOracleSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(r.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
+		tunnelMethod3 := shared.SourceOracleSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
 		tunnelPort1 := r.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
 		tunnelUser1 := r.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
 		tunnelUserPassword := r.Configuration.TunnelMethod.SourceOracleSSHTunnelMethodPasswordAuthentication.TunnelUserPassword.ValueString()
@@ -185,4 +186,11 @@ func (r *SourceOracleResourceModel) ToCreateSDKType() *shared.SourceOracleCreate
 func (r *SourceOracleResourceModel) ToDeleteSDKType() *shared.SourceOracleCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceOracleResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

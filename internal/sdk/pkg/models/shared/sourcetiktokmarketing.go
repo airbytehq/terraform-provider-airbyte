@@ -10,27 +10,27 @@ import (
 	"fmt"
 )
 
-type SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthTypeEnum string
+type SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthType string
 
 const (
-	SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthTypeEnumSandboxAccessToken SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthTypeEnum = "sandbox_access_token"
+	SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthTypeSandboxAccessToken SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthType = "sandbox_access_token"
 )
 
-func (e SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthTypeEnum) ToPointer() *SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthTypeEnum {
+func (e SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthType) ToPointer() *SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthType {
 	return &e
 }
 
-func (e *SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "sandbox_access_token":
-		*e = SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthTypeEnum(v)
+		*e = SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthType: %v", v)
 	}
 }
 
@@ -39,31 +39,31 @@ type SourceTiktokMarketingAuthenticationMethodSandboxAccessToken struct {
 	// The long-term authorized access token.
 	AccessToken string `json:"access_token"`
 	// The Advertiser ID which generated for the developer's Sandbox application.
-	AdvertiserID string                                                                   `json:"advertiser_id"`
-	AuthType     *SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthTypeEnum `json:"auth_type,omitempty"`
+	AdvertiserID string                                                               `json:"advertiser_id"`
+	AuthType     *SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthType `json:"auth_type,omitempty"`
 }
 
-type SourceTiktokMarketingAuthenticationMethodOAuth20AuthTypeEnum string
+type SourceTiktokMarketingAuthenticationMethodOAuth20AuthType string
 
 const (
-	SourceTiktokMarketingAuthenticationMethodOAuth20AuthTypeEnumOauth20 SourceTiktokMarketingAuthenticationMethodOAuth20AuthTypeEnum = "oauth2.0"
+	SourceTiktokMarketingAuthenticationMethodOAuth20AuthTypeOauth20 SourceTiktokMarketingAuthenticationMethodOAuth20AuthType = "oauth2.0"
 )
 
-func (e SourceTiktokMarketingAuthenticationMethodOAuth20AuthTypeEnum) ToPointer() *SourceTiktokMarketingAuthenticationMethodOAuth20AuthTypeEnum {
+func (e SourceTiktokMarketingAuthenticationMethodOAuth20AuthType) ToPointer() *SourceTiktokMarketingAuthenticationMethodOAuth20AuthType {
 	return &e
 }
 
-func (e *SourceTiktokMarketingAuthenticationMethodOAuth20AuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceTiktokMarketingAuthenticationMethodOAuth20AuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "oauth2.0":
-		*e = SourceTiktokMarketingAuthenticationMethodOAuth20AuthTypeEnum(v)
+		*e = SourceTiktokMarketingAuthenticationMethodOAuth20AuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceTiktokMarketingAuthenticationMethodOAuth20AuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceTiktokMarketingAuthenticationMethodOAuth20AuthType: %v", v)
 	}
 }
 
@@ -74,8 +74,8 @@ type SourceTiktokMarketingAuthenticationMethodOAuth20 struct {
 	// The Advertiser ID to filter reports and streams. Let this empty to retrieve all.
 	AdvertiserID *string `json:"advertiser_id,omitempty"`
 	// The Developer Application App ID.
-	AppID    string                                                        `json:"app_id"`
-	AuthType *SourceTiktokMarketingAuthenticationMethodOAuth20AuthTypeEnum `json:"auth_type,omitempty"`
+	AppID    string                                                    `json:"app_id"`
+	AuthType *SourceTiktokMarketingAuthenticationMethodOAuth20AuthType `json:"auth_type,omitempty"`
 	// The Developer Application Secret.
 	Secret string `json:"secret"`
 }
@@ -148,27 +148,27 @@ func (u SourceTiktokMarketingAuthenticationMethod) MarshalJSON() ([]byte, error)
 	return nil, nil
 }
 
-type SourceTiktokMarketingTiktokMarketingEnum string
+type SourceTiktokMarketingTiktokMarketing string
 
 const (
-	SourceTiktokMarketingTiktokMarketingEnumTiktokMarketing SourceTiktokMarketingTiktokMarketingEnum = "tiktok-marketing"
+	SourceTiktokMarketingTiktokMarketingTiktokMarketing SourceTiktokMarketingTiktokMarketing = "tiktok-marketing"
 )
 
-func (e SourceTiktokMarketingTiktokMarketingEnum) ToPointer() *SourceTiktokMarketingTiktokMarketingEnum {
+func (e SourceTiktokMarketingTiktokMarketing) ToPointer() *SourceTiktokMarketingTiktokMarketing {
 	return &e
 }
 
-func (e *SourceTiktokMarketingTiktokMarketingEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceTiktokMarketingTiktokMarketing) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "tiktok-marketing":
-		*e = SourceTiktokMarketingTiktokMarketingEnum(v)
+		*e = SourceTiktokMarketingTiktokMarketing(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceTiktokMarketingTiktokMarketingEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceTiktokMarketingTiktokMarketing: %v", v)
 	}
 }
 
@@ -178,8 +178,8 @@ type SourceTiktokMarketing struct {
 	// Authentication method
 	Credentials *SourceTiktokMarketingAuthenticationMethod `json:"credentials,omitempty"`
 	// The date until which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DD. All data generated between start_date and this date will be replicated. Not setting this option will result in always syncing the data till the current date.
-	EndDate    *types.Date                              `json:"end_date,omitempty"`
-	SourceType SourceTiktokMarketingTiktokMarketingEnum `json:"sourceType"`
+	EndDate    *types.Date                          `json:"end_date,omitempty"`
+	SourceType SourceTiktokMarketingTiktokMarketing `json:"sourceType"`
 	// The Start Date in format: YYYY-MM-DD. Any data before this date will not be replicated. If this parameter is not set, all data will be replicated.
 	StartDate *types.Date `json:"start_date,omitempty"`
 }

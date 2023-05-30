@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
@@ -13,9 +14,9 @@ func (r *SourceGitlabResourceModel) ToCreateSDKType() *shared.SourceGitlabCreate
 	var sourceGitlabAuthorizationMethodOAuth20 *shared.SourceGitlabAuthorizationMethodOAuth20
 	if r.Configuration.Credentials.SourceGitlabAuthorizationMethodOAuth20 != nil {
 		accessToken := r.Configuration.Credentials.SourceGitlabAuthorizationMethodOAuth20.AccessToken.ValueString()
-		authType := new(shared.SourceGitlabAuthorizationMethodOAuth20AuthTypeEnum)
+		authType := new(shared.SourceGitlabAuthorizationMethodOAuth20AuthType)
 		if !r.Configuration.Credentials.SourceGitlabAuthorizationMethodOAuth20.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceGitlabAuthorizationMethodOAuth20.AuthType.IsNull() {
-			*authType = shared.SourceGitlabAuthorizationMethodOAuth20AuthTypeEnum(r.Configuration.Credentials.SourceGitlabAuthorizationMethodOAuth20.AuthType.ValueString())
+			*authType = shared.SourceGitlabAuthorizationMethodOAuth20AuthType(r.Configuration.Credentials.SourceGitlabAuthorizationMethodOAuth20.AuthType.ValueString())
 		} else {
 			authType = nil
 		}
@@ -40,9 +41,9 @@ func (r *SourceGitlabResourceModel) ToCreateSDKType() *shared.SourceGitlabCreate
 	var sourceGitlabAuthorizationMethodPrivateToken *shared.SourceGitlabAuthorizationMethodPrivateToken
 	if r.Configuration.Credentials.SourceGitlabAuthorizationMethodPrivateToken != nil {
 		accessToken1 := r.Configuration.Credentials.SourceGitlabAuthorizationMethodPrivateToken.AccessToken.ValueString()
-		authType1 := new(shared.SourceGitlabAuthorizationMethodPrivateTokenAuthTypeEnum)
+		authType1 := new(shared.SourceGitlabAuthorizationMethodPrivateTokenAuthType)
 		if !r.Configuration.Credentials.SourceGitlabAuthorizationMethodPrivateToken.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceGitlabAuthorizationMethodPrivateToken.AuthType.IsNull() {
-			*authType1 = shared.SourceGitlabAuthorizationMethodPrivateTokenAuthTypeEnum(r.Configuration.Credentials.SourceGitlabAuthorizationMethodPrivateToken.AuthType.ValueString())
+			*authType1 = shared.SourceGitlabAuthorizationMethodPrivateTokenAuthType(r.Configuration.Credentials.SourceGitlabAuthorizationMethodPrivateToken.AuthType.ValueString())
 		} else {
 			authType1 = nil
 		}
@@ -68,7 +69,7 @@ func (r *SourceGitlabResourceModel) ToCreateSDKType() *shared.SourceGitlabCreate
 	} else {
 		projects = nil
 	}
-	sourceType := shared.SourceGitlabGitlabEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceGitlabGitlab(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceGitlab{
 		APIURL:      apiURL,
@@ -98,4 +99,11 @@ func (r *SourceGitlabResourceModel) ToCreateSDKType() *shared.SourceGitlabCreate
 func (r *SourceGitlabResourceModel) ToDeleteSDKType() *shared.SourceGitlabCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceGitlabResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

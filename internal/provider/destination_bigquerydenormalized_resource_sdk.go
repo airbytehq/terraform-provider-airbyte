@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationBigqueryDenormalizedResourceModel) ToCreateSDKType() *shared.DestinationBigqueryDenormalizedCreateRequest {
@@ -20,17 +21,17 @@ func (r *DestinationBigqueryDenormalizedResourceModel) ToCreateSDKType() *shared
 		credentialsJSON = nil
 	}
 	datasetID := r.Configuration.DatasetID.ValueString()
-	datasetLocation := new(shared.DestinationBigqueryDenormalizedDatasetLocationEnum)
+	datasetLocation := new(shared.DestinationBigqueryDenormalizedDatasetLocation)
 	if !r.Configuration.DatasetLocation.IsUnknown() && !r.Configuration.DatasetLocation.IsNull() {
-		*datasetLocation = shared.DestinationBigqueryDenormalizedDatasetLocationEnum(r.Configuration.DatasetLocation.ValueString())
+		*datasetLocation = shared.DestinationBigqueryDenormalizedDatasetLocation(r.Configuration.DatasetLocation.ValueString())
 	} else {
 		datasetLocation = nil
 	}
-	destinationType := shared.DestinationBigqueryDenormalizedBigqueryDenormalizedEnum(r.Configuration.DestinationType.ValueString())
+	destinationType := shared.DestinationBigqueryDenormalizedBigqueryDenormalized(r.Configuration.DestinationType.ValueString())
 	var loadingMethod *shared.DestinationBigqueryDenormalizedLoadingMethod
 	var destinationBigqueryDenormalizedLoadingMethodStandardInserts *shared.DestinationBigqueryDenormalizedLoadingMethodStandardInserts
 	if r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedLoadingMethodStandardInserts != nil {
-		method := shared.DestinationBigqueryDenormalizedLoadingMethodStandardInsertsMethodEnum(r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedLoadingMethodStandardInserts.Method.ValueString())
+		method := shared.DestinationBigqueryDenormalizedLoadingMethodStandardInsertsMethod(r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedLoadingMethodStandardInserts.Method.ValueString())
 		destinationBigqueryDenormalizedLoadingMethodStandardInserts = &shared.DestinationBigqueryDenormalizedLoadingMethodStandardInserts{
 			Method: method,
 		}
@@ -45,7 +46,7 @@ func (r *DestinationBigqueryDenormalizedResourceModel) ToCreateSDKType() *shared
 		var credential shared.DestinationBigqueryDenormalizedLoadingMethodGCSStagingCredential
 		var destinationBigqueryDenormalizedLoadingMethodGCSStagingCredentialHMACKey *shared.DestinationBigqueryDenormalizedLoadingMethodGCSStagingCredentialHMACKey
 		if r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedLoadingMethodGCSStaging.Credential.DestinationBigqueryDenormalizedLoadingMethodGCSStagingCredentialHMACKey != nil {
-			credentialType := shared.DestinationBigqueryDenormalizedLoadingMethodGCSStagingCredentialHMACKeyCredentialTypeEnum(r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedLoadingMethodGCSStaging.Credential.DestinationBigqueryDenormalizedLoadingMethodGCSStagingCredentialHMACKey.CredentialType.ValueString())
+			credentialType := shared.DestinationBigqueryDenormalizedLoadingMethodGCSStagingCredentialHMACKeyCredentialType(r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedLoadingMethodGCSStaging.Credential.DestinationBigqueryDenormalizedLoadingMethodGCSStagingCredentialHMACKey.CredentialType.ValueString())
 			hmacKeyAccessID := r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedLoadingMethodGCSStaging.Credential.DestinationBigqueryDenormalizedLoadingMethodGCSStagingCredentialHMACKey.HmacKeyAccessID.ValueString()
 			hmacKeySecret := r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedLoadingMethodGCSStaging.Credential.DestinationBigqueryDenormalizedLoadingMethodGCSStagingCredentialHMACKey.HmacKeySecret.ValueString()
 			destinationBigqueryDenormalizedLoadingMethodGCSStagingCredentialHMACKey = &shared.DestinationBigqueryDenormalizedLoadingMethodGCSStagingCredentialHMACKey{
@@ -67,13 +68,13 @@ func (r *DestinationBigqueryDenormalizedResourceModel) ToCreateSDKType() *shared
 		}
 		gcsBucketName := r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedLoadingMethodGCSStaging.GcsBucketName.ValueString()
 		gcsBucketPath := r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedLoadingMethodGCSStaging.GcsBucketPath.ValueString()
-		keepFilesInGcsBucket := new(shared.DestinationBigqueryDenormalizedLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessingEnum)
+		keepFilesInGcsBucket := new(shared.DestinationBigqueryDenormalizedLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessing)
 		if !r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedLoadingMethodGCSStaging.KeepFilesInGcsBucket.IsUnknown() && !r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedLoadingMethodGCSStaging.KeepFilesInGcsBucket.IsNull() {
-			*keepFilesInGcsBucket = shared.DestinationBigqueryDenormalizedLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessingEnum(r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedLoadingMethodGCSStaging.KeepFilesInGcsBucket.ValueString())
+			*keepFilesInGcsBucket = shared.DestinationBigqueryDenormalizedLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessing(r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedLoadingMethodGCSStaging.KeepFilesInGcsBucket.ValueString())
 		} else {
 			keepFilesInGcsBucket = nil
 		}
-		method1 := shared.DestinationBigqueryDenormalizedLoadingMethodGCSStagingMethodEnum(r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedLoadingMethodGCSStaging.Method.ValueString())
+		method1 := shared.DestinationBigqueryDenormalizedLoadingMethodGCSStagingMethod(r.Configuration.LoadingMethod.DestinationBigqueryDenormalizedLoadingMethodGCSStaging.Method.ValueString())
 		destinationBigqueryDenormalizedLoadingMethodGCSStaging = &shared.DestinationBigqueryDenormalizedLoadingMethodGCSStaging{
 			Credential:           credential,
 			FileBufferCount:      fileBufferCount,
@@ -111,4 +112,11 @@ func (r *DestinationBigqueryDenormalizedResourceModel) ToCreateSDKType() *shared
 func (r *DestinationBigqueryDenormalizedResourceModel) ToDeleteSDKType() *shared.DestinationBigqueryDenormalizedCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *DestinationBigqueryDenormalizedResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

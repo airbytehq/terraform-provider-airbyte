@@ -5,6 +5,7 @@ package provider
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	"encoding/json"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceAlloydbResourceModel) ToCreateSDKType() *shared.SourceAlloydbCreateRequest {
@@ -26,7 +27,7 @@ func (r *SourceAlloydbResourceModel) ToCreateSDKType() *shared.SourceAlloydbCrea
 	var replicationMethod *shared.SourceAlloydbReplicationMethod
 	var sourceAlloydbReplicationMethodStandard *shared.SourceAlloydbReplicationMethodStandard
 	if r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodStandard != nil {
-		method := shared.SourceAlloydbReplicationMethodStandardMethodEnum(r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodStandard.Method.ValueString())
+		method := shared.SourceAlloydbReplicationMethodStandardMethod(r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodStandard.Method.ValueString())
 		sourceAlloydbReplicationMethodStandard = &shared.SourceAlloydbReplicationMethodStandard{
 			Method: method,
 		}
@@ -44,26 +45,24 @@ func (r *SourceAlloydbResourceModel) ToCreateSDKType() *shared.SourceAlloydbCrea
 		} else {
 			initialWaitingSeconds = nil
 		}
-		lsnCommitBehaviour := new(shared.SourceAlloydbReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnum)
+		lsnCommitBehaviour := new(shared.SourceAlloydbReplicationMethodLogicalReplicationCDCLSNCommitBehaviour)
 		if !r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.LsnCommitBehaviour.IsUnknown() && !r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.LsnCommitBehaviour.IsNull() {
-			*lsnCommitBehaviour = shared.SourceAlloydbReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnum(r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.LsnCommitBehaviour.ValueString())
+			*lsnCommitBehaviour = shared.SourceAlloydbReplicationMethodLogicalReplicationCDCLSNCommitBehaviour(r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.LsnCommitBehaviour.ValueString())
 		} else {
 			lsnCommitBehaviour = nil
 		}
-		method1 := shared.SourceAlloydbReplicationMethodLogicalReplicationCDCMethodEnum(r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.Method.ValueString())
-		plugin := new(shared.SourceAlloydbReplicationMethodLogicalReplicationCDCPluginEnum)
+		method1 := shared.SourceAlloydbReplicationMethodLogicalReplicationCDCMethod(r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.Method.ValueString())
+		plugin := new(shared.SourceAlloydbReplicationMethodLogicalReplicationCDCPlugin)
 		if !r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.Plugin.IsUnknown() && !r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.Plugin.IsNull() {
-			*plugin = shared.SourceAlloydbReplicationMethodLogicalReplicationCDCPluginEnum(r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.Plugin.ValueString())
+			*plugin = shared.SourceAlloydbReplicationMethodLogicalReplicationCDCPlugin(r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.Plugin.ValueString())
 		} else {
 			plugin = nil
 		}
 		publication := r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.Publication.ValueString()
 		replicationSlot := r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.ReplicationSlot.ValueString()
-		additionalProperties := make(map[string]interface{})
-		for additionalPropertiesKey, additionalPropertiesValue := range r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.AdditionalProperties {
-			var additionalPropertiesInst interface{}
-			_ = json.Unmarshal([]byte(additionalPropertiesValue.ValueString()), &additionalPropertiesInst)
-			additionalProperties[additionalPropertiesKey] = additionalPropertiesInst
+		var additionalProperties interface{}
+		if !r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.AdditionalProperties.IsUnknown() && !r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.AdditionalProperties.ValueString()), &additionalProperties)
 		}
 		sourceAlloydbReplicationMethodLogicalReplicationCDC = &shared.SourceAlloydbReplicationMethodLogicalReplicationCDC{
 			InitialWaitingSeconds: initialWaitingSeconds,
@@ -84,16 +83,14 @@ func (r *SourceAlloydbResourceModel) ToCreateSDKType() *shared.SourceAlloydbCrea
 	for _, schemasItem := range r.Configuration.Schemas {
 		schemas = append(schemas, schemasItem.ValueString())
 	}
-	sourceType := shared.SourceAlloydbAlloydbEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceAlloydbAlloydb(r.Configuration.SourceType.ValueString())
 	var sslMode *shared.SourceAlloydbSSLModes
 	var sourceAlloydbSSLModesDisable *shared.SourceAlloydbSSLModesDisable
 	if r.Configuration.SslMode.SourceAlloydbSSLModesDisable != nil {
-		mode := shared.SourceAlloydbSSLModesDisableModeEnum(r.Configuration.SslMode.SourceAlloydbSSLModesDisable.Mode.ValueString())
-		additionalProperties1 := make(map[string]interface{})
-		for additionalPropertiesKey1, additionalPropertiesValue1 := range r.Configuration.SslMode.SourceAlloydbSSLModesDisable.AdditionalProperties {
-			var additionalPropertiesInst1 interface{}
-			_ = json.Unmarshal([]byte(additionalPropertiesValue1.ValueString()), &additionalPropertiesInst1)
-			additionalProperties1[additionalPropertiesKey1] = additionalPropertiesInst1
+		mode := shared.SourceAlloydbSSLModesDisableMode(r.Configuration.SslMode.SourceAlloydbSSLModesDisable.Mode.ValueString())
+		var additionalProperties1 interface{}
+		if !r.Configuration.SslMode.SourceAlloydbSSLModesDisable.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.SourceAlloydbSSLModesDisable.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.SslMode.SourceAlloydbSSLModesDisable.AdditionalProperties.ValueString()), &additionalProperties1)
 		}
 		sourceAlloydbSSLModesDisable = &shared.SourceAlloydbSSLModesDisable{
 			Mode:                 mode,
@@ -107,12 +104,10 @@ func (r *SourceAlloydbResourceModel) ToCreateSDKType() *shared.SourceAlloydbCrea
 	}
 	var sourceAlloydbSSLModesAllow *shared.SourceAlloydbSSLModesAllow
 	if r.Configuration.SslMode.SourceAlloydbSSLModesAllow != nil {
-		mode1 := shared.SourceAlloydbSSLModesAllowModeEnum(r.Configuration.SslMode.SourceAlloydbSSLModesAllow.Mode.ValueString())
-		additionalProperties2 := make(map[string]interface{})
-		for additionalPropertiesKey2, additionalPropertiesValue2 := range r.Configuration.SslMode.SourceAlloydbSSLModesAllow.AdditionalProperties {
-			var additionalPropertiesInst2 interface{}
-			_ = json.Unmarshal([]byte(additionalPropertiesValue2.ValueString()), &additionalPropertiesInst2)
-			additionalProperties2[additionalPropertiesKey2] = additionalPropertiesInst2
+		mode1 := shared.SourceAlloydbSSLModesAllowMode(r.Configuration.SslMode.SourceAlloydbSSLModesAllow.Mode.ValueString())
+		var additionalProperties2 interface{}
+		if !r.Configuration.SslMode.SourceAlloydbSSLModesAllow.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.SourceAlloydbSSLModesAllow.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.SslMode.SourceAlloydbSSLModesAllow.AdditionalProperties.ValueString()), &additionalProperties2)
 		}
 		sourceAlloydbSSLModesAllow = &shared.SourceAlloydbSSLModesAllow{
 			Mode:                 mode1,
@@ -126,12 +121,10 @@ func (r *SourceAlloydbResourceModel) ToCreateSDKType() *shared.SourceAlloydbCrea
 	}
 	var sourceAlloydbSSLModesPrefer *shared.SourceAlloydbSSLModesPrefer
 	if r.Configuration.SslMode.SourceAlloydbSSLModesPrefer != nil {
-		mode2 := shared.SourceAlloydbSSLModesPreferModeEnum(r.Configuration.SslMode.SourceAlloydbSSLModesPrefer.Mode.ValueString())
-		additionalProperties3 := make(map[string]interface{})
-		for additionalPropertiesKey3, additionalPropertiesValue3 := range r.Configuration.SslMode.SourceAlloydbSSLModesPrefer.AdditionalProperties {
-			var additionalPropertiesInst3 interface{}
-			_ = json.Unmarshal([]byte(additionalPropertiesValue3.ValueString()), &additionalPropertiesInst3)
-			additionalProperties3[additionalPropertiesKey3] = additionalPropertiesInst3
+		mode2 := shared.SourceAlloydbSSLModesPreferMode(r.Configuration.SslMode.SourceAlloydbSSLModesPrefer.Mode.ValueString())
+		var additionalProperties3 interface{}
+		if !r.Configuration.SslMode.SourceAlloydbSSLModesPrefer.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.SourceAlloydbSSLModesPrefer.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.SslMode.SourceAlloydbSSLModesPrefer.AdditionalProperties.ValueString()), &additionalProperties3)
 		}
 		sourceAlloydbSSLModesPrefer = &shared.SourceAlloydbSSLModesPrefer{
 			Mode:                 mode2,
@@ -145,12 +138,10 @@ func (r *SourceAlloydbResourceModel) ToCreateSDKType() *shared.SourceAlloydbCrea
 	}
 	var sourceAlloydbSSLModesRequire *shared.SourceAlloydbSSLModesRequire
 	if r.Configuration.SslMode.SourceAlloydbSSLModesRequire != nil {
-		mode3 := shared.SourceAlloydbSSLModesRequireModeEnum(r.Configuration.SslMode.SourceAlloydbSSLModesRequire.Mode.ValueString())
-		additionalProperties4 := make(map[string]interface{})
-		for additionalPropertiesKey4, additionalPropertiesValue4 := range r.Configuration.SslMode.SourceAlloydbSSLModesRequire.AdditionalProperties {
-			var additionalPropertiesInst4 interface{}
-			_ = json.Unmarshal([]byte(additionalPropertiesValue4.ValueString()), &additionalPropertiesInst4)
-			additionalProperties4[additionalPropertiesKey4] = additionalPropertiesInst4
+		mode3 := shared.SourceAlloydbSSLModesRequireMode(r.Configuration.SslMode.SourceAlloydbSSLModesRequire.Mode.ValueString())
+		var additionalProperties4 interface{}
+		if !r.Configuration.SslMode.SourceAlloydbSSLModesRequire.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.SourceAlloydbSSLModesRequire.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.SslMode.SourceAlloydbSSLModesRequire.AdditionalProperties.ValueString()), &additionalProperties4)
 		}
 		sourceAlloydbSSLModesRequire = &shared.SourceAlloydbSSLModesRequire{
 			Mode:                 mode3,
@@ -183,12 +174,10 @@ func (r *SourceAlloydbResourceModel) ToCreateSDKType() *shared.SourceAlloydbCrea
 		} else {
 			clientKeyPassword = nil
 		}
-		mode4 := shared.SourceAlloydbSSLModesVerifyCaModeEnum(r.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa.Mode.ValueString())
-		additionalProperties5 := make(map[string]interface{})
-		for additionalPropertiesKey5, additionalPropertiesValue5 := range r.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa.AdditionalProperties {
-			var additionalPropertiesInst5 interface{}
-			_ = json.Unmarshal([]byte(additionalPropertiesValue5.ValueString()), &additionalPropertiesInst5)
-			additionalProperties5[additionalPropertiesKey5] = additionalPropertiesInst5
+		mode4 := shared.SourceAlloydbSSLModesVerifyCaMode(r.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa.Mode.ValueString())
+		var additionalProperties5 interface{}
+		if !r.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.SslMode.SourceAlloydbSSLModesVerifyCa.AdditionalProperties.ValueString()), &additionalProperties5)
 		}
 		sourceAlloydbSSLModesVerifyCa = &shared.SourceAlloydbSSLModesVerifyCa{
 			CaCertificate:        caCertificate,
@@ -225,12 +214,10 @@ func (r *SourceAlloydbResourceModel) ToCreateSDKType() *shared.SourceAlloydbCrea
 		} else {
 			clientKeyPassword1 = nil
 		}
-		mode5 := shared.SourceAlloydbSSLModesVerifyFullModeEnum(r.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull.Mode.ValueString())
-		additionalProperties6 := make(map[string]interface{})
-		for additionalPropertiesKey6, additionalPropertiesValue6 := range r.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull.AdditionalProperties {
-			var additionalPropertiesInst6 interface{}
-			_ = json.Unmarshal([]byte(additionalPropertiesValue6.ValueString()), &additionalPropertiesInst6)
-			additionalProperties6[additionalPropertiesKey6] = additionalPropertiesInst6
+		mode5 := shared.SourceAlloydbSSLModesVerifyFullMode(r.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull.Mode.ValueString())
+		var additionalProperties6 interface{}
+		if !r.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.SslMode.SourceAlloydbSSLModesVerifyFull.AdditionalProperties.ValueString()), &additionalProperties6)
 		}
 		sourceAlloydbSSLModesVerifyFull = &shared.SourceAlloydbSSLModesVerifyFull{
 			CaCertificate:        caCertificate1,
@@ -249,7 +236,7 @@ func (r *SourceAlloydbResourceModel) ToCreateSDKType() *shared.SourceAlloydbCrea
 	var tunnelMethod *shared.SourceAlloydbSSHTunnelMethod
 	var sourceAlloydbSSHTunnelMethodNoTunnel *shared.SourceAlloydbSSHTunnelMethodNoTunnel
 	if r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodNoTunnel != nil {
-		tunnelMethod1 := shared.SourceAlloydbSSHTunnelMethodNoTunnelTunnelMethodEnum(r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
+		tunnelMethod1 := shared.SourceAlloydbSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
 		sourceAlloydbSSHTunnelMethodNoTunnel = &shared.SourceAlloydbSSHTunnelMethodNoTunnel{
 			TunnelMethod: tunnelMethod1,
 		}
@@ -263,7 +250,7 @@ func (r *SourceAlloydbResourceModel) ToCreateSDKType() *shared.SourceAlloydbCrea
 	if r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodSSHKeyAuthentication != nil {
 		sshKey := r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodSSHKeyAuthentication.SSHKey.ValueString()
 		tunnelHost := r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
-		tunnelMethod2 := shared.SourceAlloydbSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
+		tunnelMethod2 := shared.SourceAlloydbSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
 		tunnelPort := r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
 		tunnelUser := r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
 		sourceAlloydbSSHTunnelMethodSSHKeyAuthentication = &shared.SourceAlloydbSSHTunnelMethodSSHKeyAuthentication{
@@ -282,7 +269,7 @@ func (r *SourceAlloydbResourceModel) ToCreateSDKType() *shared.SourceAlloydbCrea
 	var sourceAlloydbSSHTunnelMethodPasswordAuthentication *shared.SourceAlloydbSSHTunnelMethodPasswordAuthentication
 	if r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodPasswordAuthentication != nil {
 		tunnelHost1 := r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
-		tunnelMethod3 := shared.SourceAlloydbSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
+		tunnelMethod3 := shared.SourceAlloydbSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
 		tunnelPort1 := r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
 		tunnelUser1 := r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
 		tunnelUserPassword := r.Configuration.TunnelMethod.SourceAlloydbSSHTunnelMethodPasswordAuthentication.TunnelUserPassword.ValueString()
@@ -333,4 +320,11 @@ func (r *SourceAlloydbResourceModel) ToCreateSDKType() *shared.SourceAlloydbCrea
 func (r *SourceAlloydbResourceModel) ToDeleteSDKType() *shared.SourceAlloydbCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceAlloydbResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

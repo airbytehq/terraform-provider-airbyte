@@ -4,11 +4,12 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceLaunchdarklyResourceModel) ToCreateSDKType() *shared.SourceLaunchdarklyCreateRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
-	sourceType := shared.SourceLaunchdarklyLaunchdarklyEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceLaunchdarklyLaunchdarkly(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceLaunchdarkly{
 		AccessToken: accessToken,
 		SourceType:  sourceType,
@@ -33,4 +34,11 @@ func (r *SourceLaunchdarklyResourceModel) ToCreateSDKType() *shared.SourceLaunch
 func (r *SourceLaunchdarklyResourceModel) ToDeleteSDKType() *shared.SourceLaunchdarklyCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceLaunchdarklyResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

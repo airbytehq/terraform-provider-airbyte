@@ -8,34 +8,34 @@ import (
 	"time"
 )
 
-type SourceKlaviyoKlaviyoEnum string
+type SourceKlaviyoKlaviyo string
 
 const (
-	SourceKlaviyoKlaviyoEnumKlaviyo SourceKlaviyoKlaviyoEnum = "klaviyo"
+	SourceKlaviyoKlaviyoKlaviyo SourceKlaviyoKlaviyo = "klaviyo"
 )
 
-func (e SourceKlaviyoKlaviyoEnum) ToPointer() *SourceKlaviyoKlaviyoEnum {
+func (e SourceKlaviyoKlaviyo) ToPointer() *SourceKlaviyoKlaviyo {
 	return &e
 }
 
-func (e *SourceKlaviyoKlaviyoEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceKlaviyoKlaviyo) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "klaviyo":
-		*e = SourceKlaviyoKlaviyoEnum(v)
+		*e = SourceKlaviyoKlaviyo(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceKlaviyoKlaviyoEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceKlaviyoKlaviyo: %v", v)
 	}
 }
 
 type SourceKlaviyo struct {
 	// Klaviyo API Key. See our <a href="https://docs.airbyte.com/integrations/sources/klaviyo">docs</a> if you need help finding this key.
-	APIKey     string                   `json:"api_key"`
-	SourceType SourceKlaviyoKlaviyoEnum `json:"sourceType"`
+	APIKey     string               `json:"api_key"`
+	SourceType SourceKlaviyoKlaviyo `json:"sourceType"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
 }

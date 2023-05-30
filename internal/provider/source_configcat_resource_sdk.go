@@ -4,11 +4,12 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceConfigcatResourceModel) ToCreateSDKType() *shared.SourceConfigcatCreateRequest {
 	password := r.Configuration.Password.ValueString()
-	sourceType := shared.SourceConfigcatConfigcatEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceConfigcatConfigcat(r.Configuration.SourceType.ValueString())
 	username := r.Configuration.Username.ValueString()
 	configuration := shared.SourceConfigcat{
 		Password:   password,
@@ -35,4 +36,11 @@ func (r *SourceConfigcatResourceModel) ToCreateSDKType() *shared.SourceConfigcat
 func (r *SourceConfigcatResourceModel) ToDeleteSDKType() *shared.SourceConfigcatCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceConfigcatResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

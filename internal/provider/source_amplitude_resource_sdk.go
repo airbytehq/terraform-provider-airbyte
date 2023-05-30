@@ -4,13 +4,14 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceAmplitudeResourceModel) ToCreateSDKType() *shared.SourceAmplitudeCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	dataRegion := new(shared.SourceAmplitudeDataRegionEnum)
+	dataRegion := new(shared.SourceAmplitudeDataRegion)
 	if !r.Configuration.DataRegion.IsUnknown() && !r.Configuration.DataRegion.IsNull() {
-		*dataRegion = shared.SourceAmplitudeDataRegionEnum(r.Configuration.DataRegion.ValueString())
+		*dataRegion = shared.SourceAmplitudeDataRegion(r.Configuration.DataRegion.ValueString())
 	} else {
 		dataRegion = nil
 	}
@@ -21,7 +22,7 @@ func (r *SourceAmplitudeResourceModel) ToCreateSDKType() *shared.SourceAmplitude
 		requestTimeRange = nil
 	}
 	secretKey := r.Configuration.SecretKey.ValueString()
-	sourceType := shared.SourceAmplitudeAmplitudeEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceAmplitudeAmplitude(r.Configuration.SourceType.ValueString())
 	startDate := r.Configuration.StartDate.ValueString()
 	configuration := shared.SourceAmplitude{
 		APIKey:           apiKey,
@@ -51,4 +52,11 @@ func (r *SourceAmplitudeResourceModel) ToCreateSDKType() *shared.SourceAmplitude
 func (r *SourceAmplitudeResourceModel) ToDeleteSDKType() *shared.SourceAmplitudeCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceAmplitudeResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

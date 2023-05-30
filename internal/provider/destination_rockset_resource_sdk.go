@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationRocksetResourceModel) ToCreateSDKType() *shared.DestinationRocksetCreateRequest {
@@ -14,7 +15,7 @@ func (r *DestinationRocksetResourceModel) ToCreateSDKType() *shared.DestinationR
 	} else {
 		apiServer = nil
 	}
-	destinationType := shared.DestinationRocksetRocksetEnum(r.Configuration.DestinationType.ValueString())
+	destinationType := shared.DestinationRocksetRockset(r.Configuration.DestinationType.ValueString())
 	workspace := r.Configuration.Workspace.ValueString()
 	configuration := shared.DestinationRockset{
 		APIKey:          apiKey,
@@ -35,4 +36,11 @@ func (r *DestinationRocksetResourceModel) ToCreateSDKType() *shared.DestinationR
 func (r *DestinationRocksetResourceModel) ToDeleteSDKType() *shared.DestinationRocksetCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *DestinationRocksetResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

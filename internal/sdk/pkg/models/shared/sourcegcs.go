@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type SourceGcsGcsEnum string
+type SourceGcsGcs string
 
 const (
-	SourceGcsGcsEnumGcs SourceGcsGcsEnum = "gcs"
+	SourceGcsGcsGcs SourceGcsGcs = "gcs"
 )
 
-func (e SourceGcsGcsEnum) ToPointer() *SourceGcsGcsEnum {
+func (e SourceGcsGcs) ToPointer() *SourceGcsGcs {
 	return &e
 }
 
-func (e *SourceGcsGcsEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceGcsGcs) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "gcs":
-		*e = SourceGcsGcsEnum(v)
+		*e = SourceGcsGcs(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGcsGcsEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceGcsGcs: %v", v)
 	}
 }
 
@@ -37,6 +37,6 @@ type SourceGcs struct {
 	// GCS path to data
 	GcsPath string `json:"gcs_path"`
 	// Enter your Google Cloud <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">service account key</a> in JSON format
-	ServiceAccount string           `json:"service_account"`
-	SourceType     SourceGcsGcsEnum `json:"sourceType"`
+	ServiceAccount string       `json:"service_account"`
+	SourceType     SourceGcsGcs `json:"sourceType"`
 }

@@ -4,10 +4,11 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceRkiCovidResourceModel) ToCreateSDKType() *shared.SourceRkiCovidCreateRequest {
-	sourceType := shared.SourceRkiCovidRkiCovidEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceRkiCovidRkiCovid(r.Configuration.SourceType.ValueString())
 	startDate := r.Configuration.StartDate.ValueString()
 	configuration := shared.SourceRkiCovid{
 		SourceType: sourceType,
@@ -33,4 +34,11 @@ func (r *SourceRkiCovidResourceModel) ToCreateSDKType() *shared.SourceRkiCovidCr
 func (r *SourceRkiCovidResourceModel) ToDeleteSDKType() *shared.SourceRkiCovidCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceRkiCovidResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

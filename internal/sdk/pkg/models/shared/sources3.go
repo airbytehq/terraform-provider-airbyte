@@ -10,44 +10,44 @@ import (
 	"time"
 )
 
-type SourceS3FileFormatJsonlFiletypeEnum string
+type SourceS3FileFormatJsonlFiletype string
 
 const (
-	SourceS3FileFormatJsonlFiletypeEnumJsonl SourceS3FileFormatJsonlFiletypeEnum = "jsonl"
+	SourceS3FileFormatJsonlFiletypeJsonl SourceS3FileFormatJsonlFiletype = "jsonl"
 )
 
-func (e SourceS3FileFormatJsonlFiletypeEnum) ToPointer() *SourceS3FileFormatJsonlFiletypeEnum {
+func (e SourceS3FileFormatJsonlFiletype) ToPointer() *SourceS3FileFormatJsonlFiletype {
 	return &e
 }
 
-func (e *SourceS3FileFormatJsonlFiletypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceS3FileFormatJsonlFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "jsonl":
-		*e = SourceS3FileFormatJsonlFiletypeEnum(v)
+		*e = SourceS3FileFormatJsonlFiletype(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceS3FileFormatJsonlFiletypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceS3FileFormatJsonlFiletype: %v", v)
 	}
 }
 
-// SourceS3FileFormatJsonlUnexpectedFieldBehaviorEnum - How JSON fields outside of explicit_schema (if given) are treated. Check <a href="https://arrow.apache.org/docs/python/generated/pyarrow.json.ParseOptions.html" target="_blank">PyArrow documentation</a> for details
-type SourceS3FileFormatJsonlUnexpectedFieldBehaviorEnum string
+// SourceS3FileFormatJsonlUnexpectedFieldBehavior - How JSON fields outside of explicit_schema (if given) are treated. Check <a href="https://arrow.apache.org/docs/python/generated/pyarrow.json.ParseOptions.html" target="_blank">PyArrow documentation</a> for details
+type SourceS3FileFormatJsonlUnexpectedFieldBehavior string
 
 const (
-	SourceS3FileFormatJsonlUnexpectedFieldBehaviorEnumIgnore SourceS3FileFormatJsonlUnexpectedFieldBehaviorEnum = "ignore"
-	SourceS3FileFormatJsonlUnexpectedFieldBehaviorEnumInfer  SourceS3FileFormatJsonlUnexpectedFieldBehaviorEnum = "infer"
-	SourceS3FileFormatJsonlUnexpectedFieldBehaviorEnumError  SourceS3FileFormatJsonlUnexpectedFieldBehaviorEnum = "error"
+	SourceS3FileFormatJsonlUnexpectedFieldBehaviorIgnore SourceS3FileFormatJsonlUnexpectedFieldBehavior = "ignore"
+	SourceS3FileFormatJsonlUnexpectedFieldBehaviorInfer  SourceS3FileFormatJsonlUnexpectedFieldBehavior = "infer"
+	SourceS3FileFormatJsonlUnexpectedFieldBehaviorError  SourceS3FileFormatJsonlUnexpectedFieldBehavior = "error"
 )
 
-func (e SourceS3FileFormatJsonlUnexpectedFieldBehaviorEnum) ToPointer() *SourceS3FileFormatJsonlUnexpectedFieldBehaviorEnum {
+func (e SourceS3FileFormatJsonlUnexpectedFieldBehavior) ToPointer() *SourceS3FileFormatJsonlUnexpectedFieldBehavior {
 	return &e
 }
 
-func (e *SourceS3FileFormatJsonlUnexpectedFieldBehaviorEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceS3FileFormatJsonlUnexpectedFieldBehavior) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -58,74 +58,74 @@ func (e *SourceS3FileFormatJsonlUnexpectedFieldBehaviorEnum) UnmarshalJSON(data 
 	case "infer":
 		fallthrough
 	case "error":
-		*e = SourceS3FileFormatJsonlUnexpectedFieldBehaviorEnum(v)
+		*e = SourceS3FileFormatJsonlUnexpectedFieldBehavior(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceS3FileFormatJsonlUnexpectedFieldBehaviorEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceS3FileFormatJsonlUnexpectedFieldBehavior: %v", v)
 	}
 }
 
 // SourceS3FileFormatJsonl - This connector uses <a href="https://arrow.apache.org/docs/python/json.html" target="_blank">PyArrow</a> for JSON Lines (jsonl) file parsing.
 type SourceS3FileFormatJsonl struct {
 	// The chunk size in bytes to process at a time in memory from each file. If your data is particularly wide and failing during schema detection, increasing this should solve it. Beware of raising this too high as you could hit OOM errors.
-	BlockSize *int64                               `json:"block_size,omitempty"`
-	Filetype  *SourceS3FileFormatJsonlFiletypeEnum `json:"filetype,omitempty"`
+	BlockSize *int64                           `json:"block_size,omitempty"`
+	Filetype  *SourceS3FileFormatJsonlFiletype `json:"filetype,omitempty"`
 	// Whether newline characters are allowed in JSON values. Turning this on may affect performance. Leave blank to default to False.
 	NewlinesInValues *bool `json:"newlines_in_values,omitempty"`
 	// How JSON fields outside of explicit_schema (if given) are treated. Check <a href="https://arrow.apache.org/docs/python/generated/pyarrow.json.ParseOptions.html" target="_blank">PyArrow documentation</a> for details
-	UnexpectedFieldBehavior *SourceS3FileFormatJsonlUnexpectedFieldBehaviorEnum `json:"unexpected_field_behavior,omitempty"`
+	UnexpectedFieldBehavior *SourceS3FileFormatJsonlUnexpectedFieldBehavior `json:"unexpected_field_behavior,omitempty"`
 }
 
-type SourceS3FileFormatAvroFiletypeEnum string
+type SourceS3FileFormatAvroFiletype string
 
 const (
-	SourceS3FileFormatAvroFiletypeEnumAvro SourceS3FileFormatAvroFiletypeEnum = "avro"
+	SourceS3FileFormatAvroFiletypeAvro SourceS3FileFormatAvroFiletype = "avro"
 )
 
-func (e SourceS3FileFormatAvroFiletypeEnum) ToPointer() *SourceS3FileFormatAvroFiletypeEnum {
+func (e SourceS3FileFormatAvroFiletype) ToPointer() *SourceS3FileFormatAvroFiletype {
 	return &e
 }
 
-func (e *SourceS3FileFormatAvroFiletypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceS3FileFormatAvroFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "avro":
-		*e = SourceS3FileFormatAvroFiletypeEnum(v)
+		*e = SourceS3FileFormatAvroFiletype(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceS3FileFormatAvroFiletypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceS3FileFormatAvroFiletype: %v", v)
 	}
 }
 
 // SourceS3FileFormatAvro - This connector utilises <a href="https://fastavro.readthedocs.io/en/latest/" target="_blank">fastavro</a> for Avro parsing.
 type SourceS3FileFormatAvro struct {
-	Filetype *SourceS3FileFormatAvroFiletypeEnum `json:"filetype,omitempty"`
+	Filetype *SourceS3FileFormatAvroFiletype `json:"filetype,omitempty"`
 }
 
-type SourceS3FileFormatParquetFiletypeEnum string
+type SourceS3FileFormatParquetFiletype string
 
 const (
-	SourceS3FileFormatParquetFiletypeEnumParquet SourceS3FileFormatParquetFiletypeEnum = "parquet"
+	SourceS3FileFormatParquetFiletypeParquet SourceS3FileFormatParquetFiletype = "parquet"
 )
 
-func (e SourceS3FileFormatParquetFiletypeEnum) ToPointer() *SourceS3FileFormatParquetFiletypeEnum {
+func (e SourceS3FileFormatParquetFiletype) ToPointer() *SourceS3FileFormatParquetFiletype {
 	return &e
 }
 
-func (e *SourceS3FileFormatParquetFiletypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceS3FileFormatParquetFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "parquet":
-		*e = SourceS3FileFormatParquetFiletypeEnum(v)
+		*e = SourceS3FileFormatParquetFiletype(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceS3FileFormatParquetFiletypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceS3FileFormatParquetFiletype: %v", v)
 	}
 }
 
@@ -136,31 +136,31 @@ type SourceS3FileFormatParquet struct {
 	// Perform read buffering when deserializing individual column chunks. By default every group column will be loaded fully to memory. This option can help avoid out-of-memory errors if your data is particularly wide.
 	BufferSize *int64 `json:"buffer_size,omitempty"`
 	// If you only want to sync a subset of the columns from the file(s), add the columns you want here as a comma-delimited list. Leave it empty to sync all columns.
-	Columns  []string                               `json:"columns,omitempty"`
-	Filetype *SourceS3FileFormatParquetFiletypeEnum `json:"filetype,omitempty"`
+	Columns  []string                           `json:"columns,omitempty"`
+	Filetype *SourceS3FileFormatParquetFiletype `json:"filetype,omitempty"`
 }
 
-type SourceS3FileFormatCSVFiletypeEnum string
+type SourceS3FileFormatCSVFiletype string
 
 const (
-	SourceS3FileFormatCSVFiletypeEnumCsv SourceS3FileFormatCSVFiletypeEnum = "csv"
+	SourceS3FileFormatCSVFiletypeCsv SourceS3FileFormatCSVFiletype = "csv"
 )
 
-func (e SourceS3FileFormatCSVFiletypeEnum) ToPointer() *SourceS3FileFormatCSVFiletypeEnum {
+func (e SourceS3FileFormatCSVFiletype) ToPointer() *SourceS3FileFormatCSVFiletype {
 	return &e
 }
 
-func (e *SourceS3FileFormatCSVFiletypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceS3FileFormatCSVFiletype) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "csv":
-		*e = SourceS3FileFormatCSVFiletypeEnum(v)
+		*e = SourceS3FileFormatCSVFiletype(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceS3FileFormatCSVFiletypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceS3FileFormatCSVFiletype: %v", v)
 	}
 }
 
@@ -179,8 +179,8 @@ type SourceS3FileFormatCSV struct {
 	// The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.
 	Encoding *string `json:"encoding,omitempty"`
 	// The character used for escaping special characters. To disallow escaping, leave this field blank.
-	EscapeChar *string                            `json:"escape_char,omitempty"`
-	Filetype   *SourceS3FileFormatCSVFiletypeEnum `json:"filetype,omitempty"`
+	EscapeChar *string                        `json:"escape_char,omitempty"`
+	Filetype   *SourceS3FileFormatCSVFiletype `json:"filetype,omitempty"`
 	// Configures whether a schema for the source should be inferred from the current data or not. If set to false and a custom schema is set, then the manually enforced schema is used. If a schema is not manually set, and this is set to false, then all fields will be read as strings
 	InferDatatypes *bool `json:"infer_datatypes,omitempty"`
 	// Whether newline characters are allowed in CSV values. Turning this on may affect performance. Leave blank to default to False.
@@ -321,27 +321,27 @@ type SourceS3S3AmazonWebServices struct {
 	StartDate *time.Time `json:"start_date,omitempty"`
 }
 
-type SourceS3S3Enum string
+type SourceS3S3 string
 
 const (
-	SourceS3S3EnumS3 SourceS3S3Enum = "s3"
+	SourceS3S3S3 SourceS3S3 = "s3"
 )
 
-func (e SourceS3S3Enum) ToPointer() *SourceS3S3Enum {
+func (e SourceS3S3) ToPointer() *SourceS3S3 {
 	return &e
 }
 
-func (e *SourceS3S3Enum) UnmarshalJSON(data []byte) error {
+func (e *SourceS3S3) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "s3":
-		*e = SourceS3S3Enum(v)
+		*e = SourceS3S3(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceS3S3Enum: %v", v)
+		return fmt.Errorf("invalid value for SourceS3S3: %v", v)
 	}
 }
 
@@ -355,6 +355,6 @@ type SourceS3 struct {
 	// Use this to load files from S3 or S3-compatible services
 	Provider SourceS3S3AmazonWebServices `json:"provider"`
 	// Optionally provide a schema to enforce, as a valid JSON string. Ensure this is a mapping of <strong>{ "column" : "type" }</strong>, where types are valid <a href="https://json-schema.org/understanding-json-schema/reference/type.html" target="_blank">JSON Schema datatypes</a>. Leave as {} to auto-infer the schema.
-	Schema     *string        `json:"schema,omitempty"`
-	SourceType SourceS3S3Enum `json:"sourceType"`
+	Schema     *string    `json:"schema,omitempty"`
+	SourceType SourceS3S3 `json:"sourceType"`
 }

@@ -9,64 +9,64 @@ import (
 	"fmt"
 )
 
-type SourceGoogleSheetsAuthenticationServiceAccountKeyAuthenticationAuthTypeEnum string
+type SourceGoogleSheetsAuthenticationServiceAccountKeyAuthenticationAuthType string
 
 const (
-	SourceGoogleSheetsAuthenticationServiceAccountKeyAuthenticationAuthTypeEnumService SourceGoogleSheetsAuthenticationServiceAccountKeyAuthenticationAuthTypeEnum = "Service"
+	SourceGoogleSheetsAuthenticationServiceAccountKeyAuthenticationAuthTypeService SourceGoogleSheetsAuthenticationServiceAccountKeyAuthenticationAuthType = "Service"
 )
 
-func (e SourceGoogleSheetsAuthenticationServiceAccountKeyAuthenticationAuthTypeEnum) ToPointer() *SourceGoogleSheetsAuthenticationServiceAccountKeyAuthenticationAuthTypeEnum {
+func (e SourceGoogleSheetsAuthenticationServiceAccountKeyAuthenticationAuthType) ToPointer() *SourceGoogleSheetsAuthenticationServiceAccountKeyAuthenticationAuthType {
 	return &e
 }
 
-func (e *SourceGoogleSheetsAuthenticationServiceAccountKeyAuthenticationAuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceGoogleSheetsAuthenticationServiceAccountKeyAuthenticationAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Service":
-		*e = SourceGoogleSheetsAuthenticationServiceAccountKeyAuthenticationAuthTypeEnum(v)
+		*e = SourceGoogleSheetsAuthenticationServiceAccountKeyAuthenticationAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGoogleSheetsAuthenticationServiceAccountKeyAuthenticationAuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceGoogleSheetsAuthenticationServiceAccountKeyAuthenticationAuthType: %v", v)
 	}
 }
 
 // SourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication - Credentials for connecting to the Google Sheets API
 type SourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication struct {
-	AuthType SourceGoogleSheetsAuthenticationServiceAccountKeyAuthenticationAuthTypeEnum `json:"auth_type"`
+	AuthType SourceGoogleSheetsAuthenticationServiceAccountKeyAuthenticationAuthType `json:"auth_type"`
 	// Enter your Google Cloud <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">service account key</a> in JSON format
 	ServiceAccountInfo string `json:"service_account_info"`
 }
 
-type SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuthAuthTypeEnum string
+type SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuthAuthType string
 
 const (
-	SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuthAuthTypeEnumClient SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuthAuthTypeEnum = "Client"
+	SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuthAuthTypeClient SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuthAuthType = "Client"
 )
 
-func (e SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuthAuthTypeEnum) ToPointer() *SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuthAuthTypeEnum {
+func (e SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuthAuthType) ToPointer() *SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuthAuthType {
 	return &e
 }
 
-func (e *SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuthAuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuthAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Client":
-		*e = SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuthAuthTypeEnum(v)
+		*e = SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuthAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuthAuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuthAuthType: %v", v)
 	}
 }
 
 // SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth - Credentials for connecting to the Google Sheets API
 type SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth struct {
-	AuthType SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuthAuthTypeEnum `json:"auth_type"`
+	AuthType SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuthAuthType `json:"auth_type"`
 	// Enter your Google application's Client ID
 	ClientID string `json:"client_id"`
 	// Enter your Google application's Client Secret
@@ -143,27 +143,27 @@ func (u SourceGoogleSheetsAuthentication) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-type SourceGoogleSheetsGoogleSheetsEnum string
+type SourceGoogleSheetsGoogleSheets string
 
 const (
-	SourceGoogleSheetsGoogleSheetsEnumGoogleSheets SourceGoogleSheetsGoogleSheetsEnum = "google-sheets"
+	SourceGoogleSheetsGoogleSheetsGoogleSheets SourceGoogleSheetsGoogleSheets = "google-sheets"
 )
 
-func (e SourceGoogleSheetsGoogleSheetsEnum) ToPointer() *SourceGoogleSheetsGoogleSheetsEnum {
+func (e SourceGoogleSheetsGoogleSheets) ToPointer() *SourceGoogleSheetsGoogleSheets {
 	return &e
 }
 
-func (e *SourceGoogleSheetsGoogleSheetsEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceGoogleSheetsGoogleSheets) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "google-sheets":
-		*e = SourceGoogleSheetsGoogleSheetsEnum(v)
+		*e = SourceGoogleSheetsGoogleSheets(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGoogleSheetsGoogleSheetsEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceGoogleSheetsGoogleSheets: %v", v)
 	}
 }
 
@@ -171,8 +171,8 @@ type SourceGoogleSheets struct {
 	// Credentials for connecting to the Google Sheets API
 	Credentials SourceGoogleSheetsAuthentication `json:"credentials"`
 	// Number of rows fetched when making a Google Sheet API call. Defaults to 200.
-	RowBatchSize *int64                             `json:"row_batch_size,omitempty"`
-	SourceType   SourceGoogleSheetsGoogleSheetsEnum `json:"sourceType"`
+	RowBatchSize *int64                         `json:"row_batch_size,omitempty"`
+	SourceType   SourceGoogleSheetsGoogleSheets `json:"sourceType"`
 	// Enter the link to the Google spreadsheet you want to sync
 	SpreadsheetID string `json:"spreadsheet_id"`
 }

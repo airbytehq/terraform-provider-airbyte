@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
@@ -22,7 +23,7 @@ func (r *SourceStripeResourceModel) ToCreateSDKType() *shared.SourceStripeCreate
 	} else {
 		sliceRange = nil
 	}
-	sourceType := shared.SourceStripeStripeEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceStripeStripe(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceStripe{
 		AccountID:          accountID,
@@ -52,4 +53,11 @@ func (r *SourceStripeResourceModel) ToCreateSDKType() *shared.SourceStripeCreate
 func (r *SourceStripeResourceModel) ToDeleteSDKType() *shared.SourceStripeCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceStripeResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

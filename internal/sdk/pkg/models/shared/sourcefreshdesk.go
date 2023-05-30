@@ -8,27 +8,27 @@ import (
 	"time"
 )
 
-type SourceFreshdeskFreshdeskEnum string
+type SourceFreshdeskFreshdesk string
 
 const (
-	SourceFreshdeskFreshdeskEnumFreshdesk SourceFreshdeskFreshdeskEnum = "freshdesk"
+	SourceFreshdeskFreshdeskFreshdesk SourceFreshdeskFreshdesk = "freshdesk"
 )
 
-func (e SourceFreshdeskFreshdeskEnum) ToPointer() *SourceFreshdeskFreshdeskEnum {
+func (e SourceFreshdeskFreshdesk) ToPointer() *SourceFreshdeskFreshdesk {
 	return &e
 }
 
-func (e *SourceFreshdeskFreshdeskEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceFreshdeskFreshdesk) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "freshdesk":
-		*e = SourceFreshdeskFreshdeskEnum(v)
+		*e = SourceFreshdeskFreshdesk(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFreshdeskFreshdeskEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceFreshdeskFreshdesk: %v", v)
 	}
 }
 
@@ -38,8 +38,8 @@ type SourceFreshdesk struct {
 	// Freshdesk domain
 	Domain string `json:"domain"`
 	// The number of requests per minute that this source allowed to use. There is a rate limit of 50 requests per minute per app per account.
-	RequestsPerMinute *int64                       `json:"requests_per_minute,omitempty"`
-	SourceType        SourceFreshdeskFreshdeskEnum `json:"sourceType"`
+	RequestsPerMinute *int64                   `json:"requests_per_minute,omitempty"`
+	SourceType        SourceFreshdeskFreshdesk `json:"sourceType"`
 	// UTC date and time. Any data created after this date will be replicated. If this parameter is not set, all data will be replicated.
 	StartDate *time.Time `json:"start_date,omitempty"`
 }

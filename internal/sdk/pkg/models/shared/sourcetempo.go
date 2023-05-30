@@ -7,32 +7,32 @@ import (
 	"fmt"
 )
 
-type SourceTempoTempoEnum string
+type SourceTempoTempo string
 
 const (
-	SourceTempoTempoEnumTempo SourceTempoTempoEnum = "tempo"
+	SourceTempoTempoTempo SourceTempoTempo = "tempo"
 )
 
-func (e SourceTempoTempoEnum) ToPointer() *SourceTempoTempoEnum {
+func (e SourceTempoTempo) ToPointer() *SourceTempoTempo {
 	return &e
 }
 
-func (e *SourceTempoTempoEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceTempoTempo) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "tempo":
-		*e = SourceTempoTempoEnum(v)
+		*e = SourceTempoTempo(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceTempoTempoEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceTempoTempo: %v", v)
 	}
 }
 
 type SourceTempo struct {
 	// Tempo API Token. Go to Tempo>Settings, scroll down to Data Access and select API integration.
-	APIToken   string               `json:"api_token"`
-	SourceType SourceTempoTempoEnum `json:"sourceType"`
+	APIToken   string           `json:"api_token"`
+	SourceType SourceTempoTempo `json:"sourceType"`
 }

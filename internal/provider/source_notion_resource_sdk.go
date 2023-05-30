@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
@@ -12,7 +13,7 @@ func (r *SourceNotionResourceModel) ToCreateSDKType() *shared.SourceNotionCreate
 	var sourceNotionAuthenticateUsingOAuth20 *shared.SourceNotionAuthenticateUsingOAuth20
 	if r.Configuration.Credentials.SourceNotionAuthenticateUsingOAuth20 != nil {
 		accessToken := r.Configuration.Credentials.SourceNotionAuthenticateUsingOAuth20.AccessToken.ValueString()
-		authType := shared.SourceNotionAuthenticateUsingOAuth20AuthTypeEnum(r.Configuration.Credentials.SourceNotionAuthenticateUsingOAuth20.AuthType.ValueString())
+		authType := shared.SourceNotionAuthenticateUsingOAuth20AuthType(r.Configuration.Credentials.SourceNotionAuthenticateUsingOAuth20.AuthType.ValueString())
 		clientID := r.Configuration.Credentials.SourceNotionAuthenticateUsingOAuth20.ClientID.ValueString()
 		clientSecret := r.Configuration.Credentials.SourceNotionAuthenticateUsingOAuth20.ClientSecret.ValueString()
 		sourceNotionAuthenticateUsingOAuth20 = &shared.SourceNotionAuthenticateUsingOAuth20{
@@ -29,7 +30,7 @@ func (r *SourceNotionResourceModel) ToCreateSDKType() *shared.SourceNotionCreate
 	}
 	var sourceNotionAuthenticateUsingAccessToken *shared.SourceNotionAuthenticateUsingAccessToken
 	if r.Configuration.Credentials.SourceNotionAuthenticateUsingAccessToken != nil {
-		authType1 := shared.SourceNotionAuthenticateUsingAccessTokenAuthTypeEnum(r.Configuration.Credentials.SourceNotionAuthenticateUsingAccessToken.AuthType.ValueString())
+		authType1 := shared.SourceNotionAuthenticateUsingAccessTokenAuthType(r.Configuration.Credentials.SourceNotionAuthenticateUsingAccessToken.AuthType.ValueString())
 		token := r.Configuration.Credentials.SourceNotionAuthenticateUsingAccessToken.Token.ValueString()
 		sourceNotionAuthenticateUsingAccessToken = &shared.SourceNotionAuthenticateUsingAccessToken{
 			AuthType: authType1,
@@ -41,7 +42,7 @@ func (r *SourceNotionResourceModel) ToCreateSDKType() *shared.SourceNotionCreate
 			SourceNotionAuthenticateUsingAccessToken: sourceNotionAuthenticateUsingAccessToken,
 		}
 	}
-	sourceType := shared.SourceNotionNotionEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceNotionNotion(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceNotion{
 		Credentials: credentials,
@@ -68,4 +69,11 @@ func (r *SourceNotionResourceModel) ToCreateSDKType() *shared.SourceNotionCreate
 func (r *SourceNotionResourceModel) ToDeleteSDKType() *shared.SourceNotionCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceNotionResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

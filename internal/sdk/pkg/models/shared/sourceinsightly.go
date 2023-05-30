@@ -7,32 +7,32 @@ import (
 	"fmt"
 )
 
-type SourceInsightlyInsightlyEnum string
+type SourceInsightlyInsightly string
 
 const (
-	SourceInsightlyInsightlyEnumInsightly SourceInsightlyInsightlyEnum = "insightly"
+	SourceInsightlyInsightlyInsightly SourceInsightlyInsightly = "insightly"
 )
 
-func (e SourceInsightlyInsightlyEnum) ToPointer() *SourceInsightlyInsightlyEnum {
+func (e SourceInsightlyInsightly) ToPointer() *SourceInsightlyInsightly {
 	return &e
 }
 
-func (e *SourceInsightlyInsightlyEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceInsightlyInsightly) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "insightly":
-		*e = SourceInsightlyInsightlyEnum(v)
+		*e = SourceInsightlyInsightly(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceInsightlyInsightlyEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceInsightlyInsightly: %v", v)
 	}
 }
 
 type SourceInsightly struct {
-	SourceType SourceInsightlyInsightlyEnum `json:"sourceType"`
+	SourceType SourceInsightlyInsightly `json:"sourceType"`
 	// The date from which you'd like to replicate data for Insightly in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated. Note that it will be used only for incremental streams.
 	StartDate string `json:"start_date"`
 	// Your Insightly API token.

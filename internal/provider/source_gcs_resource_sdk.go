@@ -4,13 +4,14 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceGcsResourceModel) ToCreateSDKType() *shared.SourceGcsCreateRequest {
 	gcsBucket := r.Configuration.GcsBucket.ValueString()
 	gcsPath := r.Configuration.GcsPath.ValueString()
 	serviceAccount := r.Configuration.ServiceAccount.ValueString()
-	sourceType := shared.SourceGcsGcsEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceGcsGcs(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceGcs{
 		GcsBucket:      gcsBucket,
 		GcsPath:        gcsPath,
@@ -37,4 +38,11 @@ func (r *SourceGcsResourceModel) ToCreateSDKType() *shared.SourceGcsCreateReques
 func (r *SourceGcsResourceModel) ToDeleteSDKType() *shared.SourceGcsCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceGcsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

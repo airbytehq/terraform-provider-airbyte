@@ -8,34 +8,34 @@ import (
 	"time"
 )
 
-type SourceIntercomIntercomEnum string
+type SourceIntercomIntercom string
 
 const (
-	SourceIntercomIntercomEnumIntercom SourceIntercomIntercomEnum = "intercom"
+	SourceIntercomIntercomIntercom SourceIntercomIntercom = "intercom"
 )
 
-func (e SourceIntercomIntercomEnum) ToPointer() *SourceIntercomIntercomEnum {
+func (e SourceIntercomIntercom) ToPointer() *SourceIntercomIntercom {
 	return &e
 }
 
-func (e *SourceIntercomIntercomEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceIntercomIntercom) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "intercom":
-		*e = SourceIntercomIntercomEnum(v)
+		*e = SourceIntercomIntercom(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceIntercomIntercomEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceIntercomIntercom: %v", v)
 	}
 }
 
 type SourceIntercom struct {
 	// Access token for making authenticated requests. See the <a href="https://developers.intercom.com/building-apps/docs/authentication-types#how-to-get-your-access-token">Intercom docs</a> for more information.
-	AccessToken string                     `json:"access_token"`
-	SourceType  SourceIntercomIntercomEnum `json:"sourceType"`
+	AccessToken string                 `json:"access_token"`
+	SourceType  SourceIntercomIntercom `json:"sourceType"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
 }

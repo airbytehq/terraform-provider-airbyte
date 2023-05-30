@@ -8,23 +8,23 @@ import (
 	"time"
 )
 
-// SourceZohoCrmDataCenterLocationEnum - Please choose the region of your Data Center location. More info by this <a href="https://www.zoho.com/crm/developer/docs/api/v2/multi-dc.html">Link</a>
-type SourceZohoCrmDataCenterLocationEnum string
+// SourceZohoCrmDataCenterLocation - Please choose the region of your Data Center location. More info by this <a href="https://www.zoho.com/crm/developer/docs/api/v2/multi-dc.html">Link</a>
+type SourceZohoCrmDataCenterLocation string
 
 const (
-	SourceZohoCrmDataCenterLocationEnumUs SourceZohoCrmDataCenterLocationEnum = "US"
-	SourceZohoCrmDataCenterLocationEnumAu SourceZohoCrmDataCenterLocationEnum = "AU"
-	SourceZohoCrmDataCenterLocationEnumEu SourceZohoCrmDataCenterLocationEnum = "EU"
-	SourceZohoCrmDataCenterLocationEnumIn SourceZohoCrmDataCenterLocationEnum = "IN"
-	SourceZohoCrmDataCenterLocationEnumCn SourceZohoCrmDataCenterLocationEnum = "CN"
-	SourceZohoCrmDataCenterLocationEnumJp SourceZohoCrmDataCenterLocationEnum = "JP"
+	SourceZohoCrmDataCenterLocationUs SourceZohoCrmDataCenterLocation = "US"
+	SourceZohoCrmDataCenterLocationAu SourceZohoCrmDataCenterLocation = "AU"
+	SourceZohoCrmDataCenterLocationEu SourceZohoCrmDataCenterLocation = "EU"
+	SourceZohoCrmDataCenterLocationIn SourceZohoCrmDataCenterLocation = "IN"
+	SourceZohoCrmDataCenterLocationCn SourceZohoCrmDataCenterLocation = "CN"
+	SourceZohoCrmDataCenterLocationJp SourceZohoCrmDataCenterLocation = "JP"
 )
 
-func (e SourceZohoCrmDataCenterLocationEnum) ToPointer() *SourceZohoCrmDataCenterLocationEnum {
+func (e SourceZohoCrmDataCenterLocation) ToPointer() *SourceZohoCrmDataCenterLocation {
 	return &e
 }
 
-func (e *SourceZohoCrmDataCenterLocationEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceZohoCrmDataCenterLocation) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -41,29 +41,29 @@ func (e *SourceZohoCrmDataCenterLocationEnum) UnmarshalJSON(data []byte) error {
 	case "CN":
 		fallthrough
 	case "JP":
-		*e = SourceZohoCrmDataCenterLocationEnum(v)
+		*e = SourceZohoCrmDataCenterLocation(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZohoCrmDataCenterLocationEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceZohoCrmDataCenterLocation: %v", v)
 	}
 }
 
-// SourceZohoCRMZohoCRMEditionEnum - Choose your Edition of Zoho CRM to determine API Concurrency Limits
-type SourceZohoCRMZohoCRMEditionEnum string
+// SourceZohoCRMZohoCRMEdition - Choose your Edition of Zoho CRM to determine API Concurrency Limits
+type SourceZohoCRMZohoCRMEdition string
 
 const (
-	SourceZohoCRMZohoCRMEditionEnumFree         SourceZohoCRMZohoCRMEditionEnum = "Free"
-	SourceZohoCRMZohoCRMEditionEnumStandard     SourceZohoCRMZohoCRMEditionEnum = "Standard"
-	SourceZohoCRMZohoCRMEditionEnumProfessional SourceZohoCRMZohoCRMEditionEnum = "Professional"
-	SourceZohoCRMZohoCRMEditionEnumEnterprise   SourceZohoCRMZohoCRMEditionEnum = "Enterprise"
-	SourceZohoCRMZohoCRMEditionEnumUltimate     SourceZohoCRMZohoCRMEditionEnum = "Ultimate"
+	SourceZohoCRMZohoCRMEditionFree         SourceZohoCRMZohoCRMEdition = "Free"
+	SourceZohoCRMZohoCRMEditionStandard     SourceZohoCRMZohoCRMEdition = "Standard"
+	SourceZohoCRMZohoCRMEditionProfessional SourceZohoCRMZohoCRMEdition = "Professional"
+	SourceZohoCRMZohoCRMEditionEnterprise   SourceZohoCRMZohoCRMEdition = "Enterprise"
+	SourceZohoCRMZohoCRMEditionUltimate     SourceZohoCRMZohoCRMEdition = "Ultimate"
 )
 
-func (e SourceZohoCRMZohoCRMEditionEnum) ToPointer() *SourceZohoCRMZohoCRMEditionEnum {
+func (e SourceZohoCRMZohoCRMEdition) ToPointer() *SourceZohoCRMZohoCRMEdition {
 	return &e
 }
 
-func (e *SourceZohoCRMZohoCRMEditionEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceZohoCRMZohoCRMEdition) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -78,27 +78,27 @@ func (e *SourceZohoCRMZohoCRMEditionEnum) UnmarshalJSON(data []byte) error {
 	case "Enterprise":
 		fallthrough
 	case "Ultimate":
-		*e = SourceZohoCRMZohoCRMEditionEnum(v)
+		*e = SourceZohoCRMZohoCRMEdition(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZohoCRMZohoCRMEditionEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceZohoCRMZohoCRMEdition: %v", v)
 	}
 }
 
-// SourceZohoCrmEnvironmentEnum - Please choose the environment
-type SourceZohoCrmEnvironmentEnum string
+// SourceZohoCrmEnvironment - Please choose the environment
+type SourceZohoCrmEnvironment string
 
 const (
-	SourceZohoCrmEnvironmentEnumProduction SourceZohoCrmEnvironmentEnum = "Production"
-	SourceZohoCrmEnvironmentEnumDeveloper  SourceZohoCrmEnvironmentEnum = "Developer"
-	SourceZohoCrmEnvironmentEnumSandbox    SourceZohoCrmEnvironmentEnum = "Sandbox"
+	SourceZohoCrmEnvironmentProduction SourceZohoCrmEnvironment = "Production"
+	SourceZohoCrmEnvironmentDeveloper  SourceZohoCrmEnvironment = "Developer"
+	SourceZohoCrmEnvironmentSandbox    SourceZohoCrmEnvironment = "Sandbox"
 )
 
-func (e SourceZohoCrmEnvironmentEnum) ToPointer() *SourceZohoCrmEnvironmentEnum {
+func (e SourceZohoCrmEnvironment) ToPointer() *SourceZohoCrmEnvironment {
 	return &e
 }
 
-func (e *SourceZohoCrmEnvironmentEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceZohoCrmEnvironment) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -109,34 +109,34 @@ func (e *SourceZohoCrmEnvironmentEnum) UnmarshalJSON(data []byte) error {
 	case "Developer":
 		fallthrough
 	case "Sandbox":
-		*e = SourceZohoCrmEnvironmentEnum(v)
+		*e = SourceZohoCrmEnvironment(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZohoCrmEnvironmentEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceZohoCrmEnvironment: %v", v)
 	}
 }
 
-type SourceZohoCrmZohoCrmEnum string
+type SourceZohoCrmZohoCrm string
 
 const (
-	SourceZohoCrmZohoCrmEnumZohoCrm SourceZohoCrmZohoCrmEnum = "zoho-crm"
+	SourceZohoCrmZohoCrmZohoCrm SourceZohoCrmZohoCrm = "zoho-crm"
 )
 
-func (e SourceZohoCrmZohoCrmEnum) ToPointer() *SourceZohoCrmZohoCrmEnum {
+func (e SourceZohoCrmZohoCrm) ToPointer() *SourceZohoCrmZohoCrm {
 	return &e
 }
 
-func (e *SourceZohoCrmZohoCrmEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceZohoCrmZohoCrm) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "zoho-crm":
-		*e = SourceZohoCrmZohoCrmEnum(v)
+		*e = SourceZohoCrmZohoCrm(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZohoCrmZohoCrmEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceZohoCrmZohoCrm: %v", v)
 	}
 }
 
@@ -146,14 +146,14 @@ type SourceZohoCrm struct {
 	// OAuth2.0 Client Secret
 	ClientSecret string `json:"client_secret"`
 	// Please choose the region of your Data Center location. More info by this <a href="https://www.zoho.com/crm/developer/docs/api/v2/multi-dc.html">Link</a>
-	DcRegion SourceZohoCrmDataCenterLocationEnum `json:"dc_region"`
+	DcRegion SourceZohoCrmDataCenterLocation `json:"dc_region"`
 	// Choose your Edition of Zoho CRM to determine API Concurrency Limits
-	Edition SourceZohoCRMZohoCRMEditionEnum `json:"edition"`
+	Edition SourceZohoCRMZohoCRMEdition `json:"edition"`
 	// Please choose the environment
-	Environment SourceZohoCrmEnvironmentEnum `json:"environment"`
+	Environment SourceZohoCrmEnvironment `json:"environment"`
 	// OAuth2.0 Refresh Token
-	RefreshToken string                   `json:"refresh_token"`
-	SourceType   SourceZohoCrmZohoCrmEnum `json:"sourceType"`
+	RefreshToken string               `json:"refresh_token"`
+	SourceType   SourceZohoCrmZohoCrm `json:"sourceType"`
 	// ISO 8601, for instance: `YYYY-MM-DD`, `YYYY-MM-DD HH:MM:SS+HH:MM`
 	StartDatetime *time.Time `json:"start_datetime,omitempty"`
 }

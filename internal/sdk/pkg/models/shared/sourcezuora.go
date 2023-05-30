@@ -7,19 +7,19 @@ import (
 	"fmt"
 )
 
-// SourceZuoraDataQueryTypeEnum - Choose between `Live`, or `Unlimited` - the optimized, replicated database at 12 hours freshness for high volume extraction <a href="https://knowledgecenter.zuora.com/Central_Platform/Query/Data_Query/A_Overview_of_Data_Query#Query_Processing_Limitations">Link</a>
-type SourceZuoraDataQueryTypeEnum string
+// SourceZuoraDataQueryType - Choose between `Live`, or `Unlimited` - the optimized, replicated database at 12 hours freshness for high volume extraction <a href="https://knowledgecenter.zuora.com/Central_Platform/Query/Data_Query/A_Overview_of_Data_Query#Query_Processing_Limitations">Link</a>
+type SourceZuoraDataQueryType string
 
 const (
-	SourceZuoraDataQueryTypeEnumLive      SourceZuoraDataQueryTypeEnum = "Live"
-	SourceZuoraDataQueryTypeEnumUnlimited SourceZuoraDataQueryTypeEnum = "Unlimited"
+	SourceZuoraDataQueryTypeLive      SourceZuoraDataQueryType = "Live"
+	SourceZuoraDataQueryTypeUnlimited SourceZuoraDataQueryType = "Unlimited"
 )
 
-func (e SourceZuoraDataQueryTypeEnum) ToPointer() *SourceZuoraDataQueryTypeEnum {
+func (e SourceZuoraDataQueryType) ToPointer() *SourceZuoraDataQueryType {
 	return &e
 }
 
-func (e *SourceZuoraDataQueryTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceZuoraDataQueryType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -28,57 +28,57 @@ func (e *SourceZuoraDataQueryTypeEnum) UnmarshalJSON(data []byte) error {
 	case "Live":
 		fallthrough
 	case "Unlimited":
-		*e = SourceZuoraDataQueryTypeEnum(v)
+		*e = SourceZuoraDataQueryType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZuoraDataQueryTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceZuoraDataQueryType: %v", v)
 	}
 }
 
-type SourceZuoraZuoraEnum string
+type SourceZuoraZuora string
 
 const (
-	SourceZuoraZuoraEnumZuora SourceZuoraZuoraEnum = "zuora"
+	SourceZuoraZuoraZuora SourceZuoraZuora = "zuora"
 )
 
-func (e SourceZuoraZuoraEnum) ToPointer() *SourceZuoraZuoraEnum {
+func (e SourceZuoraZuora) ToPointer() *SourceZuoraZuora {
 	return &e
 }
 
-func (e *SourceZuoraZuoraEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceZuoraZuora) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "zuora":
-		*e = SourceZuoraZuoraEnum(v)
+		*e = SourceZuoraZuora(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZuoraZuoraEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceZuoraZuora: %v", v)
 	}
 }
 
-// SourceZuoraTenantEndpointLocationEnum - Please choose the right endpoint where your Tenant is located. More info by this <a href="https://www.zuora.com/developer/api-reference/#section/Introduction/Access-to-the-API">Link</a>
-type SourceZuoraTenantEndpointLocationEnum string
+// SourceZuoraTenantEndpointLocation - Please choose the right endpoint where your Tenant is located. More info by this <a href="https://www.zuora.com/developer/api-reference/#section/Introduction/Access-to-the-API">Link</a>
+type SourceZuoraTenantEndpointLocation string
 
 const (
-	SourceZuoraTenantEndpointLocationEnumUsProduction      SourceZuoraTenantEndpointLocationEnum = "US Production"
-	SourceZuoraTenantEndpointLocationEnumUsCloudProduction SourceZuoraTenantEndpointLocationEnum = "US Cloud Production"
-	SourceZuoraTenantEndpointLocationEnumUsAPISandbox      SourceZuoraTenantEndpointLocationEnum = "US API Sandbox"
-	SourceZuoraTenantEndpointLocationEnumUsCloudAPISandbox SourceZuoraTenantEndpointLocationEnum = "US Cloud API Sandbox"
-	SourceZuoraTenantEndpointLocationEnumUsCentralSandbox  SourceZuoraTenantEndpointLocationEnum = "US Central Sandbox"
-	SourceZuoraTenantEndpointLocationEnumUsPerformanceTest SourceZuoraTenantEndpointLocationEnum = "US Performance Test"
-	SourceZuoraTenantEndpointLocationEnumEuProduction      SourceZuoraTenantEndpointLocationEnum = "EU Production"
-	SourceZuoraTenantEndpointLocationEnumEuAPISandbox      SourceZuoraTenantEndpointLocationEnum = "EU API Sandbox"
-	SourceZuoraTenantEndpointLocationEnumEuCentralSandbox  SourceZuoraTenantEndpointLocationEnum = "EU Central Sandbox"
+	SourceZuoraTenantEndpointLocationUsProduction      SourceZuoraTenantEndpointLocation = "US Production"
+	SourceZuoraTenantEndpointLocationUsCloudProduction SourceZuoraTenantEndpointLocation = "US Cloud Production"
+	SourceZuoraTenantEndpointLocationUsAPISandbox      SourceZuoraTenantEndpointLocation = "US API Sandbox"
+	SourceZuoraTenantEndpointLocationUsCloudAPISandbox SourceZuoraTenantEndpointLocation = "US Cloud API Sandbox"
+	SourceZuoraTenantEndpointLocationUsCentralSandbox  SourceZuoraTenantEndpointLocation = "US Central Sandbox"
+	SourceZuoraTenantEndpointLocationUsPerformanceTest SourceZuoraTenantEndpointLocation = "US Performance Test"
+	SourceZuoraTenantEndpointLocationEuProduction      SourceZuoraTenantEndpointLocation = "EU Production"
+	SourceZuoraTenantEndpointLocationEuAPISandbox      SourceZuoraTenantEndpointLocation = "EU API Sandbox"
+	SourceZuoraTenantEndpointLocationEuCentralSandbox  SourceZuoraTenantEndpointLocation = "EU Central Sandbox"
 )
 
-func (e SourceZuoraTenantEndpointLocationEnum) ToPointer() *SourceZuoraTenantEndpointLocationEnum {
+func (e SourceZuoraTenantEndpointLocation) ToPointer() *SourceZuoraTenantEndpointLocation {
 	return &e
 }
 
-func (e *SourceZuoraTenantEndpointLocationEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceZuoraTenantEndpointLocation) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -101,10 +101,10 @@ func (e *SourceZuoraTenantEndpointLocationEnum) UnmarshalJSON(data []byte) error
 	case "EU API Sandbox":
 		fallthrough
 	case "EU Central Sandbox":
-		*e = SourceZuoraTenantEndpointLocationEnum(v)
+		*e = SourceZuoraTenantEndpointLocation(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZuoraTenantEndpointLocationEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceZuoraTenantEndpointLocation: %v", v)
 	}
 }
 
@@ -114,12 +114,12 @@ type SourceZuora struct {
 	// Your OAuth user Client Secret
 	ClientSecret string `json:"client_secret"`
 	// Choose between `Live`, or `Unlimited` - the optimized, replicated database at 12 hours freshness for high volume extraction <a href="https://knowledgecenter.zuora.com/Central_Platform/Query/Data_Query/A_Overview_of_Data_Query#Query_Processing_Limitations">Link</a>
-	DataQuery  SourceZuoraDataQueryTypeEnum `json:"data_query"`
-	SourceType SourceZuoraZuoraEnum         `json:"sourceType"`
+	DataQuery  SourceZuoraDataQueryType `json:"data_query"`
+	SourceType SourceZuoraZuora         `json:"sourceType"`
 	// Start Date in format: YYYY-MM-DD
 	StartDate string `json:"start_date"`
 	// Please choose the right endpoint where your Tenant is located. More info by this <a href="https://www.zuora.com/developer/api-reference/#section/Introduction/Access-to-the-API">Link</a>
-	TenantEndpoint SourceZuoraTenantEndpointLocationEnum `json:"tenant_endpoint"`
+	TenantEndpoint SourceZuoraTenantEndpointLocation `json:"tenant_endpoint"`
 	// The amount of days for each data-chunk begining from start_date. Bigger the value - faster the fetch. (0.1 - as for couple of hours, 1 - as for a Day; 364 - as for a Year).
 	WindowInDays *string `json:"window_in_days,omitempty"`
 }

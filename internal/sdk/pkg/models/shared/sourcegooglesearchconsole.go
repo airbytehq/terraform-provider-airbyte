@@ -10,66 +10,66 @@ import (
 	"fmt"
 )
 
-type SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthenticationAuthTypeEnum string
+type SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthenticationAuthType string
 
 const (
-	SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthenticationAuthTypeEnumService SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthenticationAuthTypeEnum = "Service"
+	SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthenticationAuthTypeService SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthenticationAuthType = "Service"
 )
 
-func (e SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthenticationAuthTypeEnum) ToPointer() *SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthenticationAuthTypeEnum {
+func (e SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthenticationAuthType) ToPointer() *SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthenticationAuthType {
 	return &e
 }
 
-func (e *SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthenticationAuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthenticationAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Service":
-		*e = SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthenticationAuthTypeEnum(v)
+		*e = SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthenticationAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthenticationAuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthenticationAuthType: %v", v)
 	}
 }
 
 type SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication struct {
-	AuthType SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthenticationAuthTypeEnum `json:"auth_type"`
+	AuthType SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthenticationAuthType `json:"auth_type"`
 	// The email of the user which has permissions to access the Google Workspace Admin APIs.
 	Email string `json:"email"`
 	// The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys">here</a>.
 	ServiceAccountInfo string `json:"service_account_info"`
 }
 
-type SourceGoogleSearchConsoleAuthenticationTypeOAuthAuthTypeEnum string
+type SourceGoogleSearchConsoleAuthenticationTypeOAuthAuthType string
 
 const (
-	SourceGoogleSearchConsoleAuthenticationTypeOAuthAuthTypeEnumClient SourceGoogleSearchConsoleAuthenticationTypeOAuthAuthTypeEnum = "Client"
+	SourceGoogleSearchConsoleAuthenticationTypeOAuthAuthTypeClient SourceGoogleSearchConsoleAuthenticationTypeOAuthAuthType = "Client"
 )
 
-func (e SourceGoogleSearchConsoleAuthenticationTypeOAuthAuthTypeEnum) ToPointer() *SourceGoogleSearchConsoleAuthenticationTypeOAuthAuthTypeEnum {
+func (e SourceGoogleSearchConsoleAuthenticationTypeOAuthAuthType) ToPointer() *SourceGoogleSearchConsoleAuthenticationTypeOAuthAuthType {
 	return &e
 }
 
-func (e *SourceGoogleSearchConsoleAuthenticationTypeOAuthAuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceGoogleSearchConsoleAuthenticationTypeOAuthAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Client":
-		*e = SourceGoogleSearchConsoleAuthenticationTypeOAuthAuthTypeEnum(v)
+		*e = SourceGoogleSearchConsoleAuthenticationTypeOAuthAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGoogleSearchConsoleAuthenticationTypeOAuthAuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceGoogleSearchConsoleAuthenticationTypeOAuthAuthType: %v", v)
 	}
 }
 
 type SourceGoogleSearchConsoleAuthenticationTypeOAuth struct {
 	// Access token for making authenticated requests. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
-	AccessToken *string                                                      `json:"access_token,omitempty"`
-	AuthType    SourceGoogleSearchConsoleAuthenticationTypeOAuthAuthTypeEnum `json:"auth_type"`
+	AccessToken *string                                                  `json:"access_token,omitempty"`
+	AuthType    SourceGoogleSearchConsoleAuthenticationTypeOAuthAuthType `json:"auth_type"`
 	// The client ID of your Google Search Console developer application. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
 	ClientID string `json:"client_id"`
 	// The client secret of your Google Search Console developer application. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
@@ -146,27 +146,27 @@ func (u SourceGoogleSearchConsoleAuthenticationType) MarshalJSON() ([]byte, erro
 	return nil, nil
 }
 
-type SourceGoogleSearchConsoleGoogleSearchConsoleEnum string
+type SourceGoogleSearchConsoleGoogleSearchConsole string
 
 const (
-	SourceGoogleSearchConsoleGoogleSearchConsoleEnumGoogleSearchConsole SourceGoogleSearchConsoleGoogleSearchConsoleEnum = "google-search-console"
+	SourceGoogleSearchConsoleGoogleSearchConsoleGoogleSearchConsole SourceGoogleSearchConsoleGoogleSearchConsole = "google-search-console"
 )
 
-func (e SourceGoogleSearchConsoleGoogleSearchConsoleEnum) ToPointer() *SourceGoogleSearchConsoleGoogleSearchConsoleEnum {
+func (e SourceGoogleSearchConsoleGoogleSearchConsole) ToPointer() *SourceGoogleSearchConsoleGoogleSearchConsole {
 	return &e
 }
 
-func (e *SourceGoogleSearchConsoleGoogleSearchConsoleEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceGoogleSearchConsoleGoogleSearchConsole) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "google-search-console":
-		*e = SourceGoogleSearchConsoleGoogleSearchConsoleEnum(v)
+		*e = SourceGoogleSearchConsoleGoogleSearchConsole(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGoogleSearchConsoleGoogleSearchConsoleEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceGoogleSearchConsoleGoogleSearchConsole: %v", v)
 	}
 }
 
@@ -177,8 +177,8 @@ type SourceGoogleSearchConsole struct {
 	// UTC date in the format 2017-01-25. Any data after this date will not be replicated. Must be greater or equal to the start date field.
 	EndDate *types.Date `json:"end_date,omitempty"`
 	// The URLs of the website property attached to your GSC account. Read more <a href="https://support.google.com/webmasters/answer/34592?hl=en">here</a>.
-	SiteUrls   []string                                         `json:"site_urls"`
-	SourceType SourceGoogleSearchConsoleGoogleSearchConsoleEnum `json:"sourceType"`
+	SiteUrls   []string                                     `json:"site_urls"`
+	SourceType SourceGoogleSearchConsoleGoogleSearchConsole `json:"sourceType"`
 	// UTC date in the format 2017-01-25. Any data before this date will not be replicated.
 	StartDate types.Date `json:"start_date"`
 }

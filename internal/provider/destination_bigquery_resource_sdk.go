@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationBigqueryResourceModel) ToCreateSDKType() *shared.DestinationBigqueryCreateRequest {
@@ -20,12 +21,12 @@ func (r *DestinationBigqueryResourceModel) ToCreateSDKType() *shared.Destination
 		credentialsJSON = nil
 	}
 	datasetID := r.Configuration.DatasetID.ValueString()
-	datasetLocation := shared.DestinationBigqueryDatasetLocationEnum(r.Configuration.DatasetLocation.ValueString())
-	destinationType := shared.DestinationBigqueryBigqueryEnum(r.Configuration.DestinationType.ValueString())
+	datasetLocation := shared.DestinationBigqueryDatasetLocation(r.Configuration.DatasetLocation.ValueString())
+	destinationType := shared.DestinationBigqueryBigquery(r.Configuration.DestinationType.ValueString())
 	var loadingMethod *shared.DestinationBigqueryLoadingMethod
 	var destinationBigqueryLoadingMethodStandardInserts *shared.DestinationBigqueryLoadingMethodStandardInserts
 	if r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodStandardInserts != nil {
-		method := shared.DestinationBigqueryLoadingMethodStandardInsertsMethodEnum(r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodStandardInserts.Method.ValueString())
+		method := shared.DestinationBigqueryLoadingMethodStandardInsertsMethod(r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodStandardInserts.Method.ValueString())
 		destinationBigqueryLoadingMethodStandardInserts = &shared.DestinationBigqueryLoadingMethodStandardInserts{
 			Method: method,
 		}
@@ -40,7 +41,7 @@ func (r *DestinationBigqueryResourceModel) ToCreateSDKType() *shared.Destination
 		var credential shared.DestinationBigqueryLoadingMethodGCSStagingCredential
 		var destinationBigqueryLoadingMethodGCSStagingCredentialHMACKey *shared.DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKey
 		if r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.Credential.DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKey != nil {
-			credentialType := shared.DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKeyCredentialTypeEnum(r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.Credential.DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKey.CredentialType.ValueString())
+			credentialType := shared.DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKeyCredentialType(r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.Credential.DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKey.CredentialType.ValueString())
 			hmacKeyAccessID := r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.Credential.DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKey.HmacKeyAccessID.ValueString()
 			hmacKeySecret := r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.Credential.DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKey.HmacKeySecret.ValueString()
 			destinationBigqueryLoadingMethodGCSStagingCredentialHMACKey = &shared.DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKey{
@@ -62,13 +63,13 @@ func (r *DestinationBigqueryResourceModel) ToCreateSDKType() *shared.Destination
 		}
 		gcsBucketName := r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.GcsBucketName.ValueString()
 		gcsBucketPath := r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.GcsBucketPath.ValueString()
-		keepFilesInGcsBucket := new(shared.DestinationBigqueryLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessingEnum)
+		keepFilesInGcsBucket := new(shared.DestinationBigqueryLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessing)
 		if !r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.KeepFilesInGcsBucket.IsUnknown() && !r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.KeepFilesInGcsBucket.IsNull() {
-			*keepFilesInGcsBucket = shared.DestinationBigqueryLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessingEnum(r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.KeepFilesInGcsBucket.ValueString())
+			*keepFilesInGcsBucket = shared.DestinationBigqueryLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessing(r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.KeepFilesInGcsBucket.ValueString())
 		} else {
 			keepFilesInGcsBucket = nil
 		}
-		method1 := shared.DestinationBigqueryLoadingMethodGCSStagingMethodEnum(r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.Method.ValueString())
+		method1 := shared.DestinationBigqueryLoadingMethodGCSStagingMethod(r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.Method.ValueString())
 		destinationBigqueryLoadingMethodGCSStaging = &shared.DestinationBigqueryLoadingMethodGCSStaging{
 			Credential:           credential,
 			FileBufferCount:      fileBufferCount,
@@ -84,9 +85,9 @@ func (r *DestinationBigqueryResourceModel) ToCreateSDKType() *shared.Destination
 		}
 	}
 	projectID := r.Configuration.ProjectID.ValueString()
-	transformationPriority := new(shared.DestinationBigqueryTransformationQueryRunTypeEnum)
+	transformationPriority := new(shared.DestinationBigqueryTransformationQueryRunType)
 	if !r.Configuration.TransformationPriority.IsUnknown() && !r.Configuration.TransformationPriority.IsNull() {
-		*transformationPriority = shared.DestinationBigqueryTransformationQueryRunTypeEnum(r.Configuration.TransformationPriority.ValueString())
+		*transformationPriority = shared.DestinationBigqueryTransformationQueryRunType(r.Configuration.TransformationPriority.ValueString())
 	} else {
 		transformationPriority = nil
 	}
@@ -113,4 +114,11 @@ func (r *DestinationBigqueryResourceModel) ToCreateSDKType() *shared.Destination
 func (r *DestinationBigqueryResourceModel) ToDeleteSDKType() *shared.DestinationBigqueryCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *DestinationBigqueryResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

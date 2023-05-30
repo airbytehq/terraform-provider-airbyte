@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceAmazonSqsResourceModel) ToCreateSDKType() *shared.SourceAmazonSqsCreateRequest {
@@ -33,14 +34,14 @@ func (r *SourceAmazonSqsResourceModel) ToCreateSDKType() *shared.SourceAmazonSqs
 		maxWaitTime = nil
 	}
 	queueURL := r.Configuration.QueueURL.ValueString()
-	region := shared.SourceAmazonSqsAWSRegionEnum(r.Configuration.Region.ValueString())
+	region := shared.SourceAmazonSqsAWSRegion(r.Configuration.Region.ValueString())
 	secretKey := new(string)
 	if !r.Configuration.SecretKey.IsUnknown() && !r.Configuration.SecretKey.IsNull() {
 		*secretKey = r.Configuration.SecretKey.ValueString()
 	} else {
 		secretKey = nil
 	}
-	sourceType := shared.SourceAmazonSqsAmazonSqsEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceAmazonSqsAmazonSqs(r.Configuration.SourceType.ValueString())
 	visibilityTimeout := new(int64)
 	if !r.Configuration.VisibilityTimeout.IsUnknown() && !r.Configuration.VisibilityTimeout.IsNull() {
 		*visibilityTimeout = r.Configuration.VisibilityTimeout.ValueInt64()
@@ -79,4 +80,11 @@ func (r *SourceAmazonSqsResourceModel) ToCreateSDKType() *shared.SourceAmazonSqs
 func (r *SourceAmazonSqsResourceModel) ToDeleteSDKType() *shared.SourceAmazonSqsCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceAmazonSqsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

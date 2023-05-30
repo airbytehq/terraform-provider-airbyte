@@ -4,12 +4,13 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceCoinmarketcapResourceModel) ToCreateSDKType() *shared.SourceCoinmarketcapCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	dataType := shared.SourceCoinmarketcapDataTypeEnum(r.Configuration.DataType.ValueString())
-	sourceType := shared.SourceCoinmarketcapCoinmarketcapEnum(r.Configuration.SourceType.ValueString())
+	dataType := shared.SourceCoinmarketcapDataType(r.Configuration.DataType.ValueString())
+	sourceType := shared.SourceCoinmarketcapCoinmarketcap(r.Configuration.SourceType.ValueString())
 	symbols := make([]string, 0)
 	for _, symbolsItem := range r.Configuration.Symbols {
 		symbols = append(symbols, symbolsItem.ValueString())
@@ -40,4 +41,11 @@ func (r *SourceCoinmarketcapResourceModel) ToCreateSDKType() *shared.SourceCoinm
 func (r *SourceCoinmarketcapResourceModel) ToDeleteSDKType() *shared.SourceCoinmarketcapCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceCoinmarketcapResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

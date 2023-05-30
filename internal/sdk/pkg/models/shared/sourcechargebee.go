@@ -8,19 +8,19 @@ import (
 	"time"
 )
 
-// SourceChargebeeProductCatalogEnum - Product Catalog version of your Chargebee site. Instructions on how to find your version you may find <a href="https://apidocs.chargebee.com/docs/api?prod_cat_ver=2">here</a> under `API Version` section.
-type SourceChargebeeProductCatalogEnum string
+// SourceChargebeeProductCatalog - Product Catalog version of your Chargebee site. Instructions on how to find your version you may find <a href="https://apidocs.chargebee.com/docs/api?prod_cat_ver=2">here</a> under `API Version` section.
+type SourceChargebeeProductCatalog string
 
 const (
-	SourceChargebeeProductCatalogEnumOne0 SourceChargebeeProductCatalogEnum = "1.0"
-	SourceChargebeeProductCatalogEnumTwo0 SourceChargebeeProductCatalogEnum = "2.0"
+	SourceChargebeeProductCatalogOne0 SourceChargebeeProductCatalog = "1.0"
+	SourceChargebeeProductCatalogTwo0 SourceChargebeeProductCatalog = "2.0"
 )
 
-func (e SourceChargebeeProductCatalogEnum) ToPointer() *SourceChargebeeProductCatalogEnum {
+func (e SourceChargebeeProductCatalog) ToPointer() *SourceChargebeeProductCatalog {
 	return &e
 }
 
-func (e *SourceChargebeeProductCatalogEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceChargebeeProductCatalog) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -29,45 +29,45 @@ func (e *SourceChargebeeProductCatalogEnum) UnmarshalJSON(data []byte) error {
 	case "1.0":
 		fallthrough
 	case "2.0":
-		*e = SourceChargebeeProductCatalogEnum(v)
+		*e = SourceChargebeeProductCatalog(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceChargebeeProductCatalogEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceChargebeeProductCatalog: %v", v)
 	}
 }
 
-type SourceChargebeeChargebeeEnum string
+type SourceChargebeeChargebee string
 
 const (
-	SourceChargebeeChargebeeEnumChargebee SourceChargebeeChargebeeEnum = "chargebee"
+	SourceChargebeeChargebeeChargebee SourceChargebeeChargebee = "chargebee"
 )
 
-func (e SourceChargebeeChargebeeEnum) ToPointer() *SourceChargebeeChargebeeEnum {
+func (e SourceChargebeeChargebee) ToPointer() *SourceChargebeeChargebee {
 	return &e
 }
 
-func (e *SourceChargebeeChargebeeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceChargebeeChargebee) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "chargebee":
-		*e = SourceChargebeeChargebeeEnum(v)
+		*e = SourceChargebeeChargebee(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceChargebeeChargebeeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceChargebeeChargebee: %v", v)
 	}
 }
 
 type SourceChargebee struct {
 	// Product Catalog version of your Chargebee site. Instructions on how to find your version you may find <a href="https://apidocs.chargebee.com/docs/api?prod_cat_ver=2">here</a> under `API Version` section.
-	ProductCatalog SourceChargebeeProductCatalogEnum `json:"product_catalog"`
+	ProductCatalog SourceChargebeeProductCatalog `json:"product_catalog"`
 	// The site prefix for your Chargebee instance.
 	Site string `json:"site"`
 	// Chargebee API Key. See the <a href="https://docs.airbyte.com/integrations/sources/chargebee">docs</a> for more information on how to obtain this key.
-	SiteAPIKey string                       `json:"site_api_key"`
-	SourceType SourceChargebeeChargebeeEnum `json:"sourceType"`
+	SiteAPIKey string                   `json:"site_api_key"`
+	SourceType SourceChargebeeChargebee `json:"sourceType"`
 	// UTC date and time in the format 2021-01-25T00:00:00Z. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
 }

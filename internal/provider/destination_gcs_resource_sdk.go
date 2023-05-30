@@ -4,13 +4,14 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationGcsResourceModel) ToCreateSDKType() *shared.DestinationGcsCreateRequest {
 	var credential shared.DestinationGcsAuthentication
 	var destinationGcsAuthenticationHMACKey *shared.DestinationGcsAuthenticationHMACKey
 	if r.Configuration.Credential.DestinationGcsAuthenticationHMACKey != nil {
-		credentialType := shared.DestinationGcsAuthenticationHMACKeyCredentialTypeEnum(r.Configuration.Credential.DestinationGcsAuthenticationHMACKey.CredentialType.ValueString())
+		credentialType := shared.DestinationGcsAuthenticationHMACKeyCredentialType(r.Configuration.Credential.DestinationGcsAuthenticationHMACKey.CredentialType.ValueString())
 		hmacKeyAccessID := r.Configuration.Credential.DestinationGcsAuthenticationHMACKey.HmacKeyAccessID.ValueString()
 		hmacKeySecret := r.Configuration.Credential.DestinationGcsAuthenticationHMACKey.HmacKeySecret.ValueString()
 		destinationGcsAuthenticationHMACKey = &shared.DestinationGcsAuthenticationHMACKey{
@@ -24,14 +25,14 @@ func (r *DestinationGcsResourceModel) ToCreateSDKType() *shared.DestinationGcsCr
 			DestinationGcsAuthenticationHMACKey: destinationGcsAuthenticationHMACKey,
 		}
 	}
-	destinationType := shared.DestinationGcsGcsEnum(r.Configuration.DestinationType.ValueString())
+	destinationType := shared.DestinationGcsGcs(r.Configuration.DestinationType.ValueString())
 	var format shared.DestinationGcsOutputFormat
 	var destinationGcsOutputFormatAvroApacheAvro *shared.DestinationGcsOutputFormatAvroApacheAvro
 	if r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro != nil {
 		var compressionCodec shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodec
 		var destinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompression *shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompression
 		if r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompression != nil {
-			codec := shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompressionCodecEnum(r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompression.Codec.ValueString())
+			codec := shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompressionCodec(r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompression.Codec.ValueString())
 			destinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompression = &shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompression{
 				Codec: codec,
 			}
@@ -43,7 +44,7 @@ func (r *DestinationGcsResourceModel) ToCreateSDKType() *shared.DestinationGcsCr
 		}
 		var destinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflate *shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflate
 		if r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflate != nil {
-			codec1 := shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflateCodecEnum(r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflate.Codec.ValueString())
+			codec1 := shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflateCodec(r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflate.Codec.ValueString())
 			compressionLevel := new(int64)
 			if !r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflate.CompressionLevel.IsUnknown() && !r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflate.CompressionLevel.IsNull() {
 				*compressionLevel = r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflate.CompressionLevel.ValueInt64()
@@ -62,7 +63,7 @@ func (r *DestinationGcsResourceModel) ToCreateSDKType() *shared.DestinationGcsCr
 		}
 		var destinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2 *shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2
 		if r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2 != nil {
-			codec2 := shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2CodecEnum(r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2.Codec.ValueString())
+			codec2 := shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2Codec(r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2.Codec.ValueString())
 			destinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2 = &shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2{
 				Codec: codec2,
 			}
@@ -74,7 +75,7 @@ func (r *DestinationGcsResourceModel) ToCreateSDKType() *shared.DestinationGcsCr
 		}
 		var destinationGcsOutputFormatAvroApacheAvroCompressionCodecXz *shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXz
 		if r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXz != nil {
-			codec3 := shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXzCodecEnum(r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXz.Codec.ValueString())
+			codec3 := shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXzCodec(r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXz.Codec.ValueString())
 			compressionLevel1 := new(int64)
 			if !r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXz.CompressionLevel.IsUnknown() && !r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXz.CompressionLevel.IsNull() {
 				*compressionLevel1 = r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXz.CompressionLevel.ValueInt64()
@@ -93,7 +94,7 @@ func (r *DestinationGcsResourceModel) ToCreateSDKType() *shared.DestinationGcsCr
 		}
 		var destinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandard *shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandard
 		if r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandard != nil {
-			codec4 := shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandardCodecEnum(r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandard.Codec.ValueString())
+			codec4 := shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandardCodec(r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandard.Codec.ValueString())
 			compressionLevel2 := new(int64)
 			if !r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandard.CompressionLevel.IsUnknown() && !r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandard.CompressionLevel.IsNull() {
 				*compressionLevel2 = r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandard.CompressionLevel.ValueInt64()
@@ -119,7 +120,7 @@ func (r *DestinationGcsResourceModel) ToCreateSDKType() *shared.DestinationGcsCr
 		}
 		var destinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappy *shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappy
 		if r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappy != nil {
-			codec5 := shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappyCodecEnum(r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappy.Codec.ValueString())
+			codec5 := shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappyCodec(r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappy.Codec.ValueString())
 			destinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappy = &shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappy{
 				Codec: codec5,
 			}
@@ -129,7 +130,7 @@ func (r *DestinationGcsResourceModel) ToCreateSDKType() *shared.DestinationGcsCr
 				DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappy: destinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappy,
 			}
 		}
-		formatType := shared.DestinationGcsOutputFormatAvroApacheAvroFormatTypeEnum(r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.FormatType.ValueString())
+		formatType := shared.DestinationGcsOutputFormatAvroApacheAvroFormatType(r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.FormatType.ValueString())
 		destinationGcsOutputFormatAvroApacheAvro = &shared.DestinationGcsOutputFormatAvroApacheAvro{
 			CompressionCodec: compressionCodec,
 			FormatType:       formatType,
@@ -145,9 +146,9 @@ func (r *DestinationGcsResourceModel) ToCreateSDKType() *shared.DestinationGcsCr
 		var compression *shared.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompression
 		var destinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompression *shared.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompression
 		if r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompression != nil {
-			compressionType := new(shared.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionTypeEnum)
+			compressionType := new(shared.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionType)
 			if !r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompression.CompressionType.IsUnknown() && !r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompression.CompressionType.IsNull() {
-				*compressionType = shared.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionTypeEnum(r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompression.CompressionType.ValueString())
+				*compressionType = shared.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionType(r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompression.CompressionType.ValueString())
 			} else {
 				compressionType = nil
 			}
@@ -162,9 +163,9 @@ func (r *DestinationGcsResourceModel) ToCreateSDKType() *shared.DestinationGcsCr
 		}
 		var destinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP *shared.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP
 		if r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP != nil {
-			compressionType1 := new(shared.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionTypeEnum)
+			compressionType1 := new(shared.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionType)
 			if !r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP.CompressionType.IsUnknown() && !r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP.CompressionType.IsNull() {
-				*compressionType1 = shared.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionTypeEnum(r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP.CompressionType.ValueString())
+				*compressionType1 = shared.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionType(r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP.CompressionType.ValueString())
 			} else {
 				compressionType1 = nil
 			}
@@ -177,13 +178,13 @@ func (r *DestinationGcsResourceModel) ToCreateSDKType() *shared.DestinationGcsCr
 				DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP: destinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP,
 			}
 		}
-		flattening := new(shared.DestinationGcsOutputFormatCSVCommaSeparatedValuesNormalizationEnum)
+		flattening := new(shared.DestinationGcsOutputFormatCSVCommaSeparatedValuesNormalization)
 		if !r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Flattening.IsUnknown() && !r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Flattening.IsNull() {
-			*flattening = shared.DestinationGcsOutputFormatCSVCommaSeparatedValuesNormalizationEnum(r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Flattening.ValueString())
+			*flattening = shared.DestinationGcsOutputFormatCSVCommaSeparatedValuesNormalization(r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Flattening.ValueString())
 		} else {
 			flattening = nil
 		}
-		formatType1 := shared.DestinationGcsOutputFormatCSVCommaSeparatedValuesFormatTypeEnum(r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.FormatType.ValueString())
+		formatType1 := shared.DestinationGcsOutputFormatCSVCommaSeparatedValuesFormatType(r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.FormatType.ValueString())
 		destinationGcsOutputFormatCSVCommaSeparatedValues = &shared.DestinationGcsOutputFormatCSVCommaSeparatedValues{
 			Compression: compression,
 			Flattening:  flattening,
@@ -200,9 +201,9 @@ func (r *DestinationGcsResourceModel) ToCreateSDKType() *shared.DestinationGcsCr
 		var compression1 *shared.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompression
 		var destinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression *shared.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression
 		if r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression != nil {
-			compressionType2 := new(shared.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum)
+			compressionType2 := new(shared.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType)
 			if !r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression.CompressionType.IsUnknown() && !r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression.CompressionType.IsNull() {
-				*compressionType2 = shared.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum(r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression.CompressionType.ValueString())
+				*compressionType2 = shared.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType(r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression.CompressionType.ValueString())
 			} else {
 				compressionType2 = nil
 			}
@@ -217,9 +218,9 @@ func (r *DestinationGcsResourceModel) ToCreateSDKType() *shared.DestinationGcsCr
 		}
 		var destinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP *shared.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP
 		if r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP != nil {
-			compressionType3 := new(shared.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum)
+			compressionType3 := new(shared.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType)
 			if !r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP.CompressionType.IsUnknown() && !r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP.CompressionType.IsNull() {
-				*compressionType3 = shared.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum(r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP.CompressionType.ValueString())
+				*compressionType3 = shared.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType(r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP.CompressionType.ValueString())
 			} else {
 				compressionType3 = nil
 			}
@@ -232,7 +233,7 @@ func (r *DestinationGcsResourceModel) ToCreateSDKType() *shared.DestinationGcsCr
 				DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP: destinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP,
 			}
 		}
-		formatType2 := shared.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum(r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.FormatType.ValueString())
+		formatType2 := shared.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONFormatType(r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.FormatType.ValueString())
 		destinationGcsOutputFormatJSONLinesNewlineDelimitedJSON = &shared.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON{
 			Compression: compression1,
 			FormatType:  formatType2,
@@ -251,9 +252,9 @@ func (r *DestinationGcsResourceModel) ToCreateSDKType() *shared.DestinationGcsCr
 		} else {
 			blockSizeMb = nil
 		}
-		compressionCodec1 := new(shared.DestinationGcsOutputFormatParquetColumnarStorageCompressionCodecEnum)
+		compressionCodec1 := new(shared.DestinationGcsOutputFormatParquetColumnarStorageCompressionCodec)
 		if !r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.CompressionCodec.IsUnknown() && !r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.CompressionCodec.IsNull() {
-			*compressionCodec1 = shared.DestinationGcsOutputFormatParquetColumnarStorageCompressionCodecEnum(r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.CompressionCodec.ValueString())
+			*compressionCodec1 = shared.DestinationGcsOutputFormatParquetColumnarStorageCompressionCodec(r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.CompressionCodec.ValueString())
 		} else {
 			compressionCodec1 = nil
 		}
@@ -269,7 +270,7 @@ func (r *DestinationGcsResourceModel) ToCreateSDKType() *shared.DestinationGcsCr
 		} else {
 			dictionaryPageSizeKb = nil
 		}
-		formatType3 := shared.DestinationGcsOutputFormatParquetColumnarStorageFormatTypeEnum(r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.FormatType.ValueString())
+		formatType3 := shared.DestinationGcsOutputFormatParquetColumnarStorageFormatType(r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.FormatType.ValueString())
 		maxPaddingSizeMb := new(int64)
 		if !r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.MaxPaddingSizeMb.IsUnknown() && !r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.MaxPaddingSizeMb.IsNull() {
 			*maxPaddingSizeMb = r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.MaxPaddingSizeMb.ValueInt64()
@@ -299,9 +300,9 @@ func (r *DestinationGcsResourceModel) ToCreateSDKType() *shared.DestinationGcsCr
 	}
 	gcsBucketName := r.Configuration.GcsBucketName.ValueString()
 	gcsBucketPath := r.Configuration.GcsBucketPath.ValueString()
-	gcsBucketRegion := new(shared.DestinationGCSGCSBucketRegionEnum)
+	gcsBucketRegion := new(shared.DestinationGCSGCSBucketRegion)
 	if !r.Configuration.GcsBucketRegion.IsUnknown() && !r.Configuration.GcsBucketRegion.IsNull() {
-		*gcsBucketRegion = shared.DestinationGCSGCSBucketRegionEnum(r.Configuration.GcsBucketRegion.ValueString())
+		*gcsBucketRegion = shared.DestinationGCSGCSBucketRegion(r.Configuration.GcsBucketRegion.ValueString())
 	} else {
 		gcsBucketRegion = nil
 	}
@@ -326,4 +327,11 @@ func (r *DestinationGcsResourceModel) ToCreateSDKType() *shared.DestinationGcsCr
 func (r *DestinationGcsResourceModel) ToDeleteSDKType() *shared.DestinationGcsCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *DestinationGcsResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

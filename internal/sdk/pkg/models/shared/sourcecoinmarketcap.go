@@ -7,19 +7,19 @@ import (
 	"fmt"
 )
 
-// SourceCoinmarketcapDataTypeEnum - /latest: Latest market ticker quotes and averages for cryptocurrencies and exchanges. /historical: Intervals of historic market data like OHLCV data or data for use in charting libraries. See <a href="https://coinmarketcap.com/api/documentation/v1/#section/Endpoint-Overview">here</a>.
-type SourceCoinmarketcapDataTypeEnum string
+// SourceCoinmarketcapDataType - /latest: Latest market ticker quotes and averages for cryptocurrencies and exchanges. /historical: Intervals of historic market data like OHLCV data or data for use in charting libraries. See <a href="https://coinmarketcap.com/api/documentation/v1/#section/Endpoint-Overview">here</a>.
+type SourceCoinmarketcapDataType string
 
 const (
-	SourceCoinmarketcapDataTypeEnumLatest     SourceCoinmarketcapDataTypeEnum = "latest"
-	SourceCoinmarketcapDataTypeEnumHistorical SourceCoinmarketcapDataTypeEnum = "historical"
+	SourceCoinmarketcapDataTypeLatest     SourceCoinmarketcapDataType = "latest"
+	SourceCoinmarketcapDataTypeHistorical SourceCoinmarketcapDataType = "historical"
 )
 
-func (e SourceCoinmarketcapDataTypeEnum) ToPointer() *SourceCoinmarketcapDataTypeEnum {
+func (e SourceCoinmarketcapDataType) ToPointer() *SourceCoinmarketcapDataType {
 	return &e
 }
 
-func (e *SourceCoinmarketcapDataTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceCoinmarketcapDataType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -28,34 +28,34 @@ func (e *SourceCoinmarketcapDataTypeEnum) UnmarshalJSON(data []byte) error {
 	case "latest":
 		fallthrough
 	case "historical":
-		*e = SourceCoinmarketcapDataTypeEnum(v)
+		*e = SourceCoinmarketcapDataType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceCoinmarketcapDataTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceCoinmarketcapDataType: %v", v)
 	}
 }
 
-type SourceCoinmarketcapCoinmarketcapEnum string
+type SourceCoinmarketcapCoinmarketcap string
 
 const (
-	SourceCoinmarketcapCoinmarketcapEnumCoinmarketcap SourceCoinmarketcapCoinmarketcapEnum = "coinmarketcap"
+	SourceCoinmarketcapCoinmarketcapCoinmarketcap SourceCoinmarketcapCoinmarketcap = "coinmarketcap"
 )
 
-func (e SourceCoinmarketcapCoinmarketcapEnum) ToPointer() *SourceCoinmarketcapCoinmarketcapEnum {
+func (e SourceCoinmarketcapCoinmarketcap) ToPointer() *SourceCoinmarketcapCoinmarketcap {
 	return &e
 }
 
-func (e *SourceCoinmarketcapCoinmarketcapEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceCoinmarketcapCoinmarketcap) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "coinmarketcap":
-		*e = SourceCoinmarketcapCoinmarketcapEnum(v)
+		*e = SourceCoinmarketcapCoinmarketcap(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceCoinmarketcapCoinmarketcapEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceCoinmarketcapCoinmarketcap: %v", v)
 	}
 }
 
@@ -63,8 +63,8 @@ type SourceCoinmarketcap struct {
 	// Your API Key. See <a href="https://coinmarketcap.com/api/documentation/v1/#section/Authentication">here</a>. The token is case sensitive.
 	APIKey string `json:"api_key"`
 	// /latest: Latest market ticker quotes and averages for cryptocurrencies and exchanges. /historical: Intervals of historic market data like OHLCV data or data for use in charting libraries. See <a href="https://coinmarketcap.com/api/documentation/v1/#section/Endpoint-Overview">here</a>.
-	DataType   SourceCoinmarketcapDataTypeEnum      `json:"data_type"`
-	SourceType SourceCoinmarketcapCoinmarketcapEnum `json:"sourceType"`
+	DataType   SourceCoinmarketcapDataType      `json:"data_type"`
+	SourceType SourceCoinmarketcapCoinmarketcap `json:"sourceType"`
 	// Cryptocurrency symbols. (only used for quotes stream)
 	Symbols []string `json:"symbols,omitempty"`
 }

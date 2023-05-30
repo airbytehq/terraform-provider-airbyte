@@ -6,10 +6,13 @@ import (
 	"encoding/json"
 	"fmt"
 	"io"
+	"math/big"
 	"reflect"
 	"regexp"
 	"strings"
 	"time"
+
+	"airbyte/internal/sdk/pkg/types"
 )
 
 const (
@@ -120,6 +123,10 @@ func valToString(val interface{}) string {
 	switch v := val.(type) {
 	case time.Time:
 		return v.Format(time.RFC3339Nano)
+	case types.BigInt:
+		return v.String()
+	case big.Int:
+		return v.String()
 	default:
 		return fmt.Sprintf("%v", v)
 	}

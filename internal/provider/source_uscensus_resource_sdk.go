@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceUsCensusResourceModel) ToCreateSDKType() *shared.SourceUsCensusCreateRequest {
@@ -15,7 +16,7 @@ func (r *SourceUsCensusResourceModel) ToCreateSDKType() *shared.SourceUsCensusCr
 		queryParams = nil
 	}
 	queryPath := r.Configuration.QueryPath.ValueString()
-	sourceType := shared.SourceUsCensusUsCensusEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceUsCensusUsCensus(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceUsCensus{
 		APIKey:      apiKey,
 		QueryParams: queryParams,
@@ -42,4 +43,11 @@ func (r *SourceUsCensusResourceModel) ToCreateSDKType() *shared.SourceUsCensusCr
 func (r *SourceUsCensusResourceModel) ToDeleteSDKType() *shared.SourceUsCensusCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceUsCensusResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

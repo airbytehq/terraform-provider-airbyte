@@ -8,27 +8,27 @@ import (
 	"time"
 )
 
-type SourceTwitterTwitterEnum string
+type SourceTwitterTwitter string
 
 const (
-	SourceTwitterTwitterEnumTwitter SourceTwitterTwitterEnum = "twitter"
+	SourceTwitterTwitterTwitter SourceTwitterTwitter = "twitter"
 )
 
-func (e SourceTwitterTwitterEnum) ToPointer() *SourceTwitterTwitterEnum {
+func (e SourceTwitterTwitter) ToPointer() *SourceTwitterTwitter {
 	return &e
 }
 
-func (e *SourceTwitterTwitterEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceTwitterTwitter) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "twitter":
-		*e = SourceTwitterTwitterEnum(v)
+		*e = SourceTwitterTwitter(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceTwitterTwitterEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceTwitterTwitter: %v", v)
 	}
 }
 
@@ -38,8 +38,8 @@ type SourceTwitter struct {
 	// The end date for retrieving tweets must be a minimum of 10 seconds prior to the request time.
 	EndDate *time.Time `json:"end_date,omitempty"`
 	// Query for matching Tweets. You can learn how to build this query by reading <a href="https://developer.twitter.com/en/docs/twitter-api/tweets/search/integrate/build-a-query"> build a query guide </a>.
-	Query      string                   `json:"query"`
-	SourceType SourceTwitterTwitterEnum `json:"sourceType"`
+	Query      string               `json:"query"`
+	SourceType SourceTwitterTwitter `json:"sourceType"`
 	// The start date for retrieving tweets cannot be more than 7 days in the past.
 	StartDate *time.Time `json:"start_date,omitempty"`
 }

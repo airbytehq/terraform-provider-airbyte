@@ -4,21 +4,22 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
 func (r *SourceStravaResourceModel) ToCreateSDKType() *shared.SourceStravaCreateRequest {
 	athleteID := r.Configuration.AthleteID.ValueInt64()
-	authType := new(shared.SourceStravaAuthTypeEnum)
+	authType := new(shared.SourceStravaAuthType)
 	if !r.Configuration.AuthType.IsUnknown() && !r.Configuration.AuthType.IsNull() {
-		*authType = shared.SourceStravaAuthTypeEnum(r.Configuration.AuthType.ValueString())
+		*authType = shared.SourceStravaAuthType(r.Configuration.AuthType.ValueString())
 	} else {
 		authType = nil
 	}
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
 	refreshToken := r.Configuration.RefreshToken.ValueString()
-	sourceType := shared.SourceStravaStravaEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceStravaStrava(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceStrava{
 		AthleteID:    athleteID,
@@ -49,4 +50,11 @@ func (r *SourceStravaResourceModel) ToCreateSDKType() *shared.SourceStravaCreate
 func (r *SourceStravaResourceModel) ToDeleteSDKType() *shared.SourceStravaCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceStravaResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

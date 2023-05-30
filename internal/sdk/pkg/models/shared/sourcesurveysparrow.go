@@ -9,62 +9,62 @@ import (
 	"fmt"
 )
 
-type SourceSurveySparrowBaseURLGlobalAccountURLBaseEnum string
+type SourceSurveySparrowBaseURLGlobalAccountURLBase string
 
 const (
-	SourceSurveySparrowBaseURLGlobalAccountURLBaseEnumHTTPSAPISurveysparrowComV3 SourceSurveySparrowBaseURLGlobalAccountURLBaseEnum = "https://api.surveysparrow.com/v3"
+	SourceSurveySparrowBaseURLGlobalAccountURLBaseHTTPSAPISurveysparrowComV3 SourceSurveySparrowBaseURLGlobalAccountURLBase = "https://api.surveysparrow.com/v3"
 )
 
-func (e SourceSurveySparrowBaseURLGlobalAccountURLBaseEnum) ToPointer() *SourceSurveySparrowBaseURLGlobalAccountURLBaseEnum {
+func (e SourceSurveySparrowBaseURLGlobalAccountURLBase) ToPointer() *SourceSurveySparrowBaseURLGlobalAccountURLBase {
 	return &e
 }
 
-func (e *SourceSurveySparrowBaseURLGlobalAccountURLBaseEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceSurveySparrowBaseURLGlobalAccountURLBase) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "https://api.surveysparrow.com/v3":
-		*e = SourceSurveySparrowBaseURLGlobalAccountURLBaseEnum(v)
+		*e = SourceSurveySparrowBaseURLGlobalAccountURLBase(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSurveySparrowBaseURLGlobalAccountURLBaseEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceSurveySparrowBaseURLGlobalAccountURLBase: %v", v)
 	}
 }
 
 // SourceSurveySparrowBaseURLGlobalAccount - Is your account location is EU based? If yes, the base url to retrieve data will be different.
 type SourceSurveySparrowBaseURLGlobalAccount struct {
-	URLBase *SourceSurveySparrowBaseURLGlobalAccountURLBaseEnum `json:"url_base,omitempty"`
+	URLBase *SourceSurveySparrowBaseURLGlobalAccountURLBase `json:"url_base,omitempty"`
 }
 
-type SourceSurveySparrowBaseURLEUBasedAccountURLBaseEnum string
+type SourceSurveySparrowBaseURLEUBasedAccountURLBase string
 
 const (
-	SourceSurveySparrowBaseURLEUBasedAccountURLBaseEnumHTTPSEuAPISurveysparrowComV3 SourceSurveySparrowBaseURLEUBasedAccountURLBaseEnum = "https://eu-api.surveysparrow.com/v3"
+	SourceSurveySparrowBaseURLEUBasedAccountURLBaseHTTPSEuAPISurveysparrowComV3 SourceSurveySparrowBaseURLEUBasedAccountURLBase = "https://eu-api.surveysparrow.com/v3"
 )
 
-func (e SourceSurveySparrowBaseURLEUBasedAccountURLBaseEnum) ToPointer() *SourceSurveySparrowBaseURLEUBasedAccountURLBaseEnum {
+func (e SourceSurveySparrowBaseURLEUBasedAccountURLBase) ToPointer() *SourceSurveySparrowBaseURLEUBasedAccountURLBase {
 	return &e
 }
 
-func (e *SourceSurveySparrowBaseURLEUBasedAccountURLBaseEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceSurveySparrowBaseURLEUBasedAccountURLBase) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "https://eu-api.surveysparrow.com/v3":
-		*e = SourceSurveySparrowBaseURLEUBasedAccountURLBaseEnum(v)
+		*e = SourceSurveySparrowBaseURLEUBasedAccountURLBase(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSurveySparrowBaseURLEUBasedAccountURLBaseEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceSurveySparrowBaseURLEUBasedAccountURLBase: %v", v)
 	}
 }
 
 // SourceSurveySparrowBaseURLEUBasedAccount - Is your account location is EU based? If yes, the base url to retrieve data will be different.
 type SourceSurveySparrowBaseURLEUBasedAccount struct {
-	URLBase *SourceSurveySparrowBaseURLEUBasedAccountURLBaseEnum `json:"url_base,omitempty"`
+	URLBase *SourceSurveySparrowBaseURLEUBasedAccountURLBase `json:"url_base,omitempty"`
 }
 
 type SourceSurveySparrowBaseURLType string
@@ -135,27 +135,27 @@ func (u SourceSurveySparrowBaseURL) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-type SourceSurveySparrowSurveySparrowEnum string
+type SourceSurveySparrowSurveySparrow string
 
 const (
-	SourceSurveySparrowSurveySparrowEnumSurveySparrow SourceSurveySparrowSurveySparrowEnum = "survey-sparrow"
+	SourceSurveySparrowSurveySparrowSurveySparrow SourceSurveySparrowSurveySparrow = "survey-sparrow"
 )
 
-func (e SourceSurveySparrowSurveySparrowEnum) ToPointer() *SourceSurveySparrowSurveySparrowEnum {
+func (e SourceSurveySparrowSurveySparrow) ToPointer() *SourceSurveySparrowSurveySparrow {
 	return &e
 }
 
-func (e *SourceSurveySparrowSurveySparrowEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceSurveySparrowSurveySparrow) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "survey-sparrow":
-		*e = SourceSurveySparrowSurveySparrowEnum(v)
+		*e = SourceSurveySparrowSurveySparrow(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSurveySparrowSurveySparrowEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceSurveySparrowSurveySparrow: %v", v)
 	}
 }
 
@@ -163,8 +163,8 @@ type SourceSurveySparrow struct {
 	// Your access token. See <a href="https://developers.surveysparrow.com/rest-apis#authentication">here</a>. The key is case sensitive.
 	AccessToken string `json:"access_token"`
 	// Is your account location is EU based? If yes, the base url to retrieve data will be different.
-	Region     *SourceSurveySparrowBaseURL          `json:"region,omitempty"`
-	SourceType SourceSurveySparrowSurveySparrowEnum `json:"sourceType"`
+	Region     *SourceSurveySparrowBaseURL      `json:"region,omitempty"`
+	SourceType SourceSurveySparrowSurveySparrow `json:"sourceType"`
 	// A List of your survey ids for survey-specific stream
 	SurveyID []interface{} `json:"survey_id,omitempty"`
 }

@@ -5,6 +5,7 @@ package provider
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	customTypes "airbyte/internal/sdk/pkg/types"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceSenseforceResourceModel) ToCreateSDKType() *shared.SourceSenseforceCreateRequest {
@@ -17,8 +18,8 @@ func (r *SourceSenseforceResourceModel) ToCreateSDKType() *shared.SourceSensefor
 	} else {
 		sliceRange = nil
 	}
-	sourceType := shared.SourceSenseforceSenseforceEnum(r.Configuration.SourceType.ValueString())
-	startDate, _ := customTypes.NewDate(r.Configuration.StartDate.ValueString())
+	sourceType := shared.SourceSenseforceSenseforce(r.Configuration.SourceType.ValueString())
+	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceSenseforce{
 		AccessToken: accessToken,
 		BackendURL:  backendURL,
@@ -47,4 +48,11 @@ func (r *SourceSenseforceResourceModel) ToCreateSDKType() *shared.SourceSensefor
 func (r *SourceSenseforceResourceModel) ToDeleteSDKType() *shared.SourceSenseforceCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceSenseforceResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

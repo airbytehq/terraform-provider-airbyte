@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type SourceSmailySmailyEnum string
+type SourceSmailySmaily string
 
 const (
-	SourceSmailySmailyEnumSmaily SourceSmailySmailyEnum = "smaily"
+	SourceSmailySmailySmaily SourceSmailySmaily = "smaily"
 )
 
-func (e SourceSmailySmailyEnum) ToPointer() *SourceSmailySmailyEnum {
+func (e SourceSmailySmaily) ToPointer() *SourceSmailySmaily {
 	return &e
 }
 
-func (e *SourceSmailySmailyEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceSmailySmaily) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "smaily":
-		*e = SourceSmailySmailyEnum(v)
+		*e = SourceSmailySmaily(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSmailySmailyEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceSmailySmaily: %v", v)
 	}
 }
 
@@ -37,6 +37,6 @@ type SourceSmaily struct {
 	// API Subdomain. See https://smaily.com/help/api/general/create-api-user/
 	APISubdomain string `json:"api_subdomain"`
 	// API user username. See https://smaily.com/help/api/general/create-api-user/
-	APIUsername string                 `json:"api_username"`
-	SourceType  SourceSmailySmailyEnum `json:"sourceType"`
+	APIUsername string             `json:"api_username"`
+	SourceType  SourceSmailySmaily `json:"sourceType"`
 }

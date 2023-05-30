@@ -8,6 +8,6 @@ type StreamConfiguration struct {
 	CursorField []string `json:"cursorField,omitempty"`
 	Name        string   `json:"name"`
 	// Paths to the fields that will be used as primary key. This field is REQUIRED if `destination_sync_mode` is `*_dedup` unless it is already supplied by the source schema.
-	PrimaryKey [][]string                  `json:"primaryKey,omitempty"`
-	SyncMode   *ConnectionSyncModeEnumEnum `json:"syncMode,omitempty"`
+	PrimaryKey [][]string              `json:"primaryKey,omitempty"`
+	SyncMode   *ConnectionSyncModeEnum `json:"syncMode,omitempty"`
 }

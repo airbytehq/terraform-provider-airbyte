@@ -9,96 +9,96 @@ import (
 	"fmt"
 )
 
-type DestinationSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeEnum string
+type DestinationSnowflakeAuthorizationMethodUsernameAndPasswordAuthType string
 
 const (
-	DestinationSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeEnumUsernameAndPassword DestinationSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeEnum = "Username and Password"
+	DestinationSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeUsernameAndPassword DestinationSnowflakeAuthorizationMethodUsernameAndPasswordAuthType = "Username and Password"
 )
 
-func (e DestinationSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeEnum) ToPointer() *DestinationSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeEnum {
+func (e DestinationSnowflakeAuthorizationMethodUsernameAndPasswordAuthType) ToPointer() *DestinationSnowflakeAuthorizationMethodUsernameAndPasswordAuthType {
 	return &e
 }
 
-func (e *DestinationSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationSnowflakeAuthorizationMethodUsernameAndPasswordAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Username and Password":
-		*e = DestinationSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeEnum(v)
+		*e = DestinationSnowflakeAuthorizationMethodUsernameAndPasswordAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationSnowflakeAuthorizationMethodUsernameAndPasswordAuthType: %v", v)
 	}
 }
 
 type DestinationSnowflakeAuthorizationMethodUsernameAndPassword struct {
-	AuthType *DestinationSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeEnum `json:"auth_type,omitempty"`
+	AuthType *DestinationSnowflakeAuthorizationMethodUsernameAndPasswordAuthType `json:"auth_type,omitempty"`
 	// Enter the password associated with the username.
 	Password string `json:"password"`
 }
 
-type DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthTypeEnum string
+type DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthType string
 
 const (
-	DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthTypeEnumKeyPairAuthentication DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthTypeEnum = "Key Pair Authentication"
+	DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthTypeKeyPairAuthentication DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthType = "Key Pair Authentication"
 )
 
-func (e DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthTypeEnum) ToPointer() *DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthTypeEnum {
+func (e DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthType) ToPointer() *DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthType {
 	return &e
 }
 
-func (e *DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Key Pair Authentication":
-		*e = DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthTypeEnum(v)
+		*e = DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthType: %v", v)
 	}
 }
 
 type DestinationSnowflakeAuthorizationMethodKeyPairAuthentication struct {
-	AuthType *DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthTypeEnum `json:"auth_type,omitempty"`
+	AuthType *DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthType `json:"auth_type,omitempty"`
 	// RSA Private key to use for Snowflake connection. See the <a href="https://docs.airbyte.com/integrations/destinations/snowflake">docs</a> for more information on how to obtain this key.
 	PrivateKey string `json:"private_key"`
 	// Passphrase for private key
 	PrivateKeyPassword *string `json:"private_key_password,omitempty"`
 }
 
-type DestinationSnowflakeAuthorizationMethodOAuth20AuthTypeEnum string
+type DestinationSnowflakeAuthorizationMethodOAuth20AuthType string
 
 const (
-	DestinationSnowflakeAuthorizationMethodOAuth20AuthTypeEnumOAuth20 DestinationSnowflakeAuthorizationMethodOAuth20AuthTypeEnum = "OAuth2.0"
+	DestinationSnowflakeAuthorizationMethodOAuth20AuthTypeOAuth20 DestinationSnowflakeAuthorizationMethodOAuth20AuthType = "OAuth2.0"
 )
 
-func (e DestinationSnowflakeAuthorizationMethodOAuth20AuthTypeEnum) ToPointer() *DestinationSnowflakeAuthorizationMethodOAuth20AuthTypeEnum {
+func (e DestinationSnowflakeAuthorizationMethodOAuth20AuthType) ToPointer() *DestinationSnowflakeAuthorizationMethodOAuth20AuthType {
 	return &e
 }
 
-func (e *DestinationSnowflakeAuthorizationMethodOAuth20AuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationSnowflakeAuthorizationMethodOAuth20AuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "OAuth2.0":
-		*e = DestinationSnowflakeAuthorizationMethodOAuth20AuthTypeEnum(v)
+		*e = DestinationSnowflakeAuthorizationMethodOAuth20AuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationSnowflakeAuthorizationMethodOAuth20AuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationSnowflakeAuthorizationMethodOAuth20AuthType: %v", v)
 	}
 }
 
 type DestinationSnowflakeAuthorizationMethodOAuth20 struct {
 	// Enter you application's Access Token
-	AccessToken string                                                      `json:"access_token"`
-	AuthType    *DestinationSnowflakeAuthorizationMethodOAuth20AuthTypeEnum `json:"auth_type,omitempty"`
+	AccessToken string                                                  `json:"access_token"`
+	AuthType    *DestinationSnowflakeAuthorizationMethodOAuth20AuthType `json:"auth_type,omitempty"`
 	// Enter your application's Client ID
 	ClientID *string `json:"client_id,omitempty"`
 	// Enter your application's Client secret
@@ -199,51 +199,51 @@ func (u DestinationSnowflakeAuthorizationMethod) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-type DestinationSnowflakeSnowflakeEnum string
+type DestinationSnowflakeSnowflake string
 
 const (
-	DestinationSnowflakeSnowflakeEnumSnowflake DestinationSnowflakeSnowflakeEnum = "snowflake"
+	DestinationSnowflakeSnowflakeSnowflake DestinationSnowflakeSnowflake = "snowflake"
 )
 
-func (e DestinationSnowflakeSnowflakeEnum) ToPointer() *DestinationSnowflakeSnowflakeEnum {
+func (e DestinationSnowflakeSnowflake) ToPointer() *DestinationSnowflakeSnowflake {
 	return &e
 }
 
-func (e *DestinationSnowflakeSnowflakeEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationSnowflakeSnowflake) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "snowflake":
-		*e = DestinationSnowflakeSnowflakeEnum(v)
+		*e = DestinationSnowflakeSnowflake(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationSnowflakeSnowflakeEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationSnowflakeSnowflake: %v", v)
 	}
 }
 
-type DestinationSnowflakeDataStagingMethodGoogleCloudStorageStagingMethodEnum string
+type DestinationSnowflakeDataStagingMethodGoogleCloudStorageStagingMethod string
 
 const (
-	DestinationSnowflakeDataStagingMethodGoogleCloudStorageStagingMethodEnumGcsStaging DestinationSnowflakeDataStagingMethodGoogleCloudStorageStagingMethodEnum = "GCS Staging"
+	DestinationSnowflakeDataStagingMethodGoogleCloudStorageStagingMethodGcsStaging DestinationSnowflakeDataStagingMethodGoogleCloudStorageStagingMethod = "GCS Staging"
 )
 
-func (e DestinationSnowflakeDataStagingMethodGoogleCloudStorageStagingMethodEnum) ToPointer() *DestinationSnowflakeDataStagingMethodGoogleCloudStorageStagingMethodEnum {
+func (e DestinationSnowflakeDataStagingMethodGoogleCloudStorageStagingMethod) ToPointer() *DestinationSnowflakeDataStagingMethodGoogleCloudStorageStagingMethod {
 	return &e
 }
 
-func (e *DestinationSnowflakeDataStagingMethodGoogleCloudStorageStagingMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationSnowflakeDataStagingMethodGoogleCloudStorageStagingMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "GCS Staging":
-		*e = DestinationSnowflakeDataStagingMethodGoogleCloudStorageStagingMethodEnum(v)
+		*e = DestinationSnowflakeDataStagingMethodGoogleCloudStorageStagingMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationSnowflakeDataStagingMethodGoogleCloudStorageStagingMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationSnowflakeDataStagingMethodGoogleCloudStorageStagingMethod: %v", v)
 	}
 }
 
@@ -252,70 +252,70 @@ type DestinationSnowflakeDataStagingMethodGoogleCloudStorageStaging struct {
 	// Enter the <a href="https://cloud.google.com/storage/docs/creating-buckets">Cloud Storage bucket name</a>
 	BucketName string `json:"bucket_name"`
 	// Enter your <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">Google Cloud service account key</a> in the JSON format with read/write access to your Cloud Storage staging bucket
-	CredentialsJSON string                                                                   `json:"credentials_json"`
-	Method          DestinationSnowflakeDataStagingMethodGoogleCloudStorageStagingMethodEnum `json:"method"`
+	CredentialsJSON string                                                               `json:"credentials_json"`
+	Method          DestinationSnowflakeDataStagingMethodGoogleCloudStorageStagingMethod `json:"method"`
 	// Enter the <a href="https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects">Google Cloud project ID</a>
 	ProjectID string `json:"project_id"`
 }
 
-type DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionTypeEnum string
+type DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionType string
 
 const (
-	DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionTypeEnumAesCbcEnvelope DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionTypeEnum = "aes_cbc_envelope"
+	DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionTypeAesCbcEnvelope DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionType = "aes_cbc_envelope"
 )
 
-func (e DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionTypeEnum) ToPointer() *DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionTypeEnum {
+func (e DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionType) ToPointer() *DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionType {
 	return &e
 }
 
-func (e *DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "aes_cbc_envelope":
-		*e = DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionTypeEnum(v)
+		*e = DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionType: %v", v)
 	}
 }
 
 // DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryption - Staging data will be encrypted using AES-CBC envelope encryption.
 type DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryption struct {
-	EncryptionType DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionTypeEnum `json:"encryption_type"`
+	EncryptionType DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionType `json:"encryption_type"`
 	// The key, base64-encoded. Must be either 128, 192, or 256 bits. Leave blank to have Airbyte generate an ephemeral key for each sync.
 	KeyEncryptingKey *string `json:"key_encrypting_key,omitempty"`
 }
 
-type DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryptionEncryptionTypeEnum string
+type DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryptionEncryptionType string
 
 const (
-	DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryptionEncryptionTypeEnumNone DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryptionEncryptionTypeEnum = "none"
+	DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryptionEncryptionTypeNone DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryptionEncryptionType = "none"
 )
 
-func (e DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryptionEncryptionTypeEnum) ToPointer() *DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryptionEncryptionTypeEnum {
+func (e DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryptionEncryptionType) ToPointer() *DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryptionEncryptionType {
 	return &e
 }
 
-func (e *DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryptionEncryptionTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryptionEncryptionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "none":
-		*e = DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryptionEncryptionTypeEnum(v)
+		*e = DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryptionEncryptionType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryptionEncryptionTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryptionEncryptionType: %v", v)
 	}
 }
 
 // DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryption - Staging data will be stored in plaintext.
 type DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryption struct {
-	EncryptionType DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryptionEncryptionTypeEnum `json:"encryption_type"`
+	EncryptionType DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryptionEncryptionType `json:"encryption_type"`
 }
 
 type DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionType string
@@ -386,65 +386,65 @@ func (u DestinationSnowflakeDataStagingMethodAWSS3StagingEncryption) MarshalJSON
 	return nil, nil
 }
 
-type DestinationSnowflakeDataStagingMethodAWSS3StagingMethodEnum string
+type DestinationSnowflakeDataStagingMethodAWSS3StagingMethod string
 
 const (
-	DestinationSnowflakeDataStagingMethodAWSS3StagingMethodEnumS3Staging DestinationSnowflakeDataStagingMethodAWSS3StagingMethodEnum = "S3 Staging"
+	DestinationSnowflakeDataStagingMethodAWSS3StagingMethodS3Staging DestinationSnowflakeDataStagingMethodAWSS3StagingMethod = "S3 Staging"
 )
 
-func (e DestinationSnowflakeDataStagingMethodAWSS3StagingMethodEnum) ToPointer() *DestinationSnowflakeDataStagingMethodAWSS3StagingMethodEnum {
+func (e DestinationSnowflakeDataStagingMethodAWSS3StagingMethod) ToPointer() *DestinationSnowflakeDataStagingMethodAWSS3StagingMethod {
 	return &e
 }
 
-func (e *DestinationSnowflakeDataStagingMethodAWSS3StagingMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationSnowflakeDataStagingMethodAWSS3StagingMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "S3 Staging":
-		*e = DestinationSnowflakeDataStagingMethodAWSS3StagingMethodEnum(v)
+		*e = DestinationSnowflakeDataStagingMethodAWSS3StagingMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationSnowflakeDataStagingMethodAWSS3StagingMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationSnowflakeDataStagingMethodAWSS3StagingMethod: %v", v)
 	}
 }
 
-// DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum - Enter the region where your S3 bucket resides
-type DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum string
+// DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegion - Enter the region where your S3 bucket resides
+type DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegion string
 
 const (
-	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnumUnknown      DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum = ""
-	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnumUsEast1      DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum = "us-east-1"
-	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnumUsEast2      DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum = "us-east-2"
-	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnumUsWest1      DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum = "us-west-1"
-	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnumUsWest2      DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum = "us-west-2"
-	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnumAfSouth1     DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum = "af-south-1"
-	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnumApEast1      DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum = "ap-east-1"
-	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnumApSouth1     DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum = "ap-south-1"
-	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnumApNortheast1 DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum = "ap-northeast-1"
-	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnumApNortheast2 DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum = "ap-northeast-2"
-	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnumApNortheast3 DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum = "ap-northeast-3"
-	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnumApSoutheast1 DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum = "ap-southeast-1"
-	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnumApSoutheast2 DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum = "ap-southeast-2"
-	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnumCaCentral1   DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum = "ca-central-1"
-	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnumCnNorth1     DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum = "cn-north-1"
-	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnumCnNorthwest1 DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum = "cn-northwest-1"
-	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnumEuCentral1   DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum = "eu-central-1"
-	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnumEuWest1      DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum = "eu-west-1"
-	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnumEuWest2      DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum = "eu-west-2"
-	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnumEuWest3      DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum = "eu-west-3"
-	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnumEuSouth1     DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum = "eu-south-1"
-	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnumEuNorth1     DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum = "eu-north-1"
-	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnumSaEast1      DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum = "sa-east-1"
-	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnumMeSouth1     DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum = "me-south-1"
+	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionUnknown      DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegion = ""
+	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionUsEast1      DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegion = "us-east-1"
+	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionUsEast2      DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegion = "us-east-2"
+	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionUsWest1      DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegion = "us-west-1"
+	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionUsWest2      DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegion = "us-west-2"
+	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionAfSouth1     DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegion = "af-south-1"
+	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionApEast1      DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegion = "ap-east-1"
+	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionApSouth1     DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegion = "ap-south-1"
+	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionApNortheast1 DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegion = "ap-northeast-1"
+	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionApNortheast2 DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegion = "ap-northeast-2"
+	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionApNortheast3 DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegion = "ap-northeast-3"
+	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionApSoutheast1 DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegion = "ap-southeast-1"
+	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionApSoutheast2 DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegion = "ap-southeast-2"
+	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionCaCentral1   DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegion = "ca-central-1"
+	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionCnNorth1     DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegion = "cn-north-1"
+	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionCnNorthwest1 DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegion = "cn-northwest-1"
+	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEuCentral1   DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegion = "eu-central-1"
+	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEuWest1      DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegion = "eu-west-1"
+	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEuWest2      DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegion = "eu-west-2"
+	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEuWest3      DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegion = "eu-west-3"
+	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEuSouth1     DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegion = "eu-south-1"
+	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEuNorth1     DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegion = "eu-north-1"
+	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionSaEast1      DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegion = "sa-east-1"
+	DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionMeSouth1     DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegion = "me-south-1"
 )
 
-func (e DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum) ToPointer() *DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum {
+func (e DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegion) ToPointer() *DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegion {
 	return &e
 }
 
-func (e *DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -497,10 +497,10 @@ func (e *DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum) Un
 	case "sa-east-1":
 		fallthrough
 	case "me-south-1":
-		*e = DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum(v)
+		*e = DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegion(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegion: %v", v)
 	}
 }
 
@@ -511,74 +511,74 @@ type DestinationSnowflakeDataStagingMethodAWSS3Staging struct {
 	// Choose a data encryption method for the staging data
 	Encryption *DestinationSnowflakeDataStagingMethodAWSS3StagingEncryption `json:"encryption,omitempty"`
 	// The pattern allows you to set the file-name format for the S3 staging file(s)
-	FileNamePattern *string                                                     `json:"file_name_pattern,omitempty"`
-	Method          DestinationSnowflakeDataStagingMethodAWSS3StagingMethodEnum `json:"method"`
+	FileNamePattern *string                                                 `json:"file_name_pattern,omitempty"`
+	Method          DestinationSnowflakeDataStagingMethodAWSS3StagingMethod `json:"method"`
 	// Toggle to delete staging files from the S3 bucket after a successful sync
 	PurgeStagingData *bool `json:"purge_staging_data,omitempty"`
 	// Enter your S3 bucket name
 	S3BucketName string `json:"s3_bucket_name"`
 	// Enter the region where your S3 bucket resides
-	S3BucketRegion *DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum `json:"s3_bucket_region,omitempty"`
+	S3BucketRegion *DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegion `json:"s3_bucket_region,omitempty"`
 	// Enter your <a href="https://docs.aws.amazon.com/powershell/latest/userguide/pstools-appendix-sign-up.html">AWS secret access key</a>
 	SecretAccessKey string `json:"secret_access_key"`
 }
 
-type DestinationSnowflakeDataStagingMethodRecommendedInternalStagingMethodEnum string
+type DestinationSnowflakeDataStagingMethodRecommendedInternalStagingMethod string
 
 const (
-	DestinationSnowflakeDataStagingMethodRecommendedInternalStagingMethodEnumInternalStaging DestinationSnowflakeDataStagingMethodRecommendedInternalStagingMethodEnum = "Internal Staging"
+	DestinationSnowflakeDataStagingMethodRecommendedInternalStagingMethodInternalStaging DestinationSnowflakeDataStagingMethodRecommendedInternalStagingMethod = "Internal Staging"
 )
 
-func (e DestinationSnowflakeDataStagingMethodRecommendedInternalStagingMethodEnum) ToPointer() *DestinationSnowflakeDataStagingMethodRecommendedInternalStagingMethodEnum {
+func (e DestinationSnowflakeDataStagingMethodRecommendedInternalStagingMethod) ToPointer() *DestinationSnowflakeDataStagingMethodRecommendedInternalStagingMethod {
 	return &e
 }
 
-func (e *DestinationSnowflakeDataStagingMethodRecommendedInternalStagingMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationSnowflakeDataStagingMethodRecommendedInternalStagingMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Internal Staging":
-		*e = DestinationSnowflakeDataStagingMethodRecommendedInternalStagingMethodEnum(v)
+		*e = DestinationSnowflakeDataStagingMethodRecommendedInternalStagingMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationSnowflakeDataStagingMethodRecommendedInternalStagingMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationSnowflakeDataStagingMethodRecommendedInternalStagingMethod: %v", v)
 	}
 }
 
 // DestinationSnowflakeDataStagingMethodRecommendedInternalStaging - Recommended for large production workloads for better speed and scalability.
 type DestinationSnowflakeDataStagingMethodRecommendedInternalStaging struct {
-	Method DestinationSnowflakeDataStagingMethodRecommendedInternalStagingMethodEnum `json:"method"`
+	Method DestinationSnowflakeDataStagingMethodRecommendedInternalStagingMethod `json:"method"`
 }
 
-type DestinationSnowflakeDataStagingMethodSelectAnotherOptionMethodEnum string
+type DestinationSnowflakeDataStagingMethodSelectAnotherOptionMethod string
 
 const (
-	DestinationSnowflakeDataStagingMethodSelectAnotherOptionMethodEnumStandard DestinationSnowflakeDataStagingMethodSelectAnotherOptionMethodEnum = "Standard"
+	DestinationSnowflakeDataStagingMethodSelectAnotherOptionMethodStandard DestinationSnowflakeDataStagingMethodSelectAnotherOptionMethod = "Standard"
 )
 
-func (e DestinationSnowflakeDataStagingMethodSelectAnotherOptionMethodEnum) ToPointer() *DestinationSnowflakeDataStagingMethodSelectAnotherOptionMethodEnum {
+func (e DestinationSnowflakeDataStagingMethodSelectAnotherOptionMethod) ToPointer() *DestinationSnowflakeDataStagingMethodSelectAnotherOptionMethod {
 	return &e
 }
 
-func (e *DestinationSnowflakeDataStagingMethodSelectAnotherOptionMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationSnowflakeDataStagingMethodSelectAnotherOptionMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Standard":
-		*e = DestinationSnowflakeDataStagingMethodSelectAnotherOptionMethodEnum(v)
+		*e = DestinationSnowflakeDataStagingMethodSelectAnotherOptionMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationSnowflakeDataStagingMethodSelectAnotherOptionMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationSnowflakeDataStagingMethodSelectAnotherOptionMethod: %v", v)
 	}
 }
 
 // DestinationSnowflakeDataStagingMethodSelectAnotherOption - Select another option
 type DestinationSnowflakeDataStagingMethodSelectAnotherOption struct {
-	Method DestinationSnowflakeDataStagingMethodSelectAnotherOptionMethodEnum `json:"method"`
+	Method DestinationSnowflakeDataStagingMethodSelectAnotherOptionMethod `json:"method"`
 }
 
 type DestinationSnowflakeDataStagingMethodType string
@@ -700,8 +700,8 @@ func (u DestinationSnowflakeDataStagingMethod) MarshalJSON() ([]byte, error) {
 type DestinationSnowflake struct {
 	Credentials *DestinationSnowflakeAuthorizationMethod `json:"credentials,omitempty"`
 	// Enter the name of the <a href="https://docs.snowflake.com/en/sql-reference/ddl-database.html#database-schema-share-ddl">database</a> you want to sync data into
-	Database        string                            `json:"database"`
-	DestinationType DestinationSnowflakeSnowflakeEnum `json:"destinationType"`
+	Database        string                        `json:"database"`
+	DestinationType DestinationSnowflakeSnowflake `json:"destinationType"`
 	// Number of file buffers allocated for writing data. Increasing this number is beneficial for connections using Change Data Capture (CDC) and up to the number of streams within a connection. Increasing the number of file buffers past the maximum number of streams has deteriorating effects
 	FileBufferCount *int64 `json:"file_buffer_count,omitempty"`
 	// Enter your Snowflake account's <a href="https://docs.snowflake.com/en/user-guide/admin-account-identifier.html#using-an-account-locator-as-an-identifier">locator</a> (in the format <account_locator>.<region>.<cloud>.snowflakecomputing.com)

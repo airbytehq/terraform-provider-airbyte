@@ -4,15 +4,16 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceZuoraResourceModel) ToCreateSDKType() *shared.SourceZuoraCreateRequest {
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
-	dataQuery := shared.SourceZuoraDataQueryTypeEnum(r.Configuration.DataQuery.ValueString())
-	sourceType := shared.SourceZuoraZuoraEnum(r.Configuration.SourceType.ValueString())
+	dataQuery := shared.SourceZuoraDataQueryType(r.Configuration.DataQuery.ValueString())
+	sourceType := shared.SourceZuoraZuora(r.Configuration.SourceType.ValueString())
 	startDate := r.Configuration.StartDate.ValueString()
-	tenantEndpoint := shared.SourceZuoraTenantEndpointLocationEnum(r.Configuration.TenantEndpoint.ValueString())
+	tenantEndpoint := shared.SourceZuoraTenantEndpointLocation(r.Configuration.TenantEndpoint.ValueString())
 	windowInDays := new(string)
 	if !r.Configuration.WindowInDays.IsUnknown() && !r.Configuration.WindowInDays.IsNull() {
 		*windowInDays = r.Configuration.WindowInDays.ValueString()
@@ -48,4 +49,11 @@ func (r *SourceZuoraResourceModel) ToCreateSDKType() *shared.SourceZuoraCreateRe
 func (r *SourceZuoraResourceModel) ToDeleteSDKType() *shared.SourceZuoraCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceZuoraResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

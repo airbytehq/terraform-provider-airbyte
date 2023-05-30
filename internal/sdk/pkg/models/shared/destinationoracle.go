@@ -9,52 +9,52 @@ import (
 	"fmt"
 )
 
-type DestinationOracleOracleEnum string
+type DestinationOracleOracle string
 
 const (
-	DestinationOracleOracleEnumOracle DestinationOracleOracleEnum = "oracle"
+	DestinationOracleOracleOracle DestinationOracleOracle = "oracle"
 )
 
-func (e DestinationOracleOracleEnum) ToPointer() *DestinationOracleOracleEnum {
+func (e DestinationOracleOracle) ToPointer() *DestinationOracleOracle {
 	return &e
 }
 
-func (e *DestinationOracleOracleEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationOracleOracle) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "oracle":
-		*e = DestinationOracleOracleEnum(v)
+		*e = DestinationOracleOracle(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationOracleOracleEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationOracleOracle: %v", v)
 	}
 }
 
-// DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum - Connect through a jump server tunnel host using username and password authentication
-type DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum string
+// DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and password authentication
+type DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethod string
 
 const (
-	DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethodEnumSSHPasswordAuth DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum = "SSH_PASSWORD_AUTH"
+	DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethodSSHPasswordAuth DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethod = "SSH_PASSWORD_AUTH"
 )
 
-func (e DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) ToPointer() *DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum {
+func (e DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethod) ToPointer() *DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethod {
 	return &e
 }
 
-func (e *DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SSH_PASSWORD_AUTH":
-		*e = DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(v)
+		*e = DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethod: %v", v)
 	}
 }
 
@@ -63,7 +63,7 @@ type DestinationOracleSSHTunnelMethodPasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and password authentication
-	TunnelMethod DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum `json:"tunnel_method"`
+	TunnelMethod DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethod `json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort int64 `json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
@@ -72,28 +72,28 @@ type DestinationOracleSSHTunnelMethodPasswordAuthentication struct {
 	TunnelUserPassword string `json:"tunnel_user_password"`
 }
 
-// DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum - Connect through a jump server tunnel host using username and ssh key
-type DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum string
+// DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and ssh key
+type DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethod string
 
 const (
-	DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnumSSHKeyAuth DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum = "SSH_KEY_AUTH"
+	DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethodSSHKeyAuth DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethod = "SSH_KEY_AUTH"
 )
 
-func (e DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) ToPointer() *DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum {
+func (e DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethod) ToPointer() *DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethod {
 	return &e
 }
 
-func (e *DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SSH_KEY_AUTH":
-		*e = DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(v)
+		*e = DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethod: %v", v)
 	}
 }
 
@@ -104,42 +104,42 @@ type DestinationOracleSSHTunnelMethodSSHKeyAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and ssh key
-	TunnelMethod DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum `json:"tunnel_method"`
+	TunnelMethod DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethod `json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort int64 `json:"tunnel_port"`
 	// OS-level username for logging into the jump server host.
 	TunnelUser string `json:"tunnel_user"`
 }
 
-// DestinationOracleSSHTunnelMethodNoTunnelTunnelMethodEnum - No ssh tunnel needed to connect to database
-type DestinationOracleSSHTunnelMethodNoTunnelTunnelMethodEnum string
+// DestinationOracleSSHTunnelMethodNoTunnelTunnelMethod - No ssh tunnel needed to connect to database
+type DestinationOracleSSHTunnelMethodNoTunnelTunnelMethod string
 
 const (
-	DestinationOracleSSHTunnelMethodNoTunnelTunnelMethodEnumNoTunnel DestinationOracleSSHTunnelMethodNoTunnelTunnelMethodEnum = "NO_TUNNEL"
+	DestinationOracleSSHTunnelMethodNoTunnelTunnelMethodNoTunnel DestinationOracleSSHTunnelMethodNoTunnelTunnelMethod = "NO_TUNNEL"
 )
 
-func (e DestinationOracleSSHTunnelMethodNoTunnelTunnelMethodEnum) ToPointer() *DestinationOracleSSHTunnelMethodNoTunnelTunnelMethodEnum {
+func (e DestinationOracleSSHTunnelMethodNoTunnelTunnelMethod) ToPointer() *DestinationOracleSSHTunnelMethodNoTunnelTunnelMethod {
 	return &e
 }
 
-func (e *DestinationOracleSSHTunnelMethodNoTunnelTunnelMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationOracleSSHTunnelMethodNoTunnelTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "NO_TUNNEL":
-		*e = DestinationOracleSSHTunnelMethodNoTunnelTunnelMethodEnum(v)
+		*e = DestinationOracleSSHTunnelMethodNoTunnelTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationOracleSSHTunnelMethodNoTunnelTunnelMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationOracleSSHTunnelMethodNoTunnelTunnelMethod: %v", v)
 	}
 }
 
 // DestinationOracleSSHTunnelMethodNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationOracleSSHTunnelMethodNoTunnel struct {
 	// No ssh tunnel needed to connect to database
-	TunnelMethod DestinationOracleSSHTunnelMethodNoTunnelTunnelMethodEnum `json:"tunnel_method"`
+	TunnelMethod DestinationOracleSSHTunnelMethodNoTunnelTunnelMethod `json:"tunnel_method"`
 }
 
 type DestinationOracleSSHTunnelMethodType string
@@ -235,7 +235,7 @@ func (u DestinationOracleSSHTunnelMethod) MarshalJSON() ([]byte, error) {
 }
 
 type DestinationOracle struct {
-	DestinationType DestinationOracleOracleEnum `json:"destinationType"`
+	DestinationType DestinationOracleOracle `json:"destinationType"`
 	// The hostname of the database.
 	Host string `json:"host"`
 	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).

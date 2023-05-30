@@ -4,13 +4,14 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationCumulioResourceModel) ToCreateSDKType() *shared.DestinationCumulioCreateRequest {
 	apiHost := r.Configuration.APIHost.ValueString()
 	apiKey := r.Configuration.APIKey.ValueString()
 	apiToken := r.Configuration.APIToken.ValueString()
-	destinationType := shared.DestinationCumulioCumulioEnum(r.Configuration.DestinationType.ValueString())
+	destinationType := shared.DestinationCumulioCumulio(r.Configuration.DestinationType.ValueString())
 	configuration := shared.DestinationCumulio{
 		APIHost:         apiHost,
 		APIKey:          apiKey,
@@ -30,4 +31,11 @@ func (r *DestinationCumulioResourceModel) ToCreateSDKType() *shared.DestinationC
 func (r *DestinationCumulioResourceModel) ToDeleteSDKType() *shared.DestinationCumulioCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *DestinationCumulioResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

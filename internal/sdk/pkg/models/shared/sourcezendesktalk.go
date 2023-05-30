@@ -10,37 +10,37 @@ import (
 	"time"
 )
 
-type SourceZendeskTalkAuthenticationOAuth20AuthTypeEnum string
+type SourceZendeskTalkAuthenticationOAuth20AuthType string
 
 const (
-	SourceZendeskTalkAuthenticationOAuth20AuthTypeEnumOauth20 SourceZendeskTalkAuthenticationOAuth20AuthTypeEnum = "oauth2.0"
+	SourceZendeskTalkAuthenticationOAuth20AuthTypeOauth20 SourceZendeskTalkAuthenticationOAuth20AuthType = "oauth2.0"
 )
 
-func (e SourceZendeskTalkAuthenticationOAuth20AuthTypeEnum) ToPointer() *SourceZendeskTalkAuthenticationOAuth20AuthTypeEnum {
+func (e SourceZendeskTalkAuthenticationOAuth20AuthType) ToPointer() *SourceZendeskTalkAuthenticationOAuth20AuthType {
 	return &e
 }
 
-func (e *SourceZendeskTalkAuthenticationOAuth20AuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceZendeskTalkAuthenticationOAuth20AuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "oauth2.0":
-		*e = SourceZendeskTalkAuthenticationOAuth20AuthTypeEnum(v)
+		*e = SourceZendeskTalkAuthenticationOAuth20AuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZendeskTalkAuthenticationOAuth20AuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceZendeskTalkAuthenticationOAuth20AuthType: %v", v)
 	}
 }
 
 // SourceZendeskTalkAuthenticationOAuth20 - Zendesk service provides two authentication methods. Choose between: `OAuth2.0` or `API token`.
 type SourceZendeskTalkAuthenticationOAuth20 struct {
 	// The value of the API token generated. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk-talk">docs</a> for more information.
-	AccessToken string                                              `json:"access_token"`
-	AuthType    *SourceZendeskTalkAuthenticationOAuth20AuthTypeEnum `json:"auth_type,omitempty"`
+	AccessToken string                                          `json:"access_token"`
+	AuthType    *SourceZendeskTalkAuthenticationOAuth20AuthType `json:"auth_type,omitempty"`
 
-	AdditionalProperties map[string]interface{} `json:"-"`
+	AdditionalProperties interface{} `json:"-"`
 }
 type _SourceZendeskTalkAuthenticationOAuth20 SourceZendeskTalkAuthenticationOAuth20
 
@@ -88,39 +88,39 @@ func (c SourceZendeskTalkAuthenticationOAuth20) MarshalJSON() ([]byte, error) {
 	return json.Marshal(out)
 }
 
-type SourceZendeskTalkAuthenticationAPITokenAuthTypeEnum string
+type SourceZendeskTalkAuthenticationAPITokenAuthType string
 
 const (
-	SourceZendeskTalkAuthenticationAPITokenAuthTypeEnumAPIToken SourceZendeskTalkAuthenticationAPITokenAuthTypeEnum = "api_token"
+	SourceZendeskTalkAuthenticationAPITokenAuthTypeAPIToken SourceZendeskTalkAuthenticationAPITokenAuthType = "api_token"
 )
 
-func (e SourceZendeskTalkAuthenticationAPITokenAuthTypeEnum) ToPointer() *SourceZendeskTalkAuthenticationAPITokenAuthTypeEnum {
+func (e SourceZendeskTalkAuthenticationAPITokenAuthType) ToPointer() *SourceZendeskTalkAuthenticationAPITokenAuthType {
 	return &e
 }
 
-func (e *SourceZendeskTalkAuthenticationAPITokenAuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceZendeskTalkAuthenticationAPITokenAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "api_token":
-		*e = SourceZendeskTalkAuthenticationAPITokenAuthTypeEnum(v)
+		*e = SourceZendeskTalkAuthenticationAPITokenAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZendeskTalkAuthenticationAPITokenAuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceZendeskTalkAuthenticationAPITokenAuthType: %v", v)
 	}
 }
 
 // SourceZendeskTalkAuthenticationAPIToken - Zendesk service provides two authentication methods. Choose between: `OAuth2.0` or `API token`.
 type SourceZendeskTalkAuthenticationAPIToken struct {
 	// The value of the API token generated. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk-talk">docs</a> for more information.
-	APIToken string                                               `json:"api_token"`
-	AuthType *SourceZendeskTalkAuthenticationAPITokenAuthTypeEnum `json:"auth_type,omitempty"`
+	APIToken string                                           `json:"api_token"`
+	AuthType *SourceZendeskTalkAuthenticationAPITokenAuthType `json:"auth_type,omitempty"`
 	// The user email for your Zendesk account.
 	Email string `json:"email"`
 
-	AdditionalProperties map[string]interface{} `json:"-"`
+	AdditionalProperties interface{} `json:"-"`
 }
 type _SourceZendeskTalkAuthenticationAPIToken SourceZendeskTalkAuthenticationAPIToken
 
@@ -237,34 +237,34 @@ func (u SourceZendeskTalkAuthentication) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-type SourceZendeskTalkZendeskTalkEnum string
+type SourceZendeskTalkZendeskTalk string
 
 const (
-	SourceZendeskTalkZendeskTalkEnumZendeskTalk SourceZendeskTalkZendeskTalkEnum = "zendesk-talk"
+	SourceZendeskTalkZendeskTalkZendeskTalk SourceZendeskTalkZendeskTalk = "zendesk-talk"
 )
 
-func (e SourceZendeskTalkZendeskTalkEnum) ToPointer() *SourceZendeskTalkZendeskTalkEnum {
+func (e SourceZendeskTalkZendeskTalk) ToPointer() *SourceZendeskTalkZendeskTalk {
 	return &e
 }
 
-func (e *SourceZendeskTalkZendeskTalkEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceZendeskTalkZendeskTalk) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "zendesk-talk":
-		*e = SourceZendeskTalkZendeskTalkEnum(v)
+		*e = SourceZendeskTalkZendeskTalk(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZendeskTalkZendeskTalkEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceZendeskTalkZendeskTalk: %v", v)
 	}
 }
 
 type SourceZendeskTalk struct {
 	// Zendesk service provides two authentication methods. Choose between: `OAuth2.0` or `API token`.
 	Credentials *SourceZendeskTalkAuthentication `json:"credentials,omitempty"`
-	SourceType  SourceZendeskTalkZendeskTalkEnum `json:"sourceType"`
+	SourceType  SourceZendeskTalkZendeskTalk     `json:"sourceType"`
 	// The date from which you'd like to replicate data for Zendesk Talk API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 	StartDate time.Time `json:"start_date"`
 	// This is your Zendesk subdomain that can be found in your account URL. For example, in https://{MY_SUBDOMAIN}.zendesk.com/, where MY_SUBDOMAIN is the value of your subdomain.

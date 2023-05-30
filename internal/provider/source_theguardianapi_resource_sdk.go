@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceTheGuardianAPIResourceModel) ToCreateSDKType() *shared.SourceTheGuardianAPICreateRequest {
@@ -26,7 +27,7 @@ func (r *SourceTheGuardianAPIResourceModel) ToCreateSDKType() *shared.SourceTheG
 	} else {
 		section = nil
 	}
-	sourceType := shared.SourceTheGuardianAPITheGuardianAPIEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceTheGuardianAPITheGuardianAPI(r.Configuration.SourceType.ValueString())
 	startDate := r.Configuration.StartDate.ValueString()
 	tag := new(string)
 	if !r.Configuration.Tag.IsUnknown() && !r.Configuration.Tag.IsNull() {
@@ -63,4 +64,11 @@ func (r *SourceTheGuardianAPIResourceModel) ToCreateSDKType() *shared.SourceTheG
 func (r *SourceTheGuardianAPIResourceModel) ToDeleteSDKType() *shared.SourceTheGuardianAPICreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceTheGuardianAPIResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

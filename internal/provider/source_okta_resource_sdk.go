@@ -4,13 +4,14 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceOktaResourceModel) ToCreateSDKType() *shared.SourceOktaCreateRequest {
 	var credentials *shared.SourceOktaAuthorizationMethod
 	var sourceOktaAuthorizationMethodOAuth20 *shared.SourceOktaAuthorizationMethodOAuth20
 	if r.Configuration.Credentials.SourceOktaAuthorizationMethodOAuth20 != nil {
-		authType := shared.SourceOktaAuthorizationMethodOAuth20AuthTypeEnum(r.Configuration.Credentials.SourceOktaAuthorizationMethodOAuth20.AuthType.ValueString())
+		authType := shared.SourceOktaAuthorizationMethodOAuth20AuthType(r.Configuration.Credentials.SourceOktaAuthorizationMethodOAuth20.AuthType.ValueString())
 		clientID := r.Configuration.Credentials.SourceOktaAuthorizationMethodOAuth20.ClientID.ValueString()
 		clientSecret := r.Configuration.Credentials.SourceOktaAuthorizationMethodOAuth20.ClientSecret.ValueString()
 		refreshToken := r.Configuration.Credentials.SourceOktaAuthorizationMethodOAuth20.RefreshToken.ValueString()
@@ -29,7 +30,7 @@ func (r *SourceOktaResourceModel) ToCreateSDKType() *shared.SourceOktaCreateRequ
 	var sourceOktaAuthorizationMethodAPIToken *shared.SourceOktaAuthorizationMethodAPIToken
 	if r.Configuration.Credentials.SourceOktaAuthorizationMethodAPIToken != nil {
 		apiToken := r.Configuration.Credentials.SourceOktaAuthorizationMethodAPIToken.APIToken.ValueString()
-		authType1 := shared.SourceOktaAuthorizationMethodAPITokenAuthTypeEnum(r.Configuration.Credentials.SourceOktaAuthorizationMethodAPIToken.AuthType.ValueString())
+		authType1 := shared.SourceOktaAuthorizationMethodAPITokenAuthType(r.Configuration.Credentials.SourceOktaAuthorizationMethodAPIToken.AuthType.ValueString())
 		sourceOktaAuthorizationMethodAPIToken = &shared.SourceOktaAuthorizationMethodAPIToken{
 			APIToken: apiToken,
 			AuthType: authType1,
@@ -46,7 +47,7 @@ func (r *SourceOktaResourceModel) ToCreateSDKType() *shared.SourceOktaCreateRequ
 	} else {
 		domain = nil
 	}
-	sourceType := shared.SourceOktaOktaEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceOktaOkta(r.Configuration.SourceType.ValueString())
 	startDate := new(string)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate = r.Configuration.StartDate.ValueString()
@@ -79,4 +80,11 @@ func (r *SourceOktaResourceModel) ToCreateSDKType() *shared.SourceOktaCreateRequ
 func (r *SourceOktaResourceModel) ToDeleteSDKType() *shared.SourceOktaCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceOktaResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

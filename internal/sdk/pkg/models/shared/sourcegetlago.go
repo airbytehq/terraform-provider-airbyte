@@ -7,32 +7,32 @@ import (
 	"fmt"
 )
 
-type SourceGetlagoGetlagoEnum string
+type SourceGetlagoGetlago string
 
 const (
-	SourceGetlagoGetlagoEnumGetlago SourceGetlagoGetlagoEnum = "getlago"
+	SourceGetlagoGetlagoGetlago SourceGetlagoGetlago = "getlago"
 )
 
-func (e SourceGetlagoGetlagoEnum) ToPointer() *SourceGetlagoGetlagoEnum {
+func (e SourceGetlagoGetlago) ToPointer() *SourceGetlagoGetlago {
 	return &e
 }
 
-func (e *SourceGetlagoGetlagoEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceGetlagoGetlago) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "getlago":
-		*e = SourceGetlagoGetlagoEnum(v)
+		*e = SourceGetlagoGetlago(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGetlagoGetlagoEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceGetlagoGetlago: %v", v)
 	}
 }
 
 type SourceGetlago struct {
 	// Your API Key. See <a href="https://doc.getlago.com/docs/api/intro">here</a>.
-	APIKey     string                   `json:"api_key"`
-	SourceType SourceGetlagoGetlagoEnum `json:"sourceType"`
+	APIKey     string               `json:"api_key"`
+	SourceType SourceGetlagoGetlago `json:"sourceType"`
 }

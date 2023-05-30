@@ -9,51 +9,51 @@ import (
 	"fmt"
 )
 
-type DestinationPostgresPostgresEnum string
+type DestinationPostgresPostgres string
 
 const (
-	DestinationPostgresPostgresEnumPostgres DestinationPostgresPostgresEnum = "postgres"
+	DestinationPostgresPostgresPostgres DestinationPostgresPostgres = "postgres"
 )
 
-func (e DestinationPostgresPostgresEnum) ToPointer() *DestinationPostgresPostgresEnum {
+func (e DestinationPostgresPostgres) ToPointer() *DestinationPostgresPostgres {
 	return &e
 }
 
-func (e *DestinationPostgresPostgresEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationPostgresPostgres) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres":
-		*e = DestinationPostgresPostgresEnum(v)
+		*e = DestinationPostgresPostgres(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationPostgresPostgresEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationPostgresPostgres: %v", v)
 	}
 }
 
-type DestinationPostgresSSLModesVerifyFullModeEnum string
+type DestinationPostgresSSLModesVerifyFullMode string
 
 const (
-	DestinationPostgresSSLModesVerifyFullModeEnumVerifyFull DestinationPostgresSSLModesVerifyFullModeEnum = "verify-full"
+	DestinationPostgresSSLModesVerifyFullModeVerifyFull DestinationPostgresSSLModesVerifyFullMode = "verify-full"
 )
 
-func (e DestinationPostgresSSLModesVerifyFullModeEnum) ToPointer() *DestinationPostgresSSLModesVerifyFullModeEnum {
+func (e DestinationPostgresSSLModesVerifyFullMode) ToPointer() *DestinationPostgresSSLModesVerifyFullMode {
 	return &e
 }
 
-func (e *DestinationPostgresSSLModesVerifyFullModeEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationPostgresSSLModesVerifyFullMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "verify-full":
-		*e = DestinationPostgresSSLModesVerifyFullModeEnum(v)
+		*e = DestinationPostgresSSLModesVerifyFullMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationPostgresSSLModesVerifyFullModeEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationPostgresSSLModesVerifyFullMode: %v", v)
 	}
 }
 
@@ -66,31 +66,31 @@ type DestinationPostgresSSLModesVerifyFull struct {
 	// Client key
 	ClientKey string `json:"client_key"`
 	// Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.
-	ClientKeyPassword *string                                       `json:"client_key_password,omitempty"`
-	Mode              DestinationPostgresSSLModesVerifyFullModeEnum `json:"mode"`
+	ClientKeyPassword *string                                   `json:"client_key_password,omitempty"`
+	Mode              DestinationPostgresSSLModesVerifyFullMode `json:"mode"`
 }
 
-type DestinationPostgresSSLModesVerifyCaModeEnum string
+type DestinationPostgresSSLModesVerifyCaMode string
 
 const (
-	DestinationPostgresSSLModesVerifyCaModeEnumVerifyCa DestinationPostgresSSLModesVerifyCaModeEnum = "verify-ca"
+	DestinationPostgresSSLModesVerifyCaModeVerifyCa DestinationPostgresSSLModesVerifyCaMode = "verify-ca"
 )
 
-func (e DestinationPostgresSSLModesVerifyCaModeEnum) ToPointer() *DestinationPostgresSSLModesVerifyCaModeEnum {
+func (e DestinationPostgresSSLModesVerifyCaMode) ToPointer() *DestinationPostgresSSLModesVerifyCaMode {
 	return &e
 }
 
-func (e *DestinationPostgresSSLModesVerifyCaModeEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationPostgresSSLModesVerifyCaMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "verify-ca":
-		*e = DestinationPostgresSSLModesVerifyCaModeEnum(v)
+		*e = DestinationPostgresSSLModesVerifyCaMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationPostgresSSLModesVerifyCaModeEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationPostgresSSLModesVerifyCaMode: %v", v)
 	}
 }
 
@@ -99,124 +99,124 @@ type DestinationPostgresSSLModesVerifyCa struct {
 	// CA certificate
 	CaCertificate string `json:"ca_certificate"`
 	// Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.
-	ClientKeyPassword *string                                     `json:"client_key_password,omitempty"`
-	Mode              DestinationPostgresSSLModesVerifyCaModeEnum `json:"mode"`
+	ClientKeyPassword *string                                 `json:"client_key_password,omitempty"`
+	Mode              DestinationPostgresSSLModesVerifyCaMode `json:"mode"`
 }
 
-type DestinationPostgresSSLModesRequireModeEnum string
+type DestinationPostgresSSLModesRequireMode string
 
 const (
-	DestinationPostgresSSLModesRequireModeEnumRequire DestinationPostgresSSLModesRequireModeEnum = "require"
+	DestinationPostgresSSLModesRequireModeRequire DestinationPostgresSSLModesRequireMode = "require"
 )
 
-func (e DestinationPostgresSSLModesRequireModeEnum) ToPointer() *DestinationPostgresSSLModesRequireModeEnum {
+func (e DestinationPostgresSSLModesRequireMode) ToPointer() *DestinationPostgresSSLModesRequireMode {
 	return &e
 }
 
-func (e *DestinationPostgresSSLModesRequireModeEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationPostgresSSLModesRequireMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "require":
-		*e = DestinationPostgresSSLModesRequireModeEnum(v)
+		*e = DestinationPostgresSSLModesRequireMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationPostgresSSLModesRequireModeEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationPostgresSSLModesRequireMode: %v", v)
 	}
 }
 
 // DestinationPostgresSSLModesRequire - Require SSL mode.
 type DestinationPostgresSSLModesRequire struct {
-	Mode DestinationPostgresSSLModesRequireModeEnum `json:"mode"`
+	Mode DestinationPostgresSSLModesRequireMode `json:"mode"`
 }
 
-type DestinationPostgresSSLModesPreferModeEnum string
+type DestinationPostgresSSLModesPreferMode string
 
 const (
-	DestinationPostgresSSLModesPreferModeEnumPrefer DestinationPostgresSSLModesPreferModeEnum = "prefer"
+	DestinationPostgresSSLModesPreferModePrefer DestinationPostgresSSLModesPreferMode = "prefer"
 )
 
-func (e DestinationPostgresSSLModesPreferModeEnum) ToPointer() *DestinationPostgresSSLModesPreferModeEnum {
+func (e DestinationPostgresSSLModesPreferMode) ToPointer() *DestinationPostgresSSLModesPreferMode {
 	return &e
 }
 
-func (e *DestinationPostgresSSLModesPreferModeEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationPostgresSSLModesPreferMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "prefer":
-		*e = DestinationPostgresSSLModesPreferModeEnum(v)
+		*e = DestinationPostgresSSLModesPreferMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationPostgresSSLModesPreferModeEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationPostgresSSLModesPreferMode: %v", v)
 	}
 }
 
 // DestinationPostgresSSLModesPrefer - Prefer SSL mode.
 type DestinationPostgresSSLModesPrefer struct {
-	Mode DestinationPostgresSSLModesPreferModeEnum `json:"mode"`
+	Mode DestinationPostgresSSLModesPreferMode `json:"mode"`
 }
 
-type DestinationPostgresSSLModesAllowModeEnum string
+type DestinationPostgresSSLModesAllowMode string
 
 const (
-	DestinationPostgresSSLModesAllowModeEnumAllow DestinationPostgresSSLModesAllowModeEnum = "allow"
+	DestinationPostgresSSLModesAllowModeAllow DestinationPostgresSSLModesAllowMode = "allow"
 )
 
-func (e DestinationPostgresSSLModesAllowModeEnum) ToPointer() *DestinationPostgresSSLModesAllowModeEnum {
+func (e DestinationPostgresSSLModesAllowMode) ToPointer() *DestinationPostgresSSLModesAllowMode {
 	return &e
 }
 
-func (e *DestinationPostgresSSLModesAllowModeEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationPostgresSSLModesAllowMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "allow":
-		*e = DestinationPostgresSSLModesAllowModeEnum(v)
+		*e = DestinationPostgresSSLModesAllowMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationPostgresSSLModesAllowModeEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationPostgresSSLModesAllowMode: %v", v)
 	}
 }
 
 // DestinationPostgresSSLModesAllow - Allow SSL mode.
 type DestinationPostgresSSLModesAllow struct {
-	Mode DestinationPostgresSSLModesAllowModeEnum `json:"mode"`
+	Mode DestinationPostgresSSLModesAllowMode `json:"mode"`
 }
 
-type DestinationPostgresSSLModesDisableModeEnum string
+type DestinationPostgresSSLModesDisableMode string
 
 const (
-	DestinationPostgresSSLModesDisableModeEnumDisable DestinationPostgresSSLModesDisableModeEnum = "disable"
+	DestinationPostgresSSLModesDisableModeDisable DestinationPostgresSSLModesDisableMode = "disable"
 )
 
-func (e DestinationPostgresSSLModesDisableModeEnum) ToPointer() *DestinationPostgresSSLModesDisableModeEnum {
+func (e DestinationPostgresSSLModesDisableMode) ToPointer() *DestinationPostgresSSLModesDisableMode {
 	return &e
 }
 
-func (e *DestinationPostgresSSLModesDisableModeEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationPostgresSSLModesDisableMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "disable":
-		*e = DestinationPostgresSSLModesDisableModeEnum(v)
+		*e = DestinationPostgresSSLModesDisableMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationPostgresSSLModesDisableModeEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationPostgresSSLModesDisableMode: %v", v)
 	}
 }
 
 // DestinationPostgresSSLModesDisable - Disable SSL.
 type DestinationPostgresSSLModesDisable struct {
-	Mode DestinationPostgresSSLModesDisableModeEnum `json:"mode"`
+	Mode DestinationPostgresSSLModesDisableMode `json:"mode"`
 }
 
 type DestinationPostgresSSLModesType string
@@ -383,28 +383,28 @@ func (u DestinationPostgresSSLModes) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-// DestinationPostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum - Connect through a jump server tunnel host using username and password authentication
-type DestinationPostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum string
+// DestinationPostgresSSHTunnelMethodPasswordAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and password authentication
+type DestinationPostgresSSHTunnelMethodPasswordAuthenticationTunnelMethod string
 
 const (
-	DestinationPostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodEnumSSHPasswordAuth DestinationPostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum = "SSH_PASSWORD_AUTH"
+	DestinationPostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodSSHPasswordAuth DestinationPostgresSSHTunnelMethodPasswordAuthenticationTunnelMethod = "SSH_PASSWORD_AUTH"
 )
 
-func (e DestinationPostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) ToPointer() *DestinationPostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum {
+func (e DestinationPostgresSSHTunnelMethodPasswordAuthenticationTunnelMethod) ToPointer() *DestinationPostgresSSHTunnelMethodPasswordAuthenticationTunnelMethod {
 	return &e
 }
 
-func (e *DestinationPostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationPostgresSSHTunnelMethodPasswordAuthenticationTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SSH_PASSWORD_AUTH":
-		*e = DestinationPostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(v)
+		*e = DestinationPostgresSSHTunnelMethodPasswordAuthenticationTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationPostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationPostgresSSHTunnelMethodPasswordAuthenticationTunnelMethod: %v", v)
 	}
 }
 
@@ -413,7 +413,7 @@ type DestinationPostgresSSHTunnelMethodPasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and password authentication
-	TunnelMethod DestinationPostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum `json:"tunnel_method"`
+	TunnelMethod DestinationPostgresSSHTunnelMethodPasswordAuthenticationTunnelMethod `json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort int64 `json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
@@ -422,28 +422,28 @@ type DestinationPostgresSSHTunnelMethodPasswordAuthentication struct {
 	TunnelUserPassword string `json:"tunnel_user_password"`
 }
 
-// DestinationPostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum - Connect through a jump server tunnel host using username and ssh key
-type DestinationPostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum string
+// DestinationPostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and ssh key
+type DestinationPostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethod string
 
 const (
-	DestinationPostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnumSSHKeyAuth DestinationPostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum = "SSH_KEY_AUTH"
+	DestinationPostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodSSHKeyAuth DestinationPostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethod = "SSH_KEY_AUTH"
 )
 
-func (e DestinationPostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) ToPointer() *DestinationPostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum {
+func (e DestinationPostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethod) ToPointer() *DestinationPostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethod {
 	return &e
 }
 
-func (e *DestinationPostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationPostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SSH_KEY_AUTH":
-		*e = DestinationPostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(v)
+		*e = DestinationPostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationPostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationPostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethod: %v", v)
 	}
 }
 
@@ -454,42 +454,42 @@ type DestinationPostgresSSHTunnelMethodSSHKeyAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and ssh key
-	TunnelMethod DestinationPostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum `json:"tunnel_method"`
+	TunnelMethod DestinationPostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethod `json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort int64 `json:"tunnel_port"`
 	// OS-level username for logging into the jump server host.
 	TunnelUser string `json:"tunnel_user"`
 }
 
-// DestinationPostgresSSHTunnelMethodNoTunnelTunnelMethodEnum - No ssh tunnel needed to connect to database
-type DestinationPostgresSSHTunnelMethodNoTunnelTunnelMethodEnum string
+// DestinationPostgresSSHTunnelMethodNoTunnelTunnelMethod - No ssh tunnel needed to connect to database
+type DestinationPostgresSSHTunnelMethodNoTunnelTunnelMethod string
 
 const (
-	DestinationPostgresSSHTunnelMethodNoTunnelTunnelMethodEnumNoTunnel DestinationPostgresSSHTunnelMethodNoTunnelTunnelMethodEnum = "NO_TUNNEL"
+	DestinationPostgresSSHTunnelMethodNoTunnelTunnelMethodNoTunnel DestinationPostgresSSHTunnelMethodNoTunnelTunnelMethod = "NO_TUNNEL"
 )
 
-func (e DestinationPostgresSSHTunnelMethodNoTunnelTunnelMethodEnum) ToPointer() *DestinationPostgresSSHTunnelMethodNoTunnelTunnelMethodEnum {
+func (e DestinationPostgresSSHTunnelMethodNoTunnelTunnelMethod) ToPointer() *DestinationPostgresSSHTunnelMethodNoTunnelTunnelMethod {
 	return &e
 }
 
-func (e *DestinationPostgresSSHTunnelMethodNoTunnelTunnelMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationPostgresSSHTunnelMethodNoTunnelTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "NO_TUNNEL":
-		*e = DestinationPostgresSSHTunnelMethodNoTunnelTunnelMethodEnum(v)
+		*e = DestinationPostgresSSHTunnelMethodNoTunnelTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationPostgresSSHTunnelMethodNoTunnelTunnelMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationPostgresSSHTunnelMethodNoTunnelTunnelMethod: %v", v)
 	}
 }
 
 // DestinationPostgresSSHTunnelMethodNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationPostgresSSHTunnelMethodNoTunnel struct {
 	// No ssh tunnel needed to connect to database
-	TunnelMethod DestinationPostgresSSHTunnelMethodNoTunnelTunnelMethodEnum `json:"tunnel_method"`
+	TunnelMethod DestinationPostgresSSHTunnelMethodNoTunnelTunnelMethod `json:"tunnel_method"`
 }
 
 type DestinationPostgresSSHTunnelMethodType string
@@ -586,8 +586,8 @@ func (u DestinationPostgresSSHTunnelMethod) MarshalJSON() ([]byte, error) {
 
 type DestinationPostgres struct {
 	// Name of the database.
-	Database        string                          `json:"database"`
-	DestinationType DestinationPostgresPostgresEnum `json:"destinationType"`
+	Database        string                      `json:"database"`
+	DestinationType DestinationPostgresPostgres `json:"destinationType"`
 	// Hostname of the database.
 	Host string `json:"host"`
 	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).

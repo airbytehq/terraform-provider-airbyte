@@ -9,33 +9,33 @@ import (
 	"fmt"
 )
 
-type DestinationGcsAuthenticationHMACKeyCredentialTypeEnum string
+type DestinationGcsAuthenticationHMACKeyCredentialType string
 
 const (
-	DestinationGcsAuthenticationHMACKeyCredentialTypeEnumHmacKey DestinationGcsAuthenticationHMACKeyCredentialTypeEnum = "HMAC_KEY"
+	DestinationGcsAuthenticationHMACKeyCredentialTypeHmacKey DestinationGcsAuthenticationHMACKeyCredentialType = "HMAC_KEY"
 )
 
-func (e DestinationGcsAuthenticationHMACKeyCredentialTypeEnum) ToPointer() *DestinationGcsAuthenticationHMACKeyCredentialTypeEnum {
+func (e DestinationGcsAuthenticationHMACKeyCredentialType) ToPointer() *DestinationGcsAuthenticationHMACKeyCredentialType {
 	return &e
 }
 
-func (e *DestinationGcsAuthenticationHMACKeyCredentialTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationGcsAuthenticationHMACKeyCredentialType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "HMAC_KEY":
-		*e = DestinationGcsAuthenticationHMACKeyCredentialTypeEnum(v)
+		*e = DestinationGcsAuthenticationHMACKeyCredentialType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationGcsAuthenticationHMACKeyCredentialTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationGcsAuthenticationHMACKeyCredentialType: %v", v)
 	}
 }
 
 // DestinationGcsAuthenticationHMACKey - An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>.
 type DestinationGcsAuthenticationHMACKey struct {
-	CredentialType DestinationGcsAuthenticationHMACKeyCredentialTypeEnum `json:"credential_type"`
+	CredentialType DestinationGcsAuthenticationHMACKeyCredentialType `json:"credential_type"`
 	// When linked to a service account, this ID is 61 characters long; when linked to a user account, it is 24 characters long. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys#overview">here</a>.
 	HmacKeyAccessID string `json:"hmac_key_access_id"`
 	// The corresponding secret for the access ID. It is a 40-character base-64 encoded string.  Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys#secrets">here</a>.
@@ -86,48 +86,48 @@ func (u DestinationGcsAuthentication) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-type DestinationGcsGcsEnum string
+type DestinationGcsGcs string
 
 const (
-	DestinationGcsGcsEnumGcs DestinationGcsGcsEnum = "gcs"
+	DestinationGcsGcsGcs DestinationGcsGcs = "gcs"
 )
 
-func (e DestinationGcsGcsEnum) ToPointer() *DestinationGcsGcsEnum {
+func (e DestinationGcsGcs) ToPointer() *DestinationGcsGcs {
 	return &e
 }
 
-func (e *DestinationGcsGcsEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationGcsGcs) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "gcs":
-		*e = DestinationGcsGcsEnum(v)
+		*e = DestinationGcsGcs(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationGcsGcsEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationGcsGcs: %v", v)
 	}
 }
 
-// DestinationGcsOutputFormatParquetColumnarStorageCompressionCodecEnum - The compression algorithm used to compress data pages.
-type DestinationGcsOutputFormatParquetColumnarStorageCompressionCodecEnum string
+// DestinationGcsOutputFormatParquetColumnarStorageCompressionCodec - The compression algorithm used to compress data pages.
+type DestinationGcsOutputFormatParquetColumnarStorageCompressionCodec string
 
 const (
-	DestinationGcsOutputFormatParquetColumnarStorageCompressionCodecEnumUncompressed DestinationGcsOutputFormatParquetColumnarStorageCompressionCodecEnum = "UNCOMPRESSED"
-	DestinationGcsOutputFormatParquetColumnarStorageCompressionCodecEnumSnappy       DestinationGcsOutputFormatParquetColumnarStorageCompressionCodecEnum = "SNAPPY"
-	DestinationGcsOutputFormatParquetColumnarStorageCompressionCodecEnumGzip         DestinationGcsOutputFormatParquetColumnarStorageCompressionCodecEnum = "GZIP"
-	DestinationGcsOutputFormatParquetColumnarStorageCompressionCodecEnumLzo          DestinationGcsOutputFormatParquetColumnarStorageCompressionCodecEnum = "LZO"
-	DestinationGcsOutputFormatParquetColumnarStorageCompressionCodecEnumBrotli       DestinationGcsOutputFormatParquetColumnarStorageCompressionCodecEnum = "BROTLI"
-	DestinationGcsOutputFormatParquetColumnarStorageCompressionCodecEnumLz4          DestinationGcsOutputFormatParquetColumnarStorageCompressionCodecEnum = "LZ4"
-	DestinationGcsOutputFormatParquetColumnarStorageCompressionCodecEnumZstd         DestinationGcsOutputFormatParquetColumnarStorageCompressionCodecEnum = "ZSTD"
+	DestinationGcsOutputFormatParquetColumnarStorageCompressionCodecUncompressed DestinationGcsOutputFormatParquetColumnarStorageCompressionCodec = "UNCOMPRESSED"
+	DestinationGcsOutputFormatParquetColumnarStorageCompressionCodecSnappy       DestinationGcsOutputFormatParquetColumnarStorageCompressionCodec = "SNAPPY"
+	DestinationGcsOutputFormatParquetColumnarStorageCompressionCodecGzip         DestinationGcsOutputFormatParquetColumnarStorageCompressionCodec = "GZIP"
+	DestinationGcsOutputFormatParquetColumnarStorageCompressionCodecLzo          DestinationGcsOutputFormatParquetColumnarStorageCompressionCodec = "LZO"
+	DestinationGcsOutputFormatParquetColumnarStorageCompressionCodecBrotli       DestinationGcsOutputFormatParquetColumnarStorageCompressionCodec = "BROTLI"
+	DestinationGcsOutputFormatParquetColumnarStorageCompressionCodecLz4          DestinationGcsOutputFormatParquetColumnarStorageCompressionCodec = "LZ4"
+	DestinationGcsOutputFormatParquetColumnarStorageCompressionCodecZstd         DestinationGcsOutputFormatParquetColumnarStorageCompressionCodec = "ZSTD"
 )
 
-func (e DestinationGcsOutputFormatParquetColumnarStorageCompressionCodecEnum) ToPointer() *DestinationGcsOutputFormatParquetColumnarStorageCompressionCodecEnum {
+func (e DestinationGcsOutputFormatParquetColumnarStorageCompressionCodec) ToPointer() *DestinationGcsOutputFormatParquetColumnarStorageCompressionCodec {
 	return &e
 }
 
-func (e *DestinationGcsOutputFormatParquetColumnarStorageCompressionCodecEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationGcsOutputFormatParquetColumnarStorageCompressionCodec) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -146,34 +146,34 @@ func (e *DestinationGcsOutputFormatParquetColumnarStorageCompressionCodecEnum) U
 	case "LZ4":
 		fallthrough
 	case "ZSTD":
-		*e = DestinationGcsOutputFormatParquetColumnarStorageCompressionCodecEnum(v)
+		*e = DestinationGcsOutputFormatParquetColumnarStorageCompressionCodec(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationGcsOutputFormatParquetColumnarStorageCompressionCodecEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationGcsOutputFormatParquetColumnarStorageCompressionCodec: %v", v)
 	}
 }
 
-type DestinationGcsOutputFormatParquetColumnarStorageFormatTypeEnum string
+type DestinationGcsOutputFormatParquetColumnarStorageFormatType string
 
 const (
-	DestinationGcsOutputFormatParquetColumnarStorageFormatTypeEnumParquet DestinationGcsOutputFormatParquetColumnarStorageFormatTypeEnum = "Parquet"
+	DestinationGcsOutputFormatParquetColumnarStorageFormatTypeParquet DestinationGcsOutputFormatParquetColumnarStorageFormatType = "Parquet"
 )
 
-func (e DestinationGcsOutputFormatParquetColumnarStorageFormatTypeEnum) ToPointer() *DestinationGcsOutputFormatParquetColumnarStorageFormatTypeEnum {
+func (e DestinationGcsOutputFormatParquetColumnarStorageFormatType) ToPointer() *DestinationGcsOutputFormatParquetColumnarStorageFormatType {
 	return &e
 }
 
-func (e *DestinationGcsOutputFormatParquetColumnarStorageFormatTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationGcsOutputFormatParquetColumnarStorageFormatType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Parquet":
-		*e = DestinationGcsOutputFormatParquetColumnarStorageFormatTypeEnum(v)
+		*e = DestinationGcsOutputFormatParquetColumnarStorageFormatType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationGcsOutputFormatParquetColumnarStorageFormatTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationGcsOutputFormatParquetColumnarStorageFormatType: %v", v)
 	}
 }
 
@@ -182,74 +182,74 @@ type DestinationGcsOutputFormatParquetColumnarStorage struct {
 	// This is the size of a row group being buffered in memory. It limits the memory usage when writing. Larger values will improve the IO when reading, but consume more memory when writing. Default: 128 MB.
 	BlockSizeMb *int64 `json:"block_size_mb,omitempty"`
 	// The compression algorithm used to compress data pages.
-	CompressionCodec *DestinationGcsOutputFormatParquetColumnarStorageCompressionCodecEnum `json:"compression_codec,omitempty"`
+	CompressionCodec *DestinationGcsOutputFormatParquetColumnarStorageCompressionCodec `json:"compression_codec,omitempty"`
 	// Default: true.
 	DictionaryEncoding *bool `json:"dictionary_encoding,omitempty"`
 	// There is one dictionary page per column per row group when dictionary encoding is used. The dictionary page size works like the page size but for dictionary. Default: 1024 KB.
-	DictionaryPageSizeKb *int64                                                         `json:"dictionary_page_size_kb,omitempty"`
-	FormatType           DestinationGcsOutputFormatParquetColumnarStorageFormatTypeEnum `json:"format_type"`
+	DictionaryPageSizeKb *int64                                                     `json:"dictionary_page_size_kb,omitempty"`
+	FormatType           DestinationGcsOutputFormatParquetColumnarStorageFormatType `json:"format_type"`
 	// Maximum size allowed as padding to align row groups. This is also the minimum size of a row group. Default: 8 MB.
 	MaxPaddingSizeMb *int64 `json:"max_padding_size_mb,omitempty"`
 	// The page size is for compression. A block is composed of pages. A page is the smallest unit that must be read fully to access a single record. If this value is too small, the compression will deteriorate. Default: 1024 KB.
 	PageSizeKb *int64 `json:"page_size_kb,omitempty"`
 }
 
-type DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum string
+type DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType string
 
 const (
-	DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnumGzip DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum = "GZIP"
+	DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeGzip DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType = "GZIP"
 )
 
-func (e DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum) ToPointer() *DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum {
+func (e DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType) ToPointer() *DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType {
 	return &e
 }
 
-func (e *DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "GZIP":
-		*e = DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum(v)
+		*e = DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType: %v", v)
 	}
 }
 
 // DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP - Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
 type DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP struct {
-	CompressionType *DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum `json:"compression_type,omitempty"`
+	CompressionType *DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType `json:"compression_type,omitempty"`
 }
 
-type DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum string
+type DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType string
 
 const (
-	DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnumNoCompression DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum = "No Compression"
+	DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeNoCompression DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType = "No Compression"
 )
 
-func (e DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum) ToPointer() *DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum {
+func (e DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType) ToPointer() *DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType {
 	return &e
 }
 
-func (e *DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "No Compression":
-		*e = DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum(v)
+		*e = DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType: %v", v)
 	}
 }
 
 // DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression - Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
 type DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression struct {
-	CompressionType *DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum `json:"compression_type,omitempty"`
+	CompressionType *DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType `json:"compression_type,omitempty"`
 }
 
 type DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionType string
@@ -320,93 +320,93 @@ func (u DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompression) Mars
 	return nil, nil
 }
 
-type DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum string
+type DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONFormatType string
 
 const (
-	DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnumJsonl DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum = "JSONL"
+	DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeJsonl DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONFormatType = "JSONL"
 )
 
-func (e DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum) ToPointer() *DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum {
+func (e DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONFormatType) ToPointer() *DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONFormatType {
 	return &e
 }
 
-func (e *DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONFormatType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "JSONL":
-		*e = DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum(v)
+		*e = DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONFormatType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONFormatType: %v", v)
 	}
 }
 
 // DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON - Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.
 type DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON struct {
 	// Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
-	Compression *DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompression   `json:"compression,omitempty"`
-	FormatType  DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum `json:"format_type"`
+	Compression *DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompression `json:"compression,omitempty"`
+	FormatType  DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONFormatType   `json:"format_type"`
 }
 
-type DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionTypeEnum string
+type DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionType string
 
 const (
-	DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionTypeEnumGzip DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionTypeEnum = "GZIP"
+	DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionTypeGzip DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionType = "GZIP"
 )
 
-func (e DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionTypeEnum) ToPointer() *DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionTypeEnum {
+func (e DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionType) ToPointer() *DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionType {
 	return &e
 }
 
-func (e *DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "GZIP":
-		*e = DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionTypeEnum(v)
+		*e = DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionType: %v", v)
 	}
 }
 
 // DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP - Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").
 type DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP struct {
-	CompressionType *DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionTypeEnum `json:"compression_type,omitempty"`
+	CompressionType *DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionType `json:"compression_type,omitempty"`
 }
 
-type DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionTypeEnum string
+type DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionType string
 
 const (
-	DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionTypeEnumNoCompression DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionTypeEnum = "No Compression"
+	DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionTypeNoCompression DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionType = "No Compression"
 )
 
-func (e DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionTypeEnum) ToPointer() *DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionTypeEnum {
+func (e DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionType) ToPointer() *DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionType {
 	return &e
 }
 
-func (e *DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "No Compression":
-		*e = DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionTypeEnum(v)
+		*e = DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionType: %v", v)
 	}
 }
 
 // DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompression - Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").
 type DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompression struct {
-	CompressionType *DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionTypeEnum `json:"compression_type,omitempty"`
+	CompressionType *DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionType `json:"compression_type,omitempty"`
 }
 
 type DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionType string
@@ -477,19 +477,19 @@ func (u DestinationGcsOutputFormatCSVCommaSeparatedValuesCompression) MarshalJSO
 	return nil, nil
 }
 
-// DestinationGcsOutputFormatCSVCommaSeparatedValuesNormalizationEnum - Whether the input JSON data should be normalized (flattened) in the output CSV. Please refer to docs for details.
-type DestinationGcsOutputFormatCSVCommaSeparatedValuesNormalizationEnum string
+// DestinationGcsOutputFormatCSVCommaSeparatedValuesNormalization - Whether the input JSON data should be normalized (flattened) in the output CSV. Please refer to docs for details.
+type DestinationGcsOutputFormatCSVCommaSeparatedValuesNormalization string
 
 const (
-	DestinationGcsOutputFormatCSVCommaSeparatedValuesNormalizationEnumNoFlattening        DestinationGcsOutputFormatCSVCommaSeparatedValuesNormalizationEnum = "No flattening"
-	DestinationGcsOutputFormatCSVCommaSeparatedValuesNormalizationEnumRootLevelFlattening DestinationGcsOutputFormatCSVCommaSeparatedValuesNormalizationEnum = "Root level flattening"
+	DestinationGcsOutputFormatCSVCommaSeparatedValuesNormalizationNoFlattening        DestinationGcsOutputFormatCSVCommaSeparatedValuesNormalization = "No flattening"
+	DestinationGcsOutputFormatCSVCommaSeparatedValuesNormalizationRootLevelFlattening DestinationGcsOutputFormatCSVCommaSeparatedValuesNormalization = "Root level flattening"
 )
 
-func (e DestinationGcsOutputFormatCSVCommaSeparatedValuesNormalizationEnum) ToPointer() *DestinationGcsOutputFormatCSVCommaSeparatedValuesNormalizationEnum {
+func (e DestinationGcsOutputFormatCSVCommaSeparatedValuesNormalization) ToPointer() *DestinationGcsOutputFormatCSVCommaSeparatedValuesNormalization {
 	return &e
 }
 
-func (e *DestinationGcsOutputFormatCSVCommaSeparatedValuesNormalizationEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationGcsOutputFormatCSVCommaSeparatedValuesNormalization) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -498,34 +498,34 @@ func (e *DestinationGcsOutputFormatCSVCommaSeparatedValuesNormalizationEnum) Unm
 	case "No flattening":
 		fallthrough
 	case "Root level flattening":
-		*e = DestinationGcsOutputFormatCSVCommaSeparatedValuesNormalizationEnum(v)
+		*e = DestinationGcsOutputFormatCSVCommaSeparatedValuesNormalization(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationGcsOutputFormatCSVCommaSeparatedValuesNormalizationEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationGcsOutputFormatCSVCommaSeparatedValuesNormalization: %v", v)
 	}
 }
 
-type DestinationGcsOutputFormatCSVCommaSeparatedValuesFormatTypeEnum string
+type DestinationGcsOutputFormatCSVCommaSeparatedValuesFormatType string
 
 const (
-	DestinationGcsOutputFormatCSVCommaSeparatedValuesFormatTypeEnumCsv DestinationGcsOutputFormatCSVCommaSeparatedValuesFormatTypeEnum = "CSV"
+	DestinationGcsOutputFormatCSVCommaSeparatedValuesFormatTypeCsv DestinationGcsOutputFormatCSVCommaSeparatedValuesFormatType = "CSV"
 )
 
-func (e DestinationGcsOutputFormatCSVCommaSeparatedValuesFormatTypeEnum) ToPointer() *DestinationGcsOutputFormatCSVCommaSeparatedValuesFormatTypeEnum {
+func (e DestinationGcsOutputFormatCSVCommaSeparatedValuesFormatType) ToPointer() *DestinationGcsOutputFormatCSVCommaSeparatedValuesFormatType {
 	return &e
 }
 
-func (e *DestinationGcsOutputFormatCSVCommaSeparatedValuesFormatTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationGcsOutputFormatCSVCommaSeparatedValuesFormatType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "CSV":
-		*e = DestinationGcsOutputFormatCSVCommaSeparatedValuesFormatTypeEnum(v)
+		*e = DestinationGcsOutputFormatCSVCommaSeparatedValuesFormatType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationGcsOutputFormatCSVCommaSeparatedValuesFormatTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationGcsOutputFormatCSVCommaSeparatedValuesFormatType: %v", v)
 	}
 }
 
@@ -534,190 +534,190 @@ type DestinationGcsOutputFormatCSVCommaSeparatedValues struct {
 	// Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").
 	Compression *DestinationGcsOutputFormatCSVCommaSeparatedValuesCompression `json:"compression,omitempty"`
 	// Whether the input JSON data should be normalized (flattened) in the output CSV. Please refer to docs for details.
-	Flattening *DestinationGcsOutputFormatCSVCommaSeparatedValuesNormalizationEnum `json:"flattening,omitempty"`
-	FormatType DestinationGcsOutputFormatCSVCommaSeparatedValuesFormatTypeEnum     `json:"format_type"`
+	Flattening *DestinationGcsOutputFormatCSVCommaSeparatedValuesNormalization `json:"flattening,omitempty"`
+	FormatType DestinationGcsOutputFormatCSVCommaSeparatedValuesFormatType     `json:"format_type"`
 }
 
-type DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappyCodecEnum string
+type DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappyCodec string
 
 const (
-	DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappyCodecEnumSnappy DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappyCodecEnum = "snappy"
+	DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappyCodecSnappy DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappyCodec = "snappy"
 )
 
-func (e DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappyCodecEnum) ToPointer() *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappyCodecEnum {
+func (e DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappyCodec) ToPointer() *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappyCodec {
 	return &e
 }
 
-func (e *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappyCodecEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappyCodec) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "snappy":
-		*e = DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappyCodecEnum(v)
+		*e = DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappyCodec(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappyCodecEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappyCodec: %v", v)
 	}
 }
 
 // DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappy - The compression algorithm used to compress data. Default to no compression.
 type DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappy struct {
-	Codec DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappyCodecEnum `json:"codec"`
+	Codec DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappyCodec `json:"codec"`
 }
 
-type DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandardCodecEnum string
+type DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandardCodec string
 
 const (
-	DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandardCodecEnumZstandard DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandardCodecEnum = "zstandard"
+	DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandardCodecZstandard DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandardCodec = "zstandard"
 )
 
-func (e DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandardCodecEnum) ToPointer() *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandardCodecEnum {
+func (e DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandardCodec) ToPointer() *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandardCodec {
 	return &e
 }
 
-func (e *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandardCodecEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandardCodec) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "zstandard":
-		*e = DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandardCodecEnum(v)
+		*e = DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandardCodec(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandardCodecEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandardCodec: %v", v)
 	}
 }
 
 // DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandard - The compression algorithm used to compress data. Default to no compression.
 type DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandard struct {
-	Codec DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandardCodecEnum `json:"codec"`
+	Codec DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandardCodec `json:"codec"`
 	// Negative levels are 'fast' modes akin to lz4 or snappy, levels above 9 are generally for archival purposes, and levels above 18 use a lot of memory.
 	CompressionLevel *int64 `json:"compression_level,omitempty"`
 	// If true, include a checksum with each data block.
 	IncludeChecksum *bool `json:"include_checksum,omitempty"`
 }
 
-type DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXzCodecEnum string
+type DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXzCodec string
 
 const (
-	DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXzCodecEnumXz DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXzCodecEnum = "xz"
+	DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXzCodecXz DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXzCodec = "xz"
 )
 
-func (e DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXzCodecEnum) ToPointer() *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXzCodecEnum {
+func (e DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXzCodec) ToPointer() *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXzCodec {
 	return &e
 }
 
-func (e *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXzCodecEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXzCodec) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "xz":
-		*e = DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXzCodecEnum(v)
+		*e = DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXzCodec(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXzCodecEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXzCodec: %v", v)
 	}
 }
 
 // DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXz - The compression algorithm used to compress data. Default to no compression.
 type DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXz struct {
-	Codec DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXzCodecEnum `json:"codec"`
+	Codec DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXzCodec `json:"codec"`
 	// The presets 0-3 are fast presets with medium compression. The presets 4-6 are fairly slow presets with high compression. The default preset is 6. The presets 7-9 are like the preset 6 but use bigger dictionaries and have higher compressor and decompressor memory requirements. Unless the uncompressed size of the file exceeds 8 MiB, 16 MiB, or 32 MiB, it is waste of memory to use the presets 7, 8, or 9, respectively. Read more <a href="https://commons.apache.org/proper/commons-compress/apidocs/org/apache/commons/compress/compressors/xz/XZCompressorOutputStream.html#XZCompressorOutputStream-java.io.OutputStream-int-">here</a> for details.
 	CompressionLevel *int64 `json:"compression_level,omitempty"`
 }
 
-type DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2CodecEnum string
+type DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2Codec string
 
 const (
-	DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2CodecEnumBzip2 DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2CodecEnum = "bzip2"
+	DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2CodecBzip2 DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2Codec = "bzip2"
 )
 
-func (e DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2CodecEnum) ToPointer() *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2CodecEnum {
+func (e DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2Codec) ToPointer() *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2Codec {
 	return &e
 }
 
-func (e *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2CodecEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2Codec) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "bzip2":
-		*e = DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2CodecEnum(v)
+		*e = DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2Codec(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2CodecEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2Codec: %v", v)
 	}
 }
 
 // DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2 - The compression algorithm used to compress data. Default to no compression.
 type DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2 struct {
-	Codec DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2CodecEnum `json:"codec"`
+	Codec DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2Codec `json:"codec"`
 }
 
-type DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflateCodecEnum string
+type DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflateCodec string
 
 const (
-	DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflateCodecEnumDeflate DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflateCodecEnum = "Deflate"
+	DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflateCodecDeflate DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflateCodec = "Deflate"
 )
 
-func (e DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflateCodecEnum) ToPointer() *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflateCodecEnum {
+func (e DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflateCodec) ToPointer() *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflateCodec {
 	return &e
 }
 
-func (e *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflateCodecEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflateCodec) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Deflate":
-		*e = DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflateCodecEnum(v)
+		*e = DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflateCodec(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflateCodecEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflateCodec: %v", v)
 	}
 }
 
 // DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflate - The compression algorithm used to compress data. Default to no compression.
 type DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflate struct {
-	Codec DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflateCodecEnum `json:"codec"`
+	Codec DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflateCodec `json:"codec"`
 	// 0: no compression & fastest, 9: best compression & slowest.
 	CompressionLevel *int64 `json:"compression_level,omitempty"`
 }
 
-type DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompressionCodecEnum string
+type DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompressionCodec string
 
 const (
-	DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompressionCodecEnumNoCompression DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompressionCodecEnum = "no compression"
+	DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompressionCodecNoCompression DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompressionCodec = "no compression"
 )
 
-func (e DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompressionCodecEnum) ToPointer() *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompressionCodecEnum {
+func (e DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompressionCodec) ToPointer() *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompressionCodec {
 	return &e
 }
 
-func (e *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompressionCodecEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompressionCodec) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "no compression":
-		*e = DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompressionCodecEnum(v)
+		*e = DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompressionCodec(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompressionCodecEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompressionCodec: %v", v)
 	}
 }
 
 // DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompression - The compression algorithm used to compress data. Default to no compression.
 type DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompression struct {
-	Codec DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompressionCodecEnum `json:"codec"`
+	Codec DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompressionCodec `json:"codec"`
 }
 
 type DestinationGcsOutputFormatAvroApacheAvroCompressionCodecType string
@@ -884,27 +884,27 @@ func (u DestinationGcsOutputFormatAvroApacheAvroCompressionCodec) MarshalJSON() 
 	return nil, nil
 }
 
-type DestinationGcsOutputFormatAvroApacheAvroFormatTypeEnum string
+type DestinationGcsOutputFormatAvroApacheAvroFormatType string
 
 const (
-	DestinationGcsOutputFormatAvroApacheAvroFormatTypeEnumAvro DestinationGcsOutputFormatAvroApacheAvroFormatTypeEnum = "Avro"
+	DestinationGcsOutputFormatAvroApacheAvroFormatTypeAvro DestinationGcsOutputFormatAvroApacheAvroFormatType = "Avro"
 )
 
-func (e DestinationGcsOutputFormatAvroApacheAvroFormatTypeEnum) ToPointer() *DestinationGcsOutputFormatAvroApacheAvroFormatTypeEnum {
+func (e DestinationGcsOutputFormatAvroApacheAvroFormatType) ToPointer() *DestinationGcsOutputFormatAvroApacheAvroFormatType {
 	return &e
 }
 
-func (e *DestinationGcsOutputFormatAvroApacheAvroFormatTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationGcsOutputFormatAvroApacheAvroFormatType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Avro":
-		*e = DestinationGcsOutputFormatAvroApacheAvroFormatTypeEnum(v)
+		*e = DestinationGcsOutputFormatAvroApacheAvroFormatType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationGcsOutputFormatAvroApacheAvroFormatTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationGcsOutputFormatAvroApacheAvroFormatType: %v", v)
 	}
 }
 
@@ -912,7 +912,7 @@ func (e *DestinationGcsOutputFormatAvroApacheAvroFormatTypeEnum) UnmarshalJSON(d
 type DestinationGcsOutputFormatAvroApacheAvro struct {
 	// The compression algorithm used to compress data. Default to no compression.
 	CompressionCodec DestinationGcsOutputFormatAvroApacheAvroCompressionCodec `json:"compression_codec"`
-	FormatType       DestinationGcsOutputFormatAvroApacheAvroFormatTypeEnum   `json:"format_type"`
+	FormatType       DestinationGcsOutputFormatAvroApacheAvroFormatType       `json:"format_type"`
 }
 
 type DestinationGcsOutputFormatType string
@@ -1031,52 +1031,52 @@ func (u DestinationGcsOutputFormat) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-// DestinationGCSGCSBucketRegionEnum - Select a Region of the GCS Bucket. Read more <a href="https://cloud.google.com/storage/docs/locations">here</a>.
-type DestinationGCSGCSBucketRegionEnum string
+// DestinationGCSGCSBucketRegion - Select a Region of the GCS Bucket. Read more <a href="https://cloud.google.com/storage/docs/locations">here</a>.
+type DestinationGCSGCSBucketRegion string
 
 const (
-	DestinationGCSGCSBucketRegionEnumNorthamericaNortheast1 DestinationGCSGCSBucketRegionEnum = "northamerica-northeast1"
-	DestinationGCSGCSBucketRegionEnumNorthamericaNortheast2 DestinationGCSGCSBucketRegionEnum = "northamerica-northeast2"
-	DestinationGCSGCSBucketRegionEnumUsCentral1             DestinationGCSGCSBucketRegionEnum = "us-central1"
-	DestinationGCSGCSBucketRegionEnumUsEast1                DestinationGCSGCSBucketRegionEnum = "us-east1"
-	DestinationGCSGCSBucketRegionEnumUsEast4                DestinationGCSGCSBucketRegionEnum = "us-east4"
-	DestinationGCSGCSBucketRegionEnumUsWest1                DestinationGCSGCSBucketRegionEnum = "us-west1"
-	DestinationGCSGCSBucketRegionEnumUsWest2                DestinationGCSGCSBucketRegionEnum = "us-west2"
-	DestinationGCSGCSBucketRegionEnumUsWest3                DestinationGCSGCSBucketRegionEnum = "us-west3"
-	DestinationGCSGCSBucketRegionEnumUsWest4                DestinationGCSGCSBucketRegionEnum = "us-west4"
-	DestinationGCSGCSBucketRegionEnumSouthamericaEast1      DestinationGCSGCSBucketRegionEnum = "southamerica-east1"
-	DestinationGCSGCSBucketRegionEnumSouthamericaWest1      DestinationGCSGCSBucketRegionEnum = "southamerica-west1"
-	DestinationGCSGCSBucketRegionEnumEuropeCentral2         DestinationGCSGCSBucketRegionEnum = "europe-central2"
-	DestinationGCSGCSBucketRegionEnumEuropeNorth1           DestinationGCSGCSBucketRegionEnum = "europe-north1"
-	DestinationGCSGCSBucketRegionEnumEuropeWest1            DestinationGCSGCSBucketRegionEnum = "europe-west1"
-	DestinationGCSGCSBucketRegionEnumEuropeWest2            DestinationGCSGCSBucketRegionEnum = "europe-west2"
-	DestinationGCSGCSBucketRegionEnumEuropeWest3            DestinationGCSGCSBucketRegionEnum = "europe-west3"
-	DestinationGCSGCSBucketRegionEnumEuropeWest4            DestinationGCSGCSBucketRegionEnum = "europe-west4"
-	DestinationGCSGCSBucketRegionEnumEuropeWest6            DestinationGCSGCSBucketRegionEnum = "europe-west6"
-	DestinationGCSGCSBucketRegionEnumAsiaEast1              DestinationGCSGCSBucketRegionEnum = "asia-east1"
-	DestinationGCSGCSBucketRegionEnumAsiaEast2              DestinationGCSGCSBucketRegionEnum = "asia-east2"
-	DestinationGCSGCSBucketRegionEnumAsiaNortheast1         DestinationGCSGCSBucketRegionEnum = "asia-northeast1"
-	DestinationGCSGCSBucketRegionEnumAsiaNortheast2         DestinationGCSGCSBucketRegionEnum = "asia-northeast2"
-	DestinationGCSGCSBucketRegionEnumAsiaNortheast3         DestinationGCSGCSBucketRegionEnum = "asia-northeast3"
-	DestinationGCSGCSBucketRegionEnumAsiaSouth1             DestinationGCSGCSBucketRegionEnum = "asia-south1"
-	DestinationGCSGCSBucketRegionEnumAsiaSouth2             DestinationGCSGCSBucketRegionEnum = "asia-south2"
-	DestinationGCSGCSBucketRegionEnumAsiaSoutheast1         DestinationGCSGCSBucketRegionEnum = "asia-southeast1"
-	DestinationGCSGCSBucketRegionEnumAsiaSoutheast2         DestinationGCSGCSBucketRegionEnum = "asia-southeast2"
-	DestinationGCSGCSBucketRegionEnumAustraliaSoutheast1    DestinationGCSGCSBucketRegionEnum = "australia-southeast1"
-	DestinationGCSGCSBucketRegionEnumAustraliaSoutheast2    DestinationGCSGCSBucketRegionEnum = "australia-southeast2"
-	DestinationGCSGCSBucketRegionEnumAsia                   DestinationGCSGCSBucketRegionEnum = "asia"
-	DestinationGCSGCSBucketRegionEnumEu                     DestinationGCSGCSBucketRegionEnum = "eu"
-	DestinationGCSGCSBucketRegionEnumUs                     DestinationGCSGCSBucketRegionEnum = "us"
-	DestinationGCSGCSBucketRegionEnumAsia1                  DestinationGCSGCSBucketRegionEnum = "asia1"
-	DestinationGCSGCSBucketRegionEnumEur4                   DestinationGCSGCSBucketRegionEnum = "eur4"
-	DestinationGCSGCSBucketRegionEnumNam4                   DestinationGCSGCSBucketRegionEnum = "nam4"
+	DestinationGCSGCSBucketRegionNorthamericaNortheast1 DestinationGCSGCSBucketRegion = "northamerica-northeast1"
+	DestinationGCSGCSBucketRegionNorthamericaNortheast2 DestinationGCSGCSBucketRegion = "northamerica-northeast2"
+	DestinationGCSGCSBucketRegionUsCentral1             DestinationGCSGCSBucketRegion = "us-central1"
+	DestinationGCSGCSBucketRegionUsEast1                DestinationGCSGCSBucketRegion = "us-east1"
+	DestinationGCSGCSBucketRegionUsEast4                DestinationGCSGCSBucketRegion = "us-east4"
+	DestinationGCSGCSBucketRegionUsWest1                DestinationGCSGCSBucketRegion = "us-west1"
+	DestinationGCSGCSBucketRegionUsWest2                DestinationGCSGCSBucketRegion = "us-west2"
+	DestinationGCSGCSBucketRegionUsWest3                DestinationGCSGCSBucketRegion = "us-west3"
+	DestinationGCSGCSBucketRegionUsWest4                DestinationGCSGCSBucketRegion = "us-west4"
+	DestinationGCSGCSBucketRegionSouthamericaEast1      DestinationGCSGCSBucketRegion = "southamerica-east1"
+	DestinationGCSGCSBucketRegionSouthamericaWest1      DestinationGCSGCSBucketRegion = "southamerica-west1"
+	DestinationGCSGCSBucketRegionEuropeCentral2         DestinationGCSGCSBucketRegion = "europe-central2"
+	DestinationGCSGCSBucketRegionEuropeNorth1           DestinationGCSGCSBucketRegion = "europe-north1"
+	DestinationGCSGCSBucketRegionEuropeWest1            DestinationGCSGCSBucketRegion = "europe-west1"
+	DestinationGCSGCSBucketRegionEuropeWest2            DestinationGCSGCSBucketRegion = "europe-west2"
+	DestinationGCSGCSBucketRegionEuropeWest3            DestinationGCSGCSBucketRegion = "europe-west3"
+	DestinationGCSGCSBucketRegionEuropeWest4            DestinationGCSGCSBucketRegion = "europe-west4"
+	DestinationGCSGCSBucketRegionEuropeWest6            DestinationGCSGCSBucketRegion = "europe-west6"
+	DestinationGCSGCSBucketRegionAsiaEast1              DestinationGCSGCSBucketRegion = "asia-east1"
+	DestinationGCSGCSBucketRegionAsiaEast2              DestinationGCSGCSBucketRegion = "asia-east2"
+	DestinationGCSGCSBucketRegionAsiaNortheast1         DestinationGCSGCSBucketRegion = "asia-northeast1"
+	DestinationGCSGCSBucketRegionAsiaNortheast2         DestinationGCSGCSBucketRegion = "asia-northeast2"
+	DestinationGCSGCSBucketRegionAsiaNortheast3         DestinationGCSGCSBucketRegion = "asia-northeast3"
+	DestinationGCSGCSBucketRegionAsiaSouth1             DestinationGCSGCSBucketRegion = "asia-south1"
+	DestinationGCSGCSBucketRegionAsiaSouth2             DestinationGCSGCSBucketRegion = "asia-south2"
+	DestinationGCSGCSBucketRegionAsiaSoutheast1         DestinationGCSGCSBucketRegion = "asia-southeast1"
+	DestinationGCSGCSBucketRegionAsiaSoutheast2         DestinationGCSGCSBucketRegion = "asia-southeast2"
+	DestinationGCSGCSBucketRegionAustraliaSoutheast1    DestinationGCSGCSBucketRegion = "australia-southeast1"
+	DestinationGCSGCSBucketRegionAustraliaSoutheast2    DestinationGCSGCSBucketRegion = "australia-southeast2"
+	DestinationGCSGCSBucketRegionAsia                   DestinationGCSGCSBucketRegion = "asia"
+	DestinationGCSGCSBucketRegionEu                     DestinationGCSGCSBucketRegion = "eu"
+	DestinationGCSGCSBucketRegionUs                     DestinationGCSGCSBucketRegion = "us"
+	DestinationGCSGCSBucketRegionAsia1                  DestinationGCSGCSBucketRegion = "asia1"
+	DestinationGCSGCSBucketRegionEur4                   DestinationGCSGCSBucketRegion = "eur4"
+	DestinationGCSGCSBucketRegionNam4                   DestinationGCSGCSBucketRegion = "nam4"
 )
 
-func (e DestinationGCSGCSBucketRegionEnum) ToPointer() *DestinationGCSGCSBucketRegionEnum {
+func (e DestinationGCSGCSBucketRegion) ToPointer() *DestinationGCSGCSBucketRegion {
 	return &e
 }
 
-func (e *DestinationGCSGCSBucketRegionEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationGCSGCSBucketRegion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -1151,17 +1151,17 @@ func (e *DestinationGCSGCSBucketRegionEnum) UnmarshalJSON(data []byte) error {
 	case "eur4":
 		fallthrough
 	case "nam4":
-		*e = DestinationGCSGCSBucketRegionEnum(v)
+		*e = DestinationGCSGCSBucketRegion(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationGCSGCSBucketRegionEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationGCSGCSBucketRegion: %v", v)
 	}
 }
 
 type DestinationGcs struct {
 	// An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>.
 	Credential      DestinationGcsAuthentication `json:"credential"`
-	DestinationType DestinationGcsGcsEnum        `json:"destinationType"`
+	DestinationType DestinationGcsGcs            `json:"destinationType"`
 	// Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.
 	Format DestinationGcsOutputFormat `json:"format"`
 	// You can find the bucket name in the App Engine Admin console Application Settings page, under the label Google Cloud Storage Bucket. Read more <a href="https://cloud.google.com/storage/docs/naming-buckets">here</a>.
@@ -1169,5 +1169,5 @@ type DestinationGcs struct {
 	// GCS Bucket Path string Subdirectory under the above bucket to sync the data into.
 	GcsBucketPath string `json:"gcs_bucket_path"`
 	// Select a Region of the GCS Bucket. Read more <a href="https://cloud.google.com/storage/docs/locations">here</a>.
-	GcsBucketRegion *DestinationGCSGCSBucketRegionEnum `json:"gcs_bucket_region,omitempty"`
+	GcsBucketRegion *DestinationGCSGCSBucketRegion `json:"gcs_bucket_region,omitempty"`
 }

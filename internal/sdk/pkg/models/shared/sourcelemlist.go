@@ -7,32 +7,32 @@ import (
 	"fmt"
 )
 
-type SourceLemlistLemlistEnum string
+type SourceLemlistLemlist string
 
 const (
-	SourceLemlistLemlistEnumLemlist SourceLemlistLemlistEnum = "lemlist"
+	SourceLemlistLemlistLemlist SourceLemlistLemlist = "lemlist"
 )
 
-func (e SourceLemlistLemlistEnum) ToPointer() *SourceLemlistLemlistEnum {
+func (e SourceLemlistLemlist) ToPointer() *SourceLemlistLemlist {
 	return &e
 }
 
-func (e *SourceLemlistLemlistEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceLemlistLemlist) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "lemlist":
-		*e = SourceLemlistLemlistEnum(v)
+		*e = SourceLemlistLemlist(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceLemlistLemlistEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceLemlistLemlist: %v", v)
 	}
 }
 
 type SourceLemlist struct {
 	// Lemlist API key.
-	APIKey     string                   `json:"api_key"`
-	SourceType SourceLemlistLemlistEnum `json:"sourceType"`
+	APIKey     string               `json:"api_key"`
+	SourceType SourceLemlistLemlist `json:"sourceType"`
 }

@@ -4,15 +4,16 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceAsanaResourceModel) ToCreateSDKType() *shared.SourceAsanaCreateRequest {
 	var credentials *shared.SourceAsanaAuthenticationMechanism
 	var sourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken *shared.SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken
 	if r.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken != nil {
-		optionTitle := new(shared.SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitleEnum)
+		optionTitle := new(shared.SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitle)
 		if !r.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken.OptionTitle.IsUnknown() && !r.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken.OptionTitle.IsNull() {
-			*optionTitle = shared.SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitleEnum(r.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken.OptionTitle.ValueString())
+			*optionTitle = shared.SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitle(r.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken.OptionTitle.ValueString())
 		} else {
 			optionTitle = nil
 		}
@@ -31,9 +32,9 @@ func (r *SourceAsanaResourceModel) ToCreateSDKType() *shared.SourceAsanaCreateRe
 	if r.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth != nil {
 		clientID := r.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth.ClientID.ValueString()
 		clientSecret := r.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth.ClientSecret.ValueString()
-		optionTitle1 := new(shared.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitleEnum)
+		optionTitle1 := new(shared.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitle)
 		if !r.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth.OptionTitle.IsUnknown() && !r.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth.OptionTitle.IsNull() {
-			*optionTitle1 = shared.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitleEnum(r.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth.OptionTitle.ValueString())
+			*optionTitle1 = shared.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitle(r.Configuration.Credentials.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth.OptionTitle.ValueString())
 		} else {
 			optionTitle1 = nil
 		}
@@ -50,7 +51,7 @@ func (r *SourceAsanaResourceModel) ToCreateSDKType() *shared.SourceAsanaCreateRe
 			SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth: sourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth,
 		}
 	}
-	sourceType := shared.SourceAsanaAsanaEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceAsanaAsana(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceAsana{
 		Credentials: credentials,
 		SourceType:  sourceType,
@@ -75,4 +76,11 @@ func (r *SourceAsanaResourceModel) ToCreateSDKType() *shared.SourceAsanaCreateRe
 func (r *SourceAsanaResourceModel) ToDeleteSDKType() *shared.SourceAsanaCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceAsanaResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

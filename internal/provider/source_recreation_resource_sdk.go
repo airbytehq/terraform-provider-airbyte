@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceRecreationResourceModel) ToCreateSDKType() *shared.SourceRecreationCreateRequest {
@@ -14,7 +15,7 @@ func (r *SourceRecreationResourceModel) ToCreateSDKType() *shared.SourceRecreati
 	} else {
 		queryCampsites = nil
 	}
-	sourceType := shared.SourceRecreationRecreationEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceRecreationRecreation(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceRecreation{
 		Apikey:         apikey,
 		QueryCampsites: queryCampsites,
@@ -40,4 +41,11 @@ func (r *SourceRecreationResourceModel) ToCreateSDKType() *shared.SourceRecreati
 func (r *SourceRecreationResourceModel) ToDeleteSDKType() *shared.SourceRecreationCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceRecreationResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

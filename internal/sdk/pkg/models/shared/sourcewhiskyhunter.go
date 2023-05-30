@@ -7,30 +7,30 @@ import (
 	"fmt"
 )
 
-type SourceWhiskyHunterWhiskyHunterEnum string
+type SourceWhiskyHunterWhiskyHunter string
 
 const (
-	SourceWhiskyHunterWhiskyHunterEnumWhiskyHunter SourceWhiskyHunterWhiskyHunterEnum = "whisky-hunter"
+	SourceWhiskyHunterWhiskyHunterWhiskyHunter SourceWhiskyHunterWhiskyHunter = "whisky-hunter"
 )
 
-func (e SourceWhiskyHunterWhiskyHunterEnum) ToPointer() *SourceWhiskyHunterWhiskyHunterEnum {
+func (e SourceWhiskyHunterWhiskyHunter) ToPointer() *SourceWhiskyHunterWhiskyHunter {
 	return &e
 }
 
-func (e *SourceWhiskyHunterWhiskyHunterEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceWhiskyHunterWhiskyHunter) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "whisky-hunter":
-		*e = SourceWhiskyHunterWhiskyHunterEnum(v)
+		*e = SourceWhiskyHunterWhiskyHunter(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceWhiskyHunterWhiskyHunterEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceWhiskyHunterWhiskyHunter: %v", v)
 	}
 }
 
 type SourceWhiskyHunter struct {
-	SourceType SourceWhiskyHunterWhiskyHunterEnum `json:"sourceType"`
+	SourceType SourceWhiskyHunterWhiskyHunter `json:"sourceType"`
 }

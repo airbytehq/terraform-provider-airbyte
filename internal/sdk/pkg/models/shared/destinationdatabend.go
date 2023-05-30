@@ -7,34 +7,34 @@ import (
 	"fmt"
 )
 
-type DestinationDatabendDatabendEnum string
+type DestinationDatabendDatabend string
 
 const (
-	DestinationDatabendDatabendEnumDatabend DestinationDatabendDatabendEnum = "databend"
+	DestinationDatabendDatabendDatabend DestinationDatabendDatabend = "databend"
 )
 
-func (e DestinationDatabendDatabendEnum) ToPointer() *DestinationDatabendDatabendEnum {
+func (e DestinationDatabendDatabend) ToPointer() *DestinationDatabendDatabend {
 	return &e
 }
 
-func (e *DestinationDatabendDatabendEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationDatabendDatabend) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "databend":
-		*e = DestinationDatabendDatabendEnum(v)
+		*e = DestinationDatabendDatabend(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationDatabendDatabendEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationDatabendDatabend: %v", v)
 	}
 }
 
 type DestinationDatabend struct {
 	// Name of the database.
-	Database        string                          `json:"database"`
-	DestinationType DestinationDatabendDatabendEnum `json:"destinationType"`
+	Database        string                      `json:"database"`
+	DestinationType DestinationDatabendDatabend `json:"destinationType"`
 	// Hostname of the database.
 	Host string `json:"host"`
 	// Password associated with the username.

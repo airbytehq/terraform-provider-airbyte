@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type SourceClickupAPIClickupAPIEnum string
+type SourceClickupAPIClickupAPI string
 
 const (
-	SourceClickupAPIClickupAPIEnumClickupAPI SourceClickupAPIClickupAPIEnum = "clickup-api"
+	SourceClickupAPIClickupAPIClickupAPI SourceClickupAPIClickupAPI = "clickup-api"
 )
 
-func (e SourceClickupAPIClickupAPIEnum) ToPointer() *SourceClickupAPIClickupAPIEnum {
+func (e SourceClickupAPIClickupAPI) ToPointer() *SourceClickupAPIClickupAPI {
 	return &e
 }
 
-func (e *SourceClickupAPIClickupAPIEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceClickupAPIClickupAPI) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "clickup-api":
-		*e = SourceClickupAPIClickupAPIEnum(v)
+		*e = SourceClickupAPIClickupAPI(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceClickupAPIClickupAPIEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceClickupAPIClickupAPI: %v", v)
 	}
 }
 
@@ -39,8 +39,8 @@ type SourceClickupAPI struct {
 	// Include or exclude closed tasks. By default, they are excluded. See <a https://clickup.com/api/clickupreference/operation/GetTasks/#!in=query&path=include_closed&t=request">here</a>.
 	IncludeClosedTasks *bool `json:"include_closed_tasks,omitempty"`
 	// The ID of your list in your folder. Retrieve it from the `/folder/{folder_id}/list` of the ClickUp API. See <a href="https://clickup.com/api/clickupreference/operation/GetLists/">here</a>.
-	ListID     *string                        `json:"list_id,omitempty"`
-	SourceType SourceClickupAPIClickupAPIEnum `json:"sourceType"`
+	ListID     *string                    `json:"list_id,omitempty"`
+	SourceType SourceClickupAPIClickupAPI `json:"sourceType"`
 	// The ID of your space in your workspace. Retrieve it from the `/team/{team_id}/space` of the ClickUp API. See <a href="https://clickup.com/api/clickupreference/operation/GetSpaces/">here</a>.
 	SpaceID *string `json:"space_id,omitempty"`
 	// The ID of your team in ClickUp. Retrieve it from the `/team` of the ClickUp API. See <a href="https://clickup.com/api/clickupreference/operation/GetAuthorizedTeams/">here</a>.

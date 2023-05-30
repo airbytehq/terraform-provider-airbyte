@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
@@ -17,9 +18,9 @@ func (r *SourceMixpanelResourceModel) ToCreateSDKType() *shared.SourceMixpanelCr
 	var credentials *shared.SourceMixpanelAuthenticationWildcard
 	var sourceMixpanelAuthenticationWildcardServiceAccount *shared.SourceMixpanelAuthenticationWildcardServiceAccount
 	if r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount != nil {
-		optionTitle := new(shared.SourceMixpanelAuthenticationWildcardServiceAccountOptionTitleEnum)
+		optionTitle := new(shared.SourceMixpanelAuthenticationWildcardServiceAccountOptionTitle)
 		if !r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount.OptionTitle.IsUnknown() && !r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount.OptionTitle.IsNull() {
-			*optionTitle = shared.SourceMixpanelAuthenticationWildcardServiceAccountOptionTitleEnum(r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount.OptionTitle.ValueString())
+			*optionTitle = shared.SourceMixpanelAuthenticationWildcardServiceAccountOptionTitle(r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount.OptionTitle.ValueString())
 		} else {
 			optionTitle = nil
 		}
@@ -39,9 +40,9 @@ func (r *SourceMixpanelResourceModel) ToCreateSDKType() *shared.SourceMixpanelCr
 	var sourceMixpanelAuthenticationWildcardProjectSecret *shared.SourceMixpanelAuthenticationWildcardProjectSecret
 	if r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardProjectSecret != nil {
 		apiSecret := r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardProjectSecret.APISecret.ValueString()
-		optionTitle1 := new(shared.SourceMixpanelAuthenticationWildcardProjectSecretOptionTitleEnum)
+		optionTitle1 := new(shared.SourceMixpanelAuthenticationWildcardProjectSecretOptionTitle)
 		if !r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardProjectSecret.OptionTitle.IsUnknown() && !r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardProjectSecret.OptionTitle.IsNull() {
-			*optionTitle1 = shared.SourceMixpanelAuthenticationWildcardProjectSecretOptionTitleEnum(r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardProjectSecret.OptionTitle.ValueString())
+			*optionTitle1 = shared.SourceMixpanelAuthenticationWildcardProjectSecretOptionTitle(r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardProjectSecret.OptionTitle.ValueString())
 		} else {
 			optionTitle1 = nil
 		}
@@ -79,9 +80,9 @@ func (r *SourceMixpanelResourceModel) ToCreateSDKType() *shared.SourceMixpanelCr
 	} else {
 		projectTimezone = nil
 	}
-	region := new(shared.SourceMixpanelRegionEnum)
+	region := new(shared.SourceMixpanelRegion)
 	if !r.Configuration.Region.IsUnknown() && !r.Configuration.Region.IsNull() {
-		*region = shared.SourceMixpanelRegionEnum(r.Configuration.Region.ValueString())
+		*region = shared.SourceMixpanelRegion(r.Configuration.Region.ValueString())
 	} else {
 		region = nil
 	}
@@ -91,7 +92,7 @@ func (r *SourceMixpanelResourceModel) ToCreateSDKType() *shared.SourceMixpanelCr
 	} else {
 		selectPropertiesByDefault = nil
 	}
-	sourceType := shared.SourceMixpanelMixpanelEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceMixpanelMixpanel(r.Configuration.SourceType.ValueString())
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -130,4 +131,11 @@ func (r *SourceMixpanelResourceModel) ToCreateSDKType() *shared.SourceMixpanelCr
 func (r *SourceMixpanelResourceModel) ToDeleteSDKType() *shared.SourceMixpanelCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceMixpanelResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

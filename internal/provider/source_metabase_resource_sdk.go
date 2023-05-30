@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceMetabaseResourceModel) ToCreateSDKType() *shared.SourceMetabaseCreateRequest {
@@ -20,7 +21,7 @@ func (r *SourceMetabaseResourceModel) ToCreateSDKType() *shared.SourceMetabaseCr
 	} else {
 		sessionToken = nil
 	}
-	sourceType := shared.SourceMetabaseMetabaseEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceMetabaseMetabase(r.Configuration.SourceType.ValueString())
 	username := new(string)
 	if !r.Configuration.Username.IsUnknown() && !r.Configuration.Username.IsNull() {
 		*username = r.Configuration.Username.ValueString()
@@ -54,4 +55,11 @@ func (r *SourceMetabaseResourceModel) ToCreateSDKType() *shared.SourceMetabaseCr
 func (r *SourceMetabaseResourceModel) ToDeleteSDKType() *shared.SourceMetabaseCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceMetabaseResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

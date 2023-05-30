@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type SourceRailzRailzEnum string
+type SourceRailzRailz string
 
 const (
-	SourceRailzRailzEnumRailz SourceRailzRailzEnum = "railz"
+	SourceRailzRailzRailz SourceRailzRailz = "railz"
 )
 
-func (e SourceRailzRailzEnum) ToPointer() *SourceRailzRailzEnum {
+func (e SourceRailzRailz) ToPointer() *SourceRailzRailz {
 	return &e
 }
 
-func (e *SourceRailzRailzEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceRailzRailz) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "railz":
-		*e = SourceRailzRailzEnum(v)
+		*e = SourceRailzRailz(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceRailzRailzEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceRailzRailz: %v", v)
 	}
 }
 
@@ -35,8 +35,8 @@ type SourceRailz struct {
 	// Client ID (client_id)
 	ClientID string `json:"client_id"`
 	// Secret key (secret_key)
-	SecretKey  string               `json:"secret_key"`
-	SourceType SourceRailzRailzEnum `json:"sourceType"`
+	SecretKey  string           `json:"secret_key"`
+	SourceType SourceRailzRailz `json:"sourceType"`
 	// Start date
 	StartDate string `json:"start_date"`
 }

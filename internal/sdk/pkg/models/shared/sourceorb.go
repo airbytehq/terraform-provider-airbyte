@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type SourceOrbOrbEnum string
+type SourceOrbOrb string
 
 const (
-	SourceOrbOrbEnumOrb SourceOrbOrbEnum = "orb"
+	SourceOrbOrbOrb SourceOrbOrb = "orb"
 )
 
-func (e SourceOrbOrbEnum) ToPointer() *SourceOrbOrbEnum {
+func (e SourceOrbOrb) ToPointer() *SourceOrbOrb {
 	return &e
 }
 
-func (e *SourceOrbOrbEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceOrbOrb) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "orb":
-		*e = SourceOrbOrbEnum(v)
+		*e = SourceOrbOrb(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceOrbOrbEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceOrbOrb: %v", v)
 	}
 }
 
@@ -39,8 +39,8 @@ type SourceOrb struct {
 	// Property key names to extract from all events, in order to enrich ledger entries corresponding to an event deduction.
 	NumericEventPropertiesKeys []string `json:"numeric_event_properties_keys,omitempty"`
 	// Orb Plan ID to filter subscriptions that should have usage fetched.
-	PlanID     *string          `json:"plan_id,omitempty"`
-	SourceType SourceOrbOrbEnum `json:"sourceType"`
+	PlanID     *string      `json:"plan_id,omitempty"`
+	SourceType SourceOrbOrb `json:"sourceType"`
 	// UTC date and time in the format 2022-03-01T00:00:00Z. Any data with created_at before this data will not be synced. For Subscription Usage, this becomes the `timeframe_start` API parameter.
 	StartDate string `json:"start_date"`
 	// Property key names to extract from all events, in order to enrich ledger entries corresponding to an event deduction.

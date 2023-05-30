@@ -9,76 +9,76 @@ import (
 	"fmt"
 )
 
-// DestinationRedisCacheTypeEnum - Redis cache type to store data in.
-type DestinationRedisCacheTypeEnum string
+// DestinationRedisCacheType - Redis cache type to store data in.
+type DestinationRedisCacheType string
 
 const (
-	DestinationRedisCacheTypeEnumHash DestinationRedisCacheTypeEnum = "hash"
+	DestinationRedisCacheTypeHash DestinationRedisCacheType = "hash"
 )
 
-func (e DestinationRedisCacheTypeEnum) ToPointer() *DestinationRedisCacheTypeEnum {
+func (e DestinationRedisCacheType) ToPointer() *DestinationRedisCacheType {
 	return &e
 }
 
-func (e *DestinationRedisCacheTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationRedisCacheType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "hash":
-		*e = DestinationRedisCacheTypeEnum(v)
+		*e = DestinationRedisCacheType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationRedisCacheTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationRedisCacheType: %v", v)
 	}
 }
 
-type DestinationRedisRedisEnum string
+type DestinationRedisRedis string
 
 const (
-	DestinationRedisRedisEnumRedis DestinationRedisRedisEnum = "redis"
+	DestinationRedisRedisRedis DestinationRedisRedis = "redis"
 )
 
-func (e DestinationRedisRedisEnum) ToPointer() *DestinationRedisRedisEnum {
+func (e DestinationRedisRedis) ToPointer() *DestinationRedisRedis {
 	return &e
 }
 
-func (e *DestinationRedisRedisEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationRedisRedis) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "redis":
-		*e = DestinationRedisRedisEnum(v)
+		*e = DestinationRedisRedis(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationRedisRedisEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationRedisRedis: %v", v)
 	}
 }
 
-type DestinationRedisSSLModesVerifyFullModeEnum string
+type DestinationRedisSSLModesVerifyFullMode string
 
 const (
-	DestinationRedisSSLModesVerifyFullModeEnumVerifyFull DestinationRedisSSLModesVerifyFullModeEnum = "verify-full"
+	DestinationRedisSSLModesVerifyFullModeVerifyFull DestinationRedisSSLModesVerifyFullMode = "verify-full"
 )
 
-func (e DestinationRedisSSLModesVerifyFullModeEnum) ToPointer() *DestinationRedisSSLModesVerifyFullModeEnum {
+func (e DestinationRedisSSLModesVerifyFullMode) ToPointer() *DestinationRedisSSLModesVerifyFullMode {
 	return &e
 }
 
-func (e *DestinationRedisSSLModesVerifyFullModeEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationRedisSSLModesVerifyFullMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "verify-full":
-		*e = DestinationRedisSSLModesVerifyFullModeEnum(v)
+		*e = DestinationRedisSSLModesVerifyFullMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationRedisSSLModesVerifyFullModeEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationRedisSSLModesVerifyFullMode: %v", v)
 	}
 }
 
@@ -91,37 +91,37 @@ type DestinationRedisSSLModesVerifyFull struct {
 	// Client key
 	ClientKey string `json:"client_key"`
 	// Password for keystorage. If you do not add it - the password will be generated automatically.
-	ClientKeyPassword *string                                    `json:"client_key_password,omitempty"`
-	Mode              DestinationRedisSSLModesVerifyFullModeEnum `json:"mode"`
+	ClientKeyPassword *string                                `json:"client_key_password,omitempty"`
+	Mode              DestinationRedisSSLModesVerifyFullMode `json:"mode"`
 }
 
-type DestinationRedisSSLModesDisableModeEnum string
+type DestinationRedisSSLModesDisableMode string
 
 const (
-	DestinationRedisSSLModesDisableModeEnumDisable DestinationRedisSSLModesDisableModeEnum = "disable"
+	DestinationRedisSSLModesDisableModeDisable DestinationRedisSSLModesDisableMode = "disable"
 )
 
-func (e DestinationRedisSSLModesDisableModeEnum) ToPointer() *DestinationRedisSSLModesDisableModeEnum {
+func (e DestinationRedisSSLModesDisableMode) ToPointer() *DestinationRedisSSLModesDisableMode {
 	return &e
 }
 
-func (e *DestinationRedisSSLModesDisableModeEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationRedisSSLModesDisableMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "disable":
-		*e = DestinationRedisSSLModesDisableModeEnum(v)
+		*e = DestinationRedisSSLModesDisableMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationRedisSSLModesDisableModeEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationRedisSSLModesDisableMode: %v", v)
 	}
 }
 
 // DestinationRedisSSLModesDisable - Disable SSL.
 type DestinationRedisSSLModesDisable struct {
-	Mode DestinationRedisSSLModesDisableModeEnum `json:"mode"`
+	Mode DestinationRedisSSLModesDisableMode `json:"mode"`
 }
 
 type DestinationRedisSSLModesType string
@@ -192,28 +192,28 @@ func (u DestinationRedisSSLModes) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-// DestinationRedisSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum - Connect through a jump server tunnel host using username and password authentication
-type DestinationRedisSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum string
+// DestinationRedisSSHTunnelMethodPasswordAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and password authentication
+type DestinationRedisSSHTunnelMethodPasswordAuthenticationTunnelMethod string
 
 const (
-	DestinationRedisSSHTunnelMethodPasswordAuthenticationTunnelMethodEnumSSHPasswordAuth DestinationRedisSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum = "SSH_PASSWORD_AUTH"
+	DestinationRedisSSHTunnelMethodPasswordAuthenticationTunnelMethodSSHPasswordAuth DestinationRedisSSHTunnelMethodPasswordAuthenticationTunnelMethod = "SSH_PASSWORD_AUTH"
 )
 
-func (e DestinationRedisSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) ToPointer() *DestinationRedisSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum {
+func (e DestinationRedisSSHTunnelMethodPasswordAuthenticationTunnelMethod) ToPointer() *DestinationRedisSSHTunnelMethodPasswordAuthenticationTunnelMethod {
 	return &e
 }
 
-func (e *DestinationRedisSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationRedisSSHTunnelMethodPasswordAuthenticationTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SSH_PASSWORD_AUTH":
-		*e = DestinationRedisSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(v)
+		*e = DestinationRedisSSHTunnelMethodPasswordAuthenticationTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationRedisSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationRedisSSHTunnelMethodPasswordAuthenticationTunnelMethod: %v", v)
 	}
 }
 
@@ -222,7 +222,7 @@ type DestinationRedisSSHTunnelMethodPasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and password authentication
-	TunnelMethod DestinationRedisSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum `json:"tunnel_method"`
+	TunnelMethod DestinationRedisSSHTunnelMethodPasswordAuthenticationTunnelMethod `json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort int64 `json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
@@ -231,28 +231,28 @@ type DestinationRedisSSHTunnelMethodPasswordAuthentication struct {
 	TunnelUserPassword string `json:"tunnel_user_password"`
 }
 
-// DestinationRedisSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum - Connect through a jump server tunnel host using username and ssh key
-type DestinationRedisSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum string
+// DestinationRedisSSHTunnelMethodSSHKeyAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and ssh key
+type DestinationRedisSSHTunnelMethodSSHKeyAuthenticationTunnelMethod string
 
 const (
-	DestinationRedisSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnumSSHKeyAuth DestinationRedisSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum = "SSH_KEY_AUTH"
+	DestinationRedisSSHTunnelMethodSSHKeyAuthenticationTunnelMethodSSHKeyAuth DestinationRedisSSHTunnelMethodSSHKeyAuthenticationTunnelMethod = "SSH_KEY_AUTH"
 )
 
-func (e DestinationRedisSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) ToPointer() *DestinationRedisSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum {
+func (e DestinationRedisSSHTunnelMethodSSHKeyAuthenticationTunnelMethod) ToPointer() *DestinationRedisSSHTunnelMethodSSHKeyAuthenticationTunnelMethod {
 	return &e
 }
 
-func (e *DestinationRedisSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationRedisSSHTunnelMethodSSHKeyAuthenticationTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SSH_KEY_AUTH":
-		*e = DestinationRedisSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(v)
+		*e = DestinationRedisSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationRedisSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationRedisSSHTunnelMethodSSHKeyAuthenticationTunnelMethod: %v", v)
 	}
 }
 
@@ -263,42 +263,42 @@ type DestinationRedisSSHTunnelMethodSSHKeyAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and ssh key
-	TunnelMethod DestinationRedisSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum `json:"tunnel_method"`
+	TunnelMethod DestinationRedisSSHTunnelMethodSSHKeyAuthenticationTunnelMethod `json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort int64 `json:"tunnel_port"`
 	// OS-level username for logging into the jump server host.
 	TunnelUser string `json:"tunnel_user"`
 }
 
-// DestinationRedisSSHTunnelMethodNoTunnelTunnelMethodEnum - No ssh tunnel needed to connect to database
-type DestinationRedisSSHTunnelMethodNoTunnelTunnelMethodEnum string
+// DestinationRedisSSHTunnelMethodNoTunnelTunnelMethod - No ssh tunnel needed to connect to database
+type DestinationRedisSSHTunnelMethodNoTunnelTunnelMethod string
 
 const (
-	DestinationRedisSSHTunnelMethodNoTunnelTunnelMethodEnumNoTunnel DestinationRedisSSHTunnelMethodNoTunnelTunnelMethodEnum = "NO_TUNNEL"
+	DestinationRedisSSHTunnelMethodNoTunnelTunnelMethodNoTunnel DestinationRedisSSHTunnelMethodNoTunnelTunnelMethod = "NO_TUNNEL"
 )
 
-func (e DestinationRedisSSHTunnelMethodNoTunnelTunnelMethodEnum) ToPointer() *DestinationRedisSSHTunnelMethodNoTunnelTunnelMethodEnum {
+func (e DestinationRedisSSHTunnelMethodNoTunnelTunnelMethod) ToPointer() *DestinationRedisSSHTunnelMethodNoTunnelTunnelMethod {
 	return &e
 }
 
-func (e *DestinationRedisSSHTunnelMethodNoTunnelTunnelMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationRedisSSHTunnelMethodNoTunnelTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "NO_TUNNEL":
-		*e = DestinationRedisSSHTunnelMethodNoTunnelTunnelMethodEnum(v)
+		*e = DestinationRedisSSHTunnelMethodNoTunnelTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationRedisSSHTunnelMethodNoTunnelTunnelMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationRedisSSHTunnelMethodNoTunnelTunnelMethod: %v", v)
 	}
 }
 
 // DestinationRedisSSHTunnelMethodNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationRedisSSHTunnelMethodNoTunnel struct {
 	// No ssh tunnel needed to connect to database
-	TunnelMethod DestinationRedisSSHTunnelMethodNoTunnelTunnelMethodEnum `json:"tunnel_method"`
+	TunnelMethod DestinationRedisSSHTunnelMethodNoTunnelTunnelMethod `json:"tunnel_method"`
 }
 
 type DestinationRedisSSHTunnelMethodType string
@@ -395,8 +395,8 @@ func (u DestinationRedisSSHTunnelMethod) MarshalJSON() ([]byte, error) {
 
 type DestinationRedis struct {
 	// Redis cache type to store data in.
-	CacheType       DestinationRedisCacheTypeEnum `json:"cache_type"`
-	DestinationType DestinationRedisRedisEnum     `json:"destinationType"`
+	CacheType       DestinationRedisCacheType `json:"cache_type"`
+	DestinationType DestinationRedisRedis     `json:"destinationType"`
 	// Redis host to connect to.
 	Host string `json:"host"`
 	// Password associated with Redis.

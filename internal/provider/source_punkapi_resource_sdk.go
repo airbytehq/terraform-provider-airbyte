@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourcePunkAPIResourceModel) ToCreateSDKType() *shared.SourcePunkAPICreateRequest {
@@ -15,7 +16,7 @@ func (r *SourcePunkAPIResourceModel) ToCreateSDKType() *shared.SourcePunkAPICrea
 	} else {
 		id = nil
 	}
-	sourceType := shared.SourcePunkAPIPunkAPIEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourcePunkAPIPunkAPI(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourcePunkAPI{
 		BrewedAfter:  brewedAfter,
 		BrewedBefore: brewedBefore,
@@ -42,4 +43,11 @@ func (r *SourcePunkAPIResourceModel) ToCreateSDKType() *shared.SourcePunkAPICrea
 func (r *SourcePunkAPIResourceModel) ToDeleteSDKType() *shared.SourcePunkAPICreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourcePunkAPIResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

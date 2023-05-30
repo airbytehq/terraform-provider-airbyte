@@ -4,13 +4,14 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceAmazonSellerPartnerResourceModel) ToCreateSDKType() *shared.SourceAmazonSellerPartnerCreateRequest {
 	appID := r.Configuration.AppID.ValueString()
-	authType := new(shared.SourceAmazonSellerPartnerAuthTypeEnum)
+	authType := new(shared.SourceAmazonSellerPartnerAuthType)
 	if !r.Configuration.AuthType.IsUnknown() && !r.Configuration.AuthType.IsNull() {
-		*authType = shared.SourceAmazonSellerPartnerAuthTypeEnum(r.Configuration.AuthType.ValueString())
+		*authType = shared.SourceAmazonSellerPartnerAuthType(r.Configuration.AuthType.ValueString())
 	} else {
 		authType = nil
 	}
@@ -20,7 +21,7 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToCreateSDKType() *shared.Sourc
 	} else {
 		awsAccessKey = nil
 	}
-	awsEnvironment := shared.SourceAmazonSellerPartnerAWSEnvironmentEnum(r.Configuration.AwsEnvironment.ValueString())
+	awsEnvironment := shared.SourceAmazonSellerPartnerAWSEnvironment(r.Configuration.AwsEnvironment.ValueString())
 	awsSecretKey := new(string)
 	if !r.Configuration.AwsSecretKey.IsUnknown() && !r.Configuration.AwsSecretKey.IsNull() {
 		*awsSecretKey = r.Configuration.AwsSecretKey.ValueString()
@@ -42,7 +43,7 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToCreateSDKType() *shared.Sourc
 		periodInDays = nil
 	}
 	refreshToken := r.Configuration.RefreshToken.ValueString()
-	region := shared.SourceAmazonSellerPartnerAWSRegionEnum(r.Configuration.Region.ValueString())
+	region := shared.SourceAmazonSellerPartnerAWSRegion(r.Configuration.Region.ValueString())
 	replicationEndDate := new(string)
 	if !r.Configuration.ReplicationEndDate.IsUnknown() && !r.Configuration.ReplicationEndDate.IsNull() {
 		*replicationEndDate = r.Configuration.ReplicationEndDate.ValueString()
@@ -62,7 +63,7 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToCreateSDKType() *shared.Sourc
 	} else {
 		roleArn = nil
 	}
-	sourceType := shared.SourceAmazonSellerPartnerAmazonSellerPartnerEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceAmazonSellerPartnerAmazonSellerPartner(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceAmazonSellerPartner{
 		AppID:                appID,
 		AuthType:             authType,
@@ -101,4 +102,11 @@ func (r *SourceAmazonSellerPartnerResourceModel) ToCreateSDKType() *shared.Sourc
 func (r *SourceAmazonSellerPartnerResourceModel) ToDeleteSDKType() *shared.SourceAmazonSellerPartnerCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceAmazonSellerPartnerResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

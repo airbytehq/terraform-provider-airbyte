@@ -69,7 +69,7 @@ Required:
 
 Optional:
 
-- `additional_properties` (Map of String)
+- `additional_properties` (String) Parsed as JSON.
 - `initial_waiting_seconds` (Number)
 - `lsn_commit_behaviour` (String) Determines when Airbtye should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.
 - `plugin` (String) A logical decoding plugin installed on the PostgreSQL server.
@@ -105,7 +105,7 @@ Required:
 
 Optional:
 
-- `additional_properties` (Map of String)
+- `additional_properties` (String) Parsed as JSON.
 
 
 <a id="nestedatt--configuration--ssl_mode--source_alloydb_ssl_modes_disable"></a>
@@ -117,7 +117,7 @@ Required:
 
 Optional:
 
-- `additional_properties` (Map of String)
+- `additional_properties` (String) Parsed as JSON.
 
 
 <a id="nestedatt--configuration--ssl_mode--source_alloydb_ssl_modes_prefer"></a>
@@ -129,7 +129,7 @@ Required:
 
 Optional:
 
-- `additional_properties` (Map of String)
+- `additional_properties` (String) Parsed as JSON.
 
 
 <a id="nestedatt--configuration--ssl_mode--source_alloydb_ssl_modes_require"></a>
@@ -141,7 +141,7 @@ Required:
 
 Optional:
 
-- `additional_properties` (Map of String)
+- `additional_properties` (String) Parsed as JSON.
 
 
 <a id="nestedatt--configuration--ssl_mode--source_alloydb_ssl_modes_verify_ca"></a>
@@ -154,7 +154,7 @@ Required:
 
 Optional:
 
-- `additional_properties` (Map of String)
+- `additional_properties` (String) Parsed as JSON.
 - `client_certificate` (String)
 - `client_key` (String)
 - `client_key_password` (String)
@@ -170,7 +170,7 @@ Required:
 
 Optional:
 
-- `additional_properties` (Map of String)
+- `additional_properties` (String) Parsed as JSON.
 - `client_certificate` (String)
 - `client_key` (String)
 - `client_key_password` (String)

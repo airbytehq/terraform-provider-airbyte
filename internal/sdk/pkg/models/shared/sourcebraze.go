@@ -8,34 +8,34 @@ import (
 	"fmt"
 )
 
-type SourceBrazeBrazeEnum string
+type SourceBrazeBraze string
 
 const (
-	SourceBrazeBrazeEnumBraze SourceBrazeBrazeEnum = "braze"
+	SourceBrazeBrazeBraze SourceBrazeBraze = "braze"
 )
 
-func (e SourceBrazeBrazeEnum) ToPointer() *SourceBrazeBrazeEnum {
+func (e SourceBrazeBraze) ToPointer() *SourceBrazeBraze {
 	return &e
 }
 
-func (e *SourceBrazeBrazeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceBrazeBraze) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "braze":
-		*e = SourceBrazeBrazeEnum(v)
+		*e = SourceBrazeBraze(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceBrazeBrazeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceBrazeBraze: %v", v)
 	}
 }
 
 type SourceBraze struct {
 	// Braze REST API key
-	APIKey     string               `json:"api_key"`
-	SourceType SourceBrazeBrazeEnum `json:"sourceType"`
+	APIKey     string           `json:"api_key"`
+	SourceType SourceBrazeBraze `json:"sourceType"`
 	// Rows after this date will be synced
 	StartDate types.Date `json:"start_date"`
 	// Braze REST API endpoint

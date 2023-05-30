@@ -8,27 +8,27 @@ import (
 	"time"
 )
 
-type SourceAircallAircallEnum string
+type SourceAircallAircall string
 
 const (
-	SourceAircallAircallEnumAircall SourceAircallAircallEnum = "aircall"
+	SourceAircallAircallAircall SourceAircallAircall = "aircall"
 )
 
-func (e SourceAircallAircallEnum) ToPointer() *SourceAircallAircallEnum {
+func (e SourceAircallAircall) ToPointer() *SourceAircallAircall {
 	return &e
 }
 
-func (e *SourceAircallAircallEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceAircallAircall) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "aircall":
-		*e = SourceAircallAircallEnum(v)
+		*e = SourceAircallAircall(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAircallAircallEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceAircallAircall: %v", v)
 	}
 }
 
@@ -36,8 +36,8 @@ type SourceAircall struct {
 	// App ID found at settings https://dashboard.aircall.io/integrations/api-keys
 	APIID string `json:"api_id"`
 	// App token found at settings (Ref- https://dashboard.aircall.io/integrations/api-keys)
-	APIToken   string                   `json:"api_token"`
-	SourceType SourceAircallAircallEnum `json:"sourceType"`
+	APIToken   string               `json:"api_token"`
+	SourceType SourceAircallAircall `json:"sourceType"`
 	// Date time filter for incremental filter, Specify which date to extract from.
 	StartDate time.Time `json:"start_date"`
 }

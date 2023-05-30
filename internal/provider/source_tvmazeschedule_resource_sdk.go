@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceTvmazeScheduleResourceModel) ToCreateSDKType() *shared.SourceTvmazeScheduleCreateRequest {
@@ -14,7 +15,7 @@ func (r *SourceTvmazeScheduleResourceModel) ToCreateSDKType() *shared.SourceTvma
 	} else {
 		endDate = nil
 	}
-	sourceType := shared.SourceTvmazeScheduleTvmazeScheduleEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceTvmazeScheduleTvmazeSchedule(r.Configuration.SourceType.ValueString())
 	startDate := r.Configuration.StartDate.ValueString()
 	webScheduleCountryCode := new(string)
 	if !r.Configuration.WebScheduleCountryCode.IsUnknown() && !r.Configuration.WebScheduleCountryCode.IsNull() {
@@ -49,4 +50,11 @@ func (r *SourceTvmazeScheduleResourceModel) ToCreateSDKType() *shared.SourceTvma
 func (r *SourceTvmazeScheduleResourceModel) ToDeleteSDKType() *shared.SourceTvmazeScheduleCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceTvmazeScheduleResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

@@ -7,32 +7,32 @@ import (
 	"fmt"
 )
 
-type SourceHubplannerHubplannerEnum string
+type SourceHubplannerHubplanner string
 
 const (
-	SourceHubplannerHubplannerEnumHubplanner SourceHubplannerHubplannerEnum = "hubplanner"
+	SourceHubplannerHubplannerHubplanner SourceHubplannerHubplanner = "hubplanner"
 )
 
-func (e SourceHubplannerHubplannerEnum) ToPointer() *SourceHubplannerHubplannerEnum {
+func (e SourceHubplannerHubplanner) ToPointer() *SourceHubplannerHubplanner {
 	return &e
 }
 
-func (e *SourceHubplannerHubplannerEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceHubplannerHubplanner) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "hubplanner":
-		*e = SourceHubplannerHubplannerEnum(v)
+		*e = SourceHubplannerHubplanner(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceHubplannerHubplannerEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceHubplannerHubplanner: %v", v)
 	}
 }
 
 type SourceHubplanner struct {
 	// Hubplanner API key. See https://github.com/hubplanner/API#authentication for more details.
-	APIKey     string                         `json:"api_key"`
-	SourceType SourceHubplannerHubplannerEnum `json:"sourceType"`
+	APIKey     string                     `json:"api_key"`
+	SourceType SourceHubplannerHubplanner `json:"sourceType"`
 }

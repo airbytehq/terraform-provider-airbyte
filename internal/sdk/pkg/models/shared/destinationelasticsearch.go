@@ -9,60 +9,60 @@ import (
 	"fmt"
 )
 
-type DestinationElasticsearchAuthenticationMethodUsernamePasswordMethodEnum string
+type DestinationElasticsearchAuthenticationMethodUsernamePasswordMethod string
 
 const (
-	DestinationElasticsearchAuthenticationMethodUsernamePasswordMethodEnumBasic DestinationElasticsearchAuthenticationMethodUsernamePasswordMethodEnum = "basic"
+	DestinationElasticsearchAuthenticationMethodUsernamePasswordMethodBasic DestinationElasticsearchAuthenticationMethodUsernamePasswordMethod = "basic"
 )
 
-func (e DestinationElasticsearchAuthenticationMethodUsernamePasswordMethodEnum) ToPointer() *DestinationElasticsearchAuthenticationMethodUsernamePasswordMethodEnum {
+func (e DestinationElasticsearchAuthenticationMethodUsernamePasswordMethod) ToPointer() *DestinationElasticsearchAuthenticationMethodUsernamePasswordMethod {
 	return &e
 }
 
-func (e *DestinationElasticsearchAuthenticationMethodUsernamePasswordMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationElasticsearchAuthenticationMethodUsernamePasswordMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "basic":
-		*e = DestinationElasticsearchAuthenticationMethodUsernamePasswordMethodEnum(v)
+		*e = DestinationElasticsearchAuthenticationMethodUsernamePasswordMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationElasticsearchAuthenticationMethodUsernamePasswordMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationElasticsearchAuthenticationMethodUsernamePasswordMethod: %v", v)
 	}
 }
 
 // DestinationElasticsearchAuthenticationMethodUsernamePassword - Basic auth header with a username and password
 type DestinationElasticsearchAuthenticationMethodUsernamePassword struct {
-	Method DestinationElasticsearchAuthenticationMethodUsernamePasswordMethodEnum `json:"method"`
+	Method DestinationElasticsearchAuthenticationMethodUsernamePasswordMethod `json:"method"`
 	// Basic auth password to access a secure Elasticsearch server
 	Password string `json:"password"`
 	// Basic auth username to access a secure Elasticsearch server
 	Username string `json:"username"`
 }
 
-type DestinationElasticsearchAuthenticationMethodAPIKeySecretMethodEnum string
+type DestinationElasticsearchAuthenticationMethodAPIKeySecretMethod string
 
 const (
-	DestinationElasticsearchAuthenticationMethodAPIKeySecretMethodEnumSecret DestinationElasticsearchAuthenticationMethodAPIKeySecretMethodEnum = "secret"
+	DestinationElasticsearchAuthenticationMethodAPIKeySecretMethodSecret DestinationElasticsearchAuthenticationMethodAPIKeySecretMethod = "secret"
 )
 
-func (e DestinationElasticsearchAuthenticationMethodAPIKeySecretMethodEnum) ToPointer() *DestinationElasticsearchAuthenticationMethodAPIKeySecretMethodEnum {
+func (e DestinationElasticsearchAuthenticationMethodAPIKeySecretMethod) ToPointer() *DestinationElasticsearchAuthenticationMethodAPIKeySecretMethod {
 	return &e
 }
 
-func (e *DestinationElasticsearchAuthenticationMethodAPIKeySecretMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationElasticsearchAuthenticationMethodAPIKeySecretMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "secret":
-		*e = DestinationElasticsearchAuthenticationMethodAPIKeySecretMethodEnum(v)
+		*e = DestinationElasticsearchAuthenticationMethodAPIKeySecretMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationElasticsearchAuthenticationMethodAPIKeySecretMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationElasticsearchAuthenticationMethodAPIKeySecretMethod: %v", v)
 	}
 }
 
@@ -71,8 +71,8 @@ type DestinationElasticsearchAuthenticationMethodAPIKeySecret struct {
 	// The Key ID to used when accessing an enterprise Elasticsearch instance.
 	APIKeyID string `json:"apiKeyId"`
 	// The secret associated with the API Key ID.
-	APIKeySecret string                                                             `json:"apiKeySecret"`
-	Method       DestinationElasticsearchAuthenticationMethodAPIKeySecretMethodEnum `json:"method"`
+	APIKeySecret string                                                         `json:"apiKeySecret"`
+	Method       DestinationElasticsearchAuthenticationMethodAPIKeySecretMethod `json:"method"`
 }
 
 type DestinationElasticsearchAuthenticationMethodType string
@@ -143,27 +143,27 @@ func (u DestinationElasticsearchAuthenticationMethod) MarshalJSON() ([]byte, err
 	return nil, nil
 }
 
-type DestinationElasticsearchElasticsearchEnum string
+type DestinationElasticsearchElasticsearch string
 
 const (
-	DestinationElasticsearchElasticsearchEnumElasticsearch DestinationElasticsearchElasticsearchEnum = "elasticsearch"
+	DestinationElasticsearchElasticsearchElasticsearch DestinationElasticsearchElasticsearch = "elasticsearch"
 )
 
-func (e DestinationElasticsearchElasticsearchEnum) ToPointer() *DestinationElasticsearchElasticsearchEnum {
+func (e DestinationElasticsearchElasticsearch) ToPointer() *DestinationElasticsearchElasticsearch {
 	return &e
 }
 
-func (e *DestinationElasticsearchElasticsearchEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationElasticsearchElasticsearch) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "elasticsearch":
-		*e = DestinationElasticsearchElasticsearchEnum(v)
+		*e = DestinationElasticsearchElasticsearch(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationElasticsearchElasticsearchEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationElasticsearchElasticsearch: %v", v)
 	}
 }
 
@@ -171,8 +171,8 @@ type DestinationElasticsearch struct {
 	// The type of authentication to be used
 	AuthenticationMethod *DestinationElasticsearchAuthenticationMethod `json:"authenticationMethod,omitempty"`
 	// CA certificate
-	CaCertificate   *string                                   `json:"ca_certificate,omitempty"`
-	DestinationType DestinationElasticsearchElasticsearchEnum `json:"destinationType"`
+	CaCertificate   *string                               `json:"ca_certificate,omitempty"`
+	DestinationType DestinationElasticsearchElasticsearch `json:"destinationType"`
 	// The full url of the Elasticsearch server
 	Endpoint string `json:"endpoint"`
 	// If a primary key identifier is defined in the source, an upsert will be performed using the primary key value as the elasticsearch doc id. Does not support composite primary keys.

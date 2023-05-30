@@ -4,13 +4,14 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
 func (r *SourceChartmogulResourceModel) ToCreateSDKType() *shared.SourceChartmogulCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	interval := shared.SourceChartmogulIntervalEnum(r.Configuration.Interval.ValueString())
-	sourceType := shared.SourceChartmogulChartmogulEnum(r.Configuration.SourceType.ValueString())
+	interval := shared.SourceChartmogulInterval(r.Configuration.Interval.ValueString())
+	sourceType := shared.SourceChartmogulChartmogul(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceChartmogul{
 		APIKey:     apiKey,
@@ -38,4 +39,11 @@ func (r *SourceChartmogulResourceModel) ToCreateSDKType() *shared.SourceChartmog
 func (r *SourceChartmogulResourceModel) ToDeleteSDKType() *shared.SourceChartmogulCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceChartmogulResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

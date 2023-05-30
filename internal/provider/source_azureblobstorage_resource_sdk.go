@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceAzureBlobStorageResourceModel) ToCreateSDKType() *shared.SourceAzureBlobStorageCreateRequest {
@@ -31,7 +32,7 @@ func (r *SourceAzureBlobStorageResourceModel) ToCreateSDKType() *shared.SourceAz
 	var format shared.SourceAzureBlobStorageInputFormat
 	var sourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON *shared.SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON
 	if r.Configuration.Format.SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON != nil {
-		formatType := shared.SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum(r.Configuration.Format.SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON.FormatType.ValueString())
+		formatType := shared.SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSONFormatType(r.Configuration.Format.SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON.FormatType.ValueString())
 		sourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON = &shared.SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON{
 			FormatType: formatType,
 		}
@@ -41,7 +42,7 @@ func (r *SourceAzureBlobStorageResourceModel) ToCreateSDKType() *shared.SourceAz
 			SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON: sourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON,
 		}
 	}
-	sourceType := shared.SourceAzureBlobStorageAzureBlobStorageEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceAzureBlobStorageAzureBlobStorage(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceAzureBlobStorage{
 		AzureBlobStorageAccountKey:           azureBlobStorageAccountKey,
 		AzureBlobStorageAccountName:          azureBlobStorageAccountName,
@@ -72,4 +73,11 @@ func (r *SourceAzureBlobStorageResourceModel) ToCreateSDKType() *shared.SourceAz
 func (r *SourceAzureBlobStorageResourceModel) ToDeleteSDKType() *shared.SourceAzureBlobStorageCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceAzureBlobStorageResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

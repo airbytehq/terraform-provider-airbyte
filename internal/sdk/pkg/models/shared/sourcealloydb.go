@@ -9,19 +9,19 @@ import (
 	"fmt"
 )
 
-// SourceAlloydbReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnum - Determines when Airbtye should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.
-type SourceAlloydbReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnum string
+// SourceAlloydbReplicationMethodLogicalReplicationCDCLSNCommitBehaviour - Determines when Airbtye should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.
+type SourceAlloydbReplicationMethodLogicalReplicationCDCLSNCommitBehaviour string
 
 const (
-	SourceAlloydbReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnumWhileReadingData                 SourceAlloydbReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnum = "While reading Data"
-	SourceAlloydbReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnumAfterLoadingDataInTheDestination SourceAlloydbReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnum = "After loading Data in the destination"
+	SourceAlloydbReplicationMethodLogicalReplicationCDCLSNCommitBehaviourWhileReadingData                 SourceAlloydbReplicationMethodLogicalReplicationCDCLSNCommitBehaviour = "While reading Data"
+	SourceAlloydbReplicationMethodLogicalReplicationCDCLSNCommitBehaviourAfterLoadingDataInTheDestination SourceAlloydbReplicationMethodLogicalReplicationCDCLSNCommitBehaviour = "After loading Data in the destination"
 )
 
-func (e SourceAlloydbReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnum) ToPointer() *SourceAlloydbReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnum {
+func (e SourceAlloydbReplicationMethodLogicalReplicationCDCLSNCommitBehaviour) ToPointer() *SourceAlloydbReplicationMethodLogicalReplicationCDCLSNCommitBehaviour {
 	return &e
 }
 
-func (e *SourceAlloydbReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceAlloydbReplicationMethodLogicalReplicationCDCLSNCommitBehaviour) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -30,59 +30,59 @@ func (e *SourceAlloydbReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEn
 	case "While reading Data":
 		fallthrough
 	case "After loading Data in the destination":
-		*e = SourceAlloydbReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnum(v)
+		*e = SourceAlloydbReplicationMethodLogicalReplicationCDCLSNCommitBehaviour(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAlloydbReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceAlloydbReplicationMethodLogicalReplicationCDCLSNCommitBehaviour: %v", v)
 	}
 }
 
-type SourceAlloydbReplicationMethodLogicalReplicationCDCMethodEnum string
+type SourceAlloydbReplicationMethodLogicalReplicationCDCMethod string
 
 const (
-	SourceAlloydbReplicationMethodLogicalReplicationCDCMethodEnumCdc SourceAlloydbReplicationMethodLogicalReplicationCDCMethodEnum = "CDC"
+	SourceAlloydbReplicationMethodLogicalReplicationCDCMethodCdc SourceAlloydbReplicationMethodLogicalReplicationCDCMethod = "CDC"
 )
 
-func (e SourceAlloydbReplicationMethodLogicalReplicationCDCMethodEnum) ToPointer() *SourceAlloydbReplicationMethodLogicalReplicationCDCMethodEnum {
+func (e SourceAlloydbReplicationMethodLogicalReplicationCDCMethod) ToPointer() *SourceAlloydbReplicationMethodLogicalReplicationCDCMethod {
 	return &e
 }
 
-func (e *SourceAlloydbReplicationMethodLogicalReplicationCDCMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceAlloydbReplicationMethodLogicalReplicationCDCMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "CDC":
-		*e = SourceAlloydbReplicationMethodLogicalReplicationCDCMethodEnum(v)
+		*e = SourceAlloydbReplicationMethodLogicalReplicationCDCMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAlloydbReplicationMethodLogicalReplicationCDCMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceAlloydbReplicationMethodLogicalReplicationCDCMethod: %v", v)
 	}
 }
 
-// SourceAlloydbReplicationMethodLogicalReplicationCDCPluginEnum - A logical decoding plugin installed on the PostgreSQL server.
-type SourceAlloydbReplicationMethodLogicalReplicationCDCPluginEnum string
+// SourceAlloydbReplicationMethodLogicalReplicationCDCPlugin - A logical decoding plugin installed on the PostgreSQL server.
+type SourceAlloydbReplicationMethodLogicalReplicationCDCPlugin string
 
 const (
-	SourceAlloydbReplicationMethodLogicalReplicationCDCPluginEnumPgoutput SourceAlloydbReplicationMethodLogicalReplicationCDCPluginEnum = "pgoutput"
+	SourceAlloydbReplicationMethodLogicalReplicationCDCPluginPgoutput SourceAlloydbReplicationMethodLogicalReplicationCDCPlugin = "pgoutput"
 )
 
-func (e SourceAlloydbReplicationMethodLogicalReplicationCDCPluginEnum) ToPointer() *SourceAlloydbReplicationMethodLogicalReplicationCDCPluginEnum {
+func (e SourceAlloydbReplicationMethodLogicalReplicationCDCPlugin) ToPointer() *SourceAlloydbReplicationMethodLogicalReplicationCDCPlugin {
 	return &e
 }
 
-func (e *SourceAlloydbReplicationMethodLogicalReplicationCDCPluginEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceAlloydbReplicationMethodLogicalReplicationCDCPlugin) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "pgoutput":
-		*e = SourceAlloydbReplicationMethodLogicalReplicationCDCPluginEnum(v)
+		*e = SourceAlloydbReplicationMethodLogicalReplicationCDCPlugin(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAlloydbReplicationMethodLogicalReplicationCDCPluginEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceAlloydbReplicationMethodLogicalReplicationCDCPlugin: %v", v)
 	}
 }
 
@@ -91,16 +91,16 @@ type SourceAlloydbReplicationMethodLogicalReplicationCDC struct {
 	// The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-5-optional-set-up-initial-waiting-time">initial waiting time</a>.
 	InitialWaitingSeconds *int64 `json:"initial_waiting_seconds,omitempty"`
 	// Determines when Airbtye should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.
-	LsnCommitBehaviour *SourceAlloydbReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnum `json:"lsn_commit_behaviour,omitempty"`
-	Method             SourceAlloydbReplicationMethodLogicalReplicationCDCMethodEnum              `json:"method"`
+	LsnCommitBehaviour *SourceAlloydbReplicationMethodLogicalReplicationCDCLSNCommitBehaviour `json:"lsn_commit_behaviour,omitempty"`
+	Method             SourceAlloydbReplicationMethodLogicalReplicationCDCMethod              `json:"method"`
 	// A logical decoding plugin installed on the PostgreSQL server.
-	Plugin *SourceAlloydbReplicationMethodLogicalReplicationCDCPluginEnum `json:"plugin,omitempty"`
+	Plugin *SourceAlloydbReplicationMethodLogicalReplicationCDCPlugin `json:"plugin,omitempty"`
 	// A Postgres publication used for consuming changes. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-4-create-publications-and-replication-identities-for-tables">publications and replication identities</a>.
 	Publication string `json:"publication"`
 	// A plugin logical replication slot. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-3-create-replication-slot">replication slots</a>.
 	ReplicationSlot string `json:"replication_slot"`
 
-	AdditionalProperties map[string]interface{} `json:"-"`
+	AdditionalProperties interface{} `json:"-"`
 }
 type _SourceAlloydbReplicationMethodLogicalReplicationCDC SourceAlloydbReplicationMethodLogicalReplicationCDC
 
@@ -152,33 +152,33 @@ func (c SourceAlloydbReplicationMethodLogicalReplicationCDC) MarshalJSON() ([]by
 	return json.Marshal(out)
 }
 
-type SourceAlloydbReplicationMethodStandardMethodEnum string
+type SourceAlloydbReplicationMethodStandardMethod string
 
 const (
-	SourceAlloydbReplicationMethodStandardMethodEnumStandard SourceAlloydbReplicationMethodStandardMethodEnum = "Standard"
+	SourceAlloydbReplicationMethodStandardMethodStandard SourceAlloydbReplicationMethodStandardMethod = "Standard"
 )
 
-func (e SourceAlloydbReplicationMethodStandardMethodEnum) ToPointer() *SourceAlloydbReplicationMethodStandardMethodEnum {
+func (e SourceAlloydbReplicationMethodStandardMethod) ToPointer() *SourceAlloydbReplicationMethodStandardMethod {
 	return &e
 }
 
-func (e *SourceAlloydbReplicationMethodStandardMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceAlloydbReplicationMethodStandardMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Standard":
-		*e = SourceAlloydbReplicationMethodStandardMethodEnum(v)
+		*e = SourceAlloydbReplicationMethodStandardMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAlloydbReplicationMethodStandardMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceAlloydbReplicationMethodStandardMethod: %v", v)
 	}
 }
 
 // SourceAlloydbReplicationMethodStandard - Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.
 type SourceAlloydbReplicationMethodStandard struct {
-	Method SourceAlloydbReplicationMethodStandardMethodEnum `json:"method"`
+	Method SourceAlloydbReplicationMethodStandardMethod `json:"method"`
 }
 
 type SourceAlloydbReplicationMethodType string
@@ -249,51 +249,51 @@ func (u SourceAlloydbReplicationMethod) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-type SourceAlloydbAlloydbEnum string
+type SourceAlloydbAlloydb string
 
 const (
-	SourceAlloydbAlloydbEnumAlloydb SourceAlloydbAlloydbEnum = "alloydb"
+	SourceAlloydbAlloydbAlloydb SourceAlloydbAlloydb = "alloydb"
 )
 
-func (e SourceAlloydbAlloydbEnum) ToPointer() *SourceAlloydbAlloydbEnum {
+func (e SourceAlloydbAlloydb) ToPointer() *SourceAlloydbAlloydb {
 	return &e
 }
 
-func (e *SourceAlloydbAlloydbEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceAlloydbAlloydb) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "alloydb":
-		*e = SourceAlloydbAlloydbEnum(v)
+		*e = SourceAlloydbAlloydb(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAlloydbAlloydbEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceAlloydbAlloydb: %v", v)
 	}
 }
 
-type SourceAlloydbSSLModesVerifyFullModeEnum string
+type SourceAlloydbSSLModesVerifyFullMode string
 
 const (
-	SourceAlloydbSSLModesVerifyFullModeEnumVerifyFull SourceAlloydbSSLModesVerifyFullModeEnum = "verify-full"
+	SourceAlloydbSSLModesVerifyFullModeVerifyFull SourceAlloydbSSLModesVerifyFullMode = "verify-full"
 )
 
-func (e SourceAlloydbSSLModesVerifyFullModeEnum) ToPointer() *SourceAlloydbSSLModesVerifyFullModeEnum {
+func (e SourceAlloydbSSLModesVerifyFullMode) ToPointer() *SourceAlloydbSSLModesVerifyFullMode {
 	return &e
 }
 
-func (e *SourceAlloydbSSLModesVerifyFullModeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceAlloydbSSLModesVerifyFullMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "verify-full":
-		*e = SourceAlloydbSSLModesVerifyFullModeEnum(v)
+		*e = SourceAlloydbSSLModesVerifyFullMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAlloydbSSLModesVerifyFullModeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceAlloydbSSLModesVerifyFullMode: %v", v)
 	}
 }
 
@@ -306,10 +306,10 @@ type SourceAlloydbSSLModesVerifyFull struct {
 	// Client key
 	ClientKey *string `json:"client_key,omitempty"`
 	// Password for keystorage. If you do not add it - the password will be generated automatically.
-	ClientKeyPassword *string                                 `json:"client_key_password,omitempty"`
-	Mode              SourceAlloydbSSLModesVerifyFullModeEnum `json:"mode"`
+	ClientKeyPassword *string                             `json:"client_key_password,omitempty"`
+	Mode              SourceAlloydbSSLModesVerifyFullMode `json:"mode"`
 
-	AdditionalProperties map[string]interface{} `json:"-"`
+	AdditionalProperties interface{} `json:"-"`
 }
 type _SourceAlloydbSSLModesVerifyFull SourceAlloydbSSLModesVerifyFull
 
@@ -360,27 +360,27 @@ func (c SourceAlloydbSSLModesVerifyFull) MarshalJSON() ([]byte, error) {
 	return json.Marshal(out)
 }
 
-type SourceAlloydbSSLModesVerifyCaModeEnum string
+type SourceAlloydbSSLModesVerifyCaMode string
 
 const (
-	SourceAlloydbSSLModesVerifyCaModeEnumVerifyCa SourceAlloydbSSLModesVerifyCaModeEnum = "verify-ca"
+	SourceAlloydbSSLModesVerifyCaModeVerifyCa SourceAlloydbSSLModesVerifyCaMode = "verify-ca"
 )
 
-func (e SourceAlloydbSSLModesVerifyCaModeEnum) ToPointer() *SourceAlloydbSSLModesVerifyCaModeEnum {
+func (e SourceAlloydbSSLModesVerifyCaMode) ToPointer() *SourceAlloydbSSLModesVerifyCaMode {
 	return &e
 }
 
-func (e *SourceAlloydbSSLModesVerifyCaModeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceAlloydbSSLModesVerifyCaMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "verify-ca":
-		*e = SourceAlloydbSSLModesVerifyCaModeEnum(v)
+		*e = SourceAlloydbSSLModesVerifyCaMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAlloydbSSLModesVerifyCaModeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceAlloydbSSLModesVerifyCaMode: %v", v)
 	}
 }
 
@@ -393,10 +393,10 @@ type SourceAlloydbSSLModesVerifyCa struct {
 	// Client key
 	ClientKey *string `json:"client_key,omitempty"`
 	// Password for keystorage. If you do not add it - the password will be generated automatically.
-	ClientKeyPassword *string                               `json:"client_key_password,omitempty"`
-	Mode              SourceAlloydbSSLModesVerifyCaModeEnum `json:"mode"`
+	ClientKeyPassword *string                           `json:"client_key_password,omitempty"`
+	Mode              SourceAlloydbSSLModesVerifyCaMode `json:"mode"`
 
-	AdditionalProperties map[string]interface{} `json:"-"`
+	AdditionalProperties interface{} `json:"-"`
 }
 type _SourceAlloydbSSLModesVerifyCa SourceAlloydbSSLModesVerifyCa
 
@@ -447,35 +447,35 @@ func (c SourceAlloydbSSLModesVerifyCa) MarshalJSON() ([]byte, error) {
 	return json.Marshal(out)
 }
 
-type SourceAlloydbSSLModesRequireModeEnum string
+type SourceAlloydbSSLModesRequireMode string
 
 const (
-	SourceAlloydbSSLModesRequireModeEnumRequire SourceAlloydbSSLModesRequireModeEnum = "require"
+	SourceAlloydbSSLModesRequireModeRequire SourceAlloydbSSLModesRequireMode = "require"
 )
 
-func (e SourceAlloydbSSLModesRequireModeEnum) ToPointer() *SourceAlloydbSSLModesRequireModeEnum {
+func (e SourceAlloydbSSLModesRequireMode) ToPointer() *SourceAlloydbSSLModesRequireMode {
 	return &e
 }
 
-func (e *SourceAlloydbSSLModesRequireModeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceAlloydbSSLModesRequireMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "require":
-		*e = SourceAlloydbSSLModesRequireModeEnum(v)
+		*e = SourceAlloydbSSLModesRequireMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAlloydbSSLModesRequireModeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceAlloydbSSLModesRequireMode: %v", v)
 	}
 }
 
 // SourceAlloydbSSLModesRequire - Always require encryption. If the source database server does not support encryption, connection will fail.
 type SourceAlloydbSSLModesRequire struct {
-	Mode SourceAlloydbSSLModesRequireModeEnum `json:"mode"`
+	Mode SourceAlloydbSSLModesRequireMode `json:"mode"`
 
-	AdditionalProperties map[string]interface{} `json:"-"`
+	AdditionalProperties interface{} `json:"-"`
 }
 type _SourceAlloydbSSLModesRequire SourceAlloydbSSLModesRequire
 
@@ -522,35 +522,35 @@ func (c SourceAlloydbSSLModesRequire) MarshalJSON() ([]byte, error) {
 	return json.Marshal(out)
 }
 
-type SourceAlloydbSSLModesPreferModeEnum string
+type SourceAlloydbSSLModesPreferMode string
 
 const (
-	SourceAlloydbSSLModesPreferModeEnumPrefer SourceAlloydbSSLModesPreferModeEnum = "prefer"
+	SourceAlloydbSSLModesPreferModePrefer SourceAlloydbSSLModesPreferMode = "prefer"
 )
 
-func (e SourceAlloydbSSLModesPreferModeEnum) ToPointer() *SourceAlloydbSSLModesPreferModeEnum {
+func (e SourceAlloydbSSLModesPreferMode) ToPointer() *SourceAlloydbSSLModesPreferMode {
 	return &e
 }
 
-func (e *SourceAlloydbSSLModesPreferModeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceAlloydbSSLModesPreferMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "prefer":
-		*e = SourceAlloydbSSLModesPreferModeEnum(v)
+		*e = SourceAlloydbSSLModesPreferMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAlloydbSSLModesPreferModeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceAlloydbSSLModesPreferMode: %v", v)
 	}
 }
 
 // SourceAlloydbSSLModesPrefer - Allows unencrypted connection only if the source database does not support encryption.
 type SourceAlloydbSSLModesPrefer struct {
-	Mode SourceAlloydbSSLModesPreferModeEnum `json:"mode"`
+	Mode SourceAlloydbSSLModesPreferMode `json:"mode"`
 
-	AdditionalProperties map[string]interface{} `json:"-"`
+	AdditionalProperties interface{} `json:"-"`
 }
 type _SourceAlloydbSSLModesPrefer SourceAlloydbSSLModesPrefer
 
@@ -597,35 +597,35 @@ func (c SourceAlloydbSSLModesPrefer) MarshalJSON() ([]byte, error) {
 	return json.Marshal(out)
 }
 
-type SourceAlloydbSSLModesAllowModeEnum string
+type SourceAlloydbSSLModesAllowMode string
 
 const (
-	SourceAlloydbSSLModesAllowModeEnumAllow SourceAlloydbSSLModesAllowModeEnum = "allow"
+	SourceAlloydbSSLModesAllowModeAllow SourceAlloydbSSLModesAllowMode = "allow"
 )
 
-func (e SourceAlloydbSSLModesAllowModeEnum) ToPointer() *SourceAlloydbSSLModesAllowModeEnum {
+func (e SourceAlloydbSSLModesAllowMode) ToPointer() *SourceAlloydbSSLModesAllowMode {
 	return &e
 }
 
-func (e *SourceAlloydbSSLModesAllowModeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceAlloydbSSLModesAllowMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "allow":
-		*e = SourceAlloydbSSLModesAllowModeEnum(v)
+		*e = SourceAlloydbSSLModesAllowMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAlloydbSSLModesAllowModeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceAlloydbSSLModesAllowMode: %v", v)
 	}
 }
 
 // SourceAlloydbSSLModesAllow - Enables encryption only when required by the source database.
 type SourceAlloydbSSLModesAllow struct {
-	Mode SourceAlloydbSSLModesAllowModeEnum `json:"mode"`
+	Mode SourceAlloydbSSLModesAllowMode `json:"mode"`
 
-	AdditionalProperties map[string]interface{} `json:"-"`
+	AdditionalProperties interface{} `json:"-"`
 }
 type _SourceAlloydbSSLModesAllow SourceAlloydbSSLModesAllow
 
@@ -672,35 +672,35 @@ func (c SourceAlloydbSSLModesAllow) MarshalJSON() ([]byte, error) {
 	return json.Marshal(out)
 }
 
-type SourceAlloydbSSLModesDisableModeEnum string
+type SourceAlloydbSSLModesDisableMode string
 
 const (
-	SourceAlloydbSSLModesDisableModeEnumDisable SourceAlloydbSSLModesDisableModeEnum = "disable"
+	SourceAlloydbSSLModesDisableModeDisable SourceAlloydbSSLModesDisableMode = "disable"
 )
 
-func (e SourceAlloydbSSLModesDisableModeEnum) ToPointer() *SourceAlloydbSSLModesDisableModeEnum {
+func (e SourceAlloydbSSLModesDisableMode) ToPointer() *SourceAlloydbSSLModesDisableMode {
 	return &e
 }
 
-func (e *SourceAlloydbSSLModesDisableModeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceAlloydbSSLModesDisableMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "disable":
-		*e = SourceAlloydbSSLModesDisableModeEnum(v)
+		*e = SourceAlloydbSSLModesDisableMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAlloydbSSLModesDisableModeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceAlloydbSSLModesDisableMode: %v", v)
 	}
 }
 
 // SourceAlloydbSSLModesDisable - Disables encryption of communication between Airbyte and source database.
 type SourceAlloydbSSLModesDisable struct {
-	Mode SourceAlloydbSSLModesDisableModeEnum `json:"mode"`
+	Mode SourceAlloydbSSLModesDisableMode `json:"mode"`
 
-	AdditionalProperties map[string]interface{} `json:"-"`
+	AdditionalProperties interface{} `json:"-"`
 }
 type _SourceAlloydbSSLModesDisable SourceAlloydbSSLModesDisable
 
@@ -911,28 +911,28 @@ func (u SourceAlloydbSSLModes) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-// SourceAlloydbSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum - Connect through a jump server tunnel host using username and password authentication
-type SourceAlloydbSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum string
+// SourceAlloydbSSHTunnelMethodPasswordAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and password authentication
+type SourceAlloydbSSHTunnelMethodPasswordAuthenticationTunnelMethod string
 
 const (
-	SourceAlloydbSSHTunnelMethodPasswordAuthenticationTunnelMethodEnumSSHPasswordAuth SourceAlloydbSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum = "SSH_PASSWORD_AUTH"
+	SourceAlloydbSSHTunnelMethodPasswordAuthenticationTunnelMethodSSHPasswordAuth SourceAlloydbSSHTunnelMethodPasswordAuthenticationTunnelMethod = "SSH_PASSWORD_AUTH"
 )
 
-func (e SourceAlloydbSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) ToPointer() *SourceAlloydbSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum {
+func (e SourceAlloydbSSHTunnelMethodPasswordAuthenticationTunnelMethod) ToPointer() *SourceAlloydbSSHTunnelMethodPasswordAuthenticationTunnelMethod {
 	return &e
 }
 
-func (e *SourceAlloydbSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceAlloydbSSHTunnelMethodPasswordAuthenticationTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SSH_PASSWORD_AUTH":
-		*e = SourceAlloydbSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(v)
+		*e = SourceAlloydbSSHTunnelMethodPasswordAuthenticationTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAlloydbSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceAlloydbSSHTunnelMethodPasswordAuthenticationTunnelMethod: %v", v)
 	}
 }
 
@@ -941,7 +941,7 @@ type SourceAlloydbSSHTunnelMethodPasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and password authentication
-	TunnelMethod SourceAlloydbSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum `json:"tunnel_method"`
+	TunnelMethod SourceAlloydbSSHTunnelMethodPasswordAuthenticationTunnelMethod `json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort int64 `json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
@@ -950,28 +950,28 @@ type SourceAlloydbSSHTunnelMethodPasswordAuthentication struct {
 	TunnelUserPassword string `json:"tunnel_user_password"`
 }
 
-// SourceAlloydbSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum - Connect through a jump server tunnel host using username and ssh key
-type SourceAlloydbSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum string
+// SourceAlloydbSSHTunnelMethodSSHKeyAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and ssh key
+type SourceAlloydbSSHTunnelMethodSSHKeyAuthenticationTunnelMethod string
 
 const (
-	SourceAlloydbSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnumSSHKeyAuth SourceAlloydbSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum = "SSH_KEY_AUTH"
+	SourceAlloydbSSHTunnelMethodSSHKeyAuthenticationTunnelMethodSSHKeyAuth SourceAlloydbSSHTunnelMethodSSHKeyAuthenticationTunnelMethod = "SSH_KEY_AUTH"
 )
 
-func (e SourceAlloydbSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) ToPointer() *SourceAlloydbSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum {
+func (e SourceAlloydbSSHTunnelMethodSSHKeyAuthenticationTunnelMethod) ToPointer() *SourceAlloydbSSHTunnelMethodSSHKeyAuthenticationTunnelMethod {
 	return &e
 }
 
-func (e *SourceAlloydbSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceAlloydbSSHTunnelMethodSSHKeyAuthenticationTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SSH_KEY_AUTH":
-		*e = SourceAlloydbSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(v)
+		*e = SourceAlloydbSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAlloydbSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceAlloydbSSHTunnelMethodSSHKeyAuthenticationTunnelMethod: %v", v)
 	}
 }
 
@@ -982,42 +982,42 @@ type SourceAlloydbSSHTunnelMethodSSHKeyAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and ssh key
-	TunnelMethod SourceAlloydbSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum `json:"tunnel_method"`
+	TunnelMethod SourceAlloydbSSHTunnelMethodSSHKeyAuthenticationTunnelMethod `json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort int64 `json:"tunnel_port"`
 	// OS-level username for logging into the jump server host.
 	TunnelUser string `json:"tunnel_user"`
 }
 
-// SourceAlloydbSSHTunnelMethodNoTunnelTunnelMethodEnum - No ssh tunnel needed to connect to database
-type SourceAlloydbSSHTunnelMethodNoTunnelTunnelMethodEnum string
+// SourceAlloydbSSHTunnelMethodNoTunnelTunnelMethod - No ssh tunnel needed to connect to database
+type SourceAlloydbSSHTunnelMethodNoTunnelTunnelMethod string
 
 const (
-	SourceAlloydbSSHTunnelMethodNoTunnelTunnelMethodEnumNoTunnel SourceAlloydbSSHTunnelMethodNoTunnelTunnelMethodEnum = "NO_TUNNEL"
+	SourceAlloydbSSHTunnelMethodNoTunnelTunnelMethodNoTunnel SourceAlloydbSSHTunnelMethodNoTunnelTunnelMethod = "NO_TUNNEL"
 )
 
-func (e SourceAlloydbSSHTunnelMethodNoTunnelTunnelMethodEnum) ToPointer() *SourceAlloydbSSHTunnelMethodNoTunnelTunnelMethodEnum {
+func (e SourceAlloydbSSHTunnelMethodNoTunnelTunnelMethod) ToPointer() *SourceAlloydbSSHTunnelMethodNoTunnelTunnelMethod {
 	return &e
 }
 
-func (e *SourceAlloydbSSHTunnelMethodNoTunnelTunnelMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceAlloydbSSHTunnelMethodNoTunnelTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "NO_TUNNEL":
-		*e = SourceAlloydbSSHTunnelMethodNoTunnelTunnelMethodEnum(v)
+		*e = SourceAlloydbSSHTunnelMethodNoTunnelTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAlloydbSSHTunnelMethodNoTunnelTunnelMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceAlloydbSSHTunnelMethodNoTunnelTunnelMethod: %v", v)
 	}
 }
 
 // SourceAlloydbSSHTunnelMethodNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type SourceAlloydbSSHTunnelMethodNoTunnel struct {
 	// No ssh tunnel needed to connect to database
-	TunnelMethod SourceAlloydbSSHTunnelMethodNoTunnelTunnelMethodEnum `json:"tunnel_method"`
+	TunnelMethod SourceAlloydbSSHTunnelMethodNoTunnelTunnelMethod `json:"tunnel_method"`
 }
 
 type SourceAlloydbSSHTunnelMethodType string
@@ -1126,8 +1126,8 @@ type SourceAlloydb struct {
 	// Replication method for extracting data from the database.
 	ReplicationMethod *SourceAlloydbReplicationMethod `json:"replication_method,omitempty"`
 	// The list of schemas (case sensitive) to sync from. Defaults to public.
-	Schemas    []string                 `json:"schemas,omitempty"`
-	SourceType SourceAlloydbAlloydbEnum `json:"sourceType"`
+	Schemas    []string             `json:"schemas,omitempty"`
+	SourceType SourceAlloydbAlloydb `json:"sourceType"`
 	// SSL connection modes.
 	//   Read more <a href="https://jdbc.postgresql.org/documentation/head/ssl-client.html"> in the docs</a>.
 	SslMode *SourceAlloydbSSLModes `json:"ssl_mode,omitempty"`

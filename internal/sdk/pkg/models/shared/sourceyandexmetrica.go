@@ -8,27 +8,27 @@ import (
 	"fmt"
 )
 
-type SourceYandexMetricaYandexMetricaEnum string
+type SourceYandexMetricaYandexMetrica string
 
 const (
-	SourceYandexMetricaYandexMetricaEnumYandexMetrica SourceYandexMetricaYandexMetricaEnum = "yandex-metrica"
+	SourceYandexMetricaYandexMetricaYandexMetrica SourceYandexMetricaYandexMetrica = "yandex-metrica"
 )
 
-func (e SourceYandexMetricaYandexMetricaEnum) ToPointer() *SourceYandexMetricaYandexMetricaEnum {
+func (e SourceYandexMetricaYandexMetrica) ToPointer() *SourceYandexMetricaYandexMetrica {
 	return &e
 }
 
-func (e *SourceYandexMetricaYandexMetricaEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceYandexMetricaYandexMetrica) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "yandex-metrica":
-		*e = SourceYandexMetricaYandexMetricaEnum(v)
+		*e = SourceYandexMetricaYandexMetrica(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceYandexMetricaYandexMetricaEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceYandexMetricaYandexMetrica: %v", v)
 	}
 }
 
@@ -38,8 +38,8 @@ type SourceYandexMetrica struct {
 	// Counter ID
 	CounterID string `json:"counter_id"`
 	// Starting point for your data replication, in format of "YYYY-MM-DD". If not provided will sync till most recent date.
-	EndDate    *types.Date                          `json:"end_date,omitempty"`
-	SourceType SourceYandexMetricaYandexMetricaEnum `json:"sourceType"`
+	EndDate    *types.Date                      `json:"end_date,omitempty"`
+	SourceType SourceYandexMetricaYandexMetrica `json:"sourceType"`
 	// Starting point for your data replication, in format of "YYYY-MM-DD".
 	StartDate types.Date `json:"start_date"`
 }

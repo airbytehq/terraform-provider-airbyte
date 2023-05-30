@@ -9,19 +9,19 @@ import (
 	"fmt"
 )
 
-// SourcePostgresReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnum - Determines when Airbtye should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.
-type SourcePostgresReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnum string
+// SourcePostgresReplicationMethodLogicalReplicationCDCLSNCommitBehaviour - Determines when Airbtye should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.
+type SourcePostgresReplicationMethodLogicalReplicationCDCLSNCommitBehaviour string
 
 const (
-	SourcePostgresReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnumWhileReadingData                 SourcePostgresReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnum = "While reading Data"
-	SourcePostgresReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnumAfterLoadingDataInTheDestination SourcePostgresReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnum = "After loading Data in the destination"
+	SourcePostgresReplicationMethodLogicalReplicationCDCLSNCommitBehaviourWhileReadingData                 SourcePostgresReplicationMethodLogicalReplicationCDCLSNCommitBehaviour = "While reading Data"
+	SourcePostgresReplicationMethodLogicalReplicationCDCLSNCommitBehaviourAfterLoadingDataInTheDestination SourcePostgresReplicationMethodLogicalReplicationCDCLSNCommitBehaviour = "After loading Data in the destination"
 )
 
-func (e SourcePostgresReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnum) ToPointer() *SourcePostgresReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnum {
+func (e SourcePostgresReplicationMethodLogicalReplicationCDCLSNCommitBehaviour) ToPointer() *SourcePostgresReplicationMethodLogicalReplicationCDCLSNCommitBehaviour {
 	return &e
 }
 
-func (e *SourcePostgresReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnum) UnmarshalJSON(data []byte) error {
+func (e *SourcePostgresReplicationMethodLogicalReplicationCDCLSNCommitBehaviour) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -30,59 +30,59 @@ func (e *SourcePostgresReplicationMethodLogicalReplicationCDCLSNCommitBehaviourE
 	case "While reading Data":
 		fallthrough
 	case "After loading Data in the destination":
-		*e = SourcePostgresReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnum(v)
+		*e = SourcePostgresReplicationMethodLogicalReplicationCDCLSNCommitBehaviour(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnum: %v", v)
+		return fmt.Errorf("invalid value for SourcePostgresReplicationMethodLogicalReplicationCDCLSNCommitBehaviour: %v", v)
 	}
 }
 
-type SourcePostgresReplicationMethodLogicalReplicationCDCMethodEnum string
+type SourcePostgresReplicationMethodLogicalReplicationCDCMethod string
 
 const (
-	SourcePostgresReplicationMethodLogicalReplicationCDCMethodEnumCdc SourcePostgresReplicationMethodLogicalReplicationCDCMethodEnum = "CDC"
+	SourcePostgresReplicationMethodLogicalReplicationCDCMethodCdc SourcePostgresReplicationMethodLogicalReplicationCDCMethod = "CDC"
 )
 
-func (e SourcePostgresReplicationMethodLogicalReplicationCDCMethodEnum) ToPointer() *SourcePostgresReplicationMethodLogicalReplicationCDCMethodEnum {
+func (e SourcePostgresReplicationMethodLogicalReplicationCDCMethod) ToPointer() *SourcePostgresReplicationMethodLogicalReplicationCDCMethod {
 	return &e
 }
 
-func (e *SourcePostgresReplicationMethodLogicalReplicationCDCMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *SourcePostgresReplicationMethodLogicalReplicationCDCMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "CDC":
-		*e = SourcePostgresReplicationMethodLogicalReplicationCDCMethodEnum(v)
+		*e = SourcePostgresReplicationMethodLogicalReplicationCDCMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresReplicationMethodLogicalReplicationCDCMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for SourcePostgresReplicationMethodLogicalReplicationCDCMethod: %v", v)
 	}
 }
 
-// SourcePostgresReplicationMethodLogicalReplicationCDCPluginEnum - A logical decoding plugin installed on the PostgreSQL server.
-type SourcePostgresReplicationMethodLogicalReplicationCDCPluginEnum string
+// SourcePostgresReplicationMethodLogicalReplicationCDCPlugin - A logical decoding plugin installed on the PostgreSQL server.
+type SourcePostgresReplicationMethodLogicalReplicationCDCPlugin string
 
 const (
-	SourcePostgresReplicationMethodLogicalReplicationCDCPluginEnumPgoutput SourcePostgresReplicationMethodLogicalReplicationCDCPluginEnum = "pgoutput"
+	SourcePostgresReplicationMethodLogicalReplicationCDCPluginPgoutput SourcePostgresReplicationMethodLogicalReplicationCDCPlugin = "pgoutput"
 )
 
-func (e SourcePostgresReplicationMethodLogicalReplicationCDCPluginEnum) ToPointer() *SourcePostgresReplicationMethodLogicalReplicationCDCPluginEnum {
+func (e SourcePostgresReplicationMethodLogicalReplicationCDCPlugin) ToPointer() *SourcePostgresReplicationMethodLogicalReplicationCDCPlugin {
 	return &e
 }
 
-func (e *SourcePostgresReplicationMethodLogicalReplicationCDCPluginEnum) UnmarshalJSON(data []byte) error {
+func (e *SourcePostgresReplicationMethodLogicalReplicationCDCPlugin) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "pgoutput":
-		*e = SourcePostgresReplicationMethodLogicalReplicationCDCPluginEnum(v)
+		*e = SourcePostgresReplicationMethodLogicalReplicationCDCPlugin(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresReplicationMethodLogicalReplicationCDCPluginEnum: %v", v)
+		return fmt.Errorf("invalid value for SourcePostgresReplicationMethodLogicalReplicationCDCPlugin: %v", v)
 	}
 }
 
@@ -91,16 +91,16 @@ type SourcePostgresReplicationMethodLogicalReplicationCDC struct {
 	// The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-5-optional-set-up-initial-waiting-time">initial waiting time</a>.
 	InitialWaitingSeconds *int64 `json:"initial_waiting_seconds,omitempty"`
 	// Determines when Airbtye should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.
-	LsnCommitBehaviour *SourcePostgresReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnum `json:"lsn_commit_behaviour,omitempty"`
-	Method             SourcePostgresReplicationMethodLogicalReplicationCDCMethodEnum              `json:"method"`
+	LsnCommitBehaviour *SourcePostgresReplicationMethodLogicalReplicationCDCLSNCommitBehaviour `json:"lsn_commit_behaviour,omitempty"`
+	Method             SourcePostgresReplicationMethodLogicalReplicationCDCMethod              `json:"method"`
 	// A logical decoding plugin installed on the PostgreSQL server.
-	Plugin *SourcePostgresReplicationMethodLogicalReplicationCDCPluginEnum `json:"plugin,omitempty"`
+	Plugin *SourcePostgresReplicationMethodLogicalReplicationCDCPlugin `json:"plugin,omitempty"`
 	// A Postgres publication used for consuming changes. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-4-create-publications-and-replication-identities-for-tables">publications and replication identities</a>.
 	Publication string `json:"publication"`
 	// A plugin logical replication slot. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-3-create-replication-slot">replication slots</a>.
 	ReplicationSlot string `json:"replication_slot"`
 
-	AdditionalProperties map[string]interface{} `json:"-"`
+	AdditionalProperties interface{} `json:"-"`
 }
 type _SourcePostgresReplicationMethodLogicalReplicationCDC SourcePostgresReplicationMethodLogicalReplicationCDC
 
@@ -152,33 +152,33 @@ func (c SourcePostgresReplicationMethodLogicalReplicationCDC) MarshalJSON() ([]b
 	return json.Marshal(out)
 }
 
-type SourcePostgresReplicationMethodStandardMethodEnum string
+type SourcePostgresReplicationMethodStandardMethod string
 
 const (
-	SourcePostgresReplicationMethodStandardMethodEnumStandard SourcePostgresReplicationMethodStandardMethodEnum = "Standard"
+	SourcePostgresReplicationMethodStandardMethodStandard SourcePostgresReplicationMethodStandardMethod = "Standard"
 )
 
-func (e SourcePostgresReplicationMethodStandardMethodEnum) ToPointer() *SourcePostgresReplicationMethodStandardMethodEnum {
+func (e SourcePostgresReplicationMethodStandardMethod) ToPointer() *SourcePostgresReplicationMethodStandardMethod {
 	return &e
 }
 
-func (e *SourcePostgresReplicationMethodStandardMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *SourcePostgresReplicationMethodStandardMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Standard":
-		*e = SourcePostgresReplicationMethodStandardMethodEnum(v)
+		*e = SourcePostgresReplicationMethodStandardMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresReplicationMethodStandardMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for SourcePostgresReplicationMethodStandardMethod: %v", v)
 	}
 }
 
 // SourcePostgresReplicationMethodStandard - Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.
 type SourcePostgresReplicationMethodStandard struct {
-	Method SourcePostgresReplicationMethodStandardMethodEnum `json:"method"`
+	Method SourcePostgresReplicationMethodStandardMethod `json:"method"`
 }
 
 type SourcePostgresReplicationMethodType string
@@ -249,51 +249,51 @@ func (u SourcePostgresReplicationMethod) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-type SourcePostgresPostgresEnum string
+type SourcePostgresPostgres string
 
 const (
-	SourcePostgresPostgresEnumPostgres SourcePostgresPostgresEnum = "postgres"
+	SourcePostgresPostgresPostgres SourcePostgresPostgres = "postgres"
 )
 
-func (e SourcePostgresPostgresEnum) ToPointer() *SourcePostgresPostgresEnum {
+func (e SourcePostgresPostgres) ToPointer() *SourcePostgresPostgres {
 	return &e
 }
 
-func (e *SourcePostgresPostgresEnum) UnmarshalJSON(data []byte) error {
+func (e *SourcePostgresPostgres) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postgres":
-		*e = SourcePostgresPostgresEnum(v)
+		*e = SourcePostgresPostgres(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresPostgresEnum: %v", v)
+		return fmt.Errorf("invalid value for SourcePostgresPostgres: %v", v)
 	}
 }
 
-type SourcePostgresSSLModesVerifyFullModeEnum string
+type SourcePostgresSSLModesVerifyFullMode string
 
 const (
-	SourcePostgresSSLModesVerifyFullModeEnumVerifyFull SourcePostgresSSLModesVerifyFullModeEnum = "verify-full"
+	SourcePostgresSSLModesVerifyFullModeVerifyFull SourcePostgresSSLModesVerifyFullMode = "verify-full"
 )
 
-func (e SourcePostgresSSLModesVerifyFullModeEnum) ToPointer() *SourcePostgresSSLModesVerifyFullModeEnum {
+func (e SourcePostgresSSLModesVerifyFullMode) ToPointer() *SourcePostgresSSLModesVerifyFullMode {
 	return &e
 }
 
-func (e *SourcePostgresSSLModesVerifyFullModeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourcePostgresSSLModesVerifyFullMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "verify-full":
-		*e = SourcePostgresSSLModesVerifyFullModeEnum(v)
+		*e = SourcePostgresSSLModesVerifyFullMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresSSLModesVerifyFullModeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourcePostgresSSLModesVerifyFullMode: %v", v)
 	}
 }
 
@@ -306,10 +306,10 @@ type SourcePostgresSSLModesVerifyFull struct {
 	// Client key
 	ClientKey *string `json:"client_key,omitempty"`
 	// Password for keystorage. If you do not add it - the password will be generated automatically.
-	ClientKeyPassword *string                                  `json:"client_key_password,omitempty"`
-	Mode              SourcePostgresSSLModesVerifyFullModeEnum `json:"mode"`
+	ClientKeyPassword *string                              `json:"client_key_password,omitempty"`
+	Mode              SourcePostgresSSLModesVerifyFullMode `json:"mode"`
 
-	AdditionalProperties map[string]interface{} `json:"-"`
+	AdditionalProperties interface{} `json:"-"`
 }
 type _SourcePostgresSSLModesVerifyFull SourcePostgresSSLModesVerifyFull
 
@@ -360,27 +360,27 @@ func (c SourcePostgresSSLModesVerifyFull) MarshalJSON() ([]byte, error) {
 	return json.Marshal(out)
 }
 
-type SourcePostgresSSLModesVerifyCaModeEnum string
+type SourcePostgresSSLModesVerifyCaMode string
 
 const (
-	SourcePostgresSSLModesVerifyCaModeEnumVerifyCa SourcePostgresSSLModesVerifyCaModeEnum = "verify-ca"
+	SourcePostgresSSLModesVerifyCaModeVerifyCa SourcePostgresSSLModesVerifyCaMode = "verify-ca"
 )
 
-func (e SourcePostgresSSLModesVerifyCaModeEnum) ToPointer() *SourcePostgresSSLModesVerifyCaModeEnum {
+func (e SourcePostgresSSLModesVerifyCaMode) ToPointer() *SourcePostgresSSLModesVerifyCaMode {
 	return &e
 }
 
-func (e *SourcePostgresSSLModesVerifyCaModeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourcePostgresSSLModesVerifyCaMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "verify-ca":
-		*e = SourcePostgresSSLModesVerifyCaModeEnum(v)
+		*e = SourcePostgresSSLModesVerifyCaMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresSSLModesVerifyCaModeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourcePostgresSSLModesVerifyCaMode: %v", v)
 	}
 }
 
@@ -393,10 +393,10 @@ type SourcePostgresSSLModesVerifyCa struct {
 	// Client key
 	ClientKey *string `json:"client_key,omitempty"`
 	// Password for keystorage. If you do not add it - the password will be generated automatically.
-	ClientKeyPassword *string                                `json:"client_key_password,omitempty"`
-	Mode              SourcePostgresSSLModesVerifyCaModeEnum `json:"mode"`
+	ClientKeyPassword *string                            `json:"client_key_password,omitempty"`
+	Mode              SourcePostgresSSLModesVerifyCaMode `json:"mode"`
 
-	AdditionalProperties map[string]interface{} `json:"-"`
+	AdditionalProperties interface{} `json:"-"`
 }
 type _SourcePostgresSSLModesVerifyCa SourcePostgresSSLModesVerifyCa
 
@@ -447,35 +447,35 @@ func (c SourcePostgresSSLModesVerifyCa) MarshalJSON() ([]byte, error) {
 	return json.Marshal(out)
 }
 
-type SourcePostgresSSLModesRequireModeEnum string
+type SourcePostgresSSLModesRequireMode string
 
 const (
-	SourcePostgresSSLModesRequireModeEnumRequire SourcePostgresSSLModesRequireModeEnum = "require"
+	SourcePostgresSSLModesRequireModeRequire SourcePostgresSSLModesRequireMode = "require"
 )
 
-func (e SourcePostgresSSLModesRequireModeEnum) ToPointer() *SourcePostgresSSLModesRequireModeEnum {
+func (e SourcePostgresSSLModesRequireMode) ToPointer() *SourcePostgresSSLModesRequireMode {
 	return &e
 }
 
-func (e *SourcePostgresSSLModesRequireModeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourcePostgresSSLModesRequireMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "require":
-		*e = SourcePostgresSSLModesRequireModeEnum(v)
+		*e = SourcePostgresSSLModesRequireMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresSSLModesRequireModeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourcePostgresSSLModesRequireMode: %v", v)
 	}
 }
 
 // SourcePostgresSSLModesRequire - Always require encryption. If the source database server does not support encryption, connection will fail.
 type SourcePostgresSSLModesRequire struct {
-	Mode SourcePostgresSSLModesRequireModeEnum `json:"mode"`
+	Mode SourcePostgresSSLModesRequireMode `json:"mode"`
 
-	AdditionalProperties map[string]interface{} `json:"-"`
+	AdditionalProperties interface{} `json:"-"`
 }
 type _SourcePostgresSSLModesRequire SourcePostgresSSLModesRequire
 
@@ -522,35 +522,35 @@ func (c SourcePostgresSSLModesRequire) MarshalJSON() ([]byte, error) {
 	return json.Marshal(out)
 }
 
-type SourcePostgresSSLModesPreferModeEnum string
+type SourcePostgresSSLModesPreferMode string
 
 const (
-	SourcePostgresSSLModesPreferModeEnumPrefer SourcePostgresSSLModesPreferModeEnum = "prefer"
+	SourcePostgresSSLModesPreferModePrefer SourcePostgresSSLModesPreferMode = "prefer"
 )
 
-func (e SourcePostgresSSLModesPreferModeEnum) ToPointer() *SourcePostgresSSLModesPreferModeEnum {
+func (e SourcePostgresSSLModesPreferMode) ToPointer() *SourcePostgresSSLModesPreferMode {
 	return &e
 }
 
-func (e *SourcePostgresSSLModesPreferModeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourcePostgresSSLModesPreferMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "prefer":
-		*e = SourcePostgresSSLModesPreferModeEnum(v)
+		*e = SourcePostgresSSLModesPreferMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresSSLModesPreferModeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourcePostgresSSLModesPreferMode: %v", v)
 	}
 }
 
 // SourcePostgresSSLModesPrefer - Allows unencrypted connection only if the source database does not support encryption.
 type SourcePostgresSSLModesPrefer struct {
-	Mode SourcePostgresSSLModesPreferModeEnum `json:"mode"`
+	Mode SourcePostgresSSLModesPreferMode `json:"mode"`
 
-	AdditionalProperties map[string]interface{} `json:"-"`
+	AdditionalProperties interface{} `json:"-"`
 }
 type _SourcePostgresSSLModesPrefer SourcePostgresSSLModesPrefer
 
@@ -597,35 +597,35 @@ func (c SourcePostgresSSLModesPrefer) MarshalJSON() ([]byte, error) {
 	return json.Marshal(out)
 }
 
-type SourcePostgresSSLModesAllowModeEnum string
+type SourcePostgresSSLModesAllowMode string
 
 const (
-	SourcePostgresSSLModesAllowModeEnumAllow SourcePostgresSSLModesAllowModeEnum = "allow"
+	SourcePostgresSSLModesAllowModeAllow SourcePostgresSSLModesAllowMode = "allow"
 )
 
-func (e SourcePostgresSSLModesAllowModeEnum) ToPointer() *SourcePostgresSSLModesAllowModeEnum {
+func (e SourcePostgresSSLModesAllowMode) ToPointer() *SourcePostgresSSLModesAllowMode {
 	return &e
 }
 
-func (e *SourcePostgresSSLModesAllowModeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourcePostgresSSLModesAllowMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "allow":
-		*e = SourcePostgresSSLModesAllowModeEnum(v)
+		*e = SourcePostgresSSLModesAllowMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresSSLModesAllowModeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourcePostgresSSLModesAllowMode: %v", v)
 	}
 }
 
 // SourcePostgresSSLModesAllow - Enables encryption only when required by the source database.
 type SourcePostgresSSLModesAllow struct {
-	Mode SourcePostgresSSLModesAllowModeEnum `json:"mode"`
+	Mode SourcePostgresSSLModesAllowMode `json:"mode"`
 
-	AdditionalProperties map[string]interface{} `json:"-"`
+	AdditionalProperties interface{} `json:"-"`
 }
 type _SourcePostgresSSLModesAllow SourcePostgresSSLModesAllow
 
@@ -672,35 +672,35 @@ func (c SourcePostgresSSLModesAllow) MarshalJSON() ([]byte, error) {
 	return json.Marshal(out)
 }
 
-type SourcePostgresSSLModesDisableModeEnum string
+type SourcePostgresSSLModesDisableMode string
 
 const (
-	SourcePostgresSSLModesDisableModeEnumDisable SourcePostgresSSLModesDisableModeEnum = "disable"
+	SourcePostgresSSLModesDisableModeDisable SourcePostgresSSLModesDisableMode = "disable"
 )
 
-func (e SourcePostgresSSLModesDisableModeEnum) ToPointer() *SourcePostgresSSLModesDisableModeEnum {
+func (e SourcePostgresSSLModesDisableMode) ToPointer() *SourcePostgresSSLModesDisableMode {
 	return &e
 }
 
-func (e *SourcePostgresSSLModesDisableModeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourcePostgresSSLModesDisableMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "disable":
-		*e = SourcePostgresSSLModesDisableModeEnum(v)
+		*e = SourcePostgresSSLModesDisableMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresSSLModesDisableModeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourcePostgresSSLModesDisableMode: %v", v)
 	}
 }
 
 // SourcePostgresSSLModesDisable - Disables encryption of communication between Airbyte and source database.
 type SourcePostgresSSLModesDisable struct {
-	Mode SourcePostgresSSLModesDisableModeEnum `json:"mode"`
+	Mode SourcePostgresSSLModesDisableMode `json:"mode"`
 
-	AdditionalProperties map[string]interface{} `json:"-"`
+	AdditionalProperties interface{} `json:"-"`
 }
 type _SourcePostgresSSLModesDisable SourcePostgresSSLModesDisable
 
@@ -911,28 +911,28 @@ func (u SourcePostgresSSLModes) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-// SourcePostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum - Connect through a jump server tunnel host using username and password authentication
-type SourcePostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum string
+// SourcePostgresSSHTunnelMethodPasswordAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and password authentication
+type SourcePostgresSSHTunnelMethodPasswordAuthenticationTunnelMethod string
 
 const (
-	SourcePostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodEnumSSHPasswordAuth SourcePostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum = "SSH_PASSWORD_AUTH"
+	SourcePostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodSSHPasswordAuth SourcePostgresSSHTunnelMethodPasswordAuthenticationTunnelMethod = "SSH_PASSWORD_AUTH"
 )
 
-func (e SourcePostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) ToPointer() *SourcePostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum {
+func (e SourcePostgresSSHTunnelMethodPasswordAuthenticationTunnelMethod) ToPointer() *SourcePostgresSSHTunnelMethodPasswordAuthenticationTunnelMethod {
 	return &e
 }
 
-func (e *SourcePostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *SourcePostgresSSHTunnelMethodPasswordAuthenticationTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SSH_PASSWORD_AUTH":
-		*e = SourcePostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(v)
+		*e = SourcePostgresSSHTunnelMethodPasswordAuthenticationTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for SourcePostgresSSHTunnelMethodPasswordAuthenticationTunnelMethod: %v", v)
 	}
 }
 
@@ -941,7 +941,7 @@ type SourcePostgresSSHTunnelMethodPasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and password authentication
-	TunnelMethod SourcePostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum `json:"tunnel_method"`
+	TunnelMethod SourcePostgresSSHTunnelMethodPasswordAuthenticationTunnelMethod `json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort int64 `json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
@@ -950,28 +950,28 @@ type SourcePostgresSSHTunnelMethodPasswordAuthentication struct {
 	TunnelUserPassword string `json:"tunnel_user_password"`
 }
 
-// SourcePostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum - Connect through a jump server tunnel host using username and ssh key
-type SourcePostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum string
+// SourcePostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and ssh key
+type SourcePostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethod string
 
 const (
-	SourcePostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnumSSHKeyAuth SourcePostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum = "SSH_KEY_AUTH"
+	SourcePostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodSSHKeyAuth SourcePostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethod = "SSH_KEY_AUTH"
 )
 
-func (e SourcePostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) ToPointer() *SourcePostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum {
+func (e SourcePostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethod) ToPointer() *SourcePostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethod {
 	return &e
 }
 
-func (e *SourcePostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *SourcePostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SSH_KEY_AUTH":
-		*e = SourcePostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(v)
+		*e = SourcePostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for SourcePostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethod: %v", v)
 	}
 }
 
@@ -982,42 +982,42 @@ type SourcePostgresSSHTunnelMethodSSHKeyAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and ssh key
-	TunnelMethod SourcePostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum `json:"tunnel_method"`
+	TunnelMethod SourcePostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethod `json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort int64 `json:"tunnel_port"`
 	// OS-level username for logging into the jump server host.
 	TunnelUser string `json:"tunnel_user"`
 }
 
-// SourcePostgresSSHTunnelMethodNoTunnelTunnelMethodEnum - No ssh tunnel needed to connect to database
-type SourcePostgresSSHTunnelMethodNoTunnelTunnelMethodEnum string
+// SourcePostgresSSHTunnelMethodNoTunnelTunnelMethod - No ssh tunnel needed to connect to database
+type SourcePostgresSSHTunnelMethodNoTunnelTunnelMethod string
 
 const (
-	SourcePostgresSSHTunnelMethodNoTunnelTunnelMethodEnumNoTunnel SourcePostgresSSHTunnelMethodNoTunnelTunnelMethodEnum = "NO_TUNNEL"
+	SourcePostgresSSHTunnelMethodNoTunnelTunnelMethodNoTunnel SourcePostgresSSHTunnelMethodNoTunnelTunnelMethod = "NO_TUNNEL"
 )
 
-func (e SourcePostgresSSHTunnelMethodNoTunnelTunnelMethodEnum) ToPointer() *SourcePostgresSSHTunnelMethodNoTunnelTunnelMethodEnum {
+func (e SourcePostgresSSHTunnelMethodNoTunnelTunnelMethod) ToPointer() *SourcePostgresSSHTunnelMethodNoTunnelTunnelMethod {
 	return &e
 }
 
-func (e *SourcePostgresSSHTunnelMethodNoTunnelTunnelMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *SourcePostgresSSHTunnelMethodNoTunnelTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "NO_TUNNEL":
-		*e = SourcePostgresSSHTunnelMethodNoTunnelTunnelMethodEnum(v)
+		*e = SourcePostgresSSHTunnelMethodNoTunnelTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresSSHTunnelMethodNoTunnelTunnelMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for SourcePostgresSSHTunnelMethodNoTunnelTunnelMethod: %v", v)
 	}
 }
 
 // SourcePostgresSSHTunnelMethodNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type SourcePostgresSSHTunnelMethodNoTunnel struct {
 	// No ssh tunnel needed to connect to database
-	TunnelMethod SourcePostgresSSHTunnelMethodNoTunnelTunnelMethodEnum `json:"tunnel_method"`
+	TunnelMethod SourcePostgresSSHTunnelMethodNoTunnelTunnelMethod `json:"tunnel_method"`
 }
 
 type SourcePostgresSSHTunnelMethodType string
@@ -1126,8 +1126,8 @@ type SourcePostgres struct {
 	// Replication method for extracting data from the database.
 	ReplicationMethod *SourcePostgresReplicationMethod `json:"replication_method,omitempty"`
 	// The list of schemas (case sensitive) to sync from. Defaults to public.
-	Schemas    []string                   `json:"schemas,omitempty"`
-	SourceType SourcePostgresPostgresEnum `json:"sourceType"`
+	Schemas    []string               `json:"schemas,omitempty"`
+	SourceType SourcePostgresPostgres `json:"sourceType"`
 	// SSL connection modes.
 	//   Read more <a href="https://jdbc.postgresql.org/documentation/head/ssl-client.html"> in the docs</a>.
 	SslMode *SourcePostgresSSLModes `json:"ssl_mode,omitempty"`

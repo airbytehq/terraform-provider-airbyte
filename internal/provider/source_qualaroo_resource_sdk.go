@@ -4,11 +4,12 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceQualarooResourceModel) ToCreateSDKType() *shared.SourceQualarooCreateRequest {
 	key := r.Configuration.Key.ValueString()
-	sourceType := shared.SourceQualarooQualarooEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceQualarooQualaroo(r.Configuration.SourceType.ValueString())
 	startDate := r.Configuration.StartDate.ValueString()
 	surveyIds := make([]string, 0)
 	for _, surveyIdsItem := range r.Configuration.SurveyIds {
@@ -42,4 +43,11 @@ func (r *SourceQualarooResourceModel) ToCreateSDKType() *shared.SourceQualarooCr
 func (r *SourceQualarooResourceModel) ToDeleteSDKType() *shared.SourceQualarooCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceQualarooResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

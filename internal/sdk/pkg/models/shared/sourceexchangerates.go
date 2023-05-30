@@ -8,27 +8,27 @@ import (
 	"fmt"
 )
 
-type SourceExchangeRatesExchangeRatesEnum string
+type SourceExchangeRatesExchangeRates string
 
 const (
-	SourceExchangeRatesExchangeRatesEnumExchangeRates SourceExchangeRatesExchangeRatesEnum = "exchange-rates"
+	SourceExchangeRatesExchangeRatesExchangeRates SourceExchangeRatesExchangeRates = "exchange-rates"
 )
 
-func (e SourceExchangeRatesExchangeRatesEnum) ToPointer() *SourceExchangeRatesExchangeRatesEnum {
+func (e SourceExchangeRatesExchangeRates) ToPointer() *SourceExchangeRatesExchangeRates {
 	return &e
 }
 
-func (e *SourceExchangeRatesExchangeRatesEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceExchangeRatesExchangeRates) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "exchange-rates":
-		*e = SourceExchangeRatesExchangeRatesEnum(v)
+		*e = SourceExchangeRatesExchangeRates(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceExchangeRatesExchangeRatesEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceExchangeRatesExchangeRates: %v", v)
 	}
 }
 
@@ -38,8 +38,8 @@ type SourceExchangeRates struct {
 	// ISO reference currency. See <a href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html">here</a>. Free plan doesn't support Source Currency Switching, default base currency is EUR
 	Base *string `json:"base,omitempty"`
 	// Ignore weekends? (Exchanges don't run on weekends)
-	IgnoreWeekends *bool                                `json:"ignore_weekends,omitempty"`
-	SourceType     SourceExchangeRatesExchangeRatesEnum `json:"sourceType"`
+	IgnoreWeekends *bool                            `json:"ignore_weekends,omitempty"`
+	SourceType     SourceExchangeRatesExchangeRates `json:"sourceType"`
 	// Start getting data from that date.
 	StartDate types.Date `json:"start_date"`
 }

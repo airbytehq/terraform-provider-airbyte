@@ -4,12 +4,13 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceDremioResourceModel) ToCreateSDKType() *shared.SourceDremioCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	baseURL := r.Configuration.BaseURL.ValueString()
-	sourceType := shared.SourceDremioDremioEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceDremioDremio(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceDremio{
 		APIKey:     apiKey,
 		BaseURL:    baseURL,
@@ -35,4 +36,11 @@ func (r *SourceDremioResourceModel) ToCreateSDKType() *shared.SourceDremioCreate
 func (r *SourceDremioResourceModel) ToDeleteSDKType() *shared.SourceDremioCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceDremioResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

@@ -4,11 +4,12 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationMariadbColumnstoreResourceModel) ToCreateSDKType() *shared.DestinationMariadbColumnstoreCreateRequest {
 	database := r.Configuration.Database.ValueString()
-	destinationType := shared.DestinationMariadbColumnstoreMariadbColumnstoreEnum(r.Configuration.DestinationType.ValueString())
+	destinationType := shared.DestinationMariadbColumnstoreMariadbColumnstore(r.Configuration.DestinationType.ValueString())
 	host := r.Configuration.Host.ValueString()
 	jdbcURLParams := new(string)
 	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
@@ -26,7 +27,7 @@ func (r *DestinationMariadbColumnstoreResourceModel) ToCreateSDKType() *shared.D
 	var tunnelMethod *shared.DestinationMariadbColumnstoreSSHTunnelMethod
 	var destinationMariadbColumnstoreSSHTunnelMethodNoTunnel *shared.DestinationMariadbColumnstoreSSHTunnelMethodNoTunnel
 	if r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodNoTunnel != nil {
-		tunnelMethod1 := shared.DestinationMariadbColumnstoreSSHTunnelMethodNoTunnelTunnelMethodEnum(r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
+		tunnelMethod1 := shared.DestinationMariadbColumnstoreSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
 		destinationMariadbColumnstoreSSHTunnelMethodNoTunnel = &shared.DestinationMariadbColumnstoreSSHTunnelMethodNoTunnel{
 			TunnelMethod: tunnelMethod1,
 		}
@@ -40,7 +41,7 @@ func (r *DestinationMariadbColumnstoreResourceModel) ToCreateSDKType() *shared.D
 	if r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthentication != nil {
 		sshKey := r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthentication.SSHKey.ValueString()
 		tunnelHost := r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
-		tunnelMethod2 := shared.DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
+		tunnelMethod2 := shared.DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
 		tunnelPort := r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
 		tunnelUser := r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
 		destinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthentication = &shared.DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthentication{
@@ -59,7 +60,7 @@ func (r *DestinationMariadbColumnstoreResourceModel) ToCreateSDKType() *shared.D
 	var destinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication *shared.DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication
 	if r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication != nil {
 		tunnelHost1 := r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
-		tunnelMethod3 := shared.DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
+		tunnelMethod3 := shared.DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
 		tunnelPort1 := r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
 		tunnelUser1 := r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
 		tunnelUserPassword := r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication.TunnelUserPassword.ValueString()
@@ -100,4 +101,11 @@ func (r *DestinationMariadbColumnstoreResourceModel) ToCreateSDKType() *shared.D
 func (r *DestinationMariadbColumnstoreResourceModel) ToDeleteSDKType() *shared.DestinationMariadbColumnstoreCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *DestinationMariadbColumnstoreResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

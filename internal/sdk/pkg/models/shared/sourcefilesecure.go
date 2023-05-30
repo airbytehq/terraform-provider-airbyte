@@ -9,25 +9,25 @@ import (
 	"fmt"
 )
 
-// SourceFileSecureFileFormatEnum - The Format of the file which should be replicated (Warning: some formats may be experimental, please refer to the docs).
-type SourceFileSecureFileFormatEnum string
+// SourceFileSecureFileFormat - The Format of the file which should be replicated (Warning: some formats may be experimental, please refer to the docs).
+type SourceFileSecureFileFormat string
 
 const (
-	SourceFileSecureFileFormatEnumCsv         SourceFileSecureFileFormatEnum = "csv"
-	SourceFileSecureFileFormatEnumJSON        SourceFileSecureFileFormatEnum = "json"
-	SourceFileSecureFileFormatEnumJsonl       SourceFileSecureFileFormatEnum = "jsonl"
-	SourceFileSecureFileFormatEnumExcel       SourceFileSecureFileFormatEnum = "excel"
-	SourceFileSecureFileFormatEnumExcelBinary SourceFileSecureFileFormatEnum = "excel_binary"
-	SourceFileSecureFileFormatEnumFeather     SourceFileSecureFileFormatEnum = "feather"
-	SourceFileSecureFileFormatEnumParquet     SourceFileSecureFileFormatEnum = "parquet"
-	SourceFileSecureFileFormatEnumYaml        SourceFileSecureFileFormatEnum = "yaml"
+	SourceFileSecureFileFormatCsv         SourceFileSecureFileFormat = "csv"
+	SourceFileSecureFileFormatJSON        SourceFileSecureFileFormat = "json"
+	SourceFileSecureFileFormatJsonl       SourceFileSecureFileFormat = "jsonl"
+	SourceFileSecureFileFormatExcel       SourceFileSecureFileFormat = "excel"
+	SourceFileSecureFileFormatExcelBinary SourceFileSecureFileFormat = "excel_binary"
+	SourceFileSecureFileFormatFeather     SourceFileSecureFileFormat = "feather"
+	SourceFileSecureFileFormatParquet     SourceFileSecureFileFormat = "parquet"
+	SourceFileSecureFileFormatYaml        SourceFileSecureFileFormat = "yaml"
 )
 
-func (e SourceFileSecureFileFormatEnum) ToPointer() *SourceFileSecureFileFormatEnum {
+func (e SourceFileSecureFileFormat) ToPointer() *SourceFileSecureFileFormat {
 	return &e
 }
 
-func (e *SourceFileSecureFileFormatEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceFileSecureFileFormat) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -48,133 +48,133 @@ func (e *SourceFileSecureFileFormatEnum) UnmarshalJSON(data []byte) error {
 	case "parquet":
 		fallthrough
 	case "yaml":
-		*e = SourceFileSecureFileFormatEnum(v)
+		*e = SourceFileSecureFileFormat(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFileSecureFileFormatEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceFileSecureFileFormat: %v", v)
 	}
 }
 
-type SourceFileSecureStorageProviderSFTPSecureFileTransferProtocolStorageEnum string
+type SourceFileSecureStorageProviderSFTPSecureFileTransferProtocolStorage string
 
 const (
-	SourceFileSecureStorageProviderSFTPSecureFileTransferProtocolStorageEnumSftp SourceFileSecureStorageProviderSFTPSecureFileTransferProtocolStorageEnum = "SFTP"
+	SourceFileSecureStorageProviderSFTPSecureFileTransferProtocolStorageSftp SourceFileSecureStorageProviderSFTPSecureFileTransferProtocolStorage = "SFTP"
 )
 
-func (e SourceFileSecureStorageProviderSFTPSecureFileTransferProtocolStorageEnum) ToPointer() *SourceFileSecureStorageProviderSFTPSecureFileTransferProtocolStorageEnum {
+func (e SourceFileSecureStorageProviderSFTPSecureFileTransferProtocolStorage) ToPointer() *SourceFileSecureStorageProviderSFTPSecureFileTransferProtocolStorage {
 	return &e
 }
 
-func (e *SourceFileSecureStorageProviderSFTPSecureFileTransferProtocolStorageEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceFileSecureStorageProviderSFTPSecureFileTransferProtocolStorage) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SFTP":
-		*e = SourceFileSecureStorageProviderSFTPSecureFileTransferProtocolStorageEnum(v)
+		*e = SourceFileSecureStorageProviderSFTPSecureFileTransferProtocolStorage(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFileSecureStorageProviderSFTPSecureFileTransferProtocolStorageEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceFileSecureStorageProviderSFTPSecureFileTransferProtocolStorage: %v", v)
 	}
 }
 
 // SourceFileSecureStorageProviderSFTPSecureFileTransferProtocol - The storage Provider or Location of the file(s) which should be replicated.
 type SourceFileSecureStorageProviderSFTPSecureFileTransferProtocol struct {
-	Host     string                                                                   `json:"host"`
-	Password *string                                                                  `json:"password,omitempty"`
-	Port     *string                                                                  `json:"port,omitempty"`
-	Storage  SourceFileSecureStorageProviderSFTPSecureFileTransferProtocolStorageEnum `json:"storage"`
-	User     string                                                                   `json:"user"`
+	Host     string                                                               `json:"host"`
+	Password *string                                                              `json:"password,omitempty"`
+	Port     *string                                                              `json:"port,omitempty"`
+	Storage  SourceFileSecureStorageProviderSFTPSecureFileTransferProtocolStorage `json:"storage"`
+	User     string                                                               `json:"user"`
 }
 
-type SourceFileSecureStorageProviderSCPSecureCopyProtocolStorageEnum string
+type SourceFileSecureStorageProviderSCPSecureCopyProtocolStorage string
 
 const (
-	SourceFileSecureStorageProviderSCPSecureCopyProtocolStorageEnumScp SourceFileSecureStorageProviderSCPSecureCopyProtocolStorageEnum = "SCP"
+	SourceFileSecureStorageProviderSCPSecureCopyProtocolStorageScp SourceFileSecureStorageProviderSCPSecureCopyProtocolStorage = "SCP"
 )
 
-func (e SourceFileSecureStorageProviderSCPSecureCopyProtocolStorageEnum) ToPointer() *SourceFileSecureStorageProviderSCPSecureCopyProtocolStorageEnum {
+func (e SourceFileSecureStorageProviderSCPSecureCopyProtocolStorage) ToPointer() *SourceFileSecureStorageProviderSCPSecureCopyProtocolStorage {
 	return &e
 }
 
-func (e *SourceFileSecureStorageProviderSCPSecureCopyProtocolStorageEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceFileSecureStorageProviderSCPSecureCopyProtocolStorage) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SCP":
-		*e = SourceFileSecureStorageProviderSCPSecureCopyProtocolStorageEnum(v)
+		*e = SourceFileSecureStorageProviderSCPSecureCopyProtocolStorage(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFileSecureStorageProviderSCPSecureCopyProtocolStorageEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceFileSecureStorageProviderSCPSecureCopyProtocolStorage: %v", v)
 	}
 }
 
 // SourceFileSecureStorageProviderSCPSecureCopyProtocol - The storage Provider or Location of the file(s) which should be replicated.
 type SourceFileSecureStorageProviderSCPSecureCopyProtocol struct {
-	Host     string                                                          `json:"host"`
-	Password *string                                                         `json:"password,omitempty"`
-	Port     *string                                                         `json:"port,omitempty"`
-	Storage  SourceFileSecureStorageProviderSCPSecureCopyProtocolStorageEnum `json:"storage"`
-	User     string                                                          `json:"user"`
+	Host     string                                                      `json:"host"`
+	Password *string                                                     `json:"password,omitempty"`
+	Port     *string                                                     `json:"port,omitempty"`
+	Storage  SourceFileSecureStorageProviderSCPSecureCopyProtocolStorage `json:"storage"`
+	User     string                                                      `json:"user"`
 }
 
-type SourceFileSecureStorageProviderSSHSecureShellStorageEnum string
+type SourceFileSecureStorageProviderSSHSecureShellStorage string
 
 const (
-	SourceFileSecureStorageProviderSSHSecureShellStorageEnumSSH SourceFileSecureStorageProviderSSHSecureShellStorageEnum = "SSH"
+	SourceFileSecureStorageProviderSSHSecureShellStorageSSH SourceFileSecureStorageProviderSSHSecureShellStorage = "SSH"
 )
 
-func (e SourceFileSecureStorageProviderSSHSecureShellStorageEnum) ToPointer() *SourceFileSecureStorageProviderSSHSecureShellStorageEnum {
+func (e SourceFileSecureStorageProviderSSHSecureShellStorage) ToPointer() *SourceFileSecureStorageProviderSSHSecureShellStorage {
 	return &e
 }
 
-func (e *SourceFileSecureStorageProviderSSHSecureShellStorageEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceFileSecureStorageProviderSSHSecureShellStorage) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SSH":
-		*e = SourceFileSecureStorageProviderSSHSecureShellStorageEnum(v)
+		*e = SourceFileSecureStorageProviderSSHSecureShellStorage(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFileSecureStorageProviderSSHSecureShellStorageEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceFileSecureStorageProviderSSHSecureShellStorage: %v", v)
 	}
 }
 
 // SourceFileSecureStorageProviderSSHSecureShell - The storage Provider or Location of the file(s) which should be replicated.
 type SourceFileSecureStorageProviderSSHSecureShell struct {
-	Host     string                                                   `json:"host"`
-	Password *string                                                  `json:"password,omitempty"`
-	Port     *string                                                  `json:"port,omitempty"`
-	Storage  SourceFileSecureStorageProviderSSHSecureShellStorageEnum `json:"storage"`
-	User     string                                                   `json:"user"`
+	Host     string                                               `json:"host"`
+	Password *string                                              `json:"password,omitempty"`
+	Port     *string                                              `json:"port,omitempty"`
+	Storage  SourceFileSecureStorageProviderSSHSecureShellStorage `json:"storage"`
+	User     string                                               `json:"user"`
 }
 
-type SourceFileSecureStorageProviderAzBlobAzureBlobStorageStorageEnum string
+type SourceFileSecureStorageProviderAzBlobAzureBlobStorageStorage string
 
 const (
-	SourceFileSecureStorageProviderAzBlobAzureBlobStorageStorageEnumAzBlob SourceFileSecureStorageProviderAzBlobAzureBlobStorageStorageEnum = "AzBlob"
+	SourceFileSecureStorageProviderAzBlobAzureBlobStorageStorageAzBlob SourceFileSecureStorageProviderAzBlobAzureBlobStorageStorage = "AzBlob"
 )
 
-func (e SourceFileSecureStorageProviderAzBlobAzureBlobStorageStorageEnum) ToPointer() *SourceFileSecureStorageProviderAzBlobAzureBlobStorageStorageEnum {
+func (e SourceFileSecureStorageProviderAzBlobAzureBlobStorageStorage) ToPointer() *SourceFileSecureStorageProviderAzBlobAzureBlobStorageStorage {
 	return &e
 }
 
-func (e *SourceFileSecureStorageProviderAzBlobAzureBlobStorageStorageEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceFileSecureStorageProviderAzBlobAzureBlobStorageStorage) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "AzBlob":
-		*e = SourceFileSecureStorageProviderAzBlobAzureBlobStorageStorageEnum(v)
+		*e = SourceFileSecureStorageProviderAzBlobAzureBlobStorageStorage(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFileSecureStorageProviderAzBlobAzureBlobStorageStorageEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceFileSecureStorageProviderAzBlobAzureBlobStorageStorage: %v", v)
 	}
 }
 
@@ -183,33 +183,33 @@ type SourceFileSecureStorageProviderAzBlobAzureBlobStorage struct {
 	// To access Azure Blob Storage, this connector would need credentials with the proper permissions. One option is a SAS (Shared Access Signature) token. If accessing publicly available data, this field is not necessary.
 	SasToken *string `json:"sas_token,omitempty"`
 	// To access Azure Blob Storage, this connector would need credentials with the proper permissions. One option is a storage account shared key (aka account key or access key). If accessing publicly available data, this field is not necessary.
-	SharedKey *string                                                          `json:"shared_key,omitempty"`
-	Storage   SourceFileSecureStorageProviderAzBlobAzureBlobStorageStorageEnum `json:"storage"`
+	SharedKey *string                                                      `json:"shared_key,omitempty"`
+	Storage   SourceFileSecureStorageProviderAzBlobAzureBlobStorageStorage `json:"storage"`
 	// The globally unique name of the storage account that the desired blob sits within. See <a href="https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview" target="_blank">here</a> for more details.
 	StorageAccount string `json:"storage_account"`
 }
 
-type SourceFileSecureStorageProviderS3AmazonWebServicesStorageEnum string
+type SourceFileSecureStorageProviderS3AmazonWebServicesStorage string
 
 const (
-	SourceFileSecureStorageProviderS3AmazonWebServicesStorageEnumS3 SourceFileSecureStorageProviderS3AmazonWebServicesStorageEnum = "S3"
+	SourceFileSecureStorageProviderS3AmazonWebServicesStorageS3 SourceFileSecureStorageProviderS3AmazonWebServicesStorage = "S3"
 )
 
-func (e SourceFileSecureStorageProviderS3AmazonWebServicesStorageEnum) ToPointer() *SourceFileSecureStorageProviderS3AmazonWebServicesStorageEnum {
+func (e SourceFileSecureStorageProviderS3AmazonWebServicesStorage) ToPointer() *SourceFileSecureStorageProviderS3AmazonWebServicesStorage {
 	return &e
 }
 
-func (e *SourceFileSecureStorageProviderS3AmazonWebServicesStorageEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceFileSecureStorageProviderS3AmazonWebServicesStorage) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "S3":
-		*e = SourceFileSecureStorageProviderS3AmazonWebServicesStorageEnum(v)
+		*e = SourceFileSecureStorageProviderS3AmazonWebServicesStorage(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFileSecureStorageProviderS3AmazonWebServicesStorageEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceFileSecureStorageProviderS3AmazonWebServicesStorage: %v", v)
 	}
 }
 
@@ -218,68 +218,68 @@ type SourceFileSecureStorageProviderS3AmazonWebServices struct {
 	// In order to access private Buckets stored on AWS S3, this connector would need credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
 	AwsAccessKeyID *string `json:"aws_access_key_id,omitempty"`
 	// In order to access private Buckets stored on AWS S3, this connector would need credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
-	AwsSecretAccessKey *string                                                       `json:"aws_secret_access_key,omitempty"`
-	Storage            SourceFileSecureStorageProviderS3AmazonWebServicesStorageEnum `json:"storage"`
+	AwsSecretAccessKey *string                                                   `json:"aws_secret_access_key,omitempty"`
+	Storage            SourceFileSecureStorageProviderS3AmazonWebServicesStorage `json:"storage"`
 }
 
-type SourceFileSecureStorageProviderGCSGoogleCloudStorageStorageEnum string
+type SourceFileSecureStorageProviderGCSGoogleCloudStorageStorage string
 
 const (
-	SourceFileSecureStorageProviderGCSGoogleCloudStorageStorageEnumGcs SourceFileSecureStorageProviderGCSGoogleCloudStorageStorageEnum = "GCS"
+	SourceFileSecureStorageProviderGCSGoogleCloudStorageStorageGcs SourceFileSecureStorageProviderGCSGoogleCloudStorageStorage = "GCS"
 )
 
-func (e SourceFileSecureStorageProviderGCSGoogleCloudStorageStorageEnum) ToPointer() *SourceFileSecureStorageProviderGCSGoogleCloudStorageStorageEnum {
+func (e SourceFileSecureStorageProviderGCSGoogleCloudStorageStorage) ToPointer() *SourceFileSecureStorageProviderGCSGoogleCloudStorageStorage {
 	return &e
 }
 
-func (e *SourceFileSecureStorageProviderGCSGoogleCloudStorageStorageEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceFileSecureStorageProviderGCSGoogleCloudStorageStorage) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "GCS":
-		*e = SourceFileSecureStorageProviderGCSGoogleCloudStorageStorageEnum(v)
+		*e = SourceFileSecureStorageProviderGCSGoogleCloudStorageStorage(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFileSecureStorageProviderGCSGoogleCloudStorageStorageEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceFileSecureStorageProviderGCSGoogleCloudStorageStorage: %v", v)
 	}
 }
 
 // SourceFileSecureStorageProviderGCSGoogleCloudStorage - The storage Provider or Location of the file(s) which should be replicated.
 type SourceFileSecureStorageProviderGCSGoogleCloudStorage struct {
 	// In order to access private Buckets stored on Google Cloud, this connector would need a service account json credentials with the proper permissions as described <a href="https://cloud.google.com/iam/docs/service-accounts" target="_blank">here</a>. Please generate the credentials.json file and copy/paste its content to this field (expecting JSON formats). If accessing publicly available data, this field is not necessary.
-	ServiceAccountJSON *string                                                         `json:"service_account_json,omitempty"`
-	Storage            SourceFileSecureStorageProviderGCSGoogleCloudStorageStorageEnum `json:"storage"`
+	ServiceAccountJSON *string                                                     `json:"service_account_json,omitempty"`
+	Storage            SourceFileSecureStorageProviderGCSGoogleCloudStorageStorage `json:"storage"`
 }
 
-type SourceFileSecureStorageProviderHTTPSPublicWebStorageEnum string
+type SourceFileSecureStorageProviderHTTPSPublicWebStorage string
 
 const (
-	SourceFileSecureStorageProviderHTTPSPublicWebStorageEnumHTTPS SourceFileSecureStorageProviderHTTPSPublicWebStorageEnum = "HTTPS"
+	SourceFileSecureStorageProviderHTTPSPublicWebStorageHTTPS SourceFileSecureStorageProviderHTTPSPublicWebStorage = "HTTPS"
 )
 
-func (e SourceFileSecureStorageProviderHTTPSPublicWebStorageEnum) ToPointer() *SourceFileSecureStorageProviderHTTPSPublicWebStorageEnum {
+func (e SourceFileSecureStorageProviderHTTPSPublicWebStorage) ToPointer() *SourceFileSecureStorageProviderHTTPSPublicWebStorage {
 	return &e
 }
 
-func (e *SourceFileSecureStorageProviderHTTPSPublicWebStorageEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceFileSecureStorageProviderHTTPSPublicWebStorage) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "HTTPS":
-		*e = SourceFileSecureStorageProviderHTTPSPublicWebStorageEnum(v)
+		*e = SourceFileSecureStorageProviderHTTPSPublicWebStorage(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFileSecureStorageProviderHTTPSPublicWebStorageEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceFileSecureStorageProviderHTTPSPublicWebStorage: %v", v)
 	}
 }
 
 // SourceFileSecureStorageProviderHTTPSPublicWeb - The storage Provider or Location of the file(s) which should be replicated.
 type SourceFileSecureStorageProviderHTTPSPublicWeb struct {
-	Storage SourceFileSecureStorageProviderHTTPSPublicWebStorageEnum `json:"storage"`
+	Storage SourceFileSecureStorageProviderHTTPSPublicWebStorage `json:"storage"`
 	// Add User-Agent to request
 	UserAgent *bool `json:"user_agent,omitempty"`
 }
@@ -472,27 +472,27 @@ func (u SourceFileSecureStorageProvider) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-type SourceFileSecureFileSecureEnum string
+type SourceFileSecureFileSecure string
 
 const (
-	SourceFileSecureFileSecureEnumFileSecure SourceFileSecureFileSecureEnum = "file-secure"
+	SourceFileSecureFileSecureFileSecure SourceFileSecureFileSecure = "file-secure"
 )
 
-func (e SourceFileSecureFileSecureEnum) ToPointer() *SourceFileSecureFileSecureEnum {
+func (e SourceFileSecureFileSecure) ToPointer() *SourceFileSecureFileSecure {
 	return &e
 }
 
-func (e *SourceFileSecureFileSecureEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceFileSecureFileSecure) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "file-secure":
-		*e = SourceFileSecureFileSecureEnum(v)
+		*e = SourceFileSecureFileSecure(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFileSecureFileSecureEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceFileSecureFileSecure: %v", v)
 	}
 }
 
@@ -500,12 +500,12 @@ type SourceFileSecure struct {
 	// The Name of the final table to replicate this file into (should include letters, numbers dash and underscores only).
 	DatasetName string `json:"dataset_name"`
 	// The Format of the file which should be replicated (Warning: some formats may be experimental, please refer to the docs).
-	Format SourceFileSecureFileFormatEnum `json:"format"`
+	Format SourceFileSecureFileFormat `json:"format"`
 	// The storage Provider or Location of the file(s) which should be replicated.
 	Provider SourceFileSecureStorageProvider `json:"provider"`
 	// This should be a string in JSON format. It depends on the chosen file format to provide additional options and tune its behavior.
-	ReaderOptions *string                        `json:"reader_options,omitempty"`
-	SourceType    SourceFileSecureFileSecureEnum `json:"sourceType"`
+	ReaderOptions *string                    `json:"reader_options,omitempty"`
+	SourceType    SourceFileSecureFileSecure `json:"sourceType"`
 	// The URL path to access the file which should be replicated.
 	URL string `json:"url"`
 }

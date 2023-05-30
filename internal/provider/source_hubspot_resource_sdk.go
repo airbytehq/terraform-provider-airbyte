@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
@@ -13,7 +14,7 @@ func (r *SourceHubspotResourceModel) ToCreateSDKType() *shared.SourceHubspotCrea
 	if r.Configuration.Credentials.SourceHubspotAuthenticationOAuth != nil {
 		clientID := r.Configuration.Credentials.SourceHubspotAuthenticationOAuth.ClientID.ValueString()
 		clientSecret := r.Configuration.Credentials.SourceHubspotAuthenticationOAuth.ClientSecret.ValueString()
-		credentialsTitle := shared.SourceHubspotAuthenticationOAuthCredentialsEnum(r.Configuration.Credentials.SourceHubspotAuthenticationOAuth.CredentialsTitle.ValueString())
+		credentialsTitle := shared.SourceHubspotAuthenticationOAuthCredentials(r.Configuration.Credentials.SourceHubspotAuthenticationOAuth.CredentialsTitle.ValueString())
 		refreshToken := r.Configuration.Credentials.SourceHubspotAuthenticationOAuth.RefreshToken.ValueString()
 		sourceHubspotAuthenticationOAuth = &shared.SourceHubspotAuthenticationOAuth{
 			ClientID:         clientID,
@@ -30,7 +31,7 @@ func (r *SourceHubspotResourceModel) ToCreateSDKType() *shared.SourceHubspotCrea
 	var sourceHubspotAuthenticationPrivateApp *shared.SourceHubspotAuthenticationPrivateApp
 	if r.Configuration.Credentials.SourceHubspotAuthenticationPrivateApp != nil {
 		accessToken := r.Configuration.Credentials.SourceHubspotAuthenticationPrivateApp.AccessToken.ValueString()
-		credentialsTitle1 := shared.SourceHubspotAuthenticationPrivateAppCredentialsEnum(r.Configuration.Credentials.SourceHubspotAuthenticationPrivateApp.CredentialsTitle.ValueString())
+		credentialsTitle1 := shared.SourceHubspotAuthenticationPrivateAppCredentials(r.Configuration.Credentials.SourceHubspotAuthenticationPrivateApp.CredentialsTitle.ValueString())
 		sourceHubspotAuthenticationPrivateApp = &shared.SourceHubspotAuthenticationPrivateApp{
 			AccessToken:      accessToken,
 			CredentialsTitle: credentialsTitle1,
@@ -41,7 +42,7 @@ func (r *SourceHubspotResourceModel) ToCreateSDKType() *shared.SourceHubspotCrea
 			SourceHubspotAuthenticationPrivateApp: sourceHubspotAuthenticationPrivateApp,
 		}
 	}
-	sourceType := shared.SourceHubspotHubspotEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceHubspotHubspot(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceHubspot{
 		Credentials: credentials,
@@ -68,4 +69,11 @@ func (r *SourceHubspotResourceModel) ToCreateSDKType() *shared.SourceHubspotCrea
 func (r *SourceHubspotResourceModel) ToDeleteSDKType() *shared.SourceHubspotCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceHubspotResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

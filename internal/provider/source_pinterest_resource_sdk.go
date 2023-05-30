@@ -4,13 +4,14 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourcePinterestResourceModel) ToCreateSDKType() *shared.SourcePinterestCreateRequest {
 	var credentials *shared.SourcePinterestAuthorizationMethod
 	var sourcePinterestAuthorizationMethodOAuth20 *shared.SourcePinterestAuthorizationMethodOAuth20
 	if r.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20 != nil {
-		authMethod := shared.SourcePinterestAuthorizationMethodOAuth20AuthMethodEnum(r.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20.AuthMethod.ValueString())
+		authMethod := shared.SourcePinterestAuthorizationMethodOAuth20AuthMethod(r.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20.AuthMethod.ValueString())
 		clientID := new(string)
 		if !r.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20.ClientID.IsNull() {
 			*clientID = r.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20.ClientID.ValueString()
@@ -39,7 +40,7 @@ func (r *SourcePinterestResourceModel) ToCreateSDKType() *shared.SourcePinterest
 	var sourcePinterestAuthorizationMethodAccessToken *shared.SourcePinterestAuthorizationMethodAccessToken
 	if r.Configuration.Credentials.SourcePinterestAuthorizationMethodAccessToken != nil {
 		accessToken := r.Configuration.Credentials.SourcePinterestAuthorizationMethodAccessToken.AccessToken.ValueString()
-		authMethod1 := shared.SourcePinterestAuthorizationMethodAccessTokenAuthMethodEnum(r.Configuration.Credentials.SourcePinterestAuthorizationMethodAccessToken.AuthMethod.ValueString())
+		authMethod1 := shared.SourcePinterestAuthorizationMethodAccessTokenAuthMethod(r.Configuration.Credentials.SourcePinterestAuthorizationMethodAccessToken.AuthMethod.ValueString())
 		sourcePinterestAuthorizationMethodAccessToken = &shared.SourcePinterestAuthorizationMethodAccessToken{
 			AccessToken: accessToken,
 			AuthMethod:  authMethod1,
@@ -50,11 +51,11 @@ func (r *SourcePinterestResourceModel) ToCreateSDKType() *shared.SourcePinterest
 			SourcePinterestAuthorizationMethodAccessToken: sourcePinterestAuthorizationMethodAccessToken,
 		}
 	}
-	sourceType := shared.SourcePinterestPinterestEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourcePinterestPinterest(r.Configuration.SourceType.ValueString())
 	startDate := r.Configuration.StartDate.ValueString()
-	status := make([]shared.SourcePinterestStatusEnum, 0)
+	status := make([]shared.SourcePinterestStatus, 0)
 	for _, statusItem := range r.Configuration.Status {
-		status = append(status, shared.SourcePinterestStatusEnum(statusItem.ValueString()))
+		status = append(status, shared.SourcePinterestStatus(statusItem.ValueString()))
 	}
 	configuration := shared.SourcePinterest{
 		Credentials: credentials,
@@ -82,4 +83,11 @@ func (r *SourcePinterestResourceModel) ToCreateSDKType() *shared.SourcePinterest
 func (r *SourcePinterestResourceModel) ToDeleteSDKType() *shared.SourcePinterestCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourcePinterestResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

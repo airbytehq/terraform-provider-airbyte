@@ -7,34 +7,34 @@ import (
 	"fmt"
 )
 
-type DestinationMeilisearchMeilisearchEnum string
+type DestinationMeilisearchMeilisearch string
 
 const (
-	DestinationMeilisearchMeilisearchEnumMeilisearch DestinationMeilisearchMeilisearchEnum = "meilisearch"
+	DestinationMeilisearchMeilisearchMeilisearch DestinationMeilisearchMeilisearch = "meilisearch"
 )
 
-func (e DestinationMeilisearchMeilisearchEnum) ToPointer() *DestinationMeilisearchMeilisearchEnum {
+func (e DestinationMeilisearchMeilisearch) ToPointer() *DestinationMeilisearchMeilisearch {
 	return &e
 }
 
-func (e *DestinationMeilisearchMeilisearchEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationMeilisearchMeilisearch) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "meilisearch":
-		*e = DestinationMeilisearchMeilisearchEnum(v)
+		*e = DestinationMeilisearchMeilisearch(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationMeilisearchMeilisearchEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationMeilisearchMeilisearch: %v", v)
 	}
 }
 
 type DestinationMeilisearch struct {
 	// MeiliSearch API Key. See the <a href="https://docs.airbyte.com/integrations/destinations/meilisearch">docs</a> for more information on how to obtain this key.
-	APIKey          *string                               `json:"api_key,omitempty"`
-	DestinationType DestinationMeilisearchMeilisearchEnum `json:"destinationType"`
+	APIKey          *string                           `json:"api_key,omitempty"`
+	DestinationType DestinationMeilisearchMeilisearch `json:"destinationType"`
 	// Hostname of the MeiliSearch instance.
 	Host string `json:"host"`
 }

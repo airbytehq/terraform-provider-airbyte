@@ -8,27 +8,27 @@ import (
 	"time"
 )
 
-type SourceStripeStripeEnum string
+type SourceStripeStripe string
 
 const (
-	SourceStripeStripeEnumStripe SourceStripeStripeEnum = "stripe"
+	SourceStripeStripeStripe SourceStripeStripe = "stripe"
 )
 
-func (e SourceStripeStripeEnum) ToPointer() *SourceStripeStripeEnum {
+func (e SourceStripeStripe) ToPointer() *SourceStripeStripe {
 	return &e
 }
 
-func (e *SourceStripeStripeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceStripeStripe) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "stripe":
-		*e = SourceStripeStripeEnum(v)
+		*e = SourceStripeStripe(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceStripeStripeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceStripeStripe: %v", v)
 	}
 }
 
@@ -40,8 +40,8 @@ type SourceStripe struct {
 	// When set, the connector will always re-export data from the past N days, where N is the value set here. This is useful if your data is frequently updated after creation. More info <a href="https://docs.airbyte.com/integrations/sources/stripe#requirements">here</a>
 	LookbackWindowDays *int64 `json:"lookback_window_days,omitempty"`
 	// The time increment used by the connector when requesting data from the Stripe API. The bigger the value is, the less requests will be made and faster the sync will be. On the other hand, the more seldom the state is persisted.
-	SliceRange *int64                 `json:"slice_range,omitempty"`
-	SourceType SourceStripeStripeEnum `json:"sourceType"`
+	SliceRange *int64             `json:"slice_range,omitempty"`
+	SourceType SourceStripeStripe `json:"sourceType"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Only data generated after this date will be replicated.
 	StartDate time.Time `json:"start_date"`
 }

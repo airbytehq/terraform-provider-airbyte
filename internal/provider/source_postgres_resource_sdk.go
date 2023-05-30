@@ -5,6 +5,7 @@ package provider
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	"encoding/json"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourcePostgresResourceModel) ToCreateSDKType() *shared.SourcePostgresCreateRequest {
@@ -26,7 +27,7 @@ func (r *SourcePostgresResourceModel) ToCreateSDKType() *shared.SourcePostgresCr
 	var replicationMethod *shared.SourcePostgresReplicationMethod
 	var sourcePostgresReplicationMethodStandard *shared.SourcePostgresReplicationMethodStandard
 	if r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodStandard != nil {
-		method := shared.SourcePostgresReplicationMethodStandardMethodEnum(r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodStandard.Method.ValueString())
+		method := shared.SourcePostgresReplicationMethodStandardMethod(r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodStandard.Method.ValueString())
 		sourcePostgresReplicationMethodStandard = &shared.SourcePostgresReplicationMethodStandard{
 			Method: method,
 		}
@@ -44,26 +45,24 @@ func (r *SourcePostgresResourceModel) ToCreateSDKType() *shared.SourcePostgresCr
 		} else {
 			initialWaitingSeconds = nil
 		}
-		lsnCommitBehaviour := new(shared.SourcePostgresReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnum)
+		lsnCommitBehaviour := new(shared.SourcePostgresReplicationMethodLogicalReplicationCDCLSNCommitBehaviour)
 		if !r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.LsnCommitBehaviour.IsUnknown() && !r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.LsnCommitBehaviour.IsNull() {
-			*lsnCommitBehaviour = shared.SourcePostgresReplicationMethodLogicalReplicationCDCLSNCommitBehaviourEnum(r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.LsnCommitBehaviour.ValueString())
+			*lsnCommitBehaviour = shared.SourcePostgresReplicationMethodLogicalReplicationCDCLSNCommitBehaviour(r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.LsnCommitBehaviour.ValueString())
 		} else {
 			lsnCommitBehaviour = nil
 		}
-		method1 := shared.SourcePostgresReplicationMethodLogicalReplicationCDCMethodEnum(r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.Method.ValueString())
-		plugin := new(shared.SourcePostgresReplicationMethodLogicalReplicationCDCPluginEnum)
+		method1 := shared.SourcePostgresReplicationMethodLogicalReplicationCDCMethod(r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.Method.ValueString())
+		plugin := new(shared.SourcePostgresReplicationMethodLogicalReplicationCDCPlugin)
 		if !r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.Plugin.IsUnknown() && !r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.Plugin.IsNull() {
-			*plugin = shared.SourcePostgresReplicationMethodLogicalReplicationCDCPluginEnum(r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.Plugin.ValueString())
+			*plugin = shared.SourcePostgresReplicationMethodLogicalReplicationCDCPlugin(r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.Plugin.ValueString())
 		} else {
 			plugin = nil
 		}
 		publication := r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.Publication.ValueString()
 		replicationSlot := r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.ReplicationSlot.ValueString()
-		additionalProperties := make(map[string]interface{})
-		for additionalPropertiesKey, additionalPropertiesValue := range r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.AdditionalProperties {
-			var additionalPropertiesInst interface{}
-			_ = json.Unmarshal([]byte(additionalPropertiesValue.ValueString()), &additionalPropertiesInst)
-			additionalProperties[additionalPropertiesKey] = additionalPropertiesInst
+		var additionalProperties interface{}
+		if !r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.AdditionalProperties.IsUnknown() && !r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.AdditionalProperties.ValueString()), &additionalProperties)
 		}
 		sourcePostgresReplicationMethodLogicalReplicationCDC = &shared.SourcePostgresReplicationMethodLogicalReplicationCDC{
 			InitialWaitingSeconds: initialWaitingSeconds,
@@ -84,16 +83,14 @@ func (r *SourcePostgresResourceModel) ToCreateSDKType() *shared.SourcePostgresCr
 	for _, schemasItem := range r.Configuration.Schemas {
 		schemas = append(schemas, schemasItem.ValueString())
 	}
-	sourceType := shared.SourcePostgresPostgresEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourcePostgresPostgres(r.Configuration.SourceType.ValueString())
 	var sslMode *shared.SourcePostgresSSLModes
 	var sourcePostgresSSLModesDisable *shared.SourcePostgresSSLModesDisable
 	if r.Configuration.SslMode.SourcePostgresSSLModesDisable != nil {
-		mode := shared.SourcePostgresSSLModesDisableModeEnum(r.Configuration.SslMode.SourcePostgresSSLModesDisable.Mode.ValueString())
-		additionalProperties1 := make(map[string]interface{})
-		for additionalPropertiesKey1, additionalPropertiesValue1 := range r.Configuration.SslMode.SourcePostgresSSLModesDisable.AdditionalProperties {
-			var additionalPropertiesInst1 interface{}
-			_ = json.Unmarshal([]byte(additionalPropertiesValue1.ValueString()), &additionalPropertiesInst1)
-			additionalProperties1[additionalPropertiesKey1] = additionalPropertiesInst1
+		mode := shared.SourcePostgresSSLModesDisableMode(r.Configuration.SslMode.SourcePostgresSSLModesDisable.Mode.ValueString())
+		var additionalProperties1 interface{}
+		if !r.Configuration.SslMode.SourcePostgresSSLModesDisable.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.SourcePostgresSSLModesDisable.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.SslMode.SourcePostgresSSLModesDisable.AdditionalProperties.ValueString()), &additionalProperties1)
 		}
 		sourcePostgresSSLModesDisable = &shared.SourcePostgresSSLModesDisable{
 			Mode:                 mode,
@@ -107,12 +104,10 @@ func (r *SourcePostgresResourceModel) ToCreateSDKType() *shared.SourcePostgresCr
 	}
 	var sourcePostgresSSLModesAllow *shared.SourcePostgresSSLModesAllow
 	if r.Configuration.SslMode.SourcePostgresSSLModesAllow != nil {
-		mode1 := shared.SourcePostgresSSLModesAllowModeEnum(r.Configuration.SslMode.SourcePostgresSSLModesAllow.Mode.ValueString())
-		additionalProperties2 := make(map[string]interface{})
-		for additionalPropertiesKey2, additionalPropertiesValue2 := range r.Configuration.SslMode.SourcePostgresSSLModesAllow.AdditionalProperties {
-			var additionalPropertiesInst2 interface{}
-			_ = json.Unmarshal([]byte(additionalPropertiesValue2.ValueString()), &additionalPropertiesInst2)
-			additionalProperties2[additionalPropertiesKey2] = additionalPropertiesInst2
+		mode1 := shared.SourcePostgresSSLModesAllowMode(r.Configuration.SslMode.SourcePostgresSSLModesAllow.Mode.ValueString())
+		var additionalProperties2 interface{}
+		if !r.Configuration.SslMode.SourcePostgresSSLModesAllow.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.SourcePostgresSSLModesAllow.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.SslMode.SourcePostgresSSLModesAllow.AdditionalProperties.ValueString()), &additionalProperties2)
 		}
 		sourcePostgresSSLModesAllow = &shared.SourcePostgresSSLModesAllow{
 			Mode:                 mode1,
@@ -126,12 +121,10 @@ func (r *SourcePostgresResourceModel) ToCreateSDKType() *shared.SourcePostgresCr
 	}
 	var sourcePostgresSSLModesPrefer *shared.SourcePostgresSSLModesPrefer
 	if r.Configuration.SslMode.SourcePostgresSSLModesPrefer != nil {
-		mode2 := shared.SourcePostgresSSLModesPreferModeEnum(r.Configuration.SslMode.SourcePostgresSSLModesPrefer.Mode.ValueString())
-		additionalProperties3 := make(map[string]interface{})
-		for additionalPropertiesKey3, additionalPropertiesValue3 := range r.Configuration.SslMode.SourcePostgresSSLModesPrefer.AdditionalProperties {
-			var additionalPropertiesInst3 interface{}
-			_ = json.Unmarshal([]byte(additionalPropertiesValue3.ValueString()), &additionalPropertiesInst3)
-			additionalProperties3[additionalPropertiesKey3] = additionalPropertiesInst3
+		mode2 := shared.SourcePostgresSSLModesPreferMode(r.Configuration.SslMode.SourcePostgresSSLModesPrefer.Mode.ValueString())
+		var additionalProperties3 interface{}
+		if !r.Configuration.SslMode.SourcePostgresSSLModesPrefer.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.SourcePostgresSSLModesPrefer.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.SslMode.SourcePostgresSSLModesPrefer.AdditionalProperties.ValueString()), &additionalProperties3)
 		}
 		sourcePostgresSSLModesPrefer = &shared.SourcePostgresSSLModesPrefer{
 			Mode:                 mode2,
@@ -145,12 +138,10 @@ func (r *SourcePostgresResourceModel) ToCreateSDKType() *shared.SourcePostgresCr
 	}
 	var sourcePostgresSSLModesRequire *shared.SourcePostgresSSLModesRequire
 	if r.Configuration.SslMode.SourcePostgresSSLModesRequire != nil {
-		mode3 := shared.SourcePostgresSSLModesRequireModeEnum(r.Configuration.SslMode.SourcePostgresSSLModesRequire.Mode.ValueString())
-		additionalProperties4 := make(map[string]interface{})
-		for additionalPropertiesKey4, additionalPropertiesValue4 := range r.Configuration.SslMode.SourcePostgresSSLModesRequire.AdditionalProperties {
-			var additionalPropertiesInst4 interface{}
-			_ = json.Unmarshal([]byte(additionalPropertiesValue4.ValueString()), &additionalPropertiesInst4)
-			additionalProperties4[additionalPropertiesKey4] = additionalPropertiesInst4
+		mode3 := shared.SourcePostgresSSLModesRequireMode(r.Configuration.SslMode.SourcePostgresSSLModesRequire.Mode.ValueString())
+		var additionalProperties4 interface{}
+		if !r.Configuration.SslMode.SourcePostgresSSLModesRequire.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.SourcePostgresSSLModesRequire.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.SslMode.SourcePostgresSSLModesRequire.AdditionalProperties.ValueString()), &additionalProperties4)
 		}
 		sourcePostgresSSLModesRequire = &shared.SourcePostgresSSLModesRequire{
 			Mode:                 mode3,
@@ -183,12 +174,10 @@ func (r *SourcePostgresResourceModel) ToCreateSDKType() *shared.SourcePostgresCr
 		} else {
 			clientKeyPassword = nil
 		}
-		mode4 := shared.SourcePostgresSSLModesVerifyCaModeEnum(r.Configuration.SslMode.SourcePostgresSSLModesVerifyCa.Mode.ValueString())
-		additionalProperties5 := make(map[string]interface{})
-		for additionalPropertiesKey5, additionalPropertiesValue5 := range r.Configuration.SslMode.SourcePostgresSSLModesVerifyCa.AdditionalProperties {
-			var additionalPropertiesInst5 interface{}
-			_ = json.Unmarshal([]byte(additionalPropertiesValue5.ValueString()), &additionalPropertiesInst5)
-			additionalProperties5[additionalPropertiesKey5] = additionalPropertiesInst5
+		mode4 := shared.SourcePostgresSSLModesVerifyCaMode(r.Configuration.SslMode.SourcePostgresSSLModesVerifyCa.Mode.ValueString())
+		var additionalProperties5 interface{}
+		if !r.Configuration.SslMode.SourcePostgresSSLModesVerifyCa.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.SourcePostgresSSLModesVerifyCa.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.SslMode.SourcePostgresSSLModesVerifyCa.AdditionalProperties.ValueString()), &additionalProperties5)
 		}
 		sourcePostgresSSLModesVerifyCa = &shared.SourcePostgresSSLModesVerifyCa{
 			CaCertificate:        caCertificate,
@@ -225,12 +214,10 @@ func (r *SourcePostgresResourceModel) ToCreateSDKType() *shared.SourcePostgresCr
 		} else {
 			clientKeyPassword1 = nil
 		}
-		mode5 := shared.SourcePostgresSSLModesVerifyFullModeEnum(r.Configuration.SslMode.SourcePostgresSSLModesVerifyFull.Mode.ValueString())
-		additionalProperties6 := make(map[string]interface{})
-		for additionalPropertiesKey6, additionalPropertiesValue6 := range r.Configuration.SslMode.SourcePostgresSSLModesVerifyFull.AdditionalProperties {
-			var additionalPropertiesInst6 interface{}
-			_ = json.Unmarshal([]byte(additionalPropertiesValue6.ValueString()), &additionalPropertiesInst6)
-			additionalProperties6[additionalPropertiesKey6] = additionalPropertiesInst6
+		mode5 := shared.SourcePostgresSSLModesVerifyFullMode(r.Configuration.SslMode.SourcePostgresSSLModesVerifyFull.Mode.ValueString())
+		var additionalProperties6 interface{}
+		if !r.Configuration.SslMode.SourcePostgresSSLModesVerifyFull.AdditionalProperties.IsUnknown() && !r.Configuration.SslMode.SourcePostgresSSLModesVerifyFull.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.SslMode.SourcePostgresSSLModesVerifyFull.AdditionalProperties.ValueString()), &additionalProperties6)
 		}
 		sourcePostgresSSLModesVerifyFull = &shared.SourcePostgresSSLModesVerifyFull{
 			CaCertificate:        caCertificate1,
@@ -249,7 +236,7 @@ func (r *SourcePostgresResourceModel) ToCreateSDKType() *shared.SourcePostgresCr
 	var tunnelMethod *shared.SourcePostgresSSHTunnelMethod
 	var sourcePostgresSSHTunnelMethodNoTunnel *shared.SourcePostgresSSHTunnelMethodNoTunnel
 	if r.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodNoTunnel != nil {
-		tunnelMethod1 := shared.SourcePostgresSSHTunnelMethodNoTunnelTunnelMethodEnum(r.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
+		tunnelMethod1 := shared.SourcePostgresSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
 		sourcePostgresSSHTunnelMethodNoTunnel = &shared.SourcePostgresSSHTunnelMethodNoTunnel{
 			TunnelMethod: tunnelMethod1,
 		}
@@ -263,7 +250,7 @@ func (r *SourcePostgresResourceModel) ToCreateSDKType() *shared.SourcePostgresCr
 	if r.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodSSHKeyAuthentication != nil {
 		sshKey := r.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodSSHKeyAuthentication.SSHKey.ValueString()
 		tunnelHost := r.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
-		tunnelMethod2 := shared.SourcePostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(r.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
+		tunnelMethod2 := shared.SourcePostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
 		tunnelPort := r.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
 		tunnelUser := r.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
 		sourcePostgresSSHTunnelMethodSSHKeyAuthentication = &shared.SourcePostgresSSHTunnelMethodSSHKeyAuthentication{
@@ -282,7 +269,7 @@ func (r *SourcePostgresResourceModel) ToCreateSDKType() *shared.SourcePostgresCr
 	var sourcePostgresSSHTunnelMethodPasswordAuthentication *shared.SourcePostgresSSHTunnelMethodPasswordAuthentication
 	if r.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodPasswordAuthentication != nil {
 		tunnelHost1 := r.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
-		tunnelMethod3 := shared.SourcePostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(r.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
+		tunnelMethod3 := shared.SourcePostgresSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
 		tunnelPort1 := r.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
 		tunnelUser1 := r.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
 		tunnelUserPassword := r.Configuration.TunnelMethod.SourcePostgresSSHTunnelMethodPasswordAuthentication.TunnelUserPassword.ValueString()
@@ -333,4 +320,11 @@ func (r *SourcePostgresResourceModel) ToCreateSDKType() *shared.SourcePostgresCr
 func (r *SourcePostgresResourceModel) ToDeleteSDKType() *shared.SourcePostgresCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourcePostgresResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

@@ -21,33 +21,33 @@ type SourceXeroAuthenticateViaXeroOAuth struct {
 	TokenExpiryDate string `json:"token_expiry_date"`
 }
 
-type SourceXeroXeroEnum string
+type SourceXeroXero string
 
 const (
-	SourceXeroXeroEnumXero SourceXeroXeroEnum = "xero"
+	SourceXeroXeroXero SourceXeroXero = "xero"
 )
 
-func (e SourceXeroXeroEnum) ToPointer() *SourceXeroXeroEnum {
+func (e SourceXeroXero) ToPointer() *SourceXeroXero {
 	return &e
 }
 
-func (e *SourceXeroXeroEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceXeroXero) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "xero":
-		*e = SourceXeroXeroEnum(v)
+		*e = SourceXeroXero(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceXeroXeroEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceXeroXero: %v", v)
 	}
 }
 
 type SourceXero struct {
 	Authentication SourceXeroAuthenticateViaXeroOAuth `json:"authentication"`
-	SourceType     SourceXeroXeroEnum                 `json:"sourceType"`
+	SourceType     SourceXeroXero                     `json:"sourceType"`
 	// UTC date and time in the format YYYY-MM-DDTHH:mm:ssZ. Any data with created_at before this data will not be synced.
 	StartDate time.Time `json:"start_date"`
 	// Enter your Xero organization's Tenant ID

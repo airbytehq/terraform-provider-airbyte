@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceGoogleWorkspaceAdminReportsResourceModel) ToCreateSDKType() *shared.SourceGoogleWorkspaceAdminReportsCreateRequest {
@@ -15,7 +16,7 @@ func (r *SourceGoogleWorkspaceAdminReportsResourceModel) ToCreateSDKType() *shar
 	} else {
 		lookback = nil
 	}
-	sourceType := shared.SourceGoogleWorkspaceAdminReportsGoogleWorkspaceAdminReportsEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceGoogleWorkspaceAdminReportsGoogleWorkspaceAdminReports(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceGoogleWorkspaceAdminReports{
 		CredentialsJSON: credentialsJSON,
 		Email:           email,
@@ -42,4 +43,11 @@ func (r *SourceGoogleWorkspaceAdminReportsResourceModel) ToCreateSDKType() *shar
 func (r *SourceGoogleWorkspaceAdminReportsResourceModel) ToDeleteSDKType() *shared.SourceGoogleWorkspaceAdminReportsCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceGoogleWorkspaceAdminReportsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceMysqlResourceModel) ToCreateSDKType() *shared.SourceMysqlCreateRequest {
@@ -25,7 +26,7 @@ func (r *SourceMysqlResourceModel) ToCreateSDKType() *shared.SourceMysqlCreateRe
 	var replicationMethod shared.SourceMysqlReplicationMethod
 	var sourceMysqlReplicationMethodStandard *shared.SourceMysqlReplicationMethodStandard
 	if r.Configuration.ReplicationMethod.SourceMysqlReplicationMethodStandard != nil {
-		method := shared.SourceMysqlReplicationMethodStandardMethodEnum(r.Configuration.ReplicationMethod.SourceMysqlReplicationMethodStandard.Method.ValueString())
+		method := shared.SourceMysqlReplicationMethodStandardMethod(r.Configuration.ReplicationMethod.SourceMysqlReplicationMethodStandard.Method.ValueString())
 		sourceMysqlReplicationMethodStandard = &shared.SourceMysqlReplicationMethodStandard{
 			Method: method,
 		}
@@ -43,7 +44,7 @@ func (r *SourceMysqlResourceModel) ToCreateSDKType() *shared.SourceMysqlCreateRe
 		} else {
 			initialWaitingSeconds = nil
 		}
-		method1 := shared.SourceMysqlReplicationMethodLogicalReplicationCDCMethodEnum(r.Configuration.ReplicationMethod.SourceMysqlReplicationMethodLogicalReplicationCDC.Method.ValueString())
+		method1 := shared.SourceMysqlReplicationMethodLogicalReplicationCDCMethod(r.Configuration.ReplicationMethod.SourceMysqlReplicationMethodLogicalReplicationCDC.Method.ValueString())
 		serverTimeZone := new(string)
 		if !r.Configuration.ReplicationMethod.SourceMysqlReplicationMethodLogicalReplicationCDC.ServerTimeZone.IsUnknown() && !r.Configuration.ReplicationMethod.SourceMysqlReplicationMethodLogicalReplicationCDC.ServerTimeZone.IsNull() {
 			*serverTimeZone = r.Configuration.ReplicationMethod.SourceMysqlReplicationMethodLogicalReplicationCDC.ServerTimeZone.ValueString()
@@ -61,11 +62,11 @@ func (r *SourceMysqlResourceModel) ToCreateSDKType() *shared.SourceMysqlCreateRe
 			SourceMysqlReplicationMethodLogicalReplicationCDC: sourceMysqlReplicationMethodLogicalReplicationCDC,
 		}
 	}
-	sourceType := shared.SourceMysqlMysqlEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceMysqlMysql(r.Configuration.SourceType.ValueString())
 	var sslMode *shared.SourceMysqlSSLModes
 	var sourceMysqlSSLModesPreferred *shared.SourceMysqlSSLModesPreferred
 	if r.Configuration.SslMode.SourceMysqlSSLModesPreferred != nil {
-		mode := shared.SourceMysqlSSLModesPreferredModeEnum(r.Configuration.SslMode.SourceMysqlSSLModesPreferred.Mode.ValueString())
+		mode := shared.SourceMysqlSSLModesPreferredMode(r.Configuration.SslMode.SourceMysqlSSLModesPreferred.Mode.ValueString())
 		sourceMysqlSSLModesPreferred = &shared.SourceMysqlSSLModesPreferred{
 			Mode: mode,
 		}
@@ -77,7 +78,7 @@ func (r *SourceMysqlResourceModel) ToCreateSDKType() *shared.SourceMysqlCreateRe
 	}
 	var sourceMysqlSSLModesRequired *shared.SourceMysqlSSLModesRequired
 	if r.Configuration.SslMode.SourceMysqlSSLModesRequired != nil {
-		mode1 := shared.SourceMysqlSSLModesRequiredModeEnum(r.Configuration.SslMode.SourceMysqlSSLModesRequired.Mode.ValueString())
+		mode1 := shared.SourceMysqlSSLModesRequiredMode(r.Configuration.SslMode.SourceMysqlSSLModesRequired.Mode.ValueString())
 		sourceMysqlSSLModesRequired = &shared.SourceMysqlSSLModesRequired{
 			Mode: mode1,
 		}
@@ -108,7 +109,7 @@ func (r *SourceMysqlResourceModel) ToCreateSDKType() *shared.SourceMysqlCreateRe
 		} else {
 			clientKeyPassword = nil
 		}
-		mode2 := shared.SourceMysqlSSLModesVerifyCAModeEnum(r.Configuration.SslMode.SourceMysqlSSLModesVerifyCA.Mode.ValueString())
+		mode2 := shared.SourceMysqlSSLModesVerifyCAMode(r.Configuration.SslMode.SourceMysqlSSLModesVerifyCA.Mode.ValueString())
 		sourceMysqlSSLModesVerifyCA = &shared.SourceMysqlSSLModesVerifyCA{
 			CaCertificate:     caCertificate,
 			ClientCertificate: clientCertificate,
@@ -143,7 +144,7 @@ func (r *SourceMysqlResourceModel) ToCreateSDKType() *shared.SourceMysqlCreateRe
 		} else {
 			clientKeyPassword1 = nil
 		}
-		mode3 := shared.SourceMysqlSSLModesVerifyIdentityModeEnum(r.Configuration.SslMode.SourceMysqlSSLModesVerifyIdentity.Mode.ValueString())
+		mode3 := shared.SourceMysqlSSLModesVerifyIdentityMode(r.Configuration.SslMode.SourceMysqlSSLModesVerifyIdentity.Mode.ValueString())
 		sourceMysqlSSLModesVerifyIdentity = &shared.SourceMysqlSSLModesVerifyIdentity{
 			CaCertificate:     caCertificate1,
 			ClientCertificate: clientCertificate1,
@@ -160,7 +161,7 @@ func (r *SourceMysqlResourceModel) ToCreateSDKType() *shared.SourceMysqlCreateRe
 	var tunnelMethod *shared.SourceMysqlSSHTunnelMethod
 	var sourceMysqlSSHTunnelMethodNoTunnel *shared.SourceMysqlSSHTunnelMethodNoTunnel
 	if r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodNoTunnel != nil {
-		tunnelMethod1 := shared.SourceMysqlSSHTunnelMethodNoTunnelTunnelMethodEnum(r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
+		tunnelMethod1 := shared.SourceMysqlSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
 		sourceMysqlSSHTunnelMethodNoTunnel = &shared.SourceMysqlSSHTunnelMethodNoTunnel{
 			TunnelMethod: tunnelMethod1,
 		}
@@ -174,7 +175,7 @@ func (r *SourceMysqlResourceModel) ToCreateSDKType() *shared.SourceMysqlCreateRe
 	if r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodSSHKeyAuthentication != nil {
 		sshKey := r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodSSHKeyAuthentication.SSHKey.ValueString()
 		tunnelHost := r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
-		tunnelMethod2 := shared.SourceMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
+		tunnelMethod2 := shared.SourceMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
 		tunnelPort := r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
 		tunnelUser := r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
 		sourceMysqlSSHTunnelMethodSSHKeyAuthentication = &shared.SourceMysqlSSHTunnelMethodSSHKeyAuthentication{
@@ -193,7 +194,7 @@ func (r *SourceMysqlResourceModel) ToCreateSDKType() *shared.SourceMysqlCreateRe
 	var sourceMysqlSSHTunnelMethodPasswordAuthentication *shared.SourceMysqlSSHTunnelMethodPasswordAuthentication
 	if r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodPasswordAuthentication != nil {
 		tunnelHost1 := r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
-		tunnelMethod3 := shared.SourceMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
+		tunnelMethod3 := shared.SourceMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
 		tunnelPort1 := r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
 		tunnelUser1 := r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
 		tunnelUserPassword := r.Configuration.TunnelMethod.SourceMysqlSSHTunnelMethodPasswordAuthentication.TunnelUserPassword.ValueString()
@@ -243,4 +244,11 @@ func (r *SourceMysqlResourceModel) ToCreateSDKType() *shared.SourceMysqlCreateRe
 func (r *SourceMysqlResourceModel) ToDeleteSDKType() *shared.SourceMysqlCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceMysqlResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

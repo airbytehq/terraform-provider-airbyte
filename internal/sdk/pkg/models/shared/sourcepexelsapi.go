@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type SourcePexelsAPIPexelsAPIEnum string
+type SourcePexelsAPIPexelsAPI string
 
 const (
-	SourcePexelsAPIPexelsAPIEnumPexelsAPI SourcePexelsAPIPexelsAPIEnum = "pexels-api"
+	SourcePexelsAPIPexelsAPIPexelsAPI SourcePexelsAPIPexelsAPI = "pexels-api"
 )
 
-func (e SourcePexelsAPIPexelsAPIEnum) ToPointer() *SourcePexelsAPIPexelsAPIEnum {
+func (e SourcePexelsAPIPexelsAPI) ToPointer() *SourcePexelsAPIPexelsAPI {
 	return &e
 }
 
-func (e *SourcePexelsAPIPexelsAPIEnum) UnmarshalJSON(data []byte) error {
+func (e *SourcePexelsAPIPexelsAPI) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "pexels-api":
-		*e = SourcePexelsAPIPexelsAPIEnum(v)
+		*e = SourcePexelsAPIPexelsAPI(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePexelsAPIPexelsAPIEnum: %v", v)
+		return fmt.Errorf("invalid value for SourcePexelsAPIPexelsAPI: %v", v)
 	}
 }
 
@@ -43,6 +43,6 @@ type SourcePexelsAPI struct {
 	// Optional, the search query, Example Ocean, Tigers, Pears, etc.
 	Query string `json:"query"`
 	// Optional, Minimum photo size. The current supported sizes are large(24MP), medium(12MP) or small(4MP).
-	Size       *string                      `json:"size,omitempty"`
-	SourceType SourcePexelsAPIPexelsAPIEnum `json:"sourceType"`
+	Size       *string                  `json:"size,omitempty"`
+	SourceType SourcePexelsAPIPexelsAPI `json:"sourceType"`
 }

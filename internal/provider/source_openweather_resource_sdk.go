@@ -4,22 +4,23 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceOpenweatherResourceModel) ToCreateSDKType() *shared.SourceOpenweatherCreateRequest {
 	appid := r.Configuration.Appid.ValueString()
-	lang := new(shared.SourceOpenweatherLanguageEnum)
+	lang := new(shared.SourceOpenweatherLanguage)
 	if !r.Configuration.Lang.IsUnknown() && !r.Configuration.Lang.IsNull() {
-		*lang = shared.SourceOpenweatherLanguageEnum(r.Configuration.Lang.ValueString())
+		*lang = shared.SourceOpenweatherLanguage(r.Configuration.Lang.ValueString())
 	} else {
 		lang = nil
 	}
 	lat := r.Configuration.Lat.ValueString()
 	lon := r.Configuration.Lon.ValueString()
-	sourceType := shared.SourceOpenweatherOpenweatherEnum(r.Configuration.SourceType.ValueString())
-	units := new(shared.SourceOpenweatherUnitsEnum)
+	sourceType := shared.SourceOpenweatherOpenweather(r.Configuration.SourceType.ValueString())
+	units := new(shared.SourceOpenweatherUnits)
 	if !r.Configuration.Units.IsUnknown() && !r.Configuration.Units.IsNull() {
-		*units = shared.SourceOpenweatherUnitsEnum(r.Configuration.Units.ValueString())
+		*units = shared.SourceOpenweatherUnits(r.Configuration.Units.ValueString())
 	} else {
 		units = nil
 	}
@@ -51,4 +52,11 @@ func (r *SourceOpenweatherResourceModel) ToCreateSDKType() *shared.SourceOpenwea
 func (r *SourceOpenweatherResourceModel) ToDeleteSDKType() *shared.SourceOpenweatherCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceOpenweatherResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

@@ -4,12 +4,13 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationKinesisResourceModel) ToCreateSDKType() *shared.DestinationKinesisCreateRequest {
 	accessKey := r.Configuration.AccessKey.ValueString()
 	bufferSize := r.Configuration.BufferSize.ValueInt64()
-	destinationType := shared.DestinationKinesisKinesisEnum(r.Configuration.DestinationType.ValueString())
+	destinationType := shared.DestinationKinesisKinesis(r.Configuration.DestinationType.ValueString())
 	endpoint := r.Configuration.Endpoint.ValueString()
 	privateKey := r.Configuration.PrivateKey.ValueString()
 	region := r.Configuration.Region.ValueString()
@@ -36,4 +37,11 @@ func (r *DestinationKinesisResourceModel) ToCreateSDKType() *shared.DestinationK
 func (r *DestinationKinesisResourceModel) ToDeleteSDKType() *shared.DestinationKinesisCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *DestinationKinesisResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

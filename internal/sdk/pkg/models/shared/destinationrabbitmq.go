@@ -7,32 +7,32 @@ import (
 	"fmt"
 )
 
-type DestinationRabbitmqRabbitmqEnum string
+type DestinationRabbitmqRabbitmq string
 
 const (
-	DestinationRabbitmqRabbitmqEnumRabbitmq DestinationRabbitmqRabbitmqEnum = "rabbitmq"
+	DestinationRabbitmqRabbitmqRabbitmq DestinationRabbitmqRabbitmq = "rabbitmq"
 )
 
-func (e DestinationRabbitmqRabbitmqEnum) ToPointer() *DestinationRabbitmqRabbitmqEnum {
+func (e DestinationRabbitmqRabbitmq) ToPointer() *DestinationRabbitmqRabbitmq {
 	return &e
 }
 
-func (e *DestinationRabbitmqRabbitmqEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationRabbitmqRabbitmq) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "rabbitmq":
-		*e = DestinationRabbitmqRabbitmqEnum(v)
+		*e = DestinationRabbitmqRabbitmq(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationRabbitmqRabbitmqEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationRabbitmqRabbitmq: %v", v)
 	}
 }
 
 type DestinationRabbitmq struct {
-	DestinationType DestinationRabbitmqRabbitmqEnum `json:"destinationType"`
+	DestinationType DestinationRabbitmqRabbitmq `json:"destinationType"`
 	// The exchange name.
 	Exchange *string `json:"exchange,omitempty"`
 	// The RabbitMQ host name.

@@ -9,27 +9,27 @@ import (
 	"fmt"
 )
 
-type SourceFaunaCollectionDeletionModeEnabledDeletionModeEnum string
+type SourceFaunaCollectionDeletionModeEnabledDeletionMode string
 
 const (
-	SourceFaunaCollectionDeletionModeEnabledDeletionModeEnumDeletedField SourceFaunaCollectionDeletionModeEnabledDeletionModeEnum = "deleted_field"
+	SourceFaunaCollectionDeletionModeEnabledDeletionModeDeletedField SourceFaunaCollectionDeletionModeEnabledDeletionMode = "deleted_field"
 )
 
-func (e SourceFaunaCollectionDeletionModeEnabledDeletionModeEnum) ToPointer() *SourceFaunaCollectionDeletionModeEnabledDeletionModeEnum {
+func (e SourceFaunaCollectionDeletionModeEnabledDeletionMode) ToPointer() *SourceFaunaCollectionDeletionModeEnabledDeletionMode {
 	return &e
 }
 
-func (e *SourceFaunaCollectionDeletionModeEnabledDeletionModeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceFaunaCollectionDeletionModeEnabledDeletionMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "deleted_field":
-		*e = SourceFaunaCollectionDeletionModeEnabledDeletionModeEnum(v)
+		*e = SourceFaunaCollectionDeletionModeEnabledDeletionMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFaunaCollectionDeletionModeEnabledDeletionModeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceFaunaCollectionDeletionModeEnabledDeletionMode: %v", v)
 	}
 }
 
@@ -39,31 +39,31 @@ func (e *SourceFaunaCollectionDeletionModeEnabledDeletionModeEnum) UnmarshalJSON
 // Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted.
 type SourceFaunaCollectionDeletionModeEnabled struct {
 	// Name of the "deleted at" column.
-	Column       string                                                   `json:"column"`
-	DeletionMode SourceFaunaCollectionDeletionModeEnabledDeletionModeEnum `json:"deletion_mode"`
+	Column       string                                               `json:"column"`
+	DeletionMode SourceFaunaCollectionDeletionModeEnabledDeletionMode `json:"deletion_mode"`
 }
 
-type SourceFaunaCollectionDeletionModeDisabledDeletionModeEnum string
+type SourceFaunaCollectionDeletionModeDisabledDeletionMode string
 
 const (
-	SourceFaunaCollectionDeletionModeDisabledDeletionModeEnumIgnore SourceFaunaCollectionDeletionModeDisabledDeletionModeEnum = "ignore"
+	SourceFaunaCollectionDeletionModeDisabledDeletionModeIgnore SourceFaunaCollectionDeletionModeDisabledDeletionMode = "ignore"
 )
 
-func (e SourceFaunaCollectionDeletionModeDisabledDeletionModeEnum) ToPointer() *SourceFaunaCollectionDeletionModeDisabledDeletionModeEnum {
+func (e SourceFaunaCollectionDeletionModeDisabledDeletionMode) ToPointer() *SourceFaunaCollectionDeletionModeDisabledDeletionMode {
 	return &e
 }
 
-func (e *SourceFaunaCollectionDeletionModeDisabledDeletionModeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceFaunaCollectionDeletionModeDisabledDeletionMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "ignore":
-		*e = SourceFaunaCollectionDeletionModeDisabledDeletionModeEnum(v)
+		*e = SourceFaunaCollectionDeletionModeDisabledDeletionMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFaunaCollectionDeletionModeDisabledDeletionModeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceFaunaCollectionDeletionModeDisabledDeletionMode: %v", v)
 	}
 }
 
@@ -72,7 +72,7 @@ func (e *SourceFaunaCollectionDeletionModeDisabledDeletionModeEnum) UnmarshalJSO
 // Disabled - Leave this feature disabled, and ignore deleted documents.<br>
 // Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted.
 type SourceFaunaCollectionDeletionModeDisabled struct {
-	DeletionMode SourceFaunaCollectionDeletionModeDisabledDeletionModeEnum `json:"deletion_mode"`
+	DeletionMode SourceFaunaCollectionDeletionModeDisabledDeletionMode `json:"deletion_mode"`
 }
 
 type SourceFaunaCollectionDeletionModeType string
@@ -156,27 +156,27 @@ type SourceFaunaCollection struct {
 	PageSize int64 `json:"page_size"`
 }
 
-type SourceFaunaFaunaEnum string
+type SourceFaunaFauna string
 
 const (
-	SourceFaunaFaunaEnumFauna SourceFaunaFaunaEnum = "fauna"
+	SourceFaunaFaunaFauna SourceFaunaFauna = "fauna"
 )
 
-func (e SourceFaunaFaunaEnum) ToPointer() *SourceFaunaFaunaEnum {
+func (e SourceFaunaFauna) ToPointer() *SourceFaunaFauna {
 	return &e
 }
 
-func (e *SourceFaunaFaunaEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceFaunaFauna) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "fauna":
-		*e = SourceFaunaFaunaEnum(v)
+		*e = SourceFaunaFauna(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFaunaFaunaEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceFaunaFauna: %v", v)
 	}
 }
 
@@ -190,6 +190,6 @@ type SourceFauna struct {
 	// URL scheme.
 	Scheme string `json:"scheme"`
 	// Fauna secret, used when authenticating with the database.
-	Secret     string               `json:"secret"`
-	SourceType SourceFaunaFaunaEnum `json:"sourceType"`
+	Secret     string           `json:"secret"`
+	SourceType SourceFaunaFauna `json:"sourceType"`
 }

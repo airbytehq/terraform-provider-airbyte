@@ -8,27 +8,27 @@ import (
 	"time"
 )
 
-type SourceFreshcallerFreshcallerEnum string
+type SourceFreshcallerFreshcaller string
 
 const (
-	SourceFreshcallerFreshcallerEnumFreshcaller SourceFreshcallerFreshcallerEnum = "freshcaller"
+	SourceFreshcallerFreshcallerFreshcaller SourceFreshcallerFreshcaller = "freshcaller"
 )
 
-func (e SourceFreshcallerFreshcallerEnum) ToPointer() *SourceFreshcallerFreshcallerEnum {
+func (e SourceFreshcallerFreshcaller) ToPointer() *SourceFreshcallerFreshcaller {
 	return &e
 }
 
-func (e *SourceFreshcallerFreshcallerEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceFreshcallerFreshcaller) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "freshcaller":
-		*e = SourceFreshcallerFreshcallerEnum(v)
+		*e = SourceFreshcallerFreshcaller(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFreshcallerFreshcallerEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceFreshcallerFreshcaller: %v", v)
 	}
 }
 
@@ -38,8 +38,8 @@ type SourceFreshcaller struct {
 	// Used to construct Base URL for the Freshcaller APIs
 	Domain string `json:"domain"`
 	// The number of requests per minute that this source allowed to use. There is a rate limit of 50 requests per minute per app per account.
-	RequestsPerMinute *int64                           `json:"requests_per_minute,omitempty"`
-	SourceType        SourceFreshcallerFreshcallerEnum `json:"sourceType"`
+	RequestsPerMinute *int64                       `json:"requests_per_minute,omitempty"`
+	SourceType        SourceFreshcallerFreshcaller `json:"sourceType"`
 	// UTC date and time. Any data created after this date will be replicated.
 	StartDate time.Time `json:"start_date"`
 	// Lag in minutes for each sync, i.e., at time T, data for the time range [prev_sync_time, T-30] will be fetched

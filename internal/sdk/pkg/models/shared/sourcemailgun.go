@@ -8,27 +8,27 @@ import (
 	"time"
 )
 
-type SourceMailgunMailgunEnum string
+type SourceMailgunMailgun string
 
 const (
-	SourceMailgunMailgunEnumMailgun SourceMailgunMailgunEnum = "mailgun"
+	SourceMailgunMailgunMailgun SourceMailgunMailgun = "mailgun"
 )
 
-func (e SourceMailgunMailgunEnum) ToPointer() *SourceMailgunMailgunEnum {
+func (e SourceMailgunMailgun) ToPointer() *SourceMailgunMailgun {
 	return &e
 }
 
-func (e *SourceMailgunMailgunEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceMailgunMailgun) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "mailgun":
-		*e = SourceMailgunMailgunEnum(v)
+		*e = SourceMailgunMailgun(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMailgunMailgunEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceMailgunMailgun: %v", v)
 	}
 }
 
@@ -36,8 +36,8 @@ type SourceMailgun struct {
 	// Domain region code. 'EU' or 'US' are possible values. The default is 'US'.
 	DomainRegion *string `json:"domain_region,omitempty"`
 	// Primary account API key to access your Mailgun data.
-	PrivateKey string                   `json:"private_key"`
-	SourceType SourceMailgunMailgunEnum `json:"sourceType"`
+	PrivateKey string               `json:"private_key"`
+	SourceType SourceMailgunMailgun `json:"sourceType"`
 	// UTC date and time in the format 2020-10-01 00:00:00. Any data before this date will not be replicated. If omitted, defaults to 3 days ago.
 	StartDate *time.Time `json:"start_date,omitempty"`
 }

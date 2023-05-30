@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type SourceWikipediaPageviewsWikipediaPageviewsEnum string
+type SourceWikipediaPageviewsWikipediaPageviews string
 
 const (
-	SourceWikipediaPageviewsWikipediaPageviewsEnumWikipediaPageviews SourceWikipediaPageviewsWikipediaPageviewsEnum = "wikipedia-pageviews"
+	SourceWikipediaPageviewsWikipediaPageviewsWikipediaPageviews SourceWikipediaPageviewsWikipediaPageviews = "wikipedia-pageviews"
 )
 
-func (e SourceWikipediaPageviewsWikipediaPageviewsEnum) ToPointer() *SourceWikipediaPageviewsWikipediaPageviewsEnum {
+func (e SourceWikipediaPageviewsWikipediaPageviews) ToPointer() *SourceWikipediaPageviewsWikipediaPageviews {
 	return &e
 }
 
-func (e *SourceWikipediaPageviewsWikipediaPageviewsEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceWikipediaPageviewsWikipediaPageviews) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "wikipedia-pageviews":
-		*e = SourceWikipediaPageviewsWikipediaPageviewsEnum(v)
+		*e = SourceWikipediaPageviewsWikipediaPageviews(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceWikipediaPageviewsWikipediaPageviewsEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceWikipediaPageviewsWikipediaPageviews: %v", v)
 	}
 }
 
@@ -43,8 +43,8 @@ type SourceWikipediaPageviews struct {
 	// The date of the last day to include, in YYYYMMDD or YYYYMMDDHH format.
 	End string `json:"end"`
 	// If you want to filter by project, use the domain of any Wikimedia project.
-	Project    string                                         `json:"project"`
-	SourceType SourceWikipediaPageviewsWikipediaPageviewsEnum `json:"sourceType"`
+	Project    string                                     `json:"project"`
+	SourceType SourceWikipediaPageviewsWikipediaPageviews `json:"sourceType"`
 	// The date of the first day to include, in YYYYMMDD or YYYYMMDDHH format.
 	Start string `json:"start"`
 }

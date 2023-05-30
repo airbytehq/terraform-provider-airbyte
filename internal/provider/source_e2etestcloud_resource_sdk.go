@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceE2eTestCloudResourceModel) ToCreateSDKType() *shared.SourceE2eTestCloudCreateRequest {
@@ -25,7 +26,7 @@ func (r *SourceE2eTestCloudResourceModel) ToCreateSDKType() *shared.SourceE2eTes
 		}
 		streamName := r.Configuration.MockCatalog.SourceE2eTestCloudMockCatalogSingleSchema.StreamName.ValueString()
 		streamSchema := r.Configuration.MockCatalog.SourceE2eTestCloudMockCatalogSingleSchema.StreamSchema.ValueString()
-		type1 := shared.SourceE2eTestCloudMockCatalogSingleSchemaTypeEnum(r.Configuration.MockCatalog.SourceE2eTestCloudMockCatalogSingleSchema.Type.ValueString())
+		type1 := shared.SourceE2eTestCloudMockCatalogSingleSchemaType(r.Configuration.MockCatalog.SourceE2eTestCloudMockCatalogSingleSchema.Type.ValueString())
 		sourceE2eTestCloudMockCatalogSingleSchema = &shared.SourceE2eTestCloudMockCatalogSingleSchema{
 			StreamDuplication: streamDuplication,
 			StreamName:        streamName,
@@ -41,7 +42,7 @@ func (r *SourceE2eTestCloudResourceModel) ToCreateSDKType() *shared.SourceE2eTes
 	var sourceE2eTestCloudMockCatalogMultiSchema *shared.SourceE2eTestCloudMockCatalogMultiSchema
 	if r.Configuration.MockCatalog.SourceE2eTestCloudMockCatalogMultiSchema != nil {
 		streamSchemas := r.Configuration.MockCatalog.SourceE2eTestCloudMockCatalogMultiSchema.StreamSchemas.ValueString()
-		type2 := shared.SourceE2eTestCloudMockCatalogMultiSchemaTypeEnum(r.Configuration.MockCatalog.SourceE2eTestCloudMockCatalogMultiSchema.Type.ValueString())
+		type2 := shared.SourceE2eTestCloudMockCatalogMultiSchemaType(r.Configuration.MockCatalog.SourceE2eTestCloudMockCatalogMultiSchema.Type.ValueString())
 		sourceE2eTestCloudMockCatalogMultiSchema = &shared.SourceE2eTestCloudMockCatalogMultiSchema{
 			StreamSchemas: streamSchemas,
 			Type:          type2,
@@ -58,10 +59,10 @@ func (r *SourceE2eTestCloudResourceModel) ToCreateSDKType() *shared.SourceE2eTes
 	} else {
 		seed = nil
 	}
-	sourceType := shared.SourceE2eTestCloudE2eTestCloudEnum(r.Configuration.SourceType.ValueString())
-	type3 := new(shared.SourceE2eTestCloudTypeEnum)
+	sourceType := shared.SourceE2eTestCloudE2eTestCloud(r.Configuration.SourceType.ValueString())
+	type3 := new(shared.SourceE2eTestCloudType)
 	if !r.Configuration.Type.IsUnknown() && !r.Configuration.Type.IsNull() {
-		*type3 = shared.SourceE2eTestCloudTypeEnum(r.Configuration.Type.ValueString())
+		*type3 = shared.SourceE2eTestCloudType(r.Configuration.Type.ValueString())
 	} else {
 		type3 = nil
 	}
@@ -93,4 +94,11 @@ func (r *SourceE2eTestCloudResourceModel) ToCreateSDKType() *shared.SourceE2eTes
 func (r *SourceE2eTestCloudResourceModel) ToDeleteSDKType() *shared.SourceE2eTestCloudCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceE2eTestCloudResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

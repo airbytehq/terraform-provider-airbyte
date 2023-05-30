@@ -4,10 +4,11 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceAzureTableResourceModel) ToCreateSDKType() *shared.SourceAzureTableCreateRequest {
-	sourceType := shared.SourceAzureTableAzureTableEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceAzureTableAzureTable(r.Configuration.SourceType.ValueString())
 	storageAccessKey := r.Configuration.StorageAccessKey.ValueString()
 	storageAccountName := r.Configuration.StorageAccountName.ValueString()
 	storageEndpointSuffix := new(string)
@@ -42,4 +43,11 @@ func (r *SourceAzureTableResourceModel) ToCreateSDKType() *shared.SourceAzureTab
 func (r *SourceAzureTableResourceModel) ToDeleteSDKType() *shared.SourceAzureTableCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceAzureTableResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

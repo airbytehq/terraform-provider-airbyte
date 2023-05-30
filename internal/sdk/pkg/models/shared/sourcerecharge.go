@@ -8,34 +8,34 @@ import (
 	"time"
 )
 
-type SourceRechargeRechargeEnum string
+type SourceRechargeRecharge string
 
 const (
-	SourceRechargeRechargeEnumRecharge SourceRechargeRechargeEnum = "recharge"
+	SourceRechargeRechargeRecharge SourceRechargeRecharge = "recharge"
 )
 
-func (e SourceRechargeRechargeEnum) ToPointer() *SourceRechargeRechargeEnum {
+func (e SourceRechargeRecharge) ToPointer() *SourceRechargeRecharge {
 	return &e
 }
 
-func (e *SourceRechargeRechargeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceRechargeRecharge) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "recharge":
-		*e = SourceRechargeRechargeEnum(v)
+		*e = SourceRechargeRecharge(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceRechargeRechargeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceRechargeRecharge: %v", v)
 	}
 }
 
 type SourceRecharge struct {
 	// The value of the Access Token generated. See the <a href="https://docs.airbyte.com/integrations/sources/recharge">docs</a> for more information.
-	AccessToken string                     `json:"access_token"`
-	SourceType  SourceRechargeRechargeEnum `json:"sourceType"`
+	AccessToken string                 `json:"access_token"`
+	SourceType  SourceRechargeRecharge `json:"sourceType"`
 	// The date from which you'd like to replicate data for Recharge API, in the format YYYY-MM-DDT00:00:00Z. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
 }

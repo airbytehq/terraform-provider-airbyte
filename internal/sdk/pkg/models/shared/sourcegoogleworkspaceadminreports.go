@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type SourceGoogleWorkspaceAdminReportsGoogleWorkspaceAdminReportsEnum string
+type SourceGoogleWorkspaceAdminReportsGoogleWorkspaceAdminReports string
 
 const (
-	SourceGoogleWorkspaceAdminReportsGoogleWorkspaceAdminReportsEnumGoogleWorkspaceAdminReports SourceGoogleWorkspaceAdminReportsGoogleWorkspaceAdminReportsEnum = "google-workspace-admin-reports"
+	SourceGoogleWorkspaceAdminReportsGoogleWorkspaceAdminReportsGoogleWorkspaceAdminReports SourceGoogleWorkspaceAdminReportsGoogleWorkspaceAdminReports = "google-workspace-admin-reports"
 )
 
-func (e SourceGoogleWorkspaceAdminReportsGoogleWorkspaceAdminReportsEnum) ToPointer() *SourceGoogleWorkspaceAdminReportsGoogleWorkspaceAdminReportsEnum {
+func (e SourceGoogleWorkspaceAdminReportsGoogleWorkspaceAdminReports) ToPointer() *SourceGoogleWorkspaceAdminReportsGoogleWorkspaceAdminReports {
 	return &e
 }
 
-func (e *SourceGoogleWorkspaceAdminReportsGoogleWorkspaceAdminReportsEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceGoogleWorkspaceAdminReportsGoogleWorkspaceAdminReports) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "google-workspace-admin-reports":
-		*e = SourceGoogleWorkspaceAdminReportsGoogleWorkspaceAdminReportsEnum(v)
+		*e = SourceGoogleWorkspaceAdminReportsGoogleWorkspaceAdminReports(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGoogleWorkspaceAdminReportsGoogleWorkspaceAdminReportsEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceGoogleWorkspaceAdminReportsGoogleWorkspaceAdminReports: %v", v)
 	}
 }
 
@@ -37,6 +37,6 @@ type SourceGoogleWorkspaceAdminReports struct {
 	// The email of the user, which has permissions to access the Google Workspace Admin APIs.
 	Email string `json:"email"`
 	// Sets the range of time shown in the report. Reports API allows from up to 180 days ago.
-	Lookback   *int64                                                           `json:"lookback,omitempty"`
-	SourceType SourceGoogleWorkspaceAdminReportsGoogleWorkspaceAdminReportsEnum `json:"sourceType"`
+	Lookback   *int64                                                       `json:"lookback,omitempty"`
+	SourceType SourceGoogleWorkspaceAdminReportsGoogleWorkspaceAdminReports `json:"sourceType"`
 }

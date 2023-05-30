@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceClickupAPIResourceModel) ToCreateSDKType() *shared.SourceClickupAPICreateRequest {
@@ -26,7 +27,7 @@ func (r *SourceClickupAPIResourceModel) ToCreateSDKType() *shared.SourceClickupA
 	} else {
 		listID = nil
 	}
-	sourceType := shared.SourceClickupAPIClickupAPIEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceClickupAPIClickupAPI(r.Configuration.SourceType.ValueString())
 	spaceID := new(string)
 	if !r.Configuration.SpaceID.IsUnknown() && !r.Configuration.SpaceID.IsNull() {
 		*spaceID = r.Configuration.SpaceID.ValueString()
@@ -68,4 +69,11 @@ func (r *SourceClickupAPIResourceModel) ToCreateSDKType() *shared.SourceClickupA
 func (r *SourceClickupAPIResourceModel) ToDeleteSDKType() *shared.SourceClickupAPICreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceClickupAPIResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

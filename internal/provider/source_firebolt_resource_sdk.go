@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceFireboltResourceModel) ToCreateSDKType() *shared.SourceFireboltCreateRequest {
@@ -27,7 +28,7 @@ func (r *SourceFireboltResourceModel) ToCreateSDKType() *shared.SourceFireboltCr
 		host = nil
 	}
 	password := r.Configuration.Password.ValueString()
-	sourceType := shared.SourceFireboltFireboltEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceFireboltFirebolt(r.Configuration.SourceType.ValueString())
 	username := r.Configuration.Username.ValueString()
 	configuration := shared.SourceFirebolt{
 		Account:    account,
@@ -58,4 +59,11 @@ func (r *SourceFireboltResourceModel) ToCreateSDKType() *shared.SourceFireboltCr
 func (r *SourceFireboltResourceModel) ToDeleteSDKType() *shared.SourceFireboltCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceFireboltResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
@@ -29,7 +30,7 @@ func (r *SourceZendeskChatResourceModel) ToCreateSDKType() *shared.SourceZendesk
 		} else {
 			clientSecret = nil
 		}
-		credentials1 := shared.SourceZendeskChatAuthorizationMethodOAuth20CredentialsEnum(r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.Credentials.ValueString())
+		credentials1 := shared.SourceZendeskChatAuthorizationMethodOAuth20Credentials(r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.Credentials.ValueString())
 		refreshToken := new(string)
 		if !r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.RefreshToken.IsUnknown() && !r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.RefreshToken.IsNull() {
 			*refreshToken = r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.RefreshToken.ValueString()
@@ -52,7 +53,7 @@ func (r *SourceZendeskChatResourceModel) ToCreateSDKType() *shared.SourceZendesk
 	var sourceZendeskChatAuthorizationMethodAccessToken *shared.SourceZendeskChatAuthorizationMethodAccessToken
 	if r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodAccessToken != nil {
 		accessToken1 := r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodAccessToken.AccessToken.ValueString()
-		credentials2 := shared.SourceZendeskChatAuthorizationMethodAccessTokenCredentialsEnum(r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodAccessToken.Credentials.ValueString())
+		credentials2 := shared.SourceZendeskChatAuthorizationMethodAccessTokenCredentials(r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodAccessToken.Credentials.ValueString())
 		sourceZendeskChatAuthorizationMethodAccessToken = &shared.SourceZendeskChatAuthorizationMethodAccessToken{
 			AccessToken: accessToken1,
 			Credentials: credentials2,
@@ -63,7 +64,7 @@ func (r *SourceZendeskChatResourceModel) ToCreateSDKType() *shared.SourceZendesk
 			SourceZendeskChatAuthorizationMethodAccessToken: sourceZendeskChatAuthorizationMethodAccessToken,
 		}
 	}
-	sourceType := shared.SourceZendeskChatZendeskChatEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceZendeskChatZendeskChat(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	subdomain := new(string)
 	if !r.Configuration.Subdomain.IsUnknown() && !r.Configuration.Subdomain.IsNull() {
@@ -97,4 +98,11 @@ func (r *SourceZendeskChatResourceModel) ToCreateSDKType() *shared.SourceZendesk
 func (r *SourceZendeskChatResourceModel) ToDeleteSDKType() *shared.SourceZendeskChatCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceZendeskChatResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

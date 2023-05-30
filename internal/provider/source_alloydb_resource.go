@@ -9,7 +9,6 @@ import (
 
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/mapvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/listplanmodifier"
@@ -187,13 +186,13 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 										},
 										Required: true,
 									},
-									"additional_properties": schema.MapAttribute{
-										Computed:    true,
-										Optional:    true,
-										ElementType: types.StringType,
-										Validators: []validator.Map{
-											mapvalidator.ValueStringsAre(validators.IsValidJSON()),
+									"additional_properties": schema.StringAttribute{
+										Computed: true,
+										Optional: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
 										},
+										Description: `Parsed as JSON.`,
 									},
 								},
 								Description: `Logical replication uses the Postgres write-ahead log (WAL) to detect inserts, updates, and deletes. This needs to be configured on the source database itself. Only available on Postgres 10 and above. Read the <a href="https://docs.airbyte.com/integrations/sources/postgres">docs</a>.`,
@@ -247,13 +246,13 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 											),
 										},
 									},
-									"additional_properties": schema.MapAttribute{
-										Computed:    true,
-										Optional:    true,
-										ElementType: types.StringType,
-										Validators: []validator.Map{
-											mapvalidator.ValueStringsAre(validators.IsValidJSON()),
+									"additional_properties": schema.StringAttribute{
+										Computed: true,
+										Optional: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
 										},
+										Description: `Parsed as JSON.`,
 									},
 								},
 								Description: `Disables encryption of communication between Airbyte and source database.`,
@@ -276,13 +275,13 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 											),
 										},
 									},
-									"additional_properties": schema.MapAttribute{
-										Computed:    true,
-										Optional:    true,
-										ElementType: types.StringType,
-										Validators: []validator.Map{
-											mapvalidator.ValueStringsAre(validators.IsValidJSON()),
+									"additional_properties": schema.StringAttribute{
+										Computed: true,
+										Optional: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
 										},
+										Description: `Parsed as JSON.`,
 									},
 								},
 								Description: `Enables encryption only when required by the source database.`,
@@ -305,13 +304,13 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 											),
 										},
 									},
-									"additional_properties": schema.MapAttribute{
-										Computed:    true,
-										Optional:    true,
-										ElementType: types.StringType,
-										Validators: []validator.Map{
-											mapvalidator.ValueStringsAre(validators.IsValidJSON()),
+									"additional_properties": schema.StringAttribute{
+										Computed: true,
+										Optional: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
 										},
+										Description: `Parsed as JSON.`,
 									},
 								},
 								Description: `Allows unencrypted connection only if the source database does not support encryption.`,
@@ -334,13 +333,13 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 											),
 										},
 									},
-									"additional_properties": schema.MapAttribute{
-										Computed:    true,
-										Optional:    true,
-										ElementType: types.StringType,
-										Validators: []validator.Map{
-											mapvalidator.ValueStringsAre(validators.IsValidJSON()),
+									"additional_properties": schema.StringAttribute{
+										Computed: true,
+										Optional: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
 										},
+										Description: `Parsed as JSON.`,
 									},
 								},
 								Description: `Always require encryption. If the source database server does not support encryption, connection will fail.`,
@@ -390,13 +389,13 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 											),
 										},
 									},
-									"additional_properties": schema.MapAttribute{
-										Computed:    true,
-										Optional:    true,
-										ElementType: types.StringType,
-										Validators: []validator.Map{
-											mapvalidator.ValueStringsAre(validators.IsValidJSON()),
+									"additional_properties": schema.StringAttribute{
+										Computed: true,
+										Optional: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
 										},
+										Description: `Parsed as JSON.`,
 									},
 								},
 								Description: `Always require encryption and verifies that the source database server has a valid SSL certificate.`,
@@ -446,13 +445,13 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 											),
 										},
 									},
-									"additional_properties": schema.MapAttribute{
-										Computed:    true,
-										Optional:    true,
-										ElementType: types.StringType,
-										Validators: []validator.Map{
-											mapvalidator.ValueStringsAre(validators.IsValidJSON()),
+									"additional_properties": schema.StringAttribute{
+										Computed: true,
+										Optional: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
 										},
+										Description: `Parsed as JSON.`,
 									},
 								},
 								Description: `This is the most secure mode. Always require encryption and verifies the identity of the source database server.`,
@@ -677,6 +676,11 @@ func (r *SourceAlloydbResource) Create(ctx context.Context, req resource.CreateR
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
+	if res.SourceResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+		return
+	}
+	data.RefreshFromCreateResponse(res.SourceResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

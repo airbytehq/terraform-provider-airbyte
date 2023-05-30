@@ -4,15 +4,16 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceMicrosoftTeamsResourceModel) ToCreateSDKType() *shared.SourceMicrosoftTeamsCreateRequest {
 	var credentials *shared.SourceMicrosoftTeamsAuthenticationMechanism
 	var sourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20 *shared.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20
 	if r.Configuration.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20 != nil {
-		authType := new(shared.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20AuthTypeEnum)
+		authType := new(shared.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20AuthType)
 		if !r.Configuration.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20.AuthType.IsNull() {
-			*authType = shared.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20AuthTypeEnum(r.Configuration.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20.AuthType.ValueString())
+			*authType = shared.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20AuthType(r.Configuration.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20.AuthType.ValueString())
 		} else {
 			authType = nil
 		}
@@ -35,9 +36,9 @@ func (r *SourceMicrosoftTeamsResourceModel) ToCreateSDKType() *shared.SourceMicr
 	}
 	var sourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoft *shared.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoft
 	if r.Configuration.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoft != nil {
-		authType1 := new(shared.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftAuthTypeEnum)
+		authType1 := new(shared.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftAuthType)
 		if !r.Configuration.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoft.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoft.AuthType.IsNull() {
-			*authType1 = shared.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftAuthTypeEnum(r.Configuration.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoft.AuthType.ValueString())
+			*authType1 = shared.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftAuthType(r.Configuration.Credentials.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoft.AuthType.ValueString())
 		} else {
 			authType1 = nil
 		}
@@ -57,7 +58,7 @@ func (r *SourceMicrosoftTeamsResourceModel) ToCreateSDKType() *shared.SourceMicr
 		}
 	}
 	period := r.Configuration.Period.ValueString()
-	sourceType := shared.SourceMicrosoftTeamsMicrosoftTeamsEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceMicrosoftTeamsMicrosoftTeams(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceMicrosoftTeams{
 		Credentials: credentials,
 		Period:      period,
@@ -83,4 +84,11 @@ func (r *SourceMicrosoftTeamsResourceModel) ToCreateSDKType() *shared.SourceMicr
 func (r *SourceMicrosoftTeamsResourceModel) ToDeleteSDKType() *shared.SourceMicrosoftTeamsCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceMicrosoftTeamsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

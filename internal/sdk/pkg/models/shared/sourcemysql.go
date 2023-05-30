@@ -9,66 +9,66 @@ import (
 	"fmt"
 )
 
-type SourceMysqlReplicationMethodLogicalReplicationCDCMethodEnum string
+type SourceMysqlReplicationMethodLogicalReplicationCDCMethod string
 
 const (
-	SourceMysqlReplicationMethodLogicalReplicationCDCMethodEnumCdc SourceMysqlReplicationMethodLogicalReplicationCDCMethodEnum = "CDC"
+	SourceMysqlReplicationMethodLogicalReplicationCDCMethodCdc SourceMysqlReplicationMethodLogicalReplicationCDCMethod = "CDC"
 )
 
-func (e SourceMysqlReplicationMethodLogicalReplicationCDCMethodEnum) ToPointer() *SourceMysqlReplicationMethodLogicalReplicationCDCMethodEnum {
+func (e SourceMysqlReplicationMethodLogicalReplicationCDCMethod) ToPointer() *SourceMysqlReplicationMethodLogicalReplicationCDCMethod {
 	return &e
 }
 
-func (e *SourceMysqlReplicationMethodLogicalReplicationCDCMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceMysqlReplicationMethodLogicalReplicationCDCMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "CDC":
-		*e = SourceMysqlReplicationMethodLogicalReplicationCDCMethodEnum(v)
+		*e = SourceMysqlReplicationMethodLogicalReplicationCDCMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMysqlReplicationMethodLogicalReplicationCDCMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceMysqlReplicationMethodLogicalReplicationCDCMethod: %v", v)
 	}
 }
 
 // SourceMysqlReplicationMethodLogicalReplicationCDC - CDC uses the Binlog to detect inserts, updates, and deletes. This needs to be configured on the source database itself.
 type SourceMysqlReplicationMethodLogicalReplicationCDC struct {
 	// The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">initial waiting time</a>.
-	InitialWaitingSeconds *int64                                                      `json:"initial_waiting_seconds,omitempty"`
-	Method                SourceMysqlReplicationMethodLogicalReplicationCDCMethodEnum `json:"method"`
+	InitialWaitingSeconds *int64                                                  `json:"initial_waiting_seconds,omitempty"`
+	Method                SourceMysqlReplicationMethodLogicalReplicationCDCMethod `json:"method"`
 	// Enter the configured MySQL server timezone. This should only be done if the configured timezone in your MySQL instance does not conform to IANNA standard.
 	ServerTimeZone *string `json:"server_time_zone,omitempty"`
 }
 
-type SourceMysqlReplicationMethodStandardMethodEnum string
+type SourceMysqlReplicationMethodStandardMethod string
 
 const (
-	SourceMysqlReplicationMethodStandardMethodEnumStandard SourceMysqlReplicationMethodStandardMethodEnum = "STANDARD"
+	SourceMysqlReplicationMethodStandardMethodStandard SourceMysqlReplicationMethodStandardMethod = "STANDARD"
 )
 
-func (e SourceMysqlReplicationMethodStandardMethodEnum) ToPointer() *SourceMysqlReplicationMethodStandardMethodEnum {
+func (e SourceMysqlReplicationMethodStandardMethod) ToPointer() *SourceMysqlReplicationMethodStandardMethod {
 	return &e
 }
 
-func (e *SourceMysqlReplicationMethodStandardMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceMysqlReplicationMethodStandardMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "STANDARD":
-		*e = SourceMysqlReplicationMethodStandardMethodEnum(v)
+		*e = SourceMysqlReplicationMethodStandardMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMysqlReplicationMethodStandardMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceMysqlReplicationMethodStandardMethod: %v", v)
 	}
 }
 
 // SourceMysqlReplicationMethodStandard - Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.
 type SourceMysqlReplicationMethodStandard struct {
-	Method SourceMysqlReplicationMethodStandardMethodEnum `json:"method"`
+	Method SourceMysqlReplicationMethodStandardMethod `json:"method"`
 }
 
 type SourceMysqlReplicationMethodType string
@@ -139,51 +139,51 @@ func (u SourceMysqlReplicationMethod) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-type SourceMysqlMysqlEnum string
+type SourceMysqlMysql string
 
 const (
-	SourceMysqlMysqlEnumMysql SourceMysqlMysqlEnum = "mysql"
+	SourceMysqlMysqlMysql SourceMysqlMysql = "mysql"
 )
 
-func (e SourceMysqlMysqlEnum) ToPointer() *SourceMysqlMysqlEnum {
+func (e SourceMysqlMysql) ToPointer() *SourceMysqlMysql {
 	return &e
 }
 
-func (e *SourceMysqlMysqlEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceMysqlMysql) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "mysql":
-		*e = SourceMysqlMysqlEnum(v)
+		*e = SourceMysqlMysql(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMysqlMysqlEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceMysqlMysql: %v", v)
 	}
 }
 
-type SourceMysqlSSLModesVerifyIdentityModeEnum string
+type SourceMysqlSSLModesVerifyIdentityMode string
 
 const (
-	SourceMysqlSSLModesVerifyIdentityModeEnumVerifyIdentity SourceMysqlSSLModesVerifyIdentityModeEnum = "verify_identity"
+	SourceMysqlSSLModesVerifyIdentityModeVerifyIdentity SourceMysqlSSLModesVerifyIdentityMode = "verify_identity"
 )
 
-func (e SourceMysqlSSLModesVerifyIdentityModeEnum) ToPointer() *SourceMysqlSSLModesVerifyIdentityModeEnum {
+func (e SourceMysqlSSLModesVerifyIdentityMode) ToPointer() *SourceMysqlSSLModesVerifyIdentityMode {
 	return &e
 }
 
-func (e *SourceMysqlSSLModesVerifyIdentityModeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceMysqlSSLModesVerifyIdentityMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "verify_identity":
-		*e = SourceMysqlSSLModesVerifyIdentityModeEnum(v)
+		*e = SourceMysqlSSLModesVerifyIdentityMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMysqlSSLModesVerifyIdentityModeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceMysqlSSLModesVerifyIdentityMode: %v", v)
 	}
 }
 
@@ -196,31 +196,31 @@ type SourceMysqlSSLModesVerifyIdentity struct {
 	// Client key (this is not a required field, but if you want to use it, you will need to add the <b>Client certificate</b> as well)
 	ClientKey *string `json:"client_key,omitempty"`
 	// Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.
-	ClientKeyPassword *string                                   `json:"client_key_password,omitempty"`
-	Mode              SourceMysqlSSLModesVerifyIdentityModeEnum `json:"mode"`
+	ClientKeyPassword *string                               `json:"client_key_password,omitempty"`
+	Mode              SourceMysqlSSLModesVerifyIdentityMode `json:"mode"`
 }
 
-type SourceMysqlSSLModesVerifyCAModeEnum string
+type SourceMysqlSSLModesVerifyCAMode string
 
 const (
-	SourceMysqlSSLModesVerifyCAModeEnumVerifyCa SourceMysqlSSLModesVerifyCAModeEnum = "verify_ca"
+	SourceMysqlSSLModesVerifyCAModeVerifyCa SourceMysqlSSLModesVerifyCAMode = "verify_ca"
 )
 
-func (e SourceMysqlSSLModesVerifyCAModeEnum) ToPointer() *SourceMysqlSSLModesVerifyCAModeEnum {
+func (e SourceMysqlSSLModesVerifyCAMode) ToPointer() *SourceMysqlSSLModesVerifyCAMode {
 	return &e
 }
 
-func (e *SourceMysqlSSLModesVerifyCAModeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceMysqlSSLModesVerifyCAMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "verify_ca":
-		*e = SourceMysqlSSLModesVerifyCAModeEnum(v)
+		*e = SourceMysqlSSLModesVerifyCAMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMysqlSSLModesVerifyCAModeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceMysqlSSLModesVerifyCAMode: %v", v)
 	}
 }
 
@@ -233,66 +233,66 @@ type SourceMysqlSSLModesVerifyCA struct {
 	// Client key (this is not a required field, but if you want to use it, you will need to add the <b>Client certificate</b> as well)
 	ClientKey *string `json:"client_key,omitempty"`
 	// Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.
-	ClientKeyPassword *string                             `json:"client_key_password,omitempty"`
-	Mode              SourceMysqlSSLModesVerifyCAModeEnum `json:"mode"`
+	ClientKeyPassword *string                         `json:"client_key_password,omitempty"`
+	Mode              SourceMysqlSSLModesVerifyCAMode `json:"mode"`
 }
 
-type SourceMysqlSSLModesRequiredModeEnum string
+type SourceMysqlSSLModesRequiredMode string
 
 const (
-	SourceMysqlSSLModesRequiredModeEnumRequired SourceMysqlSSLModesRequiredModeEnum = "required"
+	SourceMysqlSSLModesRequiredModeRequired SourceMysqlSSLModesRequiredMode = "required"
 )
 
-func (e SourceMysqlSSLModesRequiredModeEnum) ToPointer() *SourceMysqlSSLModesRequiredModeEnum {
+func (e SourceMysqlSSLModesRequiredMode) ToPointer() *SourceMysqlSSLModesRequiredMode {
 	return &e
 }
 
-func (e *SourceMysqlSSLModesRequiredModeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceMysqlSSLModesRequiredMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "required":
-		*e = SourceMysqlSSLModesRequiredModeEnum(v)
+		*e = SourceMysqlSSLModesRequiredMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMysqlSSLModesRequiredModeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceMysqlSSLModesRequiredMode: %v", v)
 	}
 }
 
 // SourceMysqlSSLModesRequired - Always connect with SSL. If the MySQL server doesn’t support SSL, the connection will not be established. Certificate Authority (CA) and Hostname are not verified.
 type SourceMysqlSSLModesRequired struct {
-	Mode SourceMysqlSSLModesRequiredModeEnum `json:"mode"`
+	Mode SourceMysqlSSLModesRequiredMode `json:"mode"`
 }
 
-type SourceMysqlSSLModesPreferredModeEnum string
+type SourceMysqlSSLModesPreferredMode string
 
 const (
-	SourceMysqlSSLModesPreferredModeEnumPreferred SourceMysqlSSLModesPreferredModeEnum = "preferred"
+	SourceMysqlSSLModesPreferredModePreferred SourceMysqlSSLModesPreferredMode = "preferred"
 )
 
-func (e SourceMysqlSSLModesPreferredModeEnum) ToPointer() *SourceMysqlSSLModesPreferredModeEnum {
+func (e SourceMysqlSSLModesPreferredMode) ToPointer() *SourceMysqlSSLModesPreferredMode {
 	return &e
 }
 
-func (e *SourceMysqlSSLModesPreferredModeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceMysqlSSLModesPreferredMode) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "preferred":
-		*e = SourceMysqlSSLModesPreferredModeEnum(v)
+		*e = SourceMysqlSSLModesPreferredMode(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMysqlSSLModesPreferredModeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceMysqlSSLModesPreferredMode: %v", v)
 	}
 }
 
 // SourceMysqlSSLModesPreferred - Automatically attempt SSL connection. If the MySQL server does not support SSL, continue with a regular connection.
 type SourceMysqlSSLModesPreferred struct {
-	Mode SourceMysqlSSLModesPreferredModeEnum `json:"mode"`
+	Mode SourceMysqlSSLModesPreferredMode `json:"mode"`
 }
 
 type SourceMysqlSSLModesType string
@@ -411,28 +411,28 @@ func (u SourceMysqlSSLModes) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-// SourceMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum - Connect through a jump server tunnel host using username and password authentication
-type SourceMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum string
+// SourceMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and password authentication
+type SourceMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethod string
 
 const (
-	SourceMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnumSSHPasswordAuth SourceMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum = "SSH_PASSWORD_AUTH"
+	SourceMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethodSSHPasswordAuth SourceMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethod = "SSH_PASSWORD_AUTH"
 )
 
-func (e SourceMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) ToPointer() *SourceMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum {
+func (e SourceMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethod) ToPointer() *SourceMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethod {
 	return &e
 }
 
-func (e *SourceMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SSH_PASSWORD_AUTH":
-		*e = SourceMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(v)
+		*e = SourceMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethod: %v", v)
 	}
 }
 
@@ -441,7 +441,7 @@ type SourceMysqlSSHTunnelMethodPasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and password authentication
-	TunnelMethod SourceMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum `json:"tunnel_method"`
+	TunnelMethod SourceMysqlSSHTunnelMethodPasswordAuthenticationTunnelMethod `json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort int64 `json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
@@ -450,28 +450,28 @@ type SourceMysqlSSHTunnelMethodPasswordAuthentication struct {
 	TunnelUserPassword string `json:"tunnel_user_password"`
 }
 
-// SourceMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum - Connect through a jump server tunnel host using username and ssh key
-type SourceMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum string
+// SourceMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and ssh key
+type SourceMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod string
 
 const (
-	SourceMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnumSSHKeyAuth SourceMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum = "SSH_KEY_AUTH"
+	SourceMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodSSHKeyAuth SourceMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod = "SSH_KEY_AUTH"
 )
 
-func (e SourceMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) ToPointer() *SourceMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum {
+func (e SourceMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod) ToPointer() *SourceMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod {
 	return &e
 }
 
-func (e *SourceMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SSH_KEY_AUTH":
-		*e = SourceMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(v)
+		*e = SourceMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod: %v", v)
 	}
 }
 
@@ -482,42 +482,42 @@ type SourceMysqlSSHTunnelMethodSSHKeyAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and ssh key
-	TunnelMethod SourceMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum `json:"tunnel_method"`
+	TunnelMethod SourceMysqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod `json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort int64 `json:"tunnel_port"`
 	// OS-level username for logging into the jump server host.
 	TunnelUser string `json:"tunnel_user"`
 }
 
-// SourceMysqlSSHTunnelMethodNoTunnelTunnelMethodEnum - No ssh tunnel needed to connect to database
-type SourceMysqlSSHTunnelMethodNoTunnelTunnelMethodEnum string
+// SourceMysqlSSHTunnelMethodNoTunnelTunnelMethod - No ssh tunnel needed to connect to database
+type SourceMysqlSSHTunnelMethodNoTunnelTunnelMethod string
 
 const (
-	SourceMysqlSSHTunnelMethodNoTunnelTunnelMethodEnumNoTunnel SourceMysqlSSHTunnelMethodNoTunnelTunnelMethodEnum = "NO_TUNNEL"
+	SourceMysqlSSHTunnelMethodNoTunnelTunnelMethodNoTunnel SourceMysqlSSHTunnelMethodNoTunnelTunnelMethod = "NO_TUNNEL"
 )
 
-func (e SourceMysqlSSHTunnelMethodNoTunnelTunnelMethodEnum) ToPointer() *SourceMysqlSSHTunnelMethodNoTunnelTunnelMethodEnum {
+func (e SourceMysqlSSHTunnelMethodNoTunnelTunnelMethod) ToPointer() *SourceMysqlSSHTunnelMethodNoTunnelTunnelMethod {
 	return &e
 }
 
-func (e *SourceMysqlSSHTunnelMethodNoTunnelTunnelMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceMysqlSSHTunnelMethodNoTunnelTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "NO_TUNNEL":
-		*e = SourceMysqlSSHTunnelMethodNoTunnelTunnelMethodEnum(v)
+		*e = SourceMysqlSSHTunnelMethodNoTunnelTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMysqlSSHTunnelMethodNoTunnelTunnelMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceMysqlSSHTunnelMethodNoTunnelTunnelMethod: %v", v)
 	}
 }
 
 // SourceMysqlSSHTunnelMethodNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type SourceMysqlSSHTunnelMethodNoTunnel struct {
 	// No ssh tunnel needed to connect to database
-	TunnelMethod SourceMysqlSSHTunnelMethodNoTunnelTunnelMethodEnum `json:"tunnel_method"`
+	TunnelMethod SourceMysqlSSHTunnelMethodNoTunnelTunnelMethod `json:"tunnel_method"`
 }
 
 type SourceMysqlSSHTunnelMethodType string
@@ -625,7 +625,7 @@ type SourceMysql struct {
 	Port int64 `json:"port"`
 	// Replication method to use for extracting data from the database.
 	ReplicationMethod SourceMysqlReplicationMethod `json:"replication_method"`
-	SourceType        SourceMysqlMysqlEnum         `json:"sourceType"`
+	SourceType        SourceMysqlMysql             `json:"sourceType"`
 	// SSL connection modes. Read more <a href="https://dev.mysql.com/doc/connector-j/8.0/en/connector-j-reference-using-ssl.html"> in the docs</a>.
 	SslMode *SourceMysqlSSLModes `json:"ssl_mode,omitempty"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.

@@ -4,12 +4,13 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceRailzResourceModel) ToCreateSDKType() *shared.SourceRailzCreateRequest {
 	clientID := r.Configuration.ClientID.ValueString()
 	secretKey := r.Configuration.SecretKey.ValueString()
-	sourceType := shared.SourceRailzRailzEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceRailzRailz(r.Configuration.SourceType.ValueString())
 	startDate := r.Configuration.StartDate.ValueString()
 	configuration := shared.SourceRailz{
 		ClientID:   clientID,
@@ -37,4 +38,11 @@ func (r *SourceRailzResourceModel) ToCreateSDKType() *shared.SourceRailzCreateRe
 func (r *SourceRailzResourceModel) ToDeleteSDKType() *shared.SourceRailzCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceRailzResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

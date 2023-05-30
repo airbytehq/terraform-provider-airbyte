@@ -8,21 +8,21 @@ import (
 	"time"
 )
 
-// SourceChartmogulIntervalEnum - Some APIs such as <a href="https://dev.chartmogul.com/reference/endpoint-overview-metrics-api">Metrics</a> require intervals to cluster data.
-type SourceChartmogulIntervalEnum string
+// SourceChartmogulInterval - Some APIs such as <a href="https://dev.chartmogul.com/reference/endpoint-overview-metrics-api">Metrics</a> require intervals to cluster data.
+type SourceChartmogulInterval string
 
 const (
-	SourceChartmogulIntervalEnumDay     SourceChartmogulIntervalEnum = "day"
-	SourceChartmogulIntervalEnumWeek    SourceChartmogulIntervalEnum = "week"
-	SourceChartmogulIntervalEnumMonth   SourceChartmogulIntervalEnum = "month"
-	SourceChartmogulIntervalEnumQuarter SourceChartmogulIntervalEnum = "quarter"
+	SourceChartmogulIntervalDay     SourceChartmogulInterval = "day"
+	SourceChartmogulIntervalWeek    SourceChartmogulInterval = "week"
+	SourceChartmogulIntervalMonth   SourceChartmogulInterval = "month"
+	SourceChartmogulIntervalQuarter SourceChartmogulInterval = "quarter"
 )
 
-func (e SourceChartmogulIntervalEnum) ToPointer() *SourceChartmogulIntervalEnum {
+func (e SourceChartmogulInterval) ToPointer() *SourceChartmogulInterval {
 	return &e
 }
 
-func (e *SourceChartmogulIntervalEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceChartmogulInterval) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -35,34 +35,34 @@ func (e *SourceChartmogulIntervalEnum) UnmarshalJSON(data []byte) error {
 	case "month":
 		fallthrough
 	case "quarter":
-		*e = SourceChartmogulIntervalEnum(v)
+		*e = SourceChartmogulInterval(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceChartmogulIntervalEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceChartmogulInterval: %v", v)
 	}
 }
 
-type SourceChartmogulChartmogulEnum string
+type SourceChartmogulChartmogul string
 
 const (
-	SourceChartmogulChartmogulEnumChartmogul SourceChartmogulChartmogulEnum = "chartmogul"
+	SourceChartmogulChartmogulChartmogul SourceChartmogulChartmogul = "chartmogul"
 )
 
-func (e SourceChartmogulChartmogulEnum) ToPointer() *SourceChartmogulChartmogulEnum {
+func (e SourceChartmogulChartmogul) ToPointer() *SourceChartmogulChartmogul {
 	return &e
 }
 
-func (e *SourceChartmogulChartmogulEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceChartmogulChartmogul) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "chartmogul":
-		*e = SourceChartmogulChartmogulEnum(v)
+		*e = SourceChartmogulChartmogul(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceChartmogulChartmogulEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceChartmogulChartmogul: %v", v)
 	}
 }
 
@@ -70,8 +70,8 @@ type SourceChartmogul struct {
 	// Your Chartmogul API key. See <a href="https://help.chartmogul.com/hc/en-us/articles/4407796325906-Creating-and-Managing-API-keys#creating-an-api-key"> the docs </a> for info on how to obtain this.
 	APIKey string `json:"api_key"`
 	// Some APIs such as <a href="https://dev.chartmogul.com/reference/endpoint-overview-metrics-api">Metrics</a> require intervals to cluster data.
-	Interval   SourceChartmogulIntervalEnum   `json:"interval"`
-	SourceType SourceChartmogulChartmogulEnum `json:"sourceType"`
+	Interval   SourceChartmogulInterval   `json:"interval"`
+	SourceType SourceChartmogulChartmogul `json:"sourceType"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. When feasible, any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
 }

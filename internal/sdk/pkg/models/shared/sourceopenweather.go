@@ -7,66 +7,66 @@ import (
 	"fmt"
 )
 
-// SourceOpenweatherLanguageEnum - You can use lang parameter to get the output in your language. The contents of the description field will be translated. See <a href="https://openweathermap.org/api/one-call-api#multi">here</a> for the list of supported languages.
-type SourceOpenweatherLanguageEnum string
+// SourceOpenweatherLanguage - You can use lang parameter to get the output in your language. The contents of the description field will be translated. See <a href="https://openweathermap.org/api/one-call-api#multi">here</a> for the list of supported languages.
+type SourceOpenweatherLanguage string
 
 const (
-	SourceOpenweatherLanguageEnumAf   SourceOpenweatherLanguageEnum = "af"
-	SourceOpenweatherLanguageEnumAl   SourceOpenweatherLanguageEnum = "al"
-	SourceOpenweatherLanguageEnumAr   SourceOpenweatherLanguageEnum = "ar"
-	SourceOpenweatherLanguageEnumAz   SourceOpenweatherLanguageEnum = "az"
-	SourceOpenweatherLanguageEnumBg   SourceOpenweatherLanguageEnum = "bg"
-	SourceOpenweatherLanguageEnumCa   SourceOpenweatherLanguageEnum = "ca"
-	SourceOpenweatherLanguageEnumCz   SourceOpenweatherLanguageEnum = "cz"
-	SourceOpenweatherLanguageEnumDa   SourceOpenweatherLanguageEnum = "da"
-	SourceOpenweatherLanguageEnumDe   SourceOpenweatherLanguageEnum = "de"
-	SourceOpenweatherLanguageEnumEl   SourceOpenweatherLanguageEnum = "el"
-	SourceOpenweatherLanguageEnumEn   SourceOpenweatherLanguageEnum = "en"
-	SourceOpenweatherLanguageEnumEu   SourceOpenweatherLanguageEnum = "eu"
-	SourceOpenweatherLanguageEnumFa   SourceOpenweatherLanguageEnum = "fa"
-	SourceOpenweatherLanguageEnumFi   SourceOpenweatherLanguageEnum = "fi"
-	SourceOpenweatherLanguageEnumFr   SourceOpenweatherLanguageEnum = "fr"
-	SourceOpenweatherLanguageEnumGl   SourceOpenweatherLanguageEnum = "gl"
-	SourceOpenweatherLanguageEnumHe   SourceOpenweatherLanguageEnum = "he"
-	SourceOpenweatherLanguageEnumHi   SourceOpenweatherLanguageEnum = "hi"
-	SourceOpenweatherLanguageEnumHr   SourceOpenweatherLanguageEnum = "hr"
-	SourceOpenweatherLanguageEnumHu   SourceOpenweatherLanguageEnum = "hu"
-	SourceOpenweatherLanguageEnumID   SourceOpenweatherLanguageEnum = "id"
-	SourceOpenweatherLanguageEnumIt   SourceOpenweatherLanguageEnum = "it"
-	SourceOpenweatherLanguageEnumJa   SourceOpenweatherLanguageEnum = "ja"
-	SourceOpenweatherLanguageEnumKr   SourceOpenweatherLanguageEnum = "kr"
-	SourceOpenweatherLanguageEnumLa   SourceOpenweatherLanguageEnum = "la"
-	SourceOpenweatherLanguageEnumLt   SourceOpenweatherLanguageEnum = "lt"
-	SourceOpenweatherLanguageEnumMk   SourceOpenweatherLanguageEnum = "mk"
-	SourceOpenweatherLanguageEnumNo   SourceOpenweatherLanguageEnum = "no"
-	SourceOpenweatherLanguageEnumNl   SourceOpenweatherLanguageEnum = "nl"
-	SourceOpenweatherLanguageEnumPl   SourceOpenweatherLanguageEnum = "pl"
-	SourceOpenweatherLanguageEnumPt   SourceOpenweatherLanguageEnum = "pt"
-	SourceOpenweatherLanguageEnumPtBr SourceOpenweatherLanguageEnum = "pt_br"
-	SourceOpenweatherLanguageEnumRo   SourceOpenweatherLanguageEnum = "ro"
-	SourceOpenweatherLanguageEnumRu   SourceOpenweatherLanguageEnum = "ru"
-	SourceOpenweatherLanguageEnumSv   SourceOpenweatherLanguageEnum = "sv"
-	SourceOpenweatherLanguageEnumSe   SourceOpenweatherLanguageEnum = "se"
-	SourceOpenweatherLanguageEnumSk   SourceOpenweatherLanguageEnum = "sk"
-	SourceOpenweatherLanguageEnumSl   SourceOpenweatherLanguageEnum = "sl"
-	SourceOpenweatherLanguageEnumSp   SourceOpenweatherLanguageEnum = "sp"
-	SourceOpenweatherLanguageEnumEs   SourceOpenweatherLanguageEnum = "es"
-	SourceOpenweatherLanguageEnumSr   SourceOpenweatherLanguageEnum = "sr"
-	SourceOpenweatherLanguageEnumTh   SourceOpenweatherLanguageEnum = "th"
-	SourceOpenweatherLanguageEnumTr   SourceOpenweatherLanguageEnum = "tr"
-	SourceOpenweatherLanguageEnumUa   SourceOpenweatherLanguageEnum = "ua"
-	SourceOpenweatherLanguageEnumUk   SourceOpenweatherLanguageEnum = "uk"
-	SourceOpenweatherLanguageEnumVi   SourceOpenweatherLanguageEnum = "vi"
-	SourceOpenweatherLanguageEnumZhCn SourceOpenweatherLanguageEnum = "zh_cn"
-	SourceOpenweatherLanguageEnumZhTw SourceOpenweatherLanguageEnum = "zh_tw"
-	SourceOpenweatherLanguageEnumZu   SourceOpenweatherLanguageEnum = "zu"
+	SourceOpenweatherLanguageAf   SourceOpenweatherLanguage = "af"
+	SourceOpenweatherLanguageAl   SourceOpenweatherLanguage = "al"
+	SourceOpenweatherLanguageAr   SourceOpenweatherLanguage = "ar"
+	SourceOpenweatherLanguageAz   SourceOpenweatherLanguage = "az"
+	SourceOpenweatherLanguageBg   SourceOpenweatherLanguage = "bg"
+	SourceOpenweatherLanguageCa   SourceOpenweatherLanguage = "ca"
+	SourceOpenweatherLanguageCz   SourceOpenweatherLanguage = "cz"
+	SourceOpenweatherLanguageDa   SourceOpenweatherLanguage = "da"
+	SourceOpenweatherLanguageDe   SourceOpenweatherLanguage = "de"
+	SourceOpenweatherLanguageEl   SourceOpenweatherLanguage = "el"
+	SourceOpenweatherLanguageEn   SourceOpenweatherLanguage = "en"
+	SourceOpenweatherLanguageEu   SourceOpenweatherLanguage = "eu"
+	SourceOpenweatherLanguageFa   SourceOpenweatherLanguage = "fa"
+	SourceOpenweatherLanguageFi   SourceOpenweatherLanguage = "fi"
+	SourceOpenweatherLanguageFr   SourceOpenweatherLanguage = "fr"
+	SourceOpenweatherLanguageGl   SourceOpenweatherLanguage = "gl"
+	SourceOpenweatherLanguageHe   SourceOpenweatherLanguage = "he"
+	SourceOpenweatherLanguageHi   SourceOpenweatherLanguage = "hi"
+	SourceOpenweatherLanguageHr   SourceOpenweatherLanguage = "hr"
+	SourceOpenweatherLanguageHu   SourceOpenweatherLanguage = "hu"
+	SourceOpenweatherLanguageID   SourceOpenweatherLanguage = "id"
+	SourceOpenweatherLanguageIt   SourceOpenweatherLanguage = "it"
+	SourceOpenweatherLanguageJa   SourceOpenweatherLanguage = "ja"
+	SourceOpenweatherLanguageKr   SourceOpenweatherLanguage = "kr"
+	SourceOpenweatherLanguageLa   SourceOpenweatherLanguage = "la"
+	SourceOpenweatherLanguageLt   SourceOpenweatherLanguage = "lt"
+	SourceOpenweatherLanguageMk   SourceOpenweatherLanguage = "mk"
+	SourceOpenweatherLanguageNo   SourceOpenweatherLanguage = "no"
+	SourceOpenweatherLanguageNl   SourceOpenweatherLanguage = "nl"
+	SourceOpenweatherLanguagePl   SourceOpenweatherLanguage = "pl"
+	SourceOpenweatherLanguagePt   SourceOpenweatherLanguage = "pt"
+	SourceOpenweatherLanguagePtBr SourceOpenweatherLanguage = "pt_br"
+	SourceOpenweatherLanguageRo   SourceOpenweatherLanguage = "ro"
+	SourceOpenweatherLanguageRu   SourceOpenweatherLanguage = "ru"
+	SourceOpenweatherLanguageSv   SourceOpenweatherLanguage = "sv"
+	SourceOpenweatherLanguageSe   SourceOpenweatherLanguage = "se"
+	SourceOpenweatherLanguageSk   SourceOpenweatherLanguage = "sk"
+	SourceOpenweatherLanguageSl   SourceOpenweatherLanguage = "sl"
+	SourceOpenweatherLanguageSp   SourceOpenweatherLanguage = "sp"
+	SourceOpenweatherLanguageEs   SourceOpenweatherLanguage = "es"
+	SourceOpenweatherLanguageSr   SourceOpenweatherLanguage = "sr"
+	SourceOpenweatherLanguageTh   SourceOpenweatherLanguage = "th"
+	SourceOpenweatherLanguageTr   SourceOpenweatherLanguage = "tr"
+	SourceOpenweatherLanguageUa   SourceOpenweatherLanguage = "ua"
+	SourceOpenweatherLanguageUk   SourceOpenweatherLanguage = "uk"
+	SourceOpenweatherLanguageVi   SourceOpenweatherLanguage = "vi"
+	SourceOpenweatherLanguageZhCn SourceOpenweatherLanguage = "zh_cn"
+	SourceOpenweatherLanguageZhTw SourceOpenweatherLanguage = "zh_tw"
+	SourceOpenweatherLanguageZu   SourceOpenweatherLanguage = "zu"
 )
 
-func (e SourceOpenweatherLanguageEnum) ToPointer() *SourceOpenweatherLanguageEnum {
+func (e SourceOpenweatherLanguage) ToPointer() *SourceOpenweatherLanguage {
 	return &e
 }
 
-func (e *SourceOpenweatherLanguageEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceOpenweatherLanguage) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -169,51 +169,51 @@ func (e *SourceOpenweatherLanguageEnum) UnmarshalJSON(data []byte) error {
 	case "zh_tw":
 		fallthrough
 	case "zu":
-		*e = SourceOpenweatherLanguageEnum(v)
+		*e = SourceOpenweatherLanguage(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceOpenweatherLanguageEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceOpenweatherLanguage: %v", v)
 	}
 }
 
-type SourceOpenweatherOpenweatherEnum string
+type SourceOpenweatherOpenweather string
 
 const (
-	SourceOpenweatherOpenweatherEnumOpenweather SourceOpenweatherOpenweatherEnum = "openweather"
+	SourceOpenweatherOpenweatherOpenweather SourceOpenweatherOpenweather = "openweather"
 )
 
-func (e SourceOpenweatherOpenweatherEnum) ToPointer() *SourceOpenweatherOpenweatherEnum {
+func (e SourceOpenweatherOpenweather) ToPointer() *SourceOpenweatherOpenweather {
 	return &e
 }
 
-func (e *SourceOpenweatherOpenweatherEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceOpenweatherOpenweather) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "openweather":
-		*e = SourceOpenweatherOpenweatherEnum(v)
+		*e = SourceOpenweatherOpenweather(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceOpenweatherOpenweatherEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceOpenweatherOpenweather: %v", v)
 	}
 }
 
-// SourceOpenweatherUnitsEnum - Units of measurement. standard, metric and imperial units are available. If you do not use the units parameter, standard units will be applied by default.
-type SourceOpenweatherUnitsEnum string
+// SourceOpenweatherUnits - Units of measurement. standard, metric and imperial units are available. If you do not use the units parameter, standard units will be applied by default.
+type SourceOpenweatherUnits string
 
 const (
-	SourceOpenweatherUnitsEnumStandard SourceOpenweatherUnitsEnum = "standard"
-	SourceOpenweatherUnitsEnumMetric   SourceOpenweatherUnitsEnum = "metric"
-	SourceOpenweatherUnitsEnumImperial SourceOpenweatherUnitsEnum = "imperial"
+	SourceOpenweatherUnitsStandard SourceOpenweatherUnits = "standard"
+	SourceOpenweatherUnitsMetric   SourceOpenweatherUnits = "metric"
+	SourceOpenweatherUnitsImperial SourceOpenweatherUnits = "imperial"
 )
 
-func (e SourceOpenweatherUnitsEnum) ToPointer() *SourceOpenweatherUnitsEnum {
+func (e SourceOpenweatherUnits) ToPointer() *SourceOpenweatherUnits {
 	return &e
 }
 
-func (e *SourceOpenweatherUnitsEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceOpenweatherUnits) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -224,10 +224,10 @@ func (e *SourceOpenweatherUnitsEnum) UnmarshalJSON(data []byte) error {
 	case "metric":
 		fallthrough
 	case "imperial":
-		*e = SourceOpenweatherUnitsEnum(v)
+		*e = SourceOpenweatherUnits(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceOpenweatherUnitsEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceOpenweatherUnits: %v", v)
 	}
 }
 
@@ -235,12 +235,12 @@ type SourceOpenweather struct {
 	// Your OpenWeather API Key. See <a href="https://openweathermap.org/api">here</a>. The key is case sensitive.
 	Appid string `json:"appid"`
 	// You can use lang parameter to get the output in your language. The contents of the description field will be translated. See <a href="https://openweathermap.org/api/one-call-api#multi">here</a> for the list of supported languages.
-	Lang *SourceOpenweatherLanguageEnum `json:"lang,omitempty"`
+	Lang *SourceOpenweatherLanguage `json:"lang,omitempty"`
 	// Latitude for which you want to get weather condition from. (min -90, max 90)
 	Lat string `json:"lat"`
 	// Longitude for which you want to get weather condition from. (min -180, max 180)
-	Lon        string                           `json:"lon"`
-	SourceType SourceOpenweatherOpenweatherEnum `json:"sourceType"`
+	Lon        string                       `json:"lon"`
+	SourceType SourceOpenweatherOpenweather `json:"sourceType"`
 	// Units of measurement. standard, metric and imperial units are available. If you do not use the units parameter, standard units will be applied by default.
-	Units *SourceOpenweatherUnitsEnum `json:"units,omitempty"`
+	Units *SourceOpenweatherUnits `json:"units,omitempty"`
 }

@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceZendeskSunshineResourceModel) ToCreateSDKType() *shared.SourceZendeskSunshineCreateRequest {
@@ -11,7 +12,7 @@ func (r *SourceZendeskSunshineResourceModel) ToCreateSDKType() *shared.SourceZen
 	var sourceZendeskSunshineAuthorizationMethodOAuth20 *shared.SourceZendeskSunshineAuthorizationMethodOAuth20
 	if r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20 != nil {
 		accessToken := r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20.AccessToken.ValueString()
-		authMethod := shared.SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethodEnum(r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20.AuthMethod.ValueString())
+		authMethod := shared.SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethod(r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20.AuthMethod.ValueString())
 		clientID := r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20.ClientID.ValueString()
 		clientSecret := r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20.ClientSecret.ValueString()
 		sourceZendeskSunshineAuthorizationMethodOAuth20 = &shared.SourceZendeskSunshineAuthorizationMethodOAuth20{
@@ -29,7 +30,7 @@ func (r *SourceZendeskSunshineResourceModel) ToCreateSDKType() *shared.SourceZen
 	var sourceZendeskSunshineAuthorizationMethodAPIToken *shared.SourceZendeskSunshineAuthorizationMethodAPIToken
 	if r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodAPIToken != nil {
 		apiToken := r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodAPIToken.APIToken.ValueString()
-		authMethod1 := shared.SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethodEnum(r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodAPIToken.AuthMethod.ValueString())
+		authMethod1 := shared.SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethod(r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodAPIToken.AuthMethod.ValueString())
 		email := r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodAPIToken.Email.ValueString()
 		sourceZendeskSunshineAuthorizationMethodAPIToken = &shared.SourceZendeskSunshineAuthorizationMethodAPIToken{
 			APIToken:   apiToken,
@@ -42,7 +43,7 @@ func (r *SourceZendeskSunshineResourceModel) ToCreateSDKType() *shared.SourceZen
 			SourceZendeskSunshineAuthorizationMethodAPIToken: sourceZendeskSunshineAuthorizationMethodAPIToken,
 		}
 	}
-	sourceType := shared.SourceZendeskSunshineZendeskSunshineEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceZendeskSunshineZendeskSunshine(r.Configuration.SourceType.ValueString())
 	startDate := r.Configuration.StartDate.ValueString()
 	subdomain := r.Configuration.Subdomain.ValueString()
 	configuration := shared.SourceZendeskSunshine{
@@ -71,4 +72,11 @@ func (r *SourceZendeskSunshineResourceModel) ToCreateSDKType() *shared.SourceZen
 func (r *SourceZendeskSunshineResourceModel) ToDeleteSDKType() *shared.SourceZendeskSunshineCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceZendeskSunshineResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

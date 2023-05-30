@@ -8,34 +8,34 @@ import (
 	"time"
 )
 
-type SourceSendgridSendgridEnum string
+type SourceSendgridSendgrid string
 
 const (
-	SourceSendgridSendgridEnumSendgrid SourceSendgridSendgridEnum = "sendgrid"
+	SourceSendgridSendgridSendgrid SourceSendgridSendgrid = "sendgrid"
 )
 
-func (e SourceSendgridSendgridEnum) ToPointer() *SourceSendgridSendgridEnum {
+func (e SourceSendgridSendgrid) ToPointer() *SourceSendgridSendgrid {
 	return &e
 }
 
-func (e *SourceSendgridSendgridEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceSendgridSendgrid) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "sendgrid":
-		*e = SourceSendgridSendgridEnum(v)
+		*e = SourceSendgridSendgrid(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSendgridSendgridEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceSendgridSendgrid: %v", v)
 	}
 }
 
 type SourceSendgrid struct {
 	// API Key, use <a href="https://app.sendgrid.com/settings/api_keys/">admin</a> to generate this key.
-	Apikey     string                     `json:"apikey"`
-	SourceType SourceSendgridSendgridEnum `json:"sourceType"`
+	Apikey     string                 `json:"apikey"`
+	SourceType SourceSendgridSendgrid `json:"sourceType"`
 	// Start time in ISO8601 format. Any data before this time point will not be replicated.
 	StartTime *time.Time `json:"start_time,omitempty"`
 }

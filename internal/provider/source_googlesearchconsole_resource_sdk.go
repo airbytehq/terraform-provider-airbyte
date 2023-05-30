@@ -5,6 +5,7 @@ package provider
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	customTypes "airbyte/internal/sdk/pkg/types"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceGoogleSearchConsoleResourceModel) ToCreateSDKType() *shared.SourceGoogleSearchConsoleCreateRequest {
@@ -17,7 +18,7 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToCreateSDKType() *shared.Sourc
 		} else {
 			accessToken = nil
 		}
-		authType := shared.SourceGoogleSearchConsoleAuthenticationTypeOAuthAuthTypeEnum(r.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeOAuth.AuthType.ValueString())
+		authType := shared.SourceGoogleSearchConsoleAuthenticationTypeOAuthAuthType(r.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeOAuth.AuthType.ValueString())
 		clientID := r.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeOAuth.ClientID.ValueString()
 		clientSecret := r.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeOAuth.ClientSecret.ValueString()
 		refreshToken := r.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeOAuth.RefreshToken.ValueString()
@@ -36,7 +37,7 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToCreateSDKType() *shared.Sourc
 	}
 	var sourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication *shared.SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication
 	if r.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication != nil {
-		authType1 := shared.SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthenticationAuthTypeEnum(r.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication.AuthType.ValueString())
+		authType1 := shared.SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthenticationAuthType(r.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication.AuthType.ValueString())
 		email := r.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication.Email.ValueString()
 		serviceAccountInfo := r.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication.ServiceAccountInfo.ValueString()
 		sourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication = &shared.SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication{
@@ -58,7 +59,7 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToCreateSDKType() *shared.Sourc
 	}
 	endDate := new(customTypes.Date)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
-		*endDate, _ = customTypes.NewDate(r.Configuration.EndDate.ValueString())
+		endDate = customTypes.MustNewDateFromString(r.Configuration.EndDate.ValueString())
 	} else {
 		endDate = nil
 	}
@@ -66,8 +67,8 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToCreateSDKType() *shared.Sourc
 	for _, siteUrlsItem := range r.Configuration.SiteUrls {
 		siteUrls = append(siteUrls, siteUrlsItem.ValueString())
 	}
-	sourceType := shared.SourceGoogleSearchConsoleGoogleSearchConsoleEnum(r.Configuration.SourceType.ValueString())
-	startDate, _ := customTypes.NewDate(r.Configuration.StartDate.ValueString())
+	sourceType := shared.SourceGoogleSearchConsoleGoogleSearchConsole(r.Configuration.SourceType.ValueString())
+	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceGoogleSearchConsole{
 		Authorization: authorization,
 		CustomReports: customReports,
@@ -96,4 +97,11 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToCreateSDKType() *shared.Sourc
 func (r *SourceGoogleSearchConsoleResourceModel) ToDeleteSDKType() *shared.SourceGoogleSearchConsoleCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceGoogleSearchConsoleResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

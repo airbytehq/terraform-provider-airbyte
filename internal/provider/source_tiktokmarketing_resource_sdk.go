@@ -5,6 +5,7 @@ package provider
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	customTypes "airbyte/internal/sdk/pkg/types"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceTiktokMarketingResourceModel) ToCreateSDKType() *shared.SourceTiktokMarketingCreateRequest {
@@ -25,9 +26,9 @@ func (r *SourceTiktokMarketingResourceModel) ToCreateSDKType() *shared.SourceTik
 			advertiserID = nil
 		}
 		appID := r.Configuration.Credentials.SourceTiktokMarketingAuthenticationMethodOAuth20.AppID.ValueString()
-		authType := new(shared.SourceTiktokMarketingAuthenticationMethodOAuth20AuthTypeEnum)
+		authType := new(shared.SourceTiktokMarketingAuthenticationMethodOAuth20AuthType)
 		if !r.Configuration.Credentials.SourceTiktokMarketingAuthenticationMethodOAuth20.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceTiktokMarketingAuthenticationMethodOAuth20.AuthType.IsNull() {
-			*authType = shared.SourceTiktokMarketingAuthenticationMethodOAuth20AuthTypeEnum(r.Configuration.Credentials.SourceTiktokMarketingAuthenticationMethodOAuth20.AuthType.ValueString())
+			*authType = shared.SourceTiktokMarketingAuthenticationMethodOAuth20AuthType(r.Configuration.Credentials.SourceTiktokMarketingAuthenticationMethodOAuth20.AuthType.ValueString())
 		} else {
 			authType = nil
 		}
@@ -49,9 +50,9 @@ func (r *SourceTiktokMarketingResourceModel) ToCreateSDKType() *shared.SourceTik
 	if r.Configuration.Credentials.SourceTiktokMarketingAuthenticationMethodSandboxAccessToken != nil {
 		accessToken1 := r.Configuration.Credentials.SourceTiktokMarketingAuthenticationMethodSandboxAccessToken.AccessToken.ValueString()
 		advertiserId1 := r.Configuration.Credentials.SourceTiktokMarketingAuthenticationMethodSandboxAccessToken.AdvertiserID.ValueString()
-		authType1 := new(shared.SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthTypeEnum)
+		authType1 := new(shared.SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthType)
 		if !r.Configuration.Credentials.SourceTiktokMarketingAuthenticationMethodSandboxAccessToken.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceTiktokMarketingAuthenticationMethodSandboxAccessToken.AuthType.IsNull() {
-			*authType1 = shared.SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthTypeEnum(r.Configuration.Credentials.SourceTiktokMarketingAuthenticationMethodSandboxAccessToken.AuthType.ValueString())
+			*authType1 = shared.SourceTiktokMarketingAuthenticationMethodSandboxAccessTokenAuthType(r.Configuration.Credentials.SourceTiktokMarketingAuthenticationMethodSandboxAccessToken.AuthType.ValueString())
 		} else {
 			authType1 = nil
 		}
@@ -68,14 +69,14 @@ func (r *SourceTiktokMarketingResourceModel) ToCreateSDKType() *shared.SourceTik
 	}
 	endDate := new(customTypes.Date)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
-		*endDate, _ = customTypes.NewDate(r.Configuration.EndDate.ValueString())
+		endDate = customTypes.MustNewDateFromString(r.Configuration.EndDate.ValueString())
 	} else {
 		endDate = nil
 	}
-	sourceType := shared.SourceTiktokMarketingTiktokMarketingEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceTiktokMarketingTiktokMarketing(r.Configuration.SourceType.ValueString())
 	startDate := new(customTypes.Date)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		*startDate, _ = customTypes.NewDate(r.Configuration.StartDate.ValueString())
+		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
 	} else {
 		startDate = nil
 	}
@@ -106,4 +107,11 @@ func (r *SourceTiktokMarketingResourceModel) ToCreateSDKType() *shared.SourceTik
 func (r *SourceTiktokMarketingResourceModel) ToDeleteSDKType() *shared.SourceTiktokMarketingCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceTiktokMarketingResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

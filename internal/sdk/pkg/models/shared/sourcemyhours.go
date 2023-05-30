@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type SourceMyHoursMyHoursEnum string
+type SourceMyHoursMyHours string
 
 const (
-	SourceMyHoursMyHoursEnumMyHours SourceMyHoursMyHoursEnum = "my-hours"
+	SourceMyHoursMyHoursMyHours SourceMyHoursMyHours = "my-hours"
 )
 
-func (e SourceMyHoursMyHoursEnum) ToPointer() *SourceMyHoursMyHoursEnum {
+func (e SourceMyHoursMyHours) ToPointer() *SourceMyHoursMyHours {
 	return &e
 }
 
-func (e *SourceMyHoursMyHoursEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceMyHoursMyHours) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "my-hours":
-		*e = SourceMyHoursMyHoursEnum(v)
+		*e = SourceMyHoursMyHours(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMyHoursMyHoursEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceMyHoursMyHours: %v", v)
 	}
 }
 
@@ -37,8 +37,8 @@ type SourceMyHours struct {
 	// Pagination size used for retrieving logs in days
 	LogsBatchSize *int64 `json:"logs_batch_size,omitempty"`
 	// The password associated to the username
-	Password   string                   `json:"password"`
-	SourceType SourceMyHoursMyHoursEnum `json:"sourceType"`
+	Password   string               `json:"password"`
+	SourceType SourceMyHoursMyHours `json:"sourceType"`
 	// Start date for collecting time logs
 	StartDate string `json:"start_date"`
 }

@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type DestinationTypesenseTypesenseEnum string
+type DestinationTypesenseTypesense string
 
 const (
-	DestinationTypesenseTypesenseEnumTypesense DestinationTypesenseTypesenseEnum = "typesense"
+	DestinationTypesenseTypesenseTypesense DestinationTypesenseTypesense = "typesense"
 )
 
-func (e DestinationTypesenseTypesenseEnum) ToPointer() *DestinationTypesenseTypesenseEnum {
+func (e DestinationTypesenseTypesense) ToPointer() *DestinationTypesenseTypesense {
 	return &e
 }
 
-func (e *DestinationTypesenseTypesenseEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationTypesenseTypesense) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "typesense":
-		*e = DestinationTypesenseTypesenseEnum(v)
+		*e = DestinationTypesenseTypesense(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationTypesenseTypesenseEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationTypesenseTypesense: %v", v)
 	}
 }
 
@@ -35,8 +35,8 @@ type DestinationTypesense struct {
 	// Typesense API Key
 	APIKey string `json:"api_key"`
 	// How many documents should be imported together. Default 1000
-	BatchSize       *string                           `json:"batch_size,omitempty"`
-	DestinationType DestinationTypesenseTypesenseEnum `json:"destinationType"`
+	BatchSize       *string                       `json:"batch_size,omitempty"`
+	DestinationType DestinationTypesenseTypesense `json:"destinationType"`
 	// Hostname of the Typesense instance without protocol.
 	Host string `json:"host"`
 	// Port of the Typesense instance. Ex: 8108, 80, 443. Default is 443

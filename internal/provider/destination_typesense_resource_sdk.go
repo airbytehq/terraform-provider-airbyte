@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationTypesenseResourceModel) ToCreateSDKType() *shared.DestinationTypesenseCreateRequest {
@@ -14,7 +15,7 @@ func (r *DestinationTypesenseResourceModel) ToCreateSDKType() *shared.Destinatio
 	} else {
 		batchSize = nil
 	}
-	destinationType := shared.DestinationTypesenseTypesenseEnum(r.Configuration.DestinationType.ValueString())
+	destinationType := shared.DestinationTypesenseTypesense(r.Configuration.DestinationType.ValueString())
 	host := r.Configuration.Host.ValueString()
 	port := new(string)
 	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
@@ -49,4 +50,11 @@ func (r *DestinationTypesenseResourceModel) ToCreateSDKType() *shared.Destinatio
 func (r *DestinationTypesenseResourceModel) ToDeleteSDKType() *shared.DestinationTypesenseCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *DestinationTypesenseResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

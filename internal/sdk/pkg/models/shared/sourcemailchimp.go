@@ -9,64 +9,64 @@ import (
 	"fmt"
 )
 
-type SourceMailchimpAuthenticationAPIKeyAuthTypeEnum string
+type SourceMailchimpAuthenticationAPIKeyAuthType string
 
 const (
-	SourceMailchimpAuthenticationAPIKeyAuthTypeEnumApikey SourceMailchimpAuthenticationAPIKeyAuthTypeEnum = "apikey"
+	SourceMailchimpAuthenticationAPIKeyAuthTypeApikey SourceMailchimpAuthenticationAPIKeyAuthType = "apikey"
 )
 
-func (e SourceMailchimpAuthenticationAPIKeyAuthTypeEnum) ToPointer() *SourceMailchimpAuthenticationAPIKeyAuthTypeEnum {
+func (e SourceMailchimpAuthenticationAPIKeyAuthType) ToPointer() *SourceMailchimpAuthenticationAPIKeyAuthType {
 	return &e
 }
 
-func (e *SourceMailchimpAuthenticationAPIKeyAuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceMailchimpAuthenticationAPIKeyAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "apikey":
-		*e = SourceMailchimpAuthenticationAPIKeyAuthTypeEnum(v)
+		*e = SourceMailchimpAuthenticationAPIKeyAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMailchimpAuthenticationAPIKeyAuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceMailchimpAuthenticationAPIKeyAuthType: %v", v)
 	}
 }
 
 type SourceMailchimpAuthenticationAPIKey struct {
 	// Mailchimp API Key. See the <a href="https://docs.airbyte.com/integrations/sources/mailchimp">docs</a> for information on how to generate this key.
-	Apikey   string                                          `json:"apikey"`
-	AuthType SourceMailchimpAuthenticationAPIKeyAuthTypeEnum `json:"auth_type"`
+	Apikey   string                                      `json:"apikey"`
+	AuthType SourceMailchimpAuthenticationAPIKeyAuthType `json:"auth_type"`
 }
 
-type SourceMailchimpAuthenticationOAuth20AuthTypeEnum string
+type SourceMailchimpAuthenticationOAuth20AuthType string
 
 const (
-	SourceMailchimpAuthenticationOAuth20AuthTypeEnumOauth20 SourceMailchimpAuthenticationOAuth20AuthTypeEnum = "oauth2.0"
+	SourceMailchimpAuthenticationOAuth20AuthTypeOauth20 SourceMailchimpAuthenticationOAuth20AuthType = "oauth2.0"
 )
 
-func (e SourceMailchimpAuthenticationOAuth20AuthTypeEnum) ToPointer() *SourceMailchimpAuthenticationOAuth20AuthTypeEnum {
+func (e SourceMailchimpAuthenticationOAuth20AuthType) ToPointer() *SourceMailchimpAuthenticationOAuth20AuthType {
 	return &e
 }
 
-func (e *SourceMailchimpAuthenticationOAuth20AuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceMailchimpAuthenticationOAuth20AuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "oauth2.0":
-		*e = SourceMailchimpAuthenticationOAuth20AuthTypeEnum(v)
+		*e = SourceMailchimpAuthenticationOAuth20AuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMailchimpAuthenticationOAuth20AuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceMailchimpAuthenticationOAuth20AuthType: %v", v)
 	}
 }
 
 type SourceMailchimpAuthenticationOAuth20 struct {
 	// An access token generated using the above client ID and secret.
-	AccessToken string                                           `json:"access_token"`
-	AuthType    SourceMailchimpAuthenticationOAuth20AuthTypeEnum `json:"auth_type"`
+	AccessToken string                                       `json:"access_token"`
+	AuthType    SourceMailchimpAuthenticationOAuth20AuthType `json:"auth_type"`
 	// The Client ID of your OAuth application.
 	ClientID *string `json:"client_id,omitempty"`
 	// The Client Secret of your OAuth application.
@@ -141,32 +141,32 @@ func (u SourceMailchimpAuthentication) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-type SourceMailchimpMailchimpEnum string
+type SourceMailchimpMailchimp string
 
 const (
-	SourceMailchimpMailchimpEnumMailchimp SourceMailchimpMailchimpEnum = "mailchimp"
+	SourceMailchimpMailchimpMailchimp SourceMailchimpMailchimp = "mailchimp"
 )
 
-func (e SourceMailchimpMailchimpEnum) ToPointer() *SourceMailchimpMailchimpEnum {
+func (e SourceMailchimpMailchimp) ToPointer() *SourceMailchimpMailchimp {
 	return &e
 }
 
-func (e *SourceMailchimpMailchimpEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceMailchimpMailchimp) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "mailchimp":
-		*e = SourceMailchimpMailchimpEnum(v)
+		*e = SourceMailchimpMailchimp(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMailchimpMailchimpEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceMailchimpMailchimp: %v", v)
 	}
 }
 
 type SourceMailchimp struct {
 	CampaignID  *string                        `json:"campaign_id,omitempty"`
 	Credentials *SourceMailchimpAuthentication `json:"credentials,omitempty"`
-	SourceType  SourceMailchimpMailchimpEnum   `json:"sourceType"`
+	SourceType  SourceMailchimpMailchimp       `json:"sourceType"`
 }

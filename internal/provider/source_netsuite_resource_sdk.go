@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceNetsuiteResourceModel) ToCreateSDKType() *shared.SourceNetsuiteCreateRequest {
@@ -14,7 +15,7 @@ func (r *SourceNetsuiteResourceModel) ToCreateSDKType() *shared.SourceNetsuiteCr
 		objectTypes = append(objectTypes, objectTypesItem.ValueString())
 	}
 	realm := r.Configuration.Realm.ValueString()
-	sourceType := shared.SourceNetsuiteNetsuiteEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceNetsuiteNetsuite(r.Configuration.SourceType.ValueString())
 	startDatetime := r.Configuration.StartDatetime.ValueString()
 	tokenKey := r.Configuration.TokenKey.ValueString()
 	tokenSecret := r.Configuration.TokenSecret.ValueString()
@@ -55,4 +56,11 @@ func (r *SourceNetsuiteResourceModel) ToCreateSDKType() *shared.SourceNetsuiteCr
 func (r *SourceNetsuiteResourceModel) ToDeleteSDKType() *shared.SourceNetsuiteCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceNetsuiteResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

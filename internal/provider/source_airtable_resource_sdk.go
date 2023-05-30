@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
@@ -17,9 +18,9 @@ func (r *SourceAirtableResourceModel) ToCreateSDKType() *shared.SourceAirtableCr
 		} else {
 			accessToken = nil
 		}
-		authMethod := new(shared.SourceAirtableAuthenticationOAuth20AuthMethodEnum)
+		authMethod := new(shared.SourceAirtableAuthenticationOAuth20AuthMethod)
 		if !r.Configuration.Credentials.SourceAirtableAuthenticationOAuth20.AuthMethod.IsUnknown() && !r.Configuration.Credentials.SourceAirtableAuthenticationOAuth20.AuthMethod.IsNull() {
-			*authMethod = shared.SourceAirtableAuthenticationOAuth20AuthMethodEnum(r.Configuration.Credentials.SourceAirtableAuthenticationOAuth20.AuthMethod.ValueString())
+			*authMethod = shared.SourceAirtableAuthenticationOAuth20AuthMethod(r.Configuration.Credentials.SourceAirtableAuthenticationOAuth20.AuthMethod.ValueString())
 		} else {
 			authMethod = nil
 		}
@@ -49,9 +50,9 @@ func (r *SourceAirtableResourceModel) ToCreateSDKType() *shared.SourceAirtableCr
 	var sourceAirtableAuthenticationPersonalAccessToken *shared.SourceAirtableAuthenticationPersonalAccessToken
 	if r.Configuration.Credentials.SourceAirtableAuthenticationPersonalAccessToken != nil {
 		apiKey := r.Configuration.Credentials.SourceAirtableAuthenticationPersonalAccessToken.APIKey.ValueString()
-		authMethod1 := new(shared.SourceAirtableAuthenticationPersonalAccessTokenAuthMethodEnum)
+		authMethod1 := new(shared.SourceAirtableAuthenticationPersonalAccessTokenAuthMethod)
 		if !r.Configuration.Credentials.SourceAirtableAuthenticationPersonalAccessToken.AuthMethod.IsUnknown() && !r.Configuration.Credentials.SourceAirtableAuthenticationPersonalAccessToken.AuthMethod.IsNull() {
-			*authMethod1 = shared.SourceAirtableAuthenticationPersonalAccessTokenAuthMethodEnum(r.Configuration.Credentials.SourceAirtableAuthenticationPersonalAccessToken.AuthMethod.ValueString())
+			*authMethod1 = shared.SourceAirtableAuthenticationPersonalAccessTokenAuthMethod(r.Configuration.Credentials.SourceAirtableAuthenticationPersonalAccessToken.AuthMethod.ValueString())
 		} else {
 			authMethod1 = nil
 		}
@@ -65,7 +66,7 @@ func (r *SourceAirtableResourceModel) ToCreateSDKType() *shared.SourceAirtableCr
 			SourceAirtableAuthenticationPersonalAccessToken: sourceAirtableAuthenticationPersonalAccessToken,
 		}
 	}
-	sourceType := shared.SourceAirtableAirtableEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceAirtableAirtable(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceAirtable{
 		Credentials: credentials,
 		SourceType:  sourceType,
@@ -90,4 +91,11 @@ func (r *SourceAirtableResourceModel) ToCreateSDKType() *shared.SourceAirtableCr
 func (r *SourceAirtableResourceModel) ToDeleteSDKType() *shared.SourceAirtableCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceAirtableResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

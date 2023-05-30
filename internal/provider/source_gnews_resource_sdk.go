@@ -4,13 +4,14 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceGnewsResourceModel) ToCreateSDKType() *shared.SourceGnewsCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	country := new(shared.SourceGnewsCountryEnum)
+	country := new(shared.SourceGnewsCountry)
 	if !r.Configuration.Country.IsUnknown() && !r.Configuration.Country.IsNull() {
-		*country = shared.SourceGnewsCountryEnum(r.Configuration.Country.ValueString())
+		*country = shared.SourceGnewsCountry(r.Configuration.Country.ValueString())
 	} else {
 		country = nil
 	}
@@ -20,28 +21,28 @@ func (r *SourceGnewsResourceModel) ToCreateSDKType() *shared.SourceGnewsCreateRe
 	} else {
 		endDate = nil
 	}
-	in := make([]shared.SourceGnewsInEnum, 0)
+	in := make([]shared.SourceGnewsIn, 0)
 	for _, inItem := range r.Configuration.In {
-		in = append(in, shared.SourceGnewsInEnum(inItem.ValueString()))
+		in = append(in, shared.SourceGnewsIn(inItem.ValueString()))
 	}
-	language := new(shared.SourceGnewsLanguageEnum)
+	language := new(shared.SourceGnewsLanguage)
 	if !r.Configuration.Language.IsUnknown() && !r.Configuration.Language.IsNull() {
-		*language = shared.SourceGnewsLanguageEnum(r.Configuration.Language.ValueString())
+		*language = shared.SourceGnewsLanguage(r.Configuration.Language.ValueString())
 	} else {
 		language = nil
 	}
-	nullable := make([]shared.SourceGnewsNullableEnum, 0)
+	nullable := make([]shared.SourceGnewsNullable, 0)
 	for _, nullableItem := range r.Configuration.Nullable {
-		nullable = append(nullable, shared.SourceGnewsNullableEnum(nullableItem.ValueString()))
+		nullable = append(nullable, shared.SourceGnewsNullable(nullableItem.ValueString()))
 	}
 	query := r.Configuration.Query.ValueString()
-	sortby := new(shared.SourceGnewsSortByEnum)
+	sortby := new(shared.SourceGnewsSortBy)
 	if !r.Configuration.Sortby.IsUnknown() && !r.Configuration.Sortby.IsNull() {
-		*sortby = shared.SourceGnewsSortByEnum(r.Configuration.Sortby.ValueString())
+		*sortby = shared.SourceGnewsSortBy(r.Configuration.Sortby.ValueString())
 	} else {
 		sortby = nil
 	}
-	sourceType := shared.SourceGnewsGnewsEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceGnewsGnews(r.Configuration.SourceType.ValueString())
 	startDate := new(string)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate = r.Configuration.StartDate.ValueString()
@@ -54,9 +55,9 @@ func (r *SourceGnewsResourceModel) ToCreateSDKType() *shared.SourceGnewsCreateRe
 	} else {
 		topHeadlinesQuery = nil
 	}
-	topHeadlinesTopic := new(shared.SourceGnewsTopHeadlinesTopicEnum)
+	topHeadlinesTopic := new(shared.SourceGnewsTopHeadlinesTopic)
 	if !r.Configuration.TopHeadlinesTopic.IsUnknown() && !r.Configuration.TopHeadlinesTopic.IsNull() {
-		*topHeadlinesTopic = shared.SourceGnewsTopHeadlinesTopicEnum(r.Configuration.TopHeadlinesTopic.ValueString())
+		*topHeadlinesTopic = shared.SourceGnewsTopHeadlinesTopic(r.Configuration.TopHeadlinesTopic.ValueString())
 	} else {
 		topHeadlinesTopic = nil
 	}
@@ -94,4 +95,11 @@ func (r *SourceGnewsResourceModel) ToCreateSDKType() *shared.SourceGnewsCreateRe
 func (r *SourceGnewsResourceModel) ToDeleteSDKType() *shared.SourceGnewsCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceGnewsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

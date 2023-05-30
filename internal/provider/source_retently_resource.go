@@ -9,7 +9,6 @@ import (
 
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/mapvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
@@ -105,13 +104,13 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 										},
 										Required: true,
 									},
-									"additional_properties": schema.MapAttribute{
-										Computed:    true,
-										Optional:    true,
-										ElementType: types.StringType,
-										Validators: []validator.Map{
-											mapvalidator.ValueStringsAre(validators.IsValidJSON()),
+									"additional_properties": schema.StringAttribute{
+										Computed: true,
+										Optional: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
 										},
+										Description: `Parsed as JSON.`,
 									},
 								},
 								Description: `Choose how to authenticate to Retently`,
@@ -141,13 +140,13 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 											),
 										},
 									},
-									"additional_properties": schema.MapAttribute{
-										Computed:    true,
-										Optional:    true,
-										ElementType: types.StringType,
-										Validators: []validator.Map{
-											mapvalidator.ValueStringsAre(validators.IsValidJSON()),
+									"additional_properties": schema.StringAttribute{
+										Computed: true,
+										Optional: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
 										},
+										Description: `Parsed as JSON.`,
 									},
 								},
 								Description: `Choose how to authenticate to Retently`,
@@ -251,6 +250,11 @@ func (r *SourceRetentlyResource) Create(ctx context.Context, req resource.Create
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
+	if res.SourceResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+		return
+	}
+	data.RefreshFromCreateResponse(res.SourceResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

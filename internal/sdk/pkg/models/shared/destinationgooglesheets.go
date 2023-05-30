@@ -17,34 +17,34 @@ type DestinationGoogleSheetsAuthenticationViaGoogleOAuth struct {
 	RefreshToken string `json:"refresh_token"`
 }
 
-type DestinationGoogleSheetsGoogleSheetsEnum string
+type DestinationGoogleSheetsGoogleSheets string
 
 const (
-	DestinationGoogleSheetsGoogleSheetsEnumGoogleSheets DestinationGoogleSheetsGoogleSheetsEnum = "google-sheets"
+	DestinationGoogleSheetsGoogleSheetsGoogleSheets DestinationGoogleSheetsGoogleSheets = "google-sheets"
 )
 
-func (e DestinationGoogleSheetsGoogleSheetsEnum) ToPointer() *DestinationGoogleSheetsGoogleSheetsEnum {
+func (e DestinationGoogleSheetsGoogleSheets) ToPointer() *DestinationGoogleSheetsGoogleSheets {
 	return &e
 }
 
-func (e *DestinationGoogleSheetsGoogleSheetsEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationGoogleSheetsGoogleSheets) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "google-sheets":
-		*e = DestinationGoogleSheetsGoogleSheetsEnum(v)
+		*e = DestinationGoogleSheetsGoogleSheets(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationGoogleSheetsGoogleSheetsEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationGoogleSheetsGoogleSheets: %v", v)
 	}
 }
 
 type DestinationGoogleSheets struct {
 	// Google API Credentials for connecting to Google Sheets and Google Drive APIs
 	Credentials     DestinationGoogleSheetsAuthenticationViaGoogleOAuth `json:"credentials"`
-	DestinationType DestinationGoogleSheetsGoogleSheetsEnum             `json:"destinationType"`
+	DestinationType DestinationGoogleSheetsGoogleSheets                 `json:"destinationType"`
 	// The link to your spreadsheet. See <a href='https://docs.airbyte.com/integrations/destinations/google-sheets#sheetlink'>this guide</a> for more details.
 	SpreadsheetID string `json:"spreadsheet_id"`
 }

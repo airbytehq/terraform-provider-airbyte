@@ -4,13 +4,14 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceConfluenceResourceModel) ToCreateSDKType() *shared.SourceConfluenceCreateRequest {
 	apiToken := r.Configuration.APIToken.ValueString()
 	domainName := r.Configuration.DomainName.ValueString()
 	email := r.Configuration.Email.ValueString()
-	sourceType := shared.SourceConfluenceConfluenceEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceConfluenceConfluence(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceConfluence{
 		APIToken:   apiToken,
 		DomainName: domainName,
@@ -37,4 +38,11 @@ func (r *SourceConfluenceResourceModel) ToCreateSDKType() *shared.SourceConfluen
 func (r *SourceConfluenceResourceModel) ToDeleteSDKType() *shared.SourceConfluenceCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceConfluenceResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

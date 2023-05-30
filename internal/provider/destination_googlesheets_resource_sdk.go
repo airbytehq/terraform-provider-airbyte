@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationGoogleSheetsResourceModel) ToCreateSDKType() *shared.DestinationGoogleSheetsCreateRequest {
@@ -15,7 +16,7 @@ func (r *DestinationGoogleSheetsResourceModel) ToCreateSDKType() *shared.Destina
 		ClientSecret: clientSecret,
 		RefreshToken: refreshToken,
 	}
-	destinationType := shared.DestinationGoogleSheetsGoogleSheetsEnum(r.Configuration.DestinationType.ValueString())
+	destinationType := shared.DestinationGoogleSheetsGoogleSheets(r.Configuration.DestinationType.ValueString())
 	spreadsheetID := r.Configuration.SpreadsheetID.ValueString()
 	configuration := shared.DestinationGoogleSheets{
 		Credentials:     credentials,
@@ -35,4 +36,11 @@ func (r *DestinationGoogleSheetsResourceModel) ToCreateSDKType() *shared.Destina
 func (r *DestinationGoogleSheetsResourceModel) ToDeleteSDKType() *shared.DestinationGoogleSheetsCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *DestinationGoogleSheetsResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

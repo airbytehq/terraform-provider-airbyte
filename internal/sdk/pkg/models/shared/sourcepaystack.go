@@ -8,27 +8,27 @@ import (
 	"time"
 )
 
-type SourcePaystackPaystackEnum string
+type SourcePaystackPaystack string
 
 const (
-	SourcePaystackPaystackEnumPaystack SourcePaystackPaystackEnum = "paystack"
+	SourcePaystackPaystackPaystack SourcePaystackPaystack = "paystack"
 )
 
-func (e SourcePaystackPaystackEnum) ToPointer() *SourcePaystackPaystackEnum {
+func (e SourcePaystackPaystack) ToPointer() *SourcePaystackPaystack {
 	return &e
 }
 
-func (e *SourcePaystackPaystackEnum) UnmarshalJSON(data []byte) error {
+func (e *SourcePaystackPaystack) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "paystack":
-		*e = SourcePaystackPaystackEnum(v)
+		*e = SourcePaystackPaystack(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePaystackPaystackEnum: %v", v)
+		return fmt.Errorf("invalid value for SourcePaystackPaystack: %v", v)
 	}
 }
 
@@ -36,8 +36,8 @@ type SourcePaystack struct {
 	// When set, the connector will always reload data from the past N days, where N is the value set here. This is useful if your data is updated after creation.
 	LookbackWindowDays *int64 `json:"lookback_window_days,omitempty"`
 	// The Paystack API key (usually starts with 'sk_live_'; find yours <a href="https://dashboard.paystack.com/#/settings/developer">here</a>).
-	SecretKey  string                     `json:"secret_key"`
-	SourceType SourcePaystackPaystackEnum `json:"sourceType"`
+	SecretKey  string                 `json:"secret_key"`
+	SourceType SourcePaystackPaystack `json:"sourceType"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
 }

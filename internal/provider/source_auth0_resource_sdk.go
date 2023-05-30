@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceAuth0ResourceModel) ToCreateSDKType() *shared.SourceAuth0CreateRequest {
@@ -12,7 +13,7 @@ func (r *SourceAuth0ResourceModel) ToCreateSDKType() *shared.SourceAuth0CreateRe
 	var sourceAuth0AuthenticationMethodOAuth2ConfidentialApplication *shared.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication
 	if r.Configuration.Credentials.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication != nil {
 		audience := r.Configuration.Credentials.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication.Audience.ValueString()
-		authType := shared.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethodEnum(r.Configuration.Credentials.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication.AuthType.ValueString())
+		authType := shared.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethod(r.Configuration.Credentials.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication.AuthType.ValueString())
 		clientID := r.Configuration.Credentials.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication.ClientID.ValueString()
 		clientSecret := r.Configuration.Credentials.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication.ClientSecret.ValueString()
 		sourceAuth0AuthenticationMethodOAuth2ConfidentialApplication = &shared.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication{
@@ -30,7 +31,7 @@ func (r *SourceAuth0ResourceModel) ToCreateSDKType() *shared.SourceAuth0CreateRe
 	var sourceAuth0AuthenticationMethodOAuth2AccessToken *shared.SourceAuth0AuthenticationMethodOAuth2AccessToken
 	if r.Configuration.Credentials.SourceAuth0AuthenticationMethodOAuth2AccessToken != nil {
 		accessToken := r.Configuration.Credentials.SourceAuth0AuthenticationMethodOAuth2AccessToken.AccessToken.ValueString()
-		authType1 := shared.SourceAuth0AuthenticationMethodOAuth2AccessTokenAuthenticationMethodEnum(r.Configuration.Credentials.SourceAuth0AuthenticationMethodOAuth2AccessToken.AuthType.ValueString())
+		authType1 := shared.SourceAuth0AuthenticationMethodOAuth2AccessTokenAuthenticationMethod(r.Configuration.Credentials.SourceAuth0AuthenticationMethodOAuth2AccessToken.AuthType.ValueString())
 		sourceAuth0AuthenticationMethodOAuth2AccessToken = &shared.SourceAuth0AuthenticationMethodOAuth2AccessToken{
 			AccessToken: accessToken,
 			AuthType:    authType1,
@@ -41,7 +42,7 @@ func (r *SourceAuth0ResourceModel) ToCreateSDKType() *shared.SourceAuth0CreateRe
 			SourceAuth0AuthenticationMethodOAuth2AccessToken: sourceAuth0AuthenticationMethodOAuth2AccessToken,
 		}
 	}
-	sourceType := shared.SourceAuth0Auth0Enum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceAuth0Auth0(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceAuth0{
 		BaseURL:     baseURL,
 		Credentials: credentials,
@@ -67,4 +68,11 @@ func (r *SourceAuth0ResourceModel) ToCreateSDKType() *shared.SourceAuth0CreateRe
 func (r *SourceAuth0ResourceModel) ToDeleteSDKType() *shared.SourceAuth0CreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceAuth0ResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

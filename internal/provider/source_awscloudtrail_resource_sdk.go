@@ -5,14 +5,15 @@ package provider
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	customTypes "airbyte/internal/sdk/pkg/types"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceAwsCloudtrailResourceModel) ToCreateSDKType() *shared.SourceAwsCloudtrailCreateRequest {
 	awsKeyID := r.Configuration.AwsKeyID.ValueString()
 	awsRegionName := r.Configuration.AwsRegionName.ValueString()
 	awsSecretKey := r.Configuration.AwsSecretKey.ValueString()
-	sourceType := shared.SourceAwsCloudtrailAwsCloudtrailEnum(r.Configuration.SourceType.ValueString())
-	startDate, _ := customTypes.NewDate(r.Configuration.StartDate.ValueString())
+	sourceType := shared.SourceAwsCloudtrailAwsCloudtrail(r.Configuration.SourceType.ValueString())
+	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceAwsCloudtrail{
 		AwsKeyID:      awsKeyID,
 		AwsRegionName: awsRegionName,
@@ -40,4 +41,11 @@ func (r *SourceAwsCloudtrailResourceModel) ToCreateSDKType() *shared.SourceAwsCl
 func (r *SourceAwsCloudtrailResourceModel) ToDeleteSDKType() *shared.SourceAwsCloudtrailCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceAwsCloudtrailResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

@@ -4,13 +4,14 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceGoogleSheetsResourceModel) ToCreateSDKType() *shared.SourceGoogleSheetsCreateRequest {
 	var credentials shared.SourceGoogleSheetsAuthentication
 	var sourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth *shared.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth
 	if r.Configuration.Credentials.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth != nil {
-		authType := shared.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuthAuthTypeEnum(r.Configuration.Credentials.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth.AuthType.ValueString())
+		authType := shared.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuthAuthType(r.Configuration.Credentials.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth.AuthType.ValueString())
 		clientID := r.Configuration.Credentials.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth.ClientID.ValueString()
 		clientSecret := r.Configuration.Credentials.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth.ClientSecret.ValueString()
 		refreshToken := r.Configuration.Credentials.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth.RefreshToken.ValueString()
@@ -28,7 +29,7 @@ func (r *SourceGoogleSheetsResourceModel) ToCreateSDKType() *shared.SourceGoogle
 	}
 	var sourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication *shared.SourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication
 	if r.Configuration.Credentials.SourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication != nil {
-		authType1 := shared.SourceGoogleSheetsAuthenticationServiceAccountKeyAuthenticationAuthTypeEnum(r.Configuration.Credentials.SourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication.AuthType.ValueString())
+		authType1 := shared.SourceGoogleSheetsAuthenticationServiceAccountKeyAuthenticationAuthType(r.Configuration.Credentials.SourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication.AuthType.ValueString())
 		serviceAccountInfo := r.Configuration.Credentials.SourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication.ServiceAccountInfo.ValueString()
 		sourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication = &shared.SourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication{
 			AuthType:           authType1,
@@ -46,7 +47,7 @@ func (r *SourceGoogleSheetsResourceModel) ToCreateSDKType() *shared.SourceGoogle
 	} else {
 		rowBatchSize = nil
 	}
-	sourceType := shared.SourceGoogleSheetsGoogleSheetsEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceGoogleSheetsGoogleSheets(r.Configuration.SourceType.ValueString())
 	spreadsheetID := r.Configuration.SpreadsheetID.ValueString()
 	configuration := shared.SourceGoogleSheets{
 		Credentials:   credentials,
@@ -74,4 +75,11 @@ func (r *SourceGoogleSheetsResourceModel) ToCreateSDKType() *shared.SourceGoogle
 func (r *SourceGoogleSheetsResourceModel) ToDeleteSDKType() *shared.SourceGoogleSheetsCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceGoogleSheetsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

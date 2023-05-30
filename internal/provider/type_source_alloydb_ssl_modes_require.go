@@ -5,6 +5,6 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceAlloydbSSLModesRequire struct {
-	Mode                 types.String            `tfsdk:"mode"`
-	AdditionalProperties map[string]types.String `tfsdk:"additional_properties"`
+	Mode                 types.String `tfsdk:"mode"`
+	AdditionalProperties types.String `tfsdk:"additional_properties"`
 }

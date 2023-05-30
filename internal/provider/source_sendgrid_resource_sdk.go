@@ -4,12 +4,13 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
 func (r *SourceSendgridResourceModel) ToCreateSDKType() *shared.SourceSendgridCreateRequest {
 	apikey := r.Configuration.Apikey.ValueString()
-	sourceType := shared.SourceSendgridSendgridEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceSendgridSendgrid(r.Configuration.SourceType.ValueString())
 	startTime := new(time.Time)
 	if !r.Configuration.StartTime.IsUnknown() && !r.Configuration.StartTime.IsNull() {
 		*startTime, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartTime.ValueString())
@@ -41,4 +42,11 @@ func (r *SourceSendgridResourceModel) ToCreateSDKType() *shared.SourceSendgridCr
 func (r *SourceSendgridResourceModel) ToDeleteSDKType() *shared.SourceSendgridCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceSendgridResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

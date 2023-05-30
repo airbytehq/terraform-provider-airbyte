@@ -8,27 +8,27 @@ import (
 	"time"
 )
 
-type SourceLinnworksLinnworksEnum string
+type SourceLinnworksLinnworks string
 
 const (
-	SourceLinnworksLinnworksEnumLinnworks SourceLinnworksLinnworksEnum = "linnworks"
+	SourceLinnworksLinnworksLinnworks SourceLinnworksLinnworks = "linnworks"
 )
 
-func (e SourceLinnworksLinnworksEnum) ToPointer() *SourceLinnworksLinnworksEnum {
+func (e SourceLinnworksLinnworks) ToPointer() *SourceLinnworksLinnworks {
 	return &e
 }
 
-func (e *SourceLinnworksLinnworksEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceLinnworksLinnworks) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "linnworks":
-		*e = SourceLinnworksLinnworksEnum(v)
+		*e = SourceLinnworksLinnworks(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceLinnworksLinnworksEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceLinnworksLinnworks: %v", v)
 	}
 }
 
@@ -36,8 +36,8 @@ type SourceLinnworks struct {
 	// Linnworks Application ID
 	ApplicationID string `json:"application_id"`
 	// Linnworks Application Secret
-	ApplicationSecret string                       `json:"application_secret"`
-	SourceType        SourceLinnworksLinnworksEnum `json:"sourceType"`
+	ApplicationSecret string                   `json:"application_secret"`
+	SourceType        SourceLinnworksLinnworks `json:"sourceType"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
 	Token     string    `json:"token"`

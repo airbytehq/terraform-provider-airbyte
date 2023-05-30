@@ -8,34 +8,34 @@ import (
 	"time"
 )
 
-type SourceIterableIterableEnum string
+type SourceIterableIterable string
 
 const (
-	SourceIterableIterableEnumIterable SourceIterableIterableEnum = "iterable"
+	SourceIterableIterableIterable SourceIterableIterable = "iterable"
 )
 
-func (e SourceIterableIterableEnum) ToPointer() *SourceIterableIterableEnum {
+func (e SourceIterableIterable) ToPointer() *SourceIterableIterable {
 	return &e
 }
 
-func (e *SourceIterableIterableEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceIterableIterable) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "iterable":
-		*e = SourceIterableIterableEnum(v)
+		*e = SourceIterableIterable(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceIterableIterableEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceIterableIterable: %v", v)
 	}
 }
 
 type SourceIterable struct {
 	// Iterable API Key. See the <a href="https://docs.airbyte.com/integrations/sources/iterable">docs</a> for more information on how to obtain this key.
-	APIKey     string                     `json:"api_key"`
-	SourceType SourceIterableIterableEnum `json:"sourceType"`
+	APIKey     string                 `json:"api_key"`
+	SourceType SourceIterableIterable `json:"sourceType"`
 	// The date from which you'd like to replicate data for Iterable, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 	StartDate time.Time `json:"start_date"`
 }

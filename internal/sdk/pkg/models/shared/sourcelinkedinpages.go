@@ -9,62 +9,62 @@ import (
 	"fmt"
 )
 
-type SourceLinkedinPagesAuthenticationAccessTokenAuthMethodEnum string
+type SourceLinkedinPagesAuthenticationAccessTokenAuthMethod string
 
 const (
-	SourceLinkedinPagesAuthenticationAccessTokenAuthMethodEnumAccessToken SourceLinkedinPagesAuthenticationAccessTokenAuthMethodEnum = "access_token"
+	SourceLinkedinPagesAuthenticationAccessTokenAuthMethodAccessToken SourceLinkedinPagesAuthenticationAccessTokenAuthMethod = "access_token"
 )
 
-func (e SourceLinkedinPagesAuthenticationAccessTokenAuthMethodEnum) ToPointer() *SourceLinkedinPagesAuthenticationAccessTokenAuthMethodEnum {
+func (e SourceLinkedinPagesAuthenticationAccessTokenAuthMethod) ToPointer() *SourceLinkedinPagesAuthenticationAccessTokenAuthMethod {
 	return &e
 }
 
-func (e *SourceLinkedinPagesAuthenticationAccessTokenAuthMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceLinkedinPagesAuthenticationAccessTokenAuthMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "access_token":
-		*e = SourceLinkedinPagesAuthenticationAccessTokenAuthMethodEnum(v)
+		*e = SourceLinkedinPagesAuthenticationAccessTokenAuthMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceLinkedinPagesAuthenticationAccessTokenAuthMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceLinkedinPagesAuthenticationAccessTokenAuthMethod: %v", v)
 	}
 }
 
 type SourceLinkedinPagesAuthenticationAccessToken struct {
 	// The token value generated using the LinkedIn Developers OAuth Token Tools. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-pages/">docs</a> to obtain yours.
-	AccessToken string                                                      `json:"access_token"`
-	AuthMethod  *SourceLinkedinPagesAuthenticationAccessTokenAuthMethodEnum `json:"auth_method,omitempty"`
+	AccessToken string                                                  `json:"access_token"`
+	AuthMethod  *SourceLinkedinPagesAuthenticationAccessTokenAuthMethod `json:"auth_method,omitempty"`
 }
 
-type SourceLinkedinPagesAuthenticationOAuth20AuthMethodEnum string
+type SourceLinkedinPagesAuthenticationOAuth20AuthMethod string
 
 const (
-	SourceLinkedinPagesAuthenticationOAuth20AuthMethodEnumOAuth20 SourceLinkedinPagesAuthenticationOAuth20AuthMethodEnum = "oAuth2.0"
+	SourceLinkedinPagesAuthenticationOAuth20AuthMethodOAuth20 SourceLinkedinPagesAuthenticationOAuth20AuthMethod = "oAuth2.0"
 )
 
-func (e SourceLinkedinPagesAuthenticationOAuth20AuthMethodEnum) ToPointer() *SourceLinkedinPagesAuthenticationOAuth20AuthMethodEnum {
+func (e SourceLinkedinPagesAuthenticationOAuth20AuthMethod) ToPointer() *SourceLinkedinPagesAuthenticationOAuth20AuthMethod {
 	return &e
 }
 
-func (e *SourceLinkedinPagesAuthenticationOAuth20AuthMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceLinkedinPagesAuthenticationOAuth20AuthMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "oAuth2.0":
-		*e = SourceLinkedinPagesAuthenticationOAuth20AuthMethodEnum(v)
+		*e = SourceLinkedinPagesAuthenticationOAuth20AuthMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceLinkedinPagesAuthenticationOAuth20AuthMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceLinkedinPagesAuthenticationOAuth20AuthMethod: %v", v)
 	}
 }
 
 type SourceLinkedinPagesAuthenticationOAuth20 struct {
-	AuthMethod *SourceLinkedinPagesAuthenticationOAuth20AuthMethodEnum `json:"auth_method,omitempty"`
+	AuthMethod *SourceLinkedinPagesAuthenticationOAuth20AuthMethod `json:"auth_method,omitempty"`
 	// The client ID of the LinkedIn developer application.
 	ClientID string `json:"client_id"`
 	// The client secret of the LinkedIn developer application.
@@ -141,33 +141,33 @@ func (u SourceLinkedinPagesAuthentication) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-type SourceLinkedinPagesLinkedinPagesEnum string
+type SourceLinkedinPagesLinkedinPages string
 
 const (
-	SourceLinkedinPagesLinkedinPagesEnumLinkedinPages SourceLinkedinPagesLinkedinPagesEnum = "linkedin-pages"
+	SourceLinkedinPagesLinkedinPagesLinkedinPages SourceLinkedinPagesLinkedinPages = "linkedin-pages"
 )
 
-func (e SourceLinkedinPagesLinkedinPagesEnum) ToPointer() *SourceLinkedinPagesLinkedinPagesEnum {
+func (e SourceLinkedinPagesLinkedinPages) ToPointer() *SourceLinkedinPagesLinkedinPages {
 	return &e
 }
 
-func (e *SourceLinkedinPagesLinkedinPagesEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceLinkedinPagesLinkedinPages) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "linkedin-pages":
-		*e = SourceLinkedinPagesLinkedinPagesEnum(v)
+		*e = SourceLinkedinPagesLinkedinPages(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceLinkedinPagesLinkedinPagesEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceLinkedinPagesLinkedinPages: %v", v)
 	}
 }
 
 type SourceLinkedinPages struct {
 	Credentials *SourceLinkedinPagesAuthentication `json:"credentials,omitempty"`
 	// Specify the Organization ID
-	OrgID      string                               `json:"org_id"`
-	SourceType SourceLinkedinPagesLinkedinPagesEnum `json:"sourceType"`
+	OrgID      string                           `json:"org_id"`
+	SourceType SourceLinkedinPagesLinkedinPages `json:"sourceType"`
 }

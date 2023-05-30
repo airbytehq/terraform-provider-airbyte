@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
@@ -27,7 +28,7 @@ func (r *SourcePaypalTransactionResourceModel) ToCreateSDKType() *shared.SourceP
 	} else {
 		refreshToken = nil
 	}
-	sourceType := shared.SourcePaypalTransactionPaypalTransactionEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourcePaypalTransactionPaypalTransaction(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourcePaypalTransaction{
 		ClientID:     clientID,
@@ -57,4 +58,11 @@ func (r *SourcePaypalTransactionResourceModel) ToCreateSDKType() *shared.SourceP
 func (r *SourcePaypalTransactionResourceModel) ToDeleteSDKType() *shared.SourcePaypalTransactionCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourcePaypalTransactionResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

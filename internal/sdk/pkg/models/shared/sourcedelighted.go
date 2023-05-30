@@ -8,27 +8,27 @@ import (
 	"time"
 )
 
-type SourceDelightedDelightedEnum string
+type SourceDelightedDelighted string
 
 const (
-	SourceDelightedDelightedEnumDelighted SourceDelightedDelightedEnum = "delighted"
+	SourceDelightedDelightedDelighted SourceDelightedDelighted = "delighted"
 )
 
-func (e SourceDelightedDelightedEnum) ToPointer() *SourceDelightedDelightedEnum {
+func (e SourceDelightedDelighted) ToPointer() *SourceDelightedDelighted {
 	return &e
 }
 
-func (e *SourceDelightedDelightedEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceDelightedDelighted) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "delighted":
-		*e = SourceDelightedDelightedEnum(v)
+		*e = SourceDelightedDelighted(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceDelightedDelightedEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceDelightedDelighted: %v", v)
 	}
 }
 
@@ -36,6 +36,6 @@ type SourceDelighted struct {
 	// A Delighted API key.
 	APIKey string `json:"api_key"`
 	// The date from which you'd like to replicate the data
-	Since      time.Time                    `json:"since"`
-	SourceType SourceDelightedDelightedEnum `json:"sourceType"`
+	Since      time.Time                `json:"since"`
+	SourceType SourceDelightedDelighted `json:"sourceType"`
 }

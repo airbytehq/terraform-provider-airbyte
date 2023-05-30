@@ -4,11 +4,12 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationScyllaResourceModel) ToCreateSDKType() *shared.DestinationScyllaCreateRequest {
 	address := r.Configuration.Address.ValueString()
-	destinationType := shared.DestinationScyllaScyllaEnum(r.Configuration.DestinationType.ValueString())
+	destinationType := shared.DestinationScyllaScylla(r.Configuration.DestinationType.ValueString())
 	keyspace := r.Configuration.Keyspace.ValueString()
 	password := r.Configuration.Password.ValueString()
 	port := r.Configuration.Port.ValueInt64()
@@ -41,4 +42,11 @@ func (r *DestinationScyllaResourceModel) ToCreateSDKType() *shared.DestinationSc
 func (r *DestinationScyllaResourceModel) ToDeleteSDKType() *shared.DestinationScyllaCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *DestinationScyllaResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

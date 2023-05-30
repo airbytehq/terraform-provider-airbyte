@@ -10,64 +10,64 @@ import (
 	"time"
 )
 
-type SourceMixpanelAuthenticationWildcardProjectSecretOptionTitleEnum string
+type SourceMixpanelAuthenticationWildcardProjectSecretOptionTitle string
 
 const (
-	SourceMixpanelAuthenticationWildcardProjectSecretOptionTitleEnumProjectSecret SourceMixpanelAuthenticationWildcardProjectSecretOptionTitleEnum = "Project Secret"
+	SourceMixpanelAuthenticationWildcardProjectSecretOptionTitleProjectSecret SourceMixpanelAuthenticationWildcardProjectSecretOptionTitle = "Project Secret"
 )
 
-func (e SourceMixpanelAuthenticationWildcardProjectSecretOptionTitleEnum) ToPointer() *SourceMixpanelAuthenticationWildcardProjectSecretOptionTitleEnum {
+func (e SourceMixpanelAuthenticationWildcardProjectSecretOptionTitle) ToPointer() *SourceMixpanelAuthenticationWildcardProjectSecretOptionTitle {
 	return &e
 }
 
-func (e *SourceMixpanelAuthenticationWildcardProjectSecretOptionTitleEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceMixpanelAuthenticationWildcardProjectSecretOptionTitle) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Project Secret":
-		*e = SourceMixpanelAuthenticationWildcardProjectSecretOptionTitleEnum(v)
+		*e = SourceMixpanelAuthenticationWildcardProjectSecretOptionTitle(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMixpanelAuthenticationWildcardProjectSecretOptionTitleEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceMixpanelAuthenticationWildcardProjectSecretOptionTitle: %v", v)
 	}
 }
 
 // SourceMixpanelAuthenticationWildcardProjectSecret - Choose how to authenticate to Mixpanel
 type SourceMixpanelAuthenticationWildcardProjectSecret struct {
 	// Mixpanel project secret. See the <a href="https://developer.mixpanel.com/reference/project-secret#managing-a-projects-secret">docs</a> for more information on how to obtain this.
-	APISecret   string                                                            `json:"api_secret"`
-	OptionTitle *SourceMixpanelAuthenticationWildcardProjectSecretOptionTitleEnum `json:"option_title,omitempty"`
+	APISecret   string                                                        `json:"api_secret"`
+	OptionTitle *SourceMixpanelAuthenticationWildcardProjectSecretOptionTitle `json:"option_title,omitempty"`
 }
 
-type SourceMixpanelAuthenticationWildcardServiceAccountOptionTitleEnum string
+type SourceMixpanelAuthenticationWildcardServiceAccountOptionTitle string
 
 const (
-	SourceMixpanelAuthenticationWildcardServiceAccountOptionTitleEnumServiceAccount SourceMixpanelAuthenticationWildcardServiceAccountOptionTitleEnum = "Service Account"
+	SourceMixpanelAuthenticationWildcardServiceAccountOptionTitleServiceAccount SourceMixpanelAuthenticationWildcardServiceAccountOptionTitle = "Service Account"
 )
 
-func (e SourceMixpanelAuthenticationWildcardServiceAccountOptionTitleEnum) ToPointer() *SourceMixpanelAuthenticationWildcardServiceAccountOptionTitleEnum {
+func (e SourceMixpanelAuthenticationWildcardServiceAccountOptionTitle) ToPointer() *SourceMixpanelAuthenticationWildcardServiceAccountOptionTitle {
 	return &e
 }
 
-func (e *SourceMixpanelAuthenticationWildcardServiceAccountOptionTitleEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceMixpanelAuthenticationWildcardServiceAccountOptionTitle) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Service Account":
-		*e = SourceMixpanelAuthenticationWildcardServiceAccountOptionTitleEnum(v)
+		*e = SourceMixpanelAuthenticationWildcardServiceAccountOptionTitle(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMixpanelAuthenticationWildcardServiceAccountOptionTitleEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceMixpanelAuthenticationWildcardServiceAccountOptionTitle: %v", v)
 	}
 }
 
 // SourceMixpanelAuthenticationWildcardServiceAccount - Choose how to authenticate to Mixpanel
 type SourceMixpanelAuthenticationWildcardServiceAccount struct {
-	OptionTitle *SourceMixpanelAuthenticationWildcardServiceAccountOptionTitleEnum `json:"option_title,omitempty"`
+	OptionTitle *SourceMixpanelAuthenticationWildcardServiceAccountOptionTitle `json:"option_title,omitempty"`
 	// Mixpanel Service Account Secret. See the <a href="https://developer.mixpanel.com/reference/service-accounts">docs</a> for more information on how to obtain this.
 	Secret string `json:"secret"`
 	// Mixpanel Service Account Username. See the <a href="https://developer.mixpanel.com/reference/service-accounts">docs</a> for more information on how to obtain this.
@@ -142,19 +142,19 @@ func (u SourceMixpanelAuthenticationWildcard) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-// SourceMixpanelRegionEnum - The region of mixpanel domain instance either US or EU.
-type SourceMixpanelRegionEnum string
+// SourceMixpanelRegion - The region of mixpanel domain instance either US or EU.
+type SourceMixpanelRegion string
 
 const (
-	SourceMixpanelRegionEnumUs SourceMixpanelRegionEnum = "US"
-	SourceMixpanelRegionEnumEu SourceMixpanelRegionEnum = "EU"
+	SourceMixpanelRegionUs SourceMixpanelRegion = "US"
+	SourceMixpanelRegionEu SourceMixpanelRegion = "EU"
 )
 
-func (e SourceMixpanelRegionEnum) ToPointer() *SourceMixpanelRegionEnum {
+func (e SourceMixpanelRegion) ToPointer() *SourceMixpanelRegion {
 	return &e
 }
 
-func (e *SourceMixpanelRegionEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceMixpanelRegion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -163,34 +163,34 @@ func (e *SourceMixpanelRegionEnum) UnmarshalJSON(data []byte) error {
 	case "US":
 		fallthrough
 	case "EU":
-		*e = SourceMixpanelRegionEnum(v)
+		*e = SourceMixpanelRegion(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMixpanelRegionEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceMixpanelRegion: %v", v)
 	}
 }
 
-type SourceMixpanelMixpanelEnum string
+type SourceMixpanelMixpanel string
 
 const (
-	SourceMixpanelMixpanelEnumMixpanel SourceMixpanelMixpanelEnum = "mixpanel"
+	SourceMixpanelMixpanelMixpanel SourceMixpanelMixpanel = "mixpanel"
 )
 
-func (e SourceMixpanelMixpanelEnum) ToPointer() *SourceMixpanelMixpanelEnum {
+func (e SourceMixpanelMixpanel) ToPointer() *SourceMixpanelMixpanel {
 	return &e
 }
 
-func (e *SourceMixpanelMixpanelEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceMixpanelMixpanel) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "mixpanel":
-		*e = SourceMixpanelMixpanelEnum(v)
+		*e = SourceMixpanelMixpanel(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMixpanelMixpanelEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceMixpanelMixpanel: %v", v)
 	}
 }
 
@@ -208,10 +208,10 @@ type SourceMixpanel struct {
 	// Time zone in which integer date times are stored. The project timezone may be found in the project settings in the <a href="https://help.mixpanel.com/hc/en-us/articles/115004547203-Manage-Timezones-for-Projects-in-Mixpanel">Mixpanel console</a>.
 	ProjectTimezone *string `json:"project_timezone,omitempty"`
 	// The region of mixpanel domain instance either US or EU.
-	Region *SourceMixpanelRegionEnum `json:"region,omitempty"`
+	Region *SourceMixpanelRegion `json:"region,omitempty"`
 	// Setting this config parameter to TRUE ensures that new properties on events and engage records are captured. Otherwise new properties will be ignored.
-	SelectPropertiesByDefault *bool                      `json:"select_properties_by_default,omitempty"`
-	SourceType                SourceMixpanelMixpanelEnum `json:"sourceType"`
+	SelectPropertiesByDefault *bool                  `json:"select_properties_by_default,omitempty"`
+	SourceType                SourceMixpanelMixpanel `json:"sourceType"`
 	// The date in the format YYYY-MM-DD. Any data before this date will not be replicated. If this option is not set, the connector will replicate data from up to one year ago by default.
 	StartDate *time.Time `json:"start_date,omitempty"`
 }

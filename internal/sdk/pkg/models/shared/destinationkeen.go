@@ -7,34 +7,34 @@ import (
 	"fmt"
 )
 
-type DestinationKeenKeenEnum string
+type DestinationKeenKeen string
 
 const (
-	DestinationKeenKeenEnumKeen DestinationKeenKeenEnum = "keen"
+	DestinationKeenKeenKeen DestinationKeenKeen = "keen"
 )
 
-func (e DestinationKeenKeenEnum) ToPointer() *DestinationKeenKeenEnum {
+func (e DestinationKeenKeen) ToPointer() *DestinationKeenKeen {
 	return &e
 }
 
-func (e *DestinationKeenKeenEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationKeenKeen) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "keen":
-		*e = DestinationKeenKeenEnum(v)
+		*e = DestinationKeenKeen(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationKeenKeenEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationKeenKeen: %v", v)
 	}
 }
 
 type DestinationKeen struct {
 	// To get Keen Master API Key, navigate to the Access tab from the left-hand, side panel and check the Project Details section.
-	APIKey          string                  `json:"api_key"`
-	DestinationType DestinationKeenKeenEnum `json:"destinationType"`
+	APIKey          string              `json:"api_key"`
+	DestinationType DestinationKeenKeen `json:"destinationType"`
 	// Allow connector to guess keen.timestamp value based on the streamed data.
 	InferTimestamp *bool `json:"infer_timestamp,omitempty"`
 	// To get Keen Project ID, navigate to the Access tab from the left-hand, side panel and check the Project Details section.

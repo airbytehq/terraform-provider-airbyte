@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceMyHoursResourceModel) ToCreateSDKType() *shared.SourceMyHoursCreateRequest {
@@ -15,7 +16,7 @@ func (r *SourceMyHoursResourceModel) ToCreateSDKType() *shared.SourceMyHoursCrea
 		logsBatchSize = nil
 	}
 	password := r.Configuration.Password.ValueString()
-	sourceType := shared.SourceMyHoursMyHoursEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceMyHoursMyHours(r.Configuration.SourceType.ValueString())
 	startDate := r.Configuration.StartDate.ValueString()
 	configuration := shared.SourceMyHours{
 		Email:         email,
@@ -44,4 +45,11 @@ func (r *SourceMyHoursResourceModel) ToCreateSDKType() *shared.SourceMyHoursCrea
 func (r *SourceMyHoursResourceModel) ToDeleteSDKType() *shared.SourceMyHoursCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceMyHoursResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

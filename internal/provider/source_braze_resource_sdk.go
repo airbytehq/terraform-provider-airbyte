@@ -5,12 +5,13 @@ package provider
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	customTypes "airbyte/internal/sdk/pkg/types"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceBrazeResourceModel) ToCreateSDKType() *shared.SourceBrazeCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	sourceType := shared.SourceBrazeBrazeEnum(r.Configuration.SourceType.ValueString())
-	startDate, _ := customTypes.NewDate(r.Configuration.StartDate.ValueString())
+	sourceType := shared.SourceBrazeBraze(r.Configuration.SourceType.ValueString())
+	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	url := r.Configuration.URL.ValueString()
 	configuration := shared.SourceBraze{
 		APIKey:     apiKey,
@@ -38,4 +39,11 @@ func (r *SourceBrazeResourceModel) ToCreateSDKType() *shared.SourceBrazeCreateRe
 func (r *SourceBrazeResourceModel) ToDeleteSDKType() *shared.SourceBrazeCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceBrazeResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

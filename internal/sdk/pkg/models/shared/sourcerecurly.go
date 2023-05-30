@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type SourceRecurlyRecurlyEnum string
+type SourceRecurlyRecurly string
 
 const (
-	SourceRecurlyRecurlyEnumRecurly SourceRecurlyRecurlyEnum = "recurly"
+	SourceRecurlyRecurlyRecurly SourceRecurlyRecurly = "recurly"
 )
 
-func (e SourceRecurlyRecurlyEnum) ToPointer() *SourceRecurlyRecurlyEnum {
+func (e SourceRecurlyRecurly) ToPointer() *SourceRecurlyRecurly {
 	return &e
 }
 
-func (e *SourceRecurlyRecurlyEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceRecurlyRecurly) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "recurly":
-		*e = SourceRecurlyRecurlyEnum(v)
+		*e = SourceRecurlyRecurly(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceRecurlyRecurlyEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceRecurlyRecurly: %v", v)
 	}
 }
 
@@ -37,6 +37,6 @@ type SourceRecurly struct {
 	// ISO8601 timestamp from which the replication from Recurly API will start from.
 	BeginTime *string `json:"begin_time,omitempty"`
 	// ISO8601 timestamp to which the replication from Recurly API will stop. Records after that date won't be imported.
-	EndTime    *string                  `json:"end_time,omitempty"`
-	SourceType SourceRecurlyRecurlyEnum `json:"sourceType"`
+	EndTime    *string              `json:"end_time,omitempty"`
+	SourceType SourceRecurlyRecurly `json:"sourceType"`
 }

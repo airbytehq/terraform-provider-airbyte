@@ -5,6 +5,7 @@ package provider
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	customTypes "airbyte/internal/sdk/pkg/types"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceYandexMetricaResourceModel) ToCreateSDKType() *shared.SourceYandexMetricaCreateRequest {
@@ -12,12 +13,12 @@ func (r *SourceYandexMetricaResourceModel) ToCreateSDKType() *shared.SourceYande
 	counterID := r.Configuration.CounterID.ValueString()
 	endDate := new(customTypes.Date)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
-		*endDate, _ = customTypes.NewDate(r.Configuration.EndDate.ValueString())
+		endDate = customTypes.MustNewDateFromString(r.Configuration.EndDate.ValueString())
 	} else {
 		endDate = nil
 	}
-	sourceType := shared.SourceYandexMetricaYandexMetricaEnum(r.Configuration.SourceType.ValueString())
-	startDate, _ := customTypes.NewDate(r.Configuration.StartDate.ValueString())
+	sourceType := shared.SourceYandexMetricaYandexMetrica(r.Configuration.SourceType.ValueString())
+	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceYandexMetrica{
 		AuthToken:  authToken,
 		CounterID:  counterID,
@@ -45,4 +46,11 @@ func (r *SourceYandexMetricaResourceModel) ToCreateSDKType() *shared.SourceYande
 func (r *SourceYandexMetricaResourceModel) ToDeleteSDKType() *shared.SourceYandexMetricaCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceYandexMetricaResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

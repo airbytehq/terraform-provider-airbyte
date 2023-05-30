@@ -4,11 +4,12 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceVantageResourceModel) ToCreateSDKType() *shared.SourceVantageCreateRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
-	sourceType := shared.SourceVantageVantageEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceVantageVantage(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceVantage{
 		AccessToken: accessToken,
 		SourceType:  sourceType,
@@ -33,4 +34,11 @@ func (r *SourceVantageResourceModel) ToCreateSDKType() *shared.SourceVantageCrea
 func (r *SourceVantageResourceModel) ToDeleteSDKType() *shared.SourceVantageCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceVantageResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

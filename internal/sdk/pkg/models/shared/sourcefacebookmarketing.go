@@ -8,29 +8,29 @@ import (
 	"time"
 )
 
-// SourceFacebookMarketingInsightConfigValidActionBreakdownsEnum - Generic enumeration.
+// SourceFacebookMarketingInsightConfigValidActionBreakdowns - Generic enumeration.
 //
 // Derive from this class to define new enumerations.
-type SourceFacebookMarketingInsightConfigValidActionBreakdownsEnum string
+type SourceFacebookMarketingInsightConfigValidActionBreakdowns string
 
 const (
-	SourceFacebookMarketingInsightConfigValidActionBreakdownsEnumActionCanvasComponentName SourceFacebookMarketingInsightConfigValidActionBreakdownsEnum = "action_canvas_component_name"
-	SourceFacebookMarketingInsightConfigValidActionBreakdownsEnumActionCarouselCardID      SourceFacebookMarketingInsightConfigValidActionBreakdownsEnum = "action_carousel_card_id"
-	SourceFacebookMarketingInsightConfigValidActionBreakdownsEnumActionCarouselCardName    SourceFacebookMarketingInsightConfigValidActionBreakdownsEnum = "action_carousel_card_name"
-	SourceFacebookMarketingInsightConfigValidActionBreakdownsEnumActionDestination         SourceFacebookMarketingInsightConfigValidActionBreakdownsEnum = "action_destination"
-	SourceFacebookMarketingInsightConfigValidActionBreakdownsEnumActionDevice              SourceFacebookMarketingInsightConfigValidActionBreakdownsEnum = "action_device"
-	SourceFacebookMarketingInsightConfigValidActionBreakdownsEnumActionReaction            SourceFacebookMarketingInsightConfigValidActionBreakdownsEnum = "action_reaction"
-	SourceFacebookMarketingInsightConfigValidActionBreakdownsEnumActionTargetID            SourceFacebookMarketingInsightConfigValidActionBreakdownsEnum = "action_target_id"
-	SourceFacebookMarketingInsightConfigValidActionBreakdownsEnumActionType                SourceFacebookMarketingInsightConfigValidActionBreakdownsEnum = "action_type"
-	SourceFacebookMarketingInsightConfigValidActionBreakdownsEnumActionVideoSound          SourceFacebookMarketingInsightConfigValidActionBreakdownsEnum = "action_video_sound"
-	SourceFacebookMarketingInsightConfigValidActionBreakdownsEnumActionVideoType           SourceFacebookMarketingInsightConfigValidActionBreakdownsEnum = "action_video_type"
+	SourceFacebookMarketingInsightConfigValidActionBreakdownsActionCanvasComponentName SourceFacebookMarketingInsightConfigValidActionBreakdowns = "action_canvas_component_name"
+	SourceFacebookMarketingInsightConfigValidActionBreakdownsActionCarouselCardID      SourceFacebookMarketingInsightConfigValidActionBreakdowns = "action_carousel_card_id"
+	SourceFacebookMarketingInsightConfigValidActionBreakdownsActionCarouselCardName    SourceFacebookMarketingInsightConfigValidActionBreakdowns = "action_carousel_card_name"
+	SourceFacebookMarketingInsightConfigValidActionBreakdownsActionDestination         SourceFacebookMarketingInsightConfigValidActionBreakdowns = "action_destination"
+	SourceFacebookMarketingInsightConfigValidActionBreakdownsActionDevice              SourceFacebookMarketingInsightConfigValidActionBreakdowns = "action_device"
+	SourceFacebookMarketingInsightConfigValidActionBreakdownsActionReaction            SourceFacebookMarketingInsightConfigValidActionBreakdowns = "action_reaction"
+	SourceFacebookMarketingInsightConfigValidActionBreakdownsActionTargetID            SourceFacebookMarketingInsightConfigValidActionBreakdowns = "action_target_id"
+	SourceFacebookMarketingInsightConfigValidActionBreakdownsActionType                SourceFacebookMarketingInsightConfigValidActionBreakdowns = "action_type"
+	SourceFacebookMarketingInsightConfigValidActionBreakdownsActionVideoSound          SourceFacebookMarketingInsightConfigValidActionBreakdowns = "action_video_sound"
+	SourceFacebookMarketingInsightConfigValidActionBreakdownsActionVideoType           SourceFacebookMarketingInsightConfigValidActionBreakdowns = "action_video_type"
 )
 
-func (e SourceFacebookMarketingInsightConfigValidActionBreakdownsEnum) ToPointer() *SourceFacebookMarketingInsightConfigValidActionBreakdownsEnum {
+func (e SourceFacebookMarketingInsightConfigValidActionBreakdowns) ToPointer() *SourceFacebookMarketingInsightConfigValidActionBreakdowns {
 	return &e
 }
 
-func (e *SourceFacebookMarketingInsightConfigValidActionBreakdownsEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceFacebookMarketingInsightConfigValidActionBreakdowns) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -55,53 +55,53 @@ func (e *SourceFacebookMarketingInsightConfigValidActionBreakdownsEnum) Unmarsha
 	case "action_video_sound":
 		fallthrough
 	case "action_video_type":
-		*e = SourceFacebookMarketingInsightConfigValidActionBreakdownsEnum(v)
+		*e = SourceFacebookMarketingInsightConfigValidActionBreakdowns(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFacebookMarketingInsightConfigValidActionBreakdownsEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceFacebookMarketingInsightConfigValidActionBreakdowns: %v", v)
 	}
 }
 
-// SourceFacebookMarketingInsightConfigValidBreakdownsEnum - Generic enumeration.
+// SourceFacebookMarketingInsightConfigValidBreakdowns - Generic enumeration.
 //
 // Derive from this class to define new enumerations.
-type SourceFacebookMarketingInsightConfigValidBreakdownsEnum string
+type SourceFacebookMarketingInsightConfigValidBreakdowns string
 
 const (
-	SourceFacebookMarketingInsightConfigValidBreakdownsEnumAdFormatAsset                             SourceFacebookMarketingInsightConfigValidBreakdownsEnum = "ad_format_asset"
-	SourceFacebookMarketingInsightConfigValidBreakdownsEnumAge                                       SourceFacebookMarketingInsightConfigValidBreakdownsEnum = "age"
-	SourceFacebookMarketingInsightConfigValidBreakdownsEnumAppID                                     SourceFacebookMarketingInsightConfigValidBreakdownsEnum = "app_id"
-	SourceFacebookMarketingInsightConfigValidBreakdownsEnumBodyAsset                                 SourceFacebookMarketingInsightConfigValidBreakdownsEnum = "body_asset"
-	SourceFacebookMarketingInsightConfigValidBreakdownsEnumCallToActionAsset                         SourceFacebookMarketingInsightConfigValidBreakdownsEnum = "call_to_action_asset"
-	SourceFacebookMarketingInsightConfigValidBreakdownsEnumCountry                                   SourceFacebookMarketingInsightConfigValidBreakdownsEnum = "country"
-	SourceFacebookMarketingInsightConfigValidBreakdownsEnumDescriptionAsset                          SourceFacebookMarketingInsightConfigValidBreakdownsEnum = "description_asset"
-	SourceFacebookMarketingInsightConfigValidBreakdownsEnumDevicePlatform                            SourceFacebookMarketingInsightConfigValidBreakdownsEnum = "device_platform"
-	SourceFacebookMarketingInsightConfigValidBreakdownsEnumDma                                       SourceFacebookMarketingInsightConfigValidBreakdownsEnum = "dma"
-	SourceFacebookMarketingInsightConfigValidBreakdownsEnumFrequencyValue                            SourceFacebookMarketingInsightConfigValidBreakdownsEnum = "frequency_value"
-	SourceFacebookMarketingInsightConfigValidBreakdownsEnumGender                                    SourceFacebookMarketingInsightConfigValidBreakdownsEnum = "gender"
-	SourceFacebookMarketingInsightConfigValidBreakdownsEnumHourlyStatsAggregatedByAdvertiserTimeZone SourceFacebookMarketingInsightConfigValidBreakdownsEnum = "hourly_stats_aggregated_by_advertiser_time_zone"
-	SourceFacebookMarketingInsightConfigValidBreakdownsEnumHourlyStatsAggregatedByAudienceTimeZone   SourceFacebookMarketingInsightConfigValidBreakdownsEnum = "hourly_stats_aggregated_by_audience_time_zone"
-	SourceFacebookMarketingInsightConfigValidBreakdownsEnumImageAsset                                SourceFacebookMarketingInsightConfigValidBreakdownsEnum = "image_asset"
-	SourceFacebookMarketingInsightConfigValidBreakdownsEnumImpressionDevice                          SourceFacebookMarketingInsightConfigValidBreakdownsEnum = "impression_device"
-	SourceFacebookMarketingInsightConfigValidBreakdownsEnumIsConversionIDModeled                     SourceFacebookMarketingInsightConfigValidBreakdownsEnum = "is_conversion_id_modeled"
-	SourceFacebookMarketingInsightConfigValidBreakdownsEnumLinkURLAsset                              SourceFacebookMarketingInsightConfigValidBreakdownsEnum = "link_url_asset"
-	SourceFacebookMarketingInsightConfigValidBreakdownsEnumMmm                                       SourceFacebookMarketingInsightConfigValidBreakdownsEnum = "mmm"
-	SourceFacebookMarketingInsightConfigValidBreakdownsEnumPlacePageID                               SourceFacebookMarketingInsightConfigValidBreakdownsEnum = "place_page_id"
-	SourceFacebookMarketingInsightConfigValidBreakdownsEnumPlatformPosition                          SourceFacebookMarketingInsightConfigValidBreakdownsEnum = "platform_position"
-	SourceFacebookMarketingInsightConfigValidBreakdownsEnumProductID                                 SourceFacebookMarketingInsightConfigValidBreakdownsEnum = "product_id"
-	SourceFacebookMarketingInsightConfigValidBreakdownsEnumPublisherPlatform                         SourceFacebookMarketingInsightConfigValidBreakdownsEnum = "publisher_platform"
-	SourceFacebookMarketingInsightConfigValidBreakdownsEnumRegion                                    SourceFacebookMarketingInsightConfigValidBreakdownsEnum = "region"
-	SourceFacebookMarketingInsightConfigValidBreakdownsEnumSkanCampaignID                            SourceFacebookMarketingInsightConfigValidBreakdownsEnum = "skan_campaign_id"
-	SourceFacebookMarketingInsightConfigValidBreakdownsEnumSkanConversionID                          SourceFacebookMarketingInsightConfigValidBreakdownsEnum = "skan_conversion_id"
-	SourceFacebookMarketingInsightConfigValidBreakdownsEnumTitleAsset                                SourceFacebookMarketingInsightConfigValidBreakdownsEnum = "title_asset"
-	SourceFacebookMarketingInsightConfigValidBreakdownsEnumVideoAsset                                SourceFacebookMarketingInsightConfigValidBreakdownsEnum = "video_asset"
+	SourceFacebookMarketingInsightConfigValidBreakdownsAdFormatAsset                             SourceFacebookMarketingInsightConfigValidBreakdowns = "ad_format_asset"
+	SourceFacebookMarketingInsightConfigValidBreakdownsAge                                       SourceFacebookMarketingInsightConfigValidBreakdowns = "age"
+	SourceFacebookMarketingInsightConfigValidBreakdownsAppID                                     SourceFacebookMarketingInsightConfigValidBreakdowns = "app_id"
+	SourceFacebookMarketingInsightConfigValidBreakdownsBodyAsset                                 SourceFacebookMarketingInsightConfigValidBreakdowns = "body_asset"
+	SourceFacebookMarketingInsightConfigValidBreakdownsCallToActionAsset                         SourceFacebookMarketingInsightConfigValidBreakdowns = "call_to_action_asset"
+	SourceFacebookMarketingInsightConfigValidBreakdownsCountry                                   SourceFacebookMarketingInsightConfigValidBreakdowns = "country"
+	SourceFacebookMarketingInsightConfigValidBreakdownsDescriptionAsset                          SourceFacebookMarketingInsightConfigValidBreakdowns = "description_asset"
+	SourceFacebookMarketingInsightConfigValidBreakdownsDevicePlatform                            SourceFacebookMarketingInsightConfigValidBreakdowns = "device_platform"
+	SourceFacebookMarketingInsightConfigValidBreakdownsDma                                       SourceFacebookMarketingInsightConfigValidBreakdowns = "dma"
+	SourceFacebookMarketingInsightConfigValidBreakdownsFrequencyValue                            SourceFacebookMarketingInsightConfigValidBreakdowns = "frequency_value"
+	SourceFacebookMarketingInsightConfigValidBreakdownsGender                                    SourceFacebookMarketingInsightConfigValidBreakdowns = "gender"
+	SourceFacebookMarketingInsightConfigValidBreakdownsHourlyStatsAggregatedByAdvertiserTimeZone SourceFacebookMarketingInsightConfigValidBreakdowns = "hourly_stats_aggregated_by_advertiser_time_zone"
+	SourceFacebookMarketingInsightConfigValidBreakdownsHourlyStatsAggregatedByAudienceTimeZone   SourceFacebookMarketingInsightConfigValidBreakdowns = "hourly_stats_aggregated_by_audience_time_zone"
+	SourceFacebookMarketingInsightConfigValidBreakdownsImageAsset                                SourceFacebookMarketingInsightConfigValidBreakdowns = "image_asset"
+	SourceFacebookMarketingInsightConfigValidBreakdownsImpressionDevice                          SourceFacebookMarketingInsightConfigValidBreakdowns = "impression_device"
+	SourceFacebookMarketingInsightConfigValidBreakdownsIsConversionIDModeled                     SourceFacebookMarketingInsightConfigValidBreakdowns = "is_conversion_id_modeled"
+	SourceFacebookMarketingInsightConfigValidBreakdownsLinkURLAsset                              SourceFacebookMarketingInsightConfigValidBreakdowns = "link_url_asset"
+	SourceFacebookMarketingInsightConfigValidBreakdownsMmm                                       SourceFacebookMarketingInsightConfigValidBreakdowns = "mmm"
+	SourceFacebookMarketingInsightConfigValidBreakdownsPlacePageID                               SourceFacebookMarketingInsightConfigValidBreakdowns = "place_page_id"
+	SourceFacebookMarketingInsightConfigValidBreakdownsPlatformPosition                          SourceFacebookMarketingInsightConfigValidBreakdowns = "platform_position"
+	SourceFacebookMarketingInsightConfigValidBreakdownsProductID                                 SourceFacebookMarketingInsightConfigValidBreakdowns = "product_id"
+	SourceFacebookMarketingInsightConfigValidBreakdownsPublisherPlatform                         SourceFacebookMarketingInsightConfigValidBreakdowns = "publisher_platform"
+	SourceFacebookMarketingInsightConfigValidBreakdownsRegion                                    SourceFacebookMarketingInsightConfigValidBreakdowns = "region"
+	SourceFacebookMarketingInsightConfigValidBreakdownsSkanCampaignID                            SourceFacebookMarketingInsightConfigValidBreakdowns = "skan_campaign_id"
+	SourceFacebookMarketingInsightConfigValidBreakdownsSkanConversionID                          SourceFacebookMarketingInsightConfigValidBreakdowns = "skan_conversion_id"
+	SourceFacebookMarketingInsightConfigValidBreakdownsTitleAsset                                SourceFacebookMarketingInsightConfigValidBreakdowns = "title_asset"
+	SourceFacebookMarketingInsightConfigValidBreakdownsVideoAsset                                SourceFacebookMarketingInsightConfigValidBreakdowns = "video_asset"
 )
 
-func (e SourceFacebookMarketingInsightConfigValidBreakdownsEnum) ToPointer() *SourceFacebookMarketingInsightConfigValidBreakdownsEnum {
+func (e SourceFacebookMarketingInsightConfigValidBreakdowns) ToPointer() *SourceFacebookMarketingInsightConfigValidBreakdowns {
 	return &e
 }
 
-func (e *SourceFacebookMarketingInsightConfigValidBreakdownsEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceFacebookMarketingInsightConfigValidBreakdowns) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -160,157 +160,157 @@ func (e *SourceFacebookMarketingInsightConfigValidBreakdownsEnum) UnmarshalJSON(
 	case "title_asset":
 		fallthrough
 	case "video_asset":
-		*e = SourceFacebookMarketingInsightConfigValidBreakdownsEnum(v)
+		*e = SourceFacebookMarketingInsightConfigValidBreakdowns(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFacebookMarketingInsightConfigValidBreakdownsEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceFacebookMarketingInsightConfigValidBreakdowns: %v", v)
 	}
 }
 
-// SourceFacebookMarketingInsightConfigValidEnumsEnum - Generic enumeration.
+// SourceFacebookMarketingInsightConfigValidEnums - Generic enumeration.
 //
 // Derive from this class to define new enumerations.
-type SourceFacebookMarketingInsightConfigValidEnumsEnum string
+type SourceFacebookMarketingInsightConfigValidEnums string
 
 const (
-	SourceFacebookMarketingInsightConfigValidEnumsEnumAccountCurrency                         SourceFacebookMarketingInsightConfigValidEnumsEnum = "account_currency"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumAccountID                               SourceFacebookMarketingInsightConfigValidEnumsEnum = "account_id"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumAccountName                             SourceFacebookMarketingInsightConfigValidEnumsEnum = "account_name"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumActionValues                            SourceFacebookMarketingInsightConfigValidEnumsEnum = "action_values"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumActions                                 SourceFacebookMarketingInsightConfigValidEnumsEnum = "actions"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumAdBidValue                              SourceFacebookMarketingInsightConfigValidEnumsEnum = "ad_bid_value"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumAdClickActions                          SourceFacebookMarketingInsightConfigValidEnumsEnum = "ad_click_actions"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumAdID                                    SourceFacebookMarketingInsightConfigValidEnumsEnum = "ad_id"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumAdImpressionActions                     SourceFacebookMarketingInsightConfigValidEnumsEnum = "ad_impression_actions"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumAdName                                  SourceFacebookMarketingInsightConfigValidEnumsEnum = "ad_name"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumAdsetBidValue                           SourceFacebookMarketingInsightConfigValidEnumsEnum = "adset_bid_value"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumAdsetEnd                                SourceFacebookMarketingInsightConfigValidEnumsEnum = "adset_end"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumAdsetID                                 SourceFacebookMarketingInsightConfigValidEnumsEnum = "adset_id"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumAdsetName                               SourceFacebookMarketingInsightConfigValidEnumsEnum = "adset_name"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumAdsetStart                              SourceFacebookMarketingInsightConfigValidEnumsEnum = "adset_start"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumAgeTargeting                            SourceFacebookMarketingInsightConfigValidEnumsEnum = "age_targeting"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumAttributionSetting                      SourceFacebookMarketingInsightConfigValidEnumsEnum = "attribution_setting"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumAuctionBid                              SourceFacebookMarketingInsightConfigValidEnumsEnum = "auction_bid"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumAuctionCompetitiveness                  SourceFacebookMarketingInsightConfigValidEnumsEnum = "auction_competitiveness"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumAuctionMaxCompetitorBid                 SourceFacebookMarketingInsightConfigValidEnumsEnum = "auction_max_competitor_bid"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumBuyingType                              SourceFacebookMarketingInsightConfigValidEnumsEnum = "buying_type"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumCampaignID                              SourceFacebookMarketingInsightConfigValidEnumsEnum = "campaign_id"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumCampaignName                            SourceFacebookMarketingInsightConfigValidEnumsEnum = "campaign_name"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumCanvasAvgViewPercent                    SourceFacebookMarketingInsightConfigValidEnumsEnum = "canvas_avg_view_percent"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumCanvasAvgViewTime                       SourceFacebookMarketingInsightConfigValidEnumsEnum = "canvas_avg_view_time"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumCatalogSegmentActions                   SourceFacebookMarketingInsightConfigValidEnumsEnum = "catalog_segment_actions"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumCatalogSegmentValue                     SourceFacebookMarketingInsightConfigValidEnumsEnum = "catalog_segment_value"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumCatalogSegmentValueMobilePurchaseRoas   SourceFacebookMarketingInsightConfigValidEnumsEnum = "catalog_segment_value_mobile_purchase_roas"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumCatalogSegmentValueOmniPurchaseRoas     SourceFacebookMarketingInsightConfigValidEnumsEnum = "catalog_segment_value_omni_purchase_roas"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumCatalogSegmentValueWebsitePurchaseRoas  SourceFacebookMarketingInsightConfigValidEnumsEnum = "catalog_segment_value_website_purchase_roas"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumClicks                                  SourceFacebookMarketingInsightConfigValidEnumsEnum = "clicks"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumConversionRateRanking                   SourceFacebookMarketingInsightConfigValidEnumsEnum = "conversion_rate_ranking"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumConversionValues                        SourceFacebookMarketingInsightConfigValidEnumsEnum = "conversion_values"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumConversions                             SourceFacebookMarketingInsightConfigValidEnumsEnum = "conversions"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumConvertedProductQuantity                SourceFacebookMarketingInsightConfigValidEnumsEnum = "converted_product_quantity"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumConvertedProductValue                   SourceFacebookMarketingInsightConfigValidEnumsEnum = "converted_product_value"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumCostPer15SecVideoView                   SourceFacebookMarketingInsightConfigValidEnumsEnum = "cost_per_15_sec_video_view"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumCostPer2SecContinuousVideoView          SourceFacebookMarketingInsightConfigValidEnumsEnum = "cost_per_2_sec_continuous_video_view"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumCostPerActionType                       SourceFacebookMarketingInsightConfigValidEnumsEnum = "cost_per_action_type"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumCostPerAdClick                          SourceFacebookMarketingInsightConfigValidEnumsEnum = "cost_per_ad_click"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumCostPerConversion                       SourceFacebookMarketingInsightConfigValidEnumsEnum = "cost_per_conversion"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumCostPerDdaCountbyConvs                  SourceFacebookMarketingInsightConfigValidEnumsEnum = "cost_per_dda_countby_convs"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumCostPerEstimatedAdRecallers             SourceFacebookMarketingInsightConfigValidEnumsEnum = "cost_per_estimated_ad_recallers"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumCostPerInlineLinkClick                  SourceFacebookMarketingInsightConfigValidEnumsEnum = "cost_per_inline_link_click"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumCostPerInlinePostEngagement             SourceFacebookMarketingInsightConfigValidEnumsEnum = "cost_per_inline_post_engagement"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumCostPerOneThousandAdImpression          SourceFacebookMarketingInsightConfigValidEnumsEnum = "cost_per_one_thousand_ad_impression"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumCostPerOutboundClick                    SourceFacebookMarketingInsightConfigValidEnumsEnum = "cost_per_outbound_click"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumCostPerThruplay                         SourceFacebookMarketingInsightConfigValidEnumsEnum = "cost_per_thruplay"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumCostPerUniqueActionType                 SourceFacebookMarketingInsightConfigValidEnumsEnum = "cost_per_unique_action_type"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumCostPerUniqueClick                      SourceFacebookMarketingInsightConfigValidEnumsEnum = "cost_per_unique_click"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumCostPerUniqueConversion                 SourceFacebookMarketingInsightConfigValidEnumsEnum = "cost_per_unique_conversion"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumCostPerUniqueInlineLinkClick            SourceFacebookMarketingInsightConfigValidEnumsEnum = "cost_per_unique_inline_link_click"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumCostPerUniqueOutboundClick              SourceFacebookMarketingInsightConfigValidEnumsEnum = "cost_per_unique_outbound_click"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumCpc                                     SourceFacebookMarketingInsightConfigValidEnumsEnum = "cpc"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumCpm                                     SourceFacebookMarketingInsightConfigValidEnumsEnum = "cpm"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumCpp                                     SourceFacebookMarketingInsightConfigValidEnumsEnum = "cpp"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumCreatedTime                             SourceFacebookMarketingInsightConfigValidEnumsEnum = "created_time"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumCtr                                     SourceFacebookMarketingInsightConfigValidEnumsEnum = "ctr"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumDateStart                               SourceFacebookMarketingInsightConfigValidEnumsEnum = "date_start"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumDateStop                                SourceFacebookMarketingInsightConfigValidEnumsEnum = "date_stop"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumDdaCountbyConvs                         SourceFacebookMarketingInsightConfigValidEnumsEnum = "dda_countby_convs"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumDdaResults                              SourceFacebookMarketingInsightConfigValidEnumsEnum = "dda_results"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumEngagementRateRanking                   SourceFacebookMarketingInsightConfigValidEnumsEnum = "engagement_rate_ranking"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumEstimatedAdRecallRate                   SourceFacebookMarketingInsightConfigValidEnumsEnum = "estimated_ad_recall_rate"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumEstimatedAdRecallRateLowerBound         SourceFacebookMarketingInsightConfigValidEnumsEnum = "estimated_ad_recall_rate_lower_bound"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumEstimatedAdRecallRateUpperBound         SourceFacebookMarketingInsightConfigValidEnumsEnum = "estimated_ad_recall_rate_upper_bound"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumEstimatedAdRecallers                    SourceFacebookMarketingInsightConfigValidEnumsEnum = "estimated_ad_recallers"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumEstimatedAdRecallersLowerBound          SourceFacebookMarketingInsightConfigValidEnumsEnum = "estimated_ad_recallers_lower_bound"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumEstimatedAdRecallersUpperBound          SourceFacebookMarketingInsightConfigValidEnumsEnum = "estimated_ad_recallers_upper_bound"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumFrequency                               SourceFacebookMarketingInsightConfigValidEnumsEnum = "frequency"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumFullViewImpressions                     SourceFacebookMarketingInsightConfigValidEnumsEnum = "full_view_impressions"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumFullViewReach                           SourceFacebookMarketingInsightConfigValidEnumsEnum = "full_view_reach"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumGenderTargeting                         SourceFacebookMarketingInsightConfigValidEnumsEnum = "gender_targeting"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumImpressions                             SourceFacebookMarketingInsightConfigValidEnumsEnum = "impressions"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumInlineLinkClickCtr                      SourceFacebookMarketingInsightConfigValidEnumsEnum = "inline_link_click_ctr"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumInlineLinkClicks                        SourceFacebookMarketingInsightConfigValidEnumsEnum = "inline_link_clicks"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumInlinePostEngagement                    SourceFacebookMarketingInsightConfigValidEnumsEnum = "inline_post_engagement"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumInstantExperienceClicksToOpen           SourceFacebookMarketingInsightConfigValidEnumsEnum = "instant_experience_clicks_to_open"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumInstantExperienceClicksToStart          SourceFacebookMarketingInsightConfigValidEnumsEnum = "instant_experience_clicks_to_start"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumInstantExperienceOutboundClicks         SourceFacebookMarketingInsightConfigValidEnumsEnum = "instant_experience_outbound_clicks"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumInteractiveComponentTap                 SourceFacebookMarketingInsightConfigValidEnumsEnum = "interactive_component_tap"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumLabels                                  SourceFacebookMarketingInsightConfigValidEnumsEnum = "labels"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumLocation                                SourceFacebookMarketingInsightConfigValidEnumsEnum = "location"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumMobileAppPurchaseRoas                   SourceFacebookMarketingInsightConfigValidEnumsEnum = "mobile_app_purchase_roas"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumObjective                               SourceFacebookMarketingInsightConfigValidEnumsEnum = "objective"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumOptimizationGoal                        SourceFacebookMarketingInsightConfigValidEnumsEnum = "optimization_goal"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumOutboundClicks                          SourceFacebookMarketingInsightConfigValidEnumsEnum = "outbound_clicks"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumOutboundClicksCtr                       SourceFacebookMarketingInsightConfigValidEnumsEnum = "outbound_clicks_ctr"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumPlacePageName                           SourceFacebookMarketingInsightConfigValidEnumsEnum = "place_page_name"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumPurchaseRoas                            SourceFacebookMarketingInsightConfigValidEnumsEnum = "purchase_roas"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumQualifyingQuestionQualifyAnswerRate     SourceFacebookMarketingInsightConfigValidEnumsEnum = "qualifying_question_qualify_answer_rate"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumQualityRanking                          SourceFacebookMarketingInsightConfigValidEnumsEnum = "quality_ranking"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumQualityScoreEctr                        SourceFacebookMarketingInsightConfigValidEnumsEnum = "quality_score_ectr"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumQualityScoreEcvr                        SourceFacebookMarketingInsightConfigValidEnumsEnum = "quality_score_ecvr"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumQualityScoreOrganic                     SourceFacebookMarketingInsightConfigValidEnumsEnum = "quality_score_organic"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumReach                                   SourceFacebookMarketingInsightConfigValidEnumsEnum = "reach"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumSocialSpend                             SourceFacebookMarketingInsightConfigValidEnumsEnum = "social_spend"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumSpend                                   SourceFacebookMarketingInsightConfigValidEnumsEnum = "spend"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumTotalPostbacks                          SourceFacebookMarketingInsightConfigValidEnumsEnum = "total_postbacks"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumTotalPostbacksDetailed                  SourceFacebookMarketingInsightConfigValidEnumsEnum = "total_postbacks_detailed"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumUniqueActions                           SourceFacebookMarketingInsightConfigValidEnumsEnum = "unique_actions"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumUniqueClicks                            SourceFacebookMarketingInsightConfigValidEnumsEnum = "unique_clicks"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumUniqueConversions                       SourceFacebookMarketingInsightConfigValidEnumsEnum = "unique_conversions"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumUniqueCtr                               SourceFacebookMarketingInsightConfigValidEnumsEnum = "unique_ctr"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumUniqueInlineLinkClickCtr                SourceFacebookMarketingInsightConfigValidEnumsEnum = "unique_inline_link_click_ctr"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumUniqueInlineLinkClicks                  SourceFacebookMarketingInsightConfigValidEnumsEnum = "unique_inline_link_clicks"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumUniqueLinkClicksCtr                     SourceFacebookMarketingInsightConfigValidEnumsEnum = "unique_link_clicks_ctr"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumUniqueOutboundClicks                    SourceFacebookMarketingInsightConfigValidEnumsEnum = "unique_outbound_clicks"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumUniqueOutboundClicksCtr                 SourceFacebookMarketingInsightConfigValidEnumsEnum = "unique_outbound_clicks_ctr"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumUniqueVideoContinuous2SecWatchedActions SourceFacebookMarketingInsightConfigValidEnumsEnum = "unique_video_continuous_2_sec_watched_actions"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumUniqueVideoView15Sec                    SourceFacebookMarketingInsightConfigValidEnumsEnum = "unique_video_view_15_sec"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumUpdatedTime                             SourceFacebookMarketingInsightConfigValidEnumsEnum = "updated_time"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumVideo15SecWatchedActions                SourceFacebookMarketingInsightConfigValidEnumsEnum = "video_15_sec_watched_actions"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumVideo30SecWatchedActions                SourceFacebookMarketingInsightConfigValidEnumsEnum = "video_30_sec_watched_actions"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumVideoAvgTimeWatchedActions              SourceFacebookMarketingInsightConfigValidEnumsEnum = "video_avg_time_watched_actions"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumVideoContinuous2SecWatchedActions       SourceFacebookMarketingInsightConfigValidEnumsEnum = "video_continuous_2_sec_watched_actions"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumVideoP100WatchedActions                 SourceFacebookMarketingInsightConfigValidEnumsEnum = "video_p100_watched_actions"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumVideoP25WatchedActions                  SourceFacebookMarketingInsightConfigValidEnumsEnum = "video_p25_watched_actions"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumVideoP50WatchedActions                  SourceFacebookMarketingInsightConfigValidEnumsEnum = "video_p50_watched_actions"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumVideoP75WatchedActions                  SourceFacebookMarketingInsightConfigValidEnumsEnum = "video_p75_watched_actions"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumVideoP95WatchedActions                  SourceFacebookMarketingInsightConfigValidEnumsEnum = "video_p95_watched_actions"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumVideoPlayActions                        SourceFacebookMarketingInsightConfigValidEnumsEnum = "video_play_actions"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumVideoPlayCurveActions                   SourceFacebookMarketingInsightConfigValidEnumsEnum = "video_play_curve_actions"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumVideoPlayRetention0To15sActions         SourceFacebookMarketingInsightConfigValidEnumsEnum = "video_play_retention_0_to_15s_actions"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumVideoPlayRetention20To60sActions        SourceFacebookMarketingInsightConfigValidEnumsEnum = "video_play_retention_20_to_60s_actions"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumVideoPlayRetentionGraphActions          SourceFacebookMarketingInsightConfigValidEnumsEnum = "video_play_retention_graph_actions"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumVideoThruplayWatchedActions             SourceFacebookMarketingInsightConfigValidEnumsEnum = "video_thruplay_watched_actions"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumVideoTimeWatchedActions                 SourceFacebookMarketingInsightConfigValidEnumsEnum = "video_time_watched_actions"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumWebsiteCtr                              SourceFacebookMarketingInsightConfigValidEnumsEnum = "website_ctr"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumWebsitePurchaseRoas                     SourceFacebookMarketingInsightConfigValidEnumsEnum = "website_purchase_roas"
-	SourceFacebookMarketingInsightConfigValidEnumsEnumWishBid                                 SourceFacebookMarketingInsightConfigValidEnumsEnum = "wish_bid"
+	SourceFacebookMarketingInsightConfigValidEnumsAccountCurrency                         SourceFacebookMarketingInsightConfigValidEnums = "account_currency"
+	SourceFacebookMarketingInsightConfigValidEnumsAccountID                               SourceFacebookMarketingInsightConfigValidEnums = "account_id"
+	SourceFacebookMarketingInsightConfigValidEnumsAccountName                             SourceFacebookMarketingInsightConfigValidEnums = "account_name"
+	SourceFacebookMarketingInsightConfigValidEnumsActionValues                            SourceFacebookMarketingInsightConfigValidEnums = "action_values"
+	SourceFacebookMarketingInsightConfigValidEnumsActions                                 SourceFacebookMarketingInsightConfigValidEnums = "actions"
+	SourceFacebookMarketingInsightConfigValidEnumsAdBidValue                              SourceFacebookMarketingInsightConfigValidEnums = "ad_bid_value"
+	SourceFacebookMarketingInsightConfigValidEnumsAdClickActions                          SourceFacebookMarketingInsightConfigValidEnums = "ad_click_actions"
+	SourceFacebookMarketingInsightConfigValidEnumsAdID                                    SourceFacebookMarketingInsightConfigValidEnums = "ad_id"
+	SourceFacebookMarketingInsightConfigValidEnumsAdImpressionActions                     SourceFacebookMarketingInsightConfigValidEnums = "ad_impression_actions"
+	SourceFacebookMarketingInsightConfigValidEnumsAdName                                  SourceFacebookMarketingInsightConfigValidEnums = "ad_name"
+	SourceFacebookMarketingInsightConfigValidEnumsAdsetBidValue                           SourceFacebookMarketingInsightConfigValidEnums = "adset_bid_value"
+	SourceFacebookMarketingInsightConfigValidEnumsAdsetEnd                                SourceFacebookMarketingInsightConfigValidEnums = "adset_end"
+	SourceFacebookMarketingInsightConfigValidEnumsAdsetID                                 SourceFacebookMarketingInsightConfigValidEnums = "adset_id"
+	SourceFacebookMarketingInsightConfigValidEnumsAdsetName                               SourceFacebookMarketingInsightConfigValidEnums = "adset_name"
+	SourceFacebookMarketingInsightConfigValidEnumsAdsetStart                              SourceFacebookMarketingInsightConfigValidEnums = "adset_start"
+	SourceFacebookMarketingInsightConfigValidEnumsAgeTargeting                            SourceFacebookMarketingInsightConfigValidEnums = "age_targeting"
+	SourceFacebookMarketingInsightConfigValidEnumsAttributionSetting                      SourceFacebookMarketingInsightConfigValidEnums = "attribution_setting"
+	SourceFacebookMarketingInsightConfigValidEnumsAuctionBid                              SourceFacebookMarketingInsightConfigValidEnums = "auction_bid"
+	SourceFacebookMarketingInsightConfigValidEnumsAuctionCompetitiveness                  SourceFacebookMarketingInsightConfigValidEnums = "auction_competitiveness"
+	SourceFacebookMarketingInsightConfigValidEnumsAuctionMaxCompetitorBid                 SourceFacebookMarketingInsightConfigValidEnums = "auction_max_competitor_bid"
+	SourceFacebookMarketingInsightConfigValidEnumsBuyingType                              SourceFacebookMarketingInsightConfigValidEnums = "buying_type"
+	SourceFacebookMarketingInsightConfigValidEnumsCampaignID                              SourceFacebookMarketingInsightConfigValidEnums = "campaign_id"
+	SourceFacebookMarketingInsightConfigValidEnumsCampaignName                            SourceFacebookMarketingInsightConfigValidEnums = "campaign_name"
+	SourceFacebookMarketingInsightConfigValidEnumsCanvasAvgViewPercent                    SourceFacebookMarketingInsightConfigValidEnums = "canvas_avg_view_percent"
+	SourceFacebookMarketingInsightConfigValidEnumsCanvasAvgViewTime                       SourceFacebookMarketingInsightConfigValidEnums = "canvas_avg_view_time"
+	SourceFacebookMarketingInsightConfigValidEnumsCatalogSegmentActions                   SourceFacebookMarketingInsightConfigValidEnums = "catalog_segment_actions"
+	SourceFacebookMarketingInsightConfigValidEnumsCatalogSegmentValue                     SourceFacebookMarketingInsightConfigValidEnums = "catalog_segment_value"
+	SourceFacebookMarketingInsightConfigValidEnumsCatalogSegmentValueMobilePurchaseRoas   SourceFacebookMarketingInsightConfigValidEnums = "catalog_segment_value_mobile_purchase_roas"
+	SourceFacebookMarketingInsightConfigValidEnumsCatalogSegmentValueOmniPurchaseRoas     SourceFacebookMarketingInsightConfigValidEnums = "catalog_segment_value_omni_purchase_roas"
+	SourceFacebookMarketingInsightConfigValidEnumsCatalogSegmentValueWebsitePurchaseRoas  SourceFacebookMarketingInsightConfigValidEnums = "catalog_segment_value_website_purchase_roas"
+	SourceFacebookMarketingInsightConfigValidEnumsClicks                                  SourceFacebookMarketingInsightConfigValidEnums = "clicks"
+	SourceFacebookMarketingInsightConfigValidEnumsConversionRateRanking                   SourceFacebookMarketingInsightConfigValidEnums = "conversion_rate_ranking"
+	SourceFacebookMarketingInsightConfigValidEnumsConversionValues                        SourceFacebookMarketingInsightConfigValidEnums = "conversion_values"
+	SourceFacebookMarketingInsightConfigValidEnumsConversions                             SourceFacebookMarketingInsightConfigValidEnums = "conversions"
+	SourceFacebookMarketingInsightConfigValidEnumsConvertedProductQuantity                SourceFacebookMarketingInsightConfigValidEnums = "converted_product_quantity"
+	SourceFacebookMarketingInsightConfigValidEnumsConvertedProductValue                   SourceFacebookMarketingInsightConfigValidEnums = "converted_product_value"
+	SourceFacebookMarketingInsightConfigValidEnumsCostPer15SecVideoView                   SourceFacebookMarketingInsightConfigValidEnums = "cost_per_15_sec_video_view"
+	SourceFacebookMarketingInsightConfigValidEnumsCostPer2SecContinuousVideoView          SourceFacebookMarketingInsightConfigValidEnums = "cost_per_2_sec_continuous_video_view"
+	SourceFacebookMarketingInsightConfigValidEnumsCostPerActionType                       SourceFacebookMarketingInsightConfigValidEnums = "cost_per_action_type"
+	SourceFacebookMarketingInsightConfigValidEnumsCostPerAdClick                          SourceFacebookMarketingInsightConfigValidEnums = "cost_per_ad_click"
+	SourceFacebookMarketingInsightConfigValidEnumsCostPerConversion                       SourceFacebookMarketingInsightConfigValidEnums = "cost_per_conversion"
+	SourceFacebookMarketingInsightConfigValidEnumsCostPerDdaCountbyConvs                  SourceFacebookMarketingInsightConfigValidEnums = "cost_per_dda_countby_convs"
+	SourceFacebookMarketingInsightConfigValidEnumsCostPerEstimatedAdRecallers             SourceFacebookMarketingInsightConfigValidEnums = "cost_per_estimated_ad_recallers"
+	SourceFacebookMarketingInsightConfigValidEnumsCostPerInlineLinkClick                  SourceFacebookMarketingInsightConfigValidEnums = "cost_per_inline_link_click"
+	SourceFacebookMarketingInsightConfigValidEnumsCostPerInlinePostEngagement             SourceFacebookMarketingInsightConfigValidEnums = "cost_per_inline_post_engagement"
+	SourceFacebookMarketingInsightConfigValidEnumsCostPerOneThousandAdImpression          SourceFacebookMarketingInsightConfigValidEnums = "cost_per_one_thousand_ad_impression"
+	SourceFacebookMarketingInsightConfigValidEnumsCostPerOutboundClick                    SourceFacebookMarketingInsightConfigValidEnums = "cost_per_outbound_click"
+	SourceFacebookMarketingInsightConfigValidEnumsCostPerThruplay                         SourceFacebookMarketingInsightConfigValidEnums = "cost_per_thruplay"
+	SourceFacebookMarketingInsightConfigValidEnumsCostPerUniqueActionType                 SourceFacebookMarketingInsightConfigValidEnums = "cost_per_unique_action_type"
+	SourceFacebookMarketingInsightConfigValidEnumsCostPerUniqueClick                      SourceFacebookMarketingInsightConfigValidEnums = "cost_per_unique_click"
+	SourceFacebookMarketingInsightConfigValidEnumsCostPerUniqueConversion                 SourceFacebookMarketingInsightConfigValidEnums = "cost_per_unique_conversion"
+	SourceFacebookMarketingInsightConfigValidEnumsCostPerUniqueInlineLinkClick            SourceFacebookMarketingInsightConfigValidEnums = "cost_per_unique_inline_link_click"
+	SourceFacebookMarketingInsightConfigValidEnumsCostPerUniqueOutboundClick              SourceFacebookMarketingInsightConfigValidEnums = "cost_per_unique_outbound_click"
+	SourceFacebookMarketingInsightConfigValidEnumsCpc                                     SourceFacebookMarketingInsightConfigValidEnums = "cpc"
+	SourceFacebookMarketingInsightConfigValidEnumsCpm                                     SourceFacebookMarketingInsightConfigValidEnums = "cpm"
+	SourceFacebookMarketingInsightConfigValidEnumsCpp                                     SourceFacebookMarketingInsightConfigValidEnums = "cpp"
+	SourceFacebookMarketingInsightConfigValidEnumsCreatedTime                             SourceFacebookMarketingInsightConfigValidEnums = "created_time"
+	SourceFacebookMarketingInsightConfigValidEnumsCtr                                     SourceFacebookMarketingInsightConfigValidEnums = "ctr"
+	SourceFacebookMarketingInsightConfigValidEnumsDateStart                               SourceFacebookMarketingInsightConfigValidEnums = "date_start"
+	SourceFacebookMarketingInsightConfigValidEnumsDateStop                                SourceFacebookMarketingInsightConfigValidEnums = "date_stop"
+	SourceFacebookMarketingInsightConfigValidEnumsDdaCountbyConvs                         SourceFacebookMarketingInsightConfigValidEnums = "dda_countby_convs"
+	SourceFacebookMarketingInsightConfigValidEnumsDdaResults                              SourceFacebookMarketingInsightConfigValidEnums = "dda_results"
+	SourceFacebookMarketingInsightConfigValidEnumsEngagementRateRanking                   SourceFacebookMarketingInsightConfigValidEnums = "engagement_rate_ranking"
+	SourceFacebookMarketingInsightConfigValidEnumsEstimatedAdRecallRate                   SourceFacebookMarketingInsightConfigValidEnums = "estimated_ad_recall_rate"
+	SourceFacebookMarketingInsightConfigValidEnumsEstimatedAdRecallRateLowerBound         SourceFacebookMarketingInsightConfigValidEnums = "estimated_ad_recall_rate_lower_bound"
+	SourceFacebookMarketingInsightConfigValidEnumsEstimatedAdRecallRateUpperBound         SourceFacebookMarketingInsightConfigValidEnums = "estimated_ad_recall_rate_upper_bound"
+	SourceFacebookMarketingInsightConfigValidEnumsEstimatedAdRecallers                    SourceFacebookMarketingInsightConfigValidEnums = "estimated_ad_recallers"
+	SourceFacebookMarketingInsightConfigValidEnumsEstimatedAdRecallersLowerBound          SourceFacebookMarketingInsightConfigValidEnums = "estimated_ad_recallers_lower_bound"
+	SourceFacebookMarketingInsightConfigValidEnumsEstimatedAdRecallersUpperBound          SourceFacebookMarketingInsightConfigValidEnums = "estimated_ad_recallers_upper_bound"
+	SourceFacebookMarketingInsightConfigValidEnumsFrequency                               SourceFacebookMarketingInsightConfigValidEnums = "frequency"
+	SourceFacebookMarketingInsightConfigValidEnumsFullViewImpressions                     SourceFacebookMarketingInsightConfigValidEnums = "full_view_impressions"
+	SourceFacebookMarketingInsightConfigValidEnumsFullViewReach                           SourceFacebookMarketingInsightConfigValidEnums = "full_view_reach"
+	SourceFacebookMarketingInsightConfigValidEnumsGenderTargeting                         SourceFacebookMarketingInsightConfigValidEnums = "gender_targeting"
+	SourceFacebookMarketingInsightConfigValidEnumsImpressions                             SourceFacebookMarketingInsightConfigValidEnums = "impressions"
+	SourceFacebookMarketingInsightConfigValidEnumsInlineLinkClickCtr                      SourceFacebookMarketingInsightConfigValidEnums = "inline_link_click_ctr"
+	SourceFacebookMarketingInsightConfigValidEnumsInlineLinkClicks                        SourceFacebookMarketingInsightConfigValidEnums = "inline_link_clicks"
+	SourceFacebookMarketingInsightConfigValidEnumsInlinePostEngagement                    SourceFacebookMarketingInsightConfigValidEnums = "inline_post_engagement"
+	SourceFacebookMarketingInsightConfigValidEnumsInstantExperienceClicksToOpen           SourceFacebookMarketingInsightConfigValidEnums = "instant_experience_clicks_to_open"
+	SourceFacebookMarketingInsightConfigValidEnumsInstantExperienceClicksToStart          SourceFacebookMarketingInsightConfigValidEnums = "instant_experience_clicks_to_start"
+	SourceFacebookMarketingInsightConfigValidEnumsInstantExperienceOutboundClicks         SourceFacebookMarketingInsightConfigValidEnums = "instant_experience_outbound_clicks"
+	SourceFacebookMarketingInsightConfigValidEnumsInteractiveComponentTap                 SourceFacebookMarketingInsightConfigValidEnums = "interactive_component_tap"
+	SourceFacebookMarketingInsightConfigValidEnumsLabels                                  SourceFacebookMarketingInsightConfigValidEnums = "labels"
+	SourceFacebookMarketingInsightConfigValidEnumsLocation                                SourceFacebookMarketingInsightConfigValidEnums = "location"
+	SourceFacebookMarketingInsightConfigValidEnumsMobileAppPurchaseRoas                   SourceFacebookMarketingInsightConfigValidEnums = "mobile_app_purchase_roas"
+	SourceFacebookMarketingInsightConfigValidEnumsObjective                               SourceFacebookMarketingInsightConfigValidEnums = "objective"
+	SourceFacebookMarketingInsightConfigValidEnumsOptimizationGoal                        SourceFacebookMarketingInsightConfigValidEnums = "optimization_goal"
+	SourceFacebookMarketingInsightConfigValidEnumsOutboundClicks                          SourceFacebookMarketingInsightConfigValidEnums = "outbound_clicks"
+	SourceFacebookMarketingInsightConfigValidEnumsOutboundClicksCtr                       SourceFacebookMarketingInsightConfigValidEnums = "outbound_clicks_ctr"
+	SourceFacebookMarketingInsightConfigValidEnumsPlacePageName                           SourceFacebookMarketingInsightConfigValidEnums = "place_page_name"
+	SourceFacebookMarketingInsightConfigValidEnumsPurchaseRoas                            SourceFacebookMarketingInsightConfigValidEnums = "purchase_roas"
+	SourceFacebookMarketingInsightConfigValidEnumsQualifyingQuestionQualifyAnswerRate     SourceFacebookMarketingInsightConfigValidEnums = "qualifying_question_qualify_answer_rate"
+	SourceFacebookMarketingInsightConfigValidEnumsQualityRanking                          SourceFacebookMarketingInsightConfigValidEnums = "quality_ranking"
+	SourceFacebookMarketingInsightConfigValidEnumsQualityScoreEctr                        SourceFacebookMarketingInsightConfigValidEnums = "quality_score_ectr"
+	SourceFacebookMarketingInsightConfigValidEnumsQualityScoreEcvr                        SourceFacebookMarketingInsightConfigValidEnums = "quality_score_ecvr"
+	SourceFacebookMarketingInsightConfigValidEnumsQualityScoreOrganic                     SourceFacebookMarketingInsightConfigValidEnums = "quality_score_organic"
+	SourceFacebookMarketingInsightConfigValidEnumsReach                                   SourceFacebookMarketingInsightConfigValidEnums = "reach"
+	SourceFacebookMarketingInsightConfigValidEnumsSocialSpend                             SourceFacebookMarketingInsightConfigValidEnums = "social_spend"
+	SourceFacebookMarketingInsightConfigValidEnumsSpend                                   SourceFacebookMarketingInsightConfigValidEnums = "spend"
+	SourceFacebookMarketingInsightConfigValidEnumsTotalPostbacks                          SourceFacebookMarketingInsightConfigValidEnums = "total_postbacks"
+	SourceFacebookMarketingInsightConfigValidEnumsTotalPostbacksDetailed                  SourceFacebookMarketingInsightConfigValidEnums = "total_postbacks_detailed"
+	SourceFacebookMarketingInsightConfigValidEnumsUniqueActions                           SourceFacebookMarketingInsightConfigValidEnums = "unique_actions"
+	SourceFacebookMarketingInsightConfigValidEnumsUniqueClicks                            SourceFacebookMarketingInsightConfigValidEnums = "unique_clicks"
+	SourceFacebookMarketingInsightConfigValidEnumsUniqueConversions                       SourceFacebookMarketingInsightConfigValidEnums = "unique_conversions"
+	SourceFacebookMarketingInsightConfigValidEnumsUniqueCtr                               SourceFacebookMarketingInsightConfigValidEnums = "unique_ctr"
+	SourceFacebookMarketingInsightConfigValidEnumsUniqueInlineLinkClickCtr                SourceFacebookMarketingInsightConfigValidEnums = "unique_inline_link_click_ctr"
+	SourceFacebookMarketingInsightConfigValidEnumsUniqueInlineLinkClicks                  SourceFacebookMarketingInsightConfigValidEnums = "unique_inline_link_clicks"
+	SourceFacebookMarketingInsightConfigValidEnumsUniqueLinkClicksCtr                     SourceFacebookMarketingInsightConfigValidEnums = "unique_link_clicks_ctr"
+	SourceFacebookMarketingInsightConfigValidEnumsUniqueOutboundClicks                    SourceFacebookMarketingInsightConfigValidEnums = "unique_outbound_clicks"
+	SourceFacebookMarketingInsightConfigValidEnumsUniqueOutboundClicksCtr                 SourceFacebookMarketingInsightConfigValidEnums = "unique_outbound_clicks_ctr"
+	SourceFacebookMarketingInsightConfigValidEnumsUniqueVideoContinuous2SecWatchedActions SourceFacebookMarketingInsightConfigValidEnums = "unique_video_continuous_2_sec_watched_actions"
+	SourceFacebookMarketingInsightConfigValidEnumsUniqueVideoView15Sec                    SourceFacebookMarketingInsightConfigValidEnums = "unique_video_view_15_sec"
+	SourceFacebookMarketingInsightConfigValidEnumsUpdatedTime                             SourceFacebookMarketingInsightConfigValidEnums = "updated_time"
+	SourceFacebookMarketingInsightConfigValidEnumsVideo15SecWatchedActions                SourceFacebookMarketingInsightConfigValidEnums = "video_15_sec_watched_actions"
+	SourceFacebookMarketingInsightConfigValidEnumsVideo30SecWatchedActions                SourceFacebookMarketingInsightConfigValidEnums = "video_30_sec_watched_actions"
+	SourceFacebookMarketingInsightConfigValidEnumsVideoAvgTimeWatchedActions              SourceFacebookMarketingInsightConfigValidEnums = "video_avg_time_watched_actions"
+	SourceFacebookMarketingInsightConfigValidEnumsVideoContinuous2SecWatchedActions       SourceFacebookMarketingInsightConfigValidEnums = "video_continuous_2_sec_watched_actions"
+	SourceFacebookMarketingInsightConfigValidEnumsVideoP100WatchedActions                 SourceFacebookMarketingInsightConfigValidEnums = "video_p100_watched_actions"
+	SourceFacebookMarketingInsightConfigValidEnumsVideoP25WatchedActions                  SourceFacebookMarketingInsightConfigValidEnums = "video_p25_watched_actions"
+	SourceFacebookMarketingInsightConfigValidEnumsVideoP50WatchedActions                  SourceFacebookMarketingInsightConfigValidEnums = "video_p50_watched_actions"
+	SourceFacebookMarketingInsightConfigValidEnumsVideoP75WatchedActions                  SourceFacebookMarketingInsightConfigValidEnums = "video_p75_watched_actions"
+	SourceFacebookMarketingInsightConfigValidEnumsVideoP95WatchedActions                  SourceFacebookMarketingInsightConfigValidEnums = "video_p95_watched_actions"
+	SourceFacebookMarketingInsightConfigValidEnumsVideoPlayActions                        SourceFacebookMarketingInsightConfigValidEnums = "video_play_actions"
+	SourceFacebookMarketingInsightConfigValidEnumsVideoPlayCurveActions                   SourceFacebookMarketingInsightConfigValidEnums = "video_play_curve_actions"
+	SourceFacebookMarketingInsightConfigValidEnumsVideoPlayRetention0To15sActions         SourceFacebookMarketingInsightConfigValidEnums = "video_play_retention_0_to_15s_actions"
+	SourceFacebookMarketingInsightConfigValidEnumsVideoPlayRetention20To60sActions        SourceFacebookMarketingInsightConfigValidEnums = "video_play_retention_20_to_60s_actions"
+	SourceFacebookMarketingInsightConfigValidEnumsVideoPlayRetentionGraphActions          SourceFacebookMarketingInsightConfigValidEnums = "video_play_retention_graph_actions"
+	SourceFacebookMarketingInsightConfigValidEnumsVideoThruplayWatchedActions             SourceFacebookMarketingInsightConfigValidEnums = "video_thruplay_watched_actions"
+	SourceFacebookMarketingInsightConfigValidEnumsVideoTimeWatchedActions                 SourceFacebookMarketingInsightConfigValidEnums = "video_time_watched_actions"
+	SourceFacebookMarketingInsightConfigValidEnumsWebsiteCtr                              SourceFacebookMarketingInsightConfigValidEnums = "website_ctr"
+	SourceFacebookMarketingInsightConfigValidEnumsWebsitePurchaseRoas                     SourceFacebookMarketingInsightConfigValidEnums = "website_purchase_roas"
+	SourceFacebookMarketingInsightConfigValidEnumsWishBid                                 SourceFacebookMarketingInsightConfigValidEnums = "wish_bid"
 )
 
-func (e SourceFacebookMarketingInsightConfigValidEnumsEnum) ToPointer() *SourceFacebookMarketingInsightConfigValidEnumsEnum {
+func (e SourceFacebookMarketingInsightConfigValidEnums) ToPointer() *SourceFacebookMarketingInsightConfigValidEnums {
 	return &e
 }
 
-func (e *SourceFacebookMarketingInsightConfigValidEnumsEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceFacebookMarketingInsightConfigValidEnums) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -577,28 +577,28 @@ func (e *SourceFacebookMarketingInsightConfigValidEnumsEnum) UnmarshalJSON(data 
 	case "website_purchase_roas":
 		fallthrough
 	case "wish_bid":
-		*e = SourceFacebookMarketingInsightConfigValidEnumsEnum(v)
+		*e = SourceFacebookMarketingInsightConfigValidEnums(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFacebookMarketingInsightConfigValidEnumsEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceFacebookMarketingInsightConfigValidEnums: %v", v)
 	}
 }
 
-// SourceFacebookMarketingInsightConfigLevelEnum - Chosen level for API
-type SourceFacebookMarketingInsightConfigLevelEnum string
+// SourceFacebookMarketingInsightConfigLevel - Chosen level for API
+type SourceFacebookMarketingInsightConfigLevel string
 
 const (
-	SourceFacebookMarketingInsightConfigLevelEnumAd       SourceFacebookMarketingInsightConfigLevelEnum = "ad"
-	SourceFacebookMarketingInsightConfigLevelEnumAdset    SourceFacebookMarketingInsightConfigLevelEnum = "adset"
-	SourceFacebookMarketingInsightConfigLevelEnumCampaign SourceFacebookMarketingInsightConfigLevelEnum = "campaign"
-	SourceFacebookMarketingInsightConfigLevelEnumAccount  SourceFacebookMarketingInsightConfigLevelEnum = "account"
+	SourceFacebookMarketingInsightConfigLevelAd       SourceFacebookMarketingInsightConfigLevel = "ad"
+	SourceFacebookMarketingInsightConfigLevelAdset    SourceFacebookMarketingInsightConfigLevel = "adset"
+	SourceFacebookMarketingInsightConfigLevelCampaign SourceFacebookMarketingInsightConfigLevel = "campaign"
+	SourceFacebookMarketingInsightConfigLevelAccount  SourceFacebookMarketingInsightConfigLevel = "account"
 )
 
-func (e SourceFacebookMarketingInsightConfigLevelEnum) ToPointer() *SourceFacebookMarketingInsightConfigLevelEnum {
+func (e SourceFacebookMarketingInsightConfigLevel) ToPointer() *SourceFacebookMarketingInsightConfigLevel {
 	return &e
 }
 
-func (e *SourceFacebookMarketingInsightConfigLevelEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceFacebookMarketingInsightConfigLevel) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -611,27 +611,27 @@ func (e *SourceFacebookMarketingInsightConfigLevelEnum) UnmarshalJSON(data []byt
 	case "campaign":
 		fallthrough
 	case "account":
-		*e = SourceFacebookMarketingInsightConfigLevelEnum(v)
+		*e = SourceFacebookMarketingInsightConfigLevel(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFacebookMarketingInsightConfigLevelEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceFacebookMarketingInsightConfigLevel: %v", v)
 	}
 }
 
 // SourceFacebookMarketingInsightConfig - Config for custom insights
 type SourceFacebookMarketingInsightConfig struct {
 	// A list of chosen action_breakdowns for action_breakdowns
-	ActionBreakdowns []SourceFacebookMarketingInsightConfigValidActionBreakdownsEnum `json:"action_breakdowns,omitempty"`
+	ActionBreakdowns []SourceFacebookMarketingInsightConfigValidActionBreakdowns `json:"action_breakdowns,omitempty"`
 	// A list of chosen breakdowns for breakdowns
-	Breakdowns []SourceFacebookMarketingInsightConfigValidBreakdownsEnum `json:"breakdowns,omitempty"`
+	Breakdowns []SourceFacebookMarketingInsightConfigValidBreakdowns `json:"breakdowns,omitempty"`
 	// The date until which you'd like to replicate data for this stream, in the format YYYY-MM-DDT00:00:00Z. All data generated between the start date and this end date will be replicated. Not setting this option will result in always syncing the latest data.
 	EndDate *time.Time `json:"end_date,omitempty"`
 	// A list of chosen fields for fields parameter
-	Fields []SourceFacebookMarketingInsightConfigValidEnumsEnum `json:"fields,omitempty"`
+	Fields []SourceFacebookMarketingInsightConfigValidEnums `json:"fields,omitempty"`
 	// The attribution window
 	InsightsLookbackWindow *int64 `json:"insights_lookback_window,omitempty"`
 	// Chosen level for API
-	Level *SourceFacebookMarketingInsightConfigLevelEnum `json:"level,omitempty"`
+	Level *SourceFacebookMarketingInsightConfigLevel `json:"level,omitempty"`
 	// The name value of insight
 	Name string `json:"name"`
 	// The date from which you'd like to replicate data for this stream, in the format YYYY-MM-DDT00:00:00Z.
@@ -640,27 +640,27 @@ type SourceFacebookMarketingInsightConfig struct {
 	TimeIncrement *int64 `json:"time_increment,omitempty"`
 }
 
-type SourceFacebookMarketingFacebookMarketingEnum string
+type SourceFacebookMarketingFacebookMarketing string
 
 const (
-	SourceFacebookMarketingFacebookMarketingEnumFacebookMarketing SourceFacebookMarketingFacebookMarketingEnum = "facebook-marketing"
+	SourceFacebookMarketingFacebookMarketingFacebookMarketing SourceFacebookMarketingFacebookMarketing = "facebook-marketing"
 )
 
-func (e SourceFacebookMarketingFacebookMarketingEnum) ToPointer() *SourceFacebookMarketingFacebookMarketingEnum {
+func (e SourceFacebookMarketingFacebookMarketing) ToPointer() *SourceFacebookMarketingFacebookMarketing {
 	return &e
 }
 
-func (e *SourceFacebookMarketingFacebookMarketingEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceFacebookMarketingFacebookMarketing) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "facebook-marketing":
-		*e = SourceFacebookMarketingFacebookMarketingEnum(v)
+		*e = SourceFacebookMarketingFacebookMarketing(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFacebookMarketingFacebookMarketingEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceFacebookMarketingFacebookMarketing: %v", v)
 	}
 }
 
@@ -684,8 +684,8 @@ type SourceFacebookMarketing struct {
 	// Maximum batch size used when sending batch requests to Facebook API. Most users do not need to set this field unless they specifically need to tune the connector to address specific issues or use cases.
 	MaxBatchSize *int64 `json:"max_batch_size,omitempty"`
 	// Page size used when sending requests to Facebook API to specify number of records per page when response has pagination. Most users do not need to set this field unless they specifically need to tune the connector to address specific issues or use cases.
-	PageSize   *int64                                       `json:"page_size,omitempty"`
-	SourceType SourceFacebookMarketingFacebookMarketingEnum `json:"sourceType"`
+	PageSize   *int64                                   `json:"page_size,omitempty"`
+	SourceType SourceFacebookMarketingFacebookMarketing `json:"sourceType"`
 	// The date from which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 	StartDate time.Time `json:"start_date"`
 }

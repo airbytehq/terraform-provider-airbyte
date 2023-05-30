@@ -4,11 +4,12 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationDatabendResourceModel) ToCreateSDKType() *shared.DestinationDatabendCreateRequest {
 	database := r.Configuration.Database.ValueString()
-	destinationType := shared.DestinationDatabendDatabendEnum(r.Configuration.DestinationType.ValueString())
+	destinationType := shared.DestinationDatabendDatabend(r.Configuration.DestinationType.ValueString())
 	host := r.Configuration.Host.ValueString()
 	password := new(string)
 	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
@@ -51,4 +52,11 @@ func (r *DestinationDatabendResourceModel) ToCreateSDKType() *shared.Destination
 func (r *DestinationDatabendResourceModel) ToDeleteSDKType() *shared.DestinationDatabendCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *DestinationDatabendResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

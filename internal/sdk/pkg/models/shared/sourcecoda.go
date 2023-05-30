@@ -7,32 +7,32 @@ import (
 	"fmt"
 )
 
-type SourceCodaCodaEnum string
+type SourceCodaCoda string
 
 const (
-	SourceCodaCodaEnumCoda SourceCodaCodaEnum = "coda"
+	SourceCodaCodaCoda SourceCodaCoda = "coda"
 )
 
-func (e SourceCodaCodaEnum) ToPointer() *SourceCodaCodaEnum {
+func (e SourceCodaCoda) ToPointer() *SourceCodaCoda {
 	return &e
 }
 
-func (e *SourceCodaCodaEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceCodaCoda) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "coda":
-		*e = SourceCodaCodaEnum(v)
+		*e = SourceCodaCoda(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceCodaCodaEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceCodaCoda: %v", v)
 	}
 }
 
 type SourceCoda struct {
 	// Bearer token
-	AuthToken  string             `json:"auth_token"`
-	SourceType SourceCodaCodaEnum `json:"sourceType"`
+	AuthToken  string         `json:"auth_token"`
+	SourceType SourceCodaCoda `json:"sourceType"`
 }

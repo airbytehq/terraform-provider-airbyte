@@ -10,64 +10,64 @@ import (
 	"time"
 )
 
-type SourceSalesloftCredentialsAuthenticateViaAPIKeyAuthTypeEnum string
+type SourceSalesloftCredentialsAuthenticateViaAPIKeyAuthType string
 
 const (
-	SourceSalesloftCredentialsAuthenticateViaAPIKeyAuthTypeEnumAPIKey SourceSalesloftCredentialsAuthenticateViaAPIKeyAuthTypeEnum = "api_key"
+	SourceSalesloftCredentialsAuthenticateViaAPIKeyAuthTypeAPIKey SourceSalesloftCredentialsAuthenticateViaAPIKeyAuthType = "api_key"
 )
 
-func (e SourceSalesloftCredentialsAuthenticateViaAPIKeyAuthTypeEnum) ToPointer() *SourceSalesloftCredentialsAuthenticateViaAPIKeyAuthTypeEnum {
+func (e SourceSalesloftCredentialsAuthenticateViaAPIKeyAuthType) ToPointer() *SourceSalesloftCredentialsAuthenticateViaAPIKeyAuthType {
 	return &e
 }
 
-func (e *SourceSalesloftCredentialsAuthenticateViaAPIKeyAuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceSalesloftCredentialsAuthenticateViaAPIKeyAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "api_key":
-		*e = SourceSalesloftCredentialsAuthenticateViaAPIKeyAuthTypeEnum(v)
+		*e = SourceSalesloftCredentialsAuthenticateViaAPIKeyAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSalesloftCredentialsAuthenticateViaAPIKeyAuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceSalesloftCredentialsAuthenticateViaAPIKeyAuthType: %v", v)
 	}
 }
 
 type SourceSalesloftCredentialsAuthenticateViaAPIKey struct {
 	// API Key for making authenticated requests. More instruction on how to find this value in our <a href="https://docs.airbyte.com/integrations/sources/salesloft#setup-guide">docs</a>
-	APIKey   string                                                      `json:"api_key"`
-	AuthType SourceSalesloftCredentialsAuthenticateViaAPIKeyAuthTypeEnum `json:"auth_type"`
+	APIKey   string                                                  `json:"api_key"`
+	AuthType SourceSalesloftCredentialsAuthenticateViaAPIKeyAuthType `json:"auth_type"`
 }
 
-type SourceSalesloftCredentialsAuthenticateViaOAuthAuthTypeEnum string
+type SourceSalesloftCredentialsAuthenticateViaOAuthAuthType string
 
 const (
-	SourceSalesloftCredentialsAuthenticateViaOAuthAuthTypeEnumOauth20 SourceSalesloftCredentialsAuthenticateViaOAuthAuthTypeEnum = "oauth2.0"
+	SourceSalesloftCredentialsAuthenticateViaOAuthAuthTypeOauth20 SourceSalesloftCredentialsAuthenticateViaOAuthAuthType = "oauth2.0"
 )
 
-func (e SourceSalesloftCredentialsAuthenticateViaOAuthAuthTypeEnum) ToPointer() *SourceSalesloftCredentialsAuthenticateViaOAuthAuthTypeEnum {
+func (e SourceSalesloftCredentialsAuthenticateViaOAuthAuthType) ToPointer() *SourceSalesloftCredentialsAuthenticateViaOAuthAuthType {
 	return &e
 }
 
-func (e *SourceSalesloftCredentialsAuthenticateViaOAuthAuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceSalesloftCredentialsAuthenticateViaOAuthAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "oauth2.0":
-		*e = SourceSalesloftCredentialsAuthenticateViaOAuthAuthTypeEnum(v)
+		*e = SourceSalesloftCredentialsAuthenticateViaOAuthAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSalesloftCredentialsAuthenticateViaOAuthAuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceSalesloftCredentialsAuthenticateViaOAuthAuthType: %v", v)
 	}
 }
 
 type SourceSalesloftCredentialsAuthenticateViaOAuth struct {
 	// Access Token for making authenticated requests.
-	AccessToken string                                                     `json:"access_token"`
-	AuthType    SourceSalesloftCredentialsAuthenticateViaOAuthAuthTypeEnum `json:"auth_type"`
+	AccessToken string                                                 `json:"access_token"`
+	AuthType    SourceSalesloftCredentialsAuthenticateViaOAuthAuthType `json:"auth_type"`
 	// The Client ID of your Salesloft developer application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your Salesloft developer application.
@@ -146,33 +146,33 @@ func (u SourceSalesloftCredentials) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-type SourceSalesloftSalesloftEnum string
+type SourceSalesloftSalesloft string
 
 const (
-	SourceSalesloftSalesloftEnumSalesloft SourceSalesloftSalesloftEnum = "salesloft"
+	SourceSalesloftSalesloftSalesloft SourceSalesloftSalesloft = "salesloft"
 )
 
-func (e SourceSalesloftSalesloftEnum) ToPointer() *SourceSalesloftSalesloftEnum {
+func (e SourceSalesloftSalesloft) ToPointer() *SourceSalesloftSalesloft {
 	return &e
 }
 
-func (e *SourceSalesloftSalesloftEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceSalesloftSalesloft) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "salesloft":
-		*e = SourceSalesloftSalesloftEnum(v)
+		*e = SourceSalesloftSalesloft(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSalesloftSalesloftEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceSalesloftSalesloft: %v", v)
 	}
 }
 
 type SourceSalesloft struct {
-	Credentials SourceSalesloftCredentials   `json:"credentials"`
-	SourceType  SourceSalesloftSalesloftEnum `json:"sourceType"`
+	Credentials SourceSalesloftCredentials `json:"credentials"`
+	SourceType  SourceSalesloftSalesloft   `json:"sourceType"`
 	// The date from which you'd like to replicate data for Salesloft API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 	StartDate time.Time `json:"start_date"`
 }

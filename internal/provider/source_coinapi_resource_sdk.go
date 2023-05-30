@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceCoinAPIResourceModel) ToCreateSDKType() *shared.SourceCoinAPICreateRequest {
@@ -14,7 +15,7 @@ func (r *SourceCoinAPIResourceModel) ToCreateSDKType() *shared.SourceCoinAPICrea
 	} else {
 		endDate = nil
 	}
-	environment := shared.SourceCoinAPIEnvironmentEnum(r.Configuration.Environment.ValueString())
+	environment := shared.SourceCoinAPIEnvironment(r.Configuration.Environment.ValueString())
 	limit := new(int64)
 	if !r.Configuration.Limit.IsUnknown() && !r.Configuration.Limit.IsNull() {
 		*limit = r.Configuration.Limit.ValueInt64()
@@ -22,7 +23,7 @@ func (r *SourceCoinAPIResourceModel) ToCreateSDKType() *shared.SourceCoinAPICrea
 		limit = nil
 	}
 	period := r.Configuration.Period.ValueString()
-	sourceType := shared.SourceCoinAPICoinAPIEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceCoinAPICoinAPI(r.Configuration.SourceType.ValueString())
 	startDate := r.Configuration.StartDate.ValueString()
 	symbolID := r.Configuration.SymbolID.ValueString()
 	configuration := shared.SourceCoinAPI{
@@ -55,4 +56,11 @@ func (r *SourceCoinAPIResourceModel) ToCreateSDKType() *shared.SourceCoinAPICrea
 func (r *SourceCoinAPIResourceModel) ToDeleteSDKType() *shared.SourceCoinAPICreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceCoinAPIResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

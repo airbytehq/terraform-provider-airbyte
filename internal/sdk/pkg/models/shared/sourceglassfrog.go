@@ -7,32 +7,32 @@ import (
 	"fmt"
 )
 
-type SourceGlassfrogGlassfrogEnum string
+type SourceGlassfrogGlassfrog string
 
 const (
-	SourceGlassfrogGlassfrogEnumGlassfrog SourceGlassfrogGlassfrogEnum = "glassfrog"
+	SourceGlassfrogGlassfrogGlassfrog SourceGlassfrogGlassfrog = "glassfrog"
 )
 
-func (e SourceGlassfrogGlassfrogEnum) ToPointer() *SourceGlassfrogGlassfrogEnum {
+func (e SourceGlassfrogGlassfrog) ToPointer() *SourceGlassfrogGlassfrog {
 	return &e
 }
 
-func (e *SourceGlassfrogGlassfrogEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceGlassfrogGlassfrog) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "glassfrog":
-		*e = SourceGlassfrogGlassfrogEnum(v)
+		*e = SourceGlassfrogGlassfrog(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGlassfrogGlassfrogEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceGlassfrogGlassfrog: %v", v)
 	}
 }
 
 type SourceGlassfrog struct {
 	// API key provided by Glassfrog
-	APIKey     string                       `json:"api_key"`
-	SourceType SourceGlassfrogGlassfrogEnum `json:"sourceType"`
+	APIKey     string                   `json:"api_key"`
+	SourceType SourceGlassfrogGlassfrog `json:"sourceType"`
 }

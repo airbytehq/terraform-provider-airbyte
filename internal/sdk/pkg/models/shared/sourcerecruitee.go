@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type SourceRecruiteeRecruiteeEnum string
+type SourceRecruiteeRecruitee string
 
 const (
-	SourceRecruiteeRecruiteeEnumRecruitee SourceRecruiteeRecruiteeEnum = "recruitee"
+	SourceRecruiteeRecruiteeRecruitee SourceRecruiteeRecruitee = "recruitee"
 )
 
-func (e SourceRecruiteeRecruiteeEnum) ToPointer() *SourceRecruiteeRecruiteeEnum {
+func (e SourceRecruiteeRecruitee) ToPointer() *SourceRecruiteeRecruitee {
 	return &e
 }
 
-func (e *SourceRecruiteeRecruiteeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceRecruiteeRecruitee) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "recruitee":
-		*e = SourceRecruiteeRecruiteeEnum(v)
+		*e = SourceRecruiteeRecruitee(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceRecruiteeRecruiteeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceRecruiteeRecruitee: %v", v)
 	}
 }
 
@@ -35,6 +35,6 @@ type SourceRecruitee struct {
 	// Recruitee API Key. See <a href="https://docs.recruitee.com/reference/getting-started#generate-api-token">here</a>.
 	APIKey string `json:"api_key"`
 	// Recruitee Company ID. You can also find this ID on the <a href="https://app.recruitee.com/#/settings/api_tokens">Recruitee API tokens page</a>.
-	CompanyID  int64                        `json:"company_id"`
-	SourceType SourceRecruiteeRecruiteeEnum `json:"sourceType"`
+	CompanyID  int64                    `json:"company_id"`
+	SourceType SourceRecruiteeRecruitee `json:"sourceType"`
 }

@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type DestinationCumulioCumulioEnum string
+type DestinationCumulioCumulio string
 
 const (
-	DestinationCumulioCumulioEnumCumulio DestinationCumulioCumulioEnum = "cumulio"
+	DestinationCumulioCumulioCumulio DestinationCumulioCumulio = "cumulio"
 )
 
-func (e DestinationCumulioCumulioEnum) ToPointer() *DestinationCumulioCumulioEnum {
+func (e DestinationCumulioCumulio) ToPointer() *DestinationCumulioCumulio {
 	return &e
 }
 
-func (e *DestinationCumulioCumulioEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationCumulioCumulio) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "cumulio":
-		*e = DestinationCumulioCumulioEnum(v)
+		*e = DestinationCumulioCumulio(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationCumulioCumulioEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationCumulioCumulio: %v", v)
 	}
 }
 
@@ -37,6 +37,6 @@ type DestinationCumulio struct {
 	// An API key generated in Cumul.io's platform (can be generated here: https://app.cumul.io/start/profile/integration).
 	APIKey string `json:"api_key"`
 	// The corresponding API token generated in Cumul.io's platform (can be generated here: https://app.cumul.io/start/profile/integration).
-	APIToken        string                        `json:"api_token"`
-	DestinationType DestinationCumulioCumulioEnum `json:"destinationType"`
+	APIToken        string                    `json:"api_token"`
+	DestinationType DestinationCumulioCumulio `json:"destinationType"`
 }

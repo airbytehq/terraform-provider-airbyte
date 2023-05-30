@@ -10,62 +10,62 @@ import (
 	"fmt"
 )
 
-type SourceLinkedinAdsAuthenticationAccessTokenAuthMethodEnum string
+type SourceLinkedinAdsAuthenticationAccessTokenAuthMethod string
 
 const (
-	SourceLinkedinAdsAuthenticationAccessTokenAuthMethodEnumAccessToken SourceLinkedinAdsAuthenticationAccessTokenAuthMethodEnum = "access_token"
+	SourceLinkedinAdsAuthenticationAccessTokenAuthMethodAccessToken SourceLinkedinAdsAuthenticationAccessTokenAuthMethod = "access_token"
 )
 
-func (e SourceLinkedinAdsAuthenticationAccessTokenAuthMethodEnum) ToPointer() *SourceLinkedinAdsAuthenticationAccessTokenAuthMethodEnum {
+func (e SourceLinkedinAdsAuthenticationAccessTokenAuthMethod) ToPointer() *SourceLinkedinAdsAuthenticationAccessTokenAuthMethod {
 	return &e
 }
 
-func (e *SourceLinkedinAdsAuthenticationAccessTokenAuthMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceLinkedinAdsAuthenticationAccessTokenAuthMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "access_token":
-		*e = SourceLinkedinAdsAuthenticationAccessTokenAuthMethodEnum(v)
+		*e = SourceLinkedinAdsAuthenticationAccessTokenAuthMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceLinkedinAdsAuthenticationAccessTokenAuthMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceLinkedinAdsAuthenticationAccessTokenAuthMethod: %v", v)
 	}
 }
 
 type SourceLinkedinAdsAuthenticationAccessToken struct {
 	// The token value generated using the authentication code. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-ads#authentication">docs</a> to obtain yours.
-	AccessToken string                                                    `json:"access_token"`
-	AuthMethod  *SourceLinkedinAdsAuthenticationAccessTokenAuthMethodEnum `json:"auth_method,omitempty"`
+	AccessToken string                                                `json:"access_token"`
+	AuthMethod  *SourceLinkedinAdsAuthenticationAccessTokenAuthMethod `json:"auth_method,omitempty"`
 }
 
-type SourceLinkedinAdsAuthenticationOAuth20AuthMethodEnum string
+type SourceLinkedinAdsAuthenticationOAuth20AuthMethod string
 
 const (
-	SourceLinkedinAdsAuthenticationOAuth20AuthMethodEnumOAuth20 SourceLinkedinAdsAuthenticationOAuth20AuthMethodEnum = "oAuth2.0"
+	SourceLinkedinAdsAuthenticationOAuth20AuthMethodOAuth20 SourceLinkedinAdsAuthenticationOAuth20AuthMethod = "oAuth2.0"
 )
 
-func (e SourceLinkedinAdsAuthenticationOAuth20AuthMethodEnum) ToPointer() *SourceLinkedinAdsAuthenticationOAuth20AuthMethodEnum {
+func (e SourceLinkedinAdsAuthenticationOAuth20AuthMethod) ToPointer() *SourceLinkedinAdsAuthenticationOAuth20AuthMethod {
 	return &e
 }
 
-func (e *SourceLinkedinAdsAuthenticationOAuth20AuthMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceLinkedinAdsAuthenticationOAuth20AuthMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "oAuth2.0":
-		*e = SourceLinkedinAdsAuthenticationOAuth20AuthMethodEnum(v)
+		*e = SourceLinkedinAdsAuthenticationOAuth20AuthMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceLinkedinAdsAuthenticationOAuth20AuthMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceLinkedinAdsAuthenticationOAuth20AuthMethod: %v", v)
 	}
 }
 
 type SourceLinkedinAdsAuthenticationOAuth20 struct {
-	AuthMethod *SourceLinkedinAdsAuthenticationOAuth20AuthMethodEnum `json:"auth_method,omitempty"`
+	AuthMethod *SourceLinkedinAdsAuthenticationOAuth20AuthMethod `json:"auth_method,omitempty"`
 	// The client ID of the LinkedIn Ads developer application.
 	ClientID string `json:"client_id"`
 	// The client secret the LinkedIn Ads developer application.
@@ -142,27 +142,27 @@ func (u SourceLinkedinAdsAuthentication) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-type SourceLinkedinAdsLinkedinAdsEnum string
+type SourceLinkedinAdsLinkedinAds string
 
 const (
-	SourceLinkedinAdsLinkedinAdsEnumLinkedinAds SourceLinkedinAdsLinkedinAdsEnum = "linkedin-ads"
+	SourceLinkedinAdsLinkedinAdsLinkedinAds SourceLinkedinAdsLinkedinAds = "linkedin-ads"
 )
 
-func (e SourceLinkedinAdsLinkedinAdsEnum) ToPointer() *SourceLinkedinAdsLinkedinAdsEnum {
+func (e SourceLinkedinAdsLinkedinAds) ToPointer() *SourceLinkedinAdsLinkedinAds {
 	return &e
 }
 
-func (e *SourceLinkedinAdsLinkedinAdsEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceLinkedinAdsLinkedinAds) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "linkedin-ads":
-		*e = SourceLinkedinAdsLinkedinAdsEnum(v)
+		*e = SourceLinkedinAdsLinkedinAds(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceLinkedinAdsLinkedinAdsEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceLinkedinAdsLinkedinAds: %v", v)
 	}
 }
 
@@ -170,7 +170,7 @@ type SourceLinkedinAds struct {
 	// Specify the account IDs separated by a space, to pull the data from. Leave empty, if you want to pull the data from all associated accounts. See the <a href="https://www.linkedin.com/help/linkedin/answer/a424270/find-linkedin-ads-account-details?lang=en">LinkedIn Ads docs</a> for more info.
 	AccountIds  []int64                          `json:"account_ids,omitempty"`
 	Credentials *SourceLinkedinAdsAuthentication `json:"credentials,omitempty"`
-	SourceType  SourceLinkedinAdsLinkedinAdsEnum `json:"sourceType"`
+	SourceType  SourceLinkedinAdsLinkedinAds     `json:"sourceType"`
 	// UTC date in the format 2020-09-17. Any data before this date will not be replicated.
 	StartDate types.Date `json:"start_date"`
 }

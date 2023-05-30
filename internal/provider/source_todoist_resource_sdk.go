@@ -4,10 +4,11 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceTodoistResourceModel) ToCreateSDKType() *shared.SourceTodoistCreateRequest {
-	sourceType := shared.SourceTodoistTodoistEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceTodoistTodoist(r.Configuration.SourceType.ValueString())
 	token := r.Configuration.Token.ValueString()
 	configuration := shared.SourceTodoist{
 		SourceType: sourceType,
@@ -33,4 +34,11 @@ func (r *SourceTodoistResourceModel) ToCreateSDKType() *shared.SourceTodoistCrea
 func (r *SourceTodoistResourceModel) ToDeleteSDKType() *shared.SourceTodoistCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceTodoistResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

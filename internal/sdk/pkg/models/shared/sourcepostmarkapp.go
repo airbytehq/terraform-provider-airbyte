@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type SourcePostmarkappPostmarkappEnum string
+type SourcePostmarkappPostmarkapp string
 
 const (
-	SourcePostmarkappPostmarkappEnumPostmarkapp SourcePostmarkappPostmarkappEnum = "postmarkapp"
+	SourcePostmarkappPostmarkappPostmarkapp SourcePostmarkappPostmarkapp = "postmarkapp"
 )
 
-func (e SourcePostmarkappPostmarkappEnum) ToPointer() *SourcePostmarkappPostmarkappEnum {
+func (e SourcePostmarkappPostmarkapp) ToPointer() *SourcePostmarkappPostmarkapp {
 	return &e
 }
 
-func (e *SourcePostmarkappPostmarkappEnum) UnmarshalJSON(data []byte) error {
+func (e *SourcePostmarkappPostmarkapp) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "postmarkapp":
-		*e = SourcePostmarkappPostmarkappEnum(v)
+		*e = SourcePostmarkappPostmarkapp(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostmarkappPostmarkappEnum: %v", v)
+		return fmt.Errorf("invalid value for SourcePostmarkappPostmarkapp: %v", v)
 	}
 }
 
@@ -35,6 +35,6 @@ type SourcePostmarkapp struct {
 	// API Key for account
 	XPostmarkAccountToken string `json:"X-Postmark-Account-Token"`
 	// API Key for server
-	XPostmarkServerToken string                           `json:"X-Postmark-Server-Token"`
-	SourceType           SourcePostmarkappPostmarkappEnum `json:"sourceType"`
+	XPostmarkServerToken string                       `json:"X-Postmark-Server-Token"`
+	SourceType           SourcePostmarkappPostmarkapp `json:"sourceType"`
 }

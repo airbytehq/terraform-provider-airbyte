@@ -7,32 +7,32 @@ import (
 	"fmt"
 )
 
-type SourceLaunchdarklyLaunchdarklyEnum string
+type SourceLaunchdarklyLaunchdarkly string
 
 const (
-	SourceLaunchdarklyLaunchdarklyEnumLaunchdarkly SourceLaunchdarklyLaunchdarklyEnum = "launchdarkly"
+	SourceLaunchdarklyLaunchdarklyLaunchdarkly SourceLaunchdarklyLaunchdarkly = "launchdarkly"
 )
 
-func (e SourceLaunchdarklyLaunchdarklyEnum) ToPointer() *SourceLaunchdarklyLaunchdarklyEnum {
+func (e SourceLaunchdarklyLaunchdarkly) ToPointer() *SourceLaunchdarklyLaunchdarkly {
 	return &e
 }
 
-func (e *SourceLaunchdarklyLaunchdarklyEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceLaunchdarklyLaunchdarkly) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "launchdarkly":
-		*e = SourceLaunchdarklyLaunchdarklyEnum(v)
+		*e = SourceLaunchdarklyLaunchdarkly(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceLaunchdarklyLaunchdarklyEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceLaunchdarklyLaunchdarkly: %v", v)
 	}
 }
 
 type SourceLaunchdarkly struct {
 	// Your Access token. See <a href="https://apidocs.launchdarkly.com/#section/Overview/Authentication">here</a>.
-	AccessToken string                             `json:"access_token"`
-	SourceType  SourceLaunchdarklyLaunchdarklyEnum `json:"sourceType"`
+	AccessToken string                         `json:"access_token"`
+	SourceType  SourceLaunchdarklyLaunchdarkly `json:"sourceType"`
 }

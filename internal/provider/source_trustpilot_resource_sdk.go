@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
@@ -16,9 +17,9 @@ func (r *SourceTrustpilotResourceModel) ToCreateSDKType() *shared.SourceTrustpil
 	var sourceTrustpilotAuthorizationMethodOAuth20 *shared.SourceTrustpilotAuthorizationMethodOAuth20
 	if r.Configuration.Credentials.SourceTrustpilotAuthorizationMethodOAuth20 != nil {
 		accessToken := r.Configuration.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.AccessToken.ValueString()
-		authType := new(shared.SourceTrustpilotAuthorizationMethodOAuth20AuthTypeEnum)
+		authType := new(shared.SourceTrustpilotAuthorizationMethodOAuth20AuthType)
 		if !r.Configuration.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.AuthType.IsNull() {
-			*authType = shared.SourceTrustpilotAuthorizationMethodOAuth20AuthTypeEnum(r.Configuration.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.AuthType.ValueString())
+			*authType = shared.SourceTrustpilotAuthorizationMethodOAuth20AuthType(r.Configuration.Credentials.SourceTrustpilotAuthorizationMethodOAuth20.AuthType.ValueString())
 		} else {
 			authType = nil
 		}
@@ -42,9 +43,9 @@ func (r *SourceTrustpilotResourceModel) ToCreateSDKType() *shared.SourceTrustpil
 	}
 	var sourceTrustpilotAuthorizationMethodAPIKey *shared.SourceTrustpilotAuthorizationMethodAPIKey
 	if r.Configuration.Credentials.SourceTrustpilotAuthorizationMethodAPIKey != nil {
-		authType1 := new(shared.SourceTrustpilotAuthorizationMethodAPIKeyAuthTypeEnum)
+		authType1 := new(shared.SourceTrustpilotAuthorizationMethodAPIKeyAuthType)
 		if !r.Configuration.Credentials.SourceTrustpilotAuthorizationMethodAPIKey.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceTrustpilotAuthorizationMethodAPIKey.AuthType.IsNull() {
-			*authType1 = shared.SourceTrustpilotAuthorizationMethodAPIKeyAuthTypeEnum(r.Configuration.Credentials.SourceTrustpilotAuthorizationMethodAPIKey.AuthType.ValueString())
+			*authType1 = shared.SourceTrustpilotAuthorizationMethodAPIKeyAuthType(r.Configuration.Credentials.SourceTrustpilotAuthorizationMethodAPIKey.AuthType.ValueString())
 		} else {
 			authType1 = nil
 		}
@@ -59,7 +60,7 @@ func (r *SourceTrustpilotResourceModel) ToCreateSDKType() *shared.SourceTrustpil
 			SourceTrustpilotAuthorizationMethodAPIKey: sourceTrustpilotAuthorizationMethodAPIKey,
 		}
 	}
-	sourceType := shared.SourceTrustpilotTrustpilotEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceTrustpilotTrustpilot(r.Configuration.SourceType.ValueString())
 	startDate := r.Configuration.StartDate.ValueString()
 	configuration := shared.SourceTrustpilot{
 		BusinessUnits: businessUnits,
@@ -87,4 +88,11 @@ func (r *SourceTrustpilotResourceModel) ToCreateSDKType() *shared.SourceTrustpil
 func (r *SourceTrustpilotResourceModel) ToDeleteSDKType() *shared.SourceTrustpilotCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceTrustpilotResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

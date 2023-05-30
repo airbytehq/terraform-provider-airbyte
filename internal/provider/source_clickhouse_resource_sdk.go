@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceClickhouseResourceModel) ToCreateSDKType() *shared.SourceClickhouseCreateRequest {
@@ -16,11 +17,11 @@ func (r *SourceClickhouseResourceModel) ToCreateSDKType() *shared.SourceClickhou
 		password = nil
 	}
 	port := r.Configuration.Port.ValueInt64()
-	sourceType := shared.SourceClickhouseClickhouseEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceClickhouseClickhouse(r.Configuration.SourceType.ValueString())
 	var tunnelMethod *shared.SourceClickhouseSSHTunnelMethod
 	var sourceClickhouseSSHTunnelMethodNoTunnel *shared.SourceClickhouseSSHTunnelMethodNoTunnel
 	if r.Configuration.TunnelMethod.SourceClickhouseSSHTunnelMethodNoTunnel != nil {
-		tunnelMethod1 := shared.SourceClickhouseSSHTunnelMethodNoTunnelTunnelMethodEnum(r.Configuration.TunnelMethod.SourceClickhouseSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
+		tunnelMethod1 := shared.SourceClickhouseSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.SourceClickhouseSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
 		sourceClickhouseSSHTunnelMethodNoTunnel = &shared.SourceClickhouseSSHTunnelMethodNoTunnel{
 			TunnelMethod: tunnelMethod1,
 		}
@@ -34,7 +35,7 @@ func (r *SourceClickhouseResourceModel) ToCreateSDKType() *shared.SourceClickhou
 	if r.Configuration.TunnelMethod.SourceClickhouseSSHTunnelMethodSSHKeyAuthentication != nil {
 		sshKey := r.Configuration.TunnelMethod.SourceClickhouseSSHTunnelMethodSSHKeyAuthentication.SSHKey.ValueString()
 		tunnelHost := r.Configuration.TunnelMethod.SourceClickhouseSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
-		tunnelMethod2 := shared.SourceClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(r.Configuration.TunnelMethod.SourceClickhouseSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
+		tunnelMethod2 := shared.SourceClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.SourceClickhouseSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
 		tunnelPort := r.Configuration.TunnelMethod.SourceClickhouseSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
 		tunnelUser := r.Configuration.TunnelMethod.SourceClickhouseSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
 		sourceClickhouseSSHTunnelMethodSSHKeyAuthentication = &shared.SourceClickhouseSSHTunnelMethodSSHKeyAuthentication{
@@ -53,7 +54,7 @@ func (r *SourceClickhouseResourceModel) ToCreateSDKType() *shared.SourceClickhou
 	var sourceClickhouseSSHTunnelMethodPasswordAuthentication *shared.SourceClickhouseSSHTunnelMethodPasswordAuthentication
 	if r.Configuration.TunnelMethod.SourceClickhouseSSHTunnelMethodPasswordAuthentication != nil {
 		tunnelHost1 := r.Configuration.TunnelMethod.SourceClickhouseSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
-		tunnelMethod3 := shared.SourceClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(r.Configuration.TunnelMethod.SourceClickhouseSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
+		tunnelMethod3 := shared.SourceClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.SourceClickhouseSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
 		tunnelPort1 := r.Configuration.TunnelMethod.SourceClickhouseSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
 		tunnelUser1 := r.Configuration.TunnelMethod.SourceClickhouseSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
 		tunnelUserPassword := r.Configuration.TunnelMethod.SourceClickhouseSSHTunnelMethodPasswordAuthentication.TunnelUserPassword.ValueString()
@@ -100,4 +101,11 @@ func (r *SourceClickhouseResourceModel) ToCreateSDKType() *shared.SourceClickhou
 func (r *SourceClickhouseResourceModel) ToDeleteSDKType() *shared.SourceClickhouseCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceClickhouseResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

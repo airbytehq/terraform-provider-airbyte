@@ -5,25 +5,26 @@ package provider
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	customTypes "airbyte/internal/sdk/pkg/types"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceNytimesResourceModel) ToCreateSDKType() *shared.SourceNytimesCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	endDate := new(customTypes.Date)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
-		*endDate, _ = customTypes.NewDate(r.Configuration.EndDate.ValueString())
+		endDate = customTypes.MustNewDateFromString(r.Configuration.EndDate.ValueString())
 	} else {
 		endDate = nil
 	}
-	period := shared.SourceNytimesPeriodUsedForMostPopularStreamsEnum(r.Configuration.Period.ValueInt64())
-	shareType := new(shared.SourceNytimesShareTypeUsedForMostPopularSharedStreamEnum)
+	period := shared.SourceNytimesPeriodUsedForMostPopularStreams(r.Configuration.Period.ValueInt64())
+	shareType := new(shared.SourceNytimesShareTypeUsedForMostPopularSharedStream)
 	if !r.Configuration.ShareType.IsUnknown() && !r.Configuration.ShareType.IsNull() {
-		*shareType = shared.SourceNytimesShareTypeUsedForMostPopularSharedStreamEnum(r.Configuration.ShareType.ValueString())
+		*shareType = shared.SourceNytimesShareTypeUsedForMostPopularSharedStream(r.Configuration.ShareType.ValueString())
 	} else {
 		shareType = nil
 	}
-	sourceType := shared.SourceNytimesNytimesEnum(r.Configuration.SourceType.ValueString())
-	startDate, _ := customTypes.NewDate(r.Configuration.StartDate.ValueString())
+	sourceType := shared.SourceNytimesNytimes(r.Configuration.SourceType.ValueString())
+	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceNytimes{
 		APIKey:     apiKey,
 		EndDate:    endDate,
@@ -52,4 +53,11 @@ func (r *SourceNytimesResourceModel) ToCreateSDKType() *shared.SourceNytimesCrea
 func (r *SourceNytimesResourceModel) ToDeleteSDKType() *shared.SourceNytimesCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceNytimesResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

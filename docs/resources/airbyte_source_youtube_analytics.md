@@ -49,6 +49,6 @@ Required:
 
 Optional:
 
-- `additional_properties` (Map of String)
+- `additional_properties` (String) Parsed as JSON.
 
 

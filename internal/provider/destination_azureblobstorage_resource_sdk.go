@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationAzureBlobStorageResourceModel) ToCreateSDKType() *shared.DestinationAzureBlobStorageCreateRequest {
@@ -33,12 +34,12 @@ func (r *DestinationAzureBlobStorageResourceModel) ToCreateSDKType() *shared.Des
 	} else {
 		azureBlobStorageSpillSize = nil
 	}
-	destinationType := shared.DestinationAzureBlobStorageAzureBlobStorageEnum(r.Configuration.DestinationType.ValueString())
+	destinationType := shared.DestinationAzureBlobStorageAzureBlobStorage(r.Configuration.DestinationType.ValueString())
 	var format shared.DestinationAzureBlobStorageOutputFormat
 	var destinationAzureBlobStorageOutputFormatCSVCommaSeparatedValues *shared.DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValues
 	if r.Configuration.Format.DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValues != nil {
-		flattening := shared.DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValuesNormalizationFlatteningEnum(r.Configuration.Format.DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValues.Flattening.ValueString())
-		formatType := shared.DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValuesFormatTypeEnum(r.Configuration.Format.DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValues.FormatType.ValueString())
+		flattening := shared.DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValuesNormalizationFlattening(r.Configuration.Format.DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValues.Flattening.ValueString())
+		formatType := shared.DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValuesFormatType(r.Configuration.Format.DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValues.FormatType.ValueString())
 		destinationAzureBlobStorageOutputFormatCSVCommaSeparatedValues = &shared.DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValues{
 			Flattening: flattening,
 			FormatType: formatType,
@@ -51,7 +52,7 @@ func (r *DestinationAzureBlobStorageResourceModel) ToCreateSDKType() *shared.Des
 	}
 	var destinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON *shared.DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON
 	if r.Configuration.Format.DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON != nil {
-		formatType1 := shared.DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum(r.Configuration.Format.DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON.FormatType.ValueString())
+		formatType1 := shared.DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSONFormatType(r.Configuration.Format.DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON.FormatType.ValueString())
 		destinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON = &shared.DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON{
 			FormatType: formatType1,
 		}
@@ -84,4 +85,11 @@ func (r *DestinationAzureBlobStorageResourceModel) ToCreateSDKType() *shared.Des
 func (r *DestinationAzureBlobStorageResourceModel) ToDeleteSDKType() *shared.DestinationAzureBlobStorageCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *DestinationAzureBlobStorageResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

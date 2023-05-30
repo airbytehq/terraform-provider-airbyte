@@ -4,13 +4,14 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceSmailyResourceModel) ToCreateSDKType() *shared.SourceSmailyCreateRequest {
 	apiPassword := r.Configuration.APIPassword.ValueString()
 	apiSubdomain := r.Configuration.APISubdomain.ValueString()
 	apiUsername := r.Configuration.APIUsername.ValueString()
-	sourceType := shared.SourceSmailySmailyEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceSmailySmaily(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceSmaily{
 		APIPassword:  apiPassword,
 		APISubdomain: apiSubdomain,
@@ -37,4 +38,11 @@ func (r *SourceSmailyResourceModel) ToCreateSDKType() *shared.SourceSmailyCreate
 func (r *SourceSmailyResourceModel) ToDeleteSDKType() *shared.SourceSmailyCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceSmailyResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

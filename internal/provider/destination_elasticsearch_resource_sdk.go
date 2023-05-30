@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationElasticsearchResourceModel) ToCreateSDKType() *shared.DestinationElasticsearchCreateRequest {
@@ -12,7 +13,7 @@ func (r *DestinationElasticsearchResourceModel) ToCreateSDKType() *shared.Destin
 	if r.Configuration.AuthenticationMethod.DestinationElasticsearchAuthenticationMethodAPIKeySecret != nil {
 		apiKeyID := r.Configuration.AuthenticationMethod.DestinationElasticsearchAuthenticationMethodAPIKeySecret.APIKeyID.ValueString()
 		apiKeySecret := r.Configuration.AuthenticationMethod.DestinationElasticsearchAuthenticationMethodAPIKeySecret.APIKeySecret.ValueString()
-		method := shared.DestinationElasticsearchAuthenticationMethodAPIKeySecretMethodEnum(r.Configuration.AuthenticationMethod.DestinationElasticsearchAuthenticationMethodAPIKeySecret.Method.ValueString())
+		method := shared.DestinationElasticsearchAuthenticationMethodAPIKeySecretMethod(r.Configuration.AuthenticationMethod.DestinationElasticsearchAuthenticationMethodAPIKeySecret.Method.ValueString())
 		destinationElasticsearchAuthenticationMethodAPIKeySecret = &shared.DestinationElasticsearchAuthenticationMethodAPIKeySecret{
 			APIKeyID:     apiKeyID,
 			APIKeySecret: apiKeySecret,
@@ -26,7 +27,7 @@ func (r *DestinationElasticsearchResourceModel) ToCreateSDKType() *shared.Destin
 	}
 	var destinationElasticsearchAuthenticationMethodUsernamePassword *shared.DestinationElasticsearchAuthenticationMethodUsernamePassword
 	if r.Configuration.AuthenticationMethod.DestinationElasticsearchAuthenticationMethodUsernamePassword != nil {
-		method1 := shared.DestinationElasticsearchAuthenticationMethodUsernamePasswordMethodEnum(r.Configuration.AuthenticationMethod.DestinationElasticsearchAuthenticationMethodUsernamePassword.Method.ValueString())
+		method1 := shared.DestinationElasticsearchAuthenticationMethodUsernamePasswordMethod(r.Configuration.AuthenticationMethod.DestinationElasticsearchAuthenticationMethodUsernamePassword.Method.ValueString())
 		password := r.Configuration.AuthenticationMethod.DestinationElasticsearchAuthenticationMethodUsernamePassword.Password.ValueString()
 		username := r.Configuration.AuthenticationMethod.DestinationElasticsearchAuthenticationMethodUsernamePassword.Username.ValueString()
 		destinationElasticsearchAuthenticationMethodUsernamePassword = &shared.DestinationElasticsearchAuthenticationMethodUsernamePassword{
@@ -46,7 +47,7 @@ func (r *DestinationElasticsearchResourceModel) ToCreateSDKType() *shared.Destin
 	} else {
 		caCertificate = nil
 	}
-	destinationType := shared.DestinationElasticsearchElasticsearchEnum(r.Configuration.DestinationType.ValueString())
+	destinationType := shared.DestinationElasticsearchElasticsearch(r.Configuration.DestinationType.ValueString())
 	endpoint := r.Configuration.Endpoint.ValueString()
 	upsert := new(bool)
 	if !r.Configuration.Upsert.IsUnknown() && !r.Configuration.Upsert.IsNull() {
@@ -74,4 +75,11 @@ func (r *DestinationElasticsearchResourceModel) ToCreateSDKType() *shared.Destin
 func (r *DestinationElasticsearchResourceModel) ToDeleteSDKType() *shared.DestinationElasticsearchCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *DestinationElasticsearchResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationPulsarResourceModel) ToCreateSDKType() *shared.DestinationPulsarCreateRequest {
@@ -12,8 +13,8 @@ func (r *DestinationPulsarResourceModel) ToCreateSDKType() *shared.DestinationPu
 	batchingMaxPublishDelay := r.Configuration.BatchingMaxPublishDelay.ValueInt64()
 	blockIfQueueFull := r.Configuration.BlockIfQueueFull.ValueBool()
 	brokers := r.Configuration.Brokers.ValueString()
-	compressionType := shared.DestinationPulsarCompressionTypeEnum(r.Configuration.CompressionType.ValueString())
-	destinationType := shared.DestinationPulsarPulsarEnum(r.Configuration.DestinationType.ValueString())
+	compressionType := shared.DestinationPulsarCompressionType(r.Configuration.CompressionType.ValueString())
+	destinationType := shared.DestinationPulsarPulsar(r.Configuration.DestinationType.ValueString())
 	maxPendingMessages := r.Configuration.MaxPendingMessages.ValueInt64()
 	maxPendingMessagesAcrossPartitions := r.Configuration.MaxPendingMessagesAcrossPartitions.ValueInt64()
 	producerName := new(string)
@@ -38,7 +39,7 @@ func (r *DestinationPulsarResourceModel) ToCreateSDKType() *shared.DestinationPu
 	} else {
 		topicTest = nil
 	}
-	topicType := shared.DestinationPulsarTopicTypeEnum(r.Configuration.TopicType.ValueString())
+	topicType := shared.DestinationPulsarTopicType(r.Configuration.TopicType.ValueString())
 	useTLS := r.Configuration.UseTLS.ValueBool()
 	configuration := shared.DestinationPulsar{
 		BatchingEnabled:                    batchingEnabled,
@@ -73,4 +74,11 @@ func (r *DestinationPulsarResourceModel) ToCreateSDKType() *shared.DestinationPu
 func (r *DestinationPulsarResourceModel) ToDeleteSDKType() *shared.DestinationPulsarCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *DestinationPulsarResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

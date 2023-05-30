@@ -5,12 +5,13 @@ package provider
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	customTypes "airbyte/internal/sdk/pkg/types"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceBingAdsResourceModel) ToCreateSDKType() *shared.SourceBingAdsCreateRequest {
-	authMethod := new(shared.SourceBingAdsAuthMethodEnum)
+	authMethod := new(shared.SourceBingAdsAuthMethod)
 	if !r.Configuration.AuthMethod.IsUnknown() && !r.Configuration.AuthMethod.IsNull() {
-		*authMethod = shared.SourceBingAdsAuthMethodEnum(r.Configuration.AuthMethod.ValueString())
+		*authMethod = shared.SourceBingAdsAuthMethod(r.Configuration.AuthMethod.ValueString())
 	} else {
 		authMethod = nil
 	}
@@ -29,8 +30,8 @@ func (r *SourceBingAdsResourceModel) ToCreateSDKType() *shared.SourceBingAdsCrea
 		lookbackWindow = nil
 	}
 	refreshToken := r.Configuration.RefreshToken.ValueString()
-	reportsStartDate, _ := customTypes.NewDate(r.Configuration.ReportsStartDate.ValueString())
-	sourceType := shared.SourceBingAdsBingAdsEnum(r.Configuration.SourceType.ValueString())
+	reportsStartDate := customTypes.MustDateFromString(r.Configuration.ReportsStartDate.ValueString())
+	sourceType := shared.SourceBingAdsBingAds(r.Configuration.SourceType.ValueString())
 	tenantID := new(string)
 	if !r.Configuration.TenantID.IsUnknown() && !r.Configuration.TenantID.IsNull() {
 		*tenantID = r.Configuration.TenantID.ValueString()
@@ -68,4 +69,11 @@ func (r *SourceBingAdsResourceModel) ToCreateSDKType() *shared.SourceBingAdsCrea
 func (r *SourceBingAdsResourceModel) ToDeleteSDKType() *shared.SourceBingAdsCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceBingAdsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

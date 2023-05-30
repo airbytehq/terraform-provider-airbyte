@@ -7,32 +7,32 @@ import (
 	"fmt"
 )
 
-type SourceOmnisendOmnisendEnum string
+type SourceOmnisendOmnisend string
 
 const (
-	SourceOmnisendOmnisendEnumOmnisend SourceOmnisendOmnisendEnum = "omnisend"
+	SourceOmnisendOmnisendOmnisend SourceOmnisendOmnisend = "omnisend"
 )
 
-func (e SourceOmnisendOmnisendEnum) ToPointer() *SourceOmnisendOmnisendEnum {
+func (e SourceOmnisendOmnisend) ToPointer() *SourceOmnisendOmnisend {
 	return &e
 }
 
-func (e *SourceOmnisendOmnisendEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceOmnisendOmnisend) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "omnisend":
-		*e = SourceOmnisendOmnisendEnum(v)
+		*e = SourceOmnisendOmnisend(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceOmnisendOmnisendEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceOmnisendOmnisend: %v", v)
 	}
 }
 
 type SourceOmnisend struct {
 	// API Key
-	APIKey     string                     `json:"api_key"`
-	SourceType SourceOmnisendOmnisendEnum `json:"sourceType"`
+	APIKey     string                 `json:"api_key"`
+	SourceType SourceOmnisendOmnisend `json:"sourceType"`
 }

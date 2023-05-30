@@ -5,6 +5,7 @@ package provider
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	customTypes "airbyte/internal/sdk/pkg/types"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToCreateSDKType() *shared.SourceGoogleAnalyticsDataAPICreateRequest {
@@ -17,9 +18,9 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToCreateSDKType() *shared.So
 		} else {
 			accessToken = nil
 		}
-		authType := new(shared.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauthAuthTypeEnum)
+		authType := new(shared.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauthAuthType)
 		if !r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.AuthType.IsNull() {
-			*authType = shared.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauthAuthTypeEnum(r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.AuthType.ValueString())
+			*authType = shared.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauthAuthType(r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth.AuthType.ValueString())
 		} else {
 			authType = nil
 		}
@@ -41,9 +42,9 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToCreateSDKType() *shared.So
 	}
 	var sourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication *shared.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication
 	if r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication != nil {
-		authType1 := new(shared.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthenticationAuthTypeEnum)
+		authType1 := new(shared.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthenticationAuthType)
 		if !r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication.AuthType.IsNull() {
-			*authType1 = shared.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthenticationAuthTypeEnum(r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication.AuthType.ValueString())
+			*authType1 = shared.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthenticationAuthType(r.Configuration.Credentials.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication.AuthType.ValueString())
 		} else {
 			authType1 = nil
 		}
@@ -64,9 +65,9 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToCreateSDKType() *shared.So
 	} else {
 		customReports = nil
 	}
-	dateRangesStartDate, _ := customTypes.NewDate(r.Configuration.DateRangesStartDate.ValueString())
+	dateRangesStartDate := customTypes.MustDateFromString(r.Configuration.DateRangesStartDate.ValueString())
 	propertyID := r.Configuration.PropertyID.ValueString()
-	sourceType := shared.SourceGoogleAnalyticsDataAPIGoogleAnalyticsDataAPIEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceGoogleAnalyticsDataAPIGoogleAnalyticsDataAPI(r.Configuration.SourceType.ValueString())
 	windowInDays := new(int64)
 	if !r.Configuration.WindowInDays.IsUnknown() && !r.Configuration.WindowInDays.IsNull() {
 		*windowInDays = r.Configuration.WindowInDays.ValueInt64()
@@ -101,4 +102,11 @@ func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToCreateSDKType() *shared.So
 func (r *SourceGoogleAnalyticsDataAPIResourceModel) ToDeleteSDKType() *shared.SourceGoogleAnalyticsDataAPICreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceGoogleAnalyticsDataAPIResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

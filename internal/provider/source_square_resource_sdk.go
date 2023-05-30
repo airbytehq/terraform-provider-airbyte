@@ -5,13 +5,14 @@ package provider
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	customTypes "airbyte/internal/sdk/pkg/types"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceSquareResourceModel) ToCreateSDKType() *shared.SourceSquareCreateRequest {
 	var credentials *shared.SourceSquareAuthentication
 	var sourceSquareAuthenticationOauthAuthentication *shared.SourceSquareAuthenticationOauthAuthentication
 	if r.Configuration.Credentials.SourceSquareAuthenticationOauthAuthentication != nil {
-		authType := shared.SourceSquareAuthenticationOauthAuthenticationAuthTypeEnum(r.Configuration.Credentials.SourceSquareAuthenticationOauthAuthentication.AuthType.ValueString())
+		authType := shared.SourceSquareAuthenticationOauthAuthenticationAuthType(r.Configuration.Credentials.SourceSquareAuthenticationOauthAuthentication.AuthType.ValueString())
 		clientID := r.Configuration.Credentials.SourceSquareAuthenticationOauthAuthentication.ClientID.ValueString()
 		clientSecret := r.Configuration.Credentials.SourceSquareAuthenticationOauthAuthentication.ClientSecret.ValueString()
 		refreshToken := r.Configuration.Credentials.SourceSquareAuthenticationOauthAuthentication.RefreshToken.ValueString()
@@ -30,7 +31,7 @@ func (r *SourceSquareResourceModel) ToCreateSDKType() *shared.SourceSquareCreate
 	var sourceSquareAuthenticationAPIKey *shared.SourceSquareAuthenticationAPIKey
 	if r.Configuration.Credentials.SourceSquareAuthenticationAPIKey != nil {
 		apiKey := r.Configuration.Credentials.SourceSquareAuthenticationAPIKey.APIKey.ValueString()
-		authType1 := shared.SourceSquareAuthenticationAPIKeyAuthTypeEnum(r.Configuration.Credentials.SourceSquareAuthenticationAPIKey.AuthType.ValueString())
+		authType1 := shared.SourceSquareAuthenticationAPIKeyAuthType(r.Configuration.Credentials.SourceSquareAuthenticationAPIKey.AuthType.ValueString())
 		sourceSquareAuthenticationAPIKey = &shared.SourceSquareAuthenticationAPIKey{
 			APIKey:   apiKey,
 			AuthType: authType1,
@@ -48,10 +49,10 @@ func (r *SourceSquareResourceModel) ToCreateSDKType() *shared.SourceSquareCreate
 		includeDeletedObjects = nil
 	}
 	isSandbox := r.Configuration.IsSandbox.ValueBool()
-	sourceType := shared.SourceSquareSquareEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceSquareSquare(r.Configuration.SourceType.ValueString())
 	startDate := new(customTypes.Date)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		*startDate, _ = customTypes.NewDate(r.Configuration.StartDate.ValueString())
+		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
 	} else {
 		startDate = nil
 	}
@@ -82,4 +83,11 @@ func (r *SourceSquareResourceModel) ToCreateSDKType() *shared.SourceSquareCreate
 func (r *SourceSquareResourceModel) ToDeleteSDKType() *shared.SourceSquareCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceSquareResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

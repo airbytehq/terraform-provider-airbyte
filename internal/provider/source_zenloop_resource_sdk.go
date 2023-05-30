@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceZenloopResourceModel) ToCreateSDKType() *shared.SourceZenloopCreateRequest {
@@ -14,7 +15,7 @@ func (r *SourceZenloopResourceModel) ToCreateSDKType() *shared.SourceZenloopCrea
 	} else {
 		dateFrom = nil
 	}
-	sourceType := shared.SourceZenloopZenloopEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceZenloopZenloop(r.Configuration.SourceType.ValueString())
 	surveyGroupID := new(string)
 	if !r.Configuration.SurveyGroupID.IsUnknown() && !r.Configuration.SurveyGroupID.IsNull() {
 		*surveyGroupID = r.Configuration.SurveyGroupID.ValueString()
@@ -54,4 +55,11 @@ func (r *SourceZenloopResourceModel) ToCreateSDKType() *shared.SourceZenloopCrea
 func (r *SourceZenloopResourceModel) ToDeleteSDKType() *shared.SourceZenloopCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceZenloopResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

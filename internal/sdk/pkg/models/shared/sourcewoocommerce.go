@@ -8,27 +8,27 @@ import (
 	"fmt"
 )
 
-type SourceWoocommerceWoocommerceEnum string
+type SourceWoocommerceWoocommerce string
 
 const (
-	SourceWoocommerceWoocommerceEnumWoocommerce SourceWoocommerceWoocommerceEnum = "woocommerce"
+	SourceWoocommerceWoocommerceWoocommerce SourceWoocommerceWoocommerce = "woocommerce"
 )
 
-func (e SourceWoocommerceWoocommerceEnum) ToPointer() *SourceWoocommerceWoocommerceEnum {
+func (e SourceWoocommerceWoocommerce) ToPointer() *SourceWoocommerceWoocommerce {
 	return &e
 }
 
-func (e *SourceWoocommerceWoocommerceEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceWoocommerceWoocommerce) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "woocommerce":
-		*e = SourceWoocommerceWoocommerceEnum(v)
+		*e = SourceWoocommerceWoocommerce(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceWoocommerceWoocommerceEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceWoocommerceWoocommerce: %v", v)
 	}
 }
 
@@ -38,8 +38,8 @@ type SourceWoocommerce struct {
 	// Customer Secret for API in WooCommerce shop
 	APISecret string `json:"api_secret"`
 	// The name of the store. For https://EXAMPLE.com, the shop name is 'EXAMPLE.com'.
-	Shop       string                           `json:"shop"`
-	SourceType SourceWoocommerceWoocommerceEnum `json:"sourceType"`
+	Shop       string                       `json:"shop"`
+	SourceType SourceWoocommerceWoocommerce `json:"sourceType"`
 	// The date you would like to replicate data from. Format: YYYY-MM-DD
 	StartDate types.Date `json:"start_date"`
 }

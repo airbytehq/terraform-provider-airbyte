@@ -4,11 +4,12 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceK6CloudResourceModel) ToCreateSDKType() *shared.SourceK6CloudCreateRequest {
 	apiToken := r.Configuration.APIToken.ValueString()
-	sourceType := shared.SourceK6CloudK6CloudEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceK6CloudK6Cloud(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceK6Cloud{
 		APIToken:   apiToken,
 		SourceType: sourceType,
@@ -33,4 +34,11 @@ func (r *SourceK6CloudResourceModel) ToCreateSDKType() *shared.SourceK6CloudCrea
 func (r *SourceK6CloudResourceModel) ToDeleteSDKType() *shared.SourceK6CloudCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceK6CloudResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

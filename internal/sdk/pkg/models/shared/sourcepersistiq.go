@@ -7,32 +7,32 @@ import (
 	"fmt"
 )
 
-type SourcePersistiqPersistiqEnum string
+type SourcePersistiqPersistiq string
 
 const (
-	SourcePersistiqPersistiqEnumPersistiq SourcePersistiqPersistiqEnum = "persistiq"
+	SourcePersistiqPersistiqPersistiq SourcePersistiqPersistiq = "persistiq"
 )
 
-func (e SourcePersistiqPersistiqEnum) ToPointer() *SourcePersistiqPersistiqEnum {
+func (e SourcePersistiqPersistiq) ToPointer() *SourcePersistiqPersistiq {
 	return &e
 }
 
-func (e *SourcePersistiqPersistiqEnum) UnmarshalJSON(data []byte) error {
+func (e *SourcePersistiqPersistiq) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "persistiq":
-		*e = SourcePersistiqPersistiqEnum(v)
+		*e = SourcePersistiqPersistiq(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePersistiqPersistiqEnum: %v", v)
+		return fmt.Errorf("invalid value for SourcePersistiqPersistiq: %v", v)
 	}
 }
 
 type SourcePersistiq struct {
 	// PersistIq API Key. See the <a href="https://apidocs.persistiq.com/#authentication">docs</a> for more information on where to find that key.
-	APIKey     string                       `json:"api_key"`
-	SourceType SourcePersistiqPersistiqEnum `json:"sourceType"`
+	APIKey     string                   `json:"api_key"`
+	SourceType SourcePersistiqPersistiq `json:"sourceType"`
 }

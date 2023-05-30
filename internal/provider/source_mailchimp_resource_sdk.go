@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceMailchimpResourceModel) ToCreateSDKType() *shared.SourceMailchimpCreateRequest {
@@ -17,7 +18,7 @@ func (r *SourceMailchimpResourceModel) ToCreateSDKType() *shared.SourceMailchimp
 	var sourceMailchimpAuthenticationOAuth20 *shared.SourceMailchimpAuthenticationOAuth20
 	if r.Configuration.Credentials.SourceMailchimpAuthenticationOAuth20 != nil {
 		accessToken := r.Configuration.Credentials.SourceMailchimpAuthenticationOAuth20.AccessToken.ValueString()
-		authType := shared.SourceMailchimpAuthenticationOAuth20AuthTypeEnum(r.Configuration.Credentials.SourceMailchimpAuthenticationOAuth20.AuthType.ValueString())
+		authType := shared.SourceMailchimpAuthenticationOAuth20AuthType(r.Configuration.Credentials.SourceMailchimpAuthenticationOAuth20.AuthType.ValueString())
 		clientID := new(string)
 		if !r.Configuration.Credentials.SourceMailchimpAuthenticationOAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.SourceMailchimpAuthenticationOAuth20.ClientID.IsNull() {
 			*clientID = r.Configuration.Credentials.SourceMailchimpAuthenticationOAuth20.ClientID.ValueString()
@@ -45,7 +46,7 @@ func (r *SourceMailchimpResourceModel) ToCreateSDKType() *shared.SourceMailchimp
 	var sourceMailchimpAuthenticationAPIKey *shared.SourceMailchimpAuthenticationAPIKey
 	if r.Configuration.Credentials.SourceMailchimpAuthenticationAPIKey != nil {
 		apikey := r.Configuration.Credentials.SourceMailchimpAuthenticationAPIKey.Apikey.ValueString()
-		authType1 := shared.SourceMailchimpAuthenticationAPIKeyAuthTypeEnum(r.Configuration.Credentials.SourceMailchimpAuthenticationAPIKey.AuthType.ValueString())
+		authType1 := shared.SourceMailchimpAuthenticationAPIKeyAuthType(r.Configuration.Credentials.SourceMailchimpAuthenticationAPIKey.AuthType.ValueString())
 		sourceMailchimpAuthenticationAPIKey = &shared.SourceMailchimpAuthenticationAPIKey{
 			Apikey:   apikey,
 			AuthType: authType1,
@@ -56,7 +57,7 @@ func (r *SourceMailchimpResourceModel) ToCreateSDKType() *shared.SourceMailchimp
 			SourceMailchimpAuthenticationAPIKey: sourceMailchimpAuthenticationAPIKey,
 		}
 	}
-	sourceType := shared.SourceMailchimpMailchimpEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceMailchimpMailchimp(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceMailchimp{
 		CampaignID:  campaignID,
 		Credentials: credentials,
@@ -82,4 +83,11 @@ func (r *SourceMailchimpResourceModel) ToCreateSDKType() *shared.SourceMailchimp
 func (r *SourceMailchimpResourceModel) ToDeleteSDKType() *shared.SourceMailchimpCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceMailchimpResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

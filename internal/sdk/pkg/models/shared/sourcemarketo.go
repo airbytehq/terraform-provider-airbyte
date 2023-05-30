@@ -8,27 +8,27 @@ import (
 	"time"
 )
 
-type SourceMarketoMarketoEnum string
+type SourceMarketoMarketo string
 
 const (
-	SourceMarketoMarketoEnumMarketo SourceMarketoMarketoEnum = "marketo"
+	SourceMarketoMarketoMarketo SourceMarketoMarketo = "marketo"
 )
 
-func (e SourceMarketoMarketoEnum) ToPointer() *SourceMarketoMarketoEnum {
+func (e SourceMarketoMarketo) ToPointer() *SourceMarketoMarketo {
 	return &e
 }
 
-func (e *SourceMarketoMarketoEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceMarketoMarketo) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "marketo":
-		*e = SourceMarketoMarketoEnum(v)
+		*e = SourceMarketoMarketo(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMarketoMarketoEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceMarketoMarketo: %v", v)
 	}
 }
 
@@ -38,8 +38,8 @@ type SourceMarketo struct {
 	// The Client Secret of your Marketo developer application. See <a href="https://docs.airbyte.com/integrations/sources/marketo"> the docs </a> for info on how to obtain this.
 	ClientSecret string `json:"client_secret"`
 	// Your Marketo Base URL. See <a href="https://docs.airbyte.com/integrations/sources/marketo"> the docs </a> for info on how to obtain this.
-	DomainURL  string                   `json:"domain_url"`
-	SourceType SourceMarketoMarketoEnum `json:"sourceType"`
+	DomainURL  string               `json:"domain_url"`
+	SourceType SourceMarketoMarketo `json:"sourceType"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
 }

@@ -4,10 +4,11 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationOracleResourceModel) ToCreateSDKType() *shared.DestinationOracleCreateRequest {
-	destinationType := shared.DestinationOracleOracleEnum(r.Configuration.DestinationType.ValueString())
+	destinationType := shared.DestinationOracleOracle(r.Configuration.DestinationType.ValueString())
 	host := r.Configuration.Host.ValueString()
 	jdbcURLParams := new(string)
 	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
@@ -32,7 +33,7 @@ func (r *DestinationOracleResourceModel) ToCreateSDKType() *shared.DestinationOr
 	var tunnelMethod *shared.DestinationOracleSSHTunnelMethod
 	var destinationOracleSSHTunnelMethodNoTunnel *shared.DestinationOracleSSHTunnelMethodNoTunnel
 	if r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodNoTunnel != nil {
-		tunnelMethod1 := shared.DestinationOracleSSHTunnelMethodNoTunnelTunnelMethodEnum(r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
+		tunnelMethod1 := shared.DestinationOracleSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
 		destinationOracleSSHTunnelMethodNoTunnel = &shared.DestinationOracleSSHTunnelMethodNoTunnel{
 			TunnelMethod: tunnelMethod1,
 		}
@@ -46,7 +47,7 @@ func (r *DestinationOracleResourceModel) ToCreateSDKType() *shared.DestinationOr
 	if r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodSSHKeyAuthentication != nil {
 		sshKey := r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodSSHKeyAuthentication.SSHKey.ValueString()
 		tunnelHost := r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
-		tunnelMethod2 := shared.DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
+		tunnelMethod2 := shared.DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
 		tunnelPort := r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
 		tunnelUser := r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
 		destinationOracleSSHTunnelMethodSSHKeyAuthentication = &shared.DestinationOracleSSHTunnelMethodSSHKeyAuthentication{
@@ -65,7 +66,7 @@ func (r *DestinationOracleResourceModel) ToCreateSDKType() *shared.DestinationOr
 	var destinationOracleSSHTunnelMethodPasswordAuthentication *shared.DestinationOracleSSHTunnelMethodPasswordAuthentication
 	if r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodPasswordAuthentication != nil {
 		tunnelHost1 := r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
-		tunnelMethod3 := shared.DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
+		tunnelMethod3 := shared.DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
 		tunnelPort1 := r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
 		tunnelUser1 := r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
 		tunnelUserPassword := r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodPasswordAuthentication.TunnelUserPassword.ValueString()
@@ -107,4 +108,11 @@ func (r *DestinationOracleResourceModel) ToCreateSDKType() *shared.DestinationOr
 func (r *DestinationOracleResourceModel) ToDeleteSDKType() *shared.DestinationOracleCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *DestinationOracleResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

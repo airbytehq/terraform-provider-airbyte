@@ -4,13 +4,14 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceKlarnaResourceModel) ToCreateSDKType() *shared.SourceKlarnaCreateRequest {
 	password := r.Configuration.Password.ValueString()
 	playground := r.Configuration.Playground.ValueBool()
-	region := shared.SourceKlarnaRegionEnum(r.Configuration.Region.ValueString())
-	sourceType := shared.SourceKlarnaKlarnaEnum(r.Configuration.SourceType.ValueString())
+	region := shared.SourceKlarnaRegion(r.Configuration.Region.ValueString())
+	sourceType := shared.SourceKlarnaKlarna(r.Configuration.SourceType.ValueString())
 	username := r.Configuration.Username.ValueString()
 	configuration := shared.SourceKlarna{
 		Password:   password,
@@ -39,4 +40,11 @@ func (r *SourceKlarnaResourceModel) ToCreateSDKType() *shared.SourceKlarnaCreate
 func (r *SourceKlarnaResourceModel) ToDeleteSDKType() *shared.SourceKlarnaCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceKlarnaResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

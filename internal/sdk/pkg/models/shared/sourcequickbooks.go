@@ -10,34 +10,34 @@ import (
 	"time"
 )
 
-type SourceQuickbooksAuthorizationMethodOAuth20AuthTypeEnum string
+type SourceQuickbooksAuthorizationMethodOAuth20AuthType string
 
 const (
-	SourceQuickbooksAuthorizationMethodOAuth20AuthTypeEnumOauth20 SourceQuickbooksAuthorizationMethodOAuth20AuthTypeEnum = "oauth2.0"
+	SourceQuickbooksAuthorizationMethodOAuth20AuthTypeOauth20 SourceQuickbooksAuthorizationMethodOAuth20AuthType = "oauth2.0"
 )
 
-func (e SourceQuickbooksAuthorizationMethodOAuth20AuthTypeEnum) ToPointer() *SourceQuickbooksAuthorizationMethodOAuth20AuthTypeEnum {
+func (e SourceQuickbooksAuthorizationMethodOAuth20AuthType) ToPointer() *SourceQuickbooksAuthorizationMethodOAuth20AuthType {
 	return &e
 }
 
-func (e *SourceQuickbooksAuthorizationMethodOAuth20AuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceQuickbooksAuthorizationMethodOAuth20AuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "oauth2.0":
-		*e = SourceQuickbooksAuthorizationMethodOAuth20AuthTypeEnum(v)
+		*e = SourceQuickbooksAuthorizationMethodOAuth20AuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceQuickbooksAuthorizationMethodOAuth20AuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceQuickbooksAuthorizationMethodOAuth20AuthType: %v", v)
 	}
 }
 
 type SourceQuickbooksAuthorizationMethodOAuth20 struct {
 	// Access token fot making authenticated requests.
-	AccessToken string                                                  `json:"access_token"`
-	AuthType    *SourceQuickbooksAuthorizationMethodOAuth20AuthTypeEnum `json:"auth_type,omitempty"`
+	AccessToken string                                              `json:"access_token"`
+	AuthType    *SourceQuickbooksAuthorizationMethodOAuth20AuthType `json:"auth_type,omitempty"`
 	// Identifies which app is making the request. Obtain this value from the Keys tab on the app profile via My Apps on the developer site. There are two versions of this key: development and production.
 	ClientID string `json:"client_id"`
 	//  Obtain this value from the Keys tab on the app profile via My Apps on the developer site. There are two versions of this key: development and production.
@@ -94,35 +94,35 @@ func (u SourceQuickbooksAuthorizationMethod) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-type SourceQuickbooksQuickbooksEnum string
+type SourceQuickbooksQuickbooks string
 
 const (
-	SourceQuickbooksQuickbooksEnumQuickbooks SourceQuickbooksQuickbooksEnum = "quickbooks"
+	SourceQuickbooksQuickbooksQuickbooks SourceQuickbooksQuickbooks = "quickbooks"
 )
 
-func (e SourceQuickbooksQuickbooksEnum) ToPointer() *SourceQuickbooksQuickbooksEnum {
+func (e SourceQuickbooksQuickbooks) ToPointer() *SourceQuickbooksQuickbooks {
 	return &e
 }
 
-func (e *SourceQuickbooksQuickbooksEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceQuickbooksQuickbooks) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "quickbooks":
-		*e = SourceQuickbooksQuickbooksEnum(v)
+		*e = SourceQuickbooksQuickbooks(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceQuickbooksQuickbooksEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceQuickbooksQuickbooks: %v", v)
 	}
 }
 
 type SourceQuickbooks struct {
 	Credentials SourceQuickbooksAuthorizationMethod `json:"credentials"`
 	// Determines whether to use the sandbox or production environment.
-	Sandbox    bool                           `json:"sandbox"`
-	SourceType SourceQuickbooksQuickbooksEnum `json:"sourceType"`
+	Sandbox    bool                       `json:"sandbox"`
+	SourceType SourceQuickbooksQuickbooks `json:"sourceType"`
 	// The default value to use if no bookmark exists for an endpoint (rfc3339 date string). E.g, 2021-03-20T00:00:00+00:00. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
 }

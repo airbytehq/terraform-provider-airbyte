@@ -7,20 +7,20 @@ import (
 	"fmt"
 )
 
-// SourcePocketContentTypeEnum - Select the content type of the items to retrieve.
-type SourcePocketContentTypeEnum string
+// SourcePocketContentType - Select the content type of the items to retrieve.
+type SourcePocketContentType string
 
 const (
-	SourcePocketContentTypeEnumArticle SourcePocketContentTypeEnum = "article"
-	SourcePocketContentTypeEnumVideo   SourcePocketContentTypeEnum = "video"
-	SourcePocketContentTypeEnumImage   SourcePocketContentTypeEnum = "image"
+	SourcePocketContentTypeArticle SourcePocketContentType = "article"
+	SourcePocketContentTypeVideo   SourcePocketContentType = "video"
+	SourcePocketContentTypeImage   SourcePocketContentType = "image"
 )
 
-func (e SourcePocketContentTypeEnum) ToPointer() *SourcePocketContentTypeEnum {
+func (e SourcePocketContentType) ToPointer() *SourcePocketContentType {
 	return &e
 }
 
-func (e *SourcePocketContentTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourcePocketContentType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -31,26 +31,26 @@ func (e *SourcePocketContentTypeEnum) UnmarshalJSON(data []byte) error {
 	case "video":
 		fallthrough
 	case "image":
-		*e = SourcePocketContentTypeEnum(v)
+		*e = SourcePocketContentType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePocketContentTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourcePocketContentType: %v", v)
 	}
 }
 
-// SourcePocketDetailTypeEnum - Select the granularity of the information about each item.
-type SourcePocketDetailTypeEnum string
+// SourcePocketDetailType - Select the granularity of the information about each item.
+type SourcePocketDetailType string
 
 const (
-	SourcePocketDetailTypeEnumSimple   SourcePocketDetailTypeEnum = "simple"
-	SourcePocketDetailTypeEnumComplete SourcePocketDetailTypeEnum = "complete"
+	SourcePocketDetailTypeSimple   SourcePocketDetailType = "simple"
+	SourcePocketDetailTypeComplete SourcePocketDetailType = "complete"
 )
 
-func (e SourcePocketDetailTypeEnum) ToPointer() *SourcePocketDetailTypeEnum {
+func (e SourcePocketDetailType) ToPointer() *SourcePocketDetailType {
 	return &e
 }
 
-func (e *SourcePocketDetailTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourcePocketDetailType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -59,28 +59,28 @@ func (e *SourcePocketDetailTypeEnum) UnmarshalJSON(data []byte) error {
 	case "simple":
 		fallthrough
 	case "complete":
-		*e = SourcePocketDetailTypeEnum(v)
+		*e = SourcePocketDetailType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePocketDetailTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourcePocketDetailType: %v", v)
 	}
 }
 
-// SourcePocketSortByEnum - Sort retrieved items by the given criteria.
-type SourcePocketSortByEnum string
+// SourcePocketSortBy - Sort retrieved items by the given criteria.
+type SourcePocketSortBy string
 
 const (
-	SourcePocketSortByEnumNewest SourcePocketSortByEnum = "newest"
-	SourcePocketSortByEnumOldest SourcePocketSortByEnum = "oldest"
-	SourcePocketSortByEnumTitle  SourcePocketSortByEnum = "title"
-	SourcePocketSortByEnumSite   SourcePocketSortByEnum = "site"
+	SourcePocketSortByNewest SourcePocketSortBy = "newest"
+	SourcePocketSortByOldest SourcePocketSortBy = "oldest"
+	SourcePocketSortByTitle  SourcePocketSortBy = "title"
+	SourcePocketSortBySite   SourcePocketSortBy = "site"
 )
 
-func (e SourcePocketSortByEnum) ToPointer() *SourcePocketSortByEnum {
+func (e SourcePocketSortBy) ToPointer() *SourcePocketSortBy {
 	return &e
 }
 
-func (e *SourcePocketSortByEnum) UnmarshalJSON(data []byte) error {
+func (e *SourcePocketSortBy) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -93,51 +93,51 @@ func (e *SourcePocketSortByEnum) UnmarshalJSON(data []byte) error {
 	case "title":
 		fallthrough
 	case "site":
-		*e = SourcePocketSortByEnum(v)
+		*e = SourcePocketSortBy(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePocketSortByEnum: %v", v)
+		return fmt.Errorf("invalid value for SourcePocketSortBy: %v", v)
 	}
 }
 
-type SourcePocketPocketEnum string
+type SourcePocketPocket string
 
 const (
-	SourcePocketPocketEnumPocket SourcePocketPocketEnum = "pocket"
+	SourcePocketPocketPocket SourcePocketPocket = "pocket"
 )
 
-func (e SourcePocketPocketEnum) ToPointer() *SourcePocketPocketEnum {
+func (e SourcePocketPocket) ToPointer() *SourcePocketPocket {
 	return &e
 }
 
-func (e *SourcePocketPocketEnum) UnmarshalJSON(data []byte) error {
+func (e *SourcePocketPocket) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "pocket":
-		*e = SourcePocketPocketEnum(v)
+		*e = SourcePocketPocket(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePocketPocketEnum: %v", v)
+		return fmt.Errorf("invalid value for SourcePocketPocket: %v", v)
 	}
 }
 
-// SourcePocketStateEnum - Select the state of the items to retrieve.
-type SourcePocketStateEnum string
+// SourcePocketState - Select the state of the items to retrieve.
+type SourcePocketState string
 
 const (
-	SourcePocketStateEnumUnread  SourcePocketStateEnum = "unread"
-	SourcePocketStateEnumArchive SourcePocketStateEnum = "archive"
-	SourcePocketStateEnumAll     SourcePocketStateEnum = "all"
+	SourcePocketStateUnread  SourcePocketState = "unread"
+	SourcePocketStateArchive SourcePocketState = "archive"
+	SourcePocketStateAll     SourcePocketState = "all"
 )
 
-func (e SourcePocketStateEnum) ToPointer() *SourcePocketStateEnum {
+func (e SourcePocketState) ToPointer() *SourcePocketState {
 	return &e
 }
 
-func (e *SourcePocketStateEnum) UnmarshalJSON(data []byte) error {
+func (e *SourcePocketState) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -148,10 +148,10 @@ func (e *SourcePocketStateEnum) UnmarshalJSON(data []byte) error {
 	case "archive":
 		fallthrough
 	case "all":
-		*e = SourcePocketStateEnum(v)
+		*e = SourcePocketState(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePocketStateEnum: %v", v)
+		return fmt.Errorf("invalid value for SourcePocketState: %v", v)
 	}
 }
 
@@ -161,9 +161,9 @@ type SourcePocket struct {
 	// Your application's Consumer Key.
 	ConsumerKey string `json:"consumer_key"`
 	// Select the content type of the items to retrieve.
-	ContentType *SourcePocketContentTypeEnum `json:"content_type,omitempty"`
+	ContentType *SourcePocketContentType `json:"content_type,omitempty"`
 	// Select the granularity of the information about each item.
-	DetailType *SourcePocketDetailTypeEnum `json:"detail_type,omitempty"`
+	DetailType *SourcePocketDetailType `json:"detail_type,omitempty"`
 	// Only return items from a particular `domain`.
 	Domain *string `json:"domain,omitempty"`
 	// Retrieve only favorited items.
@@ -173,10 +173,10 @@ type SourcePocket struct {
 	// Only return items modified since the given timestamp.
 	Since *string `json:"since,omitempty"`
 	// Sort retrieved items by the given criteria.
-	Sort       *SourcePocketSortByEnum `json:"sort,omitempty"`
-	SourceType SourcePocketPocketEnum  `json:"sourceType"`
+	Sort       *SourcePocketSortBy `json:"sort,omitempty"`
+	SourceType SourcePocketPocket  `json:"sourceType"`
 	// Select the state of the items to retrieve.
-	State *SourcePocketStateEnum `json:"state,omitempty"`
+	State *SourcePocketState `json:"state,omitempty"`
 	// Return only items tagged with this tag name. Use _untagged_ for retrieving only untagged items.
 	Tag *string `json:"tag,omitempty"`
 }

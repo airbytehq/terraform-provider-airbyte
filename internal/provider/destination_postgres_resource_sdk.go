@@ -4,11 +4,12 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationPostgresResourceModel) ToCreateSDKType() *shared.DestinationPostgresCreateRequest {
 	database := r.Configuration.Database.ValueString()
-	destinationType := shared.DestinationPostgresPostgresEnum(r.Configuration.DestinationType.ValueString())
+	destinationType := shared.DestinationPostgresPostgres(r.Configuration.DestinationType.ValueString())
 	host := r.Configuration.Host.ValueString()
 	jdbcURLParams := new(string)
 	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
@@ -27,7 +28,7 @@ func (r *DestinationPostgresResourceModel) ToCreateSDKType() *shared.Destination
 	var sslMode *shared.DestinationPostgresSSLModes
 	var destinationPostgresSSLModesDisable *shared.DestinationPostgresSSLModesDisable
 	if r.Configuration.SslMode.DestinationPostgresSSLModesDisable != nil {
-		mode := shared.DestinationPostgresSSLModesDisableModeEnum(r.Configuration.SslMode.DestinationPostgresSSLModesDisable.Mode.ValueString())
+		mode := shared.DestinationPostgresSSLModesDisableMode(r.Configuration.SslMode.DestinationPostgresSSLModesDisable.Mode.ValueString())
 		destinationPostgresSSLModesDisable = &shared.DestinationPostgresSSLModesDisable{
 			Mode: mode,
 		}
@@ -39,7 +40,7 @@ func (r *DestinationPostgresResourceModel) ToCreateSDKType() *shared.Destination
 	}
 	var destinationPostgresSSLModesAllow *shared.DestinationPostgresSSLModesAllow
 	if r.Configuration.SslMode.DestinationPostgresSSLModesAllow != nil {
-		mode1 := shared.DestinationPostgresSSLModesAllowModeEnum(r.Configuration.SslMode.DestinationPostgresSSLModesAllow.Mode.ValueString())
+		mode1 := shared.DestinationPostgresSSLModesAllowMode(r.Configuration.SslMode.DestinationPostgresSSLModesAllow.Mode.ValueString())
 		destinationPostgresSSLModesAllow = &shared.DestinationPostgresSSLModesAllow{
 			Mode: mode1,
 		}
@@ -51,7 +52,7 @@ func (r *DestinationPostgresResourceModel) ToCreateSDKType() *shared.Destination
 	}
 	var destinationPostgresSSLModesPrefer *shared.DestinationPostgresSSLModesPrefer
 	if r.Configuration.SslMode.DestinationPostgresSSLModesPrefer != nil {
-		mode2 := shared.DestinationPostgresSSLModesPreferModeEnum(r.Configuration.SslMode.DestinationPostgresSSLModesPrefer.Mode.ValueString())
+		mode2 := shared.DestinationPostgresSSLModesPreferMode(r.Configuration.SslMode.DestinationPostgresSSLModesPrefer.Mode.ValueString())
 		destinationPostgresSSLModesPrefer = &shared.DestinationPostgresSSLModesPrefer{
 			Mode: mode2,
 		}
@@ -63,7 +64,7 @@ func (r *DestinationPostgresResourceModel) ToCreateSDKType() *shared.Destination
 	}
 	var destinationPostgresSSLModesRequire *shared.DestinationPostgresSSLModesRequire
 	if r.Configuration.SslMode.DestinationPostgresSSLModesRequire != nil {
-		mode3 := shared.DestinationPostgresSSLModesRequireModeEnum(r.Configuration.SslMode.DestinationPostgresSSLModesRequire.Mode.ValueString())
+		mode3 := shared.DestinationPostgresSSLModesRequireMode(r.Configuration.SslMode.DestinationPostgresSSLModesRequire.Mode.ValueString())
 		destinationPostgresSSLModesRequire = &shared.DestinationPostgresSSLModesRequire{
 			Mode: mode3,
 		}
@@ -82,7 +83,7 @@ func (r *DestinationPostgresResourceModel) ToCreateSDKType() *shared.Destination
 		} else {
 			clientKeyPassword = nil
 		}
-		mode4 := shared.DestinationPostgresSSLModesVerifyCaModeEnum(r.Configuration.SslMode.DestinationPostgresSSLModesVerifyCa.Mode.ValueString())
+		mode4 := shared.DestinationPostgresSSLModesVerifyCaMode(r.Configuration.SslMode.DestinationPostgresSSLModesVerifyCa.Mode.ValueString())
 		destinationPostgresSSLModesVerifyCa = &shared.DestinationPostgresSSLModesVerifyCa{
 			CaCertificate:     caCertificate,
 			ClientKeyPassword: clientKeyPassword,
@@ -105,7 +106,7 @@ func (r *DestinationPostgresResourceModel) ToCreateSDKType() *shared.Destination
 		} else {
 			clientKeyPassword1 = nil
 		}
-		mode5 := shared.DestinationPostgresSSLModesVerifyFullModeEnum(r.Configuration.SslMode.DestinationPostgresSSLModesVerifyFull.Mode.ValueString())
+		mode5 := shared.DestinationPostgresSSLModesVerifyFullMode(r.Configuration.SslMode.DestinationPostgresSSLModesVerifyFull.Mode.ValueString())
 		destinationPostgresSSLModesVerifyFull = &shared.DestinationPostgresSSLModesVerifyFull{
 			CaCertificate:     caCertificate1,
 			ClientCertificate: clientCertificate,
@@ -122,7 +123,7 @@ func (r *DestinationPostgresResourceModel) ToCreateSDKType() *shared.Destination
 	var tunnelMethod *shared.DestinationPostgresSSHTunnelMethod
 	var destinationPostgresSSHTunnelMethodNoTunnel *shared.DestinationPostgresSSHTunnelMethodNoTunnel
 	if r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodNoTunnel != nil {
-		tunnelMethod1 := shared.DestinationPostgresSSHTunnelMethodNoTunnelTunnelMethodEnum(r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
+		tunnelMethod1 := shared.DestinationPostgresSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
 		destinationPostgresSSHTunnelMethodNoTunnel = &shared.DestinationPostgresSSHTunnelMethodNoTunnel{
 			TunnelMethod: tunnelMethod1,
 		}
@@ -136,7 +137,7 @@ func (r *DestinationPostgresResourceModel) ToCreateSDKType() *shared.Destination
 	if r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication != nil {
 		sshKey := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication.SSHKey.ValueString()
 		tunnelHost := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
-		tunnelMethod2 := shared.DestinationPostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
+		tunnelMethod2 := shared.DestinationPostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
 		tunnelPort := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
 		tunnelUser := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
 		destinationPostgresSSHTunnelMethodSSHKeyAuthentication = &shared.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication{
@@ -155,7 +156,7 @@ func (r *DestinationPostgresResourceModel) ToCreateSDKType() *shared.Destination
 	var destinationPostgresSSHTunnelMethodPasswordAuthentication *shared.DestinationPostgresSSHTunnelMethodPasswordAuthentication
 	if r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodPasswordAuthentication != nil {
 		tunnelHost1 := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
-		tunnelMethod3 := shared.DestinationPostgresSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
+		tunnelMethod3 := shared.DestinationPostgresSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
 		tunnelPort1 := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
 		tunnelUser1 := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
 		tunnelUserPassword := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodPasswordAuthentication.TunnelUserPassword.ValueString()
@@ -198,4 +199,11 @@ func (r *DestinationPostgresResourceModel) ToCreateSDKType() *shared.Destination
 func (r *DestinationPostgresResourceModel) ToDeleteSDKType() *shared.DestinationPostgresCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *DestinationPostgresResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

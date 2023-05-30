@@ -4,11 +4,12 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceGlassfrogResourceModel) ToCreateSDKType() *shared.SourceGlassfrogCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	sourceType := shared.SourceGlassfrogGlassfrogEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceGlassfrogGlassfrog(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceGlassfrog{
 		APIKey:     apiKey,
 		SourceType: sourceType,
@@ -33,4 +34,11 @@ func (r *SourceGlassfrogResourceModel) ToCreateSDKType() *shared.SourceGlassfrog
 func (r *SourceGlassfrogResourceModel) ToDeleteSDKType() *shared.SourceGlassfrogCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceGlassfrogResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

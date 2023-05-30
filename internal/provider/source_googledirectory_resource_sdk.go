@@ -4,12 +4,13 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceGoogleDirectoryResourceModel) ToCreateSDKType() *shared.SourceGoogleDirectoryCreateRequest {
 	credentialsJSON := r.Configuration.CredentialsJSON.ValueString()
 	email := r.Configuration.Email.ValueString()
-	sourceType := shared.SourceGoogleDirectoryGoogleDirectoryEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceGoogleDirectoryGoogleDirectory(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceGoogleDirectory{
 		CredentialsJSON: credentialsJSON,
 		Email:           email,
@@ -35,4 +36,11 @@ func (r *SourceGoogleDirectoryResourceModel) ToCreateSDKType() *shared.SourceGoo
 func (r *SourceGoogleDirectoryResourceModel) ToDeleteSDKType() *shared.SourceGoogleDirectoryCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceGoogleDirectoryResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

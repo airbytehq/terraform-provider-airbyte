@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type DestinationRocksetRocksetEnum string
+type DestinationRocksetRockset string
 
 const (
-	DestinationRocksetRocksetEnumRockset DestinationRocksetRocksetEnum = "rockset"
+	DestinationRocksetRocksetRockset DestinationRocksetRockset = "rockset"
 )
 
-func (e DestinationRocksetRocksetEnum) ToPointer() *DestinationRocksetRocksetEnum {
+func (e DestinationRocksetRockset) ToPointer() *DestinationRocksetRockset {
 	return &e
 }
 
-func (e *DestinationRocksetRocksetEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationRocksetRockset) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "rockset":
-		*e = DestinationRocksetRocksetEnum(v)
+		*e = DestinationRocksetRockset(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationRocksetRocksetEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationRocksetRockset: %v", v)
 	}
 }
 
@@ -35,8 +35,8 @@ type DestinationRockset struct {
 	// Rockset api key
 	APIKey string `json:"api_key"`
 	// Rockset api URL
-	APIServer       *string                       `json:"api_server,omitempty"`
-	DestinationType DestinationRocksetRocksetEnum `json:"destinationType"`
+	APIServer       *string                   `json:"api_server,omitempty"`
+	DestinationType DestinationRocksetRockset `json:"destinationType"`
 	// The Rockset workspace in which collections will be created + written to.
 	Workspace string `json:"workspace"`
 }

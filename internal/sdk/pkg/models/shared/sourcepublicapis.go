@@ -7,30 +7,30 @@ import (
 	"fmt"
 )
 
-type SourcePublicApisPublicApisEnum string
+type SourcePublicApisPublicApis string
 
 const (
-	SourcePublicApisPublicApisEnumPublicApis SourcePublicApisPublicApisEnum = "public-apis"
+	SourcePublicApisPublicApisPublicApis SourcePublicApisPublicApis = "public-apis"
 )
 
-func (e SourcePublicApisPublicApisEnum) ToPointer() *SourcePublicApisPublicApisEnum {
+func (e SourcePublicApisPublicApis) ToPointer() *SourcePublicApisPublicApis {
 	return &e
 }
 
-func (e *SourcePublicApisPublicApisEnum) UnmarshalJSON(data []byte) error {
+func (e *SourcePublicApisPublicApis) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "public-apis":
-		*e = SourcePublicApisPublicApisEnum(v)
+		*e = SourcePublicApisPublicApis(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePublicApisPublicApisEnum: %v", v)
+		return fmt.Errorf("invalid value for SourcePublicApisPublicApis: %v", v)
 	}
 }
 
 type SourcePublicApis struct {
-	SourceType SourcePublicApisPublicApisEnum `json:"sourceType"`
+	SourceType SourcePublicApisPublicApis `json:"sourceType"`
 }

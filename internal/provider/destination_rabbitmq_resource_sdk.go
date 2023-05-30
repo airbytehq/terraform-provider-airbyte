@@ -4,10 +4,11 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationRabbitmqResourceModel) ToCreateSDKType() *shared.DestinationRabbitmqCreateRequest {
-	destinationType := shared.DestinationRabbitmqRabbitmqEnum(r.Configuration.DestinationType.ValueString())
+	destinationType := shared.DestinationRabbitmqRabbitmq(r.Configuration.DestinationType.ValueString())
 	exchange := new(string)
 	if !r.Configuration.Exchange.IsUnknown() && !r.Configuration.Exchange.IsNull() {
 		*exchange = r.Configuration.Exchange.ValueString()
@@ -70,4 +71,11 @@ func (r *DestinationRabbitmqResourceModel) ToCreateSDKType() *shared.Destination
 func (r *DestinationRabbitmqResourceModel) ToDeleteSDKType() *shared.DestinationRabbitmqCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *DestinationRabbitmqResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

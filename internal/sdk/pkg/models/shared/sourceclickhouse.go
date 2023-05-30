@@ -9,52 +9,52 @@ import (
 	"fmt"
 )
 
-type SourceClickhouseClickhouseEnum string
+type SourceClickhouseClickhouse string
 
 const (
-	SourceClickhouseClickhouseEnumClickhouse SourceClickhouseClickhouseEnum = "clickhouse"
+	SourceClickhouseClickhouseClickhouse SourceClickhouseClickhouse = "clickhouse"
 )
 
-func (e SourceClickhouseClickhouseEnum) ToPointer() *SourceClickhouseClickhouseEnum {
+func (e SourceClickhouseClickhouse) ToPointer() *SourceClickhouseClickhouse {
 	return &e
 }
 
-func (e *SourceClickhouseClickhouseEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceClickhouseClickhouse) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "clickhouse":
-		*e = SourceClickhouseClickhouseEnum(v)
+		*e = SourceClickhouseClickhouse(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceClickhouseClickhouseEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceClickhouseClickhouse: %v", v)
 	}
 }
 
-// SourceClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum - Connect through a jump server tunnel host using username and password authentication
-type SourceClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum string
+// SourceClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and password authentication
+type SourceClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethod string
 
 const (
-	SourceClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethodEnumSSHPasswordAuth SourceClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum = "SSH_PASSWORD_AUTH"
+	SourceClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethodSSHPasswordAuth SourceClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethod = "SSH_PASSWORD_AUTH"
 )
 
-func (e SourceClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) ToPointer() *SourceClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum {
+func (e SourceClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethod) ToPointer() *SourceClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethod {
 	return &e
 }
 
-func (e *SourceClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SSH_PASSWORD_AUTH":
-		*e = SourceClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(v)
+		*e = SourceClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethod: %v", v)
 	}
 }
 
@@ -63,7 +63,7 @@ type SourceClickhouseSSHTunnelMethodPasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and password authentication
-	TunnelMethod SourceClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum `json:"tunnel_method"`
+	TunnelMethod SourceClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethod `json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort int64 `json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
@@ -72,28 +72,28 @@ type SourceClickhouseSSHTunnelMethodPasswordAuthentication struct {
 	TunnelUserPassword string `json:"tunnel_user_password"`
 }
 
-// SourceClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum - Connect through a jump server tunnel host using username and ssh key
-type SourceClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum string
+// SourceClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and ssh key
+type SourceClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethod string
 
 const (
-	SourceClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnumSSHKeyAuth SourceClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum = "SSH_KEY_AUTH"
+	SourceClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethodSSHKeyAuth SourceClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethod = "SSH_KEY_AUTH"
 )
 
-func (e SourceClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) ToPointer() *SourceClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum {
+func (e SourceClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethod) ToPointer() *SourceClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethod {
 	return &e
 }
 
-func (e *SourceClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SSH_KEY_AUTH":
-		*e = SourceClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(v)
+		*e = SourceClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethod: %v", v)
 	}
 }
 
@@ -104,42 +104,42 @@ type SourceClickhouseSSHTunnelMethodSSHKeyAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and ssh key
-	TunnelMethod SourceClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum `json:"tunnel_method"`
+	TunnelMethod SourceClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethod `json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort int64 `json:"tunnel_port"`
 	// OS-level username for logging into the jump server host.
 	TunnelUser string `json:"tunnel_user"`
 }
 
-// SourceClickhouseSSHTunnelMethodNoTunnelTunnelMethodEnum - No ssh tunnel needed to connect to database
-type SourceClickhouseSSHTunnelMethodNoTunnelTunnelMethodEnum string
+// SourceClickhouseSSHTunnelMethodNoTunnelTunnelMethod - No ssh tunnel needed to connect to database
+type SourceClickhouseSSHTunnelMethodNoTunnelTunnelMethod string
 
 const (
-	SourceClickhouseSSHTunnelMethodNoTunnelTunnelMethodEnumNoTunnel SourceClickhouseSSHTunnelMethodNoTunnelTunnelMethodEnum = "NO_TUNNEL"
+	SourceClickhouseSSHTunnelMethodNoTunnelTunnelMethodNoTunnel SourceClickhouseSSHTunnelMethodNoTunnelTunnelMethod = "NO_TUNNEL"
 )
 
-func (e SourceClickhouseSSHTunnelMethodNoTunnelTunnelMethodEnum) ToPointer() *SourceClickhouseSSHTunnelMethodNoTunnelTunnelMethodEnum {
+func (e SourceClickhouseSSHTunnelMethodNoTunnelTunnelMethod) ToPointer() *SourceClickhouseSSHTunnelMethodNoTunnelTunnelMethod {
 	return &e
 }
 
-func (e *SourceClickhouseSSHTunnelMethodNoTunnelTunnelMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceClickhouseSSHTunnelMethodNoTunnelTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "NO_TUNNEL":
-		*e = SourceClickhouseSSHTunnelMethodNoTunnelTunnelMethodEnum(v)
+		*e = SourceClickhouseSSHTunnelMethodNoTunnelTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceClickhouseSSHTunnelMethodNoTunnelTunnelMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceClickhouseSSHTunnelMethodNoTunnelTunnelMethod: %v", v)
 	}
 }
 
 // SourceClickhouseSSHTunnelMethodNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type SourceClickhouseSSHTunnelMethodNoTunnel struct {
 	// No ssh tunnel needed to connect to database
-	TunnelMethod SourceClickhouseSSHTunnelMethodNoTunnelTunnelMethodEnum `json:"tunnel_method"`
+	TunnelMethod SourceClickhouseSSHTunnelMethodNoTunnelTunnelMethod `json:"tunnel_method"`
 }
 
 type SourceClickhouseSSHTunnelMethodType string
@@ -242,8 +242,8 @@ type SourceClickhouse struct {
 	// The password associated with this username.
 	Password *string `json:"password,omitempty"`
 	// The port of the database.
-	Port       int64                          `json:"port"`
-	SourceType SourceClickhouseClickhouseEnum `json:"sourceType"`
+	Port       int64                      `json:"port"`
+	SourceType SourceClickhouseClickhouse `json:"sourceType"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 	TunnelMethod *SourceClickhouseSSHTunnelMethod `json:"tunnel_method,omitempty"`
 	// The username which is used to access the database.

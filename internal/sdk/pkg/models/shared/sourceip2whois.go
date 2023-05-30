@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type SourceIp2whoisIp2whoisEnum string
+type SourceIp2whoisIp2whois string
 
 const (
-	SourceIp2whoisIp2whoisEnumIp2whois SourceIp2whoisIp2whoisEnum = "ip2whois"
+	SourceIp2whoisIp2whoisIp2whois SourceIp2whoisIp2whois = "ip2whois"
 )
 
-func (e SourceIp2whoisIp2whoisEnum) ToPointer() *SourceIp2whoisIp2whoisEnum {
+func (e SourceIp2whoisIp2whois) ToPointer() *SourceIp2whoisIp2whois {
 	return &e
 }
 
-func (e *SourceIp2whoisIp2whoisEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceIp2whoisIp2whois) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "ip2whois":
-		*e = SourceIp2whoisIp2whoisEnum(v)
+		*e = SourceIp2whoisIp2whois(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceIp2whoisIp2whoisEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceIp2whoisIp2whois: %v", v)
 	}
 }
 
@@ -35,6 +35,6 @@ type SourceIp2whois struct {
 	// Your API Key. See <a href="https://www.ip2whois.com/developers-api">here</a>.
 	APIKey *string `json:"api_key,omitempty"`
 	// Domain name. See <a href="https://www.ip2whois.com/developers-api">here</a>.
-	Domain     *string                    `json:"domain,omitempty"`
-	SourceType SourceIp2whoisIp2whoisEnum `json:"sourceType"`
+	Domain     *string                `json:"domain,omitempty"`
+	SourceType SourceIp2whoisIp2whois `json:"sourceType"`
 }

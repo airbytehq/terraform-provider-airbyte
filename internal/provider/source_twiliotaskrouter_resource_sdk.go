@@ -4,12 +4,13 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceTwilioTaskrouterResourceModel) ToCreateSDKType() *shared.SourceTwilioTaskrouterCreateRequest {
 	accountSid := r.Configuration.AccountSid.ValueString()
 	authToken := r.Configuration.AuthToken.ValueString()
-	sourceType := shared.SourceTwilioTaskrouterTwilioTaskrouterEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceTwilioTaskrouterTwilioTaskrouter(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceTwilioTaskrouter{
 		AccountSid: accountSid,
 		AuthToken:  authToken,
@@ -35,4 +36,11 @@ func (r *SourceTwilioTaskrouterResourceModel) ToCreateSDKType() *shared.SourceTw
 func (r *SourceTwilioTaskrouterResourceModel) ToDeleteSDKType() *shared.SourceTwilioTaskrouterCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceTwilioTaskrouterResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

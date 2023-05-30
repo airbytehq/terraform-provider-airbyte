@@ -9,33 +9,33 @@ import (
 	"fmt"
 )
 
-type SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftAuthTypeEnum string
+type SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftAuthType string
 
 const (
-	SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftAuthTypeEnumToken SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftAuthTypeEnum = "Token"
+	SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftAuthTypeToken SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftAuthType = "Token"
 )
 
-func (e SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftAuthTypeEnum) ToPointer() *SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftAuthTypeEnum {
+func (e SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftAuthType) ToPointer() *SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftAuthType {
 	return &e
 }
 
-func (e *SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftAuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Token":
-		*e = SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftAuthTypeEnum(v)
+		*e = SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftAuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftAuthType: %v", v)
 	}
 }
 
 // SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoft - Choose how to authenticate to Microsoft
 type SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoft struct {
-	AuthType *SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftAuthTypeEnum `json:"auth_type,omitempty"`
+	AuthType *SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftAuthType `json:"auth_type,omitempty"`
 	// The Client ID of your Microsoft Teams developer application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your Microsoft Teams developer application.
@@ -44,33 +44,33 @@ type SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoft struct 
 	TenantID string `json:"tenant_id"`
 }
 
-type SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20AuthTypeEnum string
+type SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20AuthType string
 
 const (
-	SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20AuthTypeEnumClient SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20AuthTypeEnum = "Client"
+	SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20AuthTypeClient SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20AuthType = "Client"
 )
 
-func (e SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20AuthTypeEnum) ToPointer() *SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20AuthTypeEnum {
+func (e SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20AuthType) ToPointer() *SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20AuthType {
 	return &e
 }
 
-func (e *SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20AuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20AuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Client":
-		*e = SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20AuthTypeEnum(v)
+		*e = SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20AuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20AuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20AuthType: %v", v)
 	}
 }
 
 // SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20 - Choose how to authenticate to Microsoft
 type SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20 struct {
-	AuthType *SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20AuthTypeEnum `json:"auth_type,omitempty"`
+	AuthType *SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20AuthType `json:"auth_type,omitempty"`
 	// The Client ID of your Microsoft Teams developer application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your Microsoft Teams developer application.
@@ -149,27 +149,27 @@ func (u SourceMicrosoftTeamsAuthenticationMechanism) MarshalJSON() ([]byte, erro
 	return nil, nil
 }
 
-type SourceMicrosoftTeamsMicrosoftTeamsEnum string
+type SourceMicrosoftTeamsMicrosoftTeams string
 
 const (
-	SourceMicrosoftTeamsMicrosoftTeamsEnumMicrosoftTeams SourceMicrosoftTeamsMicrosoftTeamsEnum = "microsoft-teams"
+	SourceMicrosoftTeamsMicrosoftTeamsMicrosoftTeams SourceMicrosoftTeamsMicrosoftTeams = "microsoft-teams"
 )
 
-func (e SourceMicrosoftTeamsMicrosoftTeamsEnum) ToPointer() *SourceMicrosoftTeamsMicrosoftTeamsEnum {
+func (e SourceMicrosoftTeamsMicrosoftTeams) ToPointer() *SourceMicrosoftTeamsMicrosoftTeams {
 	return &e
 }
 
-func (e *SourceMicrosoftTeamsMicrosoftTeamsEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceMicrosoftTeamsMicrosoftTeams) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "microsoft-teams":
-		*e = SourceMicrosoftTeamsMicrosoftTeamsEnum(v)
+		*e = SourceMicrosoftTeamsMicrosoftTeams(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMicrosoftTeamsMicrosoftTeamsEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceMicrosoftTeamsMicrosoftTeams: %v", v)
 	}
 }
 
@@ -177,6 +177,6 @@ type SourceMicrosoftTeams struct {
 	// Choose how to authenticate to Microsoft
 	Credentials *SourceMicrosoftTeamsAuthenticationMechanism `json:"credentials,omitempty"`
 	// Specifies the length of time over which the Team Device Report stream is aggregated. The supported values are: D7, D30, D90, and D180.
-	Period     string                                 `json:"period"`
-	SourceType SourceMicrosoftTeamsMicrosoftTeamsEnum `json:"sourceType"`
+	Period     string                             `json:"period"`
+	SourceType SourceMicrosoftTeamsMicrosoftTeams `json:"sourceType"`
 }

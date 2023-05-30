@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type SourceFireboltFireboltEnum string
+type SourceFireboltFirebolt string
 
 const (
-	SourceFireboltFireboltEnumFirebolt SourceFireboltFireboltEnum = "firebolt"
+	SourceFireboltFireboltFirebolt SourceFireboltFirebolt = "firebolt"
 )
 
-func (e SourceFireboltFireboltEnum) ToPointer() *SourceFireboltFireboltEnum {
+func (e SourceFireboltFirebolt) ToPointer() *SourceFireboltFirebolt {
 	return &e
 }
 
-func (e *SourceFireboltFireboltEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceFireboltFirebolt) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "firebolt":
-		*e = SourceFireboltFireboltEnum(v)
+		*e = SourceFireboltFirebolt(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFireboltFireboltEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceFireboltFirebolt: %v", v)
 	}
 }
 
@@ -41,8 +41,8 @@ type SourceFirebolt struct {
 	// The host name of your Firebolt database.
 	Host *string `json:"host,omitempty"`
 	// Firebolt password.
-	Password   string                     `json:"password"`
-	SourceType SourceFireboltFireboltEnum `json:"sourceType"`
+	Password   string                 `json:"password"`
+	SourceType SourceFireboltFirebolt `json:"sourceType"`
 	// Firebolt email address you use to login.
 	Username string `json:"username"`
 }

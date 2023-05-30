@@ -8,21 +8,21 @@ import (
 	"time"
 )
 
-// SourceBraintreeEnvironmentEnum - Environment specifies where the data will come from.
-type SourceBraintreeEnvironmentEnum string
+// SourceBraintreeEnvironment - Environment specifies where the data will come from.
+type SourceBraintreeEnvironment string
 
 const (
-	SourceBraintreeEnvironmentEnumDevelopment SourceBraintreeEnvironmentEnum = "Development"
-	SourceBraintreeEnvironmentEnumSandbox     SourceBraintreeEnvironmentEnum = "Sandbox"
-	SourceBraintreeEnvironmentEnumQa          SourceBraintreeEnvironmentEnum = "Qa"
-	SourceBraintreeEnvironmentEnumProduction  SourceBraintreeEnvironmentEnum = "Production"
+	SourceBraintreeEnvironmentDevelopment SourceBraintreeEnvironment = "Development"
+	SourceBraintreeEnvironmentSandbox     SourceBraintreeEnvironment = "Sandbox"
+	SourceBraintreeEnvironmentQa          SourceBraintreeEnvironment = "Qa"
+	SourceBraintreeEnvironmentProduction  SourceBraintreeEnvironment = "Production"
 )
 
-func (e SourceBraintreeEnvironmentEnum) ToPointer() *SourceBraintreeEnvironmentEnum {
+func (e SourceBraintreeEnvironment) ToPointer() *SourceBraintreeEnvironment {
 	return &e
 }
 
-func (e *SourceBraintreeEnvironmentEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceBraintreeEnvironment) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -35,47 +35,47 @@ func (e *SourceBraintreeEnvironmentEnum) UnmarshalJSON(data []byte) error {
 	case "Qa":
 		fallthrough
 	case "Production":
-		*e = SourceBraintreeEnvironmentEnum(v)
+		*e = SourceBraintreeEnvironment(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceBraintreeEnvironmentEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceBraintreeEnvironment: %v", v)
 	}
 }
 
-type SourceBraintreeBraintreeEnum string
+type SourceBraintreeBraintree string
 
 const (
-	SourceBraintreeBraintreeEnumBraintree SourceBraintreeBraintreeEnum = "braintree"
+	SourceBraintreeBraintreeBraintree SourceBraintreeBraintree = "braintree"
 )
 
-func (e SourceBraintreeBraintreeEnum) ToPointer() *SourceBraintreeBraintreeEnum {
+func (e SourceBraintreeBraintree) ToPointer() *SourceBraintreeBraintree {
 	return &e
 }
 
-func (e *SourceBraintreeBraintreeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceBraintreeBraintree) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "braintree":
-		*e = SourceBraintreeBraintreeEnum(v)
+		*e = SourceBraintreeBraintree(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceBraintreeBraintreeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceBraintreeBraintree: %v", v)
 	}
 }
 
 type SourceBraintree struct {
 	// Environment specifies where the data will come from.
-	Environment SourceBraintreeEnvironmentEnum `json:"environment"`
+	Environment SourceBraintreeEnvironment `json:"environment"`
 	// The unique identifier for your entire gateway account. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this ID.
 	MerchantID string `json:"merchant_id"`
 	// Braintree Private Key. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this key.
 	PrivateKey string `json:"private_key"`
 	// Braintree Public Key. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this key.
-	PublicKey  string                       `json:"public_key"`
-	SourceType SourceBraintreeBraintreeEnum `json:"sourceType"`
+	PublicKey  string                   `json:"public_key"`
+	SourceType SourceBraintreeBraintree `json:"sourceType"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 	StartDate *time.Time `json:"start_date,omitempty"`
 }

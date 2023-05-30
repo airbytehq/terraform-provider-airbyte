@@ -7,20 +7,20 @@ import (
 	"fmt"
 )
 
-// SourceKlarnaRegionEnum - Base url region (For playground eu https://docs.klarna.com/klarna-payments/api/payments-api/#tag/API-URLs). Supported 'eu', 'us', 'oc'
-type SourceKlarnaRegionEnum string
+// SourceKlarnaRegion - Base url region (For playground eu https://docs.klarna.com/klarna-payments/api/payments-api/#tag/API-URLs). Supported 'eu', 'us', 'oc'
+type SourceKlarnaRegion string
 
 const (
-	SourceKlarnaRegionEnumEu SourceKlarnaRegionEnum = "eu"
-	SourceKlarnaRegionEnumUs SourceKlarnaRegionEnum = "us"
-	SourceKlarnaRegionEnumOc SourceKlarnaRegionEnum = "oc"
+	SourceKlarnaRegionEu SourceKlarnaRegion = "eu"
+	SourceKlarnaRegionUs SourceKlarnaRegion = "us"
+	SourceKlarnaRegionOc SourceKlarnaRegion = "oc"
 )
 
-func (e SourceKlarnaRegionEnum) ToPointer() *SourceKlarnaRegionEnum {
+func (e SourceKlarnaRegion) ToPointer() *SourceKlarnaRegion {
 	return &e
 }
 
-func (e *SourceKlarnaRegionEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceKlarnaRegion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -31,34 +31,34 @@ func (e *SourceKlarnaRegionEnum) UnmarshalJSON(data []byte) error {
 	case "us":
 		fallthrough
 	case "oc":
-		*e = SourceKlarnaRegionEnum(v)
+		*e = SourceKlarnaRegion(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceKlarnaRegionEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceKlarnaRegion: %v", v)
 	}
 }
 
-type SourceKlarnaKlarnaEnum string
+type SourceKlarnaKlarna string
 
 const (
-	SourceKlarnaKlarnaEnumKlarna SourceKlarnaKlarnaEnum = "klarna"
+	SourceKlarnaKlarnaKlarna SourceKlarnaKlarna = "klarna"
 )
 
-func (e SourceKlarnaKlarnaEnum) ToPointer() *SourceKlarnaKlarnaEnum {
+func (e SourceKlarnaKlarna) ToPointer() *SourceKlarnaKlarna {
 	return &e
 }
 
-func (e *SourceKlarnaKlarnaEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceKlarnaKlarna) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "klarna":
-		*e = SourceKlarnaKlarnaEnum(v)
+		*e = SourceKlarnaKlarna(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceKlarnaKlarnaEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceKlarnaKlarna: %v", v)
 	}
 }
 
@@ -68,8 +68,8 @@ type SourceKlarna struct {
 	// Propertie defining if connector is used against playground or production environment
 	Playground bool `json:"playground"`
 	// Base url region (For playground eu https://docs.klarna.com/klarna-payments/api/payments-api/#tag/API-URLs). Supported 'eu', 'us', 'oc'
-	Region     SourceKlarnaRegionEnum `json:"region"`
-	SourceType SourceKlarnaKlarnaEnum `json:"sourceType"`
+	Region     SourceKlarnaRegion `json:"region"`
+	SourceType SourceKlarnaKlarna `json:"sourceType"`
 	// Consists of your Merchant ID (eid) - a unique number that identifies your e-store, combined with a random string (https://developers.klarna.com/api/#authentication)
 	Username string `json:"username"`
 }

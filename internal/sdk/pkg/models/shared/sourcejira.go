@@ -8,27 +8,27 @@ import (
 	"time"
 )
 
-type SourceJiraJiraEnum string
+type SourceJiraJira string
 
 const (
-	SourceJiraJiraEnumJira SourceJiraJiraEnum = "jira"
+	SourceJiraJiraJira SourceJiraJira = "jira"
 )
 
-func (e SourceJiraJiraEnum) ToPointer() *SourceJiraJiraEnum {
+func (e SourceJiraJira) ToPointer() *SourceJiraJira {
 	return &e
 }
 
-func (e *SourceJiraJiraEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceJiraJira) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "jira":
-		*e = SourceJiraJiraEnum(v)
+		*e = SourceJiraJira(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceJiraJiraEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceJiraJira: %v", v)
 	}
 }
 
@@ -46,8 +46,8 @@ type SourceJira struct {
 	// List of Jira project keys to replicate data for, or leave it empty if you want to replicate data for all projects.
 	Projects []string `json:"projects,omitempty"`
 	// Render issue fields in HTML format in addition to Jira JSON-like format.
-	RenderFields *bool              `json:"render_fields,omitempty"`
-	SourceType   SourceJiraJiraEnum `json:"sourceType"`
+	RenderFields *bool          `json:"render_fields,omitempty"`
+	SourceType   SourceJiraJira `json:"sourceType"`
 	// The date from which you want to replicate data from Jira, use the format YYYY-MM-DDT00:00:00Z. Note that this field only applies to certain streams, and only data generated on or after the start date will be replicated. Or leave it empty if you want to replicate all data. For more information, refer to the <a href="https://docs.airbyte.com/integrations/sources/jira/">documentation</a>.
 	StartDate *time.Time `json:"start_date,omitempty"`
 }

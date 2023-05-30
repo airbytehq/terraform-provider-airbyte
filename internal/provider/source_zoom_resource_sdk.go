@@ -4,11 +4,12 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceZoomResourceModel) ToCreateSDKType() *shared.SourceZoomCreateRequest {
 	jwtToken := r.Configuration.JwtToken.ValueString()
-	sourceType := shared.SourceZoomZoomEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceZoomZoom(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceZoom{
 		JwtToken:   jwtToken,
 		SourceType: sourceType,
@@ -33,4 +34,11 @@ func (r *SourceZoomResourceModel) ToCreateSDKType() *shared.SourceZoomCreateRequ
 func (r *SourceZoomResourceModel) ToDeleteSDKType() *shared.SourceZoomCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceZoomResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

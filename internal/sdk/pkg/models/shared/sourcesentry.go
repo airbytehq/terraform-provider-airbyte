@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type SourceSentrySentryEnum string
+type SourceSentrySentry string
 
 const (
-	SourceSentrySentryEnumSentry SourceSentrySentryEnum = "sentry"
+	SourceSentrySentrySentry SourceSentrySentry = "sentry"
 )
 
-func (e SourceSentrySentryEnum) ToPointer() *SourceSentrySentryEnum {
+func (e SourceSentrySentry) ToPointer() *SourceSentrySentry {
 	return &e
 }
 
-func (e *SourceSentrySentryEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceSentrySentry) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "sentry":
-		*e = SourceSentrySentryEnum(v)
+		*e = SourceSentrySentry(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSentrySentryEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceSentrySentry: %v", v)
 	}
 }
 
@@ -41,6 +41,6 @@ type SourceSentry struct {
 	// The slug of the organization the groups belong to.
 	Organization string `json:"organization"`
 	// The name (slug) of the Project you want to sync.
-	Project    string                 `json:"project"`
-	SourceType SourceSentrySentryEnum `json:"sourceType"`
+	Project    string             `json:"project"`
+	SourceType SourceSentrySentry `json:"sourceType"`
 }

@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type SourceBambooHrBambooHrEnum string
+type SourceBambooHrBambooHr string
 
 const (
-	SourceBambooHrBambooHrEnumBambooHr SourceBambooHrBambooHrEnum = "bamboo-hr"
+	SourceBambooHrBambooHrBambooHr SourceBambooHrBambooHr = "bamboo-hr"
 )
 
-func (e SourceBambooHrBambooHrEnum) ToPointer() *SourceBambooHrBambooHrEnum {
+func (e SourceBambooHrBambooHr) ToPointer() *SourceBambooHrBambooHr {
 	return &e
 }
 
-func (e *SourceBambooHrBambooHrEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceBambooHrBambooHr) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "bamboo-hr":
-		*e = SourceBambooHrBambooHrEnum(v)
+		*e = SourceBambooHrBambooHr(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceBambooHrBambooHrEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceBambooHrBambooHr: %v", v)
 	}
 }
 
@@ -37,8 +37,8 @@ type SourceBambooHr struct {
 	// Comma-separated list of fields to include in custom reports.
 	CustomReportsFields *string `json:"custom_reports_fields,omitempty"`
 	// If true, the custom reports endpoint will include the default fields defined here: https://documentation.bamboohr.com/docs/list-of-field-names.
-	CustomReportsIncludeDefaultFields *bool                      `json:"custom_reports_include_default_fields,omitempty"`
-	SourceType                        SourceBambooHrBambooHrEnum `json:"sourceType"`
+	CustomReportsIncludeDefaultFields *bool                  `json:"custom_reports_include_default_fields,omitempty"`
+	SourceType                        SourceBambooHrBambooHr `json:"sourceType"`
 	// Sub Domain of bamboo hr
 	Subdomain string `json:"subdomain"`
 }

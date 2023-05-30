@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceOrbResourceModel) ToCreateSDKType() *shared.SourceOrbCreateRequest {
@@ -24,7 +25,7 @@ func (r *SourceOrbResourceModel) ToCreateSDKType() *shared.SourceOrbCreateReques
 	} else {
 		planID = nil
 	}
-	sourceType := shared.SourceOrbOrbEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceOrbOrb(r.Configuration.SourceType.ValueString())
 	startDate := r.Configuration.StartDate.ValueString()
 	stringEventPropertiesKeys := make([]string, 0)
 	for _, stringEventPropertiesKeysItem := range r.Configuration.StringEventPropertiesKeys {
@@ -66,4 +67,11 @@ func (r *SourceOrbResourceModel) ToCreateSDKType() *shared.SourceOrbCreateReques
 func (r *SourceOrbResourceModel) ToDeleteSDKType() *shared.SourceOrbCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceOrbResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

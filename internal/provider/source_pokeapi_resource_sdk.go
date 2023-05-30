@@ -4,11 +4,12 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourcePokeapiResourceModel) ToCreateSDKType() *shared.SourcePokeapiCreateRequest {
 	pokemonName := r.Configuration.PokemonName.ValueString()
-	sourceType := shared.SourcePokeapiPokeapiEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourcePokeapiPokeapi(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourcePokeapi{
 		PokemonName: pokemonName,
 		SourceType:  sourceType,
@@ -33,4 +34,11 @@ func (r *SourcePokeapiResourceModel) ToCreateSDKType() *shared.SourcePokeapiCrea
 func (r *SourcePokeapiResourceModel) ToDeleteSDKType() *shared.SourcePokeapiCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourcePokeapiResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

@@ -7,44 +7,44 @@ import (
 	"fmt"
 )
 
-type SourceAmazonAdsAuthTypeEnum string
+type SourceAmazonAdsAuthType string
 
 const (
-	SourceAmazonAdsAuthTypeEnumOauth20 SourceAmazonAdsAuthTypeEnum = "oauth2.0"
+	SourceAmazonAdsAuthTypeOauth20 SourceAmazonAdsAuthType = "oauth2.0"
 )
 
-func (e SourceAmazonAdsAuthTypeEnum) ToPointer() *SourceAmazonAdsAuthTypeEnum {
+func (e SourceAmazonAdsAuthType) ToPointer() *SourceAmazonAdsAuthType {
 	return &e
 }
 
-func (e *SourceAmazonAdsAuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceAmazonAdsAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "oauth2.0":
-		*e = SourceAmazonAdsAuthTypeEnum(v)
+		*e = SourceAmazonAdsAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAmazonAdsAuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceAmazonAdsAuthType: %v", v)
 	}
 }
 
-// SourceAmazonAdsRegionEnum - Region to pull data from (EU/NA/FE). See <a href="https://advertising.amazon.com/API/docs/en-us/info/api-overview#api-endpoints">docs</a> for more details.
-type SourceAmazonAdsRegionEnum string
+// SourceAmazonAdsRegion - Region to pull data from (EU/NA/FE). See <a href="https://advertising.amazon.com/API/docs/en-us/info/api-overview#api-endpoints">docs</a> for more details.
+type SourceAmazonAdsRegion string
 
 const (
-	SourceAmazonAdsRegionEnumNa SourceAmazonAdsRegionEnum = "NA"
-	SourceAmazonAdsRegionEnumEu SourceAmazonAdsRegionEnum = "EU"
-	SourceAmazonAdsRegionEnumFe SourceAmazonAdsRegionEnum = "FE"
+	SourceAmazonAdsRegionNa SourceAmazonAdsRegion = "NA"
+	SourceAmazonAdsRegionEu SourceAmazonAdsRegion = "EU"
+	SourceAmazonAdsRegionFe SourceAmazonAdsRegion = "FE"
 )
 
-func (e SourceAmazonAdsRegionEnum) ToPointer() *SourceAmazonAdsRegionEnum {
+func (e SourceAmazonAdsRegion) ToPointer() *SourceAmazonAdsRegion {
 	return &e
 }
 
-func (e *SourceAmazonAdsRegionEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceAmazonAdsRegion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -55,31 +55,31 @@ func (e *SourceAmazonAdsRegionEnum) UnmarshalJSON(data []byte) error {
 	case "EU":
 		fallthrough
 	case "FE":
-		*e = SourceAmazonAdsRegionEnum(v)
+		*e = SourceAmazonAdsRegion(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAmazonAdsRegionEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceAmazonAdsRegion: %v", v)
 	}
 }
 
-type SourceAmazonAdsReportRecordTypesEnum string
+type SourceAmazonAdsReportRecordTypes string
 
 const (
-	SourceAmazonAdsReportRecordTypesEnumAdGroups      SourceAmazonAdsReportRecordTypesEnum = "adGroups"
-	SourceAmazonAdsReportRecordTypesEnumAsins         SourceAmazonAdsReportRecordTypesEnum = "asins"
-	SourceAmazonAdsReportRecordTypesEnumAsinsKeywords SourceAmazonAdsReportRecordTypesEnum = "asins_keywords"
-	SourceAmazonAdsReportRecordTypesEnumAsinsTargets  SourceAmazonAdsReportRecordTypesEnum = "asins_targets"
-	SourceAmazonAdsReportRecordTypesEnumCampaigns     SourceAmazonAdsReportRecordTypesEnum = "campaigns"
-	SourceAmazonAdsReportRecordTypesEnumKeywords      SourceAmazonAdsReportRecordTypesEnum = "keywords"
-	SourceAmazonAdsReportRecordTypesEnumProductAds    SourceAmazonAdsReportRecordTypesEnum = "productAds"
-	SourceAmazonAdsReportRecordTypesEnumTargets       SourceAmazonAdsReportRecordTypesEnum = "targets"
+	SourceAmazonAdsReportRecordTypesAdGroups      SourceAmazonAdsReportRecordTypes = "adGroups"
+	SourceAmazonAdsReportRecordTypesAsins         SourceAmazonAdsReportRecordTypes = "asins"
+	SourceAmazonAdsReportRecordTypesAsinsKeywords SourceAmazonAdsReportRecordTypes = "asins_keywords"
+	SourceAmazonAdsReportRecordTypesAsinsTargets  SourceAmazonAdsReportRecordTypes = "asins_targets"
+	SourceAmazonAdsReportRecordTypesCampaigns     SourceAmazonAdsReportRecordTypes = "campaigns"
+	SourceAmazonAdsReportRecordTypesKeywords      SourceAmazonAdsReportRecordTypes = "keywords"
+	SourceAmazonAdsReportRecordTypesProductAds    SourceAmazonAdsReportRecordTypes = "productAds"
+	SourceAmazonAdsReportRecordTypesTargets       SourceAmazonAdsReportRecordTypes = "targets"
 )
 
-func (e SourceAmazonAdsReportRecordTypesEnum) ToPointer() *SourceAmazonAdsReportRecordTypesEnum {
+func (e SourceAmazonAdsReportRecordTypes) ToPointer() *SourceAmazonAdsReportRecordTypes {
 	return &e
 }
 
-func (e *SourceAmazonAdsReportRecordTypesEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceAmazonAdsReportRecordTypes) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -100,50 +100,50 @@ func (e *SourceAmazonAdsReportRecordTypesEnum) UnmarshalJSON(data []byte) error 
 	case "productAds":
 		fallthrough
 	case "targets":
-		*e = SourceAmazonAdsReportRecordTypesEnum(v)
+		*e = SourceAmazonAdsReportRecordTypes(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAmazonAdsReportRecordTypesEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceAmazonAdsReportRecordTypes: %v", v)
 	}
 }
 
-type SourceAmazonAdsAmazonAdsEnum string
+type SourceAmazonAdsAmazonAds string
 
 const (
-	SourceAmazonAdsAmazonAdsEnumAmazonAds SourceAmazonAdsAmazonAdsEnum = "amazon-ads"
+	SourceAmazonAdsAmazonAdsAmazonAds SourceAmazonAdsAmazonAds = "amazon-ads"
 )
 
-func (e SourceAmazonAdsAmazonAdsEnum) ToPointer() *SourceAmazonAdsAmazonAdsEnum {
+func (e SourceAmazonAdsAmazonAds) ToPointer() *SourceAmazonAdsAmazonAds {
 	return &e
 }
 
-func (e *SourceAmazonAdsAmazonAdsEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceAmazonAdsAmazonAds) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "amazon-ads":
-		*e = SourceAmazonAdsAmazonAdsEnum(v)
+		*e = SourceAmazonAdsAmazonAds(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAmazonAdsAmazonAdsEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceAmazonAdsAmazonAds: %v", v)
 	}
 }
 
-type SourceAmazonAdsStateFilterEnum string
+type SourceAmazonAdsStateFilter string
 
 const (
-	SourceAmazonAdsStateFilterEnumEnabled  SourceAmazonAdsStateFilterEnum = "enabled"
-	SourceAmazonAdsStateFilterEnumPaused   SourceAmazonAdsStateFilterEnum = "paused"
-	SourceAmazonAdsStateFilterEnumArchived SourceAmazonAdsStateFilterEnum = "archived"
+	SourceAmazonAdsStateFilterEnabled  SourceAmazonAdsStateFilter = "enabled"
+	SourceAmazonAdsStateFilterPaused   SourceAmazonAdsStateFilter = "paused"
+	SourceAmazonAdsStateFilterArchived SourceAmazonAdsStateFilter = "archived"
 )
 
-func (e SourceAmazonAdsStateFilterEnum) ToPointer() *SourceAmazonAdsStateFilterEnum {
+func (e SourceAmazonAdsStateFilter) ToPointer() *SourceAmazonAdsStateFilter {
 	return &e
 }
 
-func (e *SourceAmazonAdsStateFilterEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceAmazonAdsStateFilter) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -154,15 +154,15 @@ func (e *SourceAmazonAdsStateFilterEnum) UnmarshalJSON(data []byte) error {
 	case "paused":
 		fallthrough
 	case "archived":
-		*e = SourceAmazonAdsStateFilterEnum(v)
+		*e = SourceAmazonAdsStateFilter(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAmazonAdsStateFilterEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceAmazonAdsStateFilter: %v", v)
 	}
 }
 
 type SourceAmazonAds struct {
-	AuthType *SourceAmazonAdsAuthTypeEnum `json:"auth_type,omitempty"`
+	AuthType *SourceAmazonAdsAuthType `json:"auth_type,omitempty"`
 	// The client ID of your Amazon Ads developer application. See the <a href="https://advertising.amazon.com/API/docs/en-us/get-started/generate-api-tokens#retrieve-your-client-id-and-client-secret">docs</a> for more information.
 	ClientID string `json:"client_id"`
 	// The client secret of your Amazon Ads developer application. See the <a href="https://advertising.amazon.com/API/docs/en-us/get-started/generate-api-tokens#retrieve-your-client-id-and-client-secret">docs</a> for more information.
@@ -174,12 +174,12 @@ type SourceAmazonAds struct {
 	// Amazon Ads refresh token. See the <a href="https://advertising.amazon.com/API/docs/en-us/get-started/generate-api-tokens">docs</a> for more information on how to obtain this token.
 	RefreshToken string `json:"refresh_token"`
 	// Region to pull data from (EU/NA/FE). See <a href="https://advertising.amazon.com/API/docs/en-us/info/api-overview#api-endpoints">docs</a> for more details.
-	Region *SourceAmazonAdsRegionEnum `json:"region,omitempty"`
+	Region *SourceAmazonAdsRegion `json:"region,omitempty"`
 	// Optional configuration which accepts an array of string of record types. Leave blank for default behaviour to pull all report types. Use this config option only if you want to pull specific report type(s). See <a href="https://advertising.amazon.com/API/docs/en-us/reporting/v2/report-types">docs</a> for more details
-	ReportRecordTypes []SourceAmazonAdsReportRecordTypesEnum `json:"report_record_types,omitempty"`
-	SourceType        SourceAmazonAdsAmazonAdsEnum           `json:"sourceType"`
+	ReportRecordTypes []SourceAmazonAdsReportRecordTypes `json:"report_record_types,omitempty"`
+	SourceType        SourceAmazonAdsAmazonAds           `json:"sourceType"`
 	// The Start date for collecting reports, should not be more than 60 days in the past. In YYYY-MM-DD format
 	StartDate *string `json:"start_date,omitempty"`
 	// Reflects the state of the Display, Product, and Brand Campaign streams as enabled, paused, or archived. If you do not populate this field, it will be ignored completely.
-	StateFilter []SourceAmazonAdsStateFilterEnum `json:"state_filter,omitempty"`
+	StateFilter []SourceAmazonAdsStateFilter `json:"state_filter,omitempty"`
 }

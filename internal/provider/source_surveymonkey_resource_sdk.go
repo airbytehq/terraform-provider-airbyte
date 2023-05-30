@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
@@ -11,7 +12,7 @@ func (r *SourceSurveymonkeyResourceModel) ToCreateSDKType() *shared.SourceSurvey
 	var credentials *shared.SourceSurveymonkeySurveyMonkeyAuthorizationMethod
 	if r.Configuration.Credentials != nil {
 		accessToken := r.Configuration.Credentials.AccessToken.ValueString()
-		authMethod := shared.SourceSurveymonkeySurveyMonkeyAuthorizationMethodAuthMethodEnum(r.Configuration.Credentials.AuthMethod.ValueString())
+		authMethod := shared.SourceSurveymonkeySurveyMonkeyAuthorizationMethodAuthMethod(r.Configuration.Credentials.AuthMethod.ValueString())
 		clientID := new(string)
 		if !r.Configuration.Credentials.ClientID.IsUnknown() && !r.Configuration.Credentials.ClientID.IsNull() {
 			*clientID = r.Configuration.Credentials.ClientID.ValueString()
@@ -31,13 +32,13 @@ func (r *SourceSurveymonkeyResourceModel) ToCreateSDKType() *shared.SourceSurvey
 			ClientSecret: clientSecret,
 		}
 	}
-	origin := new(shared.SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccountEnum)
+	origin := new(shared.SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccount)
 	if !r.Configuration.Origin.IsUnknown() && !r.Configuration.Origin.IsNull() {
-		*origin = shared.SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccountEnum(r.Configuration.Origin.ValueString())
+		*origin = shared.SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccount(r.Configuration.Origin.ValueString())
 	} else {
 		origin = nil
 	}
-	sourceType := shared.SourceSurveymonkeySurveymonkeyEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceSurveymonkeySurveymonkey(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	surveyIds := make([]string, 0)
 	for _, surveyIdsItem := range r.Configuration.SurveyIds {
@@ -70,4 +71,11 @@ func (r *SourceSurveymonkeyResourceModel) ToCreateSDKType() *shared.SourceSurvey
 func (r *SourceSurveymonkeyResourceModel) ToDeleteSDKType() *shared.SourceSurveymonkeyCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceSurveymonkeyResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

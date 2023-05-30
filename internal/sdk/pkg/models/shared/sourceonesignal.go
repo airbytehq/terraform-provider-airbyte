@@ -14,27 +14,27 @@ type SourceOnesignalApplications struct {
 	AppName   *string `json:"app_name,omitempty"`
 }
 
-type SourceOnesignalOnesignalEnum string
+type SourceOnesignalOnesignal string
 
 const (
-	SourceOnesignalOnesignalEnumOnesignal SourceOnesignalOnesignalEnum = "onesignal"
+	SourceOnesignalOnesignalOnesignal SourceOnesignalOnesignal = "onesignal"
 )
 
-func (e SourceOnesignalOnesignalEnum) ToPointer() *SourceOnesignalOnesignalEnum {
+func (e SourceOnesignalOnesignal) ToPointer() *SourceOnesignalOnesignal {
 	return &e
 }
 
-func (e *SourceOnesignalOnesignalEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceOnesignalOnesignal) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "onesignal":
-		*e = SourceOnesignalOnesignalEnum(v)
+		*e = SourceOnesignalOnesignal(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceOnesignalOnesignalEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceOnesignalOnesignal: %v", v)
 	}
 }
 
@@ -42,8 +42,8 @@ type SourceOnesignal struct {
 	// Applications keys, see the <a href="https://documentation.onesignal.com/docs/accounts-and-keys">docs</a> for more information on how to obtain this data
 	Applications []SourceOnesignalApplications `json:"applications"`
 	// Comma-separated list of names and the value (sum/count) for the returned outcome data. See the <a href="https://documentation.onesignal.com/reference/view-outcomes">docs</a> for more details
-	OutcomeNames string                       `json:"outcome_names"`
-	SourceType   SourceOnesignalOnesignalEnum `json:"sourceType"`
+	OutcomeNames string                   `json:"outcome_names"`
+	SourceType   SourceOnesignalOnesignal `json:"sourceType"`
 	// The date from which you'd like to replicate data for OneSignal API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 	StartDate time.Time `json:"start_date"`
 	// OneSignal User Auth Key, see the <a href="https://documentation.onesignal.com/docs/accounts-and-keys#user-auth-key">docs</a> for more information on how to obtain this key.

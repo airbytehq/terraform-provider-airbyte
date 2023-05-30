@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type SourceFakerFakerEnum string
+type SourceFakerFaker string
 
 const (
-	SourceFakerFakerEnumFaker SourceFakerFakerEnum = "faker"
+	SourceFakerFakerFaker SourceFakerFaker = "faker"
 )
 
-func (e SourceFakerFakerEnum) ToPointer() *SourceFakerFakerEnum {
+func (e SourceFakerFaker) ToPointer() *SourceFakerFaker {
 	return &e
 }
 
-func (e *SourceFakerFakerEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceFakerFaker) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "faker":
-		*e = SourceFakerFakerEnum(v)
+		*e = SourceFakerFaker(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFakerFakerEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceFakerFaker: %v", v)
 	}
 }
 
@@ -41,6 +41,6 @@ type SourceFaker struct {
 	// How many fake records will be returned for each sync, for each stream?  By default, it will take 2 syncs to create the requested 1000 records.
 	RecordsPerSync *int64 `json:"records_per_sync,omitempty"`
 	// Manually control the faker random seed to return the same values on subsequent runs (leave -1 for random)
-	Seed       *int64               `json:"seed,omitempty"`
-	SourceType SourceFakerFakerEnum `json:"sourceType"`
+	Seed       *int64           `json:"seed,omitempty"`
+	SourceType SourceFakerFaker `json:"sourceType"`
 }

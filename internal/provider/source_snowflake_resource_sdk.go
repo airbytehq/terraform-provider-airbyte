@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceSnowflakeResourceModel) ToCreateSDKType() *shared.SourceSnowflakeCreateRequest {
@@ -16,7 +17,7 @@ func (r *SourceSnowflakeResourceModel) ToCreateSDKType() *shared.SourceSnowflake
 		} else {
 			accessToken = nil
 		}
-		authType := shared.SourceSnowflakeAuthorizationMethodOAuth20AuthTypeEnum(r.Configuration.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.AuthType.ValueString())
+		authType := shared.SourceSnowflakeAuthorizationMethodOAuth20AuthType(r.Configuration.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.AuthType.ValueString())
 		clientID := r.Configuration.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.ClientID.ValueString()
 		clientSecret := r.Configuration.Credentials.SourceSnowflakeAuthorizationMethodOAuth20.ClientSecret.ValueString()
 		refreshToken := new(string)
@@ -40,7 +41,7 @@ func (r *SourceSnowflakeResourceModel) ToCreateSDKType() *shared.SourceSnowflake
 	}
 	var sourceSnowflakeAuthorizationMethodUsernameAndPassword *shared.SourceSnowflakeAuthorizationMethodUsernameAndPassword
 	if r.Configuration.Credentials.SourceSnowflakeAuthorizationMethodUsernameAndPassword != nil {
-		authType1 := shared.SourceSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeEnum(r.Configuration.Credentials.SourceSnowflakeAuthorizationMethodUsernameAndPassword.AuthType.ValueString())
+		authType1 := shared.SourceSnowflakeAuthorizationMethodUsernameAndPasswordAuthType(r.Configuration.Credentials.SourceSnowflakeAuthorizationMethodUsernameAndPassword.AuthType.ValueString())
 		password := r.Configuration.Credentials.SourceSnowflakeAuthorizationMethodUsernameAndPassword.Password.ValueString()
 		username := r.Configuration.Credentials.SourceSnowflakeAuthorizationMethodUsernameAndPassword.Username.ValueString()
 		sourceSnowflakeAuthorizationMethodUsernameAndPassword = &shared.SourceSnowflakeAuthorizationMethodUsernameAndPassword{
@@ -69,7 +70,7 @@ func (r *SourceSnowflakeResourceModel) ToCreateSDKType() *shared.SourceSnowflake
 	} else {
 		schema = nil
 	}
-	sourceType := shared.SourceSnowflakeSnowflakeEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceSnowflakeSnowflake(r.Configuration.SourceType.ValueString())
 	warehouse := r.Configuration.Warehouse.ValueString()
 	configuration := shared.SourceSnowflake{
 		Credentials:   credentials,
@@ -101,4 +102,11 @@ func (r *SourceSnowflakeResourceModel) ToCreateSDKType() *shared.SourceSnowflake
 func (r *SourceSnowflakeResourceModel) ToDeleteSDKType() *shared.SourceSnowflakeCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceSnowflakeResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

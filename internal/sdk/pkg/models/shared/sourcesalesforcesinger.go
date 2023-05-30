@@ -7,19 +7,19 @@ import (
 	"fmt"
 )
 
-// SourceSalesforceSingerAPITypeEnum - Unless you know that you are transferring a very small amount of data, prefer using the BULK API. This will help avoid using up all of your API call quota with Salesforce. Valid values are BULK or REST.
-type SourceSalesforceSingerAPITypeEnum string
+// SourceSalesforceSingerAPIType - Unless you know that you are transferring a very small amount of data, prefer using the BULK API. This will help avoid using up all of your API call quota with Salesforce. Valid values are BULK or REST.
+type SourceSalesforceSingerAPIType string
 
 const (
-	SourceSalesforceSingerAPITypeEnumBulk SourceSalesforceSingerAPITypeEnum = "BULK"
-	SourceSalesforceSingerAPITypeEnumRest SourceSalesforceSingerAPITypeEnum = "REST"
+	SourceSalesforceSingerAPITypeBulk SourceSalesforceSingerAPIType = "BULK"
+	SourceSalesforceSingerAPITypeRest SourceSalesforceSingerAPIType = "REST"
 )
 
-func (e SourceSalesforceSingerAPITypeEnum) ToPointer() *SourceSalesforceSingerAPITypeEnum {
+func (e SourceSalesforceSingerAPIType) ToPointer() *SourceSalesforceSingerAPIType {
 	return &e
 }
 
-func (e *SourceSalesforceSingerAPITypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceSalesforceSingerAPIType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -28,40 +28,40 @@ func (e *SourceSalesforceSingerAPITypeEnum) UnmarshalJSON(data []byte) error {
 	case "BULK":
 		fallthrough
 	case "REST":
-		*e = SourceSalesforceSingerAPITypeEnum(v)
+		*e = SourceSalesforceSingerAPIType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSalesforceSingerAPITypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceSalesforceSingerAPIType: %v", v)
 	}
 }
 
-type SourceSalesforceSingerSalesforceSingerEnum string
+type SourceSalesforceSingerSalesforceSinger string
 
 const (
-	SourceSalesforceSingerSalesforceSingerEnumSalesforceSinger SourceSalesforceSingerSalesforceSingerEnum = "salesforce-singer"
+	SourceSalesforceSingerSalesforceSingerSalesforceSinger SourceSalesforceSingerSalesforceSinger = "salesforce-singer"
 )
 
-func (e SourceSalesforceSingerSalesforceSingerEnum) ToPointer() *SourceSalesforceSingerSalesforceSingerEnum {
+func (e SourceSalesforceSingerSalesforceSinger) ToPointer() *SourceSalesforceSingerSalesforceSinger {
 	return &e
 }
 
-func (e *SourceSalesforceSingerSalesforceSingerEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceSalesforceSingerSalesforceSinger) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "salesforce-singer":
-		*e = SourceSalesforceSingerSalesforceSingerEnum(v)
+		*e = SourceSalesforceSingerSalesforceSinger(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSalesforceSingerSalesforceSingerEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceSalesforceSingerSalesforceSinger: %v", v)
 	}
 }
 
 type SourceSalesforceSinger struct {
 	// Unless you know that you are transferring a very small amount of data, prefer using the BULK API. This will help avoid using up all of your API call quota with Salesforce. Valid values are BULK or REST.
-	APIType SourceSalesforceSingerAPITypeEnum `json:"api_type"`
+	APIType SourceSalesforceSingerAPIType `json:"api_type"`
 	// The Consumer Key that can be found when viewing your app in Salesforce
 	ClientID string `json:"client_id"`
 	// The Consumer Secret that can be found when viewing your app in Salesforce
@@ -73,8 +73,8 @@ type SourceSalesforceSinger struct {
 	// Determines the maximum allowed API quota percentage the connector is allowed to consume at any time
 	QuotaPercentTotal *float64 `json:"quota_percent_total,omitempty"`
 	// Salesforce Refresh Token used for Airbyte to access your Salesforce account. If you don't know what this is, follow this <a href="https://medium.com/@bpmmendis94/obtain-access-refresh-tokens-from-salesforce-rest-api-a324fe4ccd9b">guide</a> to retrieve it.
-	RefreshToken string                                     `json:"refresh_token"`
-	SourceType   SourceSalesforceSingerSalesforceSingerEnum `json:"sourceType"`
+	RefreshToken string                                 `json:"refresh_token"`
+	SourceType   SourceSalesforceSingerSalesforceSinger `json:"sourceType"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 	StartDate string `json:"start_date"`
 }

@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceFaunaResourceModel) ToCreateSDKType() *shared.SourceFaunaCreateRequest {
@@ -12,7 +13,7 @@ func (r *SourceFaunaResourceModel) ToCreateSDKType() *shared.SourceFaunaCreateRe
 		var deletions shared.SourceFaunaCollectionDeletionMode
 		var sourceFaunaCollectionDeletionModeDisabled *shared.SourceFaunaCollectionDeletionModeDisabled
 		if r.Configuration.Collection.Deletions.SourceFaunaCollectionDeletionModeDisabled != nil {
-			deletionMode := shared.SourceFaunaCollectionDeletionModeDisabledDeletionModeEnum(r.Configuration.Collection.Deletions.SourceFaunaCollectionDeletionModeDisabled.DeletionMode.ValueString())
+			deletionMode := shared.SourceFaunaCollectionDeletionModeDisabledDeletionMode(r.Configuration.Collection.Deletions.SourceFaunaCollectionDeletionModeDisabled.DeletionMode.ValueString())
 			sourceFaunaCollectionDeletionModeDisabled = &shared.SourceFaunaCollectionDeletionModeDisabled{
 				DeletionMode: deletionMode,
 			}
@@ -25,7 +26,7 @@ func (r *SourceFaunaResourceModel) ToCreateSDKType() *shared.SourceFaunaCreateRe
 		var sourceFaunaCollectionDeletionModeEnabled *shared.SourceFaunaCollectionDeletionModeEnabled
 		if r.Configuration.Collection.Deletions.SourceFaunaCollectionDeletionModeEnabled != nil {
 			column := r.Configuration.Collection.Deletions.SourceFaunaCollectionDeletionModeEnabled.Column.ValueString()
-			deletionMode1 := shared.SourceFaunaCollectionDeletionModeEnabledDeletionModeEnum(r.Configuration.Collection.Deletions.SourceFaunaCollectionDeletionModeEnabled.DeletionMode.ValueString())
+			deletionMode1 := shared.SourceFaunaCollectionDeletionModeEnabledDeletionMode(r.Configuration.Collection.Deletions.SourceFaunaCollectionDeletionModeEnabled.DeletionMode.ValueString())
 			sourceFaunaCollectionDeletionModeEnabled = &shared.SourceFaunaCollectionDeletionModeEnabled{
 				Column:       column,
 				DeletionMode: deletionMode1,
@@ -46,7 +47,7 @@ func (r *SourceFaunaResourceModel) ToCreateSDKType() *shared.SourceFaunaCreateRe
 	port := r.Configuration.Port.ValueInt64()
 	scheme := r.Configuration.Scheme.ValueString()
 	secret := r.Configuration.Secret.ValueString()
-	sourceType := shared.SourceFaunaFaunaEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceFaunaFauna(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceFauna{
 		Collection: collection,
 		Domain:     domain,
@@ -75,4 +76,11 @@ func (r *SourceFaunaResourceModel) ToCreateSDKType() *shared.SourceFaunaCreateRe
 func (r *SourceFaunaResourceModel) ToDeleteSDKType() *shared.SourceFaunaCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceFaunaResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

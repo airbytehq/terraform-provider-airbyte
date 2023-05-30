@@ -4,11 +4,12 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceSmartengageResourceModel) ToCreateSDKType() *shared.SourceSmartengageCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	sourceType := shared.SourceSmartengageSmartengageEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceSmartengageSmartengage(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceSmartengage{
 		APIKey:     apiKey,
 		SourceType: sourceType,
@@ -33,4 +34,11 @@ func (r *SourceSmartengageResourceModel) ToCreateSDKType() *shared.SourceSmarten
 func (r *SourceSmartengageResourceModel) ToDeleteSDKType() *shared.SourceSmartengageCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceSmartengageResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

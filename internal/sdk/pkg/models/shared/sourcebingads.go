@@ -8,56 +8,56 @@ import (
 	"fmt"
 )
 
-type SourceBingAdsAuthMethodEnum string
+type SourceBingAdsAuthMethod string
 
 const (
-	SourceBingAdsAuthMethodEnumOauth20 SourceBingAdsAuthMethodEnum = "oauth2.0"
+	SourceBingAdsAuthMethodOauth20 SourceBingAdsAuthMethod = "oauth2.0"
 )
 
-func (e SourceBingAdsAuthMethodEnum) ToPointer() *SourceBingAdsAuthMethodEnum {
+func (e SourceBingAdsAuthMethod) ToPointer() *SourceBingAdsAuthMethod {
 	return &e
 }
 
-func (e *SourceBingAdsAuthMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceBingAdsAuthMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "oauth2.0":
-		*e = SourceBingAdsAuthMethodEnum(v)
+		*e = SourceBingAdsAuthMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceBingAdsAuthMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceBingAdsAuthMethod: %v", v)
 	}
 }
 
-type SourceBingAdsBingAdsEnum string
+type SourceBingAdsBingAds string
 
 const (
-	SourceBingAdsBingAdsEnumBingAds SourceBingAdsBingAdsEnum = "bing-ads"
+	SourceBingAdsBingAdsBingAds SourceBingAdsBingAds = "bing-ads"
 )
 
-func (e SourceBingAdsBingAdsEnum) ToPointer() *SourceBingAdsBingAdsEnum {
+func (e SourceBingAdsBingAds) ToPointer() *SourceBingAdsBingAds {
 	return &e
 }
 
-func (e *SourceBingAdsBingAdsEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceBingAdsBingAds) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "bing-ads":
-		*e = SourceBingAdsBingAdsEnum(v)
+		*e = SourceBingAdsBingAds(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceBingAdsBingAdsEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceBingAdsBingAds: %v", v)
 	}
 }
 
 type SourceBingAds struct {
-	AuthMethod *SourceBingAdsAuthMethodEnum `json:"auth_method,omitempty"`
+	AuthMethod *SourceBingAdsAuthMethod `json:"auth_method,omitempty"`
 	// The Client ID of your Microsoft Advertising developer application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your Microsoft Advertising developer application.
@@ -69,8 +69,8 @@ type SourceBingAds struct {
 	// Refresh Token to renew the expired Access Token.
 	RefreshToken string `json:"refresh_token"`
 	// The start date from which to begin replicating report data. Any data generated before this date will not be replicated in reports. This is a UTC date in YYYY-MM-DD format.
-	ReportsStartDate types.Date               `json:"reports_start_date"`
-	SourceType       SourceBingAdsBingAdsEnum `json:"sourceType"`
+	ReportsStartDate types.Date           `json:"reports_start_date"`
+	SourceType       SourceBingAdsBingAds `json:"sourceType"`
 	// The Tenant ID of your Microsoft Advertising developer application. Set this to "common" unless you know you need a different value.
 	TenantID *string `json:"tenant_id,omitempty"`
 }

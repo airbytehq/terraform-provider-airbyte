@@ -4,13 +4,14 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
 func (r *SourceLinnworksResourceModel) ToCreateSDKType() *shared.SourceLinnworksCreateRequest {
 	applicationID := r.Configuration.ApplicationID.ValueString()
 	applicationSecret := r.Configuration.ApplicationSecret.ValueString()
-	sourceType := shared.SourceLinnworksLinnworksEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceLinnworksLinnworks(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	token := r.Configuration.Token.ValueString()
 	configuration := shared.SourceLinnworks{
@@ -40,4 +41,11 @@ func (r *SourceLinnworksResourceModel) ToCreateSDKType() *shared.SourceLinnworks
 func (r *SourceLinnworksResourceModel) ToDeleteSDKType() *shared.SourceLinnworksCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceLinnworksResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

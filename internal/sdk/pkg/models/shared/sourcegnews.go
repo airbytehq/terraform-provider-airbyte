@@ -7,47 +7,47 @@ import (
 	"fmt"
 )
 
-// SourceGnewsCountryEnum - This parameter allows you to specify the country where the news articles returned by the API were published, the contents of the articles are not necessarily related to the specified country. You have to set as value the 2 letters code of the country you want to filter.
-type SourceGnewsCountryEnum string
+// SourceGnewsCountry - This parameter allows you to specify the country where the news articles returned by the API were published, the contents of the articles are not necessarily related to the specified country. You have to set as value the 2 letters code of the country you want to filter.
+type SourceGnewsCountry string
 
 const (
-	SourceGnewsCountryEnumAu SourceGnewsCountryEnum = "au"
-	SourceGnewsCountryEnumBr SourceGnewsCountryEnum = "br"
-	SourceGnewsCountryEnumCa SourceGnewsCountryEnum = "ca"
-	SourceGnewsCountryEnumCn SourceGnewsCountryEnum = "cn"
-	SourceGnewsCountryEnumEg SourceGnewsCountryEnum = "eg"
-	SourceGnewsCountryEnumFr SourceGnewsCountryEnum = "fr"
-	SourceGnewsCountryEnumDe SourceGnewsCountryEnum = "de"
-	SourceGnewsCountryEnumGr SourceGnewsCountryEnum = "gr"
-	SourceGnewsCountryEnumHk SourceGnewsCountryEnum = "hk"
-	SourceGnewsCountryEnumIn SourceGnewsCountryEnum = "in"
-	SourceGnewsCountryEnumIe SourceGnewsCountryEnum = "ie"
-	SourceGnewsCountryEnumIl SourceGnewsCountryEnum = "il"
-	SourceGnewsCountryEnumIt SourceGnewsCountryEnum = "it"
-	SourceGnewsCountryEnumJp SourceGnewsCountryEnum = "jp"
-	SourceGnewsCountryEnumNl SourceGnewsCountryEnum = "nl"
-	SourceGnewsCountryEnumNo SourceGnewsCountryEnum = "no"
-	SourceGnewsCountryEnumPk SourceGnewsCountryEnum = "pk"
-	SourceGnewsCountryEnumPe SourceGnewsCountryEnum = "pe"
-	SourceGnewsCountryEnumPh SourceGnewsCountryEnum = "ph"
-	SourceGnewsCountryEnumPt SourceGnewsCountryEnum = "pt"
-	SourceGnewsCountryEnumRo SourceGnewsCountryEnum = "ro"
-	SourceGnewsCountryEnumRu SourceGnewsCountryEnum = "ru"
-	SourceGnewsCountryEnumSg SourceGnewsCountryEnum = "sg"
-	SourceGnewsCountryEnumEs SourceGnewsCountryEnum = "es"
-	SourceGnewsCountryEnumSe SourceGnewsCountryEnum = "se"
-	SourceGnewsCountryEnumCh SourceGnewsCountryEnum = "ch"
-	SourceGnewsCountryEnumTw SourceGnewsCountryEnum = "tw"
-	SourceGnewsCountryEnumUa SourceGnewsCountryEnum = "ua"
-	SourceGnewsCountryEnumGb SourceGnewsCountryEnum = "gb"
-	SourceGnewsCountryEnumUs SourceGnewsCountryEnum = "us"
+	SourceGnewsCountryAu SourceGnewsCountry = "au"
+	SourceGnewsCountryBr SourceGnewsCountry = "br"
+	SourceGnewsCountryCa SourceGnewsCountry = "ca"
+	SourceGnewsCountryCn SourceGnewsCountry = "cn"
+	SourceGnewsCountryEg SourceGnewsCountry = "eg"
+	SourceGnewsCountryFr SourceGnewsCountry = "fr"
+	SourceGnewsCountryDe SourceGnewsCountry = "de"
+	SourceGnewsCountryGr SourceGnewsCountry = "gr"
+	SourceGnewsCountryHk SourceGnewsCountry = "hk"
+	SourceGnewsCountryIn SourceGnewsCountry = "in"
+	SourceGnewsCountryIe SourceGnewsCountry = "ie"
+	SourceGnewsCountryIl SourceGnewsCountry = "il"
+	SourceGnewsCountryIt SourceGnewsCountry = "it"
+	SourceGnewsCountryJp SourceGnewsCountry = "jp"
+	SourceGnewsCountryNl SourceGnewsCountry = "nl"
+	SourceGnewsCountryNo SourceGnewsCountry = "no"
+	SourceGnewsCountryPk SourceGnewsCountry = "pk"
+	SourceGnewsCountryPe SourceGnewsCountry = "pe"
+	SourceGnewsCountryPh SourceGnewsCountry = "ph"
+	SourceGnewsCountryPt SourceGnewsCountry = "pt"
+	SourceGnewsCountryRo SourceGnewsCountry = "ro"
+	SourceGnewsCountryRu SourceGnewsCountry = "ru"
+	SourceGnewsCountrySg SourceGnewsCountry = "sg"
+	SourceGnewsCountryEs SourceGnewsCountry = "es"
+	SourceGnewsCountrySe SourceGnewsCountry = "se"
+	SourceGnewsCountryCh SourceGnewsCountry = "ch"
+	SourceGnewsCountryTw SourceGnewsCountry = "tw"
+	SourceGnewsCountryUa SourceGnewsCountry = "ua"
+	SourceGnewsCountryGb SourceGnewsCountry = "gb"
+	SourceGnewsCountryUs SourceGnewsCountry = "us"
 )
 
-func (e SourceGnewsCountryEnum) ToPointer() *SourceGnewsCountryEnum {
+func (e SourceGnewsCountry) ToPointer() *SourceGnewsCountry {
 	return &e
 }
 
-func (e *SourceGnewsCountryEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceGnewsCountry) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -112,26 +112,26 @@ func (e *SourceGnewsCountryEnum) UnmarshalJSON(data []byte) error {
 	case "gb":
 		fallthrough
 	case "us":
-		*e = SourceGnewsCountryEnum(v)
+		*e = SourceGnewsCountry(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGnewsCountryEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceGnewsCountry: %v", v)
 	}
 }
 
-type SourceGnewsInEnum string
+type SourceGnewsIn string
 
 const (
-	SourceGnewsInEnumTitle       SourceGnewsInEnum = "title"
-	SourceGnewsInEnumDescription SourceGnewsInEnum = "description"
-	SourceGnewsInEnumContent     SourceGnewsInEnum = "content"
+	SourceGnewsInTitle       SourceGnewsIn = "title"
+	SourceGnewsInDescription SourceGnewsIn = "description"
+	SourceGnewsInContent     SourceGnewsIn = "content"
 )
 
-func (e SourceGnewsInEnum) ToPointer() *SourceGnewsInEnum {
+func (e SourceGnewsIn) ToPointer() *SourceGnewsIn {
 	return &e
 }
 
-func (e *SourceGnewsInEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceGnewsIn) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -142,45 +142,45 @@ func (e *SourceGnewsInEnum) UnmarshalJSON(data []byte) error {
 	case "description":
 		fallthrough
 	case "content":
-		*e = SourceGnewsInEnum(v)
+		*e = SourceGnewsIn(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGnewsInEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceGnewsIn: %v", v)
 	}
 }
 
-type SourceGnewsLanguageEnum string
+type SourceGnewsLanguage string
 
 const (
-	SourceGnewsLanguageEnumAr SourceGnewsLanguageEnum = "ar"
-	SourceGnewsLanguageEnumZh SourceGnewsLanguageEnum = "zh"
-	SourceGnewsLanguageEnumNl SourceGnewsLanguageEnum = "nl"
-	SourceGnewsLanguageEnumEn SourceGnewsLanguageEnum = "en"
-	SourceGnewsLanguageEnumFr SourceGnewsLanguageEnum = "fr"
-	SourceGnewsLanguageEnumDe SourceGnewsLanguageEnum = "de"
-	SourceGnewsLanguageEnumEl SourceGnewsLanguageEnum = "el"
-	SourceGnewsLanguageEnumHe SourceGnewsLanguageEnum = "he"
-	SourceGnewsLanguageEnumHi SourceGnewsLanguageEnum = "hi"
-	SourceGnewsLanguageEnumIt SourceGnewsLanguageEnum = "it"
-	SourceGnewsLanguageEnumJa SourceGnewsLanguageEnum = "ja"
-	SourceGnewsLanguageEnumMl SourceGnewsLanguageEnum = "ml"
-	SourceGnewsLanguageEnumMr SourceGnewsLanguageEnum = "mr"
-	SourceGnewsLanguageEnumNo SourceGnewsLanguageEnum = "no"
-	SourceGnewsLanguageEnumPt SourceGnewsLanguageEnum = "pt"
-	SourceGnewsLanguageEnumRo SourceGnewsLanguageEnum = "ro"
-	SourceGnewsLanguageEnumRu SourceGnewsLanguageEnum = "ru"
-	SourceGnewsLanguageEnumEs SourceGnewsLanguageEnum = "es"
-	SourceGnewsLanguageEnumSv SourceGnewsLanguageEnum = "sv"
-	SourceGnewsLanguageEnumTa SourceGnewsLanguageEnum = "ta"
-	SourceGnewsLanguageEnumTe SourceGnewsLanguageEnum = "te"
-	SourceGnewsLanguageEnumUk SourceGnewsLanguageEnum = "uk"
+	SourceGnewsLanguageAr SourceGnewsLanguage = "ar"
+	SourceGnewsLanguageZh SourceGnewsLanguage = "zh"
+	SourceGnewsLanguageNl SourceGnewsLanguage = "nl"
+	SourceGnewsLanguageEn SourceGnewsLanguage = "en"
+	SourceGnewsLanguageFr SourceGnewsLanguage = "fr"
+	SourceGnewsLanguageDe SourceGnewsLanguage = "de"
+	SourceGnewsLanguageEl SourceGnewsLanguage = "el"
+	SourceGnewsLanguageHe SourceGnewsLanguage = "he"
+	SourceGnewsLanguageHi SourceGnewsLanguage = "hi"
+	SourceGnewsLanguageIt SourceGnewsLanguage = "it"
+	SourceGnewsLanguageJa SourceGnewsLanguage = "ja"
+	SourceGnewsLanguageMl SourceGnewsLanguage = "ml"
+	SourceGnewsLanguageMr SourceGnewsLanguage = "mr"
+	SourceGnewsLanguageNo SourceGnewsLanguage = "no"
+	SourceGnewsLanguagePt SourceGnewsLanguage = "pt"
+	SourceGnewsLanguageRo SourceGnewsLanguage = "ro"
+	SourceGnewsLanguageRu SourceGnewsLanguage = "ru"
+	SourceGnewsLanguageEs SourceGnewsLanguage = "es"
+	SourceGnewsLanguageSv SourceGnewsLanguage = "sv"
+	SourceGnewsLanguageTa SourceGnewsLanguage = "ta"
+	SourceGnewsLanguageTe SourceGnewsLanguage = "te"
+	SourceGnewsLanguageUk SourceGnewsLanguage = "uk"
 )
 
-func (e SourceGnewsLanguageEnum) ToPointer() *SourceGnewsLanguageEnum {
+func (e SourceGnewsLanguage) ToPointer() *SourceGnewsLanguage {
 	return &e
 }
 
-func (e *SourceGnewsLanguageEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceGnewsLanguage) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -229,26 +229,26 @@ func (e *SourceGnewsLanguageEnum) UnmarshalJSON(data []byte) error {
 	case "te":
 		fallthrough
 	case "uk":
-		*e = SourceGnewsLanguageEnum(v)
+		*e = SourceGnewsLanguage(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGnewsLanguageEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceGnewsLanguage: %v", v)
 	}
 }
 
-type SourceGnewsNullableEnum string
+type SourceGnewsNullable string
 
 const (
-	SourceGnewsNullableEnumTitle       SourceGnewsNullableEnum = "title"
-	SourceGnewsNullableEnumDescription SourceGnewsNullableEnum = "description"
-	SourceGnewsNullableEnumContent     SourceGnewsNullableEnum = "content"
+	SourceGnewsNullableTitle       SourceGnewsNullable = "title"
+	SourceGnewsNullableDescription SourceGnewsNullable = "description"
+	SourceGnewsNullableContent     SourceGnewsNullable = "content"
 )
 
-func (e SourceGnewsNullableEnum) ToPointer() *SourceGnewsNullableEnum {
+func (e SourceGnewsNullable) ToPointer() *SourceGnewsNullable {
 	return &e
 }
 
-func (e *SourceGnewsNullableEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceGnewsNullable) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -259,28 +259,28 @@ func (e *SourceGnewsNullableEnum) UnmarshalJSON(data []byte) error {
 	case "description":
 		fallthrough
 	case "content":
-		*e = SourceGnewsNullableEnum(v)
+		*e = SourceGnewsNullable(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGnewsNullableEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceGnewsNullable: %v", v)
 	}
 }
 
-// SourceGnewsSortByEnum - This parameter allows you to choose with which type of sorting the articles should be returned. Two values  are possible:
+// SourceGnewsSortBy - This parameter allows you to choose with which type of sorting the articles should be returned. Two values  are possible:
 //   - publishedAt = sort by publication date, the articles with the most recent publication date are returned first
 //   - relevance = sort by best match to keywords, the articles with the best match are returned first
-type SourceGnewsSortByEnum string
+type SourceGnewsSortBy string
 
 const (
-	SourceGnewsSortByEnumPublishedAt SourceGnewsSortByEnum = "publishedAt"
-	SourceGnewsSortByEnumRelevance   SourceGnewsSortByEnum = "relevance"
+	SourceGnewsSortByPublishedAt SourceGnewsSortBy = "publishedAt"
+	SourceGnewsSortByRelevance   SourceGnewsSortBy = "relevance"
 )
 
-func (e SourceGnewsSortByEnum) ToPointer() *SourceGnewsSortByEnum {
+func (e SourceGnewsSortBy) ToPointer() *SourceGnewsSortBy {
 	return &e
 }
 
-func (e *SourceGnewsSortByEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceGnewsSortBy) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -289,57 +289,57 @@ func (e *SourceGnewsSortByEnum) UnmarshalJSON(data []byte) error {
 	case "publishedAt":
 		fallthrough
 	case "relevance":
-		*e = SourceGnewsSortByEnum(v)
+		*e = SourceGnewsSortBy(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGnewsSortByEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceGnewsSortBy: %v", v)
 	}
 }
 
-type SourceGnewsGnewsEnum string
+type SourceGnewsGnews string
 
 const (
-	SourceGnewsGnewsEnumGnews SourceGnewsGnewsEnum = "gnews"
+	SourceGnewsGnewsGnews SourceGnewsGnews = "gnews"
 )
 
-func (e SourceGnewsGnewsEnum) ToPointer() *SourceGnewsGnewsEnum {
+func (e SourceGnewsGnews) ToPointer() *SourceGnewsGnews {
 	return &e
 }
 
-func (e *SourceGnewsGnewsEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceGnewsGnews) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "gnews":
-		*e = SourceGnewsGnewsEnum(v)
+		*e = SourceGnewsGnews(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGnewsGnewsEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceGnewsGnews: %v", v)
 	}
 }
 
-// SourceGnewsTopHeadlinesTopicEnum - This parameter allows you to change the category for the request.
-type SourceGnewsTopHeadlinesTopicEnum string
+// SourceGnewsTopHeadlinesTopic - This parameter allows you to change the category for the request.
+type SourceGnewsTopHeadlinesTopic string
 
 const (
-	SourceGnewsTopHeadlinesTopicEnumBreakingNews  SourceGnewsTopHeadlinesTopicEnum = "breaking-news"
-	SourceGnewsTopHeadlinesTopicEnumWorld         SourceGnewsTopHeadlinesTopicEnum = "world"
-	SourceGnewsTopHeadlinesTopicEnumNation        SourceGnewsTopHeadlinesTopicEnum = "nation"
-	SourceGnewsTopHeadlinesTopicEnumBusiness      SourceGnewsTopHeadlinesTopicEnum = "business"
-	SourceGnewsTopHeadlinesTopicEnumTechnology    SourceGnewsTopHeadlinesTopicEnum = "technology"
-	SourceGnewsTopHeadlinesTopicEnumEntertainment SourceGnewsTopHeadlinesTopicEnum = "entertainment"
-	SourceGnewsTopHeadlinesTopicEnumSports        SourceGnewsTopHeadlinesTopicEnum = "sports"
-	SourceGnewsTopHeadlinesTopicEnumScience       SourceGnewsTopHeadlinesTopicEnum = "science"
-	SourceGnewsTopHeadlinesTopicEnumHealth        SourceGnewsTopHeadlinesTopicEnum = "health"
+	SourceGnewsTopHeadlinesTopicBreakingNews  SourceGnewsTopHeadlinesTopic = "breaking-news"
+	SourceGnewsTopHeadlinesTopicWorld         SourceGnewsTopHeadlinesTopic = "world"
+	SourceGnewsTopHeadlinesTopicNation        SourceGnewsTopHeadlinesTopic = "nation"
+	SourceGnewsTopHeadlinesTopicBusiness      SourceGnewsTopHeadlinesTopic = "business"
+	SourceGnewsTopHeadlinesTopicTechnology    SourceGnewsTopHeadlinesTopic = "technology"
+	SourceGnewsTopHeadlinesTopicEntertainment SourceGnewsTopHeadlinesTopic = "entertainment"
+	SourceGnewsTopHeadlinesTopicSports        SourceGnewsTopHeadlinesTopic = "sports"
+	SourceGnewsTopHeadlinesTopicScience       SourceGnewsTopHeadlinesTopic = "science"
+	SourceGnewsTopHeadlinesTopicHealth        SourceGnewsTopHeadlinesTopic = "health"
 )
 
-func (e SourceGnewsTopHeadlinesTopicEnum) ToPointer() *SourceGnewsTopHeadlinesTopicEnum {
+func (e SourceGnewsTopHeadlinesTopic) ToPointer() *SourceGnewsTopHeadlinesTopic {
 	return &e
 }
 
-func (e *SourceGnewsTopHeadlinesTopicEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceGnewsTopHeadlinesTopic) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -362,10 +362,10 @@ func (e *SourceGnewsTopHeadlinesTopicEnum) UnmarshalJSON(data []byte) error {
 	case "science":
 		fallthrough
 	case "health":
-		*e = SourceGnewsTopHeadlinesTopicEnum(v)
+		*e = SourceGnewsTopHeadlinesTopic(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGnewsTopHeadlinesTopicEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceGnewsTopHeadlinesTopic: %v", v)
 	}
 }
 
@@ -373,14 +373,14 @@ type SourceGnews struct {
 	// API Key
 	APIKey string `json:"api_key"`
 	// This parameter allows you to specify the country where the news articles returned by the API were published, the contents of the articles are not necessarily related to the specified country. You have to set as value the 2 letters code of the country you want to filter.
-	Country *SourceGnewsCountryEnum `json:"country,omitempty"`
+	Country *SourceGnewsCountry `json:"country,omitempty"`
 	// This parameter allows you to filter the articles that have a publication date smaller than or equal to the  specified value. The date must respect the following format: YYYY-MM-DD hh:mm:ss (in UTC)
 	EndDate *string `json:"end_date,omitempty"`
 	// This parameter allows you to choose in which attributes the keywords are searched. The attributes that can be set are title, description and content. It is possible to combine several attributes.
-	In       []SourceGnewsInEnum      `json:"in,omitempty"`
-	Language *SourceGnewsLanguageEnum `json:"language,omitempty"`
+	In       []SourceGnewsIn      `json:"in,omitempty"`
+	Language *SourceGnewsLanguage `json:"language,omitempty"`
 	// This parameter allows you to specify the attributes that you allow to return null values. The attributes that  can be set are title, description and content. It is possible to combine several attributes
-	Nullable []SourceGnewsNullableEnum `json:"nullable,omitempty"`
+	Nullable []SourceGnewsNullable `json:"nullable,omitempty"`
 	// This parameter allows you to specify your search keywords to find the news articles you are looking for. The keywords will be used to return the most relevant articles. It is possible to use logical operators  with keywords. - Phrase Search Operator: This operator allows you to make an exact search. Keywords surrounded by
 	//   quotation marks are used to search for articles with the exact same keyword sequence.
 	//   For example the query: "Apple iPhone" will return articles matching at least once this sequence of keywords.
@@ -399,8 +399,8 @@ type SourceGnews struct {
 	// This parameter allows you to choose with which type of sorting the articles should be returned. Two values  are possible:
 	//   - publishedAt = sort by publication date, the articles with the most recent publication date are returned first
 	//   - relevance = sort by best match to keywords, the articles with the best match are returned first
-	Sortby     *SourceGnewsSortByEnum `json:"sortby,omitempty"`
-	SourceType SourceGnewsGnewsEnum   `json:"sourceType"`
+	Sortby     *SourceGnewsSortBy `json:"sortby,omitempty"`
+	SourceType SourceGnewsGnews   `json:"sourceType"`
 	// This parameter allows you to filter the articles that have a publication date greater than or equal to the  specified value. The date must respect the following format: YYYY-MM-DD hh:mm:ss (in UTC)
 	StartDate *string `json:"start_date,omitempty"`
 	// This parameter allows you to specify your search keywords to find the news articles you are looking for. The keywords will be used to return the most relevant articles. It is possible to use logical operators  with keywords. - Phrase Search Operator: This operator allows you to make an exact search. Keywords surrounded by
@@ -419,5 +419,5 @@ type SourceGnews struct {
 	//   iPhone
 	TopHeadlinesQuery *string `json:"top_headlines_query,omitempty"`
 	// This parameter allows you to change the category for the request.
-	TopHeadlinesTopic *SourceGnewsTopHeadlinesTopicEnum `json:"top_headlines_topic,omitempty"`
+	TopHeadlinesTopic *SourceGnewsTopHeadlinesTopic `json:"top_headlines_topic,omitempty"`
 }

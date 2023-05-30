@@ -10,58 +10,58 @@ import (
 	"time"
 )
 
-type SourceSlackAuthenticationMechanismAPITokenOptionTitleEnum string
+type SourceSlackAuthenticationMechanismAPITokenOptionTitle string
 
 const (
-	SourceSlackAuthenticationMechanismAPITokenOptionTitleEnumAPITokenCredentials SourceSlackAuthenticationMechanismAPITokenOptionTitleEnum = "API Token Credentials"
+	SourceSlackAuthenticationMechanismAPITokenOptionTitleAPITokenCredentials SourceSlackAuthenticationMechanismAPITokenOptionTitle = "API Token Credentials"
 )
 
-func (e SourceSlackAuthenticationMechanismAPITokenOptionTitleEnum) ToPointer() *SourceSlackAuthenticationMechanismAPITokenOptionTitleEnum {
+func (e SourceSlackAuthenticationMechanismAPITokenOptionTitle) ToPointer() *SourceSlackAuthenticationMechanismAPITokenOptionTitle {
 	return &e
 }
 
-func (e *SourceSlackAuthenticationMechanismAPITokenOptionTitleEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceSlackAuthenticationMechanismAPITokenOptionTitle) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "API Token Credentials":
-		*e = SourceSlackAuthenticationMechanismAPITokenOptionTitleEnum(v)
+		*e = SourceSlackAuthenticationMechanismAPITokenOptionTitle(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSlackAuthenticationMechanismAPITokenOptionTitleEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceSlackAuthenticationMechanismAPITokenOptionTitle: %v", v)
 	}
 }
 
 // SourceSlackAuthenticationMechanismAPIToken - Choose how to authenticate into Slack
 type SourceSlackAuthenticationMechanismAPIToken struct {
 	// A Slack bot token. See the <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> for instructions on how to generate it.
-	APIToken    string                                                    `json:"api_token"`
-	OptionTitle SourceSlackAuthenticationMechanismAPITokenOptionTitleEnum `json:"option_title"`
+	APIToken    string                                                `json:"api_token"`
+	OptionTitle SourceSlackAuthenticationMechanismAPITokenOptionTitle `json:"option_title"`
 }
 
-type SourceSlackAuthenticationMechanismSignInViaSlackOAuthOptionTitleEnum string
+type SourceSlackAuthenticationMechanismSignInViaSlackOAuthOptionTitle string
 
 const (
-	SourceSlackAuthenticationMechanismSignInViaSlackOAuthOptionTitleEnumDefaultOAuth20Authorization SourceSlackAuthenticationMechanismSignInViaSlackOAuthOptionTitleEnum = "Default OAuth2.0 authorization"
+	SourceSlackAuthenticationMechanismSignInViaSlackOAuthOptionTitleDefaultOAuth20Authorization SourceSlackAuthenticationMechanismSignInViaSlackOAuthOptionTitle = "Default OAuth2.0 authorization"
 )
 
-func (e SourceSlackAuthenticationMechanismSignInViaSlackOAuthOptionTitleEnum) ToPointer() *SourceSlackAuthenticationMechanismSignInViaSlackOAuthOptionTitleEnum {
+func (e SourceSlackAuthenticationMechanismSignInViaSlackOAuthOptionTitle) ToPointer() *SourceSlackAuthenticationMechanismSignInViaSlackOAuthOptionTitle {
 	return &e
 }
 
-func (e *SourceSlackAuthenticationMechanismSignInViaSlackOAuthOptionTitleEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceSlackAuthenticationMechanismSignInViaSlackOAuthOptionTitle) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Default OAuth2.0 authorization":
-		*e = SourceSlackAuthenticationMechanismSignInViaSlackOAuthOptionTitleEnum(v)
+		*e = SourceSlackAuthenticationMechanismSignInViaSlackOAuthOptionTitle(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSlackAuthenticationMechanismSignInViaSlackOAuthOptionTitleEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceSlackAuthenticationMechanismSignInViaSlackOAuthOptionTitle: %v", v)
 	}
 }
 
@@ -72,8 +72,8 @@ type SourceSlackAuthenticationMechanismSignInViaSlackOAuth struct {
 	// Slack client_id. See our <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> if you need help finding this id.
 	ClientID string `json:"client_id"`
 	// Slack client_secret. See our <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> if you need help finding this secret.
-	ClientSecret string                                                               `json:"client_secret"`
-	OptionTitle  SourceSlackAuthenticationMechanismSignInViaSlackOAuthOptionTitleEnum `json:"option_title"`
+	ClientSecret string                                                           `json:"client_secret"`
+	OptionTitle  SourceSlackAuthenticationMechanismSignInViaSlackOAuthOptionTitle `json:"option_title"`
 }
 
 type SourceSlackAuthenticationMechanismType string
@@ -144,27 +144,27 @@ func (u SourceSlackAuthenticationMechanism) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-type SourceSlackSlackEnum string
+type SourceSlackSlack string
 
 const (
-	SourceSlackSlackEnumSlack SourceSlackSlackEnum = "slack"
+	SourceSlackSlackSlack SourceSlackSlack = "slack"
 )
 
-func (e SourceSlackSlackEnum) ToPointer() *SourceSlackSlackEnum {
+func (e SourceSlackSlack) ToPointer() *SourceSlackSlack {
 	return &e
 }
 
-func (e *SourceSlackSlackEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceSlackSlack) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "slack":
-		*e = SourceSlackSlackEnum(v)
+		*e = SourceSlackSlack(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSlackSlackEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceSlackSlack: %v", v)
 	}
 }
 
@@ -176,8 +176,8 @@ type SourceSlack struct {
 	// Whether to join all channels or to sync data only from channels the bot is already in.  If false, you'll need to manually add the bot to all the channels from which you'd like to sync messages.
 	JoinChannels bool `json:"join_channels"`
 	// How far into the past to look for messages in threads, default is 0 days
-	LookbackWindow int64                `json:"lookback_window"`
-	SourceType     SourceSlackSlackEnum `json:"sourceType"`
+	LookbackWindow int64            `json:"lookback_window"`
+	SourceType     SourceSlackSlack `json:"sourceType"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
 }

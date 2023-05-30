@@ -9,7 +9,6 @@ import (
 
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
-	"github.com/hashicorp/terraform-plugin-framework-validators/mapvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/boolplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
@@ -94,13 +93,13 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 											),
 										},
 									},
-									"additional_properties": schema.MapAttribute{
-										Computed:    true,
-										Optional:    true,
-										ElementType: types.StringType,
-										Validators: []validator.Map{
-											mapvalidator.ValueStringsAre(validators.IsValidJSON()),
+									"additional_properties": schema.StringAttribute{
+										Computed: true,
+										Optional: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
 										},
+										Description: `Parsed as JSON.`,
 									},
 								},
 								Description: `Zendesk service provides two authentication methods. Choose between: ` + "`" + `OAuth2.0` + "`" + ` or ` + "`" + `API token` + "`" + `.`,
@@ -136,13 +135,13 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 										},
 										Required: true,
 									},
-									"additional_properties": schema.MapAttribute{
-										Computed:    true,
-										Optional:    true,
-										ElementType: types.StringType,
-										Validators: []validator.Map{
-											mapvalidator.ValueStringsAre(validators.IsValidJSON()),
+									"additional_properties": schema.StringAttribute{
+										Computed: true,
+										Optional: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
 										},
+										Description: `Parsed as JSON.`,
 									},
 								},
 								Description: `Zendesk service provides two authentication methods. Choose between: ` + "`" + `OAuth2.0` + "`" + ` or ` + "`" + `API token` + "`" + `.`,
@@ -268,6 +267,11 @@ func (r *SourceZendeskSupportResource) Create(ctx context.Context, req resource.
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
+	if res.SourceResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+		return
+	}
+	data.RefreshFromCreateResponse(res.SourceResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

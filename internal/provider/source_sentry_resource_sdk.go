@@ -5,6 +5,7 @@ package provider
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	"encoding/json"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceSentryResourceModel) ToCreateSDKType() *shared.SourceSentryCreateRequest {
@@ -23,7 +24,7 @@ func (r *SourceSentryResourceModel) ToCreateSDKType() *shared.SourceSentryCreate
 	}
 	organization := r.Configuration.Organization.ValueString()
 	project := r.Configuration.Project.ValueString()
-	sourceType := shared.SourceSentrySentryEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceSentrySentry(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceSentry{
 		AuthToken:      authToken,
 		DiscoverFields: discoverFields,
@@ -52,4 +53,11 @@ func (r *SourceSentryResourceModel) ToCreateSDKType() *shared.SourceSentryCreate
 func (r *SourceSentryResourceModel) ToDeleteSDKType() *shared.SourceSentryCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceSentryResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

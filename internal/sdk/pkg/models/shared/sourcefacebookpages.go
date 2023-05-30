@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type SourceFacebookPagesFacebookPagesEnum string
+type SourceFacebookPagesFacebookPages string
 
 const (
-	SourceFacebookPagesFacebookPagesEnumFacebookPages SourceFacebookPagesFacebookPagesEnum = "facebook-pages"
+	SourceFacebookPagesFacebookPagesFacebookPages SourceFacebookPagesFacebookPages = "facebook-pages"
 )
 
-func (e SourceFacebookPagesFacebookPagesEnum) ToPointer() *SourceFacebookPagesFacebookPagesEnum {
+func (e SourceFacebookPagesFacebookPages) ToPointer() *SourceFacebookPagesFacebookPages {
 	return &e
 }
 
-func (e *SourceFacebookPagesFacebookPagesEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceFacebookPagesFacebookPages) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "facebook-pages":
-		*e = SourceFacebookPagesFacebookPagesEnum(v)
+		*e = SourceFacebookPagesFacebookPages(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFacebookPagesFacebookPagesEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceFacebookPagesFacebookPages: %v", v)
 	}
 }
 
@@ -35,6 +35,6 @@ type SourceFacebookPages struct {
 	// Facebook Page Access Token
 	AccessToken string `json:"access_token"`
 	// Page ID
-	PageID     string                               `json:"page_id"`
-	SourceType SourceFacebookPagesFacebookPagesEnum `json:"sourceType"`
+	PageID     string                           `json:"page_id"`
+	SourceType SourceFacebookPagesFacebookPages `json:"sourceType"`
 }

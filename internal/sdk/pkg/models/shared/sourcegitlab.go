@@ -10,64 +10,64 @@ import (
 	"time"
 )
 
-type SourceGitlabAuthorizationMethodPrivateTokenAuthTypeEnum string
+type SourceGitlabAuthorizationMethodPrivateTokenAuthType string
 
 const (
-	SourceGitlabAuthorizationMethodPrivateTokenAuthTypeEnumAccessToken SourceGitlabAuthorizationMethodPrivateTokenAuthTypeEnum = "access_token"
+	SourceGitlabAuthorizationMethodPrivateTokenAuthTypeAccessToken SourceGitlabAuthorizationMethodPrivateTokenAuthType = "access_token"
 )
 
-func (e SourceGitlabAuthorizationMethodPrivateTokenAuthTypeEnum) ToPointer() *SourceGitlabAuthorizationMethodPrivateTokenAuthTypeEnum {
+func (e SourceGitlabAuthorizationMethodPrivateTokenAuthType) ToPointer() *SourceGitlabAuthorizationMethodPrivateTokenAuthType {
 	return &e
 }
 
-func (e *SourceGitlabAuthorizationMethodPrivateTokenAuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceGitlabAuthorizationMethodPrivateTokenAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "access_token":
-		*e = SourceGitlabAuthorizationMethodPrivateTokenAuthTypeEnum(v)
+		*e = SourceGitlabAuthorizationMethodPrivateTokenAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGitlabAuthorizationMethodPrivateTokenAuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceGitlabAuthorizationMethodPrivateTokenAuthType: %v", v)
 	}
 }
 
 type SourceGitlabAuthorizationMethodPrivateToken struct {
 	// Log into your Gitlab account and then generate a personal Access Token.
-	AccessToken string                                                   `json:"access_token"`
-	AuthType    *SourceGitlabAuthorizationMethodPrivateTokenAuthTypeEnum `json:"auth_type,omitempty"`
+	AccessToken string                                               `json:"access_token"`
+	AuthType    *SourceGitlabAuthorizationMethodPrivateTokenAuthType `json:"auth_type,omitempty"`
 }
 
-type SourceGitlabAuthorizationMethodOAuth20AuthTypeEnum string
+type SourceGitlabAuthorizationMethodOAuth20AuthType string
 
 const (
-	SourceGitlabAuthorizationMethodOAuth20AuthTypeEnumOauth20 SourceGitlabAuthorizationMethodOAuth20AuthTypeEnum = "oauth2.0"
+	SourceGitlabAuthorizationMethodOAuth20AuthTypeOauth20 SourceGitlabAuthorizationMethodOAuth20AuthType = "oauth2.0"
 )
 
-func (e SourceGitlabAuthorizationMethodOAuth20AuthTypeEnum) ToPointer() *SourceGitlabAuthorizationMethodOAuth20AuthTypeEnum {
+func (e SourceGitlabAuthorizationMethodOAuth20AuthType) ToPointer() *SourceGitlabAuthorizationMethodOAuth20AuthType {
 	return &e
 }
 
-func (e *SourceGitlabAuthorizationMethodOAuth20AuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceGitlabAuthorizationMethodOAuth20AuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "oauth2.0":
-		*e = SourceGitlabAuthorizationMethodOAuth20AuthTypeEnum(v)
+		*e = SourceGitlabAuthorizationMethodOAuth20AuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGitlabAuthorizationMethodOAuth20AuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceGitlabAuthorizationMethodOAuth20AuthType: %v", v)
 	}
 }
 
 type SourceGitlabAuthorizationMethodOAuth20 struct {
 	// Access Token for making authenticated requests.
-	AccessToken string                                              `json:"access_token"`
-	AuthType    *SourceGitlabAuthorizationMethodOAuth20AuthTypeEnum `json:"auth_type,omitempty"`
+	AccessToken string                                          `json:"access_token"`
+	AuthType    *SourceGitlabAuthorizationMethodOAuth20AuthType `json:"auth_type,omitempty"`
 	// The API ID of the Gitlab developer application.
 	ClientID string `json:"client_id"`
 	// The API Secret the Gitlab developer application.
@@ -146,27 +146,27 @@ func (u SourceGitlabAuthorizationMethod) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-type SourceGitlabGitlabEnum string
+type SourceGitlabGitlab string
 
 const (
-	SourceGitlabGitlabEnumGitlab SourceGitlabGitlabEnum = "gitlab"
+	SourceGitlabGitlabGitlab SourceGitlabGitlab = "gitlab"
 )
 
-func (e SourceGitlabGitlabEnum) ToPointer() *SourceGitlabGitlabEnum {
+func (e SourceGitlabGitlab) ToPointer() *SourceGitlabGitlab {
 	return &e
 }
 
-func (e *SourceGitlabGitlabEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceGitlabGitlab) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "gitlab":
-		*e = SourceGitlabGitlabEnum(v)
+		*e = SourceGitlabGitlab(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGitlabGitlabEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceGitlabGitlab: %v", v)
 	}
 }
 
@@ -177,8 +177,8 @@ type SourceGitlab struct {
 	// Space-delimited list of groups. e.g. airbyte.io.
 	Groups *string `json:"groups,omitempty"`
 	// Space-delimited list of projects. e.g. airbyte.io/documentation meltano/tap-gitlab.
-	Projects   *string                `json:"projects,omitempty"`
-	SourceType SourceGitlabGitlabEnum `json:"sourceType"`
+	Projects   *string            `json:"projects,omitempty"`
+	SourceType SourceGitlabGitlab `json:"sourceType"`
 	// The date from which you'd like to replicate data for GitLab API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 	StartDate time.Time `json:"start_date"`
 }

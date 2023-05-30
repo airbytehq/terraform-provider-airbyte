@@ -7,32 +7,32 @@ import (
 	"fmt"
 )
 
-type SourceSmartengageSmartengageEnum string
+type SourceSmartengageSmartengage string
 
 const (
-	SourceSmartengageSmartengageEnumSmartengage SourceSmartengageSmartengageEnum = "smartengage"
+	SourceSmartengageSmartengageSmartengage SourceSmartengageSmartengage = "smartengage"
 )
 
-func (e SourceSmartengageSmartengageEnum) ToPointer() *SourceSmartengageSmartengageEnum {
+func (e SourceSmartengageSmartengage) ToPointer() *SourceSmartengageSmartengage {
 	return &e
 }
 
-func (e *SourceSmartengageSmartengageEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceSmartengageSmartengage) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "smartengage":
-		*e = SourceSmartengageSmartengageEnum(v)
+		*e = SourceSmartengageSmartengage(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSmartengageSmartengageEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceSmartengageSmartengage: %v", v)
 	}
 }
 
 type SourceSmartengage struct {
 	// API Key
-	APIKey     string                           `json:"api_key"`
-	SourceType SourceSmartengageSmartengageEnum `json:"sourceType"`
+	APIKey     string                       `json:"api_key"`
+	SourceType SourceSmartengageSmartengage `json:"sourceType"`
 }

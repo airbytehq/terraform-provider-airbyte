@@ -7,35 +7,35 @@ import (
 	"fmt"
 )
 
-type SourceShortioShortioEnum string
+type SourceShortioShortio string
 
 const (
-	SourceShortioShortioEnumShortio SourceShortioShortioEnum = "shortio"
+	SourceShortioShortioShortio SourceShortioShortio = "shortio"
 )
 
-func (e SourceShortioShortioEnum) ToPointer() *SourceShortioShortioEnum {
+func (e SourceShortioShortio) ToPointer() *SourceShortioShortio {
 	return &e
 }
 
-func (e *SourceShortioShortioEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceShortioShortio) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "shortio":
-		*e = SourceShortioShortioEnum(v)
+		*e = SourceShortioShortio(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceShortioShortioEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceShortioShortio: %v", v)
 	}
 }
 
 type SourceShortio struct {
 	DomainID string `json:"domain_id"`
 	// Short.io Secret Key
-	SecretKey  string                   `json:"secret_key"`
-	SourceType SourceShortioShortioEnum `json:"sourceType"`
+	SecretKey  string               `json:"secret_key"`
+	SourceType SourceShortioShortio `json:"sourceType"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 	StartDate string `json:"start_date"`
 }

@@ -11,7 +11,7 @@ type ListJobsRequest struct {
 	// Filter the Jobs by connectionId.
 	ConnectionID string `queryParam:"style=form,explode=true,name=connectionId"`
 	// Filter the Jobs by jobType.
-	JobType *shared.JobTypeEnumEnum `queryParam:"style=form,explode=true,name=jobType"`
+	JobType *shared.JobTypeEnum `queryParam:"style=form,explode=true,name=jobType"`
 	// Set the limit on the number of Jobs returned. The default is 20 Jobs.
 	Limit *int `queryParam:"style=form,explode=true,name=limit"`
 	// Set the offset to start at when returning Jobs. The default is 0.

@@ -10,66 +10,66 @@ import (
 	"time"
 )
 
-type SourceNotionAuthenticateUsingAccessTokenAuthTypeEnum string
+type SourceNotionAuthenticateUsingAccessTokenAuthType string
 
 const (
-	SourceNotionAuthenticateUsingAccessTokenAuthTypeEnumToken SourceNotionAuthenticateUsingAccessTokenAuthTypeEnum = "token"
+	SourceNotionAuthenticateUsingAccessTokenAuthTypeToken SourceNotionAuthenticateUsingAccessTokenAuthType = "token"
 )
 
-func (e SourceNotionAuthenticateUsingAccessTokenAuthTypeEnum) ToPointer() *SourceNotionAuthenticateUsingAccessTokenAuthTypeEnum {
+func (e SourceNotionAuthenticateUsingAccessTokenAuthType) ToPointer() *SourceNotionAuthenticateUsingAccessTokenAuthType {
 	return &e
 }
 
-func (e *SourceNotionAuthenticateUsingAccessTokenAuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceNotionAuthenticateUsingAccessTokenAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "token":
-		*e = SourceNotionAuthenticateUsingAccessTokenAuthTypeEnum(v)
+		*e = SourceNotionAuthenticateUsingAccessTokenAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceNotionAuthenticateUsingAccessTokenAuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceNotionAuthenticateUsingAccessTokenAuthType: %v", v)
 	}
 }
 
 // SourceNotionAuthenticateUsingAccessToken - Pick an authentication method.
 type SourceNotionAuthenticateUsingAccessToken struct {
-	AuthType SourceNotionAuthenticateUsingAccessTokenAuthTypeEnum `json:"auth_type"`
+	AuthType SourceNotionAuthenticateUsingAccessTokenAuthType `json:"auth_type"`
 	// Notion API access token, see the <a href="https://developers.notion.com/docs/authorization">docs</a> for more information on how to obtain this token.
 	Token string `json:"token"`
 }
 
-type SourceNotionAuthenticateUsingOAuth20AuthTypeEnum string
+type SourceNotionAuthenticateUsingOAuth20AuthType string
 
 const (
-	SourceNotionAuthenticateUsingOAuth20AuthTypeEnumOAuth20 SourceNotionAuthenticateUsingOAuth20AuthTypeEnum = "OAuth2.0"
+	SourceNotionAuthenticateUsingOAuth20AuthTypeOAuth20 SourceNotionAuthenticateUsingOAuth20AuthType = "OAuth2.0"
 )
 
-func (e SourceNotionAuthenticateUsingOAuth20AuthTypeEnum) ToPointer() *SourceNotionAuthenticateUsingOAuth20AuthTypeEnum {
+func (e SourceNotionAuthenticateUsingOAuth20AuthType) ToPointer() *SourceNotionAuthenticateUsingOAuth20AuthType {
 	return &e
 }
 
-func (e *SourceNotionAuthenticateUsingOAuth20AuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceNotionAuthenticateUsingOAuth20AuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "OAuth2.0":
-		*e = SourceNotionAuthenticateUsingOAuth20AuthTypeEnum(v)
+		*e = SourceNotionAuthenticateUsingOAuth20AuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceNotionAuthenticateUsingOAuth20AuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceNotionAuthenticateUsingOAuth20AuthType: %v", v)
 	}
 }
 
 // SourceNotionAuthenticateUsingOAuth20 - Pick an authentication method.
 type SourceNotionAuthenticateUsingOAuth20 struct {
 	// Access Token is a token you received by complete the OauthWebFlow of Notion.
-	AccessToken string                                           `json:"access_token"`
-	AuthType    SourceNotionAuthenticateUsingOAuth20AuthTypeEnum `json:"auth_type"`
+	AccessToken string                                       `json:"access_token"`
+	AuthType    SourceNotionAuthenticateUsingOAuth20AuthType `json:"auth_type"`
 	// The ClientID of your Notion integration.
 	ClientID string `json:"client_id"`
 	// The ClientSecret of your Notion integration.
@@ -144,34 +144,34 @@ func (u SourceNotionAuthenticateUsing) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-type SourceNotionNotionEnum string
+type SourceNotionNotion string
 
 const (
-	SourceNotionNotionEnumNotion SourceNotionNotionEnum = "notion"
+	SourceNotionNotionNotion SourceNotionNotion = "notion"
 )
 
-func (e SourceNotionNotionEnum) ToPointer() *SourceNotionNotionEnum {
+func (e SourceNotionNotion) ToPointer() *SourceNotionNotion {
 	return &e
 }
 
-func (e *SourceNotionNotionEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceNotionNotion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "notion":
-		*e = SourceNotionNotionEnum(v)
+		*e = SourceNotionNotion(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceNotionNotionEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceNotionNotion: %v", v)
 	}
 }
 
 type SourceNotion struct {
 	// Pick an authentication method.
 	Credentials *SourceNotionAuthenticateUsing `json:"credentials,omitempty"`
-	SourceType  SourceNotionNotionEnum         `json:"sourceType"`
+	SourceType  SourceNotionNotion             `json:"sourceType"`
 	// UTC date and time in the format 2017-01-25T00:00:00.000Z. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
 }

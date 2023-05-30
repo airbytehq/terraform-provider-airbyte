@@ -7,32 +7,32 @@ import (
 	"fmt"
 )
 
-type SourceEmailoctopusEmailoctopusEnum string
+type SourceEmailoctopusEmailoctopus string
 
 const (
-	SourceEmailoctopusEmailoctopusEnumEmailoctopus SourceEmailoctopusEmailoctopusEnum = "emailoctopus"
+	SourceEmailoctopusEmailoctopusEmailoctopus SourceEmailoctopusEmailoctopus = "emailoctopus"
 )
 
-func (e SourceEmailoctopusEmailoctopusEnum) ToPointer() *SourceEmailoctopusEmailoctopusEnum {
+func (e SourceEmailoctopusEmailoctopus) ToPointer() *SourceEmailoctopusEmailoctopus {
 	return &e
 }
 
-func (e *SourceEmailoctopusEmailoctopusEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceEmailoctopusEmailoctopus) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "emailoctopus":
-		*e = SourceEmailoctopusEmailoctopusEnum(v)
+		*e = SourceEmailoctopusEmailoctopus(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceEmailoctopusEmailoctopusEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceEmailoctopusEmailoctopus: %v", v)
 	}
 }
 
 type SourceEmailoctopus struct {
 	// EmailOctopus API Key. See the <a href="https://help.emailoctopus.com/article/165-how-to-create-and-delete-api-keys">docs</a> for information on how to generate this key.
-	APIKey     string                             `json:"api_key"`
-	SourceType SourceEmailoctopusEmailoctopusEnum `json:"sourceType"`
+	APIKey     string                         `json:"api_key"`
+	SourceType SourceEmailoctopusEmailoctopus `json:"sourceType"`
 }

@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceApifyDatasetResourceModel) ToCreateSDKType() *shared.SourceApifyDatasetCreateRequest {
@@ -14,7 +15,7 @@ func (r *SourceApifyDatasetResourceModel) ToCreateSDKType() *shared.SourceApifyD
 		clean = nil
 	}
 	datasetID := r.Configuration.DatasetID.ValueString()
-	sourceType := shared.SourceApifyDatasetApifyDatasetEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceApifyDatasetApifyDataset(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceApifyDataset{
 		Clean:      clean,
 		DatasetID:  datasetID,
@@ -40,4 +41,11 @@ func (r *SourceApifyDatasetResourceModel) ToCreateSDKType() *shared.SourceApifyD
 func (r *SourceApifyDatasetResourceModel) ToDeleteSDKType() *shared.SourceApifyDatasetCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceApifyDatasetResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

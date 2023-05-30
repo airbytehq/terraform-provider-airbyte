@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type SourceTwilioTaskrouterTwilioTaskrouterEnum string
+type SourceTwilioTaskrouterTwilioTaskrouter string
 
 const (
-	SourceTwilioTaskrouterTwilioTaskrouterEnumTwilioTaskrouter SourceTwilioTaskrouterTwilioTaskrouterEnum = "twilio-taskrouter"
+	SourceTwilioTaskrouterTwilioTaskrouterTwilioTaskrouter SourceTwilioTaskrouterTwilioTaskrouter = "twilio-taskrouter"
 )
 
-func (e SourceTwilioTaskrouterTwilioTaskrouterEnum) ToPointer() *SourceTwilioTaskrouterTwilioTaskrouterEnum {
+func (e SourceTwilioTaskrouterTwilioTaskrouter) ToPointer() *SourceTwilioTaskrouterTwilioTaskrouter {
 	return &e
 }
 
-func (e *SourceTwilioTaskrouterTwilioTaskrouterEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceTwilioTaskrouterTwilioTaskrouter) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "twilio-taskrouter":
-		*e = SourceTwilioTaskrouterTwilioTaskrouterEnum(v)
+		*e = SourceTwilioTaskrouterTwilioTaskrouter(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceTwilioTaskrouterTwilioTaskrouterEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceTwilioTaskrouterTwilioTaskrouter: %v", v)
 	}
 }
 
@@ -35,6 +35,6 @@ type SourceTwilioTaskrouter struct {
 	// Twilio Account ID
 	AccountSid string `json:"account_sid"`
 	// Twilio Auth Token
-	AuthToken  string                                     `json:"auth_token"`
-	SourceType SourceTwilioTaskrouterTwilioTaskrouterEnum `json:"sourceType"`
+	AuthToken  string                                 `json:"auth_token"`
+	SourceType SourceTwilioTaskrouterTwilioTaskrouter `json:"sourceType"`
 }

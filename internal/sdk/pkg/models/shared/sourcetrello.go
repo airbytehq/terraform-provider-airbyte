@@ -8,27 +8,27 @@ import (
 	"time"
 )
 
-type SourceTrelloTrelloEnum string
+type SourceTrelloTrello string
 
 const (
-	SourceTrelloTrelloEnumTrello SourceTrelloTrelloEnum = "trello"
+	SourceTrelloTrelloTrello SourceTrelloTrello = "trello"
 )
 
-func (e SourceTrelloTrelloEnum) ToPointer() *SourceTrelloTrelloEnum {
+func (e SourceTrelloTrello) ToPointer() *SourceTrelloTrello {
 	return &e
 }
 
-func (e *SourceTrelloTrelloEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceTrelloTrello) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "trello":
-		*e = SourceTrelloTrelloEnum(v)
+		*e = SourceTrelloTrello(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceTrelloTrelloEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceTrelloTrello: %v", v)
 	}
 }
 
@@ -36,8 +36,8 @@ type SourceTrello struct {
 	// IDs of the boards to replicate data from. If left empty, data from all boards to which you have access will be replicated.
 	BoardIds []string `json:"board_ids,omitempty"`
 	// Trello API key. See the <a href="https://developer.atlassian.com/cloud/trello/guides/rest-api/authorization/#using-basic-oauth">docs</a> for instructions on how to generate it.
-	Key        string                 `json:"key"`
-	SourceType SourceTrelloTrelloEnum `json:"sourceType"`
+	Key        string             `json:"key"`
+	SourceType SourceTrelloTrello `json:"sourceType"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
 	// Trello API token. See the <a href="https://developer.atlassian.com/cloud/trello/guides/rest-api/authorization/#using-basic-oauth">docs</a> for instructions on how to generate it.

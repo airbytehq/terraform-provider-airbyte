@@ -8,63 +8,63 @@ import (
 	"time"
 )
 
-type SourcePipedriveAPIKeyAuthenticationAuthTypeEnum string
+type SourcePipedriveAPIKeyAuthenticationAuthType string
 
 const (
-	SourcePipedriveAPIKeyAuthenticationAuthTypeEnumToken SourcePipedriveAPIKeyAuthenticationAuthTypeEnum = "Token"
+	SourcePipedriveAPIKeyAuthenticationAuthTypeToken SourcePipedriveAPIKeyAuthenticationAuthType = "Token"
 )
 
-func (e SourcePipedriveAPIKeyAuthenticationAuthTypeEnum) ToPointer() *SourcePipedriveAPIKeyAuthenticationAuthTypeEnum {
+func (e SourcePipedriveAPIKeyAuthenticationAuthType) ToPointer() *SourcePipedriveAPIKeyAuthenticationAuthType {
 	return &e
 }
 
-func (e *SourcePipedriveAPIKeyAuthenticationAuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourcePipedriveAPIKeyAuthenticationAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Token":
-		*e = SourcePipedriveAPIKeyAuthenticationAuthTypeEnum(v)
+		*e = SourcePipedriveAPIKeyAuthenticationAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePipedriveAPIKeyAuthenticationAuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourcePipedriveAPIKeyAuthenticationAuthType: %v", v)
 	}
 }
 
 type SourcePipedriveAPIKeyAuthentication struct {
 	// The Pipedrive API Token.
-	APIToken string                                          `json:"api_token"`
-	AuthType SourcePipedriveAPIKeyAuthenticationAuthTypeEnum `json:"auth_type"`
+	APIToken string                                      `json:"api_token"`
+	AuthType SourcePipedriveAPIKeyAuthenticationAuthType `json:"auth_type"`
 }
 
-type SourcePipedrivePipedriveEnum string
+type SourcePipedrivePipedrive string
 
 const (
-	SourcePipedrivePipedriveEnumPipedrive SourcePipedrivePipedriveEnum = "pipedrive"
+	SourcePipedrivePipedrivePipedrive SourcePipedrivePipedrive = "pipedrive"
 )
 
-func (e SourcePipedrivePipedriveEnum) ToPointer() *SourcePipedrivePipedriveEnum {
+func (e SourcePipedrivePipedrive) ToPointer() *SourcePipedrivePipedrive {
 	return &e
 }
 
-func (e *SourcePipedrivePipedriveEnum) UnmarshalJSON(data []byte) error {
+func (e *SourcePipedrivePipedrive) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "pipedrive":
-		*e = SourcePipedrivePipedriveEnum(v)
+		*e = SourcePipedrivePipedrive(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePipedrivePipedriveEnum: %v", v)
+		return fmt.Errorf("invalid value for SourcePipedrivePipedrive: %v", v)
 	}
 }
 
 type SourcePipedrive struct {
 	Authorization *SourcePipedriveAPIKeyAuthentication `json:"authorization,omitempty"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. When specified and not None, then stream will behave as incremental
-	ReplicationStartDate time.Time                    `json:"replication_start_date"`
-	SourceType           SourcePipedrivePipedriveEnum `json:"sourceType"`
+	ReplicationStartDate time.Time                `json:"replication_start_date"`
+	SourceType           SourcePipedrivePipedrive `json:"sourceType"`
 }

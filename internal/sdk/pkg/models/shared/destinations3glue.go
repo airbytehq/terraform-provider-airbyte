@@ -9,86 +9,86 @@ import (
 	"fmt"
 )
 
-type DestinationS3GlueS3GlueEnum string
+type DestinationS3GlueS3Glue string
 
 const (
-	DestinationS3GlueS3GlueEnumS3Glue DestinationS3GlueS3GlueEnum = "s3-glue"
+	DestinationS3GlueS3GlueS3Glue DestinationS3GlueS3Glue = "s3-glue"
 )
 
-func (e DestinationS3GlueS3GlueEnum) ToPointer() *DestinationS3GlueS3GlueEnum {
+func (e DestinationS3GlueS3Glue) ToPointer() *DestinationS3GlueS3Glue {
 	return &e
 }
 
-func (e *DestinationS3GlueS3GlueEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationS3GlueS3Glue) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "s3-glue":
-		*e = DestinationS3GlueS3GlueEnum(v)
+		*e = DestinationS3GlueS3Glue(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3GlueS3GlueEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationS3GlueS3Glue: %v", v)
 	}
 }
 
-type DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum string
+type DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType string
 
 const (
-	DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnumGzip DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum = "GZIP"
+	DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeGzip DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType = "GZIP"
 )
 
-func (e DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum) ToPointer() *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum {
+func (e DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType) ToPointer() *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType {
 	return &e
 }
 
-func (e *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "GZIP":
-		*e = DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum(v)
+		*e = DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType: %v", v)
 	}
 }
 
 // DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP - Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
 type DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP struct {
-	CompressionType *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum `json:"compression_type,omitempty"`
+	CompressionType *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType `json:"compression_type,omitempty"`
 }
 
-type DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum string
+type DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType string
 
 const (
-	DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnumNoCompression DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum = "No Compression"
+	DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeNoCompression DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType = "No Compression"
 )
 
-func (e DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum) ToPointer() *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum {
+func (e DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType) ToPointer() *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType {
 	return &e
 }
 
-func (e *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "No Compression":
-		*e = DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum(v)
+		*e = DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType: %v", v)
 	}
 }
 
 // DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression - Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
 type DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression struct {
-	CompressionType *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum `json:"compression_type,omitempty"`
+	CompressionType *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType `json:"compression_type,omitempty"`
 }
 
 type DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionType string
@@ -159,19 +159,19 @@ func (u DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompression) M
 	return nil, nil
 }
 
-// DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlatteningEnum - Whether the input json data should be normalized (flattened) in the output JSON Lines. Please refer to docs for details.
-type DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlatteningEnum string
+// DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlattening - Whether the input json data should be normalized (flattened) in the output JSON Lines. Please refer to docs for details.
+type DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlattening string
 
 const (
-	DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlatteningEnumNoFlattening        DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlatteningEnum = "No flattening"
-	DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlatteningEnumRootLevelFlattening DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlatteningEnum = "Root level flattening"
+	DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlatteningNoFlattening        DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlattening = "No flattening"
+	DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlatteningRootLevelFlattening DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlattening = "Root level flattening"
 )
 
-func (e DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlatteningEnum) ToPointer() *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlatteningEnum {
+func (e DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlattening) ToPointer() *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlattening {
 	return &e
 }
 
-func (e *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlatteningEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlattening) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -180,34 +180,34 @@ func (e *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlatteningEnu
 	case "No flattening":
 		fallthrough
 	case "Root level flattening":
-		*e = DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlatteningEnum(v)
+		*e = DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlattening(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlatteningEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlattening: %v", v)
 	}
 }
 
-type DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum string
+type DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFormatType string
 
 const (
-	DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnumJsonl DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum = "JSONL"
+	DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeJsonl DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFormatType = "JSONL"
 )
 
-func (e DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum) ToPointer() *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum {
+func (e DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFormatType) ToPointer() *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFormatType {
 	return &e
 }
 
-func (e *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFormatType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "JSONL":
-		*e = DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum(v)
+		*e = DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFormatType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFormatType: %v", v)
 	}
 }
 
@@ -216,8 +216,8 @@ type DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON struct {
 	// Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").
 	Compression *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompression `json:"compression,omitempty"`
 	// Whether the input json data should be normalized (flattened) in the output JSON Lines. Please refer to docs for details.
-	Flattening *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlatteningEnum `json:"flattening,omitempty"`
-	FormatType DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum  `json:"format_type"`
+	Flattening *DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlattening `json:"flattening,omitempty"`
+	FormatType DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFormatType  `json:"format_type"`
 }
 
 type DestinationS3GlueOutputFormatType string
@@ -264,19 +264,19 @@ func (u DestinationS3GlueOutputFormat) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-// DestinationS3GlueSerializationLibraryEnum - The library that your query engine will use for reading and writing data in your lake.
-type DestinationS3GlueSerializationLibraryEnum string
+// DestinationS3GlueSerializationLibrary - The library that your query engine will use for reading and writing data in your lake.
+type DestinationS3GlueSerializationLibrary string
 
 const (
-	DestinationS3GlueSerializationLibraryEnumOrgOpenxDataJsonserdeJSONSerDe     DestinationS3GlueSerializationLibraryEnum = "org.openx.data.jsonserde.JsonSerDe"
-	DestinationS3GlueSerializationLibraryEnumOrgApacheHiveHcatalogDataJSONSerDe DestinationS3GlueSerializationLibraryEnum = "org.apache.hive.hcatalog.data.JsonSerDe"
+	DestinationS3GlueSerializationLibraryOrgOpenxDataJsonserdeJSONSerDe     DestinationS3GlueSerializationLibrary = "org.openx.data.jsonserde.JsonSerDe"
+	DestinationS3GlueSerializationLibraryOrgApacheHiveHcatalogDataJSONSerDe DestinationS3GlueSerializationLibrary = "org.apache.hive.hcatalog.data.JsonSerDe"
 )
 
-func (e DestinationS3GlueSerializationLibraryEnum) ToPointer() *DestinationS3GlueSerializationLibraryEnum {
+func (e DestinationS3GlueSerializationLibrary) ToPointer() *DestinationS3GlueSerializationLibrary {
 	return &e
 }
 
-func (e *DestinationS3GlueSerializationLibraryEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationS3GlueSerializationLibrary) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -285,50 +285,50 @@ func (e *DestinationS3GlueSerializationLibraryEnum) UnmarshalJSON(data []byte) e
 	case "org.openx.data.jsonserde.JsonSerDe":
 		fallthrough
 	case "org.apache.hive.hcatalog.data.JsonSerDe":
-		*e = DestinationS3GlueSerializationLibraryEnum(v)
+		*e = DestinationS3GlueSerializationLibrary(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3GlueSerializationLibraryEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationS3GlueSerializationLibrary: %v", v)
 	}
 }
 
-// DestinationS3GlueS3BucketRegionEnum - The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes.
-type DestinationS3GlueS3BucketRegionEnum string
+// DestinationS3GlueS3BucketRegion - The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes.
+type DestinationS3GlueS3BucketRegion string
 
 const (
-	DestinationS3GlueS3BucketRegionEnumUnknown      DestinationS3GlueS3BucketRegionEnum = ""
-	DestinationS3GlueS3BucketRegionEnumUsEast1      DestinationS3GlueS3BucketRegionEnum = "us-east-1"
-	DestinationS3GlueS3BucketRegionEnumUsEast2      DestinationS3GlueS3BucketRegionEnum = "us-east-2"
-	DestinationS3GlueS3BucketRegionEnumUsWest1      DestinationS3GlueS3BucketRegionEnum = "us-west-1"
-	DestinationS3GlueS3BucketRegionEnumUsWest2      DestinationS3GlueS3BucketRegionEnum = "us-west-2"
-	DestinationS3GlueS3BucketRegionEnumAfSouth1     DestinationS3GlueS3BucketRegionEnum = "af-south-1"
-	DestinationS3GlueS3BucketRegionEnumApEast1      DestinationS3GlueS3BucketRegionEnum = "ap-east-1"
-	DestinationS3GlueS3BucketRegionEnumApSouth1     DestinationS3GlueS3BucketRegionEnum = "ap-south-1"
-	DestinationS3GlueS3BucketRegionEnumApNortheast1 DestinationS3GlueS3BucketRegionEnum = "ap-northeast-1"
-	DestinationS3GlueS3BucketRegionEnumApNortheast2 DestinationS3GlueS3BucketRegionEnum = "ap-northeast-2"
-	DestinationS3GlueS3BucketRegionEnumApNortheast3 DestinationS3GlueS3BucketRegionEnum = "ap-northeast-3"
-	DestinationS3GlueS3BucketRegionEnumApSoutheast1 DestinationS3GlueS3BucketRegionEnum = "ap-southeast-1"
-	DestinationS3GlueS3BucketRegionEnumApSoutheast2 DestinationS3GlueS3BucketRegionEnum = "ap-southeast-2"
-	DestinationS3GlueS3BucketRegionEnumCaCentral1   DestinationS3GlueS3BucketRegionEnum = "ca-central-1"
-	DestinationS3GlueS3BucketRegionEnumCnNorth1     DestinationS3GlueS3BucketRegionEnum = "cn-north-1"
-	DestinationS3GlueS3BucketRegionEnumCnNorthwest1 DestinationS3GlueS3BucketRegionEnum = "cn-northwest-1"
-	DestinationS3GlueS3BucketRegionEnumEuCentral1   DestinationS3GlueS3BucketRegionEnum = "eu-central-1"
-	DestinationS3GlueS3BucketRegionEnumEuNorth1     DestinationS3GlueS3BucketRegionEnum = "eu-north-1"
-	DestinationS3GlueS3BucketRegionEnumEuSouth1     DestinationS3GlueS3BucketRegionEnum = "eu-south-1"
-	DestinationS3GlueS3BucketRegionEnumEuWest1      DestinationS3GlueS3BucketRegionEnum = "eu-west-1"
-	DestinationS3GlueS3BucketRegionEnumEuWest2      DestinationS3GlueS3BucketRegionEnum = "eu-west-2"
-	DestinationS3GlueS3BucketRegionEnumEuWest3      DestinationS3GlueS3BucketRegionEnum = "eu-west-3"
-	DestinationS3GlueS3BucketRegionEnumSaEast1      DestinationS3GlueS3BucketRegionEnum = "sa-east-1"
-	DestinationS3GlueS3BucketRegionEnumMeSouth1     DestinationS3GlueS3BucketRegionEnum = "me-south-1"
-	DestinationS3GlueS3BucketRegionEnumUsGovEast1   DestinationS3GlueS3BucketRegionEnum = "us-gov-east-1"
-	DestinationS3GlueS3BucketRegionEnumUsGovWest1   DestinationS3GlueS3BucketRegionEnum = "us-gov-west-1"
+	DestinationS3GlueS3BucketRegionUnknown      DestinationS3GlueS3BucketRegion = ""
+	DestinationS3GlueS3BucketRegionUsEast1      DestinationS3GlueS3BucketRegion = "us-east-1"
+	DestinationS3GlueS3BucketRegionUsEast2      DestinationS3GlueS3BucketRegion = "us-east-2"
+	DestinationS3GlueS3BucketRegionUsWest1      DestinationS3GlueS3BucketRegion = "us-west-1"
+	DestinationS3GlueS3BucketRegionUsWest2      DestinationS3GlueS3BucketRegion = "us-west-2"
+	DestinationS3GlueS3BucketRegionAfSouth1     DestinationS3GlueS3BucketRegion = "af-south-1"
+	DestinationS3GlueS3BucketRegionApEast1      DestinationS3GlueS3BucketRegion = "ap-east-1"
+	DestinationS3GlueS3BucketRegionApSouth1     DestinationS3GlueS3BucketRegion = "ap-south-1"
+	DestinationS3GlueS3BucketRegionApNortheast1 DestinationS3GlueS3BucketRegion = "ap-northeast-1"
+	DestinationS3GlueS3BucketRegionApNortheast2 DestinationS3GlueS3BucketRegion = "ap-northeast-2"
+	DestinationS3GlueS3BucketRegionApNortheast3 DestinationS3GlueS3BucketRegion = "ap-northeast-3"
+	DestinationS3GlueS3BucketRegionApSoutheast1 DestinationS3GlueS3BucketRegion = "ap-southeast-1"
+	DestinationS3GlueS3BucketRegionApSoutheast2 DestinationS3GlueS3BucketRegion = "ap-southeast-2"
+	DestinationS3GlueS3BucketRegionCaCentral1   DestinationS3GlueS3BucketRegion = "ca-central-1"
+	DestinationS3GlueS3BucketRegionCnNorth1     DestinationS3GlueS3BucketRegion = "cn-north-1"
+	DestinationS3GlueS3BucketRegionCnNorthwest1 DestinationS3GlueS3BucketRegion = "cn-northwest-1"
+	DestinationS3GlueS3BucketRegionEuCentral1   DestinationS3GlueS3BucketRegion = "eu-central-1"
+	DestinationS3GlueS3BucketRegionEuNorth1     DestinationS3GlueS3BucketRegion = "eu-north-1"
+	DestinationS3GlueS3BucketRegionEuSouth1     DestinationS3GlueS3BucketRegion = "eu-south-1"
+	DestinationS3GlueS3BucketRegionEuWest1      DestinationS3GlueS3BucketRegion = "eu-west-1"
+	DestinationS3GlueS3BucketRegionEuWest2      DestinationS3GlueS3BucketRegion = "eu-west-2"
+	DestinationS3GlueS3BucketRegionEuWest3      DestinationS3GlueS3BucketRegion = "eu-west-3"
+	DestinationS3GlueS3BucketRegionSaEast1      DestinationS3GlueS3BucketRegion = "sa-east-1"
+	DestinationS3GlueS3BucketRegionMeSouth1     DestinationS3GlueS3BucketRegion = "me-south-1"
+	DestinationS3GlueS3BucketRegionUsGovEast1   DestinationS3GlueS3BucketRegion = "us-gov-east-1"
+	DestinationS3GlueS3BucketRegionUsGovWest1   DestinationS3GlueS3BucketRegion = "us-gov-west-1"
 )
 
-func (e DestinationS3GlueS3BucketRegionEnum) ToPointer() *DestinationS3GlueS3BucketRegionEnum {
+func (e DestinationS3GlueS3BucketRegion) ToPointer() *DestinationS3GlueS3BucketRegion {
 	return &e
 }
 
-func (e *DestinationS3GlueS3BucketRegionEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationS3GlueS3BucketRegion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -385,17 +385,17 @@ func (e *DestinationS3GlueS3BucketRegionEnum) UnmarshalJSON(data []byte) error {
 	case "us-gov-east-1":
 		fallthrough
 	case "us-gov-west-1":
-		*e = DestinationS3GlueS3BucketRegionEnum(v)
+		*e = DestinationS3GlueS3BucketRegion(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationS3GlueS3BucketRegionEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationS3GlueS3BucketRegion: %v", v)
 	}
 }
 
 type DestinationS3Glue struct {
 	// The access key ID to access the S3 bucket. Airbyte requires Read and Write permissions to the given bucket. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">here</a>.
-	AccessKeyID     *string                     `json:"access_key_id,omitempty"`
-	DestinationType DestinationS3GlueS3GlueEnum `json:"destinationType"`
+	AccessKeyID     *string                 `json:"access_key_id,omitempty"`
+	DestinationType DestinationS3GlueS3Glue `json:"destinationType"`
 	// The pattern allows you to set the file-name format for the S3 staging file(s)
 	FileNamePattern *string `json:"file_name_pattern,omitempty"`
 	// Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details
@@ -403,13 +403,13 @@ type DestinationS3Glue struct {
 	// Name of the glue database for creating the tables, leave blank if no integration
 	GlueDatabase string `json:"glue_database"`
 	// The library that your query engine will use for reading and writing data in your lake.
-	GlueSerializationLibrary DestinationS3GlueSerializationLibraryEnum `json:"glue_serialization_library"`
+	GlueSerializationLibrary DestinationS3GlueSerializationLibrary `json:"glue_serialization_library"`
 	// The name of the S3 bucket. Read more <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html">here</a>.
 	S3BucketName string `json:"s3_bucket_name"`
 	// Directory under the S3 bucket where data will be written. Read more <a href="https://docs.airbyte.com/integrations/destinations/s3#:~:text=to%20format%20the-,bucket%20path,-%3A">here</a>
 	S3BucketPath string `json:"s3_bucket_path"`
 	// The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes.
-	S3BucketRegion DestinationS3GlueS3BucketRegionEnum `json:"s3_bucket_region"`
+	S3BucketRegion DestinationS3GlueS3BucketRegion `json:"s3_bucket_region"`
 	// Your S3 endpoint url. Read more <a href="https://docs.aws.amazon.com/general/latest/gr/s3.html#:~:text=Service%20endpoints-,Amazon%20S3%20endpoints,-When%20you%20use">here</a>
 	S3Endpoint *string `json:"s3_endpoint,omitempty"`
 	// Format string on how data will be organized inside the S3 bucket directory. Read more <a href="https://docs.airbyte.com/integrations/destinations/s3#:~:text=The%20full%20path%20of%20the%20output%20data%20with%20the%20default%20S3%20path%20format">here</a>

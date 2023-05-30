@@ -4,13 +4,14 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
 func (r *SourceSalesforceResourceModel) ToCreateSDKType() *shared.SourceSalesforceCreateRequest {
-	authType := new(shared.SourceSalesforceAuthTypeEnum)
+	authType := new(shared.SourceSalesforceAuthType)
 	if !r.Configuration.AuthType.IsUnknown() && !r.Configuration.AuthType.IsNull() {
-		*authType = shared.SourceSalesforceAuthTypeEnum(r.Configuration.AuthType.ValueString())
+		*authType = shared.SourceSalesforceAuthType(r.Configuration.AuthType.ValueString())
 	} else {
 		authType = nil
 	}
@@ -23,7 +24,7 @@ func (r *SourceSalesforceResourceModel) ToCreateSDKType() *shared.SourceSalesfor
 		isSandbox = nil
 	}
 	refreshToken := r.Configuration.RefreshToken.ValueString()
-	sourceType := shared.SourceSalesforceSalesforceEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceSalesforceSalesforce(r.Configuration.SourceType.ValueString())
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -32,7 +33,7 @@ func (r *SourceSalesforceResourceModel) ToCreateSDKType() *shared.SourceSalesfor
 	}
 	streamsCriteria := make([]shared.SourceSalesforceStreamsCriteria, 0)
 	for _, streamsCriteriaItem := range r.Configuration.StreamsCriteria {
-		criteria := shared.SourceSalesforceStreamsCriteriaSearchCriteriaEnum(streamsCriteriaItem.Criteria.ValueString())
+		criteria := shared.SourceSalesforceStreamsCriteriaSearchCriteria(streamsCriteriaItem.Criteria.ValueString())
 		value := streamsCriteriaItem.Value.ValueString()
 		streamsCriteria = append(streamsCriteria, shared.SourceSalesforceStreamsCriteria{
 			Criteria: criteria,
@@ -69,4 +70,11 @@ func (r *SourceSalesforceResourceModel) ToCreateSDKType() *shared.SourceSalesfor
 func (r *SourceSalesforceResourceModel) ToDeleteSDKType() *shared.SourceSalesforceCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceSalesforceResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

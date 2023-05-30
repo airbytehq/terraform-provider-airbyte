@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type SourceMetabaseMetabaseEnum string
+type SourceMetabaseMetabase string
 
 const (
-	SourceMetabaseMetabaseEnumMetabase SourceMetabaseMetabaseEnum = "metabase"
+	SourceMetabaseMetabaseMetabase SourceMetabaseMetabase = "metabase"
 )
 
-func (e SourceMetabaseMetabaseEnum) ToPointer() *SourceMetabaseMetabaseEnum {
+func (e SourceMetabaseMetabase) ToPointer() *SourceMetabaseMetabase {
 	return &e
 }
 
-func (e *SourceMetabaseMetabaseEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceMetabaseMetabase) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "metabase":
-		*e = SourceMetabaseMetabaseEnum(v)
+		*e = SourceMetabaseMetabase(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMetabaseMetabaseEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceMetabaseMetabase: %v", v)
 	}
 }
 
@@ -41,7 +41,7 @@ type SourceMetabase struct {
 	//   http://localhost:3000/api/session
 	// ``` Then copy the value of the `id` field returned by a successful call to that API.
 	// Note that by default, sessions are good for 14 days and needs to be regenerated.
-	SessionToken *string                    `json:"session_token,omitempty"`
-	SourceType   SourceMetabaseMetabaseEnum `json:"sourceType"`
-	Username     *string                    `json:"username,omitempty"`
+	SessionToken *string                `json:"session_token,omitempty"`
+	SourceType   SourceMetabaseMetabase `json:"sourceType"`
+	Username     *string                `json:"username,omitempty"`
 }

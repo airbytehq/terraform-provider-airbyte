@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type SourceFreshsalesFreshsalesEnum string
+type SourceFreshsalesFreshsales string
 
 const (
-	SourceFreshsalesFreshsalesEnumFreshsales SourceFreshsalesFreshsalesEnum = "freshsales"
+	SourceFreshsalesFreshsalesFreshsales SourceFreshsalesFreshsales = "freshsales"
 )
 
-func (e SourceFreshsalesFreshsalesEnum) ToPointer() *SourceFreshsalesFreshsalesEnum {
+func (e SourceFreshsalesFreshsales) ToPointer() *SourceFreshsalesFreshsales {
 	return &e
 }
 
-func (e *SourceFreshsalesFreshsalesEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceFreshsalesFreshsales) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "freshsales":
-		*e = SourceFreshsalesFreshsalesEnum(v)
+		*e = SourceFreshsalesFreshsales(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceFreshsalesFreshsalesEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceFreshsalesFreshsales: %v", v)
 	}
 }
 
@@ -35,6 +35,6 @@ type SourceFreshsales struct {
 	// Freshsales API Key. See <a href="https://crmsupport.freshworks.com/support/solutions/articles/50000002503-how-to-find-my-api-key-">here</a>. The key is case sensitive.
 	APIKey string `json:"api_key"`
 	// The Name of your Freshsales domain
-	DomainName string                         `json:"domain_name"`
-	SourceType SourceFreshsalesFreshsalesEnum `json:"sourceType"`
+	DomainName string                     `json:"domain_name"`
+	SourceType SourceFreshsalesFreshsales `json:"sourceType"`
 }

@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
@@ -16,7 +17,7 @@ func (r *SourceTwitterResourceModel) ToCreateSDKType() *shared.SourceTwitterCrea
 		endDate = nil
 	}
 	query := r.Configuration.Query.ValueString()
-	sourceType := shared.SourceTwitterTwitterEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceTwitterTwitter(r.Configuration.SourceType.ValueString())
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -50,4 +51,11 @@ func (r *SourceTwitterResourceModel) ToCreateSDKType() *shared.SourceTwitterCrea
 func (r *SourceTwitterResourceModel) ToDeleteSDKType() *shared.SourceTwitterCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceTwitterResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

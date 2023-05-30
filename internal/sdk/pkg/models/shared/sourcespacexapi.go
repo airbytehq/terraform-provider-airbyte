@@ -7,32 +7,32 @@ import (
 	"fmt"
 )
 
-type SourceSpacexAPISpacexAPIEnum string
+type SourceSpacexAPISpacexAPI string
 
 const (
-	SourceSpacexAPISpacexAPIEnumSpacexAPI SourceSpacexAPISpacexAPIEnum = "spacex-api"
+	SourceSpacexAPISpacexAPISpacexAPI SourceSpacexAPISpacexAPI = "spacex-api"
 )
 
-func (e SourceSpacexAPISpacexAPIEnum) ToPointer() *SourceSpacexAPISpacexAPIEnum {
+func (e SourceSpacexAPISpacexAPI) ToPointer() *SourceSpacexAPISpacexAPI {
 	return &e
 }
 
-func (e *SourceSpacexAPISpacexAPIEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceSpacexAPISpacexAPI) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "spacex-api":
-		*e = SourceSpacexAPISpacexAPIEnum(v)
+		*e = SourceSpacexAPISpacexAPI(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSpacexAPISpacexAPIEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceSpacexAPISpacexAPI: %v", v)
 	}
 }
 
 type SourceSpacexAPI struct {
-	ID         *string                      `json:"id,omitempty"`
-	Options    *string                      `json:"options,omitempty"`
-	SourceType SourceSpacexAPISpacexAPIEnum `json:"sourceType"`
+	ID         *string                  `json:"id,omitempty"`
+	Options    *string                  `json:"options,omitempty"`
+	SourceType SourceSpacexAPISpacexAPI `json:"sourceType"`
 }

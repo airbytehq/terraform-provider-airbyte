@@ -8,20 +8,20 @@ import (
 	"fmt"
 )
 
-// SourceNytimesPeriodUsedForMostPopularStreamsEnum - Period of time (in days)
-type SourceNytimesPeriodUsedForMostPopularStreamsEnum int64
+// SourceNytimesPeriodUsedForMostPopularStreams - Period of time (in days)
+type SourceNytimesPeriodUsedForMostPopularStreams int64
 
 const (
-	SourceNytimesPeriodUsedForMostPopularStreamsEnumOne    SourceNytimesPeriodUsedForMostPopularStreamsEnum = 1
-	SourceNytimesPeriodUsedForMostPopularStreamsEnumSeven  SourceNytimesPeriodUsedForMostPopularStreamsEnum = 7
-	SourceNytimesPeriodUsedForMostPopularStreamsEnumThirty SourceNytimesPeriodUsedForMostPopularStreamsEnum = 30
+	SourceNytimesPeriodUsedForMostPopularStreamsOne    SourceNytimesPeriodUsedForMostPopularStreams = 1
+	SourceNytimesPeriodUsedForMostPopularStreamsSeven  SourceNytimesPeriodUsedForMostPopularStreams = 7
+	SourceNytimesPeriodUsedForMostPopularStreamsThirty SourceNytimesPeriodUsedForMostPopularStreams = 30
 )
 
-func (e SourceNytimesPeriodUsedForMostPopularStreamsEnum) ToPointer() *SourceNytimesPeriodUsedForMostPopularStreamsEnum {
+func (e SourceNytimesPeriodUsedForMostPopularStreams) ToPointer() *SourceNytimesPeriodUsedForMostPopularStreams {
 	return &e
 }
 
-func (e *SourceNytimesPeriodUsedForMostPopularStreamsEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceNytimesPeriodUsedForMostPopularStreams) UnmarshalJSON(data []byte) error {
 	var v int64
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -32,59 +32,59 @@ func (e *SourceNytimesPeriodUsedForMostPopularStreamsEnum) UnmarshalJSON(data []
 	case 7:
 		fallthrough
 	case 30:
-		*e = SourceNytimesPeriodUsedForMostPopularStreamsEnum(v)
+		*e = SourceNytimesPeriodUsedForMostPopularStreams(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceNytimesPeriodUsedForMostPopularStreamsEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceNytimesPeriodUsedForMostPopularStreams: %v", v)
 	}
 }
 
-// SourceNytimesShareTypeUsedForMostPopularSharedStreamEnum - Share Type
-type SourceNytimesShareTypeUsedForMostPopularSharedStreamEnum string
+// SourceNytimesShareTypeUsedForMostPopularSharedStream - Share Type
+type SourceNytimesShareTypeUsedForMostPopularSharedStream string
 
 const (
-	SourceNytimesShareTypeUsedForMostPopularSharedStreamEnumFacebook SourceNytimesShareTypeUsedForMostPopularSharedStreamEnum = "facebook"
+	SourceNytimesShareTypeUsedForMostPopularSharedStreamFacebook SourceNytimesShareTypeUsedForMostPopularSharedStream = "facebook"
 )
 
-func (e SourceNytimesShareTypeUsedForMostPopularSharedStreamEnum) ToPointer() *SourceNytimesShareTypeUsedForMostPopularSharedStreamEnum {
+func (e SourceNytimesShareTypeUsedForMostPopularSharedStream) ToPointer() *SourceNytimesShareTypeUsedForMostPopularSharedStream {
 	return &e
 }
 
-func (e *SourceNytimesShareTypeUsedForMostPopularSharedStreamEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceNytimesShareTypeUsedForMostPopularSharedStream) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "facebook":
-		*e = SourceNytimesShareTypeUsedForMostPopularSharedStreamEnum(v)
+		*e = SourceNytimesShareTypeUsedForMostPopularSharedStream(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceNytimesShareTypeUsedForMostPopularSharedStreamEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceNytimesShareTypeUsedForMostPopularSharedStream: %v", v)
 	}
 }
 
-type SourceNytimesNytimesEnum string
+type SourceNytimesNytimes string
 
 const (
-	SourceNytimesNytimesEnumNytimes SourceNytimesNytimesEnum = "nytimes"
+	SourceNytimesNytimesNytimes SourceNytimesNytimes = "nytimes"
 )
 
-func (e SourceNytimesNytimesEnum) ToPointer() *SourceNytimesNytimesEnum {
+func (e SourceNytimesNytimes) ToPointer() *SourceNytimesNytimes {
 	return &e
 }
 
-func (e *SourceNytimesNytimesEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceNytimesNytimes) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "nytimes":
-		*e = SourceNytimesNytimesEnum(v)
+		*e = SourceNytimesNytimes(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceNytimesNytimesEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceNytimesNytimes: %v", v)
 	}
 }
 
@@ -94,10 +94,10 @@ type SourceNytimes struct {
 	// End date to stop the article retrieval (format YYYY-MM)
 	EndDate *types.Date `json:"end_date,omitempty"`
 	// Period of time (in days)
-	Period SourceNytimesPeriodUsedForMostPopularStreamsEnum `json:"period"`
+	Period SourceNytimesPeriodUsedForMostPopularStreams `json:"period"`
 	// Share Type
-	ShareType  *SourceNytimesShareTypeUsedForMostPopularSharedStreamEnum `json:"share_type,omitempty"`
-	SourceType SourceNytimesNytimesEnum                                  `json:"sourceType"`
+	ShareType  *SourceNytimesShareTypeUsedForMostPopularSharedStream `json:"share_type,omitempty"`
+	SourceType SourceNytimesNytimes                                  `json:"sourceType"`
 	// Start date to begin the article retrieval (format YYYY-MM)
 	StartDate types.Date `json:"start_date"`
 }

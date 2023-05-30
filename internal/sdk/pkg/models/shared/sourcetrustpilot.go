@@ -10,65 +10,65 @@ import (
 	"time"
 )
 
-type SourceTrustpilotAuthorizationMethodAPIKeyAuthTypeEnum string
+type SourceTrustpilotAuthorizationMethodAPIKeyAuthType string
 
 const (
-	SourceTrustpilotAuthorizationMethodAPIKeyAuthTypeEnumApikey SourceTrustpilotAuthorizationMethodAPIKeyAuthTypeEnum = "apikey"
+	SourceTrustpilotAuthorizationMethodAPIKeyAuthTypeApikey SourceTrustpilotAuthorizationMethodAPIKeyAuthType = "apikey"
 )
 
-func (e SourceTrustpilotAuthorizationMethodAPIKeyAuthTypeEnum) ToPointer() *SourceTrustpilotAuthorizationMethodAPIKeyAuthTypeEnum {
+func (e SourceTrustpilotAuthorizationMethodAPIKeyAuthType) ToPointer() *SourceTrustpilotAuthorizationMethodAPIKeyAuthType {
 	return &e
 }
 
-func (e *SourceTrustpilotAuthorizationMethodAPIKeyAuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceTrustpilotAuthorizationMethodAPIKeyAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "apikey":
-		*e = SourceTrustpilotAuthorizationMethodAPIKeyAuthTypeEnum(v)
+		*e = SourceTrustpilotAuthorizationMethodAPIKeyAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceTrustpilotAuthorizationMethodAPIKeyAuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceTrustpilotAuthorizationMethodAPIKeyAuthType: %v", v)
 	}
 }
 
 // SourceTrustpilotAuthorizationMethodAPIKey - The API key authentication method gives you access to only the streams which are part of the Public API. When you want to get streams available via the Consumer API (e.g. the private reviews) you need to use authentication method OAuth 2.0.
 type SourceTrustpilotAuthorizationMethodAPIKey struct {
-	AuthType *SourceTrustpilotAuthorizationMethodAPIKeyAuthTypeEnum `json:"auth_type,omitempty"`
+	AuthType *SourceTrustpilotAuthorizationMethodAPIKeyAuthType `json:"auth_type,omitempty"`
 	// The API key of the Trustpilot API application.
 	ClientID string `json:"client_id"`
 }
 
-type SourceTrustpilotAuthorizationMethodOAuth20AuthTypeEnum string
+type SourceTrustpilotAuthorizationMethodOAuth20AuthType string
 
 const (
-	SourceTrustpilotAuthorizationMethodOAuth20AuthTypeEnumOauth20 SourceTrustpilotAuthorizationMethodOAuth20AuthTypeEnum = "oauth2.0"
+	SourceTrustpilotAuthorizationMethodOAuth20AuthTypeOauth20 SourceTrustpilotAuthorizationMethodOAuth20AuthType = "oauth2.0"
 )
 
-func (e SourceTrustpilotAuthorizationMethodOAuth20AuthTypeEnum) ToPointer() *SourceTrustpilotAuthorizationMethodOAuth20AuthTypeEnum {
+func (e SourceTrustpilotAuthorizationMethodOAuth20AuthType) ToPointer() *SourceTrustpilotAuthorizationMethodOAuth20AuthType {
 	return &e
 }
 
-func (e *SourceTrustpilotAuthorizationMethodOAuth20AuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceTrustpilotAuthorizationMethodOAuth20AuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "oauth2.0":
-		*e = SourceTrustpilotAuthorizationMethodOAuth20AuthTypeEnum(v)
+		*e = SourceTrustpilotAuthorizationMethodOAuth20AuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceTrustpilotAuthorizationMethodOAuth20AuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceTrustpilotAuthorizationMethodOAuth20AuthType: %v", v)
 	}
 }
 
 type SourceTrustpilotAuthorizationMethodOAuth20 struct {
 	// Access Token for making authenticated requests.
-	AccessToken string                                                  `json:"access_token"`
-	AuthType    *SourceTrustpilotAuthorizationMethodOAuth20AuthTypeEnum `json:"auth_type,omitempty"`
+	AccessToken string                                              `json:"access_token"`
+	AuthType    *SourceTrustpilotAuthorizationMethodOAuth20AuthType `json:"auth_type,omitempty"`
 	// The API key of the Trustpilot API application. (represents the OAuth Client ID)
 	ClientID string `json:"client_id"`
 	// The Secret of the Trustpilot API application. (represents the OAuth Client Secret)
@@ -147,27 +147,27 @@ func (u SourceTrustpilotAuthorizationMethod) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-type SourceTrustpilotTrustpilotEnum string
+type SourceTrustpilotTrustpilot string
 
 const (
-	SourceTrustpilotTrustpilotEnumTrustpilot SourceTrustpilotTrustpilotEnum = "trustpilot"
+	SourceTrustpilotTrustpilotTrustpilot SourceTrustpilotTrustpilot = "trustpilot"
 )
 
-func (e SourceTrustpilotTrustpilotEnum) ToPointer() *SourceTrustpilotTrustpilotEnum {
+func (e SourceTrustpilotTrustpilot) ToPointer() *SourceTrustpilotTrustpilot {
 	return &e
 }
 
-func (e *SourceTrustpilotTrustpilotEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceTrustpilotTrustpilot) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "trustpilot":
-		*e = SourceTrustpilotTrustpilotEnum(v)
+		*e = SourceTrustpilotTrustpilot(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceTrustpilotTrustpilotEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceTrustpilotTrustpilot: %v", v)
 	}
 }
 
@@ -175,7 +175,7 @@ type SourceTrustpilot struct {
 	// The names of business units which shall be synchronized. Some streams e.g. configured_business_units or private_reviews use this configuration.
 	BusinessUnits []string                            `json:"business_units"`
 	Credentials   SourceTrustpilotAuthorizationMethod `json:"credentials"`
-	SourceType    SourceTrustpilotTrustpilotEnum      `json:"sourceType"`
+	SourceType    SourceTrustpilotTrustpilot          `json:"sourceType"`
 	// For streams with sync. method incremental the start date time to be used
 	StartDate string `json:"start_date"`
 }

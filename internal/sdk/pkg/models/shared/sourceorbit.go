@@ -7,34 +7,34 @@ import (
 	"fmt"
 )
 
-type SourceOrbitOrbitEnum string
+type SourceOrbitOrbit string
 
 const (
-	SourceOrbitOrbitEnumOrbit SourceOrbitOrbitEnum = "orbit"
+	SourceOrbitOrbitOrbit SourceOrbitOrbit = "orbit"
 )
 
-func (e SourceOrbitOrbitEnum) ToPointer() *SourceOrbitOrbitEnum {
+func (e SourceOrbitOrbit) ToPointer() *SourceOrbitOrbit {
 	return &e
 }
 
-func (e *SourceOrbitOrbitEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceOrbitOrbit) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "orbit":
-		*e = SourceOrbitOrbitEnum(v)
+		*e = SourceOrbitOrbit(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceOrbitOrbitEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceOrbitOrbit: %v", v)
 	}
 }
 
 type SourceOrbit struct {
 	// Authorizes you to work with Orbit workspaces associated with the token.
-	APIToken   string               `json:"api_token"`
-	SourceType SourceOrbitOrbitEnum `json:"sourceType"`
+	APIToken   string           `json:"api_token"`
+	SourceType SourceOrbitOrbit `json:"sourceType"`
 	// Date in the format 2022-06-26. Only load members whose last activities are after this date.
 	StartDate *string `json:"start_date,omitempty"`
 	// The unique name of the workspace that your API token is associated with.

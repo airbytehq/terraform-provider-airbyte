@@ -4,11 +4,12 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceLemlistResourceModel) ToCreateSDKType() *shared.SourceLemlistCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	sourceType := shared.SourceLemlistLemlistEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceLemlistLemlist(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceLemlist{
 		APIKey:     apiKey,
 		SourceType: sourceType,
@@ -33,4 +34,11 @@ func (r *SourceLemlistResourceModel) ToCreateSDKType() *shared.SourceLemlistCrea
 func (r *SourceLemlistResourceModel) ToDeleteSDKType() *shared.SourceLemlistCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceLemlistResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

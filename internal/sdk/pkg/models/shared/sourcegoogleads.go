@@ -28,27 +28,27 @@ type SourceGoogleAdsCustomQueries struct {
 	TableName string `json:"table_name"`
 }
 
-type SourceGoogleAdsGoogleAdsEnum string
+type SourceGoogleAdsGoogleAds string
 
 const (
-	SourceGoogleAdsGoogleAdsEnumGoogleAds SourceGoogleAdsGoogleAdsEnum = "google-ads"
+	SourceGoogleAdsGoogleAdsGoogleAds SourceGoogleAdsGoogleAds = "google-ads"
 )
 
-func (e SourceGoogleAdsGoogleAdsEnum) ToPointer() *SourceGoogleAdsGoogleAdsEnum {
+func (e SourceGoogleAdsGoogleAds) ToPointer() *SourceGoogleAdsGoogleAds {
 	return &e
 }
 
-func (e *SourceGoogleAdsGoogleAdsEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceGoogleAdsGoogleAds) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "google-ads":
-		*e = SourceGoogleAdsGoogleAdsEnum(v)
+		*e = SourceGoogleAdsGoogleAds(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGoogleAdsGoogleAdsEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceGoogleAdsGoogleAds: %v", v)
 	}
 }
 
@@ -62,8 +62,8 @@ type SourceGoogleAds struct {
 	// UTC date and time in the format 2017-01-25. Any data after this date will not be replicated.
 	EndDate *types.Date `json:"end_date,omitempty"`
 	// If your access to the customer account is through a manager account, this field is required and must be set to the customer ID of the manager account (10-digit number without dashes). More information about this field you can see <a href="https://developers.google.com/google-ads/api/docs/concepts/call-structure#cid">here</a>
-	LoginCustomerID *string                      `json:"login_customer_id,omitempty"`
-	SourceType      SourceGoogleAdsGoogleAdsEnum `json:"sourceType"`
+	LoginCustomerID *string                  `json:"login_customer_id,omitempty"`
+	SourceType      SourceGoogleAdsGoogleAds `json:"sourceType"`
 	// UTC date and time in the format 2017-01-25. Any data before this date will not be replicated.
 	StartDate types.Date `json:"start_date"`
 }

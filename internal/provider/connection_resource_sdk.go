@@ -25,9 +25,9 @@ func (r *ConnectionResourceModel) ToCreateSDKType() *shared.ConnectionCreateRequ
 				}
 				primaryKey = append(primaryKey, primaryKeyTmp)
 			}
-			syncMode := new(shared.ConnectionSyncModeEnumEnum)
+			syncMode := new(shared.ConnectionSyncModeEnum)
 			if !streamsItem.SyncMode.IsUnknown() && !streamsItem.SyncMode.IsNull() {
-				*syncMode = shared.ConnectionSyncModeEnumEnum(streamsItem.SyncMode.ValueString())
+				*syncMode = shared.ConnectionSyncModeEnum(streamsItem.SyncMode.ValueString())
 			} else {
 				syncMode = nil
 			}
@@ -42,9 +42,9 @@ func (r *ConnectionResourceModel) ToCreateSDKType() *shared.ConnectionCreateRequ
 			Streams: streams,
 		}
 	}
-	dataResidency := new(shared.GeographyEnumEnum)
+	dataResidency := new(shared.GeographyEnum)
 	if !r.DataResidency.IsUnknown() && !r.DataResidency.IsNull() {
-		*dataResidency = shared.GeographyEnumEnum(r.DataResidency.ValueString())
+		*dataResidency = shared.GeographyEnum(r.DataResidency.ValueString())
 	} else {
 		dataResidency = nil
 	}
@@ -55,9 +55,9 @@ func (r *ConnectionResourceModel) ToCreateSDKType() *shared.ConnectionCreateRequ
 	} else {
 		name1 = nil
 	}
-	namespaceDefinition := new(shared.NamespaceDefinitionEnumEnum)
+	namespaceDefinition := new(shared.NamespaceDefinitionEnum)
 	if !r.NamespaceDefinition.IsUnknown() && !r.NamespaceDefinition.IsNull() {
-		*namespaceDefinition = shared.NamespaceDefinitionEnumEnum(r.NamespaceDefinition.ValueString())
+		*namespaceDefinition = shared.NamespaceDefinitionEnum(r.NamespaceDefinition.ValueString())
 	} else {
 		namespaceDefinition = nil
 	}
@@ -67,9 +67,9 @@ func (r *ConnectionResourceModel) ToCreateSDKType() *shared.ConnectionCreateRequ
 	} else {
 		namespaceFormat = nil
 	}
-	nonBreakingSchemaUpdatesBehavior := new(shared.NonBreakingSchemaUpdatesBehaviorEnumEnum)
+	nonBreakingSchemaUpdatesBehavior := new(shared.NonBreakingSchemaUpdatesBehaviorEnum)
 	if !r.NonBreakingSchemaUpdatesBehavior.IsUnknown() && !r.NonBreakingSchemaUpdatesBehavior.IsNull() {
-		*nonBreakingSchemaUpdatesBehavior = shared.NonBreakingSchemaUpdatesBehaviorEnumEnum(r.NonBreakingSchemaUpdatesBehavior.ValueString())
+		*nonBreakingSchemaUpdatesBehavior = shared.NonBreakingSchemaUpdatesBehaviorEnum(r.NonBreakingSchemaUpdatesBehavior.ValueString())
 	} else {
 		nonBreakingSchemaUpdatesBehavior = nil
 	}
@@ -87,7 +87,7 @@ func (r *ConnectionResourceModel) ToCreateSDKType() *shared.ConnectionCreateRequ
 		} else {
 			cronExpression = nil
 		}
-		scheduleType := shared.ScheduleTypeEnumEnum(r.Schedule.ScheduleType.ValueString())
+		scheduleType := shared.ScheduleTypeEnum(r.Schedule.ScheduleType.ValueString())
 		schedule = &shared.ConnectionScheduleCreate{
 			CronExpression: cronExpression,
 			ScheduleType:   scheduleType,

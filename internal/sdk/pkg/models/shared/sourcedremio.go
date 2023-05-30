@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type SourceDremioDremioEnum string
+type SourceDremioDremio string
 
 const (
-	SourceDremioDremioEnumDremio SourceDremioDremioEnum = "dremio"
+	SourceDremioDremioDremio SourceDremioDremio = "dremio"
 )
 
-func (e SourceDremioDremioEnum) ToPointer() *SourceDremioDremioEnum {
+func (e SourceDremioDremio) ToPointer() *SourceDremioDremio {
 	return &e
 }
 
-func (e *SourceDremioDremioEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceDremioDremio) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "dremio":
-		*e = SourceDremioDremioEnum(v)
+		*e = SourceDremioDremio(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceDremioDremioEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceDremioDremio: %v", v)
 	}
 }
 
@@ -35,6 +35,6 @@ type SourceDremio struct {
 	// API Key that is generated when you authenticate to Dremio API
 	APIKey string `json:"api_key"`
 	// URL of your Dremio instance
-	BaseURL    string                 `json:"base_url"`
-	SourceType SourceDremioDremioEnum `json:"sourceType"`
+	BaseURL    string             `json:"base_url"`
+	SourceType SourceDremioDremio `json:"sourceType"`
 }

@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceFakerResourceModel) ToCreateSDKType() *shared.SourceFakerCreateRequest {
@@ -32,7 +33,7 @@ func (r *SourceFakerResourceModel) ToCreateSDKType() *shared.SourceFakerCreateRe
 	} else {
 		seed = nil
 	}
-	sourceType := shared.SourceFakerFakerEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceFakerFaker(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceFaker{
 		Count:           count,
 		Parallelism:     parallelism,
@@ -61,4 +62,11 @@ func (r *SourceFakerResourceModel) ToCreateSDKType() *shared.SourceFakerCreateRe
 func (r *SourceFakerResourceModel) ToDeleteSDKType() *shared.SourceFakerCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceFakerResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

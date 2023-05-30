@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationPubsubResourceModel) ToCreateSDKType() *shared.DestinationPubsubCreateRequest {
@@ -27,7 +28,7 @@ func (r *DestinationPubsubResourceModel) ToCreateSDKType() *shared.DestinationPu
 		batchingRequestBytesThreshold = nil
 	}
 	credentialsJSON := r.Configuration.CredentialsJSON.ValueString()
-	destinationType := shared.DestinationPubsubPubsubEnum(r.Configuration.DestinationType.ValueString())
+	destinationType := shared.DestinationPubsubPubsub(r.Configuration.DestinationType.ValueString())
 	orderingEnabled := r.Configuration.OrderingEnabled.ValueBool()
 	projectID := r.Configuration.ProjectID.ValueString()
 	topicID := r.Configuration.TopicID.ValueString()
@@ -55,4 +56,11 @@ func (r *DestinationPubsubResourceModel) ToCreateSDKType() *shared.DestinationPu
 func (r *DestinationPubsubResourceModel) ToDeleteSDKType() *shared.DestinationPubsubCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *DestinationPubsubResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

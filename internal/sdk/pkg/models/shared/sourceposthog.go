@@ -8,27 +8,27 @@ import (
 	"time"
 )
 
-type SourcePosthogPosthogEnum string
+type SourcePosthogPosthog string
 
 const (
-	SourcePosthogPosthogEnumPosthog SourcePosthogPosthogEnum = "posthog"
+	SourcePosthogPosthogPosthog SourcePosthogPosthog = "posthog"
 )
 
-func (e SourcePosthogPosthogEnum) ToPointer() *SourcePosthogPosthogEnum {
+func (e SourcePosthogPosthog) ToPointer() *SourcePosthogPosthog {
 	return &e
 }
 
-func (e *SourcePosthogPosthogEnum) UnmarshalJSON(data []byte) error {
+func (e *SourcePosthogPosthog) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "posthog":
-		*e = SourcePosthogPosthogEnum(v)
+		*e = SourcePosthogPosthog(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePosthogPosthogEnum: %v", v)
+		return fmt.Errorf("invalid value for SourcePosthogPosthog: %v", v)
 	}
 }
 
@@ -36,8 +36,8 @@ type SourcePosthog struct {
 	// API Key. See the <a href="https://docs.airbyte.com/integrations/sources/posthog">docs</a> for information on how to generate this key.
 	APIKey string `json:"api_key"`
 	// Base PostHog url. Defaults to PostHog Cloud (https://app.posthog.com).
-	BaseURL    *string                  `json:"base_url,omitempty"`
-	SourceType SourcePosthogPosthogEnum `json:"sourceType"`
+	BaseURL    *string              `json:"base_url,omitempty"`
+	SourceType SourcePosthogPosthog `json:"sourceType"`
 	// The date from which you'd like to replicate the data. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
 }

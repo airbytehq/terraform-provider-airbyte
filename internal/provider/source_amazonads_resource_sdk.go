@@ -4,12 +4,13 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceAmazonAdsResourceModel) ToCreateSDKType() *shared.SourceAmazonAdsCreateRequest {
-	authType := new(shared.SourceAmazonAdsAuthTypeEnum)
+	authType := new(shared.SourceAmazonAdsAuthType)
 	if !r.Configuration.AuthType.IsUnknown() && !r.Configuration.AuthType.IsNull() {
-		*authType = shared.SourceAmazonAdsAuthTypeEnum(r.Configuration.AuthType.ValueString())
+		*authType = shared.SourceAmazonAdsAuthType(r.Configuration.AuthType.ValueString())
 	} else {
 		authType = nil
 	}
@@ -26,26 +27,26 @@ func (r *SourceAmazonAdsResourceModel) ToCreateSDKType() *shared.SourceAmazonAds
 		profiles = append(profiles, profilesItem.ValueInt64())
 	}
 	refreshToken := r.Configuration.RefreshToken.ValueString()
-	region := new(shared.SourceAmazonAdsRegionEnum)
+	region := new(shared.SourceAmazonAdsRegion)
 	if !r.Configuration.Region.IsUnknown() && !r.Configuration.Region.IsNull() {
-		*region = shared.SourceAmazonAdsRegionEnum(r.Configuration.Region.ValueString())
+		*region = shared.SourceAmazonAdsRegion(r.Configuration.Region.ValueString())
 	} else {
 		region = nil
 	}
-	reportRecordTypes := make([]shared.SourceAmazonAdsReportRecordTypesEnum, 0)
+	reportRecordTypes := make([]shared.SourceAmazonAdsReportRecordTypes, 0)
 	for _, reportRecordTypesItem := range r.Configuration.ReportRecordTypes {
-		reportRecordTypes = append(reportRecordTypes, shared.SourceAmazonAdsReportRecordTypesEnum(reportRecordTypesItem.ValueString()))
+		reportRecordTypes = append(reportRecordTypes, shared.SourceAmazonAdsReportRecordTypes(reportRecordTypesItem.ValueString()))
 	}
-	sourceType := shared.SourceAmazonAdsAmazonAdsEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceAmazonAdsAmazonAds(r.Configuration.SourceType.ValueString())
 	startDate := new(string)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate = r.Configuration.StartDate.ValueString()
 	} else {
 		startDate = nil
 	}
-	stateFilter := make([]shared.SourceAmazonAdsStateFilterEnum, 0)
+	stateFilter := make([]shared.SourceAmazonAdsStateFilter, 0)
 	for _, stateFilterItem := range r.Configuration.StateFilter {
-		stateFilter = append(stateFilter, shared.SourceAmazonAdsStateFilterEnum(stateFilterItem.ValueString()))
+		stateFilter = append(stateFilter, shared.SourceAmazonAdsStateFilter(stateFilterItem.ValueString()))
 	}
 	configuration := shared.SourceAmazonAds{
 		AuthType:          authType,
@@ -80,4 +81,11 @@ func (r *SourceAmazonAdsResourceModel) ToCreateSDKType() *shared.SourceAmazonAds
 func (r *SourceAmazonAdsResourceModel) ToDeleteSDKType() *shared.SourceAmazonAdsCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceAmazonAdsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

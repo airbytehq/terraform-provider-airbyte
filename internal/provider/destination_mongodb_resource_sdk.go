@@ -4,13 +4,14 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationMongodbResourceModel) ToCreateSDKType() *shared.DestinationMongodbCreateRequest {
 	var authType shared.DestinationMongodbAuthorizationType
 	var destinationMongodbAuthorizationTypeNone *shared.DestinationMongodbAuthorizationTypeNone
 	if r.Configuration.AuthType.DestinationMongodbAuthorizationTypeNone != nil {
-		authorization := shared.DestinationMongodbAuthorizationTypeNoneAuthorizationEnum(r.Configuration.AuthType.DestinationMongodbAuthorizationTypeNone.Authorization.ValueString())
+		authorization := shared.DestinationMongodbAuthorizationTypeNoneAuthorization(r.Configuration.AuthType.DestinationMongodbAuthorizationTypeNone.Authorization.ValueString())
 		destinationMongodbAuthorizationTypeNone = &shared.DestinationMongodbAuthorizationTypeNone{
 			Authorization: authorization,
 		}
@@ -22,7 +23,7 @@ func (r *DestinationMongodbResourceModel) ToCreateSDKType() *shared.DestinationM
 	}
 	var destinationMongodbAuthorizationTypeLoginPassword *shared.DestinationMongodbAuthorizationTypeLoginPassword
 	if r.Configuration.AuthType.DestinationMongodbAuthorizationTypeLoginPassword != nil {
-		authorization1 := shared.DestinationMongodbAuthorizationTypeLoginPasswordAuthorizationEnum(r.Configuration.AuthType.DestinationMongodbAuthorizationTypeLoginPassword.Authorization.ValueString())
+		authorization1 := shared.DestinationMongodbAuthorizationTypeLoginPasswordAuthorization(r.Configuration.AuthType.DestinationMongodbAuthorizationTypeLoginPassword.Authorization.ValueString())
 		password := r.Configuration.AuthType.DestinationMongodbAuthorizationTypeLoginPassword.Password.ValueString()
 		username := r.Configuration.AuthType.DestinationMongodbAuthorizationTypeLoginPassword.Username.ValueString()
 		destinationMongodbAuthorizationTypeLoginPassword = &shared.DestinationMongodbAuthorizationTypeLoginPassword{
@@ -37,12 +38,12 @@ func (r *DestinationMongodbResourceModel) ToCreateSDKType() *shared.DestinationM
 		}
 	}
 	database := r.Configuration.Database.ValueString()
-	destinationType := shared.DestinationMongodbMongodbEnum(r.Configuration.DestinationType.ValueString())
+	destinationType := shared.DestinationMongodbMongodb(r.Configuration.DestinationType.ValueString())
 	var instanceType *shared.DestinationMongodbMongoDbInstanceType
 	var destinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance *shared.DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance
 	if r.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance != nil {
 		host := r.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Host.ValueString()
-		instance := shared.DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstanceEnum(r.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Instance.ValueString())
+		instance := shared.DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstance(r.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Instance.ValueString())
 		port := r.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Port.ValueInt64()
 		destinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance = &shared.DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance{
 			Host:     host,
@@ -57,7 +58,7 @@ func (r *DestinationMongodbResourceModel) ToCreateSDKType() *shared.DestinationM
 	}
 	var destinationMongodbMongoDbInstanceTypeReplicaSet *shared.DestinationMongodbMongoDbInstanceTypeReplicaSet
 	if r.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeReplicaSet != nil {
-		instance1 := shared.DestinationMongodbMongoDbInstanceTypeReplicaSetInstanceEnum(r.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeReplicaSet.Instance.ValueString())
+		instance1 := shared.DestinationMongodbMongoDbInstanceTypeReplicaSetInstance(r.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeReplicaSet.Instance.ValueString())
 		replicaSet := new(string)
 		if !r.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeReplicaSet.ReplicaSet.IsUnknown() && !r.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeReplicaSet.ReplicaSet.IsNull() {
 			*replicaSet = r.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeReplicaSet.ReplicaSet.ValueString()
@@ -79,7 +80,7 @@ func (r *DestinationMongodbResourceModel) ToCreateSDKType() *shared.DestinationM
 	var destinationMongodbMongoDBInstanceTypeMongoDBAtlas *shared.DestinationMongodbMongoDBInstanceTypeMongoDBAtlas
 	if r.Configuration.InstanceType.DestinationMongodbMongoDBInstanceTypeMongoDBAtlas != nil {
 		clusterURL := r.Configuration.InstanceType.DestinationMongodbMongoDBInstanceTypeMongoDBAtlas.ClusterURL.ValueString()
-		instance2 := shared.DestinationMongodbMongoDBInstanceTypeMongoDBAtlasInstanceEnum(r.Configuration.InstanceType.DestinationMongodbMongoDBInstanceTypeMongoDBAtlas.Instance.ValueString())
+		instance2 := shared.DestinationMongodbMongoDBInstanceTypeMongoDBAtlasInstance(r.Configuration.InstanceType.DestinationMongodbMongoDBInstanceTypeMongoDBAtlas.Instance.ValueString())
 		destinationMongodbMongoDBInstanceTypeMongoDBAtlas = &shared.DestinationMongodbMongoDBInstanceTypeMongoDBAtlas{
 			ClusterURL: clusterURL,
 			Instance:   instance2,
@@ -93,7 +94,7 @@ func (r *DestinationMongodbResourceModel) ToCreateSDKType() *shared.DestinationM
 	var tunnelMethod *shared.DestinationMongodbSSHTunnelMethod
 	var destinationMongodbSSHTunnelMethodNoTunnel *shared.DestinationMongodbSSHTunnelMethodNoTunnel
 	if r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodNoTunnel != nil {
-		tunnelMethod1 := shared.DestinationMongodbSSHTunnelMethodNoTunnelTunnelMethodEnum(r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
+		tunnelMethod1 := shared.DestinationMongodbSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
 		destinationMongodbSSHTunnelMethodNoTunnel = &shared.DestinationMongodbSSHTunnelMethodNoTunnel{
 			TunnelMethod: tunnelMethod1,
 		}
@@ -107,7 +108,7 @@ func (r *DestinationMongodbResourceModel) ToCreateSDKType() *shared.DestinationM
 	if r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication != nil {
 		sshKey := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication.SSHKey.ValueString()
 		tunnelHost := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
-		tunnelMethod2 := shared.DestinationMongodbSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
+		tunnelMethod2 := shared.DestinationMongodbSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
 		tunnelPort := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
 		tunnelUser := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
 		destinationMongodbSSHTunnelMethodSSHKeyAuthentication = &shared.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication{
@@ -126,7 +127,7 @@ func (r *DestinationMongodbResourceModel) ToCreateSDKType() *shared.DestinationM
 	var destinationMongodbSSHTunnelMethodPasswordAuthentication *shared.DestinationMongodbSSHTunnelMethodPasswordAuthentication
 	if r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication != nil {
 		tunnelHost1 := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
-		tunnelMethod3 := shared.DestinationMongodbSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
+		tunnelMethod3 := shared.DestinationMongodbSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
 		tunnelPort1 := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
 		tunnelUser1 := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
 		tunnelUserPassword := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication.TunnelUserPassword.ValueString()
@@ -163,4 +164,11 @@ func (r *DestinationMongodbResourceModel) ToCreateSDKType() *shared.DestinationM
 func (r *DestinationMongodbResourceModel) ToDeleteSDKType() *shared.DestinationMongodbCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *DestinationMongodbResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

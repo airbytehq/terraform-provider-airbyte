@@ -7,34 +7,34 @@ import (
 	"fmt"
 )
 
-type SourceMailjetSmsMailjetSmsEnum string
+type SourceMailjetSmsMailjetSms string
 
 const (
-	SourceMailjetSmsMailjetSmsEnumMailjetSms SourceMailjetSmsMailjetSmsEnum = "mailjet-sms"
+	SourceMailjetSmsMailjetSmsMailjetSms SourceMailjetSmsMailjetSms = "mailjet-sms"
 )
 
-func (e SourceMailjetSmsMailjetSmsEnum) ToPointer() *SourceMailjetSmsMailjetSmsEnum {
+func (e SourceMailjetSmsMailjetSms) ToPointer() *SourceMailjetSmsMailjetSms {
 	return &e
 }
 
-func (e *SourceMailjetSmsMailjetSmsEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceMailjetSmsMailjetSms) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "mailjet-sms":
-		*e = SourceMailjetSmsMailjetSmsEnum(v)
+		*e = SourceMailjetSmsMailjetSms(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMailjetSmsMailjetSmsEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceMailjetSmsMailjetSms: %v", v)
 	}
 }
 
 type SourceMailjetSms struct {
 	// Retrieve SMS messages created before the specified timestamp. Required format - Unix timestamp.
-	EndDate    *int64                         `json:"end_date,omitempty"`
-	SourceType SourceMailjetSmsMailjetSmsEnum `json:"sourceType"`
+	EndDate    *int64                     `json:"end_date,omitempty"`
+	SourceType SourceMailjetSmsMailjetSms `json:"sourceType"`
 	// Retrieve SMS messages created after the specified timestamp. Required format - Unix timestamp.
 	StartDate *int64 `json:"start_date,omitempty"`
 	// Your access token. See <a href="https://dev.mailjet.com/sms/reference/overview/authentication">here</a>.

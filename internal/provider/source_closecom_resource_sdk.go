@@ -4,12 +4,13 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
 func (r *SourceCloseComResourceModel) ToCreateSDKType() *shared.SourceCloseComCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	sourceType := shared.SourceCloseComCloseComEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceCloseComCloseCom(r.Configuration.SourceType.ValueString())
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -41,4 +42,11 @@ func (r *SourceCloseComResourceModel) ToCreateSDKType() *shared.SourceCloseComCr
 func (r *SourceCloseComResourceModel) ToDeleteSDKType() *shared.SourceCloseComCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceCloseComResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

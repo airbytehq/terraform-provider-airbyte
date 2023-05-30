@@ -9,33 +9,33 @@ import (
 	"fmt"
 )
 
-type SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum string
+type SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSONFormatType string
 
 const (
-	SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnumJsonl SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum = "JSONL"
+	SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSONFormatTypeJsonl SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSONFormatType = "JSONL"
 )
 
-func (e SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum) ToPointer() *SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum {
+func (e SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSONFormatType) ToPointer() *SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSONFormatType {
 	return &e
 }
 
-func (e *SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSONFormatType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "JSONL":
-		*e = SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum(v)
+		*e = SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSONFormatType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSONFormatType: %v", v)
 	}
 }
 
 // SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON - Input data format
 type SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON struct {
-	FormatType SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum `json:"format_type"`
+	FormatType SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSONFormatType `json:"format_type"`
 }
 
 type SourceAzureBlobStorageInputFormatType string
@@ -82,27 +82,27 @@ func (u SourceAzureBlobStorageInputFormat) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-type SourceAzureBlobStorageAzureBlobStorageEnum string
+type SourceAzureBlobStorageAzureBlobStorage string
 
 const (
-	SourceAzureBlobStorageAzureBlobStorageEnumAzureBlobStorage SourceAzureBlobStorageAzureBlobStorageEnum = "azure-blob-storage"
+	SourceAzureBlobStorageAzureBlobStorageAzureBlobStorage SourceAzureBlobStorageAzureBlobStorage = "azure-blob-storage"
 )
 
-func (e SourceAzureBlobStorageAzureBlobStorageEnum) ToPointer() *SourceAzureBlobStorageAzureBlobStorageEnum {
+func (e SourceAzureBlobStorageAzureBlobStorage) ToPointer() *SourceAzureBlobStorageAzureBlobStorage {
 	return &e
 }
 
-func (e *SourceAzureBlobStorageAzureBlobStorageEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceAzureBlobStorageAzureBlobStorage) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "azure-blob-storage":
-		*e = SourceAzureBlobStorageAzureBlobStorageEnum(v)
+		*e = SourceAzureBlobStorageAzureBlobStorage(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAzureBlobStorageAzureBlobStorageEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceAzureBlobStorageAzureBlobStorage: %v", v)
 	}
 }
 
@@ -120,6 +120,6 @@ type SourceAzureBlobStorage struct {
 	// The Azure blob storage blobs to scan for inferring the schema, useful on large amounts of data with consistent structure
 	AzureBlobStorageSchemaInferenceLimit *int64 `json:"azure_blob_storage_schema_inference_limit,omitempty"`
 	// Input data format
-	Format     SourceAzureBlobStorageInputFormat          `json:"format"`
-	SourceType SourceAzureBlobStorageAzureBlobStorageEnum `json:"sourceType"`
+	Format     SourceAzureBlobStorageInputFormat      `json:"format"`
+	SourceType SourceAzureBlobStorageAzureBlobStorage `json:"sourceType"`
 }

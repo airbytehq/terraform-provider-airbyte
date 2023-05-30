@@ -4,12 +4,13 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceGridlyResourceModel) ToCreateSDKType() *shared.SourceGridlyCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	gridID := r.Configuration.GridID.ValueString()
-	sourceType := shared.SourceGridlyGridlyEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceGridlyGridly(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceGridly{
 		APIKey:     apiKey,
 		GridID:     gridID,
@@ -35,4 +36,11 @@ func (r *SourceGridlyResourceModel) ToCreateSDKType() *shared.SourceGridlyCreate
 func (r *SourceGridlyResourceModel) ToDeleteSDKType() *shared.SourceGridlyCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceGridlyResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

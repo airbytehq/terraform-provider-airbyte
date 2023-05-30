@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
@@ -15,7 +16,7 @@ func (r *SourcePaystackResourceModel) ToCreateSDKType() *shared.SourcePaystackCr
 		lookbackWindowDays = nil
 	}
 	secretKey := r.Configuration.SecretKey.ValueString()
-	sourceType := shared.SourcePaystackPaystackEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourcePaystackPaystack(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourcePaystack{
 		LookbackWindowDays: lookbackWindowDays,
@@ -43,4 +44,11 @@ func (r *SourcePaystackResourceModel) ToCreateSDKType() *shared.SourcePaystackCr
 func (r *SourcePaystackResourceModel) ToDeleteSDKType() *shared.SourcePaystackCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourcePaystackResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

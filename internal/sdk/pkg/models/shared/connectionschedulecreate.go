@@ -4,6 +4,6 @@ package shared
 
 // ConnectionScheduleCreate - schedule for when the the connection should run, per the schedule type
 type ConnectionScheduleCreate struct {
-	CronExpression *string              `json:"cronExpression,omitempty"`
-	ScheduleType   ScheduleTypeEnumEnum `json:"scheduleType"`
+	CronExpression *string          `json:"cronExpression,omitempty"`
+	ScheduleType   ScheduleTypeEnum `json:"scheduleType"`
 }

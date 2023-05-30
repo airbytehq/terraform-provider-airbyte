@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type SourceOutreachOutreachEnum string
+type SourceOutreachOutreach string
 
 const (
-	SourceOutreachOutreachEnumOutreach SourceOutreachOutreachEnum = "outreach"
+	SourceOutreachOutreachOutreach SourceOutreachOutreach = "outreach"
 )
 
-func (e SourceOutreachOutreachEnum) ToPointer() *SourceOutreachOutreachEnum {
+func (e SourceOutreachOutreach) ToPointer() *SourceOutreachOutreach {
 	return &e
 }
 
-func (e *SourceOutreachOutreachEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceOutreachOutreach) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "outreach":
-		*e = SourceOutreachOutreachEnum(v)
+		*e = SourceOutreachOutreach(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceOutreachOutreachEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceOutreachOutreach: %v", v)
 	}
 }
 
@@ -39,8 +39,8 @@ type SourceOutreach struct {
 	// A Redirect URI is the location where the authorization server sends the user once the app has been successfully authorized and granted an authorization code or access token.
 	RedirectURI string `json:"redirect_uri"`
 	// The token for obtaining the new access token.
-	RefreshToken string                     `json:"refresh_token"`
-	SourceType   SourceOutreachOutreachEnum `json:"sourceType"`
+	RefreshToken string                 `json:"refresh_token"`
+	SourceType   SourceOutreachOutreach `json:"sourceType"`
 	// The date from which you'd like to replicate data for Outreach API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 	StartDate string `json:"start_date"`
 }

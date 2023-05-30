@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type SourceGoogleDirectoryGoogleDirectoryEnum string
+type SourceGoogleDirectoryGoogleDirectory string
 
 const (
-	SourceGoogleDirectoryGoogleDirectoryEnumGoogleDirectory SourceGoogleDirectoryGoogleDirectoryEnum = "google-directory"
+	SourceGoogleDirectoryGoogleDirectoryGoogleDirectory SourceGoogleDirectoryGoogleDirectory = "google-directory"
 )
 
-func (e SourceGoogleDirectoryGoogleDirectoryEnum) ToPointer() *SourceGoogleDirectoryGoogleDirectoryEnum {
+func (e SourceGoogleDirectoryGoogleDirectory) ToPointer() *SourceGoogleDirectoryGoogleDirectory {
 	return &e
 }
 
-func (e *SourceGoogleDirectoryGoogleDirectoryEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceGoogleDirectoryGoogleDirectory) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "google-directory":
-		*e = SourceGoogleDirectoryGoogleDirectoryEnum(v)
+		*e = SourceGoogleDirectoryGoogleDirectory(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGoogleDirectoryGoogleDirectoryEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceGoogleDirectoryGoogleDirectory: %v", v)
 	}
 }
 
@@ -35,6 +35,6 @@ type SourceGoogleDirectory struct {
 	// The contents of the JSON service account key. See the <a href="https://developers.google.com/admin-sdk/directory/v1/guides/delegation">docs</a> for more information on how to generate this key.
 	CredentialsJSON string `json:"credentials_json"`
 	// The email of the user, which has permissions to access the Google Workspace Admin APIs.
-	Email      string                                   `json:"email"`
-	SourceType SourceGoogleDirectoryGoogleDirectoryEnum `json:"sourceType"`
+	Email      string                               `json:"email"`
+	SourceType SourceGoogleDirectoryGoogleDirectory `json:"sourceType"`
 }

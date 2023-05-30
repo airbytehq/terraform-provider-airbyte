@@ -4,11 +4,12 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceSapFieldglassResourceModel) ToCreateSDKType() *shared.SourceSapFieldglassCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	sourceType := shared.SourceSapFieldglassSapFieldglassEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceSapFieldglassSapFieldglass(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceSapFieldglass{
 		APIKey:     apiKey,
 		SourceType: sourceType,
@@ -33,4 +34,11 @@ func (r *SourceSapFieldglassResourceModel) ToCreateSDKType() *shared.SourceSapFi
 func (r *SourceSapFieldglassResourceModel) ToDeleteSDKType() *shared.SourceSapFieldglassCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceSapFieldglassResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

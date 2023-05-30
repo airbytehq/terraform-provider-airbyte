@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
@@ -18,9 +19,9 @@ func (r *SourceGithubResourceModel) ToCreateSDKType() *shared.SourceGithubCreate
 	var sourceGithubAuthenticationOAuth *shared.SourceGithubAuthenticationOAuth
 	if r.Configuration.Credentials.SourceGithubAuthenticationOAuth != nil {
 		accessToken := r.Configuration.Credentials.SourceGithubAuthenticationOAuth.AccessToken.ValueString()
-		optionTitle := new(shared.SourceGithubAuthenticationOAuthOptionTitleEnum)
+		optionTitle := new(shared.SourceGithubAuthenticationOAuthOptionTitle)
 		if !r.Configuration.Credentials.SourceGithubAuthenticationOAuth.OptionTitle.IsUnknown() && !r.Configuration.Credentials.SourceGithubAuthenticationOAuth.OptionTitle.IsNull() {
-			*optionTitle = shared.SourceGithubAuthenticationOAuthOptionTitleEnum(r.Configuration.Credentials.SourceGithubAuthenticationOAuth.OptionTitle.ValueString())
+			*optionTitle = shared.SourceGithubAuthenticationOAuthOptionTitle(r.Configuration.Credentials.SourceGithubAuthenticationOAuth.OptionTitle.ValueString())
 		} else {
 			optionTitle = nil
 		}
@@ -36,9 +37,9 @@ func (r *SourceGithubResourceModel) ToCreateSDKType() *shared.SourceGithubCreate
 	}
 	var sourceGithubAuthenticationPersonalAccessToken *shared.SourceGithubAuthenticationPersonalAccessToken
 	if r.Configuration.Credentials.SourceGithubAuthenticationPersonalAccessToken != nil {
-		optionTitle1 := new(shared.SourceGithubAuthenticationPersonalAccessTokenOptionTitleEnum)
+		optionTitle1 := new(shared.SourceGithubAuthenticationPersonalAccessTokenOptionTitle)
 		if !r.Configuration.Credentials.SourceGithubAuthenticationPersonalAccessToken.OptionTitle.IsUnknown() && !r.Configuration.Credentials.SourceGithubAuthenticationPersonalAccessToken.OptionTitle.IsNull() {
-			*optionTitle1 = shared.SourceGithubAuthenticationPersonalAccessTokenOptionTitleEnum(r.Configuration.Credentials.SourceGithubAuthenticationPersonalAccessToken.OptionTitle.ValueString())
+			*optionTitle1 = shared.SourceGithubAuthenticationPersonalAccessTokenOptionTitle(r.Configuration.Credentials.SourceGithubAuthenticationPersonalAccessToken.OptionTitle.ValueString())
 		} else {
 			optionTitle1 = nil
 		}
@@ -66,7 +67,7 @@ func (r *SourceGithubResourceModel) ToCreateSDKType() *shared.SourceGithubCreate
 	} else {
 		requestsPerHour = nil
 	}
-	sourceType := shared.SourceGithubGithubEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceGithubGithub(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceGithub{
 		Branch:                  branch,
@@ -97,4 +98,11 @@ func (r *SourceGithubResourceModel) ToCreateSDKType() *shared.SourceGithubCreate
 func (r *SourceGithubResourceModel) ToDeleteSDKType() *shared.SourceGithubCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceGithubResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

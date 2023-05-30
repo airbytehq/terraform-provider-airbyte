@@ -5,7 +5,7 @@ package shared
 // WorkspaceOAuthCredentialsRequest - POST body for creating/updating workspace level OAuth credentials
 type WorkspaceOAuthCredentialsRequest struct {
 	// Whether you're setting this override for a source or destination
-	ActorType ActorTypeEnumEnum `json:"actorType"`
+	ActorType ActorTypeEnum `json:"actorType"`
 	// The configuration for this source/destination based on the OAuth section of the relevant specification.
 	Configuration map[string]interface{} `json:"configuration"`
 	Name          string                 `json:"name"`

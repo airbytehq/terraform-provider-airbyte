@@ -4,12 +4,13 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
 func (r *SourceRechargeResourceModel) ToCreateSDKType() *shared.SourceRechargeCreateRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
-	sourceType := shared.SourceRechargeRechargeEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceRechargeRecharge(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceRecharge{
 		AccessToken: accessToken,
@@ -36,4 +37,11 @@ func (r *SourceRechargeResourceModel) ToCreateSDKType() *shared.SourceRechargeCr
 func (r *SourceRechargeResourceModel) ToDeleteSDKType() *shared.SourceRechargeCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceRechargeResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

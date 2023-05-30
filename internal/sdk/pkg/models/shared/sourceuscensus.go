@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type SourceUsCensusUsCensusEnum string
+type SourceUsCensusUsCensus string
 
 const (
-	SourceUsCensusUsCensusEnumUsCensus SourceUsCensusUsCensusEnum = "us-census"
+	SourceUsCensusUsCensusUsCensus SourceUsCensusUsCensus = "us-census"
 )
 
-func (e SourceUsCensusUsCensusEnum) ToPointer() *SourceUsCensusUsCensusEnum {
+func (e SourceUsCensusUsCensus) ToPointer() *SourceUsCensusUsCensus {
 	return &e
 }
 
-func (e *SourceUsCensusUsCensusEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceUsCensusUsCensus) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "us-census":
-		*e = SourceUsCensusUsCensusEnum(v)
+		*e = SourceUsCensusUsCensus(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceUsCensusUsCensusEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceUsCensusUsCensus: %v", v)
 	}
 }
 
@@ -37,6 +37,6 @@ type SourceUsCensus struct {
 	// The query parameters portion of the GET request, without the api key
 	QueryParams *string `json:"query_params,omitempty"`
 	// The path portion of the GET request
-	QueryPath  string                     `json:"query_path"`
-	SourceType SourceUsCensusUsCensusEnum `json:"sourceType"`
+	QueryPath  string                 `json:"query_path"`
+	SourceType SourceUsCensusUsCensus `json:"sourceType"`
 }

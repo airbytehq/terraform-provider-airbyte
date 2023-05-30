@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
@@ -54,9 +55,9 @@ func (r *SourceS3ResourceModel) ToCreateSDKType() *shared.SourceS3CreateRequest 
 		} else {
 			escapeChar = nil
 		}
-		filetype := new(shared.SourceS3FileFormatCSVFiletypeEnum)
+		filetype := new(shared.SourceS3FileFormatCSVFiletype)
 		if !r.Configuration.Format.SourceS3FileFormatCSV.Filetype.IsUnknown() && !r.Configuration.Format.SourceS3FileFormatCSV.Filetype.IsNull() {
-			*filetype = shared.SourceS3FileFormatCSVFiletypeEnum(r.Configuration.Format.SourceS3FileFormatCSV.Filetype.ValueString())
+			*filetype = shared.SourceS3FileFormatCSVFiletype(r.Configuration.Format.SourceS3FileFormatCSV.Filetype.ValueString())
 		} else {
 			filetype = nil
 		}
@@ -115,9 +116,9 @@ func (r *SourceS3ResourceModel) ToCreateSDKType() *shared.SourceS3CreateRequest 
 		for _, columnsItem := range r.Configuration.Format.SourceS3FileFormatParquet.Columns {
 			columns = append(columns, columnsItem.ValueString())
 		}
-		filetype1 := new(shared.SourceS3FileFormatParquetFiletypeEnum)
+		filetype1 := new(shared.SourceS3FileFormatParquetFiletype)
 		if !r.Configuration.Format.SourceS3FileFormatParquet.Filetype.IsUnknown() && !r.Configuration.Format.SourceS3FileFormatParquet.Filetype.IsNull() {
-			*filetype1 = shared.SourceS3FileFormatParquetFiletypeEnum(r.Configuration.Format.SourceS3FileFormatParquet.Filetype.ValueString())
+			*filetype1 = shared.SourceS3FileFormatParquetFiletype(r.Configuration.Format.SourceS3FileFormatParquet.Filetype.ValueString())
 		} else {
 			filetype1 = nil
 		}
@@ -135,9 +136,9 @@ func (r *SourceS3ResourceModel) ToCreateSDKType() *shared.SourceS3CreateRequest 
 	}
 	var sourceS3FileFormatAvro *shared.SourceS3FileFormatAvro
 	if r.Configuration.Format.SourceS3FileFormatAvro != nil {
-		filetype2 := new(shared.SourceS3FileFormatAvroFiletypeEnum)
+		filetype2 := new(shared.SourceS3FileFormatAvroFiletype)
 		if !r.Configuration.Format.SourceS3FileFormatAvro.Filetype.IsUnknown() && !r.Configuration.Format.SourceS3FileFormatAvro.Filetype.IsNull() {
-			*filetype2 = shared.SourceS3FileFormatAvroFiletypeEnum(r.Configuration.Format.SourceS3FileFormatAvro.Filetype.ValueString())
+			*filetype2 = shared.SourceS3FileFormatAvroFiletype(r.Configuration.Format.SourceS3FileFormatAvro.Filetype.ValueString())
 		} else {
 			filetype2 = nil
 		}
@@ -158,9 +159,9 @@ func (r *SourceS3ResourceModel) ToCreateSDKType() *shared.SourceS3CreateRequest 
 		} else {
 			blockSize1 = nil
 		}
-		filetype3 := new(shared.SourceS3FileFormatJsonlFiletypeEnum)
+		filetype3 := new(shared.SourceS3FileFormatJsonlFiletype)
 		if !r.Configuration.Format.SourceS3FileFormatJsonl.Filetype.IsUnknown() && !r.Configuration.Format.SourceS3FileFormatJsonl.Filetype.IsNull() {
-			*filetype3 = shared.SourceS3FileFormatJsonlFiletypeEnum(r.Configuration.Format.SourceS3FileFormatJsonl.Filetype.ValueString())
+			*filetype3 = shared.SourceS3FileFormatJsonlFiletype(r.Configuration.Format.SourceS3FileFormatJsonl.Filetype.ValueString())
 		} else {
 			filetype3 = nil
 		}
@@ -170,9 +171,9 @@ func (r *SourceS3ResourceModel) ToCreateSDKType() *shared.SourceS3CreateRequest 
 		} else {
 			newlinesInValues1 = nil
 		}
-		unexpectedFieldBehavior := new(shared.SourceS3FileFormatJsonlUnexpectedFieldBehaviorEnum)
+		unexpectedFieldBehavior := new(shared.SourceS3FileFormatJsonlUnexpectedFieldBehavior)
 		if !r.Configuration.Format.SourceS3FileFormatJsonl.UnexpectedFieldBehavior.IsUnknown() && !r.Configuration.Format.SourceS3FileFormatJsonl.UnexpectedFieldBehavior.IsNull() {
-			*unexpectedFieldBehavior = shared.SourceS3FileFormatJsonlUnexpectedFieldBehaviorEnum(r.Configuration.Format.SourceS3FileFormatJsonl.UnexpectedFieldBehavior.ValueString())
+			*unexpectedFieldBehavior = shared.SourceS3FileFormatJsonlUnexpectedFieldBehavior(r.Configuration.Format.SourceS3FileFormatJsonl.UnexpectedFieldBehavior.ValueString())
 		} else {
 			unexpectedFieldBehavior = nil
 		}
@@ -234,7 +235,7 @@ func (r *SourceS3ResourceModel) ToCreateSDKType() *shared.SourceS3CreateRequest 
 	} else {
 		schema = nil
 	}
-	sourceType := shared.SourceS3S3Enum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceS3S3(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceS3{
 		Dataset:     dataset,
 		Format:      format,
@@ -263,4 +264,11 @@ func (r *SourceS3ResourceModel) ToCreateSDKType() *shared.SourceS3CreateRequest 
 func (r *SourceS3ResourceModel) ToDeleteSDKType() *shared.SourceS3CreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceS3ResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

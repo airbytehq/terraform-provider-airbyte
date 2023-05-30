@@ -9,52 +9,52 @@ import (
 	"fmt"
 )
 
-type DestinationMariadbColumnstoreMariadbColumnstoreEnum string
+type DestinationMariadbColumnstoreMariadbColumnstore string
 
 const (
-	DestinationMariadbColumnstoreMariadbColumnstoreEnumMariadbColumnstore DestinationMariadbColumnstoreMariadbColumnstoreEnum = "mariadb-columnstore"
+	DestinationMariadbColumnstoreMariadbColumnstoreMariadbColumnstore DestinationMariadbColumnstoreMariadbColumnstore = "mariadb-columnstore"
 )
 
-func (e DestinationMariadbColumnstoreMariadbColumnstoreEnum) ToPointer() *DestinationMariadbColumnstoreMariadbColumnstoreEnum {
+func (e DestinationMariadbColumnstoreMariadbColumnstore) ToPointer() *DestinationMariadbColumnstoreMariadbColumnstore {
 	return &e
 }
 
-func (e *DestinationMariadbColumnstoreMariadbColumnstoreEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationMariadbColumnstoreMariadbColumnstore) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "mariadb-columnstore":
-		*e = DestinationMariadbColumnstoreMariadbColumnstoreEnum(v)
+		*e = DestinationMariadbColumnstoreMariadbColumnstore(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationMariadbColumnstoreMariadbColumnstoreEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationMariadbColumnstoreMariadbColumnstore: %v", v)
 	}
 }
 
-// DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum - Connect through a jump server tunnel host using username and password authentication
-type DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum string
+// DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and password authentication
+type DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthenticationTunnelMethod string
 
 const (
-	DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthenticationTunnelMethodEnumSSHPasswordAuth DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum = "SSH_PASSWORD_AUTH"
+	DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthenticationTunnelMethodSSHPasswordAuth DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthenticationTunnelMethod = "SSH_PASSWORD_AUTH"
 )
 
-func (e DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) ToPointer() *DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum {
+func (e DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthenticationTunnelMethod) ToPointer() *DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthenticationTunnelMethod {
 	return &e
 }
 
-func (e *DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthenticationTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SSH_PASSWORD_AUTH":
-		*e = DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(v)
+		*e = DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthenticationTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthenticationTunnelMethod: %v", v)
 	}
 }
 
@@ -63,7 +63,7 @@ type DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and password authentication
-	TunnelMethod DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum `json:"tunnel_method"`
+	TunnelMethod DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthenticationTunnelMethod `json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort int64 `json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
@@ -72,28 +72,28 @@ type DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication struct {
 	TunnelUserPassword string `json:"tunnel_user_password"`
 }
 
-// DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum - Connect through a jump server tunnel host using username and ssh key
-type DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum string
+// DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and ssh key
+type DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthenticationTunnelMethod string
 
 const (
-	DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnumSSHKeyAuth DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum = "SSH_KEY_AUTH"
+	DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthenticationTunnelMethodSSHKeyAuth DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthenticationTunnelMethod = "SSH_KEY_AUTH"
 )
 
-func (e DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) ToPointer() *DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum {
+func (e DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthenticationTunnelMethod) ToPointer() *DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthenticationTunnelMethod {
 	return &e
 }
 
-func (e *DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthenticationTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SSH_KEY_AUTH":
-		*e = DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(v)
+		*e = DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthenticationTunnelMethod: %v", v)
 	}
 }
 
@@ -104,42 +104,42 @@ type DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and ssh key
-	TunnelMethod DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum `json:"tunnel_method"`
+	TunnelMethod DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthenticationTunnelMethod `json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort int64 `json:"tunnel_port"`
 	// OS-level username for logging into the jump server host.
 	TunnelUser string `json:"tunnel_user"`
 }
 
-// DestinationMariadbColumnstoreSSHTunnelMethodNoTunnelTunnelMethodEnum - No ssh tunnel needed to connect to database
-type DestinationMariadbColumnstoreSSHTunnelMethodNoTunnelTunnelMethodEnum string
+// DestinationMariadbColumnstoreSSHTunnelMethodNoTunnelTunnelMethod - No ssh tunnel needed to connect to database
+type DestinationMariadbColumnstoreSSHTunnelMethodNoTunnelTunnelMethod string
 
 const (
-	DestinationMariadbColumnstoreSSHTunnelMethodNoTunnelTunnelMethodEnumNoTunnel DestinationMariadbColumnstoreSSHTunnelMethodNoTunnelTunnelMethodEnum = "NO_TUNNEL"
+	DestinationMariadbColumnstoreSSHTunnelMethodNoTunnelTunnelMethodNoTunnel DestinationMariadbColumnstoreSSHTunnelMethodNoTunnelTunnelMethod = "NO_TUNNEL"
 )
 
-func (e DestinationMariadbColumnstoreSSHTunnelMethodNoTunnelTunnelMethodEnum) ToPointer() *DestinationMariadbColumnstoreSSHTunnelMethodNoTunnelTunnelMethodEnum {
+func (e DestinationMariadbColumnstoreSSHTunnelMethodNoTunnelTunnelMethod) ToPointer() *DestinationMariadbColumnstoreSSHTunnelMethodNoTunnelTunnelMethod {
 	return &e
 }
 
-func (e *DestinationMariadbColumnstoreSSHTunnelMethodNoTunnelTunnelMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationMariadbColumnstoreSSHTunnelMethodNoTunnelTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "NO_TUNNEL":
-		*e = DestinationMariadbColumnstoreSSHTunnelMethodNoTunnelTunnelMethodEnum(v)
+		*e = DestinationMariadbColumnstoreSSHTunnelMethodNoTunnelTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationMariadbColumnstoreSSHTunnelMethodNoTunnelTunnelMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationMariadbColumnstoreSSHTunnelMethodNoTunnelTunnelMethod: %v", v)
 	}
 }
 
 // DestinationMariadbColumnstoreSSHTunnelMethodNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type DestinationMariadbColumnstoreSSHTunnelMethodNoTunnel struct {
 	// No ssh tunnel needed to connect to database
-	TunnelMethod DestinationMariadbColumnstoreSSHTunnelMethodNoTunnelTunnelMethodEnum `json:"tunnel_method"`
+	TunnelMethod DestinationMariadbColumnstoreSSHTunnelMethodNoTunnelTunnelMethod `json:"tunnel_method"`
 }
 
 type DestinationMariadbColumnstoreSSHTunnelMethodType string
@@ -236,8 +236,8 @@ func (u DestinationMariadbColumnstoreSSHTunnelMethod) MarshalJSON() ([]byte, err
 
 type DestinationMariadbColumnstore struct {
 	// Name of the database.
-	Database        string                                              `json:"database"`
-	DestinationType DestinationMariadbColumnstoreMariadbColumnstoreEnum `json:"destinationType"`
+	Database        string                                          `json:"database"`
+	DestinationType DestinationMariadbColumnstoreMariadbColumnstore `json:"destinationType"`
 	// The Hostname of the database.
 	Host string `json:"host"`
 	// Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).

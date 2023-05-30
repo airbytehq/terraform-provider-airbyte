@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type SourceRedshiftRedshiftEnum string
+type SourceRedshiftRedshift string
 
 const (
-	SourceRedshiftRedshiftEnumRedshift SourceRedshiftRedshiftEnum = "redshift"
+	SourceRedshiftRedshiftRedshift SourceRedshiftRedshift = "redshift"
 )
 
-func (e SourceRedshiftRedshiftEnum) ToPointer() *SourceRedshiftRedshiftEnum {
+func (e SourceRedshiftRedshift) ToPointer() *SourceRedshiftRedshift {
 	return &e
 }
 
-func (e *SourceRedshiftRedshiftEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceRedshiftRedshift) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "redshift":
-		*e = SourceRedshiftRedshiftEnum(v)
+		*e = SourceRedshiftRedshift(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceRedshiftRedshiftEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceRedshiftRedshift: %v", v)
 	}
 }
 
@@ -43,8 +43,8 @@ type SourceRedshift struct {
 	// Port of the database.
 	Port int64 `json:"port"`
 	// The list of schemas to sync from. Specify one or more explicitly or keep empty to process all schemas. Schema names are case sensitive.
-	Schemas    []string                   `json:"schemas,omitempty"`
-	SourceType SourceRedshiftRedshiftEnum `json:"sourceType"`
+	Schemas    []string               `json:"schemas,omitempty"`
+	SourceType SourceRedshiftRedshift `json:"sourceType"`
 	// Username to use to access the database.
 	Username string `json:"username"`
 }

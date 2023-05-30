@@ -4,11 +4,12 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourcePypiResourceModel) ToCreateSDKType() *shared.SourcePypiCreateRequest {
 	projectName := r.Configuration.ProjectName.ValueString()
-	sourceType := shared.SourcePypiPypiEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourcePypiPypi(r.Configuration.SourceType.ValueString())
 	version := new(string)
 	if !r.Configuration.Version.IsUnknown() && !r.Configuration.Version.IsNull() {
 		*version = r.Configuration.Version.ValueString()
@@ -40,4 +41,11 @@ func (r *SourcePypiResourceModel) ToCreateSDKType() *shared.SourcePypiCreateRequ
 func (r *SourcePypiResourceModel) ToDeleteSDKType() *shared.SourcePypiCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourcePypiResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

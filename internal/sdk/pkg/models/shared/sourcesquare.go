@@ -10,64 +10,64 @@ import (
 	"fmt"
 )
 
-type SourceSquareAuthenticationAPIKeyAuthTypeEnum string
+type SourceSquareAuthenticationAPIKeyAuthType string
 
 const (
-	SourceSquareAuthenticationAPIKeyAuthTypeEnumAPIKey SourceSquareAuthenticationAPIKeyAuthTypeEnum = "API Key"
+	SourceSquareAuthenticationAPIKeyAuthTypeAPIKey SourceSquareAuthenticationAPIKeyAuthType = "API Key"
 )
 
-func (e SourceSquareAuthenticationAPIKeyAuthTypeEnum) ToPointer() *SourceSquareAuthenticationAPIKeyAuthTypeEnum {
+func (e SourceSquareAuthenticationAPIKeyAuthType) ToPointer() *SourceSquareAuthenticationAPIKeyAuthType {
 	return &e
 }
 
-func (e *SourceSquareAuthenticationAPIKeyAuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceSquareAuthenticationAPIKeyAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "API Key":
-		*e = SourceSquareAuthenticationAPIKeyAuthTypeEnum(v)
+		*e = SourceSquareAuthenticationAPIKeyAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSquareAuthenticationAPIKeyAuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceSquareAuthenticationAPIKeyAuthType: %v", v)
 	}
 }
 
 // SourceSquareAuthenticationAPIKey - Choose how to authenticate to Square.
 type SourceSquareAuthenticationAPIKey struct {
 	// The API key for a Square application
-	APIKey   string                                       `json:"api_key"`
-	AuthType SourceSquareAuthenticationAPIKeyAuthTypeEnum `json:"auth_type"`
+	APIKey   string                                   `json:"api_key"`
+	AuthType SourceSquareAuthenticationAPIKeyAuthType `json:"auth_type"`
 }
 
-type SourceSquareAuthenticationOauthAuthenticationAuthTypeEnum string
+type SourceSquareAuthenticationOauthAuthenticationAuthType string
 
 const (
-	SourceSquareAuthenticationOauthAuthenticationAuthTypeEnumOAuth SourceSquareAuthenticationOauthAuthenticationAuthTypeEnum = "OAuth"
+	SourceSquareAuthenticationOauthAuthenticationAuthTypeOAuth SourceSquareAuthenticationOauthAuthenticationAuthType = "OAuth"
 )
 
-func (e SourceSquareAuthenticationOauthAuthenticationAuthTypeEnum) ToPointer() *SourceSquareAuthenticationOauthAuthenticationAuthTypeEnum {
+func (e SourceSquareAuthenticationOauthAuthenticationAuthType) ToPointer() *SourceSquareAuthenticationOauthAuthenticationAuthType {
 	return &e
 }
 
-func (e *SourceSquareAuthenticationOauthAuthenticationAuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceSquareAuthenticationOauthAuthenticationAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "OAuth":
-		*e = SourceSquareAuthenticationOauthAuthenticationAuthTypeEnum(v)
+		*e = SourceSquareAuthenticationOauthAuthenticationAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSquareAuthenticationOauthAuthenticationAuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceSquareAuthenticationOauthAuthenticationAuthType: %v", v)
 	}
 }
 
 // SourceSquareAuthenticationOauthAuthentication - Choose how to authenticate to Square.
 type SourceSquareAuthenticationOauthAuthentication struct {
-	AuthType SourceSquareAuthenticationOauthAuthenticationAuthTypeEnum `json:"auth_type"`
+	AuthType SourceSquareAuthenticationOauthAuthenticationAuthType `json:"auth_type"`
 	// The Square-issued ID of your application
 	ClientID string `json:"client_id"`
 	// The Square-issued application secret for your application
@@ -144,27 +144,27 @@ func (u SourceSquareAuthentication) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-type SourceSquareSquareEnum string
+type SourceSquareSquare string
 
 const (
-	SourceSquareSquareEnumSquare SourceSquareSquareEnum = "square"
+	SourceSquareSquareSquare SourceSquareSquare = "square"
 )
 
-func (e SourceSquareSquareEnum) ToPointer() *SourceSquareSquareEnum {
+func (e SourceSquareSquare) ToPointer() *SourceSquareSquare {
 	return &e
 }
 
-func (e *SourceSquareSquareEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceSquareSquare) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "square":
-		*e = SourceSquareSquareEnum(v)
+		*e = SourceSquareSquare(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSquareSquareEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceSquareSquare: %v", v)
 	}
 }
 
@@ -174,8 +174,8 @@ type SourceSquare struct {
 	// In some streams there is an option to include deleted objects (Items, Categories, Discounts, Taxes)
 	IncludeDeletedObjects *bool `json:"include_deleted_objects,omitempty"`
 	// Determines whether to use the sandbox or production environment.
-	IsSandbox  bool                   `json:"is_sandbox"`
-	SourceType SourceSquareSquareEnum `json:"sourceType"`
+	IsSandbox  bool               `json:"is_sandbox"`
+	SourceType SourceSquareSquare `json:"sourceType"`
 	// UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated. If not set, all data will be replicated.
 	StartDate *types.Date `json:"start_date,omitempty"`
 }

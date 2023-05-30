@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type SourceNetsuiteNetsuiteEnum string
+type SourceNetsuiteNetsuite string
 
 const (
-	SourceNetsuiteNetsuiteEnumNetsuite SourceNetsuiteNetsuiteEnum = "netsuite"
+	SourceNetsuiteNetsuiteNetsuite SourceNetsuiteNetsuite = "netsuite"
 )
 
-func (e SourceNetsuiteNetsuiteEnum) ToPointer() *SourceNetsuiteNetsuiteEnum {
+func (e SourceNetsuiteNetsuite) ToPointer() *SourceNetsuiteNetsuite {
 	return &e
 }
 
-func (e *SourceNetsuiteNetsuiteEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceNetsuiteNetsuite) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "netsuite":
-		*e = SourceNetsuiteNetsuiteEnum(v)
+		*e = SourceNetsuiteNetsuite(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceNetsuiteNetsuiteEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceNetsuiteNetsuite: %v", v)
 	}
 }
 
@@ -39,8 +39,8 @@ type SourceNetsuite struct {
 	// The API names of the Netsuite objects you want to sync. Setting this speeds up the connection setup process by limiting the number of schemas that need to be retrieved from Netsuite.
 	ObjectTypes []string `json:"object_types,omitempty"`
 	// Netsuite realm e.g. 2344535, as for `production` or 2344535_SB1, as for the `sandbox`
-	Realm      string                     `json:"realm"`
-	SourceType SourceNetsuiteNetsuiteEnum `json:"sourceType"`
+	Realm      string                 `json:"realm"`
+	SourceType SourceNetsuiteNetsuite `json:"sourceType"`
 	// Starting point for your data replication, in format of "YYYY-MM-DDTHH:mm:ssZ"
 	StartDatetime string `json:"start_datetime"`
 	// Access token key

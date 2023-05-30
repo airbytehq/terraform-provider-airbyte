@@ -4,12 +4,13 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
 func (r *SourceIntercomResourceModel) ToCreateSDKType() *shared.SourceIntercomCreateRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
-	sourceType := shared.SourceIntercomIntercomEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceIntercomIntercom(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceIntercom{
 		AccessToken: accessToken,
@@ -36,4 +37,11 @@ func (r *SourceIntercomResourceModel) ToCreateSDKType() *shared.SourceIntercomCr
 func (r *SourceIntercomResourceModel) ToDeleteSDKType() *shared.SourceIntercomCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceIntercomResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceMailjetSmsResourceModel) ToCreateSDKType() *shared.SourceMailjetSmsCreateRequest {
@@ -13,7 +14,7 @@ func (r *SourceMailjetSmsResourceModel) ToCreateSDKType() *shared.SourceMailjetS
 	} else {
 		endDate = nil
 	}
-	sourceType := shared.SourceMailjetSmsMailjetSmsEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceMailjetSmsMailjetSms(r.Configuration.SourceType.ValueString())
 	startDate := new(int64)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate = r.Configuration.StartDate.ValueInt64()
@@ -47,4 +48,11 @@ func (r *SourceMailjetSmsResourceModel) ToCreateSDKType() *shared.SourceMailjetS
 func (r *SourceMailjetSmsResourceModel) ToDeleteSDKType() *shared.SourceMailjetSmsCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceMailjetSmsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

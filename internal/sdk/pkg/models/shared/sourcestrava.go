@@ -8,65 +8,65 @@ import (
 	"time"
 )
 
-type SourceStravaAuthTypeEnum string
+type SourceStravaAuthType string
 
 const (
-	SourceStravaAuthTypeEnumClient SourceStravaAuthTypeEnum = "Client"
+	SourceStravaAuthTypeClient SourceStravaAuthType = "Client"
 )
 
-func (e SourceStravaAuthTypeEnum) ToPointer() *SourceStravaAuthTypeEnum {
+func (e SourceStravaAuthType) ToPointer() *SourceStravaAuthType {
 	return &e
 }
 
-func (e *SourceStravaAuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceStravaAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Client":
-		*e = SourceStravaAuthTypeEnum(v)
+		*e = SourceStravaAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceStravaAuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceStravaAuthType: %v", v)
 	}
 }
 
-type SourceStravaStravaEnum string
+type SourceStravaStrava string
 
 const (
-	SourceStravaStravaEnumStrava SourceStravaStravaEnum = "strava"
+	SourceStravaStravaStrava SourceStravaStrava = "strava"
 )
 
-func (e SourceStravaStravaEnum) ToPointer() *SourceStravaStravaEnum {
+func (e SourceStravaStrava) ToPointer() *SourceStravaStrava {
 	return &e
 }
 
-func (e *SourceStravaStravaEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceStravaStrava) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "strava":
-		*e = SourceStravaStravaEnum(v)
+		*e = SourceStravaStrava(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceStravaStravaEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceStravaStrava: %v", v)
 	}
 }
 
 type SourceStrava struct {
 	// The Athlete ID of your Strava developer application.
-	AthleteID int64                     `json:"athlete_id"`
-	AuthType  *SourceStravaAuthTypeEnum `json:"auth_type,omitempty"`
+	AthleteID int64                 `json:"athlete_id"`
+	AuthType  *SourceStravaAuthType `json:"auth_type,omitempty"`
 	// The Client ID of your Strava developer application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your Strava developer application.
 	ClientSecret string `json:"client_secret"`
 	// The Refresh Token with the activity: read_all permissions.
-	RefreshToken string                 `json:"refresh_token"`
-	SourceType   SourceStravaStravaEnum `json:"sourceType"`
+	RefreshToken string             `json:"refresh_token"`
+	SourceType   SourceStravaStrava `json:"sourceType"`
 	// UTC date and time. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
 }

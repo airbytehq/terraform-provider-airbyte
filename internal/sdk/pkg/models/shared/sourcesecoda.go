@@ -7,32 +7,32 @@ import (
 	"fmt"
 )
 
-type SourceSecodaSecodaEnum string
+type SourceSecodaSecoda string
 
 const (
-	SourceSecodaSecodaEnumSecoda SourceSecodaSecodaEnum = "secoda"
+	SourceSecodaSecodaSecoda SourceSecodaSecoda = "secoda"
 )
 
-func (e SourceSecodaSecodaEnum) ToPointer() *SourceSecodaSecodaEnum {
+func (e SourceSecodaSecoda) ToPointer() *SourceSecodaSecoda {
 	return &e
 }
 
-func (e *SourceSecodaSecodaEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceSecodaSecoda) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "secoda":
-		*e = SourceSecodaSecodaEnum(v)
+		*e = SourceSecodaSecoda(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSecodaSecodaEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceSecodaSecoda: %v", v)
 	}
 }
 
 type SourceSecoda struct {
 	// Your API Access Key. See <a href="https://docs.secoda.co/secoda-api/authentication">here</a>. The key is case sensitive.
-	APIKey     string                 `json:"api_key"`
-	SourceType SourceSecodaSecodaEnum `json:"sourceType"`
+	APIKey     string             `json:"api_key"`
+	SourceType SourceSecodaSecoda `json:"sourceType"`
 }

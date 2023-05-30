@@ -4,11 +4,12 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceDockerhubResourceModel) ToCreateSDKType() *shared.SourceDockerhubCreateRequest {
 	dockerUsername := r.Configuration.DockerUsername.ValueString()
-	sourceType := shared.SourceDockerhubDockerhubEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceDockerhubDockerhub(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceDockerhub{
 		DockerUsername: dockerUsername,
 		SourceType:     sourceType,
@@ -33,4 +34,11 @@ func (r *SourceDockerhubResourceModel) ToCreateSDKType() *shared.SourceDockerhub
 func (r *SourceDockerhubResourceModel) ToDeleteSDKType() *shared.SourceDockerhubCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceDockerhubResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

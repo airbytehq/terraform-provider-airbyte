@@ -5,26 +5,25 @@ package provider
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	"encoding/json"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceRetentlyResourceModel) ToCreateSDKType() *shared.SourceRetentlyCreateRequest {
 	var credentials *shared.SourceRetentlyAuthenticationMechanism
 	var sourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth *shared.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth
 	if r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth != nil {
-		authType := new(shared.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuthAuthTypeEnum)
+		authType := new(shared.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuthAuthType)
 		if !r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AuthType.IsNull() {
-			*authType = shared.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuthAuthTypeEnum(r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AuthType.ValueString())
+			*authType = shared.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuthAuthType(r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AuthType.ValueString())
 		} else {
 			authType = nil
 		}
 		clientID := r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.ClientID.ValueString()
 		clientSecret := r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.ClientSecret.ValueString()
 		refreshToken := r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.RefreshToken.ValueString()
-		additionalProperties := make(map[string]interface{})
-		for additionalPropertiesKey, additionalPropertiesValue := range r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AdditionalProperties {
-			var additionalPropertiesInst interface{}
-			_ = json.Unmarshal([]byte(additionalPropertiesValue.ValueString()), &additionalPropertiesInst)
-			additionalProperties[additionalPropertiesKey] = additionalPropertiesInst
+		var additionalProperties interface{}
+		if !r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AdditionalProperties.ValueString()), &additionalProperties)
 		}
 		sourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth = &shared.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth{
 			AuthType:             authType,
@@ -42,17 +41,15 @@ func (r *SourceRetentlyResourceModel) ToCreateSDKType() *shared.SourceRetentlyCr
 	var sourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken *shared.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken
 	if r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken != nil {
 		apiKey := r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.APIKey.ValueString()
-		authType1 := new(shared.SourceRetentlyAuthenticationMechanismAuthenticateWithAPITokenAuthTypeEnum)
+		authType1 := new(shared.SourceRetentlyAuthenticationMechanismAuthenticateWithAPITokenAuthType)
 		if !r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AuthType.IsNull() {
-			*authType1 = shared.SourceRetentlyAuthenticationMechanismAuthenticateWithAPITokenAuthTypeEnum(r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AuthType.ValueString())
+			*authType1 = shared.SourceRetentlyAuthenticationMechanismAuthenticateWithAPITokenAuthType(r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AuthType.ValueString())
 		} else {
 			authType1 = nil
 		}
-		additionalProperties1 := make(map[string]interface{})
-		for additionalPropertiesKey1, additionalPropertiesValue1 := range r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AdditionalProperties {
-			var additionalPropertiesInst1 interface{}
-			_ = json.Unmarshal([]byte(additionalPropertiesValue1.ValueString()), &additionalPropertiesInst1)
-			additionalProperties1[additionalPropertiesKey1] = additionalPropertiesInst1
+		var additionalProperties1 interface{}
+		if !r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AdditionalProperties.ValueString()), &additionalProperties1)
 		}
 		sourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken = &shared.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken{
 			APIKey:               apiKey,
@@ -65,7 +62,7 @@ func (r *SourceRetentlyResourceModel) ToCreateSDKType() *shared.SourceRetentlyCr
 			SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken: sourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken,
 		}
 	}
-	sourceType := shared.SourceRetentlyRetentlyEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceRetentlyRetently(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceRetently{
 		Credentials: credentials,
 		SourceType:  sourceType,
@@ -90,4 +87,11 @@ func (r *SourceRetentlyResourceModel) ToCreateSDKType() *shared.SourceRetentlyCr
 func (r *SourceRetentlyResourceModel) ToDeleteSDKType() *shared.SourceRetentlyCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceRetentlyResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

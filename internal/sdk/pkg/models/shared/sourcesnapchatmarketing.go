@@ -8,27 +8,27 @@ import (
 	"fmt"
 )
 
-type SourceSnapchatMarketingSnapchatMarketingEnum string
+type SourceSnapchatMarketingSnapchatMarketing string
 
 const (
-	SourceSnapchatMarketingSnapchatMarketingEnumSnapchatMarketing SourceSnapchatMarketingSnapchatMarketingEnum = "snapchat-marketing"
+	SourceSnapchatMarketingSnapchatMarketingSnapchatMarketing SourceSnapchatMarketingSnapchatMarketing = "snapchat-marketing"
 )
 
-func (e SourceSnapchatMarketingSnapchatMarketingEnum) ToPointer() *SourceSnapchatMarketingSnapchatMarketingEnum {
+func (e SourceSnapchatMarketingSnapchatMarketing) ToPointer() *SourceSnapchatMarketingSnapchatMarketing {
 	return &e
 }
 
-func (e *SourceSnapchatMarketingSnapchatMarketingEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceSnapchatMarketingSnapchatMarketing) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "snapchat-marketing":
-		*e = SourceSnapchatMarketingSnapchatMarketingEnum(v)
+		*e = SourceSnapchatMarketingSnapchatMarketing(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSnapchatMarketingSnapchatMarketingEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceSnapchatMarketingSnapchatMarketing: %v", v)
 	}
 }
 
@@ -40,8 +40,8 @@ type SourceSnapchatMarketing struct {
 	// Date in the format 2017-01-25. Any data after this date will not be replicated.
 	EndDate *types.Date `json:"end_date,omitempty"`
 	// Refresh Token to renew the expired Access Token.
-	RefreshToken string                                       `json:"refresh_token"`
-	SourceType   SourceSnapchatMarketingSnapchatMarketingEnum `json:"sourceType"`
+	RefreshToken string                                   `json:"refresh_token"`
+	SourceType   SourceSnapchatMarketingSnapchatMarketing `json:"sourceType"`
 	// Date in the format 2022-01-01. Any data before this date will not be replicated.
 	StartDate *types.Date `json:"start_date,omitempty"`
 }

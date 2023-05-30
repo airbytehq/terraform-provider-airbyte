@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationS3GlueResourceModel) ToCreateSDKType() *shared.DestinationS3GlueCreateRequest {
@@ -13,7 +14,7 @@ func (r *DestinationS3GlueResourceModel) ToCreateSDKType() *shared.DestinationS3
 	} else {
 		accessKeyID = nil
 	}
-	destinationType := shared.DestinationS3GlueS3GlueEnum(r.Configuration.DestinationType.ValueString())
+	destinationType := shared.DestinationS3GlueS3Glue(r.Configuration.DestinationType.ValueString())
 	fileNamePattern := new(string)
 	if !r.Configuration.FileNamePattern.IsUnknown() && !r.Configuration.FileNamePattern.IsNull() {
 		*fileNamePattern = r.Configuration.FileNamePattern.ValueString()
@@ -26,9 +27,9 @@ func (r *DestinationS3GlueResourceModel) ToCreateSDKType() *shared.DestinationS3
 		var compression *shared.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompression
 		var destinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression *shared.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression
 		if r.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression != nil {
-			compressionType := new(shared.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum)
+			compressionType := new(shared.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType)
 			if !r.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression.CompressionType.IsUnknown() && !r.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression.CompressionType.IsNull() {
-				*compressionType = shared.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionTypeEnum(r.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression.CompressionType.ValueString())
+				*compressionType = shared.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType(r.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression.CompressionType.ValueString())
 			} else {
 				compressionType = nil
 			}
@@ -43,9 +44,9 @@ func (r *DestinationS3GlueResourceModel) ToCreateSDKType() *shared.DestinationS3
 		}
 		var destinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP *shared.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP
 		if r.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP != nil {
-			compressionType1 := new(shared.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum)
+			compressionType1 := new(shared.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType)
 			if !r.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP.CompressionType.IsUnknown() && !r.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP.CompressionType.IsNull() {
-				*compressionType1 = shared.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionTypeEnum(r.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP.CompressionType.ValueString())
+				*compressionType1 = shared.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType(r.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP.CompressionType.ValueString())
 			} else {
 				compressionType1 = nil
 			}
@@ -58,13 +59,13 @@ func (r *DestinationS3GlueResourceModel) ToCreateSDKType() *shared.DestinationS3
 				DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP: destinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP,
 			}
 		}
-		flattening := new(shared.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlatteningEnum)
+		flattening := new(shared.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlattening)
 		if !r.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON.Flattening.IsUnknown() && !r.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON.Flattening.IsNull() {
-			*flattening = shared.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlatteningEnum(r.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON.Flattening.ValueString())
+			*flattening = shared.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFlattening(r.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON.Flattening.ValueString())
 		} else {
 			flattening = nil
 		}
-		formatType := shared.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFormatTypeEnum(r.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON.FormatType.ValueString())
+		formatType := shared.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSONFormatType(r.Configuration.Format.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON.FormatType.ValueString())
 		destinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON = &shared.DestinationS3GlueOutputFormatJSONLinesNewlineDelimitedJSON{
 			Compression: compression,
 			Flattening:  flattening,
@@ -77,10 +78,10 @@ func (r *DestinationS3GlueResourceModel) ToCreateSDKType() *shared.DestinationS3
 		}
 	}
 	glueDatabase := r.Configuration.GlueDatabase.ValueString()
-	glueSerializationLibrary := shared.DestinationS3GlueSerializationLibraryEnum(r.Configuration.GlueSerializationLibrary.ValueString())
+	glueSerializationLibrary := shared.DestinationS3GlueSerializationLibrary(r.Configuration.GlueSerializationLibrary.ValueString())
 	s3BucketName := r.Configuration.S3BucketName.ValueString()
 	s3BucketPath := r.Configuration.S3BucketPath.ValueString()
-	s3BucketRegion := shared.DestinationS3GlueS3BucketRegionEnum(r.Configuration.S3BucketRegion.ValueString())
+	s3BucketRegion := shared.DestinationS3GlueS3BucketRegion(r.Configuration.S3BucketRegion.ValueString())
 	s3Endpoint := new(string)
 	if !r.Configuration.S3Endpoint.IsUnknown() && !r.Configuration.S3Endpoint.IsNull() {
 		*s3Endpoint = r.Configuration.S3Endpoint.ValueString()
@@ -126,4 +127,11 @@ func (r *DestinationS3GlueResourceModel) ToCreateSDKType() *shared.DestinationS3
 func (r *DestinationS3GlueResourceModel) ToDeleteSDKType() *shared.DestinationS3GlueCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *DestinationS3GlueResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

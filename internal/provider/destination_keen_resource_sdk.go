@@ -4,11 +4,12 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationKeenResourceModel) ToCreateSDKType() *shared.DestinationKeenCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	destinationType := shared.DestinationKeenKeenEnum(r.Configuration.DestinationType.ValueString())
+	destinationType := shared.DestinationKeenKeen(r.Configuration.DestinationType.ValueString())
 	inferTimestamp := new(bool)
 	if !r.Configuration.InferTimestamp.IsUnknown() && !r.Configuration.InferTimestamp.IsNull() {
 		*inferTimestamp = r.Configuration.InferTimestamp.ValueBool()
@@ -35,4 +36,11 @@ func (r *DestinationKeenResourceModel) ToCreateSDKType() *shared.DestinationKeen
 func (r *DestinationKeenResourceModel) ToDeleteSDKType() *shared.DestinationKeenCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *DestinationKeenResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

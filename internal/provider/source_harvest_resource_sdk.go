@@ -5,6 +5,7 @@ package provider
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	"encoding/json"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
@@ -13,20 +14,18 @@ func (r *SourceHarvestResourceModel) ToCreateSDKType() *shared.SourceHarvestCrea
 	var credentials *shared.SourceHarvestAuthenticationMechanism
 	var sourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth *shared.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth
 	if r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth != nil {
-		authType := new(shared.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuthAuthTypeEnum)
+		authType := new(shared.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuthAuthType)
 		if !r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.AuthType.IsNull() {
-			*authType = shared.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuthAuthTypeEnum(r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.AuthType.ValueString())
+			*authType = shared.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuthAuthType(r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.AuthType.ValueString())
 		} else {
 			authType = nil
 		}
 		clientID := r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.ClientID.ValueString()
 		clientSecret := r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.ClientSecret.ValueString()
 		refreshToken := r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.RefreshToken.ValueString()
-		additionalProperties := make(map[string]interface{})
-		for additionalPropertiesKey, additionalPropertiesValue := range r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.AdditionalProperties {
-			var additionalPropertiesInst interface{}
-			_ = json.Unmarshal([]byte(additionalPropertiesValue.ValueString()), &additionalPropertiesInst)
-			additionalProperties[additionalPropertiesKey] = additionalPropertiesInst
+		var additionalProperties interface{}
+		if !r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth.AdditionalProperties.ValueString()), &additionalProperties)
 		}
 		sourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth = &shared.SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth{
 			AuthType:             authType,
@@ -44,17 +43,15 @@ func (r *SourceHarvestResourceModel) ToCreateSDKType() *shared.SourceHarvestCrea
 	var sourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken *shared.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken
 	if r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken != nil {
 		apiToken := r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken.APIToken.ValueString()
-		authType1 := new(shared.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessTokenAuthTypeEnum)
+		authType1 := new(shared.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessTokenAuthType)
 		if !r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken.AuthType.IsNull() {
-			*authType1 = shared.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessTokenAuthTypeEnum(r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken.AuthType.ValueString())
+			*authType1 = shared.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessTokenAuthType(r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken.AuthType.ValueString())
 		} else {
 			authType1 = nil
 		}
-		additionalProperties1 := make(map[string]interface{})
-		for additionalPropertiesKey1, additionalPropertiesValue1 := range r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken.AdditionalProperties {
-			var additionalPropertiesInst1 interface{}
-			_ = json.Unmarshal([]byte(additionalPropertiesValue1.ValueString()), &additionalPropertiesInst1)
-			additionalProperties1[additionalPropertiesKey1] = additionalPropertiesInst1
+		var additionalProperties1 interface{}
+		if !r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.Credentials.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken.AdditionalProperties.ValueString()), &additionalProperties1)
 		}
 		sourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken = &shared.SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken{
 			APIToken:             apiToken,
@@ -74,7 +71,7 @@ func (r *SourceHarvestResourceModel) ToCreateSDKType() *shared.SourceHarvestCrea
 		replicationEndDate = nil
 	}
 	replicationStartDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.ReplicationStartDate.ValueString())
-	sourceType := shared.SourceHarvestHarvestEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceHarvestHarvest(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceHarvest{
 		AccountID:            accountID,
 		Credentials:          credentials,
@@ -102,4 +99,11 @@ func (r *SourceHarvestResourceModel) ToCreateSDKType() *shared.SourceHarvestCrea
 func (r *SourceHarvestResourceModel) ToDeleteSDKType() *shared.SourceHarvestCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceHarvestResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

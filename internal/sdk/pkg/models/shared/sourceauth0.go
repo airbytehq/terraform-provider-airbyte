@@ -9,64 +9,64 @@ import (
 	"fmt"
 )
 
-type SourceAuth0AuthenticationMethodOAuth2AccessTokenAuthenticationMethodEnum string
+type SourceAuth0AuthenticationMethodOAuth2AccessTokenAuthenticationMethod string
 
 const (
-	SourceAuth0AuthenticationMethodOAuth2AccessTokenAuthenticationMethodEnumOauth2AccessToken SourceAuth0AuthenticationMethodOAuth2AccessTokenAuthenticationMethodEnum = "oauth2_access_token"
+	SourceAuth0AuthenticationMethodOAuth2AccessTokenAuthenticationMethodOauth2AccessToken SourceAuth0AuthenticationMethodOAuth2AccessTokenAuthenticationMethod = "oauth2_access_token"
 )
 
-func (e SourceAuth0AuthenticationMethodOAuth2AccessTokenAuthenticationMethodEnum) ToPointer() *SourceAuth0AuthenticationMethodOAuth2AccessTokenAuthenticationMethodEnum {
+func (e SourceAuth0AuthenticationMethodOAuth2AccessTokenAuthenticationMethod) ToPointer() *SourceAuth0AuthenticationMethodOAuth2AccessTokenAuthenticationMethod {
 	return &e
 }
 
-func (e *SourceAuth0AuthenticationMethodOAuth2AccessTokenAuthenticationMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceAuth0AuthenticationMethodOAuth2AccessTokenAuthenticationMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "oauth2_access_token":
-		*e = SourceAuth0AuthenticationMethodOAuth2AccessTokenAuthenticationMethodEnum(v)
+		*e = SourceAuth0AuthenticationMethodOAuth2AccessTokenAuthenticationMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAuth0AuthenticationMethodOAuth2AccessTokenAuthenticationMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceAuth0AuthenticationMethodOAuth2AccessTokenAuthenticationMethod: %v", v)
 	}
 }
 
 type SourceAuth0AuthenticationMethodOAuth2AccessToken struct {
 	// Also called <a href="https://auth0.com/docs/secure/tokens/access-tokens/get-management-api-access-tokens-for-testing">API Access Token </a> The access token used to call the Auth0 Management API Token. It's a JWT that contains specific grant permissions knowns as scopes.
-	AccessToken string                                                                   `json:"access_token"`
-	AuthType    SourceAuth0AuthenticationMethodOAuth2AccessTokenAuthenticationMethodEnum `json:"auth_type"`
+	AccessToken string                                                               `json:"access_token"`
+	AuthType    SourceAuth0AuthenticationMethodOAuth2AccessTokenAuthenticationMethod `json:"auth_type"`
 }
 
-type SourceAuth0AuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethodEnum string
+type SourceAuth0AuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethod string
 
 const (
-	SourceAuth0AuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethodEnumOauth2ConfidentialApplication SourceAuth0AuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethodEnum = "oauth2_confidential_application"
+	SourceAuth0AuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethodOauth2ConfidentialApplication SourceAuth0AuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethod = "oauth2_confidential_application"
 )
 
-func (e SourceAuth0AuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethodEnum) ToPointer() *SourceAuth0AuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethodEnum {
+func (e SourceAuth0AuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethod) ToPointer() *SourceAuth0AuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethod {
 	return &e
 }
 
-func (e *SourceAuth0AuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceAuth0AuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "oauth2_confidential_application":
-		*e = SourceAuth0AuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethodEnum(v)
+		*e = SourceAuth0AuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAuth0AuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceAuth0AuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethod: %v", v)
 	}
 }
 
 type SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication struct {
 	// The audience for the token, which is your API. You can find this in the Identifier field on your  <a href="https://manage.auth0.com/#/apis">API's settings tab</a>
-	Audience string                                                                               `json:"audience"`
-	AuthType SourceAuth0AuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethodEnum `json:"auth_type"`
+	Audience string                                                                           `json:"audience"`
+	AuthType SourceAuth0AuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethod `json:"auth_type"`
 	// Your application's Client ID. You can find this value on the <a href="https://manage.auth0.com/#/applications">application's settings tab</a> after you login the admin portal.
 	ClientID string `json:"client_id"`
 	// Your application's Client Secret. You can find this value on the <a href="https://manage.auth0.com/#/applications">application's settings tab</a> after you login the admin portal.
@@ -141,27 +141,27 @@ func (u SourceAuth0AuthenticationMethod) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-type SourceAuth0Auth0Enum string
+type SourceAuth0Auth0 string
 
 const (
-	SourceAuth0Auth0EnumAuth0 SourceAuth0Auth0Enum = "auth0"
+	SourceAuth0Auth0Auth0 SourceAuth0Auth0 = "auth0"
 )
 
-func (e SourceAuth0Auth0Enum) ToPointer() *SourceAuth0Auth0Enum {
+func (e SourceAuth0Auth0) ToPointer() *SourceAuth0Auth0 {
 	return &e
 }
 
-func (e *SourceAuth0Auth0Enum) UnmarshalJSON(data []byte) error {
+func (e *SourceAuth0Auth0) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "auth0":
-		*e = SourceAuth0Auth0Enum(v)
+		*e = SourceAuth0Auth0(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAuth0Auth0Enum: %v", v)
+		return fmt.Errorf("invalid value for SourceAuth0Auth0: %v", v)
 	}
 }
 
@@ -169,5 +169,5 @@ type SourceAuth0 struct {
 	// The Authentication API is served over HTTPS. All URLs referenced in the documentation have the following base `https://YOUR_DOMAIN`
 	BaseURL     string                          `json:"base_url"`
 	Credentials SourceAuth0AuthenticationMethod `json:"credentials"`
-	SourceType  SourceAuth0Auth0Enum            `json:"sourceType"`
+	SourceType  SourceAuth0Auth0                `json:"sourceType"`
 }

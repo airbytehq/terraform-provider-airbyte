@@ -4,18 +4,19 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationDynamodbResourceModel) ToCreateSDKType() *shared.DestinationDynamodbCreateRequest {
 	accessKeyID := r.Configuration.AccessKeyID.ValueString()
-	destinationType := shared.DestinationDynamodbDynamodbEnum(r.Configuration.DestinationType.ValueString())
+	destinationType := shared.DestinationDynamodbDynamodb(r.Configuration.DestinationType.ValueString())
 	dynamodbEndpoint := new(string)
 	if !r.Configuration.DynamodbEndpoint.IsUnknown() && !r.Configuration.DynamodbEndpoint.IsNull() {
 		*dynamodbEndpoint = r.Configuration.DynamodbEndpoint.ValueString()
 	} else {
 		dynamodbEndpoint = nil
 	}
-	dynamodbRegion := shared.DestinationDynamodbDynamoDBRegionEnum(r.Configuration.DynamodbRegion.ValueString())
+	dynamodbRegion := shared.DestinationDynamodbDynamoDBRegion(r.Configuration.DynamodbRegion.ValueString())
 	dynamodbTableNamePrefix := r.Configuration.DynamodbTableNamePrefix.ValueString()
 	secretAccessKey := r.Configuration.SecretAccessKey.ValueString()
 	configuration := shared.DestinationDynamodb{
@@ -39,4 +40,11 @@ func (r *DestinationDynamodbResourceModel) ToCreateSDKType() *shared.Destination
 func (r *DestinationDynamodbResourceModel) ToDeleteSDKType() *shared.DestinationDynamodbCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *DestinationDynamodbResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceIp2whoisResourceModel) ToCreateSDKType() *shared.SourceIp2whoisCreateRequest {
@@ -19,7 +20,7 @@ func (r *SourceIp2whoisResourceModel) ToCreateSDKType() *shared.SourceIp2whoisCr
 	} else {
 		domain = nil
 	}
-	sourceType := shared.SourceIp2whoisIp2whoisEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceIp2whoisIp2whois(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceIp2whois{
 		APIKey:     apiKey,
 		Domain:     domain,
@@ -45,4 +46,11 @@ func (r *SourceIp2whoisResourceModel) ToCreateSDKType() *shared.SourceIp2whoisCr
 func (r *SourceIp2whoisResourceModel) ToDeleteSDKType() *shared.SourceIp2whoisCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceIp2whoisResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

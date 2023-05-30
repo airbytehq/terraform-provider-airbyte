@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourcePexelsAPIResourceModel) ToCreateSDKType() *shared.SourcePexelsAPICreateRequest {
@@ -33,7 +34,7 @@ func (r *SourcePexelsAPIResourceModel) ToCreateSDKType() *shared.SourcePexelsAPI
 	} else {
 		size = nil
 	}
-	sourceType := shared.SourcePexelsAPIPexelsAPIEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourcePexelsAPIPexelsAPI(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourcePexelsAPI{
 		APIKey:      apiKey,
 		Color:       color,
@@ -63,4 +64,11 @@ func (r *SourcePexelsAPIResourceModel) ToCreateSDKType() *shared.SourcePexelsAPI
 func (r *SourcePexelsAPIResourceModel) ToDeleteSDKType() *shared.SourcePexelsAPICreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourcePexelsAPIResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

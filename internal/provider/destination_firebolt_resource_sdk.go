@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationFireboltResourceModel) ToCreateSDKType() *shared.DestinationFireboltCreateRequest {
@@ -14,7 +15,7 @@ func (r *DestinationFireboltResourceModel) ToCreateSDKType() *shared.Destination
 		account = nil
 	}
 	database := r.Configuration.Database.ValueString()
-	destinationType := shared.DestinationFireboltFireboltEnum(r.Configuration.DestinationType.ValueString())
+	destinationType := shared.DestinationFireboltFirebolt(r.Configuration.DestinationType.ValueString())
 	engine := new(string)
 	if !r.Configuration.Engine.IsUnknown() && !r.Configuration.Engine.IsNull() {
 		*engine = r.Configuration.Engine.ValueString()
@@ -30,7 +31,7 @@ func (r *DestinationFireboltResourceModel) ToCreateSDKType() *shared.Destination
 	var loadingMethod *shared.DestinationFireboltLoadingMethod
 	var destinationFireboltLoadingMethodSQLInserts *shared.DestinationFireboltLoadingMethodSQLInserts
 	if r.Configuration.LoadingMethod.DestinationFireboltLoadingMethodSQLInserts != nil {
-		method := shared.DestinationFireboltLoadingMethodSQLInsertsMethodEnum(r.Configuration.LoadingMethod.DestinationFireboltLoadingMethodSQLInserts.Method.ValueString())
+		method := shared.DestinationFireboltLoadingMethodSQLInsertsMethod(r.Configuration.LoadingMethod.DestinationFireboltLoadingMethodSQLInserts.Method.ValueString())
 		destinationFireboltLoadingMethodSQLInserts = &shared.DestinationFireboltLoadingMethodSQLInserts{
 			Method: method,
 		}
@@ -44,7 +45,7 @@ func (r *DestinationFireboltResourceModel) ToCreateSDKType() *shared.Destination
 	if r.Configuration.LoadingMethod.DestinationFireboltLoadingMethodExternalTableViaS3 != nil {
 		awsKeyID := r.Configuration.LoadingMethod.DestinationFireboltLoadingMethodExternalTableViaS3.AwsKeyID.ValueString()
 		awsKeySecret := r.Configuration.LoadingMethod.DestinationFireboltLoadingMethodExternalTableViaS3.AwsKeySecret.ValueString()
-		method1 := shared.DestinationFireboltLoadingMethodExternalTableViaS3MethodEnum(r.Configuration.LoadingMethod.DestinationFireboltLoadingMethodExternalTableViaS3.Method.ValueString())
+		method1 := shared.DestinationFireboltLoadingMethodExternalTableViaS3Method(r.Configuration.LoadingMethod.DestinationFireboltLoadingMethodExternalTableViaS3.Method.ValueString())
 		s3Bucket := r.Configuration.LoadingMethod.DestinationFireboltLoadingMethodExternalTableViaS3.S3Bucket.ValueString()
 		s3Region := r.Configuration.LoadingMethod.DestinationFireboltLoadingMethodExternalTableViaS3.S3Region.ValueString()
 		destinationFireboltLoadingMethodExternalTableViaS3 = &shared.DestinationFireboltLoadingMethodExternalTableViaS3{
@@ -85,4 +86,11 @@ func (r *DestinationFireboltResourceModel) ToCreateSDKType() *shared.Destination
 func (r *DestinationFireboltResourceModel) ToDeleteSDKType() *shared.DestinationFireboltCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *DestinationFireboltResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

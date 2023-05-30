@@ -4,11 +4,12 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceGreenhouseResourceModel) ToCreateSDKType() *shared.SourceGreenhouseCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	sourceType := shared.SourceGreenhouseGreenhouseEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceGreenhouseGreenhouse(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceGreenhouse{
 		APIKey:     apiKey,
 		SourceType: sourceType,
@@ -33,4 +34,11 @@ func (r *SourceGreenhouseResourceModel) ToCreateSDKType() *shared.SourceGreenhou
 func (r *SourceGreenhouseResourceModel) ToDeleteSDKType() *shared.SourceGreenhouseCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceGreenhouseResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

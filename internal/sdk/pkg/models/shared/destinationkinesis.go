@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type DestinationKinesisKinesisEnum string
+type DestinationKinesisKinesis string
 
 const (
-	DestinationKinesisKinesisEnumKinesis DestinationKinesisKinesisEnum = "kinesis"
+	DestinationKinesisKinesisKinesis DestinationKinesisKinesis = "kinesis"
 )
 
-func (e DestinationKinesisKinesisEnum) ToPointer() *DestinationKinesisKinesisEnum {
+func (e DestinationKinesisKinesis) ToPointer() *DestinationKinesisKinesis {
 	return &e
 }
 
-func (e *DestinationKinesisKinesisEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationKinesisKinesis) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "kinesis":
-		*e = DestinationKinesisKinesisEnum(v)
+		*e = DestinationKinesisKinesis(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationKinesisKinesisEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationKinesisKinesis: %v", v)
 	}
 }
 
@@ -35,8 +35,8 @@ type DestinationKinesis struct {
 	// Generate the AWS Access Key for current user.
 	AccessKey string `json:"accessKey"`
 	// Buffer size for storing kinesis records before being batch streamed.
-	BufferSize      int64                         `json:"bufferSize"`
-	DestinationType DestinationKinesisKinesisEnum `json:"destinationType"`
+	BufferSize      int64                     `json:"bufferSize"`
+	DestinationType DestinationKinesisKinesis `json:"destinationType"`
 	// AWS Kinesis endpoint.
 	Endpoint string `json:"endpoint"`
 	// The AWS Private Key - a string of numbers and letters that are unique for each account, also known as a "recovery phrase".

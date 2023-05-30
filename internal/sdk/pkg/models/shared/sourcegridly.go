@@ -7,33 +7,33 @@ import (
 	"fmt"
 )
 
-type SourceGridlyGridlyEnum string
+type SourceGridlyGridly string
 
 const (
-	SourceGridlyGridlyEnumGridly SourceGridlyGridlyEnum = "gridly"
+	SourceGridlyGridlyGridly SourceGridlyGridly = "gridly"
 )
 
-func (e SourceGridlyGridlyEnum) ToPointer() *SourceGridlyGridlyEnum {
+func (e SourceGridlyGridly) ToPointer() *SourceGridlyGridly {
 	return &e
 }
 
-func (e *SourceGridlyGridlyEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceGridlyGridly) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "gridly":
-		*e = SourceGridlyGridlyEnum(v)
+		*e = SourceGridlyGridly(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGridlyGridlyEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceGridlyGridly: %v", v)
 	}
 }
 
 type SourceGridly struct {
 	APIKey string `json:"api_key"`
 	// ID of a grid, or can be ID of a branch
-	GridID     string                 `json:"grid_id"`
-	SourceType SourceGridlyGridlyEnum `json:"sourceType"`
+	GridID     string             `json:"grid_id"`
+	SourceType SourceGridlyGridly `json:"sourceType"`
 }

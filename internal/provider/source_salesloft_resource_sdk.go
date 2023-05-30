@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
@@ -12,7 +13,7 @@ func (r *SourceSalesloftResourceModel) ToCreateSDKType() *shared.SourceSalesloft
 	var sourceSalesloftCredentialsAuthenticateViaOAuth *shared.SourceSalesloftCredentialsAuthenticateViaOAuth
 	if r.Configuration.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth != nil {
 		accessToken := r.Configuration.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.AccessToken.ValueString()
-		authType := shared.SourceSalesloftCredentialsAuthenticateViaOAuthAuthTypeEnum(r.Configuration.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.AuthType.ValueString())
+		authType := shared.SourceSalesloftCredentialsAuthenticateViaOAuthAuthType(r.Configuration.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.AuthType.ValueString())
 		clientID := r.Configuration.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.ClientID.ValueString()
 		clientSecret := r.Configuration.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.ClientSecret.ValueString()
 		refreshToken := r.Configuration.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.RefreshToken.ValueString()
@@ -34,7 +35,7 @@ func (r *SourceSalesloftResourceModel) ToCreateSDKType() *shared.SourceSalesloft
 	var sourceSalesloftCredentialsAuthenticateViaAPIKey *shared.SourceSalesloftCredentialsAuthenticateViaAPIKey
 	if r.Configuration.Credentials.SourceSalesloftCredentialsAuthenticateViaAPIKey != nil {
 		apiKey := r.Configuration.Credentials.SourceSalesloftCredentialsAuthenticateViaAPIKey.APIKey.ValueString()
-		authType1 := shared.SourceSalesloftCredentialsAuthenticateViaAPIKeyAuthTypeEnum(r.Configuration.Credentials.SourceSalesloftCredentialsAuthenticateViaAPIKey.AuthType.ValueString())
+		authType1 := shared.SourceSalesloftCredentialsAuthenticateViaAPIKeyAuthType(r.Configuration.Credentials.SourceSalesloftCredentialsAuthenticateViaAPIKey.AuthType.ValueString())
 		sourceSalesloftCredentialsAuthenticateViaAPIKey = &shared.SourceSalesloftCredentialsAuthenticateViaAPIKey{
 			APIKey:   apiKey,
 			AuthType: authType1,
@@ -45,7 +46,7 @@ func (r *SourceSalesloftResourceModel) ToCreateSDKType() *shared.SourceSalesloft
 			SourceSalesloftCredentialsAuthenticateViaAPIKey: sourceSalesloftCredentialsAuthenticateViaAPIKey,
 		}
 	}
-	sourceType := shared.SourceSalesloftSalesloftEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceSalesloftSalesloft(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceSalesloft{
 		Credentials: credentials,
@@ -72,4 +73,11 @@ func (r *SourceSalesloftResourceModel) ToCreateSDKType() *shared.SourceSalesloft
 func (r *SourceSalesloftResourceModel) ToDeleteSDKType() *shared.SourceSalesloftCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceSalesloftResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

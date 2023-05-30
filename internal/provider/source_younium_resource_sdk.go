@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceYouniumResourceModel) ToCreateSDKType() *shared.SourceYouniumCreateRequest {
@@ -15,7 +16,7 @@ func (r *SourceYouniumResourceModel) ToCreateSDKType() *shared.SourceYouniumCrea
 	} else {
 		playground = nil
 	}
-	sourceType := shared.SourceYouniumYouniumEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceYouniumYounium(r.Configuration.SourceType.ValueString())
 	username := r.Configuration.Username.ValueString()
 	configuration := shared.SourceYounium{
 		LegalEntity: legalEntity,
@@ -44,4 +45,11 @@ func (r *SourceYouniumResourceModel) ToCreateSDKType() *shared.SourceYouniumCrea
 func (r *SourceYouniumResourceModel) ToDeleteSDKType() *shared.SourceYouniumCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceYouniumResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

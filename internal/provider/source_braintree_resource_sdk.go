@@ -4,15 +4,16 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
 func (r *SourceBraintreeResourceModel) ToCreateSDKType() *shared.SourceBraintreeCreateRequest {
-	environment := shared.SourceBraintreeEnvironmentEnum(r.Configuration.Environment.ValueString())
+	environment := shared.SourceBraintreeEnvironment(r.Configuration.Environment.ValueString())
 	merchantID := r.Configuration.MerchantID.ValueString()
 	privateKey := r.Configuration.PrivateKey.ValueString()
 	publicKey := r.Configuration.PublicKey.ValueString()
-	sourceType := shared.SourceBraintreeBraintreeEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceBraintreeBraintree(r.Configuration.SourceType.ValueString())
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -47,4 +48,11 @@ func (r *SourceBraintreeResourceModel) ToCreateSDKType() *shared.SourceBraintree
 func (r *SourceBraintreeResourceModel) ToDeleteSDKType() *shared.SourceBraintreeCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceBraintreeResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

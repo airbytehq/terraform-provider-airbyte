@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceGoogleAnalyticsV4ResourceModel) ToCreateSDKType() *shared.SourceGoogleAnalyticsV4CreateRequest {
@@ -16,9 +17,9 @@ func (r *SourceGoogleAnalyticsV4ResourceModel) ToCreateSDKType() *shared.SourceG
 		} else {
 			accessToken = nil
 		}
-		authType := new(shared.SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauthAuthTypeEnum)
+		authType := new(shared.SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauthAuthType)
 		if !r.Configuration.Credentials.SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth.AuthType.IsNull() {
-			*authType = shared.SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauthAuthTypeEnum(r.Configuration.Credentials.SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth.AuthType.ValueString())
+			*authType = shared.SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauthAuthType(r.Configuration.Credentials.SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth.AuthType.ValueString())
 		} else {
 			authType = nil
 		}
@@ -40,9 +41,9 @@ func (r *SourceGoogleAnalyticsV4ResourceModel) ToCreateSDKType() *shared.SourceG
 	}
 	var sourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthentication *shared.SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthentication
 	if r.Configuration.Credentials.SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthentication != nil {
-		authType1 := new(shared.SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthenticationAuthTypeEnum)
+		authType1 := new(shared.SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthenticationAuthType)
 		if !r.Configuration.Credentials.SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthentication.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthentication.AuthType.IsNull() {
-			*authType1 = shared.SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthenticationAuthTypeEnum(r.Configuration.Credentials.SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthentication.AuthType.ValueString())
+			*authType1 = shared.SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthenticationAuthType(r.Configuration.Credentials.SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthentication.AuthType.ValueString())
 		} else {
 			authType1 = nil
 		}
@@ -63,7 +64,7 @@ func (r *SourceGoogleAnalyticsV4ResourceModel) ToCreateSDKType() *shared.SourceG
 	} else {
 		customReports = nil
 	}
-	sourceType := shared.SourceGoogleAnalyticsV4GoogleAnalyticsV4Enum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceGoogleAnalyticsV4GoogleAnalyticsV4(r.Configuration.SourceType.ValueString())
 	startDate := r.Configuration.StartDate.ValueString()
 	viewID := r.Configuration.ViewID.ValueString()
 	windowInDays := new(int64)
@@ -100,4 +101,11 @@ func (r *SourceGoogleAnalyticsV4ResourceModel) ToCreateSDKType() *shared.SourceG
 func (r *SourceGoogleAnalyticsV4ResourceModel) ToDeleteSDKType() *shared.SourceGoogleAnalyticsV4CreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceGoogleAnalyticsV4ResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

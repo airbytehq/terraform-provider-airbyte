@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
@@ -12,9 +13,9 @@ func (r *SourceSmartsheetsResourceModel) ToCreateSDKType() *shared.SourceSmartsh
 	var sourceSmartsheetsAuthorizationMethodOAuth20 *shared.SourceSmartsheetsAuthorizationMethodOAuth20
 	if r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20 != nil {
 		accessToken := r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.AccessToken.ValueString()
-		authType := new(shared.SourceSmartsheetsAuthorizationMethodOAuth20AuthTypeEnum)
+		authType := new(shared.SourceSmartsheetsAuthorizationMethodOAuth20AuthType)
 		if !r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.AuthType.IsNull() {
-			*authType = shared.SourceSmartsheetsAuthorizationMethodOAuth20AuthTypeEnum(r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.AuthType.ValueString())
+			*authType = shared.SourceSmartsheetsAuthorizationMethodOAuth20AuthType(r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.AuthType.ValueString())
 		} else {
 			authType = nil
 		}
@@ -39,9 +40,9 @@ func (r *SourceSmartsheetsResourceModel) ToCreateSDKType() *shared.SourceSmartsh
 	var sourceSmartsheetsAuthorizationMethodAPIAccessToken *shared.SourceSmartsheetsAuthorizationMethodAPIAccessToken
 	if r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodAPIAccessToken != nil {
 		accessToken1 := r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodAPIAccessToken.AccessToken.ValueString()
-		authType1 := new(shared.SourceSmartsheetsAuthorizationMethodAPIAccessTokenAuthTypeEnum)
+		authType1 := new(shared.SourceSmartsheetsAuthorizationMethodAPIAccessTokenAuthType)
 		if !r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodAPIAccessToken.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodAPIAccessToken.AuthType.IsNull() {
-			*authType1 = shared.SourceSmartsheetsAuthorizationMethodAPIAccessTokenAuthTypeEnum(r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodAPIAccessToken.AuthType.ValueString())
+			*authType1 = shared.SourceSmartsheetsAuthorizationMethodAPIAccessTokenAuthType(r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodAPIAccessToken.AuthType.ValueString())
 		} else {
 			authType1 = nil
 		}
@@ -55,7 +56,7 @@ func (r *SourceSmartsheetsResourceModel) ToCreateSDKType() *shared.SourceSmartsh
 			SourceSmartsheetsAuthorizationMethodAPIAccessToken: sourceSmartsheetsAuthorizationMethodAPIAccessToken,
 		}
 	}
-	sourceType := shared.SourceSmartsheetsSmartsheetsEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceSmartsheetsSmartsheets(r.Configuration.SourceType.ValueString())
 	spreadsheetID := r.Configuration.SpreadsheetID.ValueString()
 	startDatetime := new(time.Time)
 	if !r.Configuration.StartDatetime.IsUnknown() && !r.Configuration.StartDatetime.IsNull() {
@@ -89,4 +90,11 @@ func (r *SourceSmartsheetsResourceModel) ToCreateSDKType() *shared.SourceSmartsh
 func (r *SourceSmartsheetsResourceModel) ToDeleteSDKType() *shared.SourceSmartsheetsCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceSmartsheetsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

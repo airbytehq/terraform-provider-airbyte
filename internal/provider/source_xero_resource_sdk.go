@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
@@ -20,7 +21,7 @@ func (r *SourceXeroResourceModel) ToCreateSDKType() *shared.SourceXeroCreateRequ
 		RefreshToken:    refreshToken,
 		TokenExpiryDate: tokenExpiryDate,
 	}
-	sourceType := shared.SourceXeroXeroEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceXeroXero(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	tenantID := r.Configuration.TenantID.ValueString()
 	configuration := shared.SourceXero{
@@ -49,4 +50,11 @@ func (r *SourceXeroResourceModel) ToCreateSDKType() *shared.SourceXeroCreateRequ
 func (r *SourceXeroResourceModel) ToDeleteSDKType() *shared.SourceXeroCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceXeroResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

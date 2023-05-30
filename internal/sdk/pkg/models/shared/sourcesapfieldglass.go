@@ -7,32 +7,32 @@ import (
 	"fmt"
 )
 
-type SourceSapFieldglassSapFieldglassEnum string
+type SourceSapFieldglassSapFieldglass string
 
 const (
-	SourceSapFieldglassSapFieldglassEnumSapFieldglass SourceSapFieldglassSapFieldglassEnum = "sap-fieldglass"
+	SourceSapFieldglassSapFieldglassSapFieldglass SourceSapFieldglassSapFieldglass = "sap-fieldglass"
 )
 
-func (e SourceSapFieldglassSapFieldglassEnum) ToPointer() *SourceSapFieldglassSapFieldglassEnum {
+func (e SourceSapFieldglassSapFieldglass) ToPointer() *SourceSapFieldglassSapFieldglass {
 	return &e
 }
 
-func (e *SourceSapFieldglassSapFieldglassEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceSapFieldglassSapFieldglass) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "sap-fieldglass":
-		*e = SourceSapFieldglassSapFieldglassEnum(v)
+		*e = SourceSapFieldglassSapFieldglass(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSapFieldglassSapFieldglassEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceSapFieldglassSapFieldglass: %v", v)
 	}
 }
 
 type SourceSapFieldglass struct {
 	// API Key
-	APIKey     string                               `json:"api_key"`
-	SourceType SourceSapFieldglassSapFieldglassEnum `json:"sourceType"`
+	APIKey     string                           `json:"api_key"`
+	SourceType SourceSapFieldglassSapFieldglass `json:"sourceType"`
 }

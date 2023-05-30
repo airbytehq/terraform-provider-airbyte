@@ -8,27 +8,27 @@ import (
 	"time"
 )
 
-type SourcePaypalTransactionPaypalTransactionEnum string
+type SourcePaypalTransactionPaypalTransaction string
 
 const (
-	SourcePaypalTransactionPaypalTransactionEnumPaypalTransaction SourcePaypalTransactionPaypalTransactionEnum = "paypal-transaction"
+	SourcePaypalTransactionPaypalTransactionPaypalTransaction SourcePaypalTransactionPaypalTransaction = "paypal-transaction"
 )
 
-func (e SourcePaypalTransactionPaypalTransactionEnum) ToPointer() *SourcePaypalTransactionPaypalTransactionEnum {
+func (e SourcePaypalTransactionPaypalTransaction) ToPointer() *SourcePaypalTransactionPaypalTransaction {
 	return &e
 }
 
-func (e *SourcePaypalTransactionPaypalTransactionEnum) UnmarshalJSON(data []byte) error {
+func (e *SourcePaypalTransactionPaypalTransaction) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "paypal-transaction":
-		*e = SourcePaypalTransactionPaypalTransactionEnum(v)
+		*e = SourcePaypalTransactionPaypalTransaction(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePaypalTransactionPaypalTransactionEnum: %v", v)
+		return fmt.Errorf("invalid value for SourcePaypalTransactionPaypalTransaction: %v", v)
 	}
 }
 
@@ -40,8 +40,8 @@ type SourcePaypalTransaction struct {
 	// Determines whether to use the sandbox or production environment.
 	IsSandbox bool `json:"is_sandbox"`
 	// The key to refresh the expired access token.
-	RefreshToken *string                                      `json:"refresh_token,omitempty"`
-	SourceType   SourcePaypalTransactionPaypalTransactionEnum `json:"sourceType"`
+	RefreshToken *string                                  `json:"refresh_token,omitempty"`
+	SourceType   SourcePaypalTransactionPaypalTransaction `json:"sourceType"`
 	// Start Date for data extraction in <a href="https://datatracker.ietf.org/doc/html/rfc3339#section-5.6">ISO format</a>. Date must be in range from 3 years till 12 hrs before present time.
 	StartDate time.Time `json:"start_date"`
 }

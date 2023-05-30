@@ -4,12 +4,13 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceFacebookPagesResourceModel) ToCreateSDKType() *shared.SourceFacebookPagesCreateRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
 	pageID := r.Configuration.PageID.ValueString()
-	sourceType := shared.SourceFacebookPagesFacebookPagesEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceFacebookPagesFacebookPages(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceFacebookPages{
 		AccessToken: accessToken,
 		PageID:      pageID,
@@ -35,4 +36,11 @@ func (r *SourceFacebookPagesResourceModel) ToCreateSDKType() *shared.SourceFaceb
 func (r *SourceFacebookPagesResourceModel) ToDeleteSDKType() *shared.SourceFacebookPagesCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceFacebookPagesResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

@@ -7,42 +7,42 @@ import (
 	"fmt"
 )
 
-// SourceAmazonSqsAWSRegionEnum - AWS Region of the SQS Queue
-type SourceAmazonSqsAWSRegionEnum string
+// SourceAmazonSqsAWSRegion - AWS Region of the SQS Queue
+type SourceAmazonSqsAWSRegion string
 
 const (
-	SourceAmazonSqsAWSRegionEnumUsEast1      SourceAmazonSqsAWSRegionEnum = "us-east-1"
-	SourceAmazonSqsAWSRegionEnumUsEast2      SourceAmazonSqsAWSRegionEnum = "us-east-2"
-	SourceAmazonSqsAWSRegionEnumUsWest1      SourceAmazonSqsAWSRegionEnum = "us-west-1"
-	SourceAmazonSqsAWSRegionEnumUsWest2      SourceAmazonSqsAWSRegionEnum = "us-west-2"
-	SourceAmazonSqsAWSRegionEnumAfSouth1     SourceAmazonSqsAWSRegionEnum = "af-south-1"
-	SourceAmazonSqsAWSRegionEnumApEast1      SourceAmazonSqsAWSRegionEnum = "ap-east-1"
-	SourceAmazonSqsAWSRegionEnumApSouth1     SourceAmazonSqsAWSRegionEnum = "ap-south-1"
-	SourceAmazonSqsAWSRegionEnumApNortheast1 SourceAmazonSqsAWSRegionEnum = "ap-northeast-1"
-	SourceAmazonSqsAWSRegionEnumApNortheast2 SourceAmazonSqsAWSRegionEnum = "ap-northeast-2"
-	SourceAmazonSqsAWSRegionEnumApNortheast3 SourceAmazonSqsAWSRegionEnum = "ap-northeast-3"
-	SourceAmazonSqsAWSRegionEnumApSoutheast1 SourceAmazonSqsAWSRegionEnum = "ap-southeast-1"
-	SourceAmazonSqsAWSRegionEnumApSoutheast2 SourceAmazonSqsAWSRegionEnum = "ap-southeast-2"
-	SourceAmazonSqsAWSRegionEnumCaCentral1   SourceAmazonSqsAWSRegionEnum = "ca-central-1"
-	SourceAmazonSqsAWSRegionEnumCnNorth1     SourceAmazonSqsAWSRegionEnum = "cn-north-1"
-	SourceAmazonSqsAWSRegionEnumCnNorthwest1 SourceAmazonSqsAWSRegionEnum = "cn-northwest-1"
-	SourceAmazonSqsAWSRegionEnumEuCentral1   SourceAmazonSqsAWSRegionEnum = "eu-central-1"
-	SourceAmazonSqsAWSRegionEnumEuNorth1     SourceAmazonSqsAWSRegionEnum = "eu-north-1"
-	SourceAmazonSqsAWSRegionEnumEuSouth1     SourceAmazonSqsAWSRegionEnum = "eu-south-1"
-	SourceAmazonSqsAWSRegionEnumEuWest1      SourceAmazonSqsAWSRegionEnum = "eu-west-1"
-	SourceAmazonSqsAWSRegionEnumEuWest2      SourceAmazonSqsAWSRegionEnum = "eu-west-2"
-	SourceAmazonSqsAWSRegionEnumEuWest3      SourceAmazonSqsAWSRegionEnum = "eu-west-3"
-	SourceAmazonSqsAWSRegionEnumSaEast1      SourceAmazonSqsAWSRegionEnum = "sa-east-1"
-	SourceAmazonSqsAWSRegionEnumMeSouth1     SourceAmazonSqsAWSRegionEnum = "me-south-1"
-	SourceAmazonSqsAWSRegionEnumUsGovEast1   SourceAmazonSqsAWSRegionEnum = "us-gov-east-1"
-	SourceAmazonSqsAWSRegionEnumUsGovWest1   SourceAmazonSqsAWSRegionEnum = "us-gov-west-1"
+	SourceAmazonSqsAWSRegionUsEast1      SourceAmazonSqsAWSRegion = "us-east-1"
+	SourceAmazonSqsAWSRegionUsEast2      SourceAmazonSqsAWSRegion = "us-east-2"
+	SourceAmazonSqsAWSRegionUsWest1      SourceAmazonSqsAWSRegion = "us-west-1"
+	SourceAmazonSqsAWSRegionUsWest2      SourceAmazonSqsAWSRegion = "us-west-2"
+	SourceAmazonSqsAWSRegionAfSouth1     SourceAmazonSqsAWSRegion = "af-south-1"
+	SourceAmazonSqsAWSRegionApEast1      SourceAmazonSqsAWSRegion = "ap-east-1"
+	SourceAmazonSqsAWSRegionApSouth1     SourceAmazonSqsAWSRegion = "ap-south-1"
+	SourceAmazonSqsAWSRegionApNortheast1 SourceAmazonSqsAWSRegion = "ap-northeast-1"
+	SourceAmazonSqsAWSRegionApNortheast2 SourceAmazonSqsAWSRegion = "ap-northeast-2"
+	SourceAmazonSqsAWSRegionApNortheast3 SourceAmazonSqsAWSRegion = "ap-northeast-3"
+	SourceAmazonSqsAWSRegionApSoutheast1 SourceAmazonSqsAWSRegion = "ap-southeast-1"
+	SourceAmazonSqsAWSRegionApSoutheast2 SourceAmazonSqsAWSRegion = "ap-southeast-2"
+	SourceAmazonSqsAWSRegionCaCentral1   SourceAmazonSqsAWSRegion = "ca-central-1"
+	SourceAmazonSqsAWSRegionCnNorth1     SourceAmazonSqsAWSRegion = "cn-north-1"
+	SourceAmazonSqsAWSRegionCnNorthwest1 SourceAmazonSqsAWSRegion = "cn-northwest-1"
+	SourceAmazonSqsAWSRegionEuCentral1   SourceAmazonSqsAWSRegion = "eu-central-1"
+	SourceAmazonSqsAWSRegionEuNorth1     SourceAmazonSqsAWSRegion = "eu-north-1"
+	SourceAmazonSqsAWSRegionEuSouth1     SourceAmazonSqsAWSRegion = "eu-south-1"
+	SourceAmazonSqsAWSRegionEuWest1      SourceAmazonSqsAWSRegion = "eu-west-1"
+	SourceAmazonSqsAWSRegionEuWest2      SourceAmazonSqsAWSRegion = "eu-west-2"
+	SourceAmazonSqsAWSRegionEuWest3      SourceAmazonSqsAWSRegion = "eu-west-3"
+	SourceAmazonSqsAWSRegionSaEast1      SourceAmazonSqsAWSRegion = "sa-east-1"
+	SourceAmazonSqsAWSRegionMeSouth1     SourceAmazonSqsAWSRegion = "me-south-1"
+	SourceAmazonSqsAWSRegionUsGovEast1   SourceAmazonSqsAWSRegion = "us-gov-east-1"
+	SourceAmazonSqsAWSRegionUsGovWest1   SourceAmazonSqsAWSRegion = "us-gov-west-1"
 )
 
-func (e SourceAmazonSqsAWSRegionEnum) ToPointer() *SourceAmazonSqsAWSRegionEnum {
+func (e SourceAmazonSqsAWSRegion) ToPointer() *SourceAmazonSqsAWSRegion {
 	return &e
 }
 
-func (e *SourceAmazonSqsAWSRegionEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceAmazonSqsAWSRegion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -97,34 +97,34 @@ func (e *SourceAmazonSqsAWSRegionEnum) UnmarshalJSON(data []byte) error {
 	case "us-gov-east-1":
 		fallthrough
 	case "us-gov-west-1":
-		*e = SourceAmazonSqsAWSRegionEnum(v)
+		*e = SourceAmazonSqsAWSRegion(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAmazonSqsAWSRegionEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceAmazonSqsAWSRegion: %v", v)
 	}
 }
 
-type SourceAmazonSqsAmazonSqsEnum string
+type SourceAmazonSqsAmazonSqs string
 
 const (
-	SourceAmazonSqsAmazonSqsEnumAmazonSqs SourceAmazonSqsAmazonSqsEnum = "amazon-sqs"
+	SourceAmazonSqsAmazonSqsAmazonSqs SourceAmazonSqsAmazonSqs = "amazon-sqs"
 )
 
-func (e SourceAmazonSqsAmazonSqsEnum) ToPointer() *SourceAmazonSqsAmazonSqsEnum {
+func (e SourceAmazonSqsAmazonSqs) ToPointer() *SourceAmazonSqsAmazonSqs {
 	return &e
 }
 
-func (e *SourceAmazonSqsAmazonSqsEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceAmazonSqsAmazonSqs) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "amazon-sqs":
-		*e = SourceAmazonSqsAmazonSqsEnum(v)
+		*e = SourceAmazonSqsAmazonSqs(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAmazonSqsAmazonSqsEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceAmazonSqsAmazonSqs: %v", v)
 	}
 }
 
@@ -142,10 +142,10 @@ type SourceAmazonSqs struct {
 	// URL of the SQS Queue
 	QueueURL string `json:"queue_url"`
 	// AWS Region of the SQS Queue
-	Region SourceAmazonSqsAWSRegionEnum `json:"region"`
+	Region SourceAmazonSqsAWSRegion `json:"region"`
 	// The Secret Key of the AWS IAM Role to use for pulling messages
-	SecretKey  *string                      `json:"secret_key,omitempty"`
-	SourceType SourceAmazonSqsAmazonSqsEnum `json:"sourceType"`
+	SecretKey  *string                  `json:"secret_key,omitempty"`
+	SourceType SourceAmazonSqsAmazonSqs `json:"sourceType"`
 	// Modify the Visibility Timeout of the individual message from the Queue's default (seconds).
 	VisibilityTimeout *int64 `json:"visibility_timeout,omitempty"`
 }

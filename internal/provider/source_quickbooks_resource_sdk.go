@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
@@ -12,9 +13,9 @@ func (r *SourceQuickbooksResourceModel) ToCreateSDKType() *shared.SourceQuickboo
 	var sourceQuickbooksAuthorizationMethodOAuth20 *shared.SourceQuickbooksAuthorizationMethodOAuth20
 	if r.Configuration.Credentials.SourceQuickbooksAuthorizationMethodOAuth20 != nil {
 		accessToken := r.Configuration.Credentials.SourceQuickbooksAuthorizationMethodOAuth20.AccessToken.ValueString()
-		authType := new(shared.SourceQuickbooksAuthorizationMethodOAuth20AuthTypeEnum)
+		authType := new(shared.SourceQuickbooksAuthorizationMethodOAuth20AuthType)
 		if !r.Configuration.Credentials.SourceQuickbooksAuthorizationMethodOAuth20.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceQuickbooksAuthorizationMethodOAuth20.AuthType.IsNull() {
-			*authType = shared.SourceQuickbooksAuthorizationMethodOAuth20AuthTypeEnum(r.Configuration.Credentials.SourceQuickbooksAuthorizationMethodOAuth20.AuthType.ValueString())
+			*authType = shared.SourceQuickbooksAuthorizationMethodOAuth20AuthType(r.Configuration.Credentials.SourceQuickbooksAuthorizationMethodOAuth20.AuthType.ValueString())
 		} else {
 			authType = nil
 		}
@@ -39,7 +40,7 @@ func (r *SourceQuickbooksResourceModel) ToCreateSDKType() *shared.SourceQuickboo
 		}
 	}
 	sandbox := r.Configuration.Sandbox.ValueBool()
-	sourceType := shared.SourceQuickbooksQuickbooksEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceQuickbooksQuickbooks(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceQuickbooks{
 		Credentials: credentials,
@@ -67,4 +68,11 @@ func (r *SourceQuickbooksResourceModel) ToCreateSDKType() *shared.SourceQuickboo
 func (r *SourceQuickbooksResourceModel) ToDeleteSDKType() *shared.SourceQuickbooksCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceQuickbooksResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

@@ -8,27 +8,27 @@ import (
 	"fmt"
 )
 
-type SourcePolygonStockAPIPolygonStockAPIEnum string
+type SourcePolygonStockAPIPolygonStockAPI string
 
 const (
-	SourcePolygonStockAPIPolygonStockAPIEnumPolygonStockAPI SourcePolygonStockAPIPolygonStockAPIEnum = "polygon-stock-api"
+	SourcePolygonStockAPIPolygonStockAPIPolygonStockAPI SourcePolygonStockAPIPolygonStockAPI = "polygon-stock-api"
 )
 
-func (e SourcePolygonStockAPIPolygonStockAPIEnum) ToPointer() *SourcePolygonStockAPIPolygonStockAPIEnum {
+func (e SourcePolygonStockAPIPolygonStockAPI) ToPointer() *SourcePolygonStockAPIPolygonStockAPI {
 	return &e
 }
 
-func (e *SourcePolygonStockAPIPolygonStockAPIEnum) UnmarshalJSON(data []byte) error {
+func (e *SourcePolygonStockAPIPolygonStockAPI) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "polygon-stock-api":
-		*e = SourcePolygonStockAPIPolygonStockAPIEnum(v)
+		*e = SourcePolygonStockAPIPolygonStockAPI(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePolygonStockAPIPolygonStockAPIEnum: %v", v)
+		return fmt.Errorf("invalid value for SourcePolygonStockAPIPolygonStockAPI: %v", v)
 	}
 }
 
@@ -44,8 +44,8 @@ type SourcePolygonStockAPI struct {
 	// The size of the timespan multiplier.
 	Multiplier int64 `json:"multiplier"`
 	// Sort the results by timestamp. asc will return results in ascending order (oldest at the top), desc will return results in descending order (newest at the top).
-	Sort       *string                                  `json:"sort,omitempty"`
-	SourceType SourcePolygonStockAPIPolygonStockAPIEnum `json:"sourceType"`
+	Sort       *string                              `json:"sort,omitempty"`
+	SourceType SourcePolygonStockAPIPolygonStockAPI `json:"sourceType"`
 	// The beginning date for the aggregate window.
 	StartDate types.Date `json:"start_date"`
 	// The exchange symbol that this item is traded under.

@@ -7,34 +7,34 @@ import (
 	"fmt"
 )
 
-type DestinationFirestoreFirestoreEnum string
+type DestinationFirestoreFirestore string
 
 const (
-	DestinationFirestoreFirestoreEnumFirestore DestinationFirestoreFirestoreEnum = "firestore"
+	DestinationFirestoreFirestoreFirestore DestinationFirestoreFirestore = "firestore"
 )
 
-func (e DestinationFirestoreFirestoreEnum) ToPointer() *DestinationFirestoreFirestoreEnum {
+func (e DestinationFirestoreFirestore) ToPointer() *DestinationFirestoreFirestore {
 	return &e
 }
 
-func (e *DestinationFirestoreFirestoreEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationFirestoreFirestore) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "firestore":
-		*e = DestinationFirestoreFirestoreEnum(v)
+		*e = DestinationFirestoreFirestore(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationFirestoreFirestoreEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationFirestoreFirestore: %v", v)
 	}
 }
 
 type DestinationFirestore struct {
 	// The contents of the JSON service account key. Check out the <a href="https://docs.airbyte.io/integrations/destinations/firestore">docs</a> if you need help generating this key. Default credentials will be used if this field is left empty.
-	CredentialsJSON *string                           `json:"credentials_json,omitempty"`
-	DestinationType DestinationFirestoreFirestoreEnum `json:"destinationType"`
+	CredentialsJSON *string                       `json:"credentials_json,omitempty"`
+	DestinationType DestinationFirestoreFirestore `json:"destinationType"`
 	// The GCP project ID for the project containing the target BigQuery dataset.
 	ProjectID string `json:"project_id"`
 }

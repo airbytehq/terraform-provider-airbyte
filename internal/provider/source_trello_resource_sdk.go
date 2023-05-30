@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
@@ -13,7 +14,7 @@ func (r *SourceTrelloResourceModel) ToCreateSDKType() *shared.SourceTrelloCreate
 		boardIds = append(boardIds, boardIdsItem.ValueString())
 	}
 	key := r.Configuration.Key.ValueString()
-	sourceType := shared.SourceTrelloTrelloEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceTrelloTrello(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	token := r.Configuration.Token.ValueString()
 	configuration := shared.SourceTrello{
@@ -43,4 +44,11 @@ func (r *SourceTrelloResourceModel) ToCreateSDKType() *shared.SourceTrelloCreate
 func (r *SourceTrelloResourceModel) ToDeleteSDKType() *shared.SourceTrelloCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceTrelloResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

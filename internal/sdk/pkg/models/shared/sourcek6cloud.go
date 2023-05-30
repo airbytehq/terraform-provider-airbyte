@@ -7,32 +7,32 @@ import (
 	"fmt"
 )
 
-type SourceK6CloudK6CloudEnum string
+type SourceK6CloudK6Cloud string
 
 const (
-	SourceK6CloudK6CloudEnumK6Cloud SourceK6CloudK6CloudEnum = "k6-cloud"
+	SourceK6CloudK6CloudK6Cloud SourceK6CloudK6Cloud = "k6-cloud"
 )
 
-func (e SourceK6CloudK6CloudEnum) ToPointer() *SourceK6CloudK6CloudEnum {
+func (e SourceK6CloudK6Cloud) ToPointer() *SourceK6CloudK6Cloud {
 	return &e
 }
 
-func (e *SourceK6CloudK6CloudEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceK6CloudK6Cloud) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "k6-cloud":
-		*e = SourceK6CloudK6CloudEnum(v)
+		*e = SourceK6CloudK6Cloud(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceK6CloudK6CloudEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceK6CloudK6Cloud: %v", v)
 	}
 }
 
 type SourceK6Cloud struct {
 	// Your API Token. See <a href="https://k6.io/docs/cloud/integrations/token/">here</a>. The key is case sensitive.
-	APIToken   string                   `json:"api_token"`
-	SourceType SourceK6CloudK6CloudEnum `json:"sourceType"`
+	APIToken   string               `json:"api_token"`
+	SourceType SourceK6CloudK6Cloud `json:"sourceType"`
 }

@@ -7,32 +7,32 @@ import (
 	"fmt"
 )
 
-type SourceDockerhubDockerhubEnum string
+type SourceDockerhubDockerhub string
 
 const (
-	SourceDockerhubDockerhubEnumDockerhub SourceDockerhubDockerhubEnum = "dockerhub"
+	SourceDockerhubDockerhubDockerhub SourceDockerhubDockerhub = "dockerhub"
 )
 
-func (e SourceDockerhubDockerhubEnum) ToPointer() *SourceDockerhubDockerhubEnum {
+func (e SourceDockerhubDockerhub) ToPointer() *SourceDockerhubDockerhub {
 	return &e
 }
 
-func (e *SourceDockerhubDockerhubEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceDockerhubDockerhub) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "dockerhub":
-		*e = SourceDockerhubDockerhubEnum(v)
+		*e = SourceDockerhubDockerhub(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceDockerhubDockerhubEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceDockerhubDockerhub: %v", v)
 	}
 }
 
 type SourceDockerhub struct {
 	// Username of DockerHub person or organization (for https://hub.docker.com/v2/repositories/USERNAME/ API call)
-	DockerUsername string                       `json:"docker_username"`
-	SourceType     SourceDockerhubDockerhubEnum `json:"sourceType"`
+	DockerUsername string                   `json:"docker_username"`
+	SourceType     SourceDockerhubDockerhub `json:"sourceType"`
 }

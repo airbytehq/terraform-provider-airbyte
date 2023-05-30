@@ -5,6 +5,7 @@ package provider
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	customTypes "airbyte/internal/sdk/pkg/types"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceExchangeRatesResourceModel) ToCreateSDKType() *shared.SourceExchangeRatesCreateRequest {
@@ -21,8 +22,8 @@ func (r *SourceExchangeRatesResourceModel) ToCreateSDKType() *shared.SourceExcha
 	} else {
 		ignoreWeekends = nil
 	}
-	sourceType := shared.SourceExchangeRatesExchangeRatesEnum(r.Configuration.SourceType.ValueString())
-	startDate, _ := customTypes.NewDate(r.Configuration.StartDate.ValueString())
+	sourceType := shared.SourceExchangeRatesExchangeRates(r.Configuration.SourceType.ValueString())
+	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceExchangeRates{
 		AccessKey:      accessKey,
 		Base:           base,
@@ -50,4 +51,11 @@ func (r *SourceExchangeRatesResourceModel) ToCreateSDKType() *shared.SourceExcha
 func (r *SourceExchangeRatesResourceModel) ToDeleteSDKType() *shared.SourceExchangeRatesCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceExchangeRatesResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

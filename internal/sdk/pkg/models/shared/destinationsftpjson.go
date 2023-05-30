@@ -7,32 +7,32 @@ import (
 	"fmt"
 )
 
-type DestinationSftpJSONSftpJSONEnum string
+type DestinationSftpJSONSftpJSON string
 
 const (
-	DestinationSftpJSONSftpJSONEnumSftpJSON DestinationSftpJSONSftpJSONEnum = "sftp-json"
+	DestinationSftpJSONSftpJSONSftpJSON DestinationSftpJSONSftpJSON = "sftp-json"
 )
 
-func (e DestinationSftpJSONSftpJSONEnum) ToPointer() *DestinationSftpJSONSftpJSONEnum {
+func (e DestinationSftpJSONSftpJSON) ToPointer() *DestinationSftpJSONSftpJSON {
 	return &e
 }
 
-func (e *DestinationSftpJSONSftpJSONEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationSftpJSONSftpJSON) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "sftp-json":
-		*e = DestinationSftpJSONSftpJSONEnum(v)
+		*e = DestinationSftpJSONSftpJSON(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationSftpJSONSftpJSONEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationSftpJSONSftpJSON: %v", v)
 	}
 }
 
 type DestinationSftpJSON struct {
-	DestinationType DestinationSftpJSONSftpJSONEnum `json:"destinationType"`
+	DestinationType DestinationSftpJSONSftpJSON `json:"destinationType"`
 	// Path to the directory where json files will be written.
 	DestinationPath string `json:"destination_path"`
 	// Hostname of the SFTP server.

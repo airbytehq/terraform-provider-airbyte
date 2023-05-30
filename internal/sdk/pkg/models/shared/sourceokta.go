@@ -9,62 +9,62 @@ import (
 	"fmt"
 )
 
-type SourceOktaAuthorizationMethodAPITokenAuthTypeEnum string
+type SourceOktaAuthorizationMethodAPITokenAuthType string
 
 const (
-	SourceOktaAuthorizationMethodAPITokenAuthTypeEnumAPIToken SourceOktaAuthorizationMethodAPITokenAuthTypeEnum = "api_token"
+	SourceOktaAuthorizationMethodAPITokenAuthTypeAPIToken SourceOktaAuthorizationMethodAPITokenAuthType = "api_token"
 )
 
-func (e SourceOktaAuthorizationMethodAPITokenAuthTypeEnum) ToPointer() *SourceOktaAuthorizationMethodAPITokenAuthTypeEnum {
+func (e SourceOktaAuthorizationMethodAPITokenAuthType) ToPointer() *SourceOktaAuthorizationMethodAPITokenAuthType {
 	return &e
 }
 
-func (e *SourceOktaAuthorizationMethodAPITokenAuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceOktaAuthorizationMethodAPITokenAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "api_token":
-		*e = SourceOktaAuthorizationMethodAPITokenAuthTypeEnum(v)
+		*e = SourceOktaAuthorizationMethodAPITokenAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceOktaAuthorizationMethodAPITokenAuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceOktaAuthorizationMethodAPITokenAuthType: %v", v)
 	}
 }
 
 type SourceOktaAuthorizationMethodAPIToken struct {
 	// An Okta token. See the <a href="https://docs.airbyte.com/integrations/sources/okta">docs</a> for instructions on how to generate it.
-	APIToken string                                            `json:"api_token"`
-	AuthType SourceOktaAuthorizationMethodAPITokenAuthTypeEnum `json:"auth_type"`
+	APIToken string                                        `json:"api_token"`
+	AuthType SourceOktaAuthorizationMethodAPITokenAuthType `json:"auth_type"`
 }
 
-type SourceOktaAuthorizationMethodOAuth20AuthTypeEnum string
+type SourceOktaAuthorizationMethodOAuth20AuthType string
 
 const (
-	SourceOktaAuthorizationMethodOAuth20AuthTypeEnumOauth20 SourceOktaAuthorizationMethodOAuth20AuthTypeEnum = "oauth2.0"
+	SourceOktaAuthorizationMethodOAuth20AuthTypeOauth20 SourceOktaAuthorizationMethodOAuth20AuthType = "oauth2.0"
 )
 
-func (e SourceOktaAuthorizationMethodOAuth20AuthTypeEnum) ToPointer() *SourceOktaAuthorizationMethodOAuth20AuthTypeEnum {
+func (e SourceOktaAuthorizationMethodOAuth20AuthType) ToPointer() *SourceOktaAuthorizationMethodOAuth20AuthType {
 	return &e
 }
 
-func (e *SourceOktaAuthorizationMethodOAuth20AuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceOktaAuthorizationMethodOAuth20AuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "oauth2.0":
-		*e = SourceOktaAuthorizationMethodOAuth20AuthTypeEnum(v)
+		*e = SourceOktaAuthorizationMethodOAuth20AuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceOktaAuthorizationMethodOAuth20AuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceOktaAuthorizationMethodOAuth20AuthType: %v", v)
 	}
 }
 
 type SourceOktaAuthorizationMethodOAuth20 struct {
-	AuthType SourceOktaAuthorizationMethodOAuth20AuthTypeEnum `json:"auth_type"`
+	AuthType SourceOktaAuthorizationMethodOAuth20AuthType `json:"auth_type"`
 	// The Client ID of your OAuth application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your OAuth application.
@@ -141,35 +141,35 @@ func (u SourceOktaAuthorizationMethod) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-type SourceOktaOktaEnum string
+type SourceOktaOkta string
 
 const (
-	SourceOktaOktaEnumOkta SourceOktaOktaEnum = "okta"
+	SourceOktaOktaOkta SourceOktaOkta = "okta"
 )
 
-func (e SourceOktaOktaEnum) ToPointer() *SourceOktaOktaEnum {
+func (e SourceOktaOkta) ToPointer() *SourceOktaOkta {
 	return &e
 }
 
-func (e *SourceOktaOktaEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceOktaOkta) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "okta":
-		*e = SourceOktaOktaEnum(v)
+		*e = SourceOktaOkta(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceOktaOktaEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceOktaOkta: %v", v)
 	}
 }
 
 type SourceOkta struct {
 	Credentials *SourceOktaAuthorizationMethod `json:"credentials,omitempty"`
 	// The Okta domain. See the <a href="https://docs.airbyte.com/integrations/sources/okta">docs</a> for instructions on how to find it.
-	Domain     *string            `json:"domain,omitempty"`
-	SourceType SourceOktaOktaEnum `json:"sourceType"`
+	Domain     *string        `json:"domain,omitempty"`
+	SourceType SourceOktaOkta `json:"sourceType"`
 	// UTC date and time in the format YYYY-MM-DDTHH:MM:SSZ. Any data before this date will not be replicated.
 	StartDate *string `json:"start_date,omitempty"`
 }

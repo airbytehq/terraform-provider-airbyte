@@ -9,51 +9,51 @@ import (
 	"fmt"
 )
 
-type DestinationFireboltFireboltEnum string
+type DestinationFireboltFirebolt string
 
 const (
-	DestinationFireboltFireboltEnumFirebolt DestinationFireboltFireboltEnum = "firebolt"
+	DestinationFireboltFireboltFirebolt DestinationFireboltFirebolt = "firebolt"
 )
 
-func (e DestinationFireboltFireboltEnum) ToPointer() *DestinationFireboltFireboltEnum {
+func (e DestinationFireboltFirebolt) ToPointer() *DestinationFireboltFirebolt {
 	return &e
 }
 
-func (e *DestinationFireboltFireboltEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationFireboltFirebolt) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "firebolt":
-		*e = DestinationFireboltFireboltEnum(v)
+		*e = DestinationFireboltFirebolt(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationFireboltFireboltEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationFireboltFirebolt: %v", v)
 	}
 }
 
-type DestinationFireboltLoadingMethodExternalTableViaS3MethodEnum string
+type DestinationFireboltLoadingMethodExternalTableViaS3Method string
 
 const (
-	DestinationFireboltLoadingMethodExternalTableViaS3MethodEnumS3 DestinationFireboltLoadingMethodExternalTableViaS3MethodEnum = "S3"
+	DestinationFireboltLoadingMethodExternalTableViaS3MethodS3 DestinationFireboltLoadingMethodExternalTableViaS3Method = "S3"
 )
 
-func (e DestinationFireboltLoadingMethodExternalTableViaS3MethodEnum) ToPointer() *DestinationFireboltLoadingMethodExternalTableViaS3MethodEnum {
+func (e DestinationFireboltLoadingMethodExternalTableViaS3Method) ToPointer() *DestinationFireboltLoadingMethodExternalTableViaS3Method {
 	return &e
 }
 
-func (e *DestinationFireboltLoadingMethodExternalTableViaS3MethodEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationFireboltLoadingMethodExternalTableViaS3Method) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "S3":
-		*e = DestinationFireboltLoadingMethodExternalTableViaS3MethodEnum(v)
+		*e = DestinationFireboltLoadingMethodExternalTableViaS3Method(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationFireboltLoadingMethodExternalTableViaS3MethodEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationFireboltLoadingMethodExternalTableViaS3Method: %v", v)
 	}
 }
 
@@ -62,41 +62,41 @@ type DestinationFireboltLoadingMethodExternalTableViaS3 struct {
 	// AWS access key granting read and write access to S3.
 	AwsKeyID string `json:"aws_key_id"`
 	// Corresponding secret part of the AWS Key
-	AwsKeySecret string                                                       `json:"aws_key_secret"`
-	Method       DestinationFireboltLoadingMethodExternalTableViaS3MethodEnum `json:"method"`
+	AwsKeySecret string                                                   `json:"aws_key_secret"`
+	Method       DestinationFireboltLoadingMethodExternalTableViaS3Method `json:"method"`
 	// The name of the S3 bucket.
 	S3Bucket string `json:"s3_bucket"`
 	// Region name of the S3 bucket.
 	S3Region string `json:"s3_region"`
 }
 
-type DestinationFireboltLoadingMethodSQLInsertsMethodEnum string
+type DestinationFireboltLoadingMethodSQLInsertsMethod string
 
 const (
-	DestinationFireboltLoadingMethodSQLInsertsMethodEnumSQL DestinationFireboltLoadingMethodSQLInsertsMethodEnum = "SQL"
+	DestinationFireboltLoadingMethodSQLInsertsMethodSQL DestinationFireboltLoadingMethodSQLInsertsMethod = "SQL"
 )
 
-func (e DestinationFireboltLoadingMethodSQLInsertsMethodEnum) ToPointer() *DestinationFireboltLoadingMethodSQLInsertsMethodEnum {
+func (e DestinationFireboltLoadingMethodSQLInsertsMethod) ToPointer() *DestinationFireboltLoadingMethodSQLInsertsMethod {
 	return &e
 }
 
-func (e *DestinationFireboltLoadingMethodSQLInsertsMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationFireboltLoadingMethodSQLInsertsMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SQL":
-		*e = DestinationFireboltLoadingMethodSQLInsertsMethodEnum(v)
+		*e = DestinationFireboltLoadingMethodSQLInsertsMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationFireboltLoadingMethodSQLInsertsMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationFireboltLoadingMethodSQLInsertsMethod: %v", v)
 	}
 }
 
 // DestinationFireboltLoadingMethodSQLInserts - Loading method used to select the way data will be uploaded to Firebolt
 type DestinationFireboltLoadingMethodSQLInserts struct {
-	Method DestinationFireboltLoadingMethodSQLInsertsMethodEnum `json:"method"`
+	Method DestinationFireboltLoadingMethodSQLInsertsMethod `json:"method"`
 }
 
 type DestinationFireboltLoadingMethodType string
@@ -171,8 +171,8 @@ type DestinationFirebolt struct {
 	// Firebolt account to login.
 	Account *string `json:"account,omitempty"`
 	// The database to connect to.
-	Database        string                          `json:"database"`
-	DestinationType DestinationFireboltFireboltEnum `json:"destinationType"`
+	Database        string                      `json:"database"`
+	DestinationType DestinationFireboltFirebolt `json:"destinationType"`
 	// Engine name or url to connect to.
 	Engine *string `json:"engine,omitempty"`
 	// The host name of your Firebolt database.

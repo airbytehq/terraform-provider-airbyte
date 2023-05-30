@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationSnowflakeResourceModel) ToCreateSDKType() *shared.DestinationSnowflakeCreateRequest {
@@ -11,9 +12,9 @@ func (r *DestinationSnowflakeResourceModel) ToCreateSDKType() *shared.Destinatio
 	var destinationSnowflakeAuthorizationMethodOAuth20 *shared.DestinationSnowflakeAuthorizationMethodOAuth20
 	if r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20 != nil {
 		accessToken := r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.AccessToken.ValueString()
-		authType := new(shared.DestinationSnowflakeAuthorizationMethodOAuth20AuthTypeEnum)
+		authType := new(shared.DestinationSnowflakeAuthorizationMethodOAuth20AuthType)
 		if !r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.AuthType.IsUnknown() && !r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.AuthType.IsNull() {
-			*authType = shared.DestinationSnowflakeAuthorizationMethodOAuth20AuthTypeEnum(r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.AuthType.ValueString())
+			*authType = shared.DestinationSnowflakeAuthorizationMethodOAuth20AuthType(r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.AuthType.ValueString())
 		} else {
 			authType = nil
 		}
@@ -45,9 +46,9 @@ func (r *DestinationSnowflakeResourceModel) ToCreateSDKType() *shared.Destinatio
 	}
 	var destinationSnowflakeAuthorizationMethodKeyPairAuthentication *shared.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication
 	if r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication != nil {
-		authType1 := new(shared.DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthTypeEnum)
+		authType1 := new(shared.DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthType)
 		if !r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication.AuthType.IsUnknown() && !r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication.AuthType.IsNull() {
-			*authType1 = shared.DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthTypeEnum(r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication.AuthType.ValueString())
+			*authType1 = shared.DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthType(r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication.AuthType.ValueString())
 		} else {
 			authType1 = nil
 		}
@@ -71,9 +72,9 @@ func (r *DestinationSnowflakeResourceModel) ToCreateSDKType() *shared.Destinatio
 	}
 	var destinationSnowflakeAuthorizationMethodUsernameAndPassword *shared.DestinationSnowflakeAuthorizationMethodUsernameAndPassword
 	if r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodUsernameAndPassword != nil {
-		authType2 := new(shared.DestinationSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeEnum)
+		authType2 := new(shared.DestinationSnowflakeAuthorizationMethodUsernameAndPasswordAuthType)
 		if !r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodUsernameAndPassword.AuthType.IsUnknown() && !r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodUsernameAndPassword.AuthType.IsNull() {
-			*authType2 = shared.DestinationSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeEnum(r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodUsernameAndPassword.AuthType.ValueString())
+			*authType2 = shared.DestinationSnowflakeAuthorizationMethodUsernameAndPasswordAuthType(r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodUsernameAndPassword.AuthType.ValueString())
 		} else {
 			authType2 = nil
 		}
@@ -89,7 +90,7 @@ func (r *DestinationSnowflakeResourceModel) ToCreateSDKType() *shared.Destinatio
 		}
 	}
 	database := r.Configuration.Database.ValueString()
-	destinationType := shared.DestinationSnowflakeSnowflakeEnum(r.Configuration.DestinationType.ValueString())
+	destinationType := shared.DestinationSnowflakeSnowflake(r.Configuration.DestinationType.ValueString())
 	fileBufferCount := new(int64)
 	if !r.Configuration.FileBufferCount.IsUnknown() && !r.Configuration.FileBufferCount.IsNull() {
 		*fileBufferCount = r.Configuration.FileBufferCount.ValueInt64()
@@ -106,7 +107,7 @@ func (r *DestinationSnowflakeResourceModel) ToCreateSDKType() *shared.Destinatio
 	var loadingMethod *shared.DestinationSnowflakeDataStagingMethod
 	var destinationSnowflakeDataStagingMethodSelectAnotherOption *shared.DestinationSnowflakeDataStagingMethodSelectAnotherOption
 	if r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodSelectAnotherOption != nil {
-		method := shared.DestinationSnowflakeDataStagingMethodSelectAnotherOptionMethodEnum(r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodSelectAnotherOption.Method.ValueString())
+		method := shared.DestinationSnowflakeDataStagingMethodSelectAnotherOptionMethod(r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodSelectAnotherOption.Method.ValueString())
 		destinationSnowflakeDataStagingMethodSelectAnotherOption = &shared.DestinationSnowflakeDataStagingMethodSelectAnotherOption{
 			Method: method,
 		}
@@ -118,7 +119,7 @@ func (r *DestinationSnowflakeResourceModel) ToCreateSDKType() *shared.Destinatio
 	}
 	var destinationSnowflakeDataStagingMethodRecommendedInternalStaging *shared.DestinationSnowflakeDataStagingMethodRecommendedInternalStaging
 	if r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodRecommendedInternalStaging != nil {
-		method1 := shared.DestinationSnowflakeDataStagingMethodRecommendedInternalStagingMethodEnum(r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodRecommendedInternalStaging.Method.ValueString())
+		method1 := shared.DestinationSnowflakeDataStagingMethodRecommendedInternalStagingMethod(r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodRecommendedInternalStaging.Method.ValueString())
 		destinationSnowflakeDataStagingMethodRecommendedInternalStaging = &shared.DestinationSnowflakeDataStagingMethodRecommendedInternalStaging{
 			Method: method1,
 		}
@@ -134,7 +135,7 @@ func (r *DestinationSnowflakeResourceModel) ToCreateSDKType() *shared.Destinatio
 		var encryption *shared.DestinationSnowflakeDataStagingMethodAWSS3StagingEncryption
 		var destinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryption *shared.DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryption
 		if r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging.Encryption.DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryption != nil {
-			encryptionType := shared.DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryptionEncryptionTypeEnum(r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging.Encryption.DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryption.EncryptionType.ValueString())
+			encryptionType := shared.DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryptionEncryptionType(r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging.Encryption.DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryption.EncryptionType.ValueString())
 			destinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryption = &shared.DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryption{
 				EncryptionType: encryptionType,
 			}
@@ -146,7 +147,7 @@ func (r *DestinationSnowflakeResourceModel) ToCreateSDKType() *shared.Destinatio
 		}
 		var destinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryption *shared.DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryption
 		if r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging.Encryption.DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryption != nil {
-			encryptionType1 := shared.DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionTypeEnum(r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging.Encryption.DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryption.EncryptionType.ValueString())
+			encryptionType1 := shared.DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionType(r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging.Encryption.DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryption.EncryptionType.ValueString())
 			keyEncryptingKey := new(string)
 			if !r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging.Encryption.DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryption.KeyEncryptingKey.IsUnknown() && !r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging.Encryption.DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryption.KeyEncryptingKey.IsNull() {
 				*keyEncryptingKey = r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging.Encryption.DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryption.KeyEncryptingKey.ValueString()
@@ -169,7 +170,7 @@ func (r *DestinationSnowflakeResourceModel) ToCreateSDKType() *shared.Destinatio
 		} else {
 			fileNamePattern = nil
 		}
-		method2 := shared.DestinationSnowflakeDataStagingMethodAWSS3StagingMethodEnum(r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging.Method.ValueString())
+		method2 := shared.DestinationSnowflakeDataStagingMethodAWSS3StagingMethod(r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging.Method.ValueString())
 		purgeStagingData := new(bool)
 		if !r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging.PurgeStagingData.IsUnknown() && !r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging.PurgeStagingData.IsNull() {
 			*purgeStagingData = r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging.PurgeStagingData.ValueBool()
@@ -177,9 +178,9 @@ func (r *DestinationSnowflakeResourceModel) ToCreateSDKType() *shared.Destinatio
 			purgeStagingData = nil
 		}
 		s3BucketName := r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging.S3BucketName.ValueString()
-		s3BucketRegion := new(shared.DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum)
+		s3BucketRegion := new(shared.DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegion)
 		if !r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging.S3BucketRegion.IsUnknown() && !r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging.S3BucketRegion.IsNull() {
-			*s3BucketRegion = shared.DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegionEnum(r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging.S3BucketRegion.ValueString())
+			*s3BucketRegion = shared.DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegion(r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging.S3BucketRegion.ValueString())
 		} else {
 			s3BucketRegion = nil
 		}
@@ -204,7 +205,7 @@ func (r *DestinationSnowflakeResourceModel) ToCreateSDKType() *shared.Destinatio
 	if r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodGoogleCloudStorageStaging != nil {
 		bucketName := r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodGoogleCloudStorageStaging.BucketName.ValueString()
 		credentialsJSON := r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodGoogleCloudStorageStaging.CredentialsJSON.ValueString()
-		method3 := shared.DestinationSnowflakeDataStagingMethodGoogleCloudStorageStagingMethodEnum(r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodGoogleCloudStorageStaging.Method.ValueString())
+		method3 := shared.DestinationSnowflakeDataStagingMethodGoogleCloudStorageStagingMethod(r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodGoogleCloudStorageStaging.Method.ValueString())
 		projectID := r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodGoogleCloudStorageStaging.ProjectID.ValueString()
 		destinationSnowflakeDataStagingMethodGoogleCloudStorageStaging = &shared.DestinationSnowflakeDataStagingMethodGoogleCloudStorageStaging{
 			BucketName:      bucketName,
@@ -248,4 +249,11 @@ func (r *DestinationSnowflakeResourceModel) ToCreateSDKType() *shared.Destinatio
 func (r *DestinationSnowflakeResourceModel) ToDeleteSDKType() *shared.DestinationSnowflakeCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *DestinationSnowflakeResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

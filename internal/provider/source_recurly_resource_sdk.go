@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceRecurlyResourceModel) ToCreateSDKType() *shared.SourceRecurlyCreateRequest {
@@ -20,7 +21,7 @@ func (r *SourceRecurlyResourceModel) ToCreateSDKType() *shared.SourceRecurlyCrea
 	} else {
 		endTime = nil
 	}
-	sourceType := shared.SourceRecurlyRecurlyEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceRecurlyRecurly(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceRecurly{
 		APIKey:     apiKey,
 		BeginTime:  beginTime,
@@ -47,4 +48,11 @@ func (r *SourceRecurlyResourceModel) ToCreateSDKType() *shared.SourceRecurlyCrea
 func (r *SourceRecurlyResourceModel) ToDeleteSDKType() *shared.SourceRecurlyCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceRecurlyResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

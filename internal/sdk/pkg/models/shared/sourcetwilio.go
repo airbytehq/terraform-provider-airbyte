@@ -8,27 +8,27 @@ import (
 	"time"
 )
 
-type SourceTwilioTwilioEnum string
+type SourceTwilioTwilio string
 
 const (
-	SourceTwilioTwilioEnumTwilio SourceTwilioTwilioEnum = "twilio"
+	SourceTwilioTwilioTwilio SourceTwilioTwilio = "twilio"
 )
 
-func (e SourceTwilioTwilioEnum) ToPointer() *SourceTwilioTwilioEnum {
+func (e SourceTwilioTwilio) ToPointer() *SourceTwilioTwilio {
 	return &e
 }
 
-func (e *SourceTwilioTwilioEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceTwilioTwilio) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "twilio":
-		*e = SourceTwilioTwilioEnum(v)
+		*e = SourceTwilioTwilio(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceTwilioTwilioEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceTwilioTwilio: %v", v)
 	}
 }
 
@@ -38,8 +38,8 @@ type SourceTwilio struct {
 	// Twilio Auth Token.
 	AuthToken string `json:"auth_token"`
 	// How far into the past to look for records. (in minutes)
-	LookbackWindow *int64                 `json:"lookback_window,omitempty"`
-	SourceType     SourceTwilioTwilioEnum `json:"sourceType"`
+	LookbackWindow *int64             `json:"lookback_window,omitempty"`
+	SourceType     SourceTwilioTwilio `json:"sourceType"`
 	// UTC date and time in the format 2020-10-01T00:00:00Z. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
 }

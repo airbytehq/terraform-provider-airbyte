@@ -9,28 +9,28 @@ import (
 	"fmt"
 )
 
-// SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitleEnum - OAuth Credentials
-type SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitleEnum string
+// SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitle - OAuth Credentials
+type SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitle string
 
 const (
-	SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitleEnumOAuthCredentials SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitleEnum = "OAuth Credentials"
+	SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitleOAuthCredentials SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitle = "OAuth Credentials"
 )
 
-func (e SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitleEnum) ToPointer() *SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitleEnum {
+func (e SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitle) ToPointer() *SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitle {
 	return &e
 }
 
-func (e *SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitleEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitle) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "OAuth Credentials":
-		*e = SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitleEnum(v)
+		*e = SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitle(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitleEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitle: %v", v)
 	}
 }
 
@@ -39,39 +39,39 @@ type SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth struct {
 	ClientID     string `json:"client_id"`
 	ClientSecret string `json:"client_secret"`
 	// OAuth Credentials
-	OptionTitle  *SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitleEnum `json:"option_title,omitempty"`
-	RefreshToken string                                                                           `json:"refresh_token"`
+	OptionTitle  *SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauthCredentialsTitle `json:"option_title,omitempty"`
+	RefreshToken string                                                                       `json:"refresh_token"`
 }
 
-// SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitleEnum - PAT Credentials
-type SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitleEnum string
+// SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitle - PAT Credentials
+type SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitle string
 
 const (
-	SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitleEnumPatCredentials SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitleEnum = "PAT Credentials"
+	SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitlePatCredentials SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitle = "PAT Credentials"
 )
 
-func (e SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitleEnum) ToPointer() *SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitleEnum {
+func (e SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitle) ToPointer() *SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitle {
 	return &e
 }
 
-func (e *SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitleEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitle) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "PAT Credentials":
-		*e = SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitleEnum(v)
+		*e = SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitle(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitleEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitle: %v", v)
 	}
 }
 
 // SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken - Choose how to authenticate to Github
 type SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken struct {
 	// PAT Credentials
-	OptionTitle *SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitleEnum `json:"option_title,omitempty"`
+	OptionTitle *SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessTokenCredentialsTitle `json:"option_title,omitempty"`
 	// Asana Personal Access Token (generate yours <a href="https://app.asana.com/0/developer-console">here</a>).
 	PersonalAccessToken string `json:"personal_access_token"`
 }
@@ -144,32 +144,32 @@ func (u SourceAsanaAuthenticationMechanism) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-type SourceAsanaAsanaEnum string
+type SourceAsanaAsana string
 
 const (
-	SourceAsanaAsanaEnumAsana SourceAsanaAsanaEnum = "asana"
+	SourceAsanaAsanaAsana SourceAsanaAsana = "asana"
 )
 
-func (e SourceAsanaAsanaEnum) ToPointer() *SourceAsanaAsanaEnum {
+func (e SourceAsanaAsana) ToPointer() *SourceAsanaAsana {
 	return &e
 }
 
-func (e *SourceAsanaAsanaEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceAsanaAsana) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "asana":
-		*e = SourceAsanaAsanaEnum(v)
+		*e = SourceAsanaAsana(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAsanaAsanaEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceAsanaAsana: %v", v)
 	}
 }
 
 type SourceAsana struct {
 	// Choose how to authenticate to Github
 	Credentials *SourceAsanaAuthenticationMechanism `json:"credentials,omitempty"`
-	SourceType  SourceAsanaAsanaEnum                `json:"sourceType"`
+	SourceType  SourceAsanaAsana                    `json:"sourceType"`
 }

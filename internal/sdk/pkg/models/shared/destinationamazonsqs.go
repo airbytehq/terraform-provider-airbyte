@@ -7,66 +7,66 @@ import (
 	"fmt"
 )
 
-type DestinationAmazonSqsAmazonSqsEnum string
+type DestinationAmazonSqsAmazonSqs string
 
 const (
-	DestinationAmazonSqsAmazonSqsEnumAmazonSqs DestinationAmazonSqsAmazonSqsEnum = "amazon-sqs"
+	DestinationAmazonSqsAmazonSqsAmazonSqs DestinationAmazonSqsAmazonSqs = "amazon-sqs"
 )
 
-func (e DestinationAmazonSqsAmazonSqsEnum) ToPointer() *DestinationAmazonSqsAmazonSqsEnum {
+func (e DestinationAmazonSqsAmazonSqs) ToPointer() *DestinationAmazonSqsAmazonSqs {
 	return &e
 }
 
-func (e *DestinationAmazonSqsAmazonSqsEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationAmazonSqsAmazonSqs) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "amazon-sqs":
-		*e = DestinationAmazonSqsAmazonSqsEnum(v)
+		*e = DestinationAmazonSqsAmazonSqs(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationAmazonSqsAmazonSqsEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationAmazonSqsAmazonSqs: %v", v)
 	}
 }
 
-// DestinationAmazonSqsAWSRegionEnum - AWS Region of the SQS Queue
-type DestinationAmazonSqsAWSRegionEnum string
+// DestinationAmazonSqsAWSRegion - AWS Region of the SQS Queue
+type DestinationAmazonSqsAWSRegion string
 
 const (
-	DestinationAmazonSqsAWSRegionEnumUsEast1      DestinationAmazonSqsAWSRegionEnum = "us-east-1"
-	DestinationAmazonSqsAWSRegionEnumUsEast2      DestinationAmazonSqsAWSRegionEnum = "us-east-2"
-	DestinationAmazonSqsAWSRegionEnumUsWest1      DestinationAmazonSqsAWSRegionEnum = "us-west-1"
-	DestinationAmazonSqsAWSRegionEnumUsWest2      DestinationAmazonSqsAWSRegionEnum = "us-west-2"
-	DestinationAmazonSqsAWSRegionEnumAfSouth1     DestinationAmazonSqsAWSRegionEnum = "af-south-1"
-	DestinationAmazonSqsAWSRegionEnumApEast1      DestinationAmazonSqsAWSRegionEnum = "ap-east-1"
-	DestinationAmazonSqsAWSRegionEnumApSouth1     DestinationAmazonSqsAWSRegionEnum = "ap-south-1"
-	DestinationAmazonSqsAWSRegionEnumApNortheast1 DestinationAmazonSqsAWSRegionEnum = "ap-northeast-1"
-	DestinationAmazonSqsAWSRegionEnumApNortheast2 DestinationAmazonSqsAWSRegionEnum = "ap-northeast-2"
-	DestinationAmazonSqsAWSRegionEnumApNortheast3 DestinationAmazonSqsAWSRegionEnum = "ap-northeast-3"
-	DestinationAmazonSqsAWSRegionEnumApSoutheast1 DestinationAmazonSqsAWSRegionEnum = "ap-southeast-1"
-	DestinationAmazonSqsAWSRegionEnumApSoutheast2 DestinationAmazonSqsAWSRegionEnum = "ap-southeast-2"
-	DestinationAmazonSqsAWSRegionEnumCaCentral1   DestinationAmazonSqsAWSRegionEnum = "ca-central-1"
-	DestinationAmazonSqsAWSRegionEnumCnNorth1     DestinationAmazonSqsAWSRegionEnum = "cn-north-1"
-	DestinationAmazonSqsAWSRegionEnumCnNorthwest1 DestinationAmazonSqsAWSRegionEnum = "cn-northwest-1"
-	DestinationAmazonSqsAWSRegionEnumEuCentral1   DestinationAmazonSqsAWSRegionEnum = "eu-central-1"
-	DestinationAmazonSqsAWSRegionEnumEuNorth1     DestinationAmazonSqsAWSRegionEnum = "eu-north-1"
-	DestinationAmazonSqsAWSRegionEnumEuSouth1     DestinationAmazonSqsAWSRegionEnum = "eu-south-1"
-	DestinationAmazonSqsAWSRegionEnumEuWest1      DestinationAmazonSqsAWSRegionEnum = "eu-west-1"
-	DestinationAmazonSqsAWSRegionEnumEuWest2      DestinationAmazonSqsAWSRegionEnum = "eu-west-2"
-	DestinationAmazonSqsAWSRegionEnumEuWest3      DestinationAmazonSqsAWSRegionEnum = "eu-west-3"
-	DestinationAmazonSqsAWSRegionEnumSaEast1      DestinationAmazonSqsAWSRegionEnum = "sa-east-1"
-	DestinationAmazonSqsAWSRegionEnumMeSouth1     DestinationAmazonSqsAWSRegionEnum = "me-south-1"
-	DestinationAmazonSqsAWSRegionEnumUsGovEast1   DestinationAmazonSqsAWSRegionEnum = "us-gov-east-1"
-	DestinationAmazonSqsAWSRegionEnumUsGovWest1   DestinationAmazonSqsAWSRegionEnum = "us-gov-west-1"
+	DestinationAmazonSqsAWSRegionUsEast1      DestinationAmazonSqsAWSRegion = "us-east-1"
+	DestinationAmazonSqsAWSRegionUsEast2      DestinationAmazonSqsAWSRegion = "us-east-2"
+	DestinationAmazonSqsAWSRegionUsWest1      DestinationAmazonSqsAWSRegion = "us-west-1"
+	DestinationAmazonSqsAWSRegionUsWest2      DestinationAmazonSqsAWSRegion = "us-west-2"
+	DestinationAmazonSqsAWSRegionAfSouth1     DestinationAmazonSqsAWSRegion = "af-south-1"
+	DestinationAmazonSqsAWSRegionApEast1      DestinationAmazonSqsAWSRegion = "ap-east-1"
+	DestinationAmazonSqsAWSRegionApSouth1     DestinationAmazonSqsAWSRegion = "ap-south-1"
+	DestinationAmazonSqsAWSRegionApNortheast1 DestinationAmazonSqsAWSRegion = "ap-northeast-1"
+	DestinationAmazonSqsAWSRegionApNortheast2 DestinationAmazonSqsAWSRegion = "ap-northeast-2"
+	DestinationAmazonSqsAWSRegionApNortheast3 DestinationAmazonSqsAWSRegion = "ap-northeast-3"
+	DestinationAmazonSqsAWSRegionApSoutheast1 DestinationAmazonSqsAWSRegion = "ap-southeast-1"
+	DestinationAmazonSqsAWSRegionApSoutheast2 DestinationAmazonSqsAWSRegion = "ap-southeast-2"
+	DestinationAmazonSqsAWSRegionCaCentral1   DestinationAmazonSqsAWSRegion = "ca-central-1"
+	DestinationAmazonSqsAWSRegionCnNorth1     DestinationAmazonSqsAWSRegion = "cn-north-1"
+	DestinationAmazonSqsAWSRegionCnNorthwest1 DestinationAmazonSqsAWSRegion = "cn-northwest-1"
+	DestinationAmazonSqsAWSRegionEuCentral1   DestinationAmazonSqsAWSRegion = "eu-central-1"
+	DestinationAmazonSqsAWSRegionEuNorth1     DestinationAmazonSqsAWSRegion = "eu-north-1"
+	DestinationAmazonSqsAWSRegionEuSouth1     DestinationAmazonSqsAWSRegion = "eu-south-1"
+	DestinationAmazonSqsAWSRegionEuWest1      DestinationAmazonSqsAWSRegion = "eu-west-1"
+	DestinationAmazonSqsAWSRegionEuWest2      DestinationAmazonSqsAWSRegion = "eu-west-2"
+	DestinationAmazonSqsAWSRegionEuWest3      DestinationAmazonSqsAWSRegion = "eu-west-3"
+	DestinationAmazonSqsAWSRegionSaEast1      DestinationAmazonSqsAWSRegion = "sa-east-1"
+	DestinationAmazonSqsAWSRegionMeSouth1     DestinationAmazonSqsAWSRegion = "me-south-1"
+	DestinationAmazonSqsAWSRegionUsGovEast1   DestinationAmazonSqsAWSRegion = "us-gov-east-1"
+	DestinationAmazonSqsAWSRegionUsGovWest1   DestinationAmazonSqsAWSRegion = "us-gov-west-1"
 )
 
-func (e DestinationAmazonSqsAWSRegionEnum) ToPointer() *DestinationAmazonSqsAWSRegionEnum {
+func (e DestinationAmazonSqsAWSRegion) ToPointer() *DestinationAmazonSqsAWSRegion {
 	return &e
 }
 
-func (e *DestinationAmazonSqsAWSRegionEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationAmazonSqsAWSRegion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -121,17 +121,17 @@ func (e *DestinationAmazonSqsAWSRegionEnum) UnmarshalJSON(data []byte) error {
 	case "us-gov-east-1":
 		fallthrough
 	case "us-gov-west-1":
-		*e = DestinationAmazonSqsAWSRegionEnum(v)
+		*e = DestinationAmazonSqsAWSRegion(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationAmazonSqsAWSRegionEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationAmazonSqsAWSRegion: %v", v)
 	}
 }
 
 type DestinationAmazonSqs struct {
 	// The Access Key ID of the AWS IAM Role to use for sending  messages
-	AccessKey       *string                           `json:"access_key,omitempty"`
-	DestinationType DestinationAmazonSqsAmazonSqsEnum `json:"destinationType"`
+	AccessKey       *string                       `json:"access_key,omitempty"`
+	DestinationType DestinationAmazonSqsAmazonSqs `json:"destinationType"`
 	// Use this property to extract the contents of the named key in the input record to use as the SQS message body. If not set, the entire content of the input record data is used as the message body.
 	MessageBodyKey *string `json:"message_body_key,omitempty"`
 	// Modify the Message Delay of the individual message from the Queue's default (seconds).
@@ -141,7 +141,7 @@ type DestinationAmazonSqs struct {
 	// URL of the SQS Queue
 	QueueURL string `json:"queue_url"`
 	// AWS Region of the SQS Queue
-	Region DestinationAmazonSqsAWSRegionEnum `json:"region"`
+	Region DestinationAmazonSqsAWSRegion `json:"region"`
 	// The Secret Key of the AWS IAM Role to use for sending messages
 	SecretKey *string `json:"secret_key,omitempty"`
 }

@@ -7,34 +7,34 @@ import (
 	"fmt"
 )
 
-type SourcePypiPypiEnum string
+type SourcePypiPypi string
 
 const (
-	SourcePypiPypiEnumPypi SourcePypiPypiEnum = "pypi"
+	SourcePypiPypiPypi SourcePypiPypi = "pypi"
 )
 
-func (e SourcePypiPypiEnum) ToPointer() *SourcePypiPypiEnum {
+func (e SourcePypiPypi) ToPointer() *SourcePypiPypi {
 	return &e
 }
 
-func (e *SourcePypiPypiEnum) UnmarshalJSON(data []byte) error {
+func (e *SourcePypiPypi) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "pypi":
-		*e = SourcePypiPypiEnum(v)
+		*e = SourcePypiPypi(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePypiPypiEnum: %v", v)
+		return fmt.Errorf("invalid value for SourcePypiPypi: %v", v)
 	}
 }
 
 type SourcePypi struct {
 	// Name of the project/package. Can only be in lowercase with hyphen. This is the name used using pip command for installing the package.
-	ProjectName string             `json:"project_name"`
-	SourceType  SourcePypiPypiEnum `json:"sourceType"`
+	ProjectName string         `json:"project_name"`
+	SourceType  SourcePypiPypi `json:"sourceType"`
 	// Version of the project/package.  Use it to find a particular release instead of all releases.
 	Version *string `json:"version,omitempty"`
 }

@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type SourceTheGuardianAPITheGuardianAPIEnum string
+type SourceTheGuardianAPITheGuardianAPI string
 
 const (
-	SourceTheGuardianAPITheGuardianAPIEnumTheGuardianAPI SourceTheGuardianAPITheGuardianAPIEnum = "the-guardian-api"
+	SourceTheGuardianAPITheGuardianAPITheGuardianAPI SourceTheGuardianAPITheGuardianAPI = "the-guardian-api"
 )
 
-func (e SourceTheGuardianAPITheGuardianAPIEnum) ToPointer() *SourceTheGuardianAPITheGuardianAPIEnum {
+func (e SourceTheGuardianAPITheGuardianAPI) ToPointer() *SourceTheGuardianAPITheGuardianAPI {
 	return &e
 }
 
-func (e *SourceTheGuardianAPITheGuardianAPIEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceTheGuardianAPITheGuardianAPI) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "the-guardian-api":
-		*e = SourceTheGuardianAPITheGuardianAPIEnum(v)
+		*e = SourceTheGuardianAPITheGuardianAPI(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceTheGuardianAPITheGuardianAPIEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceTheGuardianAPITheGuardianAPI: %v", v)
 	}
 }
 
@@ -39,8 +39,8 @@ type SourceTheGuardianAPI struct {
 	// (Optional) The query (q) parameter filters the results to only those that include that search term. The q parameter supports AND, OR and NOT operators.
 	Query *string `json:"query,omitempty"`
 	// (Optional) Use this to filter the results by a particular section. See <a href="https://content.guardianapis.com/sections?api-key=test">here</a> for a list of all sections, and <a href="https://open-platform.theguardian.com/documentation/section">here</a> for the sections endpoint documentation.
-	Section    *string                                `json:"section,omitempty"`
-	SourceType SourceTheGuardianAPITheGuardianAPIEnum `json:"sourceType"`
+	Section    *string                            `json:"section,omitempty"`
+	SourceType SourceTheGuardianAPITheGuardianAPI `json:"sourceType"`
 	// Use this to set the minimum date (YYYY-MM-DD) of the results. Results older than the start_date will not be shown.
 	StartDate string `json:"start_date"`
 	// (Optional) A tag is a piece of data that is used by The Guardian to categorise content. Use this parameter to filter results by showing only the ones matching the entered tag. See <a href="https://content.guardianapis.com/tags?api-key=test">here</a> for a list of all tags, and <a href="https://open-platform.theguardian.com/documentation/tag">here</a> for the tags endpoint documentation.

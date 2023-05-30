@@ -7,32 +7,32 @@ import (
 	"fmt"
 )
 
-type SourceAzureTableAzureTableEnum string
+type SourceAzureTableAzureTable string
 
 const (
-	SourceAzureTableAzureTableEnumAzureTable SourceAzureTableAzureTableEnum = "azure-table"
+	SourceAzureTableAzureTableAzureTable SourceAzureTableAzureTable = "azure-table"
 )
 
-func (e SourceAzureTableAzureTableEnum) ToPointer() *SourceAzureTableAzureTableEnum {
+func (e SourceAzureTableAzureTable) ToPointer() *SourceAzureTableAzureTable {
 	return &e
 }
 
-func (e *SourceAzureTableAzureTableEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceAzureTableAzureTable) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "azure-table":
-		*e = SourceAzureTableAzureTableEnum(v)
+		*e = SourceAzureTableAzureTable(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAzureTableAzureTableEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceAzureTableAzureTable: %v", v)
 	}
 }
 
 type SourceAzureTable struct {
-	SourceType SourceAzureTableAzureTableEnum `json:"sourceType"`
+	SourceType SourceAzureTableAzureTable `json:"sourceType"`
 	// Azure Table Storage Access Key. See the <a href="https://docs.airbyte.com/integrations/sources/azure-table">docs</a> for more information on how to obtain this key.
 	StorageAccessKey string `json:"storage_access_key"`
 	// The name of your storage account.

@@ -10,70 +10,70 @@ import (
 	"fmt"
 )
 
-type SourceShopifyShopifyAuthorizationMethodOAuth20AuthMethodEnum string
+type SourceShopifyShopifyAuthorizationMethodOAuth20AuthMethod string
 
 const (
-	SourceShopifyShopifyAuthorizationMethodOAuth20AuthMethodEnumOauth20 SourceShopifyShopifyAuthorizationMethodOAuth20AuthMethodEnum = "oauth2.0"
+	SourceShopifyShopifyAuthorizationMethodOAuth20AuthMethodOauth20 SourceShopifyShopifyAuthorizationMethodOAuth20AuthMethod = "oauth2.0"
 )
 
-func (e SourceShopifyShopifyAuthorizationMethodOAuth20AuthMethodEnum) ToPointer() *SourceShopifyShopifyAuthorizationMethodOAuth20AuthMethodEnum {
+func (e SourceShopifyShopifyAuthorizationMethodOAuth20AuthMethod) ToPointer() *SourceShopifyShopifyAuthorizationMethodOAuth20AuthMethod {
 	return &e
 }
 
-func (e *SourceShopifyShopifyAuthorizationMethodOAuth20AuthMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceShopifyShopifyAuthorizationMethodOAuth20AuthMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "oauth2.0":
-		*e = SourceShopifyShopifyAuthorizationMethodOAuth20AuthMethodEnum(v)
+		*e = SourceShopifyShopifyAuthorizationMethodOAuth20AuthMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceShopifyShopifyAuthorizationMethodOAuth20AuthMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceShopifyShopifyAuthorizationMethodOAuth20AuthMethod: %v", v)
 	}
 }
 
 // SourceShopifyShopifyAuthorizationMethodOAuth20 - OAuth2.0
 type SourceShopifyShopifyAuthorizationMethodOAuth20 struct {
 	// The Access Token for making authenticated requests.
-	AccessToken *string                                                      `json:"access_token,omitempty"`
-	AuthMethod  SourceShopifyShopifyAuthorizationMethodOAuth20AuthMethodEnum `json:"auth_method"`
+	AccessToken *string                                                  `json:"access_token,omitempty"`
+	AuthMethod  SourceShopifyShopifyAuthorizationMethodOAuth20AuthMethod `json:"auth_method"`
 	// The Client ID of the Shopify developer application.
 	ClientID *string `json:"client_id,omitempty"`
 	// The Client Secret of the Shopify developer application.
 	ClientSecret *string `json:"client_secret,omitempty"`
 }
 
-type SourceShopifyShopifyAuthorizationMethodAPIPasswordAuthMethodEnum string
+type SourceShopifyShopifyAuthorizationMethodAPIPasswordAuthMethod string
 
 const (
-	SourceShopifyShopifyAuthorizationMethodAPIPasswordAuthMethodEnumAPIPassword SourceShopifyShopifyAuthorizationMethodAPIPasswordAuthMethodEnum = "api_password"
+	SourceShopifyShopifyAuthorizationMethodAPIPasswordAuthMethodAPIPassword SourceShopifyShopifyAuthorizationMethodAPIPasswordAuthMethod = "api_password"
 )
 
-func (e SourceShopifyShopifyAuthorizationMethodAPIPasswordAuthMethodEnum) ToPointer() *SourceShopifyShopifyAuthorizationMethodAPIPasswordAuthMethodEnum {
+func (e SourceShopifyShopifyAuthorizationMethodAPIPasswordAuthMethod) ToPointer() *SourceShopifyShopifyAuthorizationMethodAPIPasswordAuthMethod {
 	return &e
 }
 
-func (e *SourceShopifyShopifyAuthorizationMethodAPIPasswordAuthMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceShopifyShopifyAuthorizationMethodAPIPasswordAuthMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "api_password":
-		*e = SourceShopifyShopifyAuthorizationMethodAPIPasswordAuthMethodEnum(v)
+		*e = SourceShopifyShopifyAuthorizationMethodAPIPasswordAuthMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceShopifyShopifyAuthorizationMethodAPIPasswordAuthMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceShopifyShopifyAuthorizationMethodAPIPasswordAuthMethod: %v", v)
 	}
 }
 
 // SourceShopifyShopifyAuthorizationMethodAPIPassword - API Password Auth
 type SourceShopifyShopifyAuthorizationMethodAPIPassword struct {
 	// The API Password for your private application in the `Shopify` store.
-	APIPassword string                                                           `json:"api_password"`
-	AuthMethod  SourceShopifyShopifyAuthorizationMethodAPIPasswordAuthMethodEnum `json:"auth_method"`
+	APIPassword string                                                       `json:"api_password"`
+	AuthMethod  SourceShopifyShopifyAuthorizationMethodAPIPasswordAuthMethod `json:"auth_method"`
 }
 
 type SourceShopifyShopifyAuthorizationMethodType string
@@ -144,27 +144,27 @@ func (u SourceShopifyShopifyAuthorizationMethod) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-type SourceShopifyShopifyEnum string
+type SourceShopifyShopify string
 
 const (
-	SourceShopifyShopifyEnumShopify SourceShopifyShopifyEnum = "shopify"
+	SourceShopifyShopifyShopify SourceShopifyShopify = "shopify"
 )
 
-func (e SourceShopifyShopifyEnum) ToPointer() *SourceShopifyShopifyEnum {
+func (e SourceShopifyShopify) ToPointer() *SourceShopifyShopify {
 	return &e
 }
 
-func (e *SourceShopifyShopifyEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceShopifyShopify) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "shopify":
-		*e = SourceShopifyShopifyEnum(v)
+		*e = SourceShopifyShopify(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceShopifyShopifyEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceShopifyShopify: %v", v)
 	}
 }
 
@@ -172,8 +172,8 @@ type SourceShopify struct {
 	// The authorization method to use to retrieve data from Shopify
 	Credentials *SourceShopifyShopifyAuthorizationMethod `json:"credentials,omitempty"`
 	// The name of your Shopify store found in the URL. For example, if your URL was https://NAME.myshopify.com, then the name would be 'NAME'.
-	Shop       string                   `json:"shop"`
-	SourceType SourceShopifyShopifyEnum `json:"sourceType"`
+	Shop       string               `json:"shop"`
+	SourceType SourceShopifyShopify `json:"sourceType"`
 	// The date you would like to replicate data from. Format: YYYY-MM-DD. Any data before this date will not be replicated.
 	StartDate types.Date `json:"start_date"`
 }

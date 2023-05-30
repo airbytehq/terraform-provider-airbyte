@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
@@ -25,7 +26,7 @@ func (r *SourceOnesignalResourceModel) ToCreateSDKType() *shared.SourceOnesignal
 		})
 	}
 	outcomeNames := r.Configuration.OutcomeNames.ValueString()
-	sourceType := shared.SourceOnesignalOnesignalEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceOnesignalOnesignal(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	userAuthKey := r.Configuration.UserAuthKey.ValueString()
 	configuration := shared.SourceOnesignal{
@@ -55,4 +56,11 @@ func (r *SourceOnesignalResourceModel) ToCreateSDKType() *shared.SourceOnesignal
 func (r *SourceOnesignalResourceModel) ToDeleteSDKType() *shared.SourceOnesignalCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceOnesignalResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

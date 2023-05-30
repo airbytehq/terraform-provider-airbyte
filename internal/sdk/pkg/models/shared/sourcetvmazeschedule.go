@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type SourceTvmazeScheduleTvmazeScheduleEnum string
+type SourceTvmazeScheduleTvmazeSchedule string
 
 const (
-	SourceTvmazeScheduleTvmazeScheduleEnumTvmazeSchedule SourceTvmazeScheduleTvmazeScheduleEnum = "tvmaze-schedule"
+	SourceTvmazeScheduleTvmazeScheduleTvmazeSchedule SourceTvmazeScheduleTvmazeSchedule = "tvmaze-schedule"
 )
 
-func (e SourceTvmazeScheduleTvmazeScheduleEnum) ToPointer() *SourceTvmazeScheduleTvmazeScheduleEnum {
+func (e SourceTvmazeScheduleTvmazeSchedule) ToPointer() *SourceTvmazeScheduleTvmazeSchedule {
 	return &e
 }
 
-func (e *SourceTvmazeScheduleTvmazeScheduleEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceTvmazeScheduleTvmazeSchedule) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "tvmaze-schedule":
-		*e = SourceTvmazeScheduleTvmazeScheduleEnum(v)
+		*e = SourceTvmazeScheduleTvmazeSchedule(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceTvmazeScheduleTvmazeScheduleEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceTvmazeScheduleTvmazeSchedule: %v", v)
 	}
 }
 
@@ -36,8 +36,8 @@ type SourceTvmazeSchedule struct {
 	DomesticScheduleCountryCode string `json:"domestic_schedule_country_code"`
 	// End date for TV schedule retrieval. May be in the future. Optional.
 	//
-	EndDate    *string                                `json:"end_date,omitempty"`
-	SourceType SourceTvmazeScheduleTvmazeScheduleEnum `json:"sourceType"`
+	EndDate    *string                            `json:"end_date,omitempty"`
+	SourceType SourceTvmazeScheduleTvmazeSchedule `json:"sourceType"`
 	// Start date for TV schedule retrieval. May be in the future.
 	StartDate string `json:"start_date"`
 	// ISO 3166-1 country code for web TV schedule retrieval. Leave blank for

@@ -4,11 +4,12 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourcePendoResourceModel) ToCreateSDKType() *shared.SourcePendoCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	sourceType := shared.SourcePendoPendoEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourcePendoPendo(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourcePendo{
 		APIKey:     apiKey,
 		SourceType: sourceType,
@@ -33,4 +34,11 @@ func (r *SourcePendoResourceModel) ToCreateSDKType() *shared.SourcePendoCreateRe
 func (r *SourcePendoResourceModel) ToDeleteSDKType() *shared.SourcePendoCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourcePendoResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type DestinationConvexConvexEnum string
+type DestinationConvexConvex string
 
 const (
-	DestinationConvexConvexEnumConvex DestinationConvexConvexEnum = "convex"
+	DestinationConvexConvexConvex DestinationConvexConvex = "convex"
 )
 
-func (e DestinationConvexConvexEnum) ToPointer() *DestinationConvexConvexEnum {
+func (e DestinationConvexConvex) ToPointer() *DestinationConvexConvex {
 	return &e
 }
 
-func (e *DestinationConvexConvexEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationConvexConvex) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "convex":
-		*e = DestinationConvexConvexEnum(v)
+		*e = DestinationConvexConvex(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationConvexConvexEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationConvexConvex: %v", v)
 	}
 }
 
@@ -35,6 +35,6 @@ type DestinationConvex struct {
 	// API access key used to send data to a Convex deployment.
 	AccessKey string `json:"access_key"`
 	// URL of the Convex deployment that is the destination
-	DeploymentURL   string                      `json:"deployment_url"`
-	DestinationType DestinationConvexConvexEnum `json:"destinationType"`
+	DeploymentURL   string                  `json:"deployment_url"`
+	DestinationType DestinationConvexConvex `json:"destinationType"`
 }

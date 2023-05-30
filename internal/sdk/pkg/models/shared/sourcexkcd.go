@@ -7,30 +7,30 @@ import (
 	"fmt"
 )
 
-type SourceXkcdXkcdEnum string
+type SourceXkcdXkcd string
 
 const (
-	SourceXkcdXkcdEnumXkcd SourceXkcdXkcdEnum = "xkcd"
+	SourceXkcdXkcdXkcd SourceXkcdXkcd = "xkcd"
 )
 
-func (e SourceXkcdXkcdEnum) ToPointer() *SourceXkcdXkcdEnum {
+func (e SourceXkcdXkcd) ToPointer() *SourceXkcdXkcd {
 	return &e
 }
 
-func (e *SourceXkcdXkcdEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceXkcdXkcd) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "xkcd":
-		*e = SourceXkcdXkcdEnum(v)
+		*e = SourceXkcdXkcd(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceXkcdXkcdEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceXkcdXkcd: %v", v)
 	}
 }
 
 type SourceXkcd struct {
-	SourceType SourceXkcdXkcdEnum `json:"sourceType"`
+	SourceType SourceXkcdXkcd `json:"sourceType"`
 }

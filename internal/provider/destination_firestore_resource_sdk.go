@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationFirestoreResourceModel) ToCreateSDKType() *shared.DestinationFirestoreCreateRequest {
@@ -13,7 +14,7 @@ func (r *DestinationFirestoreResourceModel) ToCreateSDKType() *shared.Destinatio
 	} else {
 		credentialsJSON = nil
 	}
-	destinationType := shared.DestinationFirestoreFirestoreEnum(r.Configuration.DestinationType.ValueString())
+	destinationType := shared.DestinationFirestoreFirestore(r.Configuration.DestinationType.ValueString())
 	projectID := r.Configuration.ProjectID.ValueString()
 	configuration := shared.DestinationFirestore{
 		CredentialsJSON: credentialsJSON,
@@ -33,4 +34,11 @@ func (r *DestinationFirestoreResourceModel) ToCreateSDKType() *shared.Destinatio
 func (r *DestinationFirestoreResourceModel) ToDeleteSDKType() *shared.DestinationFirestoreCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *DestinationFirestoreResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

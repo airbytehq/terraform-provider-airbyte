@@ -7,32 +7,32 @@ import (
 	"fmt"
 )
 
-type SourceSendinblueSendinblueEnum string
+type SourceSendinblueSendinblue string
 
 const (
-	SourceSendinblueSendinblueEnumSendinblue SourceSendinblueSendinblueEnum = "sendinblue"
+	SourceSendinblueSendinblueSendinblue SourceSendinblueSendinblue = "sendinblue"
 )
 
-func (e SourceSendinblueSendinblueEnum) ToPointer() *SourceSendinblueSendinblueEnum {
+func (e SourceSendinblueSendinblue) ToPointer() *SourceSendinblueSendinblue {
 	return &e
 }
 
-func (e *SourceSendinblueSendinblueEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceSendinblueSendinblue) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "sendinblue":
-		*e = SourceSendinblueSendinblueEnum(v)
+		*e = SourceSendinblueSendinblue(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSendinblueSendinblueEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceSendinblueSendinblue: %v", v)
 	}
 }
 
 type SourceSendinblue struct {
 	// Your API Key. See <a href="https://developers.sendinblue.com/docs/getting-started">here</a>.
-	APIKey     string                         `json:"api_key"`
-	SourceType SourceSendinblueSendinblueEnum `json:"sourceType"`
+	APIKey     string                     `json:"api_key"`
+	SourceType SourceSendinblueSendinblue `json:"sourceType"`
 }

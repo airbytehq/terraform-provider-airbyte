@@ -7,34 +7,34 @@ import (
 	"fmt"
 )
 
-type DestinationScyllaScyllaEnum string
+type DestinationScyllaScylla string
 
 const (
-	DestinationScyllaScyllaEnumScylla DestinationScyllaScyllaEnum = "scylla"
+	DestinationScyllaScyllaScylla DestinationScyllaScylla = "scylla"
 )
 
-func (e DestinationScyllaScyllaEnum) ToPointer() *DestinationScyllaScyllaEnum {
+func (e DestinationScyllaScylla) ToPointer() *DestinationScyllaScylla {
 	return &e
 }
 
-func (e *DestinationScyllaScyllaEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationScyllaScylla) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "scylla":
-		*e = DestinationScyllaScyllaEnum(v)
+		*e = DestinationScyllaScylla(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationScyllaScyllaEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationScyllaScylla: %v", v)
 	}
 }
 
 type DestinationScylla struct {
 	// Address to connect to.
-	Address         string                      `json:"address"`
-	DestinationType DestinationScyllaScyllaEnum `json:"destinationType"`
+	Address         string                  `json:"address"`
+	DestinationType DestinationScyllaScylla `json:"destinationType"`
 	// Default Scylla keyspace to create data in.
 	Keyspace string `json:"keyspace"`
 	// Password associated with Scylla.

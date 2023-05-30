@@ -4,11 +4,12 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationClickhouseResourceModel) ToCreateSDKType() *shared.DestinationClickhouseCreateRequest {
 	database := r.Configuration.Database.ValueString()
-	destinationType := shared.DestinationClickhouseClickhouseEnum(r.Configuration.DestinationType.ValueString())
+	destinationType := shared.DestinationClickhouseClickhouse(r.Configuration.DestinationType.ValueString())
 	host := r.Configuration.Host.ValueString()
 	jdbcURLParams := new(string)
 	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
@@ -26,7 +27,7 @@ func (r *DestinationClickhouseResourceModel) ToCreateSDKType() *shared.Destinati
 	var tunnelMethod *shared.DestinationClickhouseSSHTunnelMethod
 	var destinationClickhouseSSHTunnelMethodNoTunnel *shared.DestinationClickhouseSSHTunnelMethodNoTunnel
 	if r.Configuration.TunnelMethod.DestinationClickhouseSSHTunnelMethodNoTunnel != nil {
-		tunnelMethod1 := shared.DestinationClickhouseSSHTunnelMethodNoTunnelTunnelMethodEnum(r.Configuration.TunnelMethod.DestinationClickhouseSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
+		tunnelMethod1 := shared.DestinationClickhouseSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.DestinationClickhouseSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
 		destinationClickhouseSSHTunnelMethodNoTunnel = &shared.DestinationClickhouseSSHTunnelMethodNoTunnel{
 			TunnelMethod: tunnelMethod1,
 		}
@@ -40,7 +41,7 @@ func (r *DestinationClickhouseResourceModel) ToCreateSDKType() *shared.Destinati
 	if r.Configuration.TunnelMethod.DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication != nil {
 		sshKey := r.Configuration.TunnelMethod.DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication.SSHKey.ValueString()
 		tunnelHost := r.Configuration.TunnelMethod.DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
-		tunnelMethod2 := shared.DestinationClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(r.Configuration.TunnelMethod.DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
+		tunnelMethod2 := shared.DestinationClickhouseSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
 		tunnelPort := r.Configuration.TunnelMethod.DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
 		tunnelUser := r.Configuration.TunnelMethod.DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
 		destinationClickhouseSSHTunnelMethodSSHKeyAuthentication = &shared.DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication{
@@ -59,7 +60,7 @@ func (r *DestinationClickhouseResourceModel) ToCreateSDKType() *shared.Destinati
 	var destinationClickhouseSSHTunnelMethodPasswordAuthentication *shared.DestinationClickhouseSSHTunnelMethodPasswordAuthentication
 	if r.Configuration.TunnelMethod.DestinationClickhouseSSHTunnelMethodPasswordAuthentication != nil {
 		tunnelHost1 := r.Configuration.TunnelMethod.DestinationClickhouseSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
-		tunnelMethod3 := shared.DestinationClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(r.Configuration.TunnelMethod.DestinationClickhouseSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
+		tunnelMethod3 := shared.DestinationClickhouseSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationClickhouseSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
 		tunnelPort1 := r.Configuration.TunnelMethod.DestinationClickhouseSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
 		tunnelUser1 := r.Configuration.TunnelMethod.DestinationClickhouseSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
 		tunnelUserPassword := r.Configuration.TunnelMethod.DestinationClickhouseSSHTunnelMethodPasswordAuthentication.TunnelUserPassword.ValueString()
@@ -100,4 +101,11 @@ func (r *DestinationClickhouseResourceModel) ToCreateSDKType() *shared.Destinati
 func (r *DestinationClickhouseResourceModel) ToDeleteSDKType() *shared.DestinationClickhouseCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *DestinationClickhouseResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

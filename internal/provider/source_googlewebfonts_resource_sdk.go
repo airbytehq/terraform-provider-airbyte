@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceGoogleWebfontsResourceModel) ToCreateSDKType() *shared.SourceGoogleWebfontsCreateRequest {
@@ -26,7 +27,7 @@ func (r *SourceGoogleWebfontsResourceModel) ToCreateSDKType() *shared.SourceGoog
 	} else {
 		sort = nil
 	}
-	sourceType := shared.SourceGoogleWebfontsGoogleWebfontsEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceGoogleWebfontsGoogleWebfonts(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceGoogleWebfonts{
 		Alt:         alt,
 		APIKey:      apiKey,
@@ -54,4 +55,11 @@ func (r *SourceGoogleWebfontsResourceModel) ToCreateSDKType() *shared.SourceGoog
 func (r *SourceGoogleWebfontsResourceModel) ToDeleteSDKType() *shared.SourceGoogleWebfontsCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceGoogleWebfontsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

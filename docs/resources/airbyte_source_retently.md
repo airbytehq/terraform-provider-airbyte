@@ -60,7 +60,7 @@ Required:
 
 Optional:
 
-- `additional_properties` (Map of String)
+- `additional_properties` (String) Parsed as JSON.
 - `auth_type` (String)
 
 
@@ -73,7 +73,7 @@ Required:
 
 Optional:
 
-- `additional_properties` (Map of String)
+- `additional_properties` (String) Parsed as JSON.
 - `auth_type` (String)
 
 

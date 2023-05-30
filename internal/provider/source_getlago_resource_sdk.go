@@ -4,11 +4,12 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceGetlagoResourceModel) ToCreateSDKType() *shared.SourceGetlagoCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	sourceType := shared.SourceGetlagoGetlagoEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceGetlagoGetlago(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceGetlago{
 		APIKey:     apiKey,
 		SourceType: sourceType,
@@ -33,4 +34,11 @@ func (r *SourceGetlagoResourceModel) ToCreateSDKType() *shared.SourceGetlagoCrea
 func (r *SourceGetlagoResourceModel) ToDeleteSDKType() *shared.SourceGetlagoCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceGetlagoResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

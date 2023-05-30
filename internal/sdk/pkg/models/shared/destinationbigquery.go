@@ -9,57 +9,57 @@ import (
 	"fmt"
 )
 
-// DestinationBigqueryDatasetLocationEnum - The location of the dataset. Warning: Changes made after creation will not be applied. Read more <a href="https://cloud.google.com/bigquery/docs/locations">here</a>.
-type DestinationBigqueryDatasetLocationEnum string
+// DestinationBigqueryDatasetLocation - The location of the dataset. Warning: Changes made after creation will not be applied. Read more <a href="https://cloud.google.com/bigquery/docs/locations">here</a>.
+type DestinationBigqueryDatasetLocation string
 
 const (
-	DestinationBigqueryDatasetLocationEnumUs                     DestinationBigqueryDatasetLocationEnum = "US"
-	DestinationBigqueryDatasetLocationEnumEu                     DestinationBigqueryDatasetLocationEnum = "EU"
-	DestinationBigqueryDatasetLocationEnumAsiaEast1              DestinationBigqueryDatasetLocationEnum = "asia-east1"
-	DestinationBigqueryDatasetLocationEnumAsiaEast2              DestinationBigqueryDatasetLocationEnum = "asia-east2"
-	DestinationBigqueryDatasetLocationEnumAsiaNortheast1         DestinationBigqueryDatasetLocationEnum = "asia-northeast1"
-	DestinationBigqueryDatasetLocationEnumAsiaNortheast2         DestinationBigqueryDatasetLocationEnum = "asia-northeast2"
-	DestinationBigqueryDatasetLocationEnumAsiaNortheast3         DestinationBigqueryDatasetLocationEnum = "asia-northeast3"
-	DestinationBigqueryDatasetLocationEnumAsiaSouth1             DestinationBigqueryDatasetLocationEnum = "asia-south1"
-	DestinationBigqueryDatasetLocationEnumAsiaSouth2             DestinationBigqueryDatasetLocationEnum = "asia-south2"
-	DestinationBigqueryDatasetLocationEnumAsiaSoutheast1         DestinationBigqueryDatasetLocationEnum = "asia-southeast1"
-	DestinationBigqueryDatasetLocationEnumAsiaSoutheast2         DestinationBigqueryDatasetLocationEnum = "asia-southeast2"
-	DestinationBigqueryDatasetLocationEnumAustraliaSoutheast1    DestinationBigqueryDatasetLocationEnum = "australia-southeast1"
-	DestinationBigqueryDatasetLocationEnumAustraliaSoutheast2    DestinationBigqueryDatasetLocationEnum = "australia-southeast2"
-	DestinationBigqueryDatasetLocationEnumEuropeCentral1         DestinationBigqueryDatasetLocationEnum = "europe-central1"
-	DestinationBigqueryDatasetLocationEnumEuropeCentral2         DestinationBigqueryDatasetLocationEnum = "europe-central2"
-	DestinationBigqueryDatasetLocationEnumEuropeNorth1           DestinationBigqueryDatasetLocationEnum = "europe-north1"
-	DestinationBigqueryDatasetLocationEnumEuropeSouthwest1       DestinationBigqueryDatasetLocationEnum = "europe-southwest1"
-	DestinationBigqueryDatasetLocationEnumEuropeWest1            DestinationBigqueryDatasetLocationEnum = "europe-west1"
-	DestinationBigqueryDatasetLocationEnumEuropeWest2            DestinationBigqueryDatasetLocationEnum = "europe-west2"
-	DestinationBigqueryDatasetLocationEnumEuropeWest3            DestinationBigqueryDatasetLocationEnum = "europe-west3"
-	DestinationBigqueryDatasetLocationEnumEuropeWest4            DestinationBigqueryDatasetLocationEnum = "europe-west4"
-	DestinationBigqueryDatasetLocationEnumEuropeWest6            DestinationBigqueryDatasetLocationEnum = "europe-west6"
-	DestinationBigqueryDatasetLocationEnumEuropeWest7            DestinationBigqueryDatasetLocationEnum = "europe-west7"
-	DestinationBigqueryDatasetLocationEnumEuropeWest8            DestinationBigqueryDatasetLocationEnum = "europe-west8"
-	DestinationBigqueryDatasetLocationEnumEuropeWest9            DestinationBigqueryDatasetLocationEnum = "europe-west9"
-	DestinationBigqueryDatasetLocationEnumMeWest1                DestinationBigqueryDatasetLocationEnum = "me-west1"
-	DestinationBigqueryDatasetLocationEnumNorthamericaNortheast1 DestinationBigqueryDatasetLocationEnum = "northamerica-northeast1"
-	DestinationBigqueryDatasetLocationEnumNorthamericaNortheast2 DestinationBigqueryDatasetLocationEnum = "northamerica-northeast2"
-	DestinationBigqueryDatasetLocationEnumSouthamericaEast1      DestinationBigqueryDatasetLocationEnum = "southamerica-east1"
-	DestinationBigqueryDatasetLocationEnumSouthamericaWest1      DestinationBigqueryDatasetLocationEnum = "southamerica-west1"
-	DestinationBigqueryDatasetLocationEnumUsCentral1             DestinationBigqueryDatasetLocationEnum = "us-central1"
-	DestinationBigqueryDatasetLocationEnumUsEast1                DestinationBigqueryDatasetLocationEnum = "us-east1"
-	DestinationBigqueryDatasetLocationEnumUsEast2                DestinationBigqueryDatasetLocationEnum = "us-east2"
-	DestinationBigqueryDatasetLocationEnumUsEast3                DestinationBigqueryDatasetLocationEnum = "us-east3"
-	DestinationBigqueryDatasetLocationEnumUsEast4                DestinationBigqueryDatasetLocationEnum = "us-east4"
-	DestinationBigqueryDatasetLocationEnumUsEast5                DestinationBigqueryDatasetLocationEnum = "us-east5"
-	DestinationBigqueryDatasetLocationEnumUsWest1                DestinationBigqueryDatasetLocationEnum = "us-west1"
-	DestinationBigqueryDatasetLocationEnumUsWest2                DestinationBigqueryDatasetLocationEnum = "us-west2"
-	DestinationBigqueryDatasetLocationEnumUsWest3                DestinationBigqueryDatasetLocationEnum = "us-west3"
-	DestinationBigqueryDatasetLocationEnumUsWest4                DestinationBigqueryDatasetLocationEnum = "us-west4"
+	DestinationBigqueryDatasetLocationUs                     DestinationBigqueryDatasetLocation = "US"
+	DestinationBigqueryDatasetLocationEu                     DestinationBigqueryDatasetLocation = "EU"
+	DestinationBigqueryDatasetLocationAsiaEast1              DestinationBigqueryDatasetLocation = "asia-east1"
+	DestinationBigqueryDatasetLocationAsiaEast2              DestinationBigqueryDatasetLocation = "asia-east2"
+	DestinationBigqueryDatasetLocationAsiaNortheast1         DestinationBigqueryDatasetLocation = "asia-northeast1"
+	DestinationBigqueryDatasetLocationAsiaNortheast2         DestinationBigqueryDatasetLocation = "asia-northeast2"
+	DestinationBigqueryDatasetLocationAsiaNortheast3         DestinationBigqueryDatasetLocation = "asia-northeast3"
+	DestinationBigqueryDatasetLocationAsiaSouth1             DestinationBigqueryDatasetLocation = "asia-south1"
+	DestinationBigqueryDatasetLocationAsiaSouth2             DestinationBigqueryDatasetLocation = "asia-south2"
+	DestinationBigqueryDatasetLocationAsiaSoutheast1         DestinationBigqueryDatasetLocation = "asia-southeast1"
+	DestinationBigqueryDatasetLocationAsiaSoutheast2         DestinationBigqueryDatasetLocation = "asia-southeast2"
+	DestinationBigqueryDatasetLocationAustraliaSoutheast1    DestinationBigqueryDatasetLocation = "australia-southeast1"
+	DestinationBigqueryDatasetLocationAustraliaSoutheast2    DestinationBigqueryDatasetLocation = "australia-southeast2"
+	DestinationBigqueryDatasetLocationEuropeCentral1         DestinationBigqueryDatasetLocation = "europe-central1"
+	DestinationBigqueryDatasetLocationEuropeCentral2         DestinationBigqueryDatasetLocation = "europe-central2"
+	DestinationBigqueryDatasetLocationEuropeNorth1           DestinationBigqueryDatasetLocation = "europe-north1"
+	DestinationBigqueryDatasetLocationEuropeSouthwest1       DestinationBigqueryDatasetLocation = "europe-southwest1"
+	DestinationBigqueryDatasetLocationEuropeWest1            DestinationBigqueryDatasetLocation = "europe-west1"
+	DestinationBigqueryDatasetLocationEuropeWest2            DestinationBigqueryDatasetLocation = "europe-west2"
+	DestinationBigqueryDatasetLocationEuropeWest3            DestinationBigqueryDatasetLocation = "europe-west3"
+	DestinationBigqueryDatasetLocationEuropeWest4            DestinationBigqueryDatasetLocation = "europe-west4"
+	DestinationBigqueryDatasetLocationEuropeWest6            DestinationBigqueryDatasetLocation = "europe-west6"
+	DestinationBigqueryDatasetLocationEuropeWest7            DestinationBigqueryDatasetLocation = "europe-west7"
+	DestinationBigqueryDatasetLocationEuropeWest8            DestinationBigqueryDatasetLocation = "europe-west8"
+	DestinationBigqueryDatasetLocationEuropeWest9            DestinationBigqueryDatasetLocation = "europe-west9"
+	DestinationBigqueryDatasetLocationMeWest1                DestinationBigqueryDatasetLocation = "me-west1"
+	DestinationBigqueryDatasetLocationNorthamericaNortheast1 DestinationBigqueryDatasetLocation = "northamerica-northeast1"
+	DestinationBigqueryDatasetLocationNorthamericaNortheast2 DestinationBigqueryDatasetLocation = "northamerica-northeast2"
+	DestinationBigqueryDatasetLocationSouthamericaEast1      DestinationBigqueryDatasetLocation = "southamerica-east1"
+	DestinationBigqueryDatasetLocationSouthamericaWest1      DestinationBigqueryDatasetLocation = "southamerica-west1"
+	DestinationBigqueryDatasetLocationUsCentral1             DestinationBigqueryDatasetLocation = "us-central1"
+	DestinationBigqueryDatasetLocationUsEast1                DestinationBigqueryDatasetLocation = "us-east1"
+	DestinationBigqueryDatasetLocationUsEast2                DestinationBigqueryDatasetLocation = "us-east2"
+	DestinationBigqueryDatasetLocationUsEast3                DestinationBigqueryDatasetLocation = "us-east3"
+	DestinationBigqueryDatasetLocationUsEast4                DestinationBigqueryDatasetLocation = "us-east4"
+	DestinationBigqueryDatasetLocationUsEast5                DestinationBigqueryDatasetLocation = "us-east5"
+	DestinationBigqueryDatasetLocationUsWest1                DestinationBigqueryDatasetLocation = "us-west1"
+	DestinationBigqueryDatasetLocationUsWest2                DestinationBigqueryDatasetLocation = "us-west2"
+	DestinationBigqueryDatasetLocationUsWest3                DestinationBigqueryDatasetLocation = "us-west3"
+	DestinationBigqueryDatasetLocationUsWest4                DestinationBigqueryDatasetLocation = "us-west4"
 )
 
-func (e DestinationBigqueryDatasetLocationEnum) ToPointer() *DestinationBigqueryDatasetLocationEnum {
+func (e DestinationBigqueryDatasetLocation) ToPointer() *DestinationBigqueryDatasetLocation {
 	return &e
 }
 
-func (e *DestinationBigqueryDatasetLocationEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationBigqueryDatasetLocation) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -144,64 +144,64 @@ func (e *DestinationBigqueryDatasetLocationEnum) UnmarshalJSON(data []byte) erro
 	case "us-west3":
 		fallthrough
 	case "us-west4":
-		*e = DestinationBigqueryDatasetLocationEnum(v)
+		*e = DestinationBigqueryDatasetLocation(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationBigqueryDatasetLocationEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationBigqueryDatasetLocation: %v", v)
 	}
 }
 
-type DestinationBigqueryBigqueryEnum string
+type DestinationBigqueryBigquery string
 
 const (
-	DestinationBigqueryBigqueryEnumBigquery DestinationBigqueryBigqueryEnum = "bigquery"
+	DestinationBigqueryBigqueryBigquery DestinationBigqueryBigquery = "bigquery"
 )
 
-func (e DestinationBigqueryBigqueryEnum) ToPointer() *DestinationBigqueryBigqueryEnum {
+func (e DestinationBigqueryBigquery) ToPointer() *DestinationBigqueryBigquery {
 	return &e
 }
 
-func (e *DestinationBigqueryBigqueryEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationBigqueryBigquery) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "bigquery":
-		*e = DestinationBigqueryBigqueryEnum(v)
+		*e = DestinationBigqueryBigquery(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationBigqueryBigqueryEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationBigqueryBigquery: %v", v)
 	}
 }
 
-type DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKeyCredentialTypeEnum string
+type DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKeyCredentialType string
 
 const (
-	DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKeyCredentialTypeEnumHmacKey DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKeyCredentialTypeEnum = "HMAC_KEY"
+	DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKeyCredentialTypeHmacKey DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKeyCredentialType = "HMAC_KEY"
 )
 
-func (e DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKeyCredentialTypeEnum) ToPointer() *DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKeyCredentialTypeEnum {
+func (e DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKeyCredentialType) ToPointer() *DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKeyCredentialType {
 	return &e
 }
 
-func (e *DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKeyCredentialTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKeyCredentialType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "HMAC_KEY":
-		*e = DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKeyCredentialTypeEnum(v)
+		*e = DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKeyCredentialType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKeyCredentialTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKeyCredentialType: %v", v)
 	}
 }
 
 // DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKey - An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>.
 type DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKey struct {
-	CredentialType DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKeyCredentialTypeEnum `json:"credential_type"`
+	CredentialType DestinationBigqueryLoadingMethodGCSStagingCredentialHMACKeyCredentialType `json:"credential_type"`
 	// HMAC key access ID. When linked to a service account, this ID is 61 characters long; when linked to a user account, it is 24 characters long.
 	HmacKeyAccessID string `json:"hmac_key_access_id"`
 	// The corresponding secret for the access ID. It is a 40-character base-64 encoded string.
@@ -252,19 +252,19 @@ func (u DestinationBigqueryLoadingMethodGCSStagingCredential) MarshalJSON() ([]b
 	return nil, nil
 }
 
-// DestinationBigqueryLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessingEnum - This upload method is supposed to temporary store records in GCS bucket. By this select you can chose if these records should be removed from GCS when migration has finished. The default "Delete all tmp files from GCS" value is used if not set explicitly.
-type DestinationBigqueryLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessingEnum string
+// DestinationBigqueryLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessing - This upload method is supposed to temporary store records in GCS bucket. By this select you can chose if these records should be removed from GCS when migration has finished. The default "Delete all tmp files from GCS" value is used if not set explicitly.
+type DestinationBigqueryLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessing string
 
 const (
-	DestinationBigqueryLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessingEnumDeleteAllTmpFilesFromGcs DestinationBigqueryLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessingEnum = "Delete all tmp files from GCS"
-	DestinationBigqueryLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessingEnumKeepAllTmpFilesInGcs     DestinationBigqueryLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessingEnum = "Keep all tmp files in GCS"
+	DestinationBigqueryLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessingDeleteAllTmpFilesFromGcs DestinationBigqueryLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessing = "Delete all tmp files from GCS"
+	DestinationBigqueryLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessingKeepAllTmpFilesInGcs     DestinationBigqueryLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessing = "Keep all tmp files in GCS"
 )
 
-func (e DestinationBigqueryLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessingEnum) ToPointer() *DestinationBigqueryLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessingEnum {
+func (e DestinationBigqueryLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessing) ToPointer() *DestinationBigqueryLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessing {
 	return &e
 }
 
-func (e *DestinationBigqueryLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessingEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationBigqueryLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessing) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -273,34 +273,34 @@ func (e *DestinationBigqueryLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessin
 	case "Delete all tmp files from GCS":
 		fallthrough
 	case "Keep all tmp files in GCS":
-		*e = DestinationBigqueryLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessingEnum(v)
+		*e = DestinationBigqueryLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessing(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationBigqueryLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessingEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationBigqueryLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessing: %v", v)
 	}
 }
 
-type DestinationBigqueryLoadingMethodGCSStagingMethodEnum string
+type DestinationBigqueryLoadingMethodGCSStagingMethod string
 
 const (
-	DestinationBigqueryLoadingMethodGCSStagingMethodEnumGcsStaging DestinationBigqueryLoadingMethodGCSStagingMethodEnum = "GCS Staging"
+	DestinationBigqueryLoadingMethodGCSStagingMethodGcsStaging DestinationBigqueryLoadingMethodGCSStagingMethod = "GCS Staging"
 )
 
-func (e DestinationBigqueryLoadingMethodGCSStagingMethodEnum) ToPointer() *DestinationBigqueryLoadingMethodGCSStagingMethodEnum {
+func (e DestinationBigqueryLoadingMethodGCSStagingMethod) ToPointer() *DestinationBigqueryLoadingMethodGCSStagingMethod {
 	return &e
 }
 
-func (e *DestinationBigqueryLoadingMethodGCSStagingMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationBigqueryLoadingMethodGCSStagingMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "GCS Staging":
-		*e = DestinationBigqueryLoadingMethodGCSStagingMethodEnum(v)
+		*e = DestinationBigqueryLoadingMethodGCSStagingMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationBigqueryLoadingMethodGCSStagingMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationBigqueryLoadingMethodGCSStagingMethod: %v", v)
 	}
 }
 
@@ -315,37 +315,37 @@ type DestinationBigqueryLoadingMethodGCSStaging struct {
 	// Directory under the GCS bucket where data will be written.
 	GcsBucketPath string `json:"gcs_bucket_path"`
 	// This upload method is supposed to temporary store records in GCS bucket. By this select you can chose if these records should be removed from GCS when migration has finished. The default "Delete all tmp files from GCS" value is used if not set explicitly.
-	KeepFilesInGcsBucket *DestinationBigqueryLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessingEnum `json:"keep_files_in_gcs-bucket,omitempty"`
-	Method               DestinationBigqueryLoadingMethodGCSStagingMethodEnum                          `json:"method"`
+	KeepFilesInGcsBucket *DestinationBigqueryLoadingMethodGCSStagingGCSTmpFilesAfterwardProcessing `json:"keep_files_in_gcs-bucket,omitempty"`
+	Method               DestinationBigqueryLoadingMethodGCSStagingMethod                          `json:"method"`
 }
 
-type DestinationBigqueryLoadingMethodStandardInsertsMethodEnum string
+type DestinationBigqueryLoadingMethodStandardInsertsMethod string
 
 const (
-	DestinationBigqueryLoadingMethodStandardInsertsMethodEnumStandard DestinationBigqueryLoadingMethodStandardInsertsMethodEnum = "Standard"
+	DestinationBigqueryLoadingMethodStandardInsertsMethodStandard DestinationBigqueryLoadingMethodStandardInsertsMethod = "Standard"
 )
 
-func (e DestinationBigqueryLoadingMethodStandardInsertsMethodEnum) ToPointer() *DestinationBigqueryLoadingMethodStandardInsertsMethodEnum {
+func (e DestinationBigqueryLoadingMethodStandardInsertsMethod) ToPointer() *DestinationBigqueryLoadingMethodStandardInsertsMethod {
 	return &e
 }
 
-func (e *DestinationBigqueryLoadingMethodStandardInsertsMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationBigqueryLoadingMethodStandardInsertsMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Standard":
-		*e = DestinationBigqueryLoadingMethodStandardInsertsMethodEnum(v)
+		*e = DestinationBigqueryLoadingMethodStandardInsertsMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationBigqueryLoadingMethodStandardInsertsMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationBigqueryLoadingMethodStandardInsertsMethod: %v", v)
 	}
 }
 
 // DestinationBigqueryLoadingMethodStandardInserts - Loading method used to send select the way data will be uploaded to BigQuery. <br/><b>Standard Inserts</b> - Direct uploading using SQL INSERT statements. This method is extremely inefficient and provided only for quick testing. In almost all cases, you should use staging. <br/><b>GCS Staging</b> - Writes large batches of records to a file, uploads the file to GCS, then uses <b>COPY INTO table</b> to upload the file. Recommended for most workloads for better speed and scalability. Read more about GCS Staging <a href="https://docs.airbyte.com/integrations/destinations/bigquery#gcs-staging">here</a>.
 type DestinationBigqueryLoadingMethodStandardInserts struct {
-	Method DestinationBigqueryLoadingMethodStandardInsertsMethodEnum `json:"method"`
+	Method DestinationBigqueryLoadingMethodStandardInsertsMethod `json:"method"`
 }
 
 type DestinationBigqueryLoadingMethodType string
@@ -416,19 +416,19 @@ func (u DestinationBigqueryLoadingMethod) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-// DestinationBigqueryTransformationQueryRunTypeEnum - Interactive run type means that the query is executed as soon as possible, and these queries count towards concurrent rate limit and daily limit. Read more about interactive run type <a href="https://cloud.google.com/bigquery/docs/running-queries#queries">here</a>. Batch queries are queued and started as soon as idle resources are available in the BigQuery shared resource pool, which usually occurs within a few minutes. Batch queries don’t count towards your concurrent rate limit. Read more about batch queries <a href="https://cloud.google.com/bigquery/docs/running-queries#batch">here</a>. The default "interactive" value is used if not set explicitly.
-type DestinationBigqueryTransformationQueryRunTypeEnum string
+// DestinationBigqueryTransformationQueryRunType - Interactive run type means that the query is executed as soon as possible, and these queries count towards concurrent rate limit and daily limit. Read more about interactive run type <a href="https://cloud.google.com/bigquery/docs/running-queries#queries">here</a>. Batch queries are queued and started as soon as idle resources are available in the BigQuery shared resource pool, which usually occurs within a few minutes. Batch queries don’t count towards your concurrent rate limit. Read more about batch queries <a href="https://cloud.google.com/bigquery/docs/running-queries#batch">here</a>. The default "interactive" value is used if not set explicitly.
+type DestinationBigqueryTransformationQueryRunType string
 
 const (
-	DestinationBigqueryTransformationQueryRunTypeEnumInteractive DestinationBigqueryTransformationQueryRunTypeEnum = "interactive"
-	DestinationBigqueryTransformationQueryRunTypeEnumBatch       DestinationBigqueryTransformationQueryRunTypeEnum = "batch"
+	DestinationBigqueryTransformationQueryRunTypeInteractive DestinationBigqueryTransformationQueryRunType = "interactive"
+	DestinationBigqueryTransformationQueryRunTypeBatch       DestinationBigqueryTransformationQueryRunType = "batch"
 )
 
-func (e DestinationBigqueryTransformationQueryRunTypeEnum) ToPointer() *DestinationBigqueryTransformationQueryRunTypeEnum {
+func (e DestinationBigqueryTransformationQueryRunType) ToPointer() *DestinationBigqueryTransformationQueryRunType {
 	return &e
 }
 
-func (e *DestinationBigqueryTransformationQueryRunTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationBigqueryTransformationQueryRunType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -437,10 +437,10 @@ func (e *DestinationBigqueryTransformationQueryRunTypeEnum) UnmarshalJSON(data [
 	case "interactive":
 		fallthrough
 	case "batch":
-		*e = DestinationBigqueryTransformationQueryRunTypeEnum(v)
+		*e = DestinationBigqueryTransformationQueryRunType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationBigqueryTransformationQueryRunTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationBigqueryTransformationQueryRunType: %v", v)
 	}
 }
 
@@ -452,12 +452,12 @@ type DestinationBigquery struct {
 	// The default BigQuery Dataset ID that tables are replicated to if the source does not specify a namespace. Read more <a href="https://cloud.google.com/bigquery/docs/datasets#create-dataset">here</a>.
 	DatasetID string `json:"dataset_id"`
 	// The location of the dataset. Warning: Changes made after creation will not be applied. Read more <a href="https://cloud.google.com/bigquery/docs/locations">here</a>.
-	DatasetLocation DestinationBigqueryDatasetLocationEnum `json:"dataset_location"`
-	DestinationType DestinationBigqueryBigqueryEnum        `json:"destinationType"`
+	DatasetLocation DestinationBigqueryDatasetLocation `json:"dataset_location"`
+	DestinationType DestinationBigqueryBigquery        `json:"destinationType"`
 	// Loading method used to send select the way data will be uploaded to BigQuery. <br/><b>Standard Inserts</b> - Direct uploading using SQL INSERT statements. This method is extremely inefficient and provided only for quick testing. In almost all cases, you should use staging. <br/><b>GCS Staging</b> - Writes large batches of records to a file, uploads the file to GCS, then uses <b>COPY INTO table</b> to upload the file. Recommended for most workloads for better speed and scalability. Read more about GCS Staging <a href="https://docs.airbyte.com/integrations/destinations/bigquery#gcs-staging">here</a>.
 	LoadingMethod *DestinationBigqueryLoadingMethod `json:"loading_method,omitempty"`
 	// The GCP project ID for the project containing the target BigQuery dataset. Read more <a href="https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects">here</a>.
 	ProjectID string `json:"project_id"`
 	// Interactive run type means that the query is executed as soon as possible, and these queries count towards concurrent rate limit and daily limit. Read more about interactive run type <a href="https://cloud.google.com/bigquery/docs/running-queries#queries">here</a>. Batch queries are queued and started as soon as idle resources are available in the BigQuery shared resource pool, which usually occurs within a few minutes. Batch queries don’t count towards your concurrent rate limit. Read more about batch queries <a href="https://cloud.google.com/bigquery/docs/running-queries#batch">here</a>. The default "interactive" value is used if not set explicitly.
-	TransformationPriority *DestinationBigqueryTransformationQueryRunTypeEnum `json:"transformation_priority,omitempty"`
+	TransformationPriority *DestinationBigqueryTransformationQueryRunType `json:"transformation_priority,omitempty"`
 }

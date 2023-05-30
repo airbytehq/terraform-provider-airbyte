@@ -8,19 +8,19 @@ import (
 	"time"
 )
 
-// SourceSftpBulkFileTypeEnum - The file type you want to sync. Currently only 'csv' and 'json' files are supported.
-type SourceSftpBulkFileTypeEnum string
+// SourceSftpBulkFileType - The file type you want to sync. Currently only 'csv' and 'json' files are supported.
+type SourceSftpBulkFileType string
 
 const (
-	SourceSftpBulkFileTypeEnumCsv  SourceSftpBulkFileTypeEnum = "csv"
-	SourceSftpBulkFileTypeEnumJSON SourceSftpBulkFileTypeEnum = "json"
+	SourceSftpBulkFileTypeCsv  SourceSftpBulkFileType = "csv"
+	SourceSftpBulkFileTypeJSON SourceSftpBulkFileType = "json"
 )
 
-func (e SourceSftpBulkFileTypeEnum) ToPointer() *SourceSftpBulkFileTypeEnum {
+func (e SourceSftpBulkFileType) ToPointer() *SourceSftpBulkFileType {
 	return &e
 }
 
-func (e *SourceSftpBulkFileTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceSftpBulkFileType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -29,34 +29,34 @@ func (e *SourceSftpBulkFileTypeEnum) UnmarshalJSON(data []byte) error {
 	case "csv":
 		fallthrough
 	case "json":
-		*e = SourceSftpBulkFileTypeEnum(v)
+		*e = SourceSftpBulkFileType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSftpBulkFileTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceSftpBulkFileType: %v", v)
 	}
 }
 
-type SourceSftpBulkSftpBulkEnum string
+type SourceSftpBulkSftpBulk string
 
 const (
-	SourceSftpBulkSftpBulkEnumSftpBulk SourceSftpBulkSftpBulkEnum = "sftp-bulk"
+	SourceSftpBulkSftpBulkSftpBulk SourceSftpBulkSftpBulk = "sftp-bulk"
 )
 
-func (e SourceSftpBulkSftpBulkEnum) ToPointer() *SourceSftpBulkSftpBulkEnum {
+func (e SourceSftpBulkSftpBulk) ToPointer() *SourceSftpBulkSftpBulk {
 	return &e
 }
 
-func (e *SourceSftpBulkSftpBulkEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceSftpBulkSftpBulk) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "sftp-bulk":
-		*e = SourceSftpBulkSftpBulkEnum(v)
+		*e = SourceSftpBulkSftpBulk(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSftpBulkSftpBulkEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceSftpBulkSftpBulk: %v", v)
 	}
 }
 
@@ -66,7 +66,7 @@ type SourceSftpBulk struct {
 	// The regular expression to specify files for sync in a chosen Folder Path
 	FilePattern *string `json:"file_pattern,omitempty"`
 	// The file type you want to sync. Currently only 'csv' and 'json' files are supported.
-	FileType *SourceSftpBulkFileTypeEnum `json:"file_type,omitempty"`
+	FileType *SourceSftpBulkFileType `json:"file_type,omitempty"`
 	// The directory to search files for sync
 	FolderPath string `json:"folder_path"`
 	// The server host address
@@ -78,8 +78,8 @@ type SourceSftpBulk struct {
 	// The private key
 	PrivateKey *string `json:"private_key,omitempty"`
 	// The separator used in the CSV files. Define None if you want to use the Sniffer functionality
-	Separator  *string                    `json:"separator,omitempty"`
-	SourceType SourceSftpBulkSftpBulkEnum `json:"sourceType"`
+	Separator  *string                `json:"separator,omitempty"`
+	SourceType SourceSftpBulkSftpBulk `json:"sourceType"`
 	// The date from which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 	StartDate time.Time `json:"start_date"`
 	// The name of the stream or table you want to create

@@ -4,10 +4,11 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceSalesforceSingerResourceModel) ToCreateSDKType() *shared.SourceSalesforceSingerCreateRequest {
-	apiType := shared.SourceSalesforceSingerAPITypeEnum(r.Configuration.APIType.ValueString())
+	apiType := shared.SourceSalesforceSingerAPIType(r.Configuration.APIType.ValueString())
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
 	isSandbox := new(bool)
@@ -29,7 +30,7 @@ func (r *SourceSalesforceSingerResourceModel) ToCreateSDKType() *shared.SourceSa
 		quotaPercentTotal = nil
 	}
 	refreshToken := r.Configuration.RefreshToken.ValueString()
-	sourceType := shared.SourceSalesforceSingerSalesforceSingerEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceSalesforceSingerSalesforceSinger(r.Configuration.SourceType.ValueString())
 	startDate := r.Configuration.StartDate.ValueString()
 	configuration := shared.SourceSalesforceSinger{
 		APIType:            apiType,
@@ -62,4 +63,11 @@ func (r *SourceSalesforceSingerResourceModel) ToCreateSDKType() *shared.SourceSa
 func (r *SourceSalesforceSingerResourceModel) ToDeleteSDKType() *shared.SourceSalesforceSingerCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceSalesforceSingerResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

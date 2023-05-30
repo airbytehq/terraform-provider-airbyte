@@ -7,43 +7,43 @@ import (
 	"fmt"
 )
 
-type SourceAmazonSellerPartnerAuthTypeEnum string
+type SourceAmazonSellerPartnerAuthType string
 
 const (
-	SourceAmazonSellerPartnerAuthTypeEnumOauth20 SourceAmazonSellerPartnerAuthTypeEnum = "oauth2.0"
+	SourceAmazonSellerPartnerAuthTypeOauth20 SourceAmazonSellerPartnerAuthType = "oauth2.0"
 )
 
-func (e SourceAmazonSellerPartnerAuthTypeEnum) ToPointer() *SourceAmazonSellerPartnerAuthTypeEnum {
+func (e SourceAmazonSellerPartnerAuthType) ToPointer() *SourceAmazonSellerPartnerAuthType {
 	return &e
 }
 
-func (e *SourceAmazonSellerPartnerAuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceAmazonSellerPartnerAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "oauth2.0":
-		*e = SourceAmazonSellerPartnerAuthTypeEnum(v)
+		*e = SourceAmazonSellerPartnerAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAmazonSellerPartnerAuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceAmazonSellerPartnerAuthType: %v", v)
 	}
 }
 
-// SourceAmazonSellerPartnerAWSEnvironmentEnum - An enumeration.
-type SourceAmazonSellerPartnerAWSEnvironmentEnum string
+// SourceAmazonSellerPartnerAWSEnvironment - An enumeration.
+type SourceAmazonSellerPartnerAWSEnvironment string
 
 const (
-	SourceAmazonSellerPartnerAWSEnvironmentEnumProduction SourceAmazonSellerPartnerAWSEnvironmentEnum = "PRODUCTION"
-	SourceAmazonSellerPartnerAWSEnvironmentEnumSandbox    SourceAmazonSellerPartnerAWSEnvironmentEnum = "SANDBOX"
+	SourceAmazonSellerPartnerAWSEnvironmentProduction SourceAmazonSellerPartnerAWSEnvironment = "PRODUCTION"
+	SourceAmazonSellerPartnerAWSEnvironmentSandbox    SourceAmazonSellerPartnerAWSEnvironment = "SANDBOX"
 )
 
-func (e SourceAmazonSellerPartnerAWSEnvironmentEnum) ToPointer() *SourceAmazonSellerPartnerAWSEnvironmentEnum {
+func (e SourceAmazonSellerPartnerAWSEnvironment) ToPointer() *SourceAmazonSellerPartnerAWSEnvironment {
 	return &e
 }
 
-func (e *SourceAmazonSellerPartnerAWSEnvironmentEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceAmazonSellerPartnerAWSEnvironment) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -52,46 +52,46 @@ func (e *SourceAmazonSellerPartnerAWSEnvironmentEnum) UnmarshalJSON(data []byte)
 	case "PRODUCTION":
 		fallthrough
 	case "SANDBOX":
-		*e = SourceAmazonSellerPartnerAWSEnvironmentEnum(v)
+		*e = SourceAmazonSellerPartnerAWSEnvironment(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAmazonSellerPartnerAWSEnvironmentEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceAmazonSellerPartnerAWSEnvironment: %v", v)
 	}
 }
 
-// SourceAmazonSellerPartnerAWSRegionEnum - An enumeration.
-type SourceAmazonSellerPartnerAWSRegionEnum string
+// SourceAmazonSellerPartnerAWSRegion - An enumeration.
+type SourceAmazonSellerPartnerAWSRegion string
 
 const (
-	SourceAmazonSellerPartnerAWSRegionEnumAe SourceAmazonSellerPartnerAWSRegionEnum = "AE"
-	SourceAmazonSellerPartnerAWSRegionEnumAu SourceAmazonSellerPartnerAWSRegionEnum = "AU"
-	SourceAmazonSellerPartnerAWSRegionEnumBe SourceAmazonSellerPartnerAWSRegionEnum = "BE"
-	SourceAmazonSellerPartnerAWSRegionEnumBr SourceAmazonSellerPartnerAWSRegionEnum = "BR"
-	SourceAmazonSellerPartnerAWSRegionEnumCa SourceAmazonSellerPartnerAWSRegionEnum = "CA"
-	SourceAmazonSellerPartnerAWSRegionEnumDe SourceAmazonSellerPartnerAWSRegionEnum = "DE"
-	SourceAmazonSellerPartnerAWSRegionEnumEg SourceAmazonSellerPartnerAWSRegionEnum = "EG"
-	SourceAmazonSellerPartnerAWSRegionEnumEs SourceAmazonSellerPartnerAWSRegionEnum = "ES"
-	SourceAmazonSellerPartnerAWSRegionEnumFr SourceAmazonSellerPartnerAWSRegionEnum = "FR"
-	SourceAmazonSellerPartnerAWSRegionEnumGb SourceAmazonSellerPartnerAWSRegionEnum = "GB"
-	SourceAmazonSellerPartnerAWSRegionEnumIn SourceAmazonSellerPartnerAWSRegionEnum = "IN"
-	SourceAmazonSellerPartnerAWSRegionEnumIt SourceAmazonSellerPartnerAWSRegionEnum = "IT"
-	SourceAmazonSellerPartnerAWSRegionEnumJp SourceAmazonSellerPartnerAWSRegionEnum = "JP"
-	SourceAmazonSellerPartnerAWSRegionEnumMx SourceAmazonSellerPartnerAWSRegionEnum = "MX"
-	SourceAmazonSellerPartnerAWSRegionEnumNl SourceAmazonSellerPartnerAWSRegionEnum = "NL"
-	SourceAmazonSellerPartnerAWSRegionEnumPl SourceAmazonSellerPartnerAWSRegionEnum = "PL"
-	SourceAmazonSellerPartnerAWSRegionEnumSa SourceAmazonSellerPartnerAWSRegionEnum = "SA"
-	SourceAmazonSellerPartnerAWSRegionEnumSe SourceAmazonSellerPartnerAWSRegionEnum = "SE"
-	SourceAmazonSellerPartnerAWSRegionEnumSg SourceAmazonSellerPartnerAWSRegionEnum = "SG"
-	SourceAmazonSellerPartnerAWSRegionEnumTr SourceAmazonSellerPartnerAWSRegionEnum = "TR"
-	SourceAmazonSellerPartnerAWSRegionEnumUk SourceAmazonSellerPartnerAWSRegionEnum = "UK"
-	SourceAmazonSellerPartnerAWSRegionEnumUs SourceAmazonSellerPartnerAWSRegionEnum = "US"
+	SourceAmazonSellerPartnerAWSRegionAe SourceAmazonSellerPartnerAWSRegion = "AE"
+	SourceAmazonSellerPartnerAWSRegionAu SourceAmazonSellerPartnerAWSRegion = "AU"
+	SourceAmazonSellerPartnerAWSRegionBe SourceAmazonSellerPartnerAWSRegion = "BE"
+	SourceAmazonSellerPartnerAWSRegionBr SourceAmazonSellerPartnerAWSRegion = "BR"
+	SourceAmazonSellerPartnerAWSRegionCa SourceAmazonSellerPartnerAWSRegion = "CA"
+	SourceAmazonSellerPartnerAWSRegionDe SourceAmazonSellerPartnerAWSRegion = "DE"
+	SourceAmazonSellerPartnerAWSRegionEg SourceAmazonSellerPartnerAWSRegion = "EG"
+	SourceAmazonSellerPartnerAWSRegionEs SourceAmazonSellerPartnerAWSRegion = "ES"
+	SourceAmazonSellerPartnerAWSRegionFr SourceAmazonSellerPartnerAWSRegion = "FR"
+	SourceAmazonSellerPartnerAWSRegionGb SourceAmazonSellerPartnerAWSRegion = "GB"
+	SourceAmazonSellerPartnerAWSRegionIn SourceAmazonSellerPartnerAWSRegion = "IN"
+	SourceAmazonSellerPartnerAWSRegionIt SourceAmazonSellerPartnerAWSRegion = "IT"
+	SourceAmazonSellerPartnerAWSRegionJp SourceAmazonSellerPartnerAWSRegion = "JP"
+	SourceAmazonSellerPartnerAWSRegionMx SourceAmazonSellerPartnerAWSRegion = "MX"
+	SourceAmazonSellerPartnerAWSRegionNl SourceAmazonSellerPartnerAWSRegion = "NL"
+	SourceAmazonSellerPartnerAWSRegionPl SourceAmazonSellerPartnerAWSRegion = "PL"
+	SourceAmazonSellerPartnerAWSRegionSa SourceAmazonSellerPartnerAWSRegion = "SA"
+	SourceAmazonSellerPartnerAWSRegionSe SourceAmazonSellerPartnerAWSRegion = "SE"
+	SourceAmazonSellerPartnerAWSRegionSg SourceAmazonSellerPartnerAWSRegion = "SG"
+	SourceAmazonSellerPartnerAWSRegionTr SourceAmazonSellerPartnerAWSRegion = "TR"
+	SourceAmazonSellerPartnerAWSRegionUk SourceAmazonSellerPartnerAWSRegion = "UK"
+	SourceAmazonSellerPartnerAWSRegionUs SourceAmazonSellerPartnerAWSRegion = "US"
 )
 
-func (e SourceAmazonSellerPartnerAWSRegionEnum) ToPointer() *SourceAmazonSellerPartnerAWSRegionEnum {
+func (e SourceAmazonSellerPartnerAWSRegion) ToPointer() *SourceAmazonSellerPartnerAWSRegion {
 	return &e
 }
 
-func (e *SourceAmazonSellerPartnerAWSRegionEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceAmazonSellerPartnerAWSRegion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -140,45 +140,45 @@ func (e *SourceAmazonSellerPartnerAWSRegionEnum) UnmarshalJSON(data []byte) erro
 	case "UK":
 		fallthrough
 	case "US":
-		*e = SourceAmazonSellerPartnerAWSRegionEnum(v)
+		*e = SourceAmazonSellerPartnerAWSRegion(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAmazonSellerPartnerAWSRegionEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceAmazonSellerPartnerAWSRegion: %v", v)
 	}
 }
 
-type SourceAmazonSellerPartnerAmazonSellerPartnerEnum string
+type SourceAmazonSellerPartnerAmazonSellerPartner string
 
 const (
-	SourceAmazonSellerPartnerAmazonSellerPartnerEnumAmazonSellerPartner SourceAmazonSellerPartnerAmazonSellerPartnerEnum = "amazon-seller-partner"
+	SourceAmazonSellerPartnerAmazonSellerPartnerAmazonSellerPartner SourceAmazonSellerPartnerAmazonSellerPartner = "amazon-seller-partner"
 )
 
-func (e SourceAmazonSellerPartnerAmazonSellerPartnerEnum) ToPointer() *SourceAmazonSellerPartnerAmazonSellerPartnerEnum {
+func (e SourceAmazonSellerPartnerAmazonSellerPartner) ToPointer() *SourceAmazonSellerPartnerAmazonSellerPartner {
 	return &e
 }
 
-func (e *SourceAmazonSellerPartnerAmazonSellerPartnerEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceAmazonSellerPartnerAmazonSellerPartner) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "amazon-seller-partner":
-		*e = SourceAmazonSellerPartnerAmazonSellerPartnerEnum(v)
+		*e = SourceAmazonSellerPartnerAmazonSellerPartner(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAmazonSellerPartnerAmazonSellerPartnerEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceAmazonSellerPartnerAmazonSellerPartner: %v", v)
 	}
 }
 
 type SourceAmazonSellerPartner struct {
 	// Your Amazon App ID
-	AppID    string                                 `json:"app_id"`
-	AuthType *SourceAmazonSellerPartnerAuthTypeEnum `json:"auth_type,omitempty"`
+	AppID    string                             `json:"app_id"`
+	AuthType *SourceAmazonSellerPartnerAuthType `json:"auth_type,omitempty"`
 	// Specifies the AWS access key used as part of the credentials to authenticate the user.
 	AwsAccessKey *string `json:"aws_access_key,omitempty"`
 	// An enumeration.
-	AwsEnvironment SourceAmazonSellerPartnerAWSEnvironmentEnum `json:"aws_environment"`
+	AwsEnvironment SourceAmazonSellerPartnerAWSEnvironment `json:"aws_environment"`
 	// Specifies the AWS secret key used as part of the credentials to authenticate the user.
 	AwsSecretKey *string `json:"aws_secret_key,omitempty"`
 	// Your Login with Amazon Client ID.
@@ -192,7 +192,7 @@ type SourceAmazonSellerPartner struct {
 	// The Refresh Token obtained via OAuth flow authorization.
 	RefreshToken string `json:"refresh_token"`
 	// An enumeration.
-	Region SourceAmazonSellerPartnerAWSRegionEnum `json:"region"`
+	Region SourceAmazonSellerPartnerAWSRegion `json:"region"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data after this date will not be replicated.
 	ReplicationEndDate *string `json:"replication_end_date,omitempty"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
@@ -200,6 +200,6 @@ type SourceAmazonSellerPartner struct {
 	// Additional information passed to reports. This varies by report type. Must be a valid json string.
 	ReportOptions *string `json:"report_options,omitempty"`
 	// Specifies the Amazon Resource Name (ARN) of an IAM role that you want to use to perform operations requested using this profile. (Needs permission to 'Assume Role' STS).
-	RoleArn    *string                                          `json:"role_arn,omitempty"`
-	SourceType SourceAmazonSellerPartnerAmazonSellerPartnerEnum `json:"sourceType"`
+	RoleArn    *string                                      `json:"role_arn,omitempty"`
+	SourceType SourceAmazonSellerPartnerAmazonSellerPartner `json:"sourceType"`
 }

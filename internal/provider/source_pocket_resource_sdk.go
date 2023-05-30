@@ -4,20 +4,21 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourcePocketResourceModel) ToCreateSDKType() *shared.SourcePocketCreateRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
 	consumerKey := r.Configuration.ConsumerKey.ValueString()
-	contentType := new(shared.SourcePocketContentTypeEnum)
+	contentType := new(shared.SourcePocketContentType)
 	if !r.Configuration.ContentType.IsUnknown() && !r.Configuration.ContentType.IsNull() {
-		*contentType = shared.SourcePocketContentTypeEnum(r.Configuration.ContentType.ValueString())
+		*contentType = shared.SourcePocketContentType(r.Configuration.ContentType.ValueString())
 	} else {
 		contentType = nil
 	}
-	detailType := new(shared.SourcePocketDetailTypeEnum)
+	detailType := new(shared.SourcePocketDetailType)
 	if !r.Configuration.DetailType.IsUnknown() && !r.Configuration.DetailType.IsNull() {
-		*detailType = shared.SourcePocketDetailTypeEnum(r.Configuration.DetailType.ValueString())
+		*detailType = shared.SourcePocketDetailType(r.Configuration.DetailType.ValueString())
 	} else {
 		detailType = nil
 	}
@@ -45,16 +46,16 @@ func (r *SourcePocketResourceModel) ToCreateSDKType() *shared.SourcePocketCreate
 	} else {
 		since = nil
 	}
-	sort := new(shared.SourcePocketSortByEnum)
+	sort := new(shared.SourcePocketSortBy)
 	if !r.Configuration.Sort.IsUnknown() && !r.Configuration.Sort.IsNull() {
-		*sort = shared.SourcePocketSortByEnum(r.Configuration.Sort.ValueString())
+		*sort = shared.SourcePocketSortBy(r.Configuration.Sort.ValueString())
 	} else {
 		sort = nil
 	}
-	sourceType := shared.SourcePocketPocketEnum(r.Configuration.SourceType.ValueString())
-	state := new(shared.SourcePocketStateEnum)
+	sourceType := shared.SourcePocketPocket(r.Configuration.SourceType.ValueString())
+	state := new(shared.SourcePocketState)
 	if !r.Configuration.State.IsUnknown() && !r.Configuration.State.IsNull() {
-		*state = shared.SourcePocketStateEnum(r.Configuration.State.ValueString())
+		*state = shared.SourcePocketState(r.Configuration.State.ValueString())
 	} else {
 		state = nil
 	}
@@ -98,4 +99,11 @@ func (r *SourcePocketResourceModel) ToCreateSDKType() *shared.SourcePocketCreate
 func (r *SourcePocketResourceModel) ToDeleteSDKType() *shared.SourcePocketCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourcePocketResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

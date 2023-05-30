@@ -8,27 +8,27 @@ import (
 	"fmt"
 )
 
-type SourceAwsCloudtrailAwsCloudtrailEnum string
+type SourceAwsCloudtrailAwsCloudtrail string
 
 const (
-	SourceAwsCloudtrailAwsCloudtrailEnumAwsCloudtrail SourceAwsCloudtrailAwsCloudtrailEnum = "aws-cloudtrail"
+	SourceAwsCloudtrailAwsCloudtrailAwsCloudtrail SourceAwsCloudtrailAwsCloudtrail = "aws-cloudtrail"
 )
 
-func (e SourceAwsCloudtrailAwsCloudtrailEnum) ToPointer() *SourceAwsCloudtrailAwsCloudtrailEnum {
+func (e SourceAwsCloudtrailAwsCloudtrail) ToPointer() *SourceAwsCloudtrailAwsCloudtrail {
 	return &e
 }
 
-func (e *SourceAwsCloudtrailAwsCloudtrailEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceAwsCloudtrailAwsCloudtrail) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "aws-cloudtrail":
-		*e = SourceAwsCloudtrailAwsCloudtrailEnum(v)
+		*e = SourceAwsCloudtrailAwsCloudtrail(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAwsCloudtrailAwsCloudtrailEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceAwsCloudtrailAwsCloudtrail: %v", v)
 	}
 }
 
@@ -38,8 +38,8 @@ type SourceAwsCloudtrail struct {
 	// The default AWS Region to use, for example, us-west-1 or us-west-2. When specifying a Region inline during client initialization, this property is named region_name.
 	AwsRegionName string `json:"aws_region_name"`
 	// AWS CloudTrail Access Key ID. See the <a href="https://docs.airbyte.com/integrations/sources/aws-cloudtrail">docs</a> for more information on how to obtain this key.
-	AwsSecretKey string                               `json:"aws_secret_key"`
-	SourceType   SourceAwsCloudtrailAwsCloudtrailEnum `json:"sourceType"`
+	AwsSecretKey string                           `json:"aws_secret_key"`
+	SourceType   SourceAwsCloudtrailAwsCloudtrail `json:"sourceType"`
 	// The date you would like to replicate data. Data in AWS CloudTrail is available for last 90 days only. Format: YYYY-MM-DD.
 	StartDate types.Date `json:"start_date"`
 }

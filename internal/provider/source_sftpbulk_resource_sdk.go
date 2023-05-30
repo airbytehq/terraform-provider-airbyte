@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
@@ -20,9 +21,9 @@ func (r *SourceSftpBulkResourceModel) ToCreateSDKType() *shared.SourceSftpBulkCr
 	} else {
 		filePattern = nil
 	}
-	fileType := new(shared.SourceSftpBulkFileTypeEnum)
+	fileType := new(shared.SourceSftpBulkFileType)
 	if !r.Configuration.FileType.IsUnknown() && !r.Configuration.FileType.IsNull() {
-		*fileType = shared.SourceSftpBulkFileTypeEnum(r.Configuration.FileType.ValueString())
+		*fileType = shared.SourceSftpBulkFileType(r.Configuration.FileType.ValueString())
 	} else {
 		fileType = nil
 	}
@@ -47,7 +48,7 @@ func (r *SourceSftpBulkResourceModel) ToCreateSDKType() *shared.SourceSftpBulkCr
 	} else {
 		separator = nil
 	}
-	sourceType := shared.SourceSftpBulkSftpBulkEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceSftpBulkSftpBulk(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	streamName := r.Configuration.StreamName.ValueString()
 	username := r.Configuration.Username.ValueString()
@@ -86,4 +87,11 @@ func (r *SourceSftpBulkResourceModel) ToCreateSDKType() *shared.SourceSftpBulkCr
 func (r *SourceSftpBulkResourceModel) ToDeleteSDKType() *shared.SourceSftpBulkCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceSftpBulkResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

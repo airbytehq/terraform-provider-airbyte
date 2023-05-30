@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
@@ -16,7 +17,7 @@ func (r *SourceFreshdeskResourceModel) ToCreateSDKType() *shared.SourceFreshdesk
 	} else {
 		requestsPerMinute = nil
 	}
-	sourceType := shared.SourceFreshdeskFreshdeskEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceFreshdeskFreshdesk(r.Configuration.SourceType.ValueString())
 	startDate := new(time.Time)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -50,4 +51,11 @@ func (r *SourceFreshdeskResourceModel) ToCreateSDKType() *shared.SourceFreshdesk
 func (r *SourceFreshdeskResourceModel) ToDeleteSDKType() *shared.SourceFreshdeskCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceFreshdeskResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

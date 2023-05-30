@@ -10,66 +10,66 @@ import (
 	"fmt"
 )
 
-type SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthenticationAuthTypeEnum string
+type SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthenticationAuthType string
 
 const (
-	SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthenticationAuthTypeEnumService SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthenticationAuthTypeEnum = "Service"
+	SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthenticationAuthTypeService SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthenticationAuthType = "Service"
 )
 
-func (e SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthenticationAuthTypeEnum) ToPointer() *SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthenticationAuthTypeEnum {
+func (e SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthenticationAuthType) ToPointer() *SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthenticationAuthType {
 	return &e
 }
 
-func (e *SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthenticationAuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthenticationAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Service":
-		*e = SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthenticationAuthTypeEnum(v)
+		*e = SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthenticationAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthenticationAuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthenticationAuthType: %v", v)
 	}
 }
 
 // SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication - Credentials for the service
 type SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication struct {
-	AuthType *SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthenticationAuthTypeEnum `json:"auth_type,omitempty"`
+	AuthType *SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthenticationAuthType `json:"auth_type,omitempty"`
 	// The JSON key of the service account to use for authorization
 	CredentialsJSON string `json:"credentials_json"`
 }
 
-type SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauthAuthTypeEnum string
+type SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauthAuthType string
 
 const (
-	SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauthAuthTypeEnumClient SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauthAuthTypeEnum = "Client"
+	SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauthAuthTypeClient SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauthAuthType = "Client"
 )
 
-func (e SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauthAuthTypeEnum) ToPointer() *SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauthAuthTypeEnum {
+func (e SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauthAuthType) ToPointer() *SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauthAuthType {
 	return &e
 }
 
-func (e *SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauthAuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauthAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Client":
-		*e = SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauthAuthTypeEnum(v)
+		*e = SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauthAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauthAuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauthAuthType: %v", v)
 	}
 }
 
 // SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth - Credentials for the service
 type SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth struct {
 	// Access Token for making authenticated requests.
-	AccessToken *string                                                                        `json:"access_token,omitempty"`
-	AuthType    *SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauthAuthTypeEnum `json:"auth_type,omitempty"`
+	AccessToken *string                                                                    `json:"access_token,omitempty"`
+	AuthType    *SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauthAuthType `json:"auth_type,omitempty"`
 	// The Client ID of your Google Analytics developer application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your Google Analytics developer application.
@@ -146,27 +146,27 @@ func (u SourceGoogleAnalyticsDataAPICredentials) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-type SourceGoogleAnalyticsDataAPIGoogleAnalyticsDataAPIEnum string
+type SourceGoogleAnalyticsDataAPIGoogleAnalyticsDataAPI string
 
 const (
-	SourceGoogleAnalyticsDataAPIGoogleAnalyticsDataAPIEnumGoogleAnalyticsDataAPI SourceGoogleAnalyticsDataAPIGoogleAnalyticsDataAPIEnum = "google-analytics-data-api"
+	SourceGoogleAnalyticsDataAPIGoogleAnalyticsDataAPIGoogleAnalyticsDataAPI SourceGoogleAnalyticsDataAPIGoogleAnalyticsDataAPI = "google-analytics-data-api"
 )
 
-func (e SourceGoogleAnalyticsDataAPIGoogleAnalyticsDataAPIEnum) ToPointer() *SourceGoogleAnalyticsDataAPIGoogleAnalyticsDataAPIEnum {
+func (e SourceGoogleAnalyticsDataAPIGoogleAnalyticsDataAPI) ToPointer() *SourceGoogleAnalyticsDataAPIGoogleAnalyticsDataAPI {
 	return &e
 }
 
-func (e *SourceGoogleAnalyticsDataAPIGoogleAnalyticsDataAPIEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceGoogleAnalyticsDataAPIGoogleAnalyticsDataAPI) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "google-analytics-data-api":
-		*e = SourceGoogleAnalyticsDataAPIGoogleAnalyticsDataAPIEnum(v)
+		*e = SourceGoogleAnalyticsDataAPIGoogleAnalyticsDataAPI(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGoogleAnalyticsDataAPIGoogleAnalyticsDataAPIEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceGoogleAnalyticsDataAPIGoogleAnalyticsDataAPI: %v", v)
 	}
 }
 
@@ -178,8 +178,8 @@ type SourceGoogleAnalyticsDataAPI struct {
 	// The start date from which to replicate report data in the format YYYY-MM-DD. Data generated before this date will not be included in the report. Not applied to custom Cohort reports.
 	DateRangesStartDate types.Date `json:"date_ranges_start_date"`
 	// A Google Analytics GA4 property identifier whose events are tracked. Specified in the URL path and not the body such as "123...". See <a href="https://developers.google.com/analytics/devguides/reporting/data/v1/property-id#what_is_my_property_id">the docs</a> for more details.
-	PropertyID string                                                 `json:"property_id"`
-	SourceType SourceGoogleAnalyticsDataAPIGoogleAnalyticsDataAPIEnum `json:"sourceType"`
+	PropertyID string                                             `json:"property_id"`
+	SourceType SourceGoogleAnalyticsDataAPIGoogleAnalyticsDataAPI `json:"sourceType"`
 	// The time increment used by the connector when requesting data from the Google Analytics API. More information is available in the <a href="https://docs.airbyte.com/integrations/sources/google-analytics-v4/#sampling-in-reports">the docs</a>. The bigger this value is, the faster the sync will be, but the more likely that sampling will be applied to your data, potentially causing inaccuracies in the returned results. We recommend setting this to 1 unless you have a hard requirement to make the sync faster at the expense of accuracy. The minimum allowed value for this field is 1, and the maximum is 364. Not applied to custom Cohort reports.
 	WindowInDays *int64 `json:"window_in_days,omitempty"`
 }

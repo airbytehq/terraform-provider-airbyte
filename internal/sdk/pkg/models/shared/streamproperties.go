@@ -4,10 +4,10 @@ package shared
 
 // StreamProperties - The stream properties associated with a connection.
 type StreamProperties struct {
-	DefaultCursorField       []string                     `json:"defaultCursorField,omitempty"`
-	PropertyFields           [][]string                   `json:"propertyFields,omitempty"`
-	SourceDefinedCursorField *bool                        `json:"sourceDefinedCursorField,omitempty"`
-	SourceDefinedPrimaryKey  [][]string                   `json:"sourceDefinedPrimaryKey,omitempty"`
-	StreamName               *string                      `json:"streamName,omitempty"`
-	SyncModes                []ConnectionSyncModeEnumEnum `json:"syncModes,omitempty"`
+	DefaultCursorField       []string                 `json:"defaultCursorField,omitempty"`
+	PropertyFields           [][]string               `json:"propertyFields,omitempty"`
+	SourceDefinedCursorField *bool                    `json:"sourceDefinedCursorField,omitempty"`
+	SourceDefinedPrimaryKey  [][]string               `json:"sourceDefinedPrimaryKey,omitempty"`
+	StreamName               *string                  `json:"streamName,omitempty"`
+	SyncModes                []ConnectionSyncModeEnum `json:"syncModes,omitempty"`
 }

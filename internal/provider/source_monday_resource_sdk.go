@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceMondayResourceModel) ToCreateSDKType() *shared.SourceMondayCreateRequest {
@@ -11,7 +12,7 @@ func (r *SourceMondayResourceModel) ToCreateSDKType() *shared.SourceMondayCreate
 	var sourceMondayAuthorizationMethodOAuth20 *shared.SourceMondayAuthorizationMethodOAuth20
 	if r.Configuration.Credentials.SourceMondayAuthorizationMethodOAuth20 != nil {
 		accessToken := r.Configuration.Credentials.SourceMondayAuthorizationMethodOAuth20.AccessToken.ValueString()
-		authType := shared.SourceMondayAuthorizationMethodOAuth20AuthTypeEnum(r.Configuration.Credentials.SourceMondayAuthorizationMethodOAuth20.AuthType.ValueString())
+		authType := shared.SourceMondayAuthorizationMethodOAuth20AuthType(r.Configuration.Credentials.SourceMondayAuthorizationMethodOAuth20.AuthType.ValueString())
 		clientID := r.Configuration.Credentials.SourceMondayAuthorizationMethodOAuth20.ClientID.ValueString()
 		clientSecret := r.Configuration.Credentials.SourceMondayAuthorizationMethodOAuth20.ClientSecret.ValueString()
 		subdomain := new(string)
@@ -36,7 +37,7 @@ func (r *SourceMondayResourceModel) ToCreateSDKType() *shared.SourceMondayCreate
 	var sourceMondayAuthorizationMethodAPIToken *shared.SourceMondayAuthorizationMethodAPIToken
 	if r.Configuration.Credentials.SourceMondayAuthorizationMethodAPIToken != nil {
 		apiToken := r.Configuration.Credentials.SourceMondayAuthorizationMethodAPIToken.APIToken.ValueString()
-		authType1 := shared.SourceMondayAuthorizationMethodAPITokenAuthTypeEnum(r.Configuration.Credentials.SourceMondayAuthorizationMethodAPIToken.AuthType.ValueString())
+		authType1 := shared.SourceMondayAuthorizationMethodAPITokenAuthType(r.Configuration.Credentials.SourceMondayAuthorizationMethodAPIToken.AuthType.ValueString())
 		sourceMondayAuthorizationMethodAPIToken = &shared.SourceMondayAuthorizationMethodAPIToken{
 			APIToken: apiToken,
 			AuthType: authType1,
@@ -47,7 +48,7 @@ func (r *SourceMondayResourceModel) ToCreateSDKType() *shared.SourceMondayCreate
 			SourceMondayAuthorizationMethodAPIToken: sourceMondayAuthorizationMethodAPIToken,
 		}
 	}
-	sourceType := shared.SourceMondayMondayEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceMondayMonday(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceMonday{
 		Credentials: credentials,
 		SourceType:  sourceType,
@@ -72,4 +73,11 @@ func (r *SourceMondayResourceModel) ToCreateSDKType() *shared.SourceMondayCreate
 func (r *SourceMondayResourceModel) ToDeleteSDKType() *shared.SourceMondayCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceMondayResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

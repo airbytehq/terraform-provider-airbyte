@@ -7,34 +7,34 @@ import (
 	"fmt"
 )
 
-type SourceBigcommerceBigcommerceEnum string
+type SourceBigcommerceBigcommerce string
 
 const (
-	SourceBigcommerceBigcommerceEnumBigcommerce SourceBigcommerceBigcommerceEnum = "bigcommerce"
+	SourceBigcommerceBigcommerceBigcommerce SourceBigcommerceBigcommerce = "bigcommerce"
 )
 
-func (e SourceBigcommerceBigcommerceEnum) ToPointer() *SourceBigcommerceBigcommerceEnum {
+func (e SourceBigcommerceBigcommerce) ToPointer() *SourceBigcommerceBigcommerce {
 	return &e
 }
 
-func (e *SourceBigcommerceBigcommerceEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceBigcommerceBigcommerce) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "bigcommerce":
-		*e = SourceBigcommerceBigcommerceEnum(v)
+		*e = SourceBigcommerceBigcommerce(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceBigcommerceBigcommerceEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceBigcommerceBigcommerce: %v", v)
 	}
 }
 
 type SourceBigcommerce struct {
 	// Access Token for making authenticated requests.
-	AccessToken string                           `json:"access_token"`
-	SourceType  SourceBigcommerceBigcommerceEnum `json:"sourceType"`
+	AccessToken string                       `json:"access_token"`
+	SourceType  SourceBigcommerceBigcommerce `json:"sourceType"`
 	// The date you would like to replicate data. Format: YYYY-MM-DD.
 	StartDate string `json:"start_date"`
 	// The hash code of the store. For https://api.bigcommerce.com/stores/HASH_CODE/v3/, The store's hash code is 'HASH_CODE'.

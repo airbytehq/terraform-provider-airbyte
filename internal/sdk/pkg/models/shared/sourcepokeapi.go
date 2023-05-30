@@ -7,32 +7,32 @@ import (
 	"fmt"
 )
 
-type SourcePokeapiPokeapiEnum string
+type SourcePokeapiPokeapi string
 
 const (
-	SourcePokeapiPokeapiEnumPokeapi SourcePokeapiPokeapiEnum = "pokeapi"
+	SourcePokeapiPokeapiPokeapi SourcePokeapiPokeapi = "pokeapi"
 )
 
-func (e SourcePokeapiPokeapiEnum) ToPointer() *SourcePokeapiPokeapiEnum {
+func (e SourcePokeapiPokeapi) ToPointer() *SourcePokeapiPokeapi {
 	return &e
 }
 
-func (e *SourcePokeapiPokeapiEnum) UnmarshalJSON(data []byte) error {
+func (e *SourcePokeapiPokeapi) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "pokeapi":
-		*e = SourcePokeapiPokeapiEnum(v)
+		*e = SourcePokeapiPokeapi(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePokeapiPokeapiEnum: %v", v)
+		return fmt.Errorf("invalid value for SourcePokeapiPokeapi: %v", v)
 	}
 }
 
 type SourcePokeapi struct {
 	// Pokemon requested from the API.
-	PokemonName string                   `json:"pokemon_name"`
-	SourceType  SourcePokeapiPokeapiEnum `json:"sourceType"`
+	PokemonName string               `json:"pokemon_name"`
+	SourceType  SourcePokeapiPokeapi `json:"sourceType"`
 }

@@ -8,55 +8,55 @@ import (
 	"time"
 )
 
-type SourceSurveymonkeySurveyMonkeyAuthorizationMethodAuthMethodEnum string
+type SourceSurveymonkeySurveyMonkeyAuthorizationMethodAuthMethod string
 
 const (
-	SourceSurveymonkeySurveyMonkeyAuthorizationMethodAuthMethodEnumOauth20 SourceSurveymonkeySurveyMonkeyAuthorizationMethodAuthMethodEnum = "oauth2.0"
+	SourceSurveymonkeySurveyMonkeyAuthorizationMethodAuthMethodOauth20 SourceSurveymonkeySurveyMonkeyAuthorizationMethodAuthMethod = "oauth2.0"
 )
 
-func (e SourceSurveymonkeySurveyMonkeyAuthorizationMethodAuthMethodEnum) ToPointer() *SourceSurveymonkeySurveyMonkeyAuthorizationMethodAuthMethodEnum {
+func (e SourceSurveymonkeySurveyMonkeyAuthorizationMethodAuthMethod) ToPointer() *SourceSurveymonkeySurveyMonkeyAuthorizationMethodAuthMethod {
 	return &e
 }
 
-func (e *SourceSurveymonkeySurveyMonkeyAuthorizationMethodAuthMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceSurveymonkeySurveyMonkeyAuthorizationMethodAuthMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "oauth2.0":
-		*e = SourceSurveymonkeySurveyMonkeyAuthorizationMethodAuthMethodEnum(v)
+		*e = SourceSurveymonkeySurveyMonkeyAuthorizationMethodAuthMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSurveymonkeySurveyMonkeyAuthorizationMethodAuthMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceSurveymonkeySurveyMonkeyAuthorizationMethodAuthMethod: %v", v)
 	}
 }
 
 // SourceSurveymonkeySurveyMonkeyAuthorizationMethod - The authorization method to use to retrieve data from SurveyMonkey
 type SourceSurveymonkeySurveyMonkeyAuthorizationMethod struct {
 	// Access Token for making authenticated requests. See the <a href="https://docs.airbyte.io/integrations/sources/surveymonkey">docs</a> for information on how to generate this key.
-	AccessToken string                                                          `json:"access_token"`
-	AuthMethod  SourceSurveymonkeySurveyMonkeyAuthorizationMethodAuthMethodEnum `json:"auth_method"`
+	AccessToken string                                                      `json:"access_token"`
+	AuthMethod  SourceSurveymonkeySurveyMonkeyAuthorizationMethodAuthMethod `json:"auth_method"`
 	// The Client ID of the SurveyMonkey developer application.
 	ClientID *string `json:"client_id,omitempty"`
 	// The Client Secret of the SurveyMonkey developer application.
 	ClientSecret *string `json:"client_secret,omitempty"`
 }
 
-// SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccountEnum - Depending on the originating datacenter of the SurveyMonkey account, the API access URL may be different.
-type SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccountEnum string
+// SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccount - Depending on the originating datacenter of the SurveyMonkey account, the API access URL may be different.
+type SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccount string
 
 const (
-	SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccountEnumUsa    SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccountEnum = "USA"
-	SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccountEnumEurope SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccountEnum = "Europe"
-	SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccountEnumCanada SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccountEnum = "Canada"
+	SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccountUsa    SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccount = "USA"
+	SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccountEurope SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccount = "Europe"
+	SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccountCanada SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccount = "Canada"
 )
 
-func (e SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccountEnum) ToPointer() *SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccountEnum {
+func (e SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccount) ToPointer() *SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccount {
 	return &e
 }
 
-func (e *SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccountEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccount) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -67,34 +67,34 @@ func (e *SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccountEnum) Unmarsh
 	case "Europe":
 		fallthrough
 	case "Canada":
-		*e = SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccountEnum(v)
+		*e = SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccount(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccountEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccount: %v", v)
 	}
 }
 
-type SourceSurveymonkeySurveymonkeyEnum string
+type SourceSurveymonkeySurveymonkey string
 
 const (
-	SourceSurveymonkeySurveymonkeyEnumSurveymonkey SourceSurveymonkeySurveymonkeyEnum = "surveymonkey"
+	SourceSurveymonkeySurveymonkeySurveymonkey SourceSurveymonkeySurveymonkey = "surveymonkey"
 )
 
-func (e SourceSurveymonkeySurveymonkeyEnum) ToPointer() *SourceSurveymonkeySurveymonkeyEnum {
+func (e SourceSurveymonkeySurveymonkey) ToPointer() *SourceSurveymonkeySurveymonkey {
 	return &e
 }
 
-func (e *SourceSurveymonkeySurveymonkeyEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceSurveymonkeySurveymonkey) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "surveymonkey":
-		*e = SourceSurveymonkeySurveymonkeyEnum(v)
+		*e = SourceSurveymonkeySurveymonkey(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSurveymonkeySurveymonkeyEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceSurveymonkeySurveymonkey: %v", v)
 	}
 }
 
@@ -102,8 +102,8 @@ type SourceSurveymonkey struct {
 	// The authorization method to use to retrieve data from SurveyMonkey
 	Credentials *SourceSurveymonkeySurveyMonkeyAuthorizationMethod `json:"credentials,omitempty"`
 	// Depending on the originating datacenter of the SurveyMonkey account, the API access URL may be different.
-	Origin     *SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccountEnum `json:"origin,omitempty"`
-	SourceType SourceSurveymonkeySurveymonkeyEnum                              `json:"sourceType"`
+	Origin     *SourceSurveymonkeyOriginDatacenterOfTheSurveyMonkeyAccount `json:"origin,omitempty"`
+	SourceType SourceSurveymonkeySurveymonkey                              `json:"sourceType"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
 	// IDs of the surveys from which you'd like to replicate data. If left empty, data from all boards to which you have access will be replicated.

@@ -7,32 +7,32 @@ import (
 	"fmt"
 )
 
-type SourceRssRssEnum string
+type SourceRssRss string
 
 const (
-	SourceRssRssEnumRss SourceRssRssEnum = "rss"
+	SourceRssRssRss SourceRssRss = "rss"
 )
 
-func (e SourceRssRssEnum) ToPointer() *SourceRssRssEnum {
+func (e SourceRssRss) ToPointer() *SourceRssRss {
 	return &e
 }
 
-func (e *SourceRssRssEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceRssRss) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "rss":
-		*e = SourceRssRssEnum(v)
+		*e = SourceRssRss(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceRssRssEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceRssRss: %v", v)
 	}
 }
 
 type SourceRss struct {
-	SourceType SourceRssRssEnum `json:"sourceType"`
+	SourceType SourceRssRss `json:"sourceType"`
 	// RSS Feed URL
 	URL string `json:"url"`
 }

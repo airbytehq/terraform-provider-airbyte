@@ -4,11 +4,12 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceHubplannerResourceModel) ToCreateSDKType() *shared.SourceHubplannerCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	sourceType := shared.SourceHubplannerHubplannerEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceHubplannerHubplanner(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceHubplanner{
 		APIKey:     apiKey,
 		SourceType: sourceType,
@@ -33,4 +34,11 @@ func (r *SourceHubplannerResourceModel) ToCreateSDKType() *shared.SourceHubplann
 func (r *SourceHubplannerResourceModel) ToDeleteSDKType() *shared.SourceHubplannerCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceHubplannerResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

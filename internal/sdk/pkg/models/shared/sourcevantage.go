@@ -7,32 +7,32 @@ import (
 	"fmt"
 )
 
-type SourceVantageVantageEnum string
+type SourceVantageVantage string
 
 const (
-	SourceVantageVantageEnumVantage SourceVantageVantageEnum = "vantage"
+	SourceVantageVantageVantage SourceVantageVantage = "vantage"
 )
 
-func (e SourceVantageVantageEnum) ToPointer() *SourceVantageVantageEnum {
+func (e SourceVantageVantage) ToPointer() *SourceVantageVantage {
 	return &e
 }
 
-func (e *SourceVantageVantageEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceVantageVantage) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "vantage":
-		*e = SourceVantageVantageEnum(v)
+		*e = SourceVantageVantage(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceVantageVantageEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceVantageVantage: %v", v)
 	}
 }
 
 type SourceVantage struct {
 	// Your API Access token. See <a href="https://vantage.readme.io/reference/authentication">here</a>.
-	AccessToken string                   `json:"access_token"`
-	SourceType  SourceVantageVantageEnum `json:"sourceType"`
+	AccessToken string               `json:"access_token"`
+	SourceType  SourceVantageVantage `json:"sourceType"`
 }

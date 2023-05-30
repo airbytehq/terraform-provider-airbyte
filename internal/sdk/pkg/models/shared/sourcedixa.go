@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type SourceDixaDixaEnum string
+type SourceDixaDixa string
 
 const (
-	SourceDixaDixaEnumDixa SourceDixaDixaEnum = "dixa"
+	SourceDixaDixaDixa SourceDixaDixa = "dixa"
 )
 
-func (e SourceDixaDixaEnum) ToPointer() *SourceDixaDixaEnum {
+func (e SourceDixaDixa) ToPointer() *SourceDixaDixa {
 	return &e
 }
 
-func (e *SourceDixaDixaEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceDixaDixa) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "dixa":
-		*e = SourceDixaDixaEnum(v)
+		*e = SourceDixaDixa(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceDixaDixaEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceDixaDixa: %v", v)
 	}
 }
 
@@ -35,8 +35,8 @@ type SourceDixa struct {
 	// Dixa API token
 	APIToken string `json:"api_token"`
 	// Number of days to batch into one request. Max 31.
-	BatchSize  *int64             `json:"batch_size,omitempty"`
-	SourceType SourceDixaDixaEnum `json:"sourceType"`
+	BatchSize  *int64         `json:"batch_size,omitempty"`
+	SourceType SourceDixaDixa `json:"sourceType"`
 	// The connector pulls records updated from this date onwards.
 	StartDate string `json:"start_date"`
 }

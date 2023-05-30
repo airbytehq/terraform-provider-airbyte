@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceMongodbResourceModel) ToCreateSDKType() *shared.SourceMongodbCreateRequest {
@@ -18,7 +19,7 @@ func (r *SourceMongodbResourceModel) ToCreateSDKType() *shared.SourceMongodbCrea
 	var sourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance *shared.SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance
 	if r.Configuration.InstanceType.SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance != nil {
 		host := r.Configuration.InstanceType.SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Host.ValueString()
-		instance := shared.SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstanceEnum(r.Configuration.InstanceType.SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Instance.ValueString())
+		instance := shared.SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstance(r.Configuration.InstanceType.SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Instance.ValueString())
 		port := r.Configuration.InstanceType.SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Port.ValueInt64()
 		sourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance = &shared.SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance{
 			Host:     host,
@@ -33,7 +34,7 @@ func (r *SourceMongodbResourceModel) ToCreateSDKType() *shared.SourceMongodbCrea
 	}
 	var sourceMongodbMongoDbInstanceTypeReplicaSet *shared.SourceMongodbMongoDbInstanceTypeReplicaSet
 	if r.Configuration.InstanceType.SourceMongodbMongoDbInstanceTypeReplicaSet != nil {
-		instance1 := shared.SourceMongodbMongoDbInstanceTypeReplicaSetInstanceEnum(r.Configuration.InstanceType.SourceMongodbMongoDbInstanceTypeReplicaSet.Instance.ValueString())
+		instance1 := shared.SourceMongodbMongoDbInstanceTypeReplicaSetInstance(r.Configuration.InstanceType.SourceMongodbMongoDbInstanceTypeReplicaSet.Instance.ValueString())
 		replicaSet := new(string)
 		if !r.Configuration.InstanceType.SourceMongodbMongoDbInstanceTypeReplicaSet.ReplicaSet.IsUnknown() && !r.Configuration.InstanceType.SourceMongodbMongoDbInstanceTypeReplicaSet.ReplicaSet.IsNull() {
 			*replicaSet = r.Configuration.InstanceType.SourceMongodbMongoDbInstanceTypeReplicaSet.ReplicaSet.ValueString()
@@ -55,7 +56,7 @@ func (r *SourceMongodbResourceModel) ToCreateSDKType() *shared.SourceMongodbCrea
 	var sourceMongodbMongoDBInstanceTypeMongoDBAtlas *shared.SourceMongodbMongoDBInstanceTypeMongoDBAtlas
 	if r.Configuration.InstanceType.SourceMongodbMongoDBInstanceTypeMongoDBAtlas != nil {
 		clusterURL := r.Configuration.InstanceType.SourceMongodbMongoDBInstanceTypeMongoDBAtlas.ClusterURL.ValueString()
-		instance2 := shared.SourceMongodbMongoDBInstanceTypeMongoDBAtlasInstanceEnum(r.Configuration.InstanceType.SourceMongodbMongoDBInstanceTypeMongoDBAtlas.Instance.ValueString())
+		instance2 := shared.SourceMongodbMongoDBInstanceTypeMongoDBAtlasInstance(r.Configuration.InstanceType.SourceMongodbMongoDBInstanceTypeMongoDBAtlas.Instance.ValueString())
 		sourceMongodbMongoDBInstanceTypeMongoDBAtlas = &shared.SourceMongodbMongoDBInstanceTypeMongoDBAtlas{
 			ClusterURL: clusterURL,
 			Instance:   instance2,
@@ -72,7 +73,7 @@ func (r *SourceMongodbResourceModel) ToCreateSDKType() *shared.SourceMongodbCrea
 	} else {
 		password = nil
 	}
-	sourceType := shared.SourceMongodbMongodbEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceMongodbMongodb(r.Configuration.SourceType.ValueString())
 	user := new(string)
 	if !r.Configuration.User.IsUnknown() && !r.Configuration.User.IsNull() {
 		*user = r.Configuration.User.ValueString()
@@ -107,4 +108,11 @@ func (r *SourceMongodbResourceModel) ToCreateSDKType() *shared.SourceMongodbCrea
 func (r *SourceMongodbResourceModel) ToDeleteSDKType() *shared.SourceMongodbCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceMongodbResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

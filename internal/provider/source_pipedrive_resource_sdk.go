@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
@@ -11,14 +12,14 @@ func (r *SourcePipedriveResourceModel) ToCreateSDKType() *shared.SourcePipedrive
 	var authorization *shared.SourcePipedriveAPIKeyAuthentication
 	if r.Configuration.Authorization != nil {
 		apiToken := r.Configuration.Authorization.APIToken.ValueString()
-		authType := shared.SourcePipedriveAPIKeyAuthenticationAuthTypeEnum(r.Configuration.Authorization.AuthType.ValueString())
+		authType := shared.SourcePipedriveAPIKeyAuthenticationAuthType(r.Configuration.Authorization.AuthType.ValueString())
 		authorization = &shared.SourcePipedriveAPIKeyAuthentication{
 			APIToken: apiToken,
 			AuthType: authType,
 		}
 	}
 	replicationStartDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.ReplicationStartDate.ValueString())
-	sourceType := shared.SourcePipedrivePipedriveEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourcePipedrivePipedrive(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourcePipedrive{
 		Authorization:        authorization,
 		ReplicationStartDate: replicationStartDate,
@@ -44,4 +45,11 @@ func (r *SourcePipedriveResourceModel) ToCreateSDKType() *shared.SourcePipedrive
 func (r *SourcePipedriveResourceModel) ToDeleteSDKType() *shared.SourcePipedriveCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourcePipedriveResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

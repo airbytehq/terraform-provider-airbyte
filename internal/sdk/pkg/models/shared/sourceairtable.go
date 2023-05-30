@@ -10,64 +10,64 @@ import (
 	"time"
 )
 
-type SourceAirtableAuthenticationPersonalAccessTokenAuthMethodEnum string
+type SourceAirtableAuthenticationPersonalAccessTokenAuthMethod string
 
 const (
-	SourceAirtableAuthenticationPersonalAccessTokenAuthMethodEnumAPIKey SourceAirtableAuthenticationPersonalAccessTokenAuthMethodEnum = "api_key"
+	SourceAirtableAuthenticationPersonalAccessTokenAuthMethodAPIKey SourceAirtableAuthenticationPersonalAccessTokenAuthMethod = "api_key"
 )
 
-func (e SourceAirtableAuthenticationPersonalAccessTokenAuthMethodEnum) ToPointer() *SourceAirtableAuthenticationPersonalAccessTokenAuthMethodEnum {
+func (e SourceAirtableAuthenticationPersonalAccessTokenAuthMethod) ToPointer() *SourceAirtableAuthenticationPersonalAccessTokenAuthMethod {
 	return &e
 }
 
-func (e *SourceAirtableAuthenticationPersonalAccessTokenAuthMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceAirtableAuthenticationPersonalAccessTokenAuthMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "api_key":
-		*e = SourceAirtableAuthenticationPersonalAccessTokenAuthMethodEnum(v)
+		*e = SourceAirtableAuthenticationPersonalAccessTokenAuthMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAirtableAuthenticationPersonalAccessTokenAuthMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceAirtableAuthenticationPersonalAccessTokenAuthMethod: %v", v)
 	}
 }
 
 type SourceAirtableAuthenticationPersonalAccessToken struct {
 	// The Personal Access Token for the Airtable account. See the <a href="https://airtable.com/developers/web/guides/personal-access-tokens">Support Guide</a> for more information on how to obtain this token.
-	APIKey     string                                                         `json:"api_key"`
-	AuthMethod *SourceAirtableAuthenticationPersonalAccessTokenAuthMethodEnum `json:"auth_method,omitempty"`
+	APIKey     string                                                     `json:"api_key"`
+	AuthMethod *SourceAirtableAuthenticationPersonalAccessTokenAuthMethod `json:"auth_method,omitempty"`
 }
 
-type SourceAirtableAuthenticationOAuth20AuthMethodEnum string
+type SourceAirtableAuthenticationOAuth20AuthMethod string
 
 const (
-	SourceAirtableAuthenticationOAuth20AuthMethodEnumOauth20 SourceAirtableAuthenticationOAuth20AuthMethodEnum = "oauth2.0"
+	SourceAirtableAuthenticationOAuth20AuthMethodOauth20 SourceAirtableAuthenticationOAuth20AuthMethod = "oauth2.0"
 )
 
-func (e SourceAirtableAuthenticationOAuth20AuthMethodEnum) ToPointer() *SourceAirtableAuthenticationOAuth20AuthMethodEnum {
+func (e SourceAirtableAuthenticationOAuth20AuthMethod) ToPointer() *SourceAirtableAuthenticationOAuth20AuthMethod {
 	return &e
 }
 
-func (e *SourceAirtableAuthenticationOAuth20AuthMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceAirtableAuthenticationOAuth20AuthMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "oauth2.0":
-		*e = SourceAirtableAuthenticationOAuth20AuthMethodEnum(v)
+		*e = SourceAirtableAuthenticationOAuth20AuthMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAirtableAuthenticationOAuth20AuthMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceAirtableAuthenticationOAuth20AuthMethod: %v", v)
 	}
 }
 
 type SourceAirtableAuthenticationOAuth20 struct {
 	// Access Token for making authenticated requests.
-	AccessToken *string                                            `json:"access_token,omitempty"`
-	AuthMethod  *SourceAirtableAuthenticationOAuth20AuthMethodEnum `json:"auth_method,omitempty"`
+	AccessToken *string                                        `json:"access_token,omitempty"`
+	AuthMethod  *SourceAirtableAuthenticationOAuth20AuthMethod `json:"auth_method,omitempty"`
 	// The client ID of the Airtable developer application.
 	ClientID string `json:"client_id"`
 	// The client secret the Airtable developer application.
@@ -146,31 +146,31 @@ func (u SourceAirtableAuthentication) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-type SourceAirtableAirtableEnum string
+type SourceAirtableAirtable string
 
 const (
-	SourceAirtableAirtableEnumAirtable SourceAirtableAirtableEnum = "airtable"
+	SourceAirtableAirtableAirtable SourceAirtableAirtable = "airtable"
 )
 
-func (e SourceAirtableAirtableEnum) ToPointer() *SourceAirtableAirtableEnum {
+func (e SourceAirtableAirtable) ToPointer() *SourceAirtableAirtable {
 	return &e
 }
 
-func (e *SourceAirtableAirtableEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceAirtableAirtable) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "airtable":
-		*e = SourceAirtableAirtableEnum(v)
+		*e = SourceAirtableAirtable(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAirtableAirtableEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceAirtableAirtable: %v", v)
 	}
 }
 
 type SourceAirtable struct {
 	Credentials *SourceAirtableAuthentication `json:"credentials,omitempty"`
-	SourceType  SourceAirtableAirtableEnum    `json:"sourceType"`
+	SourceType  SourceAirtableAirtable        `json:"sourceType"`
 }

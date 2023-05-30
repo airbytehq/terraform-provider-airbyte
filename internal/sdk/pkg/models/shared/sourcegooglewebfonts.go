@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type SourceGoogleWebfontsGoogleWebfontsEnum string
+type SourceGoogleWebfontsGoogleWebfonts string
 
 const (
-	SourceGoogleWebfontsGoogleWebfontsEnumGoogleWebfonts SourceGoogleWebfontsGoogleWebfontsEnum = "google-webfonts"
+	SourceGoogleWebfontsGoogleWebfontsGoogleWebfonts SourceGoogleWebfontsGoogleWebfonts = "google-webfonts"
 )
 
-func (e SourceGoogleWebfontsGoogleWebfontsEnum) ToPointer() *SourceGoogleWebfontsGoogleWebfontsEnum {
+func (e SourceGoogleWebfontsGoogleWebfonts) ToPointer() *SourceGoogleWebfontsGoogleWebfonts {
 	return &e
 }
 
-func (e *SourceGoogleWebfontsGoogleWebfontsEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceGoogleWebfontsGoogleWebfonts) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "google-webfonts":
-		*e = SourceGoogleWebfontsGoogleWebfontsEnum(v)
+		*e = SourceGoogleWebfontsGoogleWebfonts(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGoogleWebfontsGoogleWebfontsEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceGoogleWebfontsGoogleWebfonts: %v", v)
 	}
 }
 
@@ -39,6 +39,6 @@ type SourceGoogleWebfonts struct {
 	// Optional, boolean type
 	PrettyPrint *string `json:"prettyPrint,omitempty"`
 	// Optional, to find how to sort
-	Sort       *string                                `json:"sort,omitempty"`
-	SourceType SourceGoogleWebfontsGoogleWebfontsEnum `json:"sourceType"`
+	Sort       *string                            `json:"sort,omitempty"`
+	SourceType SourceGoogleWebfontsGoogleWebfonts `json:"sourceType"`
 }

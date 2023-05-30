@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
@@ -18,13 +19,13 @@ func (r *SourceFacebookMarketingResourceModel) ToCreateSDKType() *shared.SourceF
 	}
 	customInsights := make([]shared.SourceFacebookMarketingInsightConfig, 0)
 	for _, customInsightsItem := range r.Configuration.CustomInsights {
-		actionBreakdowns := make([]shared.SourceFacebookMarketingInsightConfigValidActionBreakdownsEnum, 0)
+		actionBreakdowns := make([]shared.SourceFacebookMarketingInsightConfigValidActionBreakdowns, 0)
 		for _, actionBreakdownsItem := range customInsightsItem.ActionBreakdowns {
-			actionBreakdowns = append(actionBreakdowns, shared.SourceFacebookMarketingInsightConfigValidActionBreakdownsEnum(actionBreakdownsItem.ValueString()))
+			actionBreakdowns = append(actionBreakdowns, shared.SourceFacebookMarketingInsightConfigValidActionBreakdowns(actionBreakdownsItem.ValueString()))
 		}
-		breakdowns := make([]shared.SourceFacebookMarketingInsightConfigValidBreakdownsEnum, 0)
+		breakdowns := make([]shared.SourceFacebookMarketingInsightConfigValidBreakdowns, 0)
 		for _, breakdownsItem := range customInsightsItem.Breakdowns {
-			breakdowns = append(breakdowns, shared.SourceFacebookMarketingInsightConfigValidBreakdownsEnum(breakdownsItem.ValueString()))
+			breakdowns = append(breakdowns, shared.SourceFacebookMarketingInsightConfigValidBreakdowns(breakdownsItem.ValueString()))
 		}
 		endDate := new(time.Time)
 		if !customInsightsItem.EndDate.IsUnknown() && !customInsightsItem.EndDate.IsNull() {
@@ -32,9 +33,9 @@ func (r *SourceFacebookMarketingResourceModel) ToCreateSDKType() *shared.SourceF
 		} else {
 			endDate = nil
 		}
-		fields := make([]shared.SourceFacebookMarketingInsightConfigValidEnumsEnum, 0)
+		fields := make([]shared.SourceFacebookMarketingInsightConfigValidEnums, 0)
 		for _, fieldsItem := range customInsightsItem.Fields {
-			fields = append(fields, shared.SourceFacebookMarketingInsightConfigValidEnumsEnum(fieldsItem.ValueString()))
+			fields = append(fields, shared.SourceFacebookMarketingInsightConfigValidEnums(fieldsItem.ValueString()))
 		}
 		insightsLookbackWindow := new(int64)
 		if !customInsightsItem.InsightsLookbackWindow.IsUnknown() && !customInsightsItem.InsightsLookbackWindow.IsNull() {
@@ -42,9 +43,9 @@ func (r *SourceFacebookMarketingResourceModel) ToCreateSDKType() *shared.SourceF
 		} else {
 			insightsLookbackWindow = nil
 		}
-		level := new(shared.SourceFacebookMarketingInsightConfigLevelEnum)
+		level := new(shared.SourceFacebookMarketingInsightConfigLevel)
 		if !customInsightsItem.Level.IsUnknown() && !customInsightsItem.Level.IsNull() {
-			*level = shared.SourceFacebookMarketingInsightConfigLevelEnum(customInsightsItem.Level.ValueString())
+			*level = shared.SourceFacebookMarketingInsightConfigLevel(customInsightsItem.Level.ValueString())
 		} else {
 			level = nil
 		}
@@ -109,7 +110,7 @@ func (r *SourceFacebookMarketingResourceModel) ToCreateSDKType() *shared.SourceF
 	} else {
 		pageSize = nil
 	}
-	sourceType := shared.SourceFacebookMarketingFacebookMarketingEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceFacebookMarketingFacebookMarketing(r.Configuration.SourceType.ValueString())
 	startDate1, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceFacebookMarketing{
 		AccessToken:                accessToken,
@@ -145,4 +146,11 @@ func (r *SourceFacebookMarketingResourceModel) ToCreateSDKType() *shared.SourceF
 func (r *SourceFacebookMarketingResourceModel) ToDeleteSDKType() *shared.SourceFacebookMarketingCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceFacebookMarketingResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

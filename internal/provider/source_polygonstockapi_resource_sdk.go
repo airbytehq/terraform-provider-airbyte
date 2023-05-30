@@ -5,6 +5,7 @@ package provider
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	customTypes "airbyte/internal/sdk/pkg/types"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourcePolygonStockAPIResourceModel) ToCreateSDKType() *shared.SourcePolygonStockAPICreateRequest {
@@ -15,7 +16,7 @@ func (r *SourcePolygonStockAPIResourceModel) ToCreateSDKType() *shared.SourcePol
 		adjusted = nil
 	}
 	apiKey := r.Configuration.APIKey.ValueString()
-	endDate, _ := customTypes.NewDate(r.Configuration.EndDate.ValueString())
+	endDate := customTypes.MustDateFromString(r.Configuration.EndDate.ValueString())
 	limit := new(int64)
 	if !r.Configuration.Limit.IsUnknown() && !r.Configuration.Limit.IsNull() {
 		*limit = r.Configuration.Limit.ValueInt64()
@@ -29,8 +30,8 @@ func (r *SourcePolygonStockAPIResourceModel) ToCreateSDKType() *shared.SourcePol
 	} else {
 		sort = nil
 	}
-	sourceType := shared.SourcePolygonStockAPIPolygonStockAPIEnum(r.Configuration.SourceType.ValueString())
-	startDate, _ := customTypes.NewDate(r.Configuration.StartDate.ValueString())
+	sourceType := shared.SourcePolygonStockAPIPolygonStockAPI(r.Configuration.SourceType.ValueString())
+	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	stocksTicker := r.Configuration.StocksTicker.ValueString()
 	timespan := r.Configuration.Timespan.ValueString()
 	configuration := shared.SourcePolygonStockAPI{
@@ -65,4 +66,11 @@ func (r *SourcePolygonStockAPIResourceModel) ToCreateSDKType() *shared.SourcePol
 func (r *SourcePolygonStockAPIResourceModel) ToDeleteSDKType() *shared.SourcePolygonStockAPICreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourcePolygonStockAPIResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

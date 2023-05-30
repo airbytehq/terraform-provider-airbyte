@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type SourceYouniumYouniumEnum string
+type SourceYouniumYounium string
 
 const (
-	SourceYouniumYouniumEnumYounium SourceYouniumYouniumEnum = "younium"
+	SourceYouniumYouniumYounium SourceYouniumYounium = "younium"
 )
 
-func (e SourceYouniumYouniumEnum) ToPointer() *SourceYouniumYouniumEnum {
+func (e SourceYouniumYounium) ToPointer() *SourceYouniumYounium {
 	return &e
 }
 
-func (e *SourceYouniumYouniumEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceYouniumYounium) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "younium":
-		*e = SourceYouniumYouniumEnum(v)
+		*e = SourceYouniumYounium(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceYouniumYouniumEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceYouniumYounium: %v", v)
 	}
 }
 
@@ -37,8 +37,8 @@ type SourceYounium struct {
 	// Account password for younium account API key
 	Password string `json:"password"`
 	// Property defining if connector is used against playground or production environment
-	Playground *bool                    `json:"playground,omitempty"`
-	SourceType SourceYouniumYouniumEnum `json:"sourceType"`
+	Playground *bool                `json:"playground,omitempty"`
+	SourceType SourceYouniumYounium `json:"sourceType"`
 	// Username for Younium account
 	Username string `json:"username"`
 }

@@ -4,14 +4,15 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
 func (r *SourceChargebeeResourceModel) ToCreateSDKType() *shared.SourceChargebeeCreateRequest {
-	productCatalog := shared.SourceChargebeeProductCatalogEnum(r.Configuration.ProductCatalog.ValueString())
+	productCatalog := shared.SourceChargebeeProductCatalog(r.Configuration.ProductCatalog.ValueString())
 	site := r.Configuration.Site.ValueString()
 	siteAPIKey := r.Configuration.SiteAPIKey.ValueString()
-	sourceType := shared.SourceChargebeeChargebeeEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceChargebeeChargebee(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceChargebee{
 		ProductCatalog: productCatalog,
@@ -40,4 +41,11 @@ func (r *SourceChargebeeResourceModel) ToCreateSDKType() *shared.SourceChargebee
 func (r *SourceChargebeeResourceModel) ToDeleteSDKType() *shared.SourceChargebeeCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceChargebeeResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

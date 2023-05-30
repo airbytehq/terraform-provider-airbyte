@@ -8,34 +8,34 @@ import (
 	"time"
 )
 
-type SourceInstagramInstagramEnum string
+type SourceInstagramInstagram string
 
 const (
-	SourceInstagramInstagramEnumInstagram SourceInstagramInstagramEnum = "instagram"
+	SourceInstagramInstagramInstagram SourceInstagramInstagram = "instagram"
 )
 
-func (e SourceInstagramInstagramEnum) ToPointer() *SourceInstagramInstagramEnum {
+func (e SourceInstagramInstagram) ToPointer() *SourceInstagramInstagram {
 	return &e
 }
 
-func (e *SourceInstagramInstagramEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceInstagramInstagram) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "instagram":
-		*e = SourceInstagramInstagramEnum(v)
+		*e = SourceInstagramInstagram(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceInstagramInstagramEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceInstagramInstagram: %v", v)
 	}
 }
 
 type SourceInstagram struct {
 	// The value of the access token generated with <b>instagram_basic, instagram_manage_insights, pages_show_list, pages_read_engagement, Instagram Public Content Access</b> permissions. See the <a href="https://docs.airbyte.com/integrations/sources/instagram/#step-1-set-up-instagram">docs</a> for more information
-	AccessToken string                       `json:"access_token"`
-	SourceType  SourceInstagramInstagramEnum `json:"sourceType"`
+	AccessToken string                   `json:"access_token"`
+	SourceType  SourceInstagramInstagram `json:"sourceType"`
 	// The date from which you'd like to replicate data for User Insights, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 	StartDate time.Time `json:"start_date"`
 }

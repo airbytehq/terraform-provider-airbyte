@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationCassandraResourceModel) ToCreateSDKType() *shared.DestinationCassandraCreateRequest {
@@ -14,7 +15,7 @@ func (r *DestinationCassandraResourceModel) ToCreateSDKType() *shared.Destinatio
 	} else {
 		datacenter = nil
 	}
-	destinationType := shared.DestinationCassandraCassandraEnum(r.Configuration.DestinationType.ValueString())
+	destinationType := shared.DestinationCassandraCassandra(r.Configuration.DestinationType.ValueString())
 	keyspace := r.Configuration.Keyspace.ValueString()
 	password := r.Configuration.Password.ValueString()
 	port := r.Configuration.Port.ValueInt64()
@@ -48,4 +49,11 @@ func (r *DestinationCassandraResourceModel) ToCreateSDKType() *shared.Destinatio
 func (r *DestinationCassandraResourceModel) ToDeleteSDKType() *shared.DestinationCassandraCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *DestinationCassandraResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

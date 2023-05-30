@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceBigqueryResourceModel) ToCreateSDKType() *shared.SourceBigqueryCreateRequest {
@@ -15,7 +16,7 @@ func (r *SourceBigqueryResourceModel) ToCreateSDKType() *shared.SourceBigqueryCr
 		datasetID = nil
 	}
 	projectID := r.Configuration.ProjectID.ValueString()
-	sourceType := shared.SourceBigqueryBigqueryEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceBigqueryBigquery(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceBigquery{
 		CredentialsJSON: credentialsJSON,
 		DatasetID:       datasetID,
@@ -42,4 +43,11 @@ func (r *SourceBigqueryResourceModel) ToCreateSDKType() *shared.SourceBigqueryCr
 func (r *SourceBigqueryResourceModel) ToDeleteSDKType() *shared.SourceBigqueryCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceBigqueryResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

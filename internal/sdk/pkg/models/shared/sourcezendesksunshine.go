@@ -9,66 +9,66 @@ import (
 	"fmt"
 )
 
-type SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethodEnum string
+type SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethod string
 
 const (
-	SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethodEnumAPIToken SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethodEnum = "api_token"
+	SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethodAPIToken SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethod = "api_token"
 )
 
-func (e SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethodEnum) ToPointer() *SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethodEnum {
+func (e SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethod) ToPointer() *SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethod {
 	return &e
 }
 
-func (e *SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "api_token":
-		*e = SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethodEnum(v)
+		*e = SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethod: %v", v)
 	}
 }
 
 type SourceZendeskSunshineAuthorizationMethodAPIToken struct {
 	// API Token. See the <a href="https://docs.airbyte.io/integrations/sources/zendesk_sunshine">docs</a> for information on how to generate this key.
-	APIToken   string                                                         `json:"api_token"`
-	AuthMethod SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethodEnum `json:"auth_method"`
+	APIToken   string                                                     `json:"api_token"`
+	AuthMethod SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethod `json:"auth_method"`
 	// The user email for your Zendesk account
 	Email string `json:"email"`
 }
 
-type SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethodEnum string
+type SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethod string
 
 const (
-	SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethodEnumOauth20 SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethodEnum = "oauth2.0"
+	SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethodOauth20 SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethod = "oauth2.0"
 )
 
-func (e SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethodEnum) ToPointer() *SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethodEnum {
+func (e SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethod) ToPointer() *SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethod {
 	return &e
 }
 
-func (e *SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "oauth2.0":
-		*e = SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethodEnum(v)
+		*e = SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethod: %v", v)
 	}
 }
 
 type SourceZendeskSunshineAuthorizationMethodOAuth20 struct {
 	// Long-term access Token for making authenticated requests.
-	AccessToken string                                                        `json:"access_token"`
-	AuthMethod  SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethodEnum `json:"auth_method"`
+	AccessToken string                                                    `json:"access_token"`
+	AuthMethod  SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethod `json:"auth_method"`
 	// The Client ID of your OAuth application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your OAuth application.
@@ -143,33 +143,33 @@ func (u SourceZendeskSunshineAuthorizationMethod) MarshalJSON() ([]byte, error) 
 	return nil, nil
 }
 
-type SourceZendeskSunshineZendeskSunshineEnum string
+type SourceZendeskSunshineZendeskSunshine string
 
 const (
-	SourceZendeskSunshineZendeskSunshineEnumZendeskSunshine SourceZendeskSunshineZendeskSunshineEnum = "zendesk-sunshine"
+	SourceZendeskSunshineZendeskSunshineZendeskSunshine SourceZendeskSunshineZendeskSunshine = "zendesk-sunshine"
 )
 
-func (e SourceZendeskSunshineZendeskSunshineEnum) ToPointer() *SourceZendeskSunshineZendeskSunshineEnum {
+func (e SourceZendeskSunshineZendeskSunshine) ToPointer() *SourceZendeskSunshineZendeskSunshine {
 	return &e
 }
 
-func (e *SourceZendeskSunshineZendeskSunshineEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceZendeskSunshineZendeskSunshine) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "zendesk-sunshine":
-		*e = SourceZendeskSunshineZendeskSunshineEnum(v)
+		*e = SourceZendeskSunshineZendeskSunshine(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZendeskSunshineZendeskSunshineEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceZendeskSunshineZendeskSunshine: %v", v)
 	}
 }
 
 type SourceZendeskSunshine struct {
 	Credentials *SourceZendeskSunshineAuthorizationMethod `json:"credentials,omitempty"`
-	SourceType  SourceZendeskSunshineZendeskSunshineEnum  `json:"sourceType"`
+	SourceType  SourceZendeskSunshineZendeskSunshine      `json:"sourceType"`
 	// The date from which you'd like to replicate data for Zendesk Sunshine API, in the format YYYY-MM-DDT00:00:00Z.
 	StartDate string `json:"start_date"`
 	// The subdomain for your Zendesk Account.

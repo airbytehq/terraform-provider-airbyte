@@ -7,32 +7,32 @@ import (
 	"fmt"
 )
 
-type SourceInstatusInstatusEnum string
+type SourceInstatusInstatus string
 
 const (
-	SourceInstatusInstatusEnumInstatus SourceInstatusInstatusEnum = "instatus"
+	SourceInstatusInstatusInstatus SourceInstatusInstatus = "instatus"
 )
 
-func (e SourceInstatusInstatusEnum) ToPointer() *SourceInstatusInstatusEnum {
+func (e SourceInstatusInstatus) ToPointer() *SourceInstatusInstatus {
 	return &e
 }
 
-func (e *SourceInstatusInstatusEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceInstatusInstatus) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "instatus":
-		*e = SourceInstatusInstatusEnum(v)
+		*e = SourceInstatusInstatus(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceInstatusInstatusEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceInstatusInstatus: %v", v)
 	}
 }
 
 type SourceInstatus struct {
 	// Instatus REST API key
-	APIKey     string                     `json:"api_key"`
-	SourceType SourceInstatusInstatusEnum `json:"sourceType"`
+	APIKey     string                 `json:"api_key"`
+	SourceType SourceInstatusInstatus `json:"sourceType"`
 }

@@ -7,22 +7,22 @@ import (
 	"fmt"
 )
 
-// DestinationPulsarCompressionTypeEnum - Compression type for the producer.
-type DestinationPulsarCompressionTypeEnum string
+// DestinationPulsarCompressionType - Compression type for the producer.
+type DestinationPulsarCompressionType string
 
 const (
-	DestinationPulsarCompressionTypeEnumNone   DestinationPulsarCompressionTypeEnum = "NONE"
-	DestinationPulsarCompressionTypeEnumLz4    DestinationPulsarCompressionTypeEnum = "LZ4"
-	DestinationPulsarCompressionTypeEnumZlib   DestinationPulsarCompressionTypeEnum = "ZLIB"
-	DestinationPulsarCompressionTypeEnumZstd   DestinationPulsarCompressionTypeEnum = "ZSTD"
-	DestinationPulsarCompressionTypeEnumSnappy DestinationPulsarCompressionTypeEnum = "SNAPPY"
+	DestinationPulsarCompressionTypeNone   DestinationPulsarCompressionType = "NONE"
+	DestinationPulsarCompressionTypeLz4    DestinationPulsarCompressionType = "LZ4"
+	DestinationPulsarCompressionTypeZlib   DestinationPulsarCompressionType = "ZLIB"
+	DestinationPulsarCompressionTypeZstd   DestinationPulsarCompressionType = "ZSTD"
+	DestinationPulsarCompressionTypeSnappy DestinationPulsarCompressionType = "SNAPPY"
 )
 
-func (e DestinationPulsarCompressionTypeEnum) ToPointer() *DestinationPulsarCompressionTypeEnum {
+func (e DestinationPulsarCompressionType) ToPointer() *DestinationPulsarCompressionType {
 	return &e
 }
 
-func (e *DestinationPulsarCompressionTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationPulsarCompressionType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -37,50 +37,50 @@ func (e *DestinationPulsarCompressionTypeEnum) UnmarshalJSON(data []byte) error 
 	case "ZSTD":
 		fallthrough
 	case "SNAPPY":
-		*e = DestinationPulsarCompressionTypeEnum(v)
+		*e = DestinationPulsarCompressionType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationPulsarCompressionTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationPulsarCompressionType: %v", v)
 	}
 }
 
-type DestinationPulsarPulsarEnum string
+type DestinationPulsarPulsar string
 
 const (
-	DestinationPulsarPulsarEnumPulsar DestinationPulsarPulsarEnum = "pulsar"
+	DestinationPulsarPulsarPulsar DestinationPulsarPulsar = "pulsar"
 )
 
-func (e DestinationPulsarPulsarEnum) ToPointer() *DestinationPulsarPulsarEnum {
+func (e DestinationPulsarPulsar) ToPointer() *DestinationPulsarPulsar {
 	return &e
 }
 
-func (e *DestinationPulsarPulsarEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationPulsarPulsar) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "pulsar":
-		*e = DestinationPulsarPulsarEnum(v)
+		*e = DestinationPulsarPulsar(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationPulsarPulsarEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationPulsarPulsar: %v", v)
 	}
 }
 
-// DestinationPulsarTopicTypeEnum - It identifies type of topic. Pulsar supports two kind of topics: persistent and non-persistent. In persistent topic, all messages are durably persisted on disk (that means on multiple disks unless the broker is standalone), whereas non-persistent topic does not persist message into storage disk.
-type DestinationPulsarTopicTypeEnum string
+// DestinationPulsarTopicType - It identifies type of topic. Pulsar supports two kind of topics: persistent and non-persistent. In persistent topic, all messages are durably persisted on disk (that means on multiple disks unless the broker is standalone), whereas non-persistent topic does not persist message into storage disk.
+type DestinationPulsarTopicType string
 
 const (
-	DestinationPulsarTopicTypeEnumPersistent    DestinationPulsarTopicTypeEnum = "persistent"
-	DestinationPulsarTopicTypeEnumNonPersistent DestinationPulsarTopicTypeEnum = "non-persistent"
+	DestinationPulsarTopicTypePersistent    DestinationPulsarTopicType = "persistent"
+	DestinationPulsarTopicTypeNonPersistent DestinationPulsarTopicType = "non-persistent"
 )
 
-func (e DestinationPulsarTopicTypeEnum) ToPointer() *DestinationPulsarTopicTypeEnum {
+func (e DestinationPulsarTopicType) ToPointer() *DestinationPulsarTopicType {
 	return &e
 }
 
-func (e *DestinationPulsarTopicTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationPulsarTopicType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -89,10 +89,10 @@ func (e *DestinationPulsarTopicTypeEnum) UnmarshalJSON(data []byte) error {
 	case "persistent":
 		fallthrough
 	case "non-persistent":
-		*e = DestinationPulsarTopicTypeEnum(v)
+		*e = DestinationPulsarTopicType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationPulsarTopicTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationPulsarTopicType: %v", v)
 	}
 }
 
@@ -108,8 +108,8 @@ type DestinationPulsar struct {
 	// A list of host/port pairs to use for establishing the initial connection to the Pulsar cluster.
 	Brokers string `json:"brokers"`
 	// Compression type for the producer.
-	CompressionType DestinationPulsarCompressionTypeEnum `json:"compression_type"`
-	DestinationType DestinationPulsarPulsarEnum          `json:"destinationType"`
+	CompressionType DestinationPulsarCompressionType `json:"compression_type"`
+	DestinationType DestinationPulsarPulsar          `json:"destinationType"`
 	// The maximum size of a queue holding pending messages.
 	MaxPendingMessages int64 `json:"max_pending_messages"`
 	// The maximum number of pending messages across partitions.
@@ -129,7 +129,7 @@ type DestinationPulsar struct {
 	// Topic to test if Airbyte can produce messages.
 	TopicTest *string `json:"topic_test,omitempty"`
 	// It identifies type of topic. Pulsar supports two kind of topics: persistent and non-persistent. In persistent topic, all messages are durably persisted on disk (that means on multiple disks unless the broker is standalone), whereas non-persistent topic does not persist message into storage disk.
-	TopicType DestinationPulsarTopicTypeEnum `json:"topic_type"`
+	TopicType DestinationPulsarTopicType `json:"topic_type"`
 	// Whether to use TLS encryption on the connection.
 	UseTLS bool `json:"use_tls"`
 }

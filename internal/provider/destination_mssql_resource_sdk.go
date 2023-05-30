@@ -4,11 +4,12 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationMssqlResourceModel) ToCreateSDKType() *shared.DestinationMssqlCreateRequest {
 	database := r.Configuration.Database.ValueString()
-	destinationType := shared.DestinationMssqlMssqlEnum(r.Configuration.DestinationType.ValueString())
+	destinationType := shared.DestinationMssqlMssql(r.Configuration.DestinationType.ValueString())
 	host := r.Configuration.Host.ValueString()
 	jdbcURLParams := new(string)
 	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
@@ -27,7 +28,7 @@ func (r *DestinationMssqlResourceModel) ToCreateSDKType() *shared.DestinationMss
 	var sslMethod *shared.DestinationMssqlSSLMethod
 	var destinationMssqlSSLMethodEncryptedTrustServerCertificate *shared.DestinationMssqlSSLMethodEncryptedTrustServerCertificate
 	if r.Configuration.SslMethod.DestinationMssqlSSLMethodEncryptedTrustServerCertificate != nil {
-		sslMethod1 := shared.DestinationMssqlSSLMethodEncryptedTrustServerCertificateSSLMethodEnum(r.Configuration.SslMethod.DestinationMssqlSSLMethodEncryptedTrustServerCertificate.SslMethod.ValueString())
+		sslMethod1 := shared.DestinationMssqlSSLMethodEncryptedTrustServerCertificateSSLMethod(r.Configuration.SslMethod.DestinationMssqlSSLMethodEncryptedTrustServerCertificate.SslMethod.ValueString())
 		destinationMssqlSSLMethodEncryptedTrustServerCertificate = &shared.DestinationMssqlSSLMethodEncryptedTrustServerCertificate{
 			SslMethod: sslMethod1,
 		}
@@ -45,7 +46,7 @@ func (r *DestinationMssqlResourceModel) ToCreateSDKType() *shared.DestinationMss
 		} else {
 			hostNameInCertificate = nil
 		}
-		sslMethod2 := shared.DestinationMssqlSSLMethodEncryptedVerifyCertificateSSLMethodEnum(r.Configuration.SslMethod.DestinationMssqlSSLMethodEncryptedVerifyCertificate.SslMethod.ValueString())
+		sslMethod2 := shared.DestinationMssqlSSLMethodEncryptedVerifyCertificateSSLMethod(r.Configuration.SslMethod.DestinationMssqlSSLMethodEncryptedVerifyCertificate.SslMethod.ValueString())
 		destinationMssqlSSLMethodEncryptedVerifyCertificate = &shared.DestinationMssqlSSLMethodEncryptedVerifyCertificate{
 			HostNameInCertificate: hostNameInCertificate,
 			SslMethod:             sslMethod2,
@@ -59,7 +60,7 @@ func (r *DestinationMssqlResourceModel) ToCreateSDKType() *shared.DestinationMss
 	var tunnelMethod *shared.DestinationMssqlSSHTunnelMethod
 	var destinationMssqlSSHTunnelMethodNoTunnel *shared.DestinationMssqlSSHTunnelMethodNoTunnel
 	if r.Configuration.TunnelMethod.DestinationMssqlSSHTunnelMethodNoTunnel != nil {
-		tunnelMethod1 := shared.DestinationMssqlSSHTunnelMethodNoTunnelTunnelMethodEnum(r.Configuration.TunnelMethod.DestinationMssqlSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
+		tunnelMethod1 := shared.DestinationMssqlSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.DestinationMssqlSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
 		destinationMssqlSSHTunnelMethodNoTunnel = &shared.DestinationMssqlSSHTunnelMethodNoTunnel{
 			TunnelMethod: tunnelMethod1,
 		}
@@ -73,7 +74,7 @@ func (r *DestinationMssqlResourceModel) ToCreateSDKType() *shared.DestinationMss
 	if r.Configuration.TunnelMethod.DestinationMssqlSSHTunnelMethodSSHKeyAuthentication != nil {
 		sshKey := r.Configuration.TunnelMethod.DestinationMssqlSSHTunnelMethodSSHKeyAuthentication.SSHKey.ValueString()
 		tunnelHost := r.Configuration.TunnelMethod.DestinationMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
-		tunnelMethod2 := shared.DestinationMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(r.Configuration.TunnelMethod.DestinationMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
+		tunnelMethod2 := shared.DestinationMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
 		tunnelPort := r.Configuration.TunnelMethod.DestinationMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
 		tunnelUser := r.Configuration.TunnelMethod.DestinationMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
 		destinationMssqlSSHTunnelMethodSSHKeyAuthentication = &shared.DestinationMssqlSSHTunnelMethodSSHKeyAuthentication{
@@ -92,7 +93,7 @@ func (r *DestinationMssqlResourceModel) ToCreateSDKType() *shared.DestinationMss
 	var destinationMssqlSSHTunnelMethodPasswordAuthentication *shared.DestinationMssqlSSHTunnelMethodPasswordAuthentication
 	if r.Configuration.TunnelMethod.DestinationMssqlSSHTunnelMethodPasswordAuthentication != nil {
 		tunnelHost1 := r.Configuration.TunnelMethod.DestinationMssqlSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
-		tunnelMethod3 := shared.DestinationMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(r.Configuration.TunnelMethod.DestinationMssqlSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
+		tunnelMethod3 := shared.DestinationMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationMssqlSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
 		tunnelPort1 := r.Configuration.TunnelMethod.DestinationMssqlSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
 		tunnelUser1 := r.Configuration.TunnelMethod.DestinationMssqlSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
 		tunnelUserPassword := r.Configuration.TunnelMethod.DestinationMssqlSSHTunnelMethodPasswordAuthentication.TunnelUserPassword.ValueString()
@@ -135,4 +136,11 @@ func (r *DestinationMssqlResourceModel) ToCreateSDKType() *shared.DestinationMss
 func (r *DestinationMssqlResourceModel) ToDeleteSDKType() *shared.DestinationMssqlCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *DestinationMssqlResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

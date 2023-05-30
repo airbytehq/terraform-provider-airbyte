@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationMeilisearchResourceModel) ToCreateSDKType() *shared.DestinationMeilisearchCreateRequest {
@@ -13,7 +14,7 @@ func (r *DestinationMeilisearchResourceModel) ToCreateSDKType() *shared.Destinat
 	} else {
 		apiKey = nil
 	}
-	destinationType := shared.DestinationMeilisearchMeilisearchEnum(r.Configuration.DestinationType.ValueString())
+	destinationType := shared.DestinationMeilisearchMeilisearch(r.Configuration.DestinationType.ValueString())
 	host := r.Configuration.Host.ValueString()
 	configuration := shared.DestinationMeilisearch{
 		APIKey:          apiKey,
@@ -33,4 +34,11 @@ func (r *DestinationMeilisearchResourceModel) ToCreateSDKType() *shared.Destinat
 func (r *DestinationMeilisearchResourceModel) ToDeleteSDKType() *shared.DestinationMeilisearchCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *DestinationMeilisearchResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

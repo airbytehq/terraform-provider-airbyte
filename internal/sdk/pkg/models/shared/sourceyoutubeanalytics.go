@@ -15,7 +15,7 @@ type SourceYoutubeAnalyticsAuthenticateViaOAuth20 struct {
 	// A refresh token generated using the above client ID and secret
 	RefreshToken string `json:"refresh_token"`
 
-	AdditionalProperties map[string]interface{} `json:"-"`
+	AdditionalProperties interface{} `json:"-"`
 }
 type _SourceYoutubeAnalyticsAuthenticateViaOAuth20 SourceYoutubeAnalyticsAuthenticateViaOAuth20
 
@@ -64,31 +64,31 @@ func (c SourceYoutubeAnalyticsAuthenticateViaOAuth20) MarshalJSON() ([]byte, err
 	return json.Marshal(out)
 }
 
-type SourceYoutubeAnalyticsYoutubeAnalyticsEnum string
+type SourceYoutubeAnalyticsYoutubeAnalytics string
 
 const (
-	SourceYoutubeAnalyticsYoutubeAnalyticsEnumYoutubeAnalytics SourceYoutubeAnalyticsYoutubeAnalyticsEnum = "youtube-analytics"
+	SourceYoutubeAnalyticsYoutubeAnalyticsYoutubeAnalytics SourceYoutubeAnalyticsYoutubeAnalytics = "youtube-analytics"
 )
 
-func (e SourceYoutubeAnalyticsYoutubeAnalyticsEnum) ToPointer() *SourceYoutubeAnalyticsYoutubeAnalyticsEnum {
+func (e SourceYoutubeAnalyticsYoutubeAnalytics) ToPointer() *SourceYoutubeAnalyticsYoutubeAnalytics {
 	return &e
 }
 
-func (e *SourceYoutubeAnalyticsYoutubeAnalyticsEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceYoutubeAnalyticsYoutubeAnalytics) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "youtube-analytics":
-		*e = SourceYoutubeAnalyticsYoutubeAnalyticsEnum(v)
+		*e = SourceYoutubeAnalyticsYoutubeAnalytics(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceYoutubeAnalyticsYoutubeAnalyticsEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceYoutubeAnalyticsYoutubeAnalytics: %v", v)
 	}
 }
 
 type SourceYoutubeAnalytics struct {
 	Credentials SourceYoutubeAnalyticsAuthenticateViaOAuth20 `json:"credentials"`
-	SourceType  SourceYoutubeAnalyticsYoutubeAnalyticsEnum   `json:"sourceType"`
+	SourceType  SourceYoutubeAnalyticsYoutubeAnalytics       `json:"sourceType"`
 }

@@ -9,66 +9,66 @@ import (
 	"fmt"
 )
 
-type SourceSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeEnum string
+type SourceSnowflakeAuthorizationMethodUsernameAndPasswordAuthType string
 
 const (
-	SourceSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeEnumUsernamePassword SourceSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeEnum = "username/password"
+	SourceSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeUsernamePassword SourceSnowflakeAuthorizationMethodUsernameAndPasswordAuthType = "username/password"
 )
 
-func (e SourceSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeEnum) ToPointer() *SourceSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeEnum {
+func (e SourceSnowflakeAuthorizationMethodUsernameAndPasswordAuthType) ToPointer() *SourceSnowflakeAuthorizationMethodUsernameAndPasswordAuthType {
 	return &e
 }
 
-func (e *SourceSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceSnowflakeAuthorizationMethodUsernameAndPasswordAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "username/password":
-		*e = SourceSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeEnum(v)
+		*e = SourceSnowflakeAuthorizationMethodUsernameAndPasswordAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceSnowflakeAuthorizationMethodUsernameAndPasswordAuthType: %v", v)
 	}
 }
 
 type SourceSnowflakeAuthorizationMethodUsernameAndPassword struct {
-	AuthType SourceSnowflakeAuthorizationMethodUsernameAndPasswordAuthTypeEnum `json:"auth_type"`
+	AuthType SourceSnowflakeAuthorizationMethodUsernameAndPasswordAuthType `json:"auth_type"`
 	// The password associated with the username.
 	Password string `json:"password"`
 	// The username you created to allow Airbyte to access the database.
 	Username string `json:"username"`
 }
 
-type SourceSnowflakeAuthorizationMethodOAuth20AuthTypeEnum string
+type SourceSnowflakeAuthorizationMethodOAuth20AuthType string
 
 const (
-	SourceSnowflakeAuthorizationMethodOAuth20AuthTypeEnumOAuth SourceSnowflakeAuthorizationMethodOAuth20AuthTypeEnum = "OAuth"
+	SourceSnowflakeAuthorizationMethodOAuth20AuthTypeOAuth SourceSnowflakeAuthorizationMethodOAuth20AuthType = "OAuth"
 )
 
-func (e SourceSnowflakeAuthorizationMethodOAuth20AuthTypeEnum) ToPointer() *SourceSnowflakeAuthorizationMethodOAuth20AuthTypeEnum {
+func (e SourceSnowflakeAuthorizationMethodOAuth20AuthType) ToPointer() *SourceSnowflakeAuthorizationMethodOAuth20AuthType {
 	return &e
 }
 
-func (e *SourceSnowflakeAuthorizationMethodOAuth20AuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceSnowflakeAuthorizationMethodOAuth20AuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "OAuth":
-		*e = SourceSnowflakeAuthorizationMethodOAuth20AuthTypeEnum(v)
+		*e = SourceSnowflakeAuthorizationMethodOAuth20AuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSnowflakeAuthorizationMethodOAuth20AuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceSnowflakeAuthorizationMethodOAuth20AuthType: %v", v)
 	}
 }
 
 type SourceSnowflakeAuthorizationMethodOAuth20 struct {
 	// Access Token for making authenticated requests.
-	AccessToken *string                                               `json:"access_token,omitempty"`
-	AuthType    SourceSnowflakeAuthorizationMethodOAuth20AuthTypeEnum `json:"auth_type"`
+	AccessToken *string                                           `json:"access_token,omitempty"`
+	AuthType    SourceSnowflakeAuthorizationMethodOAuth20AuthType `json:"auth_type"`
 	// The Client ID of your Snowflake developer application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your Snowflake developer application.
@@ -145,27 +145,27 @@ func (u SourceSnowflakeAuthorizationMethod) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-type SourceSnowflakeSnowflakeEnum string
+type SourceSnowflakeSnowflake string
 
 const (
-	SourceSnowflakeSnowflakeEnumSnowflake SourceSnowflakeSnowflakeEnum = "snowflake"
+	SourceSnowflakeSnowflakeSnowflake SourceSnowflakeSnowflake = "snowflake"
 )
 
-func (e SourceSnowflakeSnowflakeEnum) ToPointer() *SourceSnowflakeSnowflakeEnum {
+func (e SourceSnowflakeSnowflake) ToPointer() *SourceSnowflakeSnowflake {
 	return &e
 }
 
-func (e *SourceSnowflakeSnowflakeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceSnowflakeSnowflake) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "snowflake":
-		*e = SourceSnowflakeSnowflakeEnum(v)
+		*e = SourceSnowflakeSnowflake(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceSnowflakeSnowflakeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceSnowflakeSnowflake: %v", v)
 	}
 }
 
@@ -180,8 +180,8 @@ type SourceSnowflake struct {
 	// The role you created for Airbyte to access Snowflake.
 	Role string `json:"role"`
 	// The source Snowflake schema tables. Leave empty to access tables from multiple schemas.
-	Schema     *string                      `json:"schema,omitempty"`
-	SourceType SourceSnowflakeSnowflakeEnum `json:"sourceType"`
+	Schema     *string                  `json:"schema,omitempty"`
+	SourceType SourceSnowflakeSnowflake `json:"sourceType"`
 	// The warehouse you created for Airbyte to access data.
 	Warehouse string `json:"warehouse"`
 }

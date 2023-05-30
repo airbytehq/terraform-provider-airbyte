@@ -4,11 +4,12 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourcePersistiqResourceModel) ToCreateSDKType() *shared.SourcePersistiqCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	sourceType := shared.SourcePersistiqPersistiqEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourcePersistiqPersistiq(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourcePersistiq{
 		APIKey:     apiKey,
 		SourceType: sourceType,
@@ -33,4 +34,11 @@ func (r *SourcePersistiqResourceModel) ToCreateSDKType() *shared.SourcePersistiq
 func (r *SourcePersistiqResourceModel) ToDeleteSDKType() *shared.SourcePersistiqCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourcePersistiqResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

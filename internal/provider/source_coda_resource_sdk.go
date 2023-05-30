@@ -4,11 +4,12 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceCodaResourceModel) ToCreateSDKType() *shared.SourceCodaCreateRequest {
 	authToken := r.Configuration.AuthToken.ValueString()
-	sourceType := shared.SourceCodaCodaEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceCodaCoda(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceCoda{
 		AuthToken:  authToken,
 		SourceType: sourceType,
@@ -33,4 +34,11 @@ func (r *SourceCodaResourceModel) ToCreateSDKType() *shared.SourceCodaCreateRequ
 func (r *SourceCodaResourceModel) ToDeleteSDKType() *shared.SourceCodaCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceCodaResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

@@ -9,19 +9,19 @@ import (
 	"fmt"
 )
 
-// SourceMssqlReplicationMethodLogicalReplicationCDCDataToSyncEnum - What data should be synced under the CDC. "Existing and New" will read existing data as a snapshot, and sync new changes through CDC. "New Changes Only" will skip the initial snapshot, and only sync new changes through CDC.
-type SourceMssqlReplicationMethodLogicalReplicationCDCDataToSyncEnum string
+// SourceMssqlReplicationMethodLogicalReplicationCDCDataToSync - What data should be synced under the CDC. "Existing and New" will read existing data as a snapshot, and sync new changes through CDC. "New Changes Only" will skip the initial snapshot, and only sync new changes through CDC.
+type SourceMssqlReplicationMethodLogicalReplicationCDCDataToSync string
 
 const (
-	SourceMssqlReplicationMethodLogicalReplicationCDCDataToSyncEnumExistingAndNew SourceMssqlReplicationMethodLogicalReplicationCDCDataToSyncEnum = "Existing and New"
-	SourceMssqlReplicationMethodLogicalReplicationCDCDataToSyncEnumNewChangesOnly SourceMssqlReplicationMethodLogicalReplicationCDCDataToSyncEnum = "New Changes Only"
+	SourceMssqlReplicationMethodLogicalReplicationCDCDataToSyncExistingAndNew SourceMssqlReplicationMethodLogicalReplicationCDCDataToSync = "Existing and New"
+	SourceMssqlReplicationMethodLogicalReplicationCDCDataToSyncNewChangesOnly SourceMssqlReplicationMethodLogicalReplicationCDCDataToSync = "New Changes Only"
 )
 
-func (e SourceMssqlReplicationMethodLogicalReplicationCDCDataToSyncEnum) ToPointer() *SourceMssqlReplicationMethodLogicalReplicationCDCDataToSyncEnum {
+func (e SourceMssqlReplicationMethodLogicalReplicationCDCDataToSync) ToPointer() *SourceMssqlReplicationMethodLogicalReplicationCDCDataToSync {
 	return &e
 }
 
-func (e *SourceMssqlReplicationMethodLogicalReplicationCDCDataToSyncEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceMssqlReplicationMethodLogicalReplicationCDCDataToSync) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -30,50 +30,50 @@ func (e *SourceMssqlReplicationMethodLogicalReplicationCDCDataToSyncEnum) Unmars
 	case "Existing and New":
 		fallthrough
 	case "New Changes Only":
-		*e = SourceMssqlReplicationMethodLogicalReplicationCDCDataToSyncEnum(v)
+		*e = SourceMssqlReplicationMethodLogicalReplicationCDCDataToSync(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMssqlReplicationMethodLogicalReplicationCDCDataToSyncEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceMssqlReplicationMethodLogicalReplicationCDCDataToSync: %v", v)
 	}
 }
 
-type SourceMssqlReplicationMethodLogicalReplicationCDCMethodEnum string
+type SourceMssqlReplicationMethodLogicalReplicationCDCMethod string
 
 const (
-	SourceMssqlReplicationMethodLogicalReplicationCDCMethodEnumCdc SourceMssqlReplicationMethodLogicalReplicationCDCMethodEnum = "CDC"
+	SourceMssqlReplicationMethodLogicalReplicationCDCMethodCdc SourceMssqlReplicationMethodLogicalReplicationCDCMethod = "CDC"
 )
 
-func (e SourceMssqlReplicationMethodLogicalReplicationCDCMethodEnum) ToPointer() *SourceMssqlReplicationMethodLogicalReplicationCDCMethodEnum {
+func (e SourceMssqlReplicationMethodLogicalReplicationCDCMethod) ToPointer() *SourceMssqlReplicationMethodLogicalReplicationCDCMethod {
 	return &e
 }
 
-func (e *SourceMssqlReplicationMethodLogicalReplicationCDCMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceMssqlReplicationMethodLogicalReplicationCDCMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "CDC":
-		*e = SourceMssqlReplicationMethodLogicalReplicationCDCMethodEnum(v)
+		*e = SourceMssqlReplicationMethodLogicalReplicationCDCMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMssqlReplicationMethodLogicalReplicationCDCMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceMssqlReplicationMethodLogicalReplicationCDCMethod: %v", v)
 	}
 }
 
-// SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevelEnum - Existing data in the database are synced through an initial snapshot. This parameter controls the isolation level that will be used during the initial snapshotting. If you choose the "Snapshot" level, you must enable the <a href="https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/snapshot-isolation-in-sql-server">snapshot isolation mode</a> on the database.
-type SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevelEnum string
+// SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevel - Existing data in the database are synced through an initial snapshot. This parameter controls the isolation level that will be used during the initial snapshotting. If you choose the "Snapshot" level, you must enable the <a href="https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/snapshot-isolation-in-sql-server">snapshot isolation mode</a> on the database.
+type SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevel string
 
 const (
-	SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevelEnumSnapshot      SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevelEnum = "Snapshot"
-	SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevelEnumReadCommitted SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevelEnum = "Read Committed"
+	SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevelSnapshot      SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevel = "Snapshot"
+	SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevelReadCommitted SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevel = "Read Committed"
 )
 
-func (e SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevelEnum) ToPointer() *SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevelEnum {
+func (e SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevel) ToPointer() *SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevel {
 	return &e
 }
 
-func (e *SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevelEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevel) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -82,51 +82,51 @@ func (e *SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolati
 	case "Snapshot":
 		fallthrough
 	case "Read Committed":
-		*e = SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevelEnum(v)
+		*e = SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevel(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevelEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevel: %v", v)
 	}
 }
 
 // SourceMssqlReplicationMethodLogicalReplicationCDC - CDC uses {TBC} to detect inserts, updates, and deletes. This needs to be configured on the source database itself.
 type SourceMssqlReplicationMethodLogicalReplicationCDC struct {
 	// What data should be synced under the CDC. "Existing and New" will read existing data as a snapshot, and sync new changes through CDC. "New Changes Only" will skip the initial snapshot, and only sync new changes through CDC.
-	DataToSync *SourceMssqlReplicationMethodLogicalReplicationCDCDataToSyncEnum `json:"data_to_sync,omitempty"`
+	DataToSync *SourceMssqlReplicationMethodLogicalReplicationCDCDataToSync `json:"data_to_sync,omitempty"`
 	// The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">initial waiting time</a>.
-	InitialWaitingSeconds *int64                                                      `json:"initial_waiting_seconds,omitempty"`
-	Method                SourceMssqlReplicationMethodLogicalReplicationCDCMethodEnum `json:"method"`
+	InitialWaitingSeconds *int64                                                  `json:"initial_waiting_seconds,omitempty"`
+	Method                SourceMssqlReplicationMethodLogicalReplicationCDCMethod `json:"method"`
 	// Existing data in the database are synced through an initial snapshot. This parameter controls the isolation level that will be used during the initial snapshotting. If you choose the "Snapshot" level, you must enable the <a href="https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/snapshot-isolation-in-sql-server">snapshot isolation mode</a> on the database.
-	SnapshotIsolation *SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevelEnum `json:"snapshot_isolation,omitempty"`
+	SnapshotIsolation *SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevel `json:"snapshot_isolation,omitempty"`
 }
 
-type SourceMssqlReplicationMethodStandardMethodEnum string
+type SourceMssqlReplicationMethodStandardMethod string
 
 const (
-	SourceMssqlReplicationMethodStandardMethodEnumStandard SourceMssqlReplicationMethodStandardMethodEnum = "STANDARD"
+	SourceMssqlReplicationMethodStandardMethodStandard SourceMssqlReplicationMethodStandardMethod = "STANDARD"
 )
 
-func (e SourceMssqlReplicationMethodStandardMethodEnum) ToPointer() *SourceMssqlReplicationMethodStandardMethodEnum {
+func (e SourceMssqlReplicationMethodStandardMethod) ToPointer() *SourceMssqlReplicationMethodStandardMethod {
 	return &e
 }
 
-func (e *SourceMssqlReplicationMethodStandardMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceMssqlReplicationMethodStandardMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "STANDARD":
-		*e = SourceMssqlReplicationMethodStandardMethodEnum(v)
+		*e = SourceMssqlReplicationMethodStandardMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMssqlReplicationMethodStandardMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceMssqlReplicationMethodStandardMethod: %v", v)
 	}
 }
 
 // SourceMssqlReplicationMethodStandard - Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.
 type SourceMssqlReplicationMethodStandard struct {
-	Method SourceMssqlReplicationMethodStandardMethodEnum `json:"method"`
+	Method SourceMssqlReplicationMethodStandardMethod `json:"method"`
 }
 
 type SourceMssqlReplicationMethodType string
@@ -197,88 +197,88 @@ func (u SourceMssqlReplicationMethod) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-type SourceMssqlMssqlEnum string
+type SourceMssqlMssql string
 
 const (
-	SourceMssqlMssqlEnumMssql SourceMssqlMssqlEnum = "mssql"
+	SourceMssqlMssqlMssql SourceMssqlMssql = "mssql"
 )
 
-func (e SourceMssqlMssqlEnum) ToPointer() *SourceMssqlMssqlEnum {
+func (e SourceMssqlMssql) ToPointer() *SourceMssqlMssql {
 	return &e
 }
 
-func (e *SourceMssqlMssqlEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceMssqlMssql) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "mssql":
-		*e = SourceMssqlMssqlEnum(v)
+		*e = SourceMssqlMssql(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMssqlMssqlEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceMssqlMssql: %v", v)
 	}
 }
 
-type SourceMssqlSSLMethodEncryptedVerifyCertificateSSLMethodEnum string
+type SourceMssqlSSLMethodEncryptedVerifyCertificateSSLMethod string
 
 const (
-	SourceMssqlSSLMethodEncryptedVerifyCertificateSSLMethodEnumEncryptedVerifyCertificate SourceMssqlSSLMethodEncryptedVerifyCertificateSSLMethodEnum = "encrypted_verify_certificate"
+	SourceMssqlSSLMethodEncryptedVerifyCertificateSSLMethodEncryptedVerifyCertificate SourceMssqlSSLMethodEncryptedVerifyCertificateSSLMethod = "encrypted_verify_certificate"
 )
 
-func (e SourceMssqlSSLMethodEncryptedVerifyCertificateSSLMethodEnum) ToPointer() *SourceMssqlSSLMethodEncryptedVerifyCertificateSSLMethodEnum {
+func (e SourceMssqlSSLMethodEncryptedVerifyCertificateSSLMethod) ToPointer() *SourceMssqlSSLMethodEncryptedVerifyCertificateSSLMethod {
 	return &e
 }
 
-func (e *SourceMssqlSSLMethodEncryptedVerifyCertificateSSLMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceMssqlSSLMethodEncryptedVerifyCertificateSSLMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "encrypted_verify_certificate":
-		*e = SourceMssqlSSLMethodEncryptedVerifyCertificateSSLMethodEnum(v)
+		*e = SourceMssqlSSLMethodEncryptedVerifyCertificateSSLMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMssqlSSLMethodEncryptedVerifyCertificateSSLMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceMssqlSSLMethodEncryptedVerifyCertificateSSLMethod: %v", v)
 	}
 }
 
 // SourceMssqlSSLMethodEncryptedVerifyCertificate - Verify and use the certificate provided by the server.
 type SourceMssqlSSLMethodEncryptedVerifyCertificate struct {
 	// Specifies the host name of the server. The value of this property must match the subject property of the certificate.
-	HostNameInCertificate *string                                                     `json:"hostNameInCertificate,omitempty"`
-	SslMethod             SourceMssqlSSLMethodEncryptedVerifyCertificateSSLMethodEnum `json:"ssl_method"`
+	HostNameInCertificate *string                                                 `json:"hostNameInCertificate,omitempty"`
+	SslMethod             SourceMssqlSSLMethodEncryptedVerifyCertificateSSLMethod `json:"ssl_method"`
 }
 
-type SourceMssqlSSLMethodEncryptedTrustServerCertificateSSLMethodEnum string
+type SourceMssqlSSLMethodEncryptedTrustServerCertificateSSLMethod string
 
 const (
-	SourceMssqlSSLMethodEncryptedTrustServerCertificateSSLMethodEnumEncryptedTrustServerCertificate SourceMssqlSSLMethodEncryptedTrustServerCertificateSSLMethodEnum = "encrypted_trust_server_certificate"
+	SourceMssqlSSLMethodEncryptedTrustServerCertificateSSLMethodEncryptedTrustServerCertificate SourceMssqlSSLMethodEncryptedTrustServerCertificateSSLMethod = "encrypted_trust_server_certificate"
 )
 
-func (e SourceMssqlSSLMethodEncryptedTrustServerCertificateSSLMethodEnum) ToPointer() *SourceMssqlSSLMethodEncryptedTrustServerCertificateSSLMethodEnum {
+func (e SourceMssqlSSLMethodEncryptedTrustServerCertificateSSLMethod) ToPointer() *SourceMssqlSSLMethodEncryptedTrustServerCertificateSSLMethod {
 	return &e
 }
 
-func (e *SourceMssqlSSLMethodEncryptedTrustServerCertificateSSLMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceMssqlSSLMethodEncryptedTrustServerCertificateSSLMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "encrypted_trust_server_certificate":
-		*e = SourceMssqlSSLMethodEncryptedTrustServerCertificateSSLMethodEnum(v)
+		*e = SourceMssqlSSLMethodEncryptedTrustServerCertificateSSLMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMssqlSSLMethodEncryptedTrustServerCertificateSSLMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceMssqlSSLMethodEncryptedTrustServerCertificateSSLMethod: %v", v)
 	}
 }
 
 // SourceMssqlSSLMethodEncryptedTrustServerCertificate - Use the certificate provided by the server without verification. (For testing purposes only!)
 type SourceMssqlSSLMethodEncryptedTrustServerCertificate struct {
-	SslMethod SourceMssqlSSLMethodEncryptedTrustServerCertificateSSLMethodEnum `json:"ssl_method"`
+	SslMethod SourceMssqlSSLMethodEncryptedTrustServerCertificateSSLMethod `json:"ssl_method"`
 }
 
 type SourceMssqlSSLMethodType string
@@ -349,28 +349,28 @@ func (u SourceMssqlSSLMethod) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-// SourceMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum - Connect through a jump server tunnel host using username and password authentication
-type SourceMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum string
+// SourceMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and password authentication
+type SourceMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethod string
 
 const (
-	SourceMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnumSSHPasswordAuth SourceMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum = "SSH_PASSWORD_AUTH"
+	SourceMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethodSSHPasswordAuth SourceMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethod = "SSH_PASSWORD_AUTH"
 )
 
-func (e SourceMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) ToPointer() *SourceMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum {
+func (e SourceMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethod) ToPointer() *SourceMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethod {
 	return &e
 }
 
-func (e *SourceMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SSH_PASSWORD_AUTH":
-		*e = SourceMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum(v)
+		*e = SourceMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethod: %v", v)
 	}
 }
 
@@ -379,7 +379,7 @@ type SourceMssqlSSHTunnelMethodPasswordAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and password authentication
-	TunnelMethod SourceMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethodEnum `json:"tunnel_method"`
+	TunnelMethod SourceMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethod `json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort int64 `json:"tunnel_port"`
 	// OS-level username for logging into the jump server host
@@ -388,28 +388,28 @@ type SourceMssqlSSHTunnelMethodPasswordAuthentication struct {
 	TunnelUserPassword string `json:"tunnel_user_password"`
 }
 
-// SourceMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum - Connect through a jump server tunnel host using username and ssh key
-type SourceMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum string
+// SourceMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod - Connect through a jump server tunnel host using username and ssh key
+type SourceMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod string
 
 const (
-	SourceMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnumSSHKeyAuth SourceMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum = "SSH_KEY_AUTH"
+	SourceMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodSSHKeyAuth SourceMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod = "SSH_KEY_AUTH"
 )
 
-func (e SourceMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) ToPointer() *SourceMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum {
+func (e SourceMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod) ToPointer() *SourceMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod {
 	return &e
 }
 
-func (e *SourceMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "SSH_KEY_AUTH":
-		*e = SourceMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum(v)
+		*e = SourceMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod: %v", v)
 	}
 }
 
@@ -420,42 +420,42 @@ type SourceMssqlSSHTunnelMethodSSHKeyAuthentication struct {
 	// Hostname of the jump server host that allows inbound ssh tunnel.
 	TunnelHost string `json:"tunnel_host"`
 	// Connect through a jump server tunnel host using username and ssh key
-	TunnelMethod SourceMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethodEnum `json:"tunnel_method"`
+	TunnelMethod SourceMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod `json:"tunnel_method"`
 	// Port on the proxy/jump server that accepts inbound ssh connections.
 	TunnelPort int64 `json:"tunnel_port"`
 	// OS-level username for logging into the jump server host.
 	TunnelUser string `json:"tunnel_user"`
 }
 
-// SourceMssqlSSHTunnelMethodNoTunnelTunnelMethodEnum - No ssh tunnel needed to connect to database
-type SourceMssqlSSHTunnelMethodNoTunnelTunnelMethodEnum string
+// SourceMssqlSSHTunnelMethodNoTunnelTunnelMethod - No ssh tunnel needed to connect to database
+type SourceMssqlSSHTunnelMethodNoTunnelTunnelMethod string
 
 const (
-	SourceMssqlSSHTunnelMethodNoTunnelTunnelMethodEnumNoTunnel SourceMssqlSSHTunnelMethodNoTunnelTunnelMethodEnum = "NO_TUNNEL"
+	SourceMssqlSSHTunnelMethodNoTunnelTunnelMethodNoTunnel SourceMssqlSSHTunnelMethodNoTunnelTunnelMethod = "NO_TUNNEL"
 )
 
-func (e SourceMssqlSSHTunnelMethodNoTunnelTunnelMethodEnum) ToPointer() *SourceMssqlSSHTunnelMethodNoTunnelTunnelMethodEnum {
+func (e SourceMssqlSSHTunnelMethodNoTunnelTunnelMethod) ToPointer() *SourceMssqlSSHTunnelMethodNoTunnelTunnelMethod {
 	return &e
 }
 
-func (e *SourceMssqlSSHTunnelMethodNoTunnelTunnelMethodEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceMssqlSSHTunnelMethodNoTunnelTunnelMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "NO_TUNNEL":
-		*e = SourceMssqlSSHTunnelMethodNoTunnelTunnelMethodEnum(v)
+		*e = SourceMssqlSSHTunnelMethodNoTunnelTunnelMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMssqlSSHTunnelMethodNoTunnelTunnelMethodEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceMssqlSSHTunnelMethodNoTunnelTunnelMethod: %v", v)
 	}
 }
 
 // SourceMssqlSSHTunnelMethodNoTunnel - Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.
 type SourceMssqlSSHTunnelMethodNoTunnel struct {
 	// No ssh tunnel needed to connect to database
-	TunnelMethod SourceMssqlSSHTunnelMethodNoTunnelTunnelMethodEnum `json:"tunnel_method"`
+	TunnelMethod SourceMssqlSSHTunnelMethodNoTunnelTunnelMethod `json:"tunnel_method"`
 }
 
 type SourceMssqlSSHTunnelMethodType string
@@ -564,8 +564,8 @@ type SourceMssql struct {
 	// The replication method used for extracting data from the database. STANDARD replication requires no setup on the DB side but will not be able to represent deletions incrementally. CDC uses {TBC} to detect inserts, updates, and deletes. This needs to be configured on the source database itself.
 	ReplicationMethod *SourceMssqlReplicationMethod `json:"replication_method,omitempty"`
 	// The list of schemas to sync from. Defaults to user. Case sensitive.
-	Schemas    []string             `json:"schemas,omitempty"`
-	SourceType SourceMssqlMssqlEnum `json:"sourceType"`
+	Schemas    []string         `json:"schemas,omitempty"`
+	SourceType SourceMssqlMssql `json:"sourceType"`
 	// The encryption method which is used when communicating with the database.
 	SslMethod *SourceMssqlSSLMethod `json:"ssl_method,omitempty"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.

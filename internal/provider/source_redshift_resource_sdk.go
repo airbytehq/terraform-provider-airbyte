@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceRedshiftResourceModel) ToCreateSDKType() *shared.SourceRedshiftCreateRequest {
@@ -21,7 +22,7 @@ func (r *SourceRedshiftResourceModel) ToCreateSDKType() *shared.SourceRedshiftCr
 	for _, schemasItem := range r.Configuration.Schemas {
 		schemas = append(schemas, schemasItem.ValueString())
 	}
-	sourceType := shared.SourceRedshiftRedshiftEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceRedshiftRedshift(r.Configuration.SourceType.ValueString())
 	username := r.Configuration.Username.ValueString()
 	configuration := shared.SourceRedshift{
 		Database:      database,
@@ -53,4 +54,11 @@ func (r *SourceRedshiftResourceModel) ToCreateSDKType() *shared.SourceRedshiftCr
 func (r *SourceRedshiftResourceModel) ToDeleteSDKType() *shared.SourceRedshiftCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceRedshiftResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

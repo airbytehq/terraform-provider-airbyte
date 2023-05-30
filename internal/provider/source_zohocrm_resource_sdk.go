@@ -4,17 +4,18 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
 func (r *SourceZohoCrmResourceModel) ToCreateSDKType() *shared.SourceZohoCrmCreateRequest {
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
-	dcRegion := shared.SourceZohoCrmDataCenterLocationEnum(r.Configuration.DcRegion.ValueString())
-	edition := shared.SourceZohoCRMZohoCRMEditionEnum(r.Configuration.Edition.ValueString())
-	environment := shared.SourceZohoCrmEnvironmentEnum(r.Configuration.Environment.ValueString())
+	dcRegion := shared.SourceZohoCrmDataCenterLocation(r.Configuration.DcRegion.ValueString())
+	edition := shared.SourceZohoCRMZohoCRMEdition(r.Configuration.Edition.ValueString())
+	environment := shared.SourceZohoCrmEnvironment(r.Configuration.Environment.ValueString())
 	refreshToken := r.Configuration.RefreshToken.ValueString()
-	sourceType := shared.SourceZohoCrmZohoCrmEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceZohoCrmZohoCrm(r.Configuration.SourceType.ValueString())
 	startDatetime := new(time.Time)
 	if !r.Configuration.StartDatetime.IsUnknown() && !r.Configuration.StartDatetime.IsNull() {
 		*startDatetime, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDatetime.ValueString())
@@ -51,4 +52,11 @@ func (r *SourceZohoCrmResourceModel) ToCreateSDKType() *shared.SourceZohoCrmCrea
 func (r *SourceZohoCrmResourceModel) ToDeleteSDKType() *shared.SourceZohoCrmCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceZohoCrmResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

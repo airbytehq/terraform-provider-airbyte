@@ -4,15 +4,16 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceLinkedinPagesResourceModel) ToCreateSDKType() *shared.SourceLinkedinPagesCreateRequest {
 	var credentials *shared.SourceLinkedinPagesAuthentication
 	var sourceLinkedinPagesAuthenticationOAuth20 *shared.SourceLinkedinPagesAuthenticationOAuth20
 	if r.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20 != nil {
-		authMethod := new(shared.SourceLinkedinPagesAuthenticationOAuth20AuthMethodEnum)
+		authMethod := new(shared.SourceLinkedinPagesAuthenticationOAuth20AuthMethod)
 		if !r.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20.AuthMethod.IsUnknown() && !r.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20.AuthMethod.IsNull() {
-			*authMethod = shared.SourceLinkedinPagesAuthenticationOAuth20AuthMethodEnum(r.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20.AuthMethod.ValueString())
+			*authMethod = shared.SourceLinkedinPagesAuthenticationOAuth20AuthMethod(r.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20.AuthMethod.ValueString())
 		} else {
 			authMethod = nil
 		}
@@ -34,9 +35,9 @@ func (r *SourceLinkedinPagesResourceModel) ToCreateSDKType() *shared.SourceLinke
 	var sourceLinkedinPagesAuthenticationAccessToken *shared.SourceLinkedinPagesAuthenticationAccessToken
 	if r.Configuration.Credentials.SourceLinkedinPagesAuthenticationAccessToken != nil {
 		accessToken := r.Configuration.Credentials.SourceLinkedinPagesAuthenticationAccessToken.AccessToken.ValueString()
-		authMethod1 := new(shared.SourceLinkedinPagesAuthenticationAccessTokenAuthMethodEnum)
+		authMethod1 := new(shared.SourceLinkedinPagesAuthenticationAccessTokenAuthMethod)
 		if !r.Configuration.Credentials.SourceLinkedinPagesAuthenticationAccessToken.AuthMethod.IsUnknown() && !r.Configuration.Credentials.SourceLinkedinPagesAuthenticationAccessToken.AuthMethod.IsNull() {
-			*authMethod1 = shared.SourceLinkedinPagesAuthenticationAccessTokenAuthMethodEnum(r.Configuration.Credentials.SourceLinkedinPagesAuthenticationAccessToken.AuthMethod.ValueString())
+			*authMethod1 = shared.SourceLinkedinPagesAuthenticationAccessTokenAuthMethod(r.Configuration.Credentials.SourceLinkedinPagesAuthenticationAccessToken.AuthMethod.ValueString())
 		} else {
 			authMethod1 = nil
 		}
@@ -51,7 +52,7 @@ func (r *SourceLinkedinPagesResourceModel) ToCreateSDKType() *shared.SourceLinke
 		}
 	}
 	orgID := r.Configuration.OrgID.ValueString()
-	sourceType := shared.SourceLinkedinPagesLinkedinPagesEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceLinkedinPagesLinkedinPages(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceLinkedinPages{
 		Credentials: credentials,
 		OrgID:       orgID,
@@ -77,4 +78,11 @@ func (r *SourceLinkedinPagesResourceModel) ToCreateSDKType() *shared.SourceLinke
 func (r *SourceLinkedinPagesResourceModel) ToDeleteSDKType() *shared.SourceLinkedinPagesCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceLinkedinPagesResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

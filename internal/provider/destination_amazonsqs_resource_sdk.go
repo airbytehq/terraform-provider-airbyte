@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *DestinationAmazonSqsResourceModel) ToCreateSDKType() *shared.DestinationAmazonSqsCreateRequest {
@@ -13,7 +14,7 @@ func (r *DestinationAmazonSqsResourceModel) ToCreateSDKType() *shared.Destinatio
 	} else {
 		accessKey = nil
 	}
-	destinationType := shared.DestinationAmazonSqsAmazonSqsEnum(r.Configuration.DestinationType.ValueString())
+	destinationType := shared.DestinationAmazonSqsAmazonSqs(r.Configuration.DestinationType.ValueString())
 	messageBodyKey := new(string)
 	if !r.Configuration.MessageBodyKey.IsUnknown() && !r.Configuration.MessageBodyKey.IsNull() {
 		*messageBodyKey = r.Configuration.MessageBodyKey.ValueString()
@@ -33,7 +34,7 @@ func (r *DestinationAmazonSqsResourceModel) ToCreateSDKType() *shared.Destinatio
 		messageGroupID = nil
 	}
 	queueURL := r.Configuration.QueueURL.ValueString()
-	region := shared.DestinationAmazonSqsAWSRegionEnum(r.Configuration.Region.ValueString())
+	region := shared.DestinationAmazonSqsAWSRegion(r.Configuration.Region.ValueString())
 	secretKey := new(string)
 	if !r.Configuration.SecretKey.IsUnknown() && !r.Configuration.SecretKey.IsNull() {
 		*secretKey = r.Configuration.SecretKey.ValueString()
@@ -63,4 +64,11 @@ func (r *DestinationAmazonSqsResourceModel) ToCreateSDKType() *shared.Destinatio
 func (r *DestinationAmazonSqsResourceModel) ToDeleteSDKType() *shared.DestinationAmazonSqsCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *DestinationAmazonSqsResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.DestinationID = types.StringValue(resp.DestinationID)
+	r.DestinationType = types.StringValue(resp.DestinationType)
+	r.Name = types.StringValue(resp.Name)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

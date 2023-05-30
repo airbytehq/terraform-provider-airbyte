@@ -5,6 +5,7 @@ package provider
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	"encoding/json"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
@@ -13,17 +14,15 @@ func (r *SourceZendeskSupportResourceModel) ToCreateSDKType() *shared.SourceZend
 	var sourceZendeskSupportAuthenticationOAuth20 *shared.SourceZendeskSupportAuthenticationOAuth20
 	if r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20 != nil {
 		accessToken := r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.AccessToken.ValueString()
-		credentials1 := new(shared.SourceZendeskSupportAuthenticationOAuth20CredentialsEnum)
+		credentials1 := new(shared.SourceZendeskSupportAuthenticationOAuth20Credentials)
 		if !r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.Credentials.IsUnknown() && !r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.Credentials.IsNull() {
-			*credentials1 = shared.SourceZendeskSupportAuthenticationOAuth20CredentialsEnum(r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.Credentials.ValueString())
+			*credentials1 = shared.SourceZendeskSupportAuthenticationOAuth20Credentials(r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.Credentials.ValueString())
 		} else {
 			credentials1 = nil
 		}
-		additionalProperties := make(map[string]interface{})
-		for additionalPropertiesKey, additionalPropertiesValue := range r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.AdditionalProperties {
-			var additionalPropertiesInst interface{}
-			_ = json.Unmarshal([]byte(additionalPropertiesValue.ValueString()), &additionalPropertiesInst)
-			additionalProperties[additionalPropertiesKey] = additionalPropertiesInst
+		var additionalProperties interface{}
+		if !r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.AdditionalProperties.ValueString()), &additionalProperties)
 		}
 		sourceZendeskSupportAuthenticationOAuth20 = &shared.SourceZendeskSupportAuthenticationOAuth20{
 			AccessToken:          accessToken,
@@ -39,18 +38,16 @@ func (r *SourceZendeskSupportResourceModel) ToCreateSDKType() *shared.SourceZend
 	var sourceZendeskSupportAuthenticationAPIToken *shared.SourceZendeskSupportAuthenticationAPIToken
 	if r.Configuration.Credentials.SourceZendeskSupportAuthenticationAPIToken != nil {
 		apiToken := r.Configuration.Credentials.SourceZendeskSupportAuthenticationAPIToken.APIToken.ValueString()
-		credentials2 := new(shared.SourceZendeskSupportAuthenticationAPITokenCredentialsEnum)
+		credentials2 := new(shared.SourceZendeskSupportAuthenticationAPITokenCredentials)
 		if !r.Configuration.Credentials.SourceZendeskSupportAuthenticationAPIToken.Credentials.IsUnknown() && !r.Configuration.Credentials.SourceZendeskSupportAuthenticationAPIToken.Credentials.IsNull() {
-			*credentials2 = shared.SourceZendeskSupportAuthenticationAPITokenCredentialsEnum(r.Configuration.Credentials.SourceZendeskSupportAuthenticationAPIToken.Credentials.ValueString())
+			*credentials2 = shared.SourceZendeskSupportAuthenticationAPITokenCredentials(r.Configuration.Credentials.SourceZendeskSupportAuthenticationAPIToken.Credentials.ValueString())
 		} else {
 			credentials2 = nil
 		}
 		email := r.Configuration.Credentials.SourceZendeskSupportAuthenticationAPIToken.Email.ValueString()
-		additionalProperties1 := make(map[string]interface{})
-		for additionalPropertiesKey1, additionalPropertiesValue1 := range r.Configuration.Credentials.SourceZendeskSupportAuthenticationAPIToken.AdditionalProperties {
-			var additionalPropertiesInst1 interface{}
-			_ = json.Unmarshal([]byte(additionalPropertiesValue1.ValueString()), &additionalPropertiesInst1)
-			additionalProperties1[additionalPropertiesKey1] = additionalPropertiesInst1
+		var additionalProperties1 interface{}
+		if !r.Configuration.Credentials.SourceZendeskSupportAuthenticationAPIToken.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.SourceZendeskSupportAuthenticationAPIToken.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.Credentials.SourceZendeskSupportAuthenticationAPIToken.AdditionalProperties.ValueString()), &additionalProperties1)
 		}
 		sourceZendeskSupportAuthenticationAPIToken = &shared.SourceZendeskSupportAuthenticationAPIToken{
 			APIToken:             apiToken,
@@ -70,7 +67,7 @@ func (r *SourceZendeskSupportResourceModel) ToCreateSDKType() *shared.SourceZend
 	} else {
 		ignorePagination = nil
 	}
-	sourceType := shared.SourceZendeskSupportZendeskSupportEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceZendeskSupportZendeskSupport(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	subdomain := r.Configuration.Subdomain.ValueString()
 	configuration := shared.SourceZendeskSupport{
@@ -100,4 +97,11 @@ func (r *SourceZendeskSupportResourceModel) ToCreateSDKType() *shared.SourceZend
 func (r *SourceZendeskSupportResourceModel) ToDeleteSDKType() *shared.SourceZendeskSupportCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceZendeskSupportResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

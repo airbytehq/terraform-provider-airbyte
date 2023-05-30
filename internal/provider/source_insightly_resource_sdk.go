@@ -4,10 +4,11 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceInsightlyResourceModel) ToCreateSDKType() *shared.SourceInsightlyCreateRequest {
-	sourceType := shared.SourceInsightlyInsightlyEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceInsightlyInsightly(r.Configuration.SourceType.ValueString())
 	startDate := r.Configuration.StartDate.ValueString()
 	token := r.Configuration.Token.ValueString()
 	configuration := shared.SourceInsightly{
@@ -35,4 +36,11 @@ func (r *SourceInsightlyResourceModel) ToCreateSDKType() *shared.SourceInsightly
 func (r *SourceInsightlyResourceModel) ToDeleteSDKType() *shared.SourceInsightlyCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceInsightlyResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

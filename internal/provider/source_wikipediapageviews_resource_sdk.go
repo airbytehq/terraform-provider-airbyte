@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceWikipediaPageviewsResourceModel) ToCreateSDKType() *shared.SourceWikipediaPageviewsCreateRequest {
@@ -13,7 +14,7 @@ func (r *SourceWikipediaPageviewsResourceModel) ToCreateSDKType() *shared.Source
 	country := r.Configuration.Country.ValueString()
 	end := r.Configuration.End.ValueString()
 	project := r.Configuration.Project.ValueString()
-	sourceType := shared.SourceWikipediaPageviewsWikipediaPageviewsEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceWikipediaPageviewsWikipediaPageviews(r.Configuration.SourceType.ValueString())
 	start := r.Configuration.Start.ValueString()
 	configuration := shared.SourceWikipediaPageviews{
 		Access:     access,
@@ -45,4 +46,11 @@ func (r *SourceWikipediaPageviewsResourceModel) ToCreateSDKType() *shared.Source
 func (r *SourceWikipediaPageviewsResourceModel) ToDeleteSDKType() *shared.SourceWikipediaPageviewsCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceWikipediaPageviewsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

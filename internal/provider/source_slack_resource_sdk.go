@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 	"time"
 )
 
@@ -18,7 +19,7 @@ func (r *SourceSlackResourceModel) ToCreateSDKType() *shared.SourceSlackCreateRe
 		accessToken := r.Configuration.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth.AccessToken.ValueString()
 		clientID := r.Configuration.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth.ClientID.ValueString()
 		clientSecret := r.Configuration.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth.ClientSecret.ValueString()
-		optionTitle := shared.SourceSlackAuthenticationMechanismSignInViaSlackOAuthOptionTitleEnum(r.Configuration.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth.OptionTitle.ValueString())
+		optionTitle := shared.SourceSlackAuthenticationMechanismSignInViaSlackOAuthOptionTitle(r.Configuration.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth.OptionTitle.ValueString())
 		sourceSlackAuthenticationMechanismSignInViaSlackOAuth = &shared.SourceSlackAuthenticationMechanismSignInViaSlackOAuth{
 			AccessToken:  accessToken,
 			ClientID:     clientID,
@@ -34,7 +35,7 @@ func (r *SourceSlackResourceModel) ToCreateSDKType() *shared.SourceSlackCreateRe
 	var sourceSlackAuthenticationMechanismAPIToken *shared.SourceSlackAuthenticationMechanismAPIToken
 	if r.Configuration.Credentials.SourceSlackAuthenticationMechanismAPIToken != nil {
 		apiToken := r.Configuration.Credentials.SourceSlackAuthenticationMechanismAPIToken.APIToken.ValueString()
-		optionTitle1 := shared.SourceSlackAuthenticationMechanismAPITokenOptionTitleEnum(r.Configuration.Credentials.SourceSlackAuthenticationMechanismAPIToken.OptionTitle.ValueString())
+		optionTitle1 := shared.SourceSlackAuthenticationMechanismAPITokenOptionTitle(r.Configuration.Credentials.SourceSlackAuthenticationMechanismAPIToken.OptionTitle.ValueString())
 		sourceSlackAuthenticationMechanismAPIToken = &shared.SourceSlackAuthenticationMechanismAPIToken{
 			APIToken:    apiToken,
 			OptionTitle: optionTitle1,
@@ -47,7 +48,7 @@ func (r *SourceSlackResourceModel) ToCreateSDKType() *shared.SourceSlackCreateRe
 	}
 	joinChannels := r.Configuration.JoinChannels.ValueBool()
 	lookbackWindow := r.Configuration.LookbackWindow.ValueInt64()
-	sourceType := shared.SourceSlackSlackEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceSlackSlack(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceSlack{
 		ChannelFilter:  channelFilter,
@@ -77,4 +78,11 @@ func (r *SourceSlackResourceModel) ToCreateSDKType() *shared.SourceSlackCreateRe
 func (r *SourceSlackResourceModel) ToDeleteSDKType() *shared.SourceSlackCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceSlackResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

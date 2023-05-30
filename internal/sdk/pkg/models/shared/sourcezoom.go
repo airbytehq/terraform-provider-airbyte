@@ -7,32 +7,32 @@ import (
 	"fmt"
 )
 
-type SourceZoomZoomEnum string
+type SourceZoomZoom string
 
 const (
-	SourceZoomZoomEnumZoom SourceZoomZoomEnum = "zoom"
+	SourceZoomZoomZoom SourceZoomZoom = "zoom"
 )
 
-func (e SourceZoomZoomEnum) ToPointer() *SourceZoomZoomEnum {
+func (e SourceZoomZoom) ToPointer() *SourceZoomZoom {
 	return &e
 }
 
-func (e *SourceZoomZoomEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceZoomZoom) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "zoom":
-		*e = SourceZoomZoomEnum(v)
+		*e = SourceZoomZoom(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZoomZoomEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceZoomZoom: %v", v)
 	}
 }
 
 type SourceZoom struct {
 	// JWT Token
-	JwtToken   string             `json:"jwt_token"`
-	SourceType SourceZoomZoomEnum `json:"sourceType"`
+	JwtToken   string         `json:"jwt_token"`
+	SourceType SourceZoomZoom `json:"sourceType"`
 }

@@ -5,12 +5,13 @@ package provider
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	customTypes "airbyte/internal/sdk/pkg/types"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourcePrestashopResourceModel) ToCreateSDKType() *shared.SourcePrestashopCreateRequest {
 	accessKey := r.Configuration.AccessKey.ValueString()
-	sourceType := shared.SourcePrestashopPrestashopEnum(r.Configuration.SourceType.ValueString())
-	startDate, _ := customTypes.NewDate(r.Configuration.StartDate.ValueString())
+	sourceType := shared.SourcePrestashopPrestashop(r.Configuration.SourceType.ValueString())
+	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	url := r.Configuration.URL.ValueString()
 	configuration := shared.SourcePrestashop{
 		AccessKey:  accessKey,
@@ -38,4 +39,11 @@ func (r *SourcePrestashopResourceModel) ToCreateSDKType() *shared.SourcePrestash
 func (r *SourcePrestashopResourceModel) ToDeleteSDKType() *shared.SourcePrestashopCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourcePrestashopResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

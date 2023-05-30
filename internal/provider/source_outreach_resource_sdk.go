@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceOutreachResourceModel) ToCreateSDKType() *shared.SourceOutreachCreateRequest {
@@ -11,7 +12,7 @@ func (r *SourceOutreachResourceModel) ToCreateSDKType() *shared.SourceOutreachCr
 	clientSecret := r.Configuration.ClientSecret.ValueString()
 	redirectURI := r.Configuration.RedirectURI.ValueString()
 	refreshToken := r.Configuration.RefreshToken.ValueString()
-	sourceType := shared.SourceOutreachOutreachEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceOutreachOutreach(r.Configuration.SourceType.ValueString())
 	startDate := r.Configuration.StartDate.ValueString()
 	configuration := shared.SourceOutreach{
 		ClientID:     clientID,
@@ -41,4 +42,11 @@ func (r *SourceOutreachResourceModel) ToCreateSDKType() *shared.SourceOutreachCr
 func (r *SourceOutreachResourceModel) ToDeleteSDKType() *shared.SourceOutreachCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceOutreachResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

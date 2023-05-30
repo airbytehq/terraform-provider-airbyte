@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceDixaResourceModel) ToCreateSDKType() *shared.SourceDixaCreateRequest {
@@ -14,7 +15,7 @@ func (r *SourceDixaResourceModel) ToCreateSDKType() *shared.SourceDixaCreateRequ
 	} else {
 		batchSize = nil
 	}
-	sourceType := shared.SourceDixaDixaEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceDixaDixa(r.Configuration.SourceType.ValueString())
 	startDate := r.Configuration.StartDate.ValueString()
 	configuration := shared.SourceDixa{
 		APIToken:   apiToken,
@@ -42,4 +43,11 @@ func (r *SourceDixaResourceModel) ToCreateSDKType() *shared.SourceDixaCreateRequ
 func (r *SourceDixaResourceModel) ToDeleteSDKType() *shared.SourceDixaCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceDixaResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

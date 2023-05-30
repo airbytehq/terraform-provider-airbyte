@@ -5,6 +5,7 @@ package provider
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	customTypes "airbyte/internal/sdk/pkg/types"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceSnapchatMarketingResourceModel) ToCreateSDKType() *shared.SourceSnapchatMarketingCreateRequest {
@@ -12,15 +13,15 @@ func (r *SourceSnapchatMarketingResourceModel) ToCreateSDKType() *shared.SourceS
 	clientSecret := r.Configuration.ClientSecret.ValueString()
 	endDate := new(customTypes.Date)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
-		*endDate, _ = customTypes.NewDate(r.Configuration.EndDate.ValueString())
+		endDate = customTypes.MustNewDateFromString(r.Configuration.EndDate.ValueString())
 	} else {
 		endDate = nil
 	}
 	refreshToken := r.Configuration.RefreshToken.ValueString()
-	sourceType := shared.SourceSnapchatMarketingSnapchatMarketingEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceSnapchatMarketingSnapchatMarketing(r.Configuration.SourceType.ValueString())
 	startDate := new(customTypes.Date)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		*startDate, _ = customTypes.NewDate(r.Configuration.StartDate.ValueString())
+		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
 	} else {
 		startDate = nil
 	}
@@ -52,4 +53,11 @@ func (r *SourceSnapchatMarketingResourceModel) ToCreateSDKType() *shared.SourceS
 func (r *SourceSnapchatMarketingResourceModel) ToDeleteSDKType() *shared.SourceSnapchatMarketingCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceSnapchatMarketingResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

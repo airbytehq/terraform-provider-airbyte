@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type DestinationCassandraCassandraEnum string
+type DestinationCassandraCassandra string
 
 const (
-	DestinationCassandraCassandraEnumCassandra DestinationCassandraCassandraEnum = "cassandra"
+	DestinationCassandraCassandraCassandra DestinationCassandraCassandra = "cassandra"
 )
 
-func (e DestinationCassandraCassandraEnum) ToPointer() *DestinationCassandraCassandraEnum {
+func (e DestinationCassandraCassandra) ToPointer() *DestinationCassandraCassandra {
 	return &e
 }
 
-func (e *DestinationCassandraCassandraEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationCassandraCassandra) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "cassandra":
-		*e = DestinationCassandraCassandraEnum(v)
+		*e = DestinationCassandraCassandra(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationCassandraCassandraEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationCassandraCassandra: %v", v)
 	}
 }
 
@@ -35,8 +35,8 @@ type DestinationCassandra struct {
 	// Address to connect to.
 	Address string `json:"address"`
 	// Datacenter of the cassandra cluster.
-	Datacenter      *string                           `json:"datacenter,omitempty"`
-	DestinationType DestinationCassandraCassandraEnum `json:"destinationType"`
+	Datacenter      *string                       `json:"datacenter,omitempty"`
+	DestinationType DestinationCassandraCassandra `json:"destinationType"`
 	// Default Cassandra keyspace to create data in.
 	Keyspace string `json:"keyspace"`
 	// Password associated with Cassandra.

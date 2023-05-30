@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type SourceBigqueryBigqueryEnum string
+type SourceBigqueryBigquery string
 
 const (
-	SourceBigqueryBigqueryEnumBigquery SourceBigqueryBigqueryEnum = "bigquery"
+	SourceBigqueryBigqueryBigquery SourceBigqueryBigquery = "bigquery"
 )
 
-func (e SourceBigqueryBigqueryEnum) ToPointer() *SourceBigqueryBigqueryEnum {
+func (e SourceBigqueryBigquery) ToPointer() *SourceBigqueryBigquery {
 	return &e
 }
 
-func (e *SourceBigqueryBigqueryEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceBigqueryBigquery) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "bigquery":
-		*e = SourceBigqueryBigqueryEnum(v)
+		*e = SourceBigqueryBigquery(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceBigqueryBigqueryEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceBigqueryBigquery: %v", v)
 	}
 }
 
@@ -37,6 +37,6 @@ type SourceBigquery struct {
 	// The dataset ID to search for tables and views. If you are only loading data from one dataset, setting this option could result in much faster schema discovery.
 	DatasetID *string `json:"dataset_id,omitempty"`
 	// The GCP project ID for the project containing the target BigQuery dataset.
-	ProjectID  string                     `json:"project_id"`
-	SourceType SourceBigqueryBigqueryEnum `json:"sourceType"`
+	ProjectID  string                 `json:"project_id"`
+	SourceType SourceBigqueryBigquery `json:"sourceType"`
 }

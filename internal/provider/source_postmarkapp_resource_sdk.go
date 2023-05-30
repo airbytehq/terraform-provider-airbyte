@@ -4,12 +4,13 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourcePostmarkappResourceModel) ToCreateSDKType() *shared.SourcePostmarkappCreateRequest {
 	xPostmarkAccountToken := r.Configuration.XPostmarkAccountToken.ValueString()
 	xPostmarkServerToken := r.Configuration.XPostmarkServerToken.ValueString()
-	sourceType := shared.SourcePostmarkappPostmarkappEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourcePostmarkappPostmarkapp(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourcePostmarkapp{
 		XPostmarkAccountToken: xPostmarkAccountToken,
 		XPostmarkServerToken:  xPostmarkServerToken,
@@ -35,4 +36,11 @@ func (r *SourcePostmarkappResourceModel) ToCreateSDKType() *shared.SourcePostmar
 func (r *SourcePostmarkappResourceModel) ToDeleteSDKType() *shared.SourcePostmarkappCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourcePostmarkappResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

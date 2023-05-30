@@ -7,34 +7,34 @@ import (
 	"fmt"
 )
 
-type SourceConfigcatConfigcatEnum string
+type SourceConfigcatConfigcat string
 
 const (
-	SourceConfigcatConfigcatEnumConfigcat SourceConfigcatConfigcatEnum = "configcat"
+	SourceConfigcatConfigcatConfigcat SourceConfigcatConfigcat = "configcat"
 )
 
-func (e SourceConfigcatConfigcatEnum) ToPointer() *SourceConfigcatConfigcatEnum {
+func (e SourceConfigcatConfigcat) ToPointer() *SourceConfigcatConfigcat {
 	return &e
 }
 
-func (e *SourceConfigcatConfigcatEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceConfigcatConfigcat) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "configcat":
-		*e = SourceConfigcatConfigcatEnum(v)
+		*e = SourceConfigcatConfigcat(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceConfigcatConfigcatEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceConfigcatConfigcat: %v", v)
 	}
 }
 
 type SourceConfigcat struct {
 	// Basic auth password. See <a href="https://api.configcat.com/docs/#section/Authentication">here</a>.
-	Password   string                       `json:"password"`
-	SourceType SourceConfigcatConfigcatEnum `json:"sourceType"`
+	Password   string                   `json:"password"`
+	SourceType SourceConfigcatConfigcat `json:"sourceType"`
 	// Basic auth user name. See <a href="https://api.configcat.com/docs/#section/Authentication">here</a>.
 	Username string `json:"username"`
 }

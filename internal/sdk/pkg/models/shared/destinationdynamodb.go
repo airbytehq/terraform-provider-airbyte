@@ -7,67 +7,67 @@ import (
 	"fmt"
 )
 
-type DestinationDynamodbDynamodbEnum string
+type DestinationDynamodbDynamodb string
 
 const (
-	DestinationDynamodbDynamodbEnumDynamodb DestinationDynamodbDynamodbEnum = "dynamodb"
+	DestinationDynamodbDynamodbDynamodb DestinationDynamodbDynamodb = "dynamodb"
 )
 
-func (e DestinationDynamodbDynamodbEnum) ToPointer() *DestinationDynamodbDynamodbEnum {
+func (e DestinationDynamodbDynamodb) ToPointer() *DestinationDynamodbDynamodb {
 	return &e
 }
 
-func (e *DestinationDynamodbDynamodbEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationDynamodbDynamodb) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "dynamodb":
-		*e = DestinationDynamodbDynamodbEnum(v)
+		*e = DestinationDynamodbDynamodb(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationDynamodbDynamodbEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationDynamodbDynamodb: %v", v)
 	}
 }
 
-// DestinationDynamodbDynamoDBRegionEnum - The region of the DynamoDB.
-type DestinationDynamodbDynamoDBRegionEnum string
+// DestinationDynamodbDynamoDBRegion - The region of the DynamoDB.
+type DestinationDynamodbDynamoDBRegion string
 
 const (
-	DestinationDynamodbDynamoDBRegionEnumUnknown      DestinationDynamodbDynamoDBRegionEnum = ""
-	DestinationDynamodbDynamoDBRegionEnumUsEast1      DestinationDynamodbDynamoDBRegionEnum = "us-east-1"
-	DestinationDynamodbDynamoDBRegionEnumUsEast2      DestinationDynamodbDynamoDBRegionEnum = "us-east-2"
-	DestinationDynamodbDynamoDBRegionEnumUsWest1      DestinationDynamodbDynamoDBRegionEnum = "us-west-1"
-	DestinationDynamodbDynamoDBRegionEnumUsWest2      DestinationDynamodbDynamoDBRegionEnum = "us-west-2"
-	DestinationDynamodbDynamoDBRegionEnumAfSouth1     DestinationDynamodbDynamoDBRegionEnum = "af-south-1"
-	DestinationDynamodbDynamoDBRegionEnumApEast1      DestinationDynamodbDynamoDBRegionEnum = "ap-east-1"
-	DestinationDynamodbDynamoDBRegionEnumApSouth1     DestinationDynamodbDynamoDBRegionEnum = "ap-south-1"
-	DestinationDynamodbDynamoDBRegionEnumApNortheast1 DestinationDynamodbDynamoDBRegionEnum = "ap-northeast-1"
-	DestinationDynamodbDynamoDBRegionEnumApNortheast2 DestinationDynamodbDynamoDBRegionEnum = "ap-northeast-2"
-	DestinationDynamodbDynamoDBRegionEnumApNortheast3 DestinationDynamodbDynamoDBRegionEnum = "ap-northeast-3"
-	DestinationDynamodbDynamoDBRegionEnumApSoutheast1 DestinationDynamodbDynamoDBRegionEnum = "ap-southeast-1"
-	DestinationDynamodbDynamoDBRegionEnumApSoutheast2 DestinationDynamodbDynamoDBRegionEnum = "ap-southeast-2"
-	DestinationDynamodbDynamoDBRegionEnumCaCentral1   DestinationDynamodbDynamoDBRegionEnum = "ca-central-1"
-	DestinationDynamodbDynamoDBRegionEnumCnNorth1     DestinationDynamodbDynamoDBRegionEnum = "cn-north-1"
-	DestinationDynamodbDynamoDBRegionEnumCnNorthwest1 DestinationDynamodbDynamoDBRegionEnum = "cn-northwest-1"
-	DestinationDynamodbDynamoDBRegionEnumEuCentral1   DestinationDynamodbDynamoDBRegionEnum = "eu-central-1"
-	DestinationDynamodbDynamoDBRegionEnumEuNorth1     DestinationDynamodbDynamoDBRegionEnum = "eu-north-1"
-	DestinationDynamodbDynamoDBRegionEnumEuSouth1     DestinationDynamodbDynamoDBRegionEnum = "eu-south-1"
-	DestinationDynamodbDynamoDBRegionEnumEuWest1      DestinationDynamodbDynamoDBRegionEnum = "eu-west-1"
-	DestinationDynamodbDynamoDBRegionEnumEuWest2      DestinationDynamodbDynamoDBRegionEnum = "eu-west-2"
-	DestinationDynamodbDynamoDBRegionEnumEuWest3      DestinationDynamodbDynamoDBRegionEnum = "eu-west-3"
-	DestinationDynamodbDynamoDBRegionEnumSaEast1      DestinationDynamodbDynamoDBRegionEnum = "sa-east-1"
-	DestinationDynamodbDynamoDBRegionEnumMeSouth1     DestinationDynamodbDynamoDBRegionEnum = "me-south-1"
-	DestinationDynamodbDynamoDBRegionEnumUsGovEast1   DestinationDynamodbDynamoDBRegionEnum = "us-gov-east-1"
-	DestinationDynamodbDynamoDBRegionEnumUsGovWest1   DestinationDynamodbDynamoDBRegionEnum = "us-gov-west-1"
+	DestinationDynamodbDynamoDBRegionUnknown      DestinationDynamodbDynamoDBRegion = ""
+	DestinationDynamodbDynamoDBRegionUsEast1      DestinationDynamodbDynamoDBRegion = "us-east-1"
+	DestinationDynamodbDynamoDBRegionUsEast2      DestinationDynamodbDynamoDBRegion = "us-east-2"
+	DestinationDynamodbDynamoDBRegionUsWest1      DestinationDynamodbDynamoDBRegion = "us-west-1"
+	DestinationDynamodbDynamoDBRegionUsWest2      DestinationDynamodbDynamoDBRegion = "us-west-2"
+	DestinationDynamodbDynamoDBRegionAfSouth1     DestinationDynamodbDynamoDBRegion = "af-south-1"
+	DestinationDynamodbDynamoDBRegionApEast1      DestinationDynamodbDynamoDBRegion = "ap-east-1"
+	DestinationDynamodbDynamoDBRegionApSouth1     DestinationDynamodbDynamoDBRegion = "ap-south-1"
+	DestinationDynamodbDynamoDBRegionApNortheast1 DestinationDynamodbDynamoDBRegion = "ap-northeast-1"
+	DestinationDynamodbDynamoDBRegionApNortheast2 DestinationDynamodbDynamoDBRegion = "ap-northeast-2"
+	DestinationDynamodbDynamoDBRegionApNortheast3 DestinationDynamodbDynamoDBRegion = "ap-northeast-3"
+	DestinationDynamodbDynamoDBRegionApSoutheast1 DestinationDynamodbDynamoDBRegion = "ap-southeast-1"
+	DestinationDynamodbDynamoDBRegionApSoutheast2 DestinationDynamodbDynamoDBRegion = "ap-southeast-2"
+	DestinationDynamodbDynamoDBRegionCaCentral1   DestinationDynamodbDynamoDBRegion = "ca-central-1"
+	DestinationDynamodbDynamoDBRegionCnNorth1     DestinationDynamodbDynamoDBRegion = "cn-north-1"
+	DestinationDynamodbDynamoDBRegionCnNorthwest1 DestinationDynamodbDynamoDBRegion = "cn-northwest-1"
+	DestinationDynamodbDynamoDBRegionEuCentral1   DestinationDynamodbDynamoDBRegion = "eu-central-1"
+	DestinationDynamodbDynamoDBRegionEuNorth1     DestinationDynamodbDynamoDBRegion = "eu-north-1"
+	DestinationDynamodbDynamoDBRegionEuSouth1     DestinationDynamodbDynamoDBRegion = "eu-south-1"
+	DestinationDynamodbDynamoDBRegionEuWest1      DestinationDynamodbDynamoDBRegion = "eu-west-1"
+	DestinationDynamodbDynamoDBRegionEuWest2      DestinationDynamodbDynamoDBRegion = "eu-west-2"
+	DestinationDynamodbDynamoDBRegionEuWest3      DestinationDynamodbDynamoDBRegion = "eu-west-3"
+	DestinationDynamodbDynamoDBRegionSaEast1      DestinationDynamodbDynamoDBRegion = "sa-east-1"
+	DestinationDynamodbDynamoDBRegionMeSouth1     DestinationDynamodbDynamoDBRegion = "me-south-1"
+	DestinationDynamodbDynamoDBRegionUsGovEast1   DestinationDynamodbDynamoDBRegion = "us-gov-east-1"
+	DestinationDynamodbDynamoDBRegionUsGovWest1   DestinationDynamodbDynamoDBRegion = "us-gov-west-1"
 )
 
-func (e DestinationDynamodbDynamoDBRegionEnum) ToPointer() *DestinationDynamodbDynamoDBRegionEnum {
+func (e DestinationDynamodbDynamoDBRegion) ToPointer() *DestinationDynamodbDynamoDBRegion {
 	return &e
 }
 
-func (e *DestinationDynamodbDynamoDBRegionEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationDynamodbDynamoDBRegion) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -124,21 +124,21 @@ func (e *DestinationDynamodbDynamoDBRegionEnum) UnmarshalJSON(data []byte) error
 	case "us-gov-east-1":
 		fallthrough
 	case "us-gov-west-1":
-		*e = DestinationDynamodbDynamoDBRegionEnum(v)
+		*e = DestinationDynamodbDynamoDBRegion(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationDynamodbDynamoDBRegionEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationDynamodbDynamoDBRegion: %v", v)
 	}
 }
 
 type DestinationDynamodb struct {
 	// The access key id to access the DynamoDB. Airbyte requires Read and Write permissions to the DynamoDB.
-	AccessKeyID     string                          `json:"access_key_id"`
-	DestinationType DestinationDynamodbDynamodbEnum `json:"destinationType"`
+	AccessKeyID     string                      `json:"access_key_id"`
+	DestinationType DestinationDynamodbDynamodb `json:"destinationType"`
 	// This is your DynamoDB endpoint url.(if you are working with AWS DynamoDB, just leave empty).
 	DynamodbEndpoint *string `json:"dynamodb_endpoint,omitempty"`
 	// The region of the DynamoDB.
-	DynamodbRegion DestinationDynamodbDynamoDBRegionEnum `json:"dynamodb_region"`
+	DynamodbRegion DestinationDynamodbDynamoDBRegion `json:"dynamodb_region"`
 	// The prefix to use when naming DynamoDB tables.
 	DynamodbTableNamePrefix string `json:"dynamodb_table_name_prefix"`
 	// The corresponding secret to the access key id.

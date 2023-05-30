@@ -4,11 +4,12 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceEmailoctopusResourceModel) ToCreateSDKType() *shared.SourceEmailoctopusCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	sourceType := shared.SourceEmailoctopusEmailoctopusEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceEmailoctopusEmailoctopus(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceEmailoctopus{
 		APIKey:     apiKey,
 		SourceType: sourceType,
@@ -33,4 +34,11 @@ func (r *SourceEmailoctopusResourceModel) ToCreateSDKType() *shared.SourceEmailo
 func (r *SourceEmailoctopusResourceModel) ToDeleteSDKType() *shared.SourceEmailoctopusCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceEmailoctopusResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

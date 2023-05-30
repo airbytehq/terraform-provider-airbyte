@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceBambooHrResourceModel) ToCreateSDKType() *shared.SourceBambooHrCreateRequest {
@@ -20,7 +21,7 @@ func (r *SourceBambooHrResourceModel) ToCreateSDKType() *shared.SourceBambooHrCr
 	} else {
 		customReportsIncludeDefaultFields = nil
 	}
-	sourceType := shared.SourceBambooHrBambooHrEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceBambooHrBambooHr(r.Configuration.SourceType.ValueString())
 	subdomain := r.Configuration.Subdomain.ValueString()
 	configuration := shared.SourceBambooHr{
 		APIKey:                            apiKey,
@@ -49,4 +50,11 @@ func (r *SourceBambooHrResourceModel) ToCreateSDKType() *shared.SourceBambooHrCr
 func (r *SourceBambooHrResourceModel) ToDeleteSDKType() *shared.SourceBambooHrCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceBambooHrResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

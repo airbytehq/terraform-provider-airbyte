@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type SourcePunkAPIPunkAPIEnum string
+type SourcePunkAPIPunkAPI string
 
 const (
-	SourcePunkAPIPunkAPIEnumPunkAPI SourcePunkAPIPunkAPIEnum = "punk-api"
+	SourcePunkAPIPunkAPIPunkAPI SourcePunkAPIPunkAPI = "punk-api"
 )
 
-func (e SourcePunkAPIPunkAPIEnum) ToPointer() *SourcePunkAPIPunkAPIEnum {
+func (e SourcePunkAPIPunkAPI) ToPointer() *SourcePunkAPIPunkAPI {
 	return &e
 }
 
-func (e *SourcePunkAPIPunkAPIEnum) UnmarshalJSON(data []byte) error {
+func (e *SourcePunkAPIPunkAPI) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "punk-api":
-		*e = SourcePunkAPIPunkAPIEnum(v)
+		*e = SourcePunkAPIPunkAPI(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePunkAPIPunkAPIEnum: %v", v)
+		return fmt.Errorf("invalid value for SourcePunkAPIPunkAPI: %v", v)
 	}
 }
 
@@ -37,6 +37,6 @@ type SourcePunkAPI struct {
 	// To extract specific data with Unique ID
 	BrewedBefore string `json:"brewed_before"`
 	// To extract specific data with Unique ID
-	ID         *string                  `json:"id,omitempty"`
-	SourceType SourcePunkAPIPunkAPIEnum `json:"sourceType"`
+	ID         *string              `json:"id,omitempty"`
+	SourceType SourcePunkAPIPunkAPI `json:"sourceType"`
 }

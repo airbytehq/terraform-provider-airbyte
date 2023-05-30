@@ -7,32 +7,32 @@ import (
 	"fmt"
 )
 
-type SourceTodoistTodoistEnum string
+type SourceTodoistTodoist string
 
 const (
-	SourceTodoistTodoistEnumTodoist SourceTodoistTodoistEnum = "todoist"
+	SourceTodoistTodoistTodoist SourceTodoistTodoist = "todoist"
 )
 
-func (e SourceTodoistTodoistEnum) ToPointer() *SourceTodoistTodoistEnum {
+func (e SourceTodoistTodoist) ToPointer() *SourceTodoistTodoist {
 	return &e
 }
 
-func (e *SourceTodoistTodoistEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceTodoistTodoist) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "todoist":
-		*e = SourceTodoistTodoistEnum(v)
+		*e = SourceTodoistTodoist(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceTodoistTodoistEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceTodoistTodoist: %v", v)
 	}
 }
 
 type SourceTodoist struct {
-	SourceType SourceTodoistTodoistEnum `json:"sourceType"`
+	SourceType SourceTodoistTodoist `json:"sourceType"`
 	// Your API Token. See <a href="https://todoist.com/app/settings/integrations/">here</a>. The token is case sensitive.
 	Token string `json:"token"`
 }

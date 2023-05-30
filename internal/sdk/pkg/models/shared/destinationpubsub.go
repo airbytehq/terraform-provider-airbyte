@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type DestinationPubsubPubsubEnum string
+type DestinationPubsubPubsub string
 
 const (
-	DestinationPubsubPubsubEnumPubsub DestinationPubsubPubsubEnum = "pubsub"
+	DestinationPubsubPubsubPubsub DestinationPubsubPubsub = "pubsub"
 )
 
-func (e DestinationPubsubPubsubEnum) ToPointer() *DestinationPubsubPubsubEnum {
+func (e DestinationPubsubPubsub) ToPointer() *DestinationPubsubPubsub {
 	return &e
 }
 
-func (e *DestinationPubsubPubsubEnum) UnmarshalJSON(data []byte) error {
+func (e *DestinationPubsubPubsub) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "pubsub":
-		*e = DestinationPubsubPubsubEnum(v)
+		*e = DestinationPubsubPubsub(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for DestinationPubsubPubsubEnum: %v", v)
+		return fmt.Errorf("invalid value for DestinationPubsubPubsub: %v", v)
 	}
 }
 
@@ -41,8 +41,8 @@ type DestinationPubsub struct {
 	// Number of bytes before the buffer is flushed
 	BatchingRequestBytesThreshold *int64 `json:"batching_request_bytes_threshold,omitempty"`
 	// The contents of the JSON service account key. Check out the <a href="https://docs.airbyte.com/integrations/destinations/pubsub">docs</a> if you need help generating this key.
-	CredentialsJSON string                      `json:"credentials_json"`
-	DestinationType DestinationPubsubPubsubEnum `json:"destinationType"`
+	CredentialsJSON string                  `json:"credentials_json"`
+	DestinationType DestinationPubsubPubsub `json:"destinationType"`
 	// If TRUE PubSub publisher will have <a href="https://cloud.google.com/pubsub/docs/ordering">message ordering</a> enabled. Every message will have an ordering key of stream
 	OrderingEnabled bool `json:"ordering_enabled"`
 	// The GCP project ID for the project containing the target PubSub.

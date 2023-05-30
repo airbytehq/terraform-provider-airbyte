@@ -5,7 +5,7 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceZendeskTalkAuthenticationOAuth20 struct {
-	AccessToken          types.String            `tfsdk:"access_token"`
-	AuthType             types.String            `tfsdk:"auth_type"`
-	AdditionalProperties map[string]types.String `tfsdk:"additional_properties"`
+	AccessToken          types.String `tfsdk:"access_token"`
+	AuthType             types.String `tfsdk:"auth_type"`
+	AdditionalProperties types.String `tfsdk:"additional_properties"`
 }

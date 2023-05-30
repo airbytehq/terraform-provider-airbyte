@@ -9,64 +9,64 @@ import (
 	"fmt"
 )
 
-type SourceMondayAuthorizationMethodAPITokenAuthTypeEnum string
+type SourceMondayAuthorizationMethodAPITokenAuthType string
 
 const (
-	SourceMondayAuthorizationMethodAPITokenAuthTypeEnumAPIToken SourceMondayAuthorizationMethodAPITokenAuthTypeEnum = "api_token"
+	SourceMondayAuthorizationMethodAPITokenAuthTypeAPIToken SourceMondayAuthorizationMethodAPITokenAuthType = "api_token"
 )
 
-func (e SourceMondayAuthorizationMethodAPITokenAuthTypeEnum) ToPointer() *SourceMondayAuthorizationMethodAPITokenAuthTypeEnum {
+func (e SourceMondayAuthorizationMethodAPITokenAuthType) ToPointer() *SourceMondayAuthorizationMethodAPITokenAuthType {
 	return &e
 }
 
-func (e *SourceMondayAuthorizationMethodAPITokenAuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceMondayAuthorizationMethodAPITokenAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "api_token":
-		*e = SourceMondayAuthorizationMethodAPITokenAuthTypeEnum(v)
+		*e = SourceMondayAuthorizationMethodAPITokenAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMondayAuthorizationMethodAPITokenAuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceMondayAuthorizationMethodAPITokenAuthType: %v", v)
 	}
 }
 
 type SourceMondayAuthorizationMethodAPIToken struct {
 	// API Token for making authenticated requests.
-	APIToken string                                              `json:"api_token"`
-	AuthType SourceMondayAuthorizationMethodAPITokenAuthTypeEnum `json:"auth_type"`
+	APIToken string                                          `json:"api_token"`
+	AuthType SourceMondayAuthorizationMethodAPITokenAuthType `json:"auth_type"`
 }
 
-type SourceMondayAuthorizationMethodOAuth20AuthTypeEnum string
+type SourceMondayAuthorizationMethodOAuth20AuthType string
 
 const (
-	SourceMondayAuthorizationMethodOAuth20AuthTypeEnumOauth20 SourceMondayAuthorizationMethodOAuth20AuthTypeEnum = "oauth2.0"
+	SourceMondayAuthorizationMethodOAuth20AuthTypeOauth20 SourceMondayAuthorizationMethodOAuth20AuthType = "oauth2.0"
 )
 
-func (e SourceMondayAuthorizationMethodOAuth20AuthTypeEnum) ToPointer() *SourceMondayAuthorizationMethodOAuth20AuthTypeEnum {
+func (e SourceMondayAuthorizationMethodOAuth20AuthType) ToPointer() *SourceMondayAuthorizationMethodOAuth20AuthType {
 	return &e
 }
 
-func (e *SourceMondayAuthorizationMethodOAuth20AuthTypeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceMondayAuthorizationMethodOAuth20AuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "oauth2.0":
-		*e = SourceMondayAuthorizationMethodOAuth20AuthTypeEnum(v)
+		*e = SourceMondayAuthorizationMethodOAuth20AuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMondayAuthorizationMethodOAuth20AuthTypeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceMondayAuthorizationMethodOAuth20AuthType: %v", v)
 	}
 }
 
 type SourceMondayAuthorizationMethodOAuth20 struct {
 	// Access Token for making authenticated requests.
-	AccessToken string                                             `json:"access_token"`
-	AuthType    SourceMondayAuthorizationMethodOAuth20AuthTypeEnum `json:"auth_type"`
+	AccessToken string                                         `json:"access_token"`
+	AuthType    SourceMondayAuthorizationMethodOAuth20AuthType `json:"auth_type"`
 	// The Client ID of your OAuth application.
 	ClientID string `json:"client_id"`
 	// The Client Secret of your OAuth application.
@@ -143,31 +143,31 @@ func (u SourceMondayAuthorizationMethod) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-type SourceMondayMondayEnum string
+type SourceMondayMonday string
 
 const (
-	SourceMondayMondayEnumMonday SourceMondayMondayEnum = "monday"
+	SourceMondayMondayMonday SourceMondayMonday = "monday"
 )
 
-func (e SourceMondayMondayEnum) ToPointer() *SourceMondayMondayEnum {
+func (e SourceMondayMonday) ToPointer() *SourceMondayMonday {
 	return &e
 }
 
-func (e *SourceMondayMondayEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceMondayMonday) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "monday":
-		*e = SourceMondayMondayEnum(v)
+		*e = SourceMondayMonday(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMondayMondayEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceMondayMonday: %v", v)
 	}
 }
 
 type SourceMonday struct {
 	Credentials *SourceMondayAuthorizationMethod `json:"credentials,omitempty"`
-	SourceType  SourceMondayMondayEnum           `json:"sourceType"`
+	SourceType  SourceMondayMonday               `json:"sourceType"`
 }

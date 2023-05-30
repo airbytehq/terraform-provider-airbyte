@@ -7,27 +7,27 @@ import (
 	"fmt"
 )
 
-type SourceConfluenceConfluenceEnum string
+type SourceConfluenceConfluence string
 
 const (
-	SourceConfluenceConfluenceEnumConfluence SourceConfluenceConfluenceEnum = "confluence"
+	SourceConfluenceConfluenceConfluence SourceConfluenceConfluence = "confluence"
 )
 
-func (e SourceConfluenceConfluenceEnum) ToPointer() *SourceConfluenceConfluenceEnum {
+func (e SourceConfluenceConfluence) ToPointer() *SourceConfluenceConfluence {
 	return &e
 }
 
-func (e *SourceConfluenceConfluenceEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceConfluenceConfluence) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "confluence":
-		*e = SourceConfluenceConfluenceEnum(v)
+		*e = SourceConfluenceConfluence(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceConfluenceConfluenceEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceConfluenceConfluence: %v", v)
 	}
 }
 
@@ -37,6 +37,6 @@ type SourceConfluence struct {
 	// Your Confluence domain name
 	DomainName string `json:"domain_name"`
 	// Your Confluence login email
-	Email      string                         `json:"email"`
-	SourceType SourceConfluenceConfluenceEnum `json:"sourceType"`
+	Email      string                     `json:"email"`
+	SourceType SourceConfluenceConfluence `json:"sourceType"`
 }

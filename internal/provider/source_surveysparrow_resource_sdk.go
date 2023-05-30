@@ -5,6 +5,7 @@ package provider
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
 	"encoding/json"
+	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourceSurveySparrowResourceModel) ToCreateSDKType() *shared.SourceSurveySparrowCreateRequest {
@@ -12,9 +13,9 @@ func (r *SourceSurveySparrowResourceModel) ToCreateSDKType() *shared.SourceSurve
 	var region *shared.SourceSurveySparrowBaseURL
 	var sourceSurveySparrowBaseURLEUBasedAccount *shared.SourceSurveySparrowBaseURLEUBasedAccount
 	if r.Configuration.Region.SourceSurveySparrowBaseURLEUBasedAccount != nil {
-		urlBase := new(shared.SourceSurveySparrowBaseURLEUBasedAccountURLBaseEnum)
+		urlBase := new(shared.SourceSurveySparrowBaseURLEUBasedAccountURLBase)
 		if !r.Configuration.Region.SourceSurveySparrowBaseURLEUBasedAccount.URLBase.IsUnknown() && !r.Configuration.Region.SourceSurveySparrowBaseURLEUBasedAccount.URLBase.IsNull() {
-			*urlBase = shared.SourceSurveySparrowBaseURLEUBasedAccountURLBaseEnum(r.Configuration.Region.SourceSurveySparrowBaseURLEUBasedAccount.URLBase.ValueString())
+			*urlBase = shared.SourceSurveySparrowBaseURLEUBasedAccountURLBase(r.Configuration.Region.SourceSurveySparrowBaseURLEUBasedAccount.URLBase.ValueString())
 		} else {
 			urlBase = nil
 		}
@@ -29,9 +30,9 @@ func (r *SourceSurveySparrowResourceModel) ToCreateSDKType() *shared.SourceSurve
 	}
 	var sourceSurveySparrowBaseURLGlobalAccount *shared.SourceSurveySparrowBaseURLGlobalAccount
 	if r.Configuration.Region.SourceSurveySparrowBaseURLGlobalAccount != nil {
-		urlBase1 := new(shared.SourceSurveySparrowBaseURLGlobalAccountURLBaseEnum)
+		urlBase1 := new(shared.SourceSurveySparrowBaseURLGlobalAccountURLBase)
 		if !r.Configuration.Region.SourceSurveySparrowBaseURLGlobalAccount.URLBase.IsUnknown() && !r.Configuration.Region.SourceSurveySparrowBaseURLGlobalAccount.URLBase.IsNull() {
-			*urlBase1 = shared.SourceSurveySparrowBaseURLGlobalAccountURLBaseEnum(r.Configuration.Region.SourceSurveySparrowBaseURLGlobalAccount.URLBase.ValueString())
+			*urlBase1 = shared.SourceSurveySparrowBaseURLGlobalAccountURLBase(r.Configuration.Region.SourceSurveySparrowBaseURLGlobalAccount.URLBase.ValueString())
 		} else {
 			urlBase1 = nil
 		}
@@ -44,7 +45,7 @@ func (r *SourceSurveySparrowResourceModel) ToCreateSDKType() *shared.SourceSurve
 			SourceSurveySparrowBaseURLGlobalAccount: sourceSurveySparrowBaseURLGlobalAccount,
 		}
 	}
-	sourceType := shared.SourceSurveySparrowSurveySparrowEnum(r.Configuration.SourceType.ValueString())
+	sourceType := shared.SourceSurveySparrowSurveySparrow(r.Configuration.SourceType.ValueString())
 	surveyID := make([]interface{}, 0)
 	for _, surveyIDItem := range r.Configuration.SurveyID {
 		var surveyIDTmp interface{}
@@ -77,4 +78,11 @@ func (r *SourceSurveySparrowResourceModel) ToCreateSDKType() *shared.SourceSurve
 func (r *SourceSurveySparrowResourceModel) ToDeleteSDKType() *shared.SourceSurveySparrowCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
+}
+
+func (r *SourceSurveySparrowResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.Name = types.StringValue(resp.Name)
+	r.SourceID = types.StringValue(resp.SourceID)
+	r.SourceType = types.StringValue(resp.SourceType)
+	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

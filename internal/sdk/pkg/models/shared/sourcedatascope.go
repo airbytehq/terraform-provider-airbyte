@@ -7,34 +7,34 @@ import (
 	"fmt"
 )
 
-type SourceDatascopeDatascopeEnum string
+type SourceDatascopeDatascope string
 
 const (
-	SourceDatascopeDatascopeEnumDatascope SourceDatascopeDatascopeEnum = "datascope"
+	SourceDatascopeDatascopeDatascope SourceDatascopeDatascope = "datascope"
 )
 
-func (e SourceDatascopeDatascopeEnum) ToPointer() *SourceDatascopeDatascopeEnum {
+func (e SourceDatascopeDatascope) ToPointer() *SourceDatascopeDatascope {
 	return &e
 }
 
-func (e *SourceDatascopeDatascopeEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceDatascopeDatascope) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "datascope":
-		*e = SourceDatascopeDatascopeEnum(v)
+		*e = SourceDatascopeDatascope(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceDatascopeDatascopeEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceDatascopeDatascope: %v", v)
 	}
 }
 
 type SourceDatascope struct {
 	// API Key
-	APIKey     string                       `json:"api_key"`
-	SourceType SourceDatascopeDatascopeEnum `json:"sourceType"`
+	APIKey     string                   `json:"api_key"`
+	SourceType SourceDatascopeDatascope `json:"sourceType"`
 	// Start date for the data to be replicated
 	StartDate string `json:"start_date"`
 }

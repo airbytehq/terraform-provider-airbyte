@@ -10,57 +10,57 @@ import (
 	"time"
 )
 
-type SourceZendeskChatAuthorizationMethodAccessTokenCredentialsEnum string
+type SourceZendeskChatAuthorizationMethodAccessTokenCredentials string
 
 const (
-	SourceZendeskChatAuthorizationMethodAccessTokenCredentialsEnumAccessToken SourceZendeskChatAuthorizationMethodAccessTokenCredentialsEnum = "access_token"
+	SourceZendeskChatAuthorizationMethodAccessTokenCredentialsAccessToken SourceZendeskChatAuthorizationMethodAccessTokenCredentials = "access_token"
 )
 
-func (e SourceZendeskChatAuthorizationMethodAccessTokenCredentialsEnum) ToPointer() *SourceZendeskChatAuthorizationMethodAccessTokenCredentialsEnum {
+func (e SourceZendeskChatAuthorizationMethodAccessTokenCredentials) ToPointer() *SourceZendeskChatAuthorizationMethodAccessTokenCredentials {
 	return &e
 }
 
-func (e *SourceZendeskChatAuthorizationMethodAccessTokenCredentialsEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceZendeskChatAuthorizationMethodAccessTokenCredentials) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "access_token":
-		*e = SourceZendeskChatAuthorizationMethodAccessTokenCredentialsEnum(v)
+		*e = SourceZendeskChatAuthorizationMethodAccessTokenCredentials(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZendeskChatAuthorizationMethodAccessTokenCredentialsEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceZendeskChatAuthorizationMethodAccessTokenCredentials: %v", v)
 	}
 }
 
 type SourceZendeskChatAuthorizationMethodAccessToken struct {
 	// The Access Token to make authenticated requests.
-	AccessToken string                                                         `json:"access_token"`
-	Credentials SourceZendeskChatAuthorizationMethodAccessTokenCredentialsEnum `json:"credentials"`
+	AccessToken string                                                     `json:"access_token"`
+	Credentials SourceZendeskChatAuthorizationMethodAccessTokenCredentials `json:"credentials"`
 }
 
-type SourceZendeskChatAuthorizationMethodOAuth20CredentialsEnum string
+type SourceZendeskChatAuthorizationMethodOAuth20Credentials string
 
 const (
-	SourceZendeskChatAuthorizationMethodOAuth20CredentialsEnumOauth20 SourceZendeskChatAuthorizationMethodOAuth20CredentialsEnum = "oauth2.0"
+	SourceZendeskChatAuthorizationMethodOAuth20CredentialsOauth20 SourceZendeskChatAuthorizationMethodOAuth20Credentials = "oauth2.0"
 )
 
-func (e SourceZendeskChatAuthorizationMethodOAuth20CredentialsEnum) ToPointer() *SourceZendeskChatAuthorizationMethodOAuth20CredentialsEnum {
+func (e SourceZendeskChatAuthorizationMethodOAuth20Credentials) ToPointer() *SourceZendeskChatAuthorizationMethodOAuth20Credentials {
 	return &e
 }
 
-func (e *SourceZendeskChatAuthorizationMethodOAuth20CredentialsEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceZendeskChatAuthorizationMethodOAuth20Credentials) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "oauth2.0":
-		*e = SourceZendeskChatAuthorizationMethodOAuth20CredentialsEnum(v)
+		*e = SourceZendeskChatAuthorizationMethodOAuth20Credentials(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZendeskChatAuthorizationMethodOAuth20CredentialsEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceZendeskChatAuthorizationMethodOAuth20Credentials: %v", v)
 	}
 }
 
@@ -70,8 +70,8 @@ type SourceZendeskChatAuthorizationMethodOAuth20 struct {
 	// The Client ID of your OAuth application
 	ClientID *string `json:"client_id,omitempty"`
 	// The Client Secret of your OAuth application.
-	ClientSecret *string                                                    `json:"client_secret,omitempty"`
-	Credentials  SourceZendeskChatAuthorizationMethodOAuth20CredentialsEnum `json:"credentials"`
+	ClientSecret *string                                                `json:"client_secret,omitempty"`
+	Credentials  SourceZendeskChatAuthorizationMethodOAuth20Credentials `json:"credentials"`
 	// Refresh Token to obtain new Access Token, when it's expired.
 	RefreshToken *string `json:"refresh_token,omitempty"`
 }
@@ -144,33 +144,33 @@ func (u SourceZendeskChatAuthorizationMethod) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
-type SourceZendeskChatZendeskChatEnum string
+type SourceZendeskChatZendeskChat string
 
 const (
-	SourceZendeskChatZendeskChatEnumZendeskChat SourceZendeskChatZendeskChatEnum = "zendesk-chat"
+	SourceZendeskChatZendeskChatZendeskChat SourceZendeskChatZendeskChat = "zendesk-chat"
 )
 
-func (e SourceZendeskChatZendeskChatEnum) ToPointer() *SourceZendeskChatZendeskChatEnum {
+func (e SourceZendeskChatZendeskChat) ToPointer() *SourceZendeskChatZendeskChat {
 	return &e
 }
 
-func (e *SourceZendeskChatZendeskChatEnum) UnmarshalJSON(data []byte) error {
+func (e *SourceZendeskChatZendeskChat) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "zendesk-chat":
-		*e = SourceZendeskChatZendeskChatEnum(v)
+		*e = SourceZendeskChatZendeskChat(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceZendeskChatZendeskChatEnum: %v", v)
+		return fmt.Errorf("invalid value for SourceZendeskChatZendeskChat: %v", v)
 	}
 }
 
 type SourceZendeskChat struct {
 	Credentials *SourceZendeskChatAuthorizationMethod `json:"credentials,omitempty"`
-	SourceType  SourceZendeskChatZendeskChatEnum      `json:"sourceType"`
+	SourceType  SourceZendeskChatZendeskChat          `json:"sourceType"`
 	// The date from which you'd like to replicate data for Zendesk Chat API, in the format YYYY-MM-DDT00:00:00Z.
 	StartDate time.Time `json:"start_date"`
 	// Required if you access Zendesk Chat from a Zendesk Support subdomain.
