@@ -63,21 +63,18 @@ func (r *SourceSftpBulkResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"file_most_recent": schema.BoolAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Bool{
 							boolplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"file_pattern": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"file_type": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -103,7 +100,6 @@ func (r *SourceSftpBulkResource) Schema(ctx context.Context, req resource.Schema
 						Required: true,
 					},
 					"password": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -116,14 +112,12 @@ func (r *SourceSftpBulkResource) Schema(ctx context.Context, req resource.Schema
 						Required: true,
 					},
 					"private_key": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"separator": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -170,7 +164,6 @@ func (r *SourceSftpBulkResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

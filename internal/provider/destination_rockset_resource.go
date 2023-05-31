@@ -65,7 +65,6 @@ func (r *DestinationRocksetResource) Schema(ctx context.Context, req resource.Sc
 						Required: true,
 					},
 					"api_server": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},

@@ -1,5 +1,4 @@
-.terraform
-.terraform*
-*.tfstate*
 .DS_Store
-airbyteorig*
+*.tfstate
+*.tfstate.*
+airbyte*.yaml

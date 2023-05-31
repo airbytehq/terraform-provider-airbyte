@@ -62,14 +62,12 @@ func (r *SourcePaypalTransactionResource) Schema(ctx context.Context, req resour
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"client_id": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"client_secret": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -82,7 +80,6 @@ func (r *SourcePaypalTransactionResource) Schema(ctx context.Context, req resour
 						Required: true,
 					},
 					"refresh_token": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -117,7 +114,6 @@ func (r *SourcePaypalTransactionResource) Schema(ctx context.Context, req resour
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

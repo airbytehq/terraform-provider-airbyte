@@ -62,7 +62,6 @@ func (r *SourceMongodbResource) Schema(ctx context.Context, req resource.SchemaR
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"auth_source": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -75,14 +74,12 @@ func (r *SourceMongodbResource) Schema(ctx context.Context, req resource.SchemaR
 						Required: true,
 					},
 					"instance_type": schema.SingleNestedAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Object{
 							objectplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_mongodb_mongo_db_instance_type_standalone_mongo_db_instance": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -115,7 +112,6 @@ func (r *SourceMongodbResource) Schema(ctx context.Context, req resource.SchemaR
 								Description: `The MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.`,
 							},
 							"source_mongodb_mongo_db_instance_type_replica_set": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -133,7 +129,6 @@ func (r *SourceMongodbResource) Schema(ctx context.Context, req resource.SchemaR
 										},
 									},
 									"replica_set": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -149,7 +144,6 @@ func (r *SourceMongodbResource) Schema(ctx context.Context, req resource.SchemaR
 								Description: `The MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.`,
 							},
 							"source_mongodb_mongo_db_instance_type_mongo_db_atlas": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -181,7 +175,6 @@ func (r *SourceMongodbResource) Schema(ctx context.Context, req resource.SchemaR
 						},
 					},
 					"password": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -199,7 +192,6 @@ func (r *SourceMongodbResource) Schema(ctx context.Context, req resource.SchemaR
 						},
 					},
 					"user": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -214,7 +206,6 @@ func (r *SourceMongodbResource) Schema(ctx context.Context, req resource.SchemaR
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

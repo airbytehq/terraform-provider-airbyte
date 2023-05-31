@@ -75,14 +75,12 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 						Required: true,
 					},
 					"jdbc_url_params": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"password": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -95,14 +93,12 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 						Required: true,
 					},
 					"replication_method": schema.SingleNestedAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Object{
 							objectplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_alloydb_replication_method_standard": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -123,21 +119,18 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 								Description: `Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
 							},
 							"source_alloydb_replication_method_logical_replication_cdc_": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"initial_waiting_seconds": schema.Int64Attribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.Int64{
 											int64planmodifier.RequiresReplace(),
 										},
 										Optional: true,
 									},
 									"lsn_commit_behaviour": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -162,7 +155,6 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 										},
 									},
 									"plugin": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -187,7 +179,6 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 										Required: true,
 									},
 									"additional_properties": schema.StringAttribute{
-										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											validators.IsValidJSON(),
@@ -203,7 +194,6 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 						},
 					},
 					"schemas": schema.ListAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.List{
 							listplanmodifier.RequiresReplace(),
 						},
@@ -222,14 +212,12 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 						},
 					},
 					"ssl_mode": schema.SingleNestedAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Object{
 							objectplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_alloydb_ssl_modes_disable": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -247,7 +235,6 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 										},
 									},
 									"additional_properties": schema.StringAttribute{
-										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											validators.IsValidJSON(),
@@ -258,7 +245,6 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 								Description: `Disables encryption of communication between Airbyte and source database.`,
 							},
 							"source_alloydb_ssl_modes_allow": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -276,7 +262,6 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 										},
 									},
 									"additional_properties": schema.StringAttribute{
-										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											validators.IsValidJSON(),
@@ -287,7 +272,6 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 								Description: `Enables encryption only when required by the source database.`,
 							},
 							"source_alloydb_ssl_modes_prefer": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -305,7 +289,6 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 										},
 									},
 									"additional_properties": schema.StringAttribute{
-										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											validators.IsValidJSON(),
@@ -316,7 +299,6 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 								Description: `Allows unencrypted connection only if the source database does not support encryption.`,
 							},
 							"source_alloydb_ssl_modes_require": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -334,7 +316,6 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 										},
 									},
 									"additional_properties": schema.StringAttribute{
-										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											validators.IsValidJSON(),
@@ -345,7 +326,6 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 								Description: `Always require encryption. If the source database server does not support encryption, connection will fail.`,
 							},
 							"source_alloydb_ssl_modes_verify_ca": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -358,21 +338,18 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 										Required: true,
 									},
 									"client_certificate": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
 										Optional: true,
 									},
 									"client_key": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
 										Optional: true,
 									},
 									"client_key_password": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -390,7 +367,6 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 										},
 									},
 									"additional_properties": schema.StringAttribute{
-										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											validators.IsValidJSON(),
@@ -401,7 +377,6 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 								Description: `Always require encryption and verifies that the source database server has a valid SSL certificate.`,
 							},
 							"source_alloydb_ssl_modes_verify_full": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -414,21 +389,18 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 										Required: true,
 									},
 									"client_certificate": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
 										Optional: true,
 									},
 									"client_key": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
 										Optional: true,
 									},
 									"client_key_password": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -446,7 +418,6 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 										},
 									},
 									"additional_properties": schema.StringAttribute{
-										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											validators.IsValidJSON(),
@@ -462,14 +433,12 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 						},
 					},
 					"tunnel_method": schema.SingleNestedAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Object{
 							objectplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_alloydb_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -491,7 +460,6 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"source_alloydb_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -537,7 +505,6 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"source_alloydb_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -602,7 +569,6 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

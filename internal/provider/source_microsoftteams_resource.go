@@ -61,21 +61,18 @@ func (r *SourceMicrosoftTeamsResource) Schema(ctx context.Context, req resource.
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"credentials": schema.SingleNestedAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Object{
 							objectplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_microsoft_teams_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0_": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -114,14 +111,12 @@ func (r *SourceMicrosoftTeamsResource) Schema(ctx context.Context, req resource.
 								Description: `Choose how to authenticate to Microsoft`,
 							},
 							"source_microsoft_teams_authentication_mechanism_authenticate_via_microsoft": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -184,7 +179,6 @@ func (r *SourceMicrosoftTeamsResource) Schema(ctx context.Context, req resource.
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

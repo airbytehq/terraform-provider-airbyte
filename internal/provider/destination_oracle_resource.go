@@ -78,14 +78,12 @@ func (r *DestinationOracleResource) Schema(ctx context.Context, req resource.Sch
 						Required: true,
 					},
 					"jdbc_url_params": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"password": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -98,7 +96,6 @@ func (r *DestinationOracleResource) Schema(ctx context.Context, req resource.Sch
 						Required: true,
 					},
 					"schema": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -111,14 +108,12 @@ func (r *DestinationOracleResource) Schema(ctx context.Context, req resource.Sch
 						Required: true,
 					},
 					"tunnel_method": schema.SingleNestedAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Object{
 							objectplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_oracle_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -140,7 +135,6 @@ func (r *DestinationOracleResource) Schema(ctx context.Context, req resource.Sch
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"destination_oracle_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -186,7 +180,6 @@ func (r *DestinationOracleResource) Schema(ctx context.Context, req resource.Sch
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"destination_oracle_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},

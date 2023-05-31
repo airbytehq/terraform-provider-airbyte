@@ -73,28 +73,24 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 						Required: true,
 					},
 					"azure_blob_storage_container_name": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"azure_blob_storage_endpoint_domain_name": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"azure_blob_storage_output_buffer_size": schema.Int64Attribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Int64{
 							int64planmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"azure_blob_storage_spill_size": schema.Int64Attribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Int64{
 							int64planmodifier.RequiresReplace(),
 						},
@@ -118,7 +114,6 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_azure_blob_storage_output_format_csv_comma_separated_values": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -152,7 +147,6 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 								Description: `Output data format`,
 							},
 							"destination_azure_blob_storage_output_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},

@@ -61,21 +61,18 @@ func (r *SourceSnowflakeResource) Schema(ctx context.Context, req resource.Schem
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"credentials": schema.SingleNestedAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Object{
 							objectplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_snowflake_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -105,7 +102,6 @@ func (r *SourceSnowflakeResource) Schema(ctx context.Context, req resource.Schem
 										Required: true,
 									},
 									"refresh_token": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -114,7 +110,6 @@ func (r *SourceSnowflakeResource) Schema(ctx context.Context, req resource.Schem
 								},
 							},
 							"source_snowflake_authorization_method_username_and_password": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -163,7 +158,6 @@ func (r *SourceSnowflakeResource) Schema(ctx context.Context, req resource.Schem
 						Required: true,
 					},
 					"jdbc_url_params": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -176,7 +170,6 @@ func (r *SourceSnowflakeResource) Schema(ctx context.Context, req resource.Schem
 						Required: true,
 					},
 					"schema": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -208,7 +201,6 @@ func (r *SourceSnowflakeResource) Schema(ctx context.Context, req resource.Schem
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

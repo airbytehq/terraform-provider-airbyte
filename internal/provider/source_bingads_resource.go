@@ -62,7 +62,6 @@ func (r *SourceBingAdsResource) Schema(ctx context.Context, req resource.SchemaR
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"auth_method": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -80,7 +79,6 @@ func (r *SourceBingAdsResource) Schema(ctx context.Context, req resource.SchemaR
 						Required: true,
 					},
 					"client_secret": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -93,7 +91,6 @@ func (r *SourceBingAdsResource) Schema(ctx context.Context, req resource.SchemaR
 						Required: true,
 					},
 					"lookback_window": schema.Int64Attribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Int64{
 							int64planmodifier.RequiresReplace(),
 						},
@@ -126,7 +123,6 @@ func (r *SourceBingAdsResource) Schema(ctx context.Context, req resource.SchemaR
 						},
 					},
 					"tenant_id": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -141,7 +137,6 @@ func (r *SourceBingAdsResource) Schema(ctx context.Context, req resource.SchemaR
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

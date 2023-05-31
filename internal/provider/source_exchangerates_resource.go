@@ -68,14 +68,12 @@ func (r *SourceExchangeRatesResource) Schema(ctx context.Context, req resource.S
 						Required: true,
 					},
 					"base": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"ignore_weekends": schema.BoolAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Bool{
 							boolplanmodifier.RequiresReplace(),
 						},
@@ -110,7 +108,6 @@ func (r *SourceExchangeRatesResource) Schema(ctx context.Context, req resource.S
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

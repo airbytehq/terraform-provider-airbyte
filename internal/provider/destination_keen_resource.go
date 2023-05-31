@@ -77,7 +77,6 @@ func (r *DestinationKeenResource) Schema(ctx context.Context, req resource.Schem
 						},
 					},
 					"infer_timestamp": schema.BoolAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Bool{
 							boolplanmodifier.RequiresReplace(),
 						},

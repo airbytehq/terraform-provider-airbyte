@@ -66,14 +66,12 @@ func (r *SourceDynamodbResource) Schema(ctx context.Context, req resource.Schema
 						Required: true,
 					},
 					"endpoint": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"region": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -111,7 +109,6 @@ func (r *SourceDynamodbResource) Schema(ctx context.Context, req resource.Schema
 						Description: `The region of the Dynamodb database`,
 					},
 					"reserved_attribute_names": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -143,7 +140,6 @@ func (r *SourceDynamodbResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

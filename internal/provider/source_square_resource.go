@@ -62,14 +62,12 @@ func (r *SourceSquareResource) Schema(ctx context.Context, req resource.SchemaRe
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"credentials": schema.SingleNestedAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Object{
 							objectplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_square_authentication_oauth_authentication": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -108,7 +106,6 @@ func (r *SourceSquareResource) Schema(ctx context.Context, req resource.SchemaRe
 								Description: `Choose how to authenticate to Square.`,
 							},
 							"source_square_authentication_api_key": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -140,7 +137,6 @@ func (r *SourceSquareResource) Schema(ctx context.Context, req resource.SchemaRe
 						},
 					},
 					"include_deleted_objects": schema.BoolAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Bool{
 							boolplanmodifier.RequiresReplace(),
 						},
@@ -164,7 +160,6 @@ func (r *SourceSquareResource) Schema(ctx context.Context, req resource.SchemaRe
 						},
 					},
 					"start_date": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -182,7 +177,6 @@ func (r *SourceSquareResource) Schema(ctx context.Context, req resource.SchemaRe
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

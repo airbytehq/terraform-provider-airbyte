@@ -74,7 +74,6 @@ func (r *SourceClickhouseResource) Schema(ctx context.Context, req resource.Sche
 						Required: true,
 					},
 					"password": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -98,14 +97,12 @@ func (r *SourceClickhouseResource) Schema(ctx context.Context, req resource.Sche
 						},
 					},
 					"tunnel_method": schema.SingleNestedAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Object{
 							objectplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_clickhouse_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -127,7 +124,6 @@ func (r *SourceClickhouseResource) Schema(ctx context.Context, req resource.Sche
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"source_clickhouse_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -173,7 +169,6 @@ func (r *SourceClickhouseResource) Schema(ctx context.Context, req resource.Sche
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"source_clickhouse_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -238,7 +233,6 @@ func (r *SourceClickhouseResource) Schema(ctx context.Context, req resource.Sche
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

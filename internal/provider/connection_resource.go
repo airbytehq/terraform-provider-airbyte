@@ -62,14 +62,12 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 
 		Attributes: map[string]schema.Attribute{
 			"configurations": schema.SingleNestedAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.Object{
 					objectplanmodifier.RequiresReplace(),
 				},
 				Optional: true,
 				Attributes: map[string]schema.Attribute{
 					"streams": schema.ListNestedAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.List{
 							listplanmodifier.RequiresReplace(),
 						},
@@ -77,7 +75,6 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 						NestedObject: schema.NestedAttributeObject{
 							Attributes: map[string]schema.Attribute{
 								"cursor_field": schema.ListAttribute{
-									Computed:    true,
 									Optional:    true,
 									ElementType: types.StringType,
 								},
@@ -85,14 +82,12 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 									Required: true,
 								},
 								"primary_key": schema.ListAttribute{
-									Computed: true,
 									Optional: true,
 									ElementType: types.ListType{
 										ElemType: types.StringType,
 									},
 								},
 								"sync_mode": schema.StringAttribute{
-									Computed: true,
 									Optional: true,
 									Validators: []validator.String{
 										stringvalidator.OneOf(
@@ -113,7 +108,6 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Computed: true,
 			},
 			"data_residency": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},
@@ -133,14 +127,12 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Required: true,
 			},
 			"name": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},
 				Optional: true,
 			},
 			"namespace_definition": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},
@@ -155,14 +147,12 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Description: `Define the location where the data will be stored in the destination`,
 			},
 			"namespace_format": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},
 				Optional: true,
 			},
 			"non_breaking_schema_updates_behavior": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},
@@ -176,21 +166,18 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Description: `Set how Airbyte handles syncs when it detects a non-breaking schema change in the source`,
 			},
 			"prefix": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},
 				Optional: true,
 			},
 			"schedule": schema.SingleNestedAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.Object{
 					objectplanmodifier.RequiresReplace(),
 				},
 				Optional: true,
 				Attributes: map[string]schema.Attribute{
 					"cron_expression": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},

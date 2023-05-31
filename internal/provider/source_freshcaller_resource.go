@@ -74,7 +74,6 @@ func (r *SourceFreshcallerResource) Schema(ctx context.Context, req resource.Sch
 						Required: true,
 					},
 					"requests_per_minute": schema.Int64Attribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Int64{
 							int64planmodifier.RequiresReplace(),
 						},
@@ -101,7 +100,6 @@ func (r *SourceFreshcallerResource) Schema(ctx context.Context, req resource.Sch
 						},
 					},
 					"sync_lag_minutes": schema.Int64Attribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Int64{
 							int64planmodifier.RequiresReplace(),
 						},
@@ -116,7 +114,6 @@ func (r *SourceFreshcallerResource) Schema(ctx context.Context, req resource.Sch
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

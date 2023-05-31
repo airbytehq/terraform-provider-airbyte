@@ -68,14 +68,12 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"source_google_search_console_authentication_type_o_auth": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -113,7 +111,6 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 								},
 							},
 							"source_google_search_console_authentication_type_service_account_key_authentication": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -150,14 +147,12 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 						},
 					},
 					"custom_reports": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"end_date": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -202,7 +197,6 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

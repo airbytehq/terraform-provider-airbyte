@@ -68,7 +68,6 @@ func (r *SourceStravaResource) Schema(ctx context.Context, req resource.SchemaRe
 						Required: true,
 					},
 					"auth_type": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -126,7 +125,6 @@ func (r *SourceStravaResource) Schema(ctx context.Context, req resource.SchemaRe
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

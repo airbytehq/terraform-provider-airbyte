@@ -62,7 +62,6 @@ func (r *SourceLinkedinAdsResource) Schema(ctx context.Context, req resource.Sch
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"account_ids": schema.ListAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.List{
 							listplanmodifier.RequiresReplace(),
 						},
@@ -70,21 +69,18 @@ func (r *SourceLinkedinAdsResource) Schema(ctx context.Context, req resource.Sch
 						ElementType: types.Int64Type,
 					},
 					"credentials": schema.SingleNestedAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Object{
 							objectplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_linkedin_ads_authentication_o_auth2_0": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_method": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -116,7 +112,6 @@ func (r *SourceLinkedinAdsResource) Schema(ctx context.Context, req resource.Sch
 								},
 							},
 							"source_linkedin_ads_authentication_access_token": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -129,7 +124,6 @@ func (r *SourceLinkedinAdsResource) Schema(ctx context.Context, req resource.Sch
 										Required: true,
 									},
 									"auth_method": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -176,7 +170,6 @@ func (r *SourceLinkedinAdsResource) Schema(ctx context.Context, req resource.Sch
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

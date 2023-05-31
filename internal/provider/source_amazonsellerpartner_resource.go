@@ -67,7 +67,6 @@ func (r *SourceAmazonSellerPartnerResource) Schema(ctx context.Context, req reso
 						Required: true,
 					},
 					"auth_type": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -79,7 +78,6 @@ func (r *SourceAmazonSellerPartnerResource) Schema(ctx context.Context, req reso
 						},
 					},
 					"aws_access_key": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -99,7 +97,6 @@ func (r *SourceAmazonSellerPartnerResource) Schema(ctx context.Context, req reso
 						Description: `An enumeration.`,
 					},
 					"aws_secret_key": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -118,14 +115,12 @@ func (r *SourceAmazonSellerPartnerResource) Schema(ctx context.Context, req reso
 						Required: true,
 					},
 					"max_wait_seconds": schema.Int64Attribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Int64{
 							int64planmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"period_in_days": schema.Int64Attribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Int64{
 							int64planmodifier.RequiresReplace(),
 						},
@@ -171,7 +166,6 @@ func (r *SourceAmazonSellerPartnerResource) Schema(ctx context.Context, req reso
 						Description: `An enumeration.`,
 					},
 					"replication_end_date": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -184,14 +178,12 @@ func (r *SourceAmazonSellerPartnerResource) Schema(ctx context.Context, req reso
 						Required: true,
 					},
 					"report_options": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"role_arn": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -217,7 +209,6 @@ func (r *SourceAmazonSellerPartnerResource) Schema(ctx context.Context, req reso
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

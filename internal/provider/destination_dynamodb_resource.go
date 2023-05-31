@@ -76,7 +76,6 @@ func (r *DestinationDynamodbResource) Schema(ctx context.Context, req resource.S
 						},
 					},
 					"dynamodb_endpoint": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},

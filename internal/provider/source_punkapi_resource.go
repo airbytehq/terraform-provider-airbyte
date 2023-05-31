@@ -72,7 +72,6 @@ func (r *SourcePunkAPIResource) Schema(ctx context.Context, req resource.SchemaR
 						Required: true,
 					},
 					"id": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -98,7 +97,6 @@ func (r *SourcePunkAPIResource) Schema(ctx context.Context, req resource.SchemaR
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

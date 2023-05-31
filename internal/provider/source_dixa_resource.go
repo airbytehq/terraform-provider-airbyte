@@ -67,7 +67,6 @@ func (r *SourceDixaResource) Schema(ctx context.Context, req resource.SchemaRequ
 						Required: true,
 					},
 					"batch_size": schema.Int64Attribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Int64{
 							int64planmodifier.RequiresReplace(),
 						},
@@ -99,7 +98,6 @@ func (r *SourceDixaResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

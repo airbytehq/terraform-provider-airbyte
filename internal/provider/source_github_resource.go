@@ -62,21 +62,18 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"branch": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"credentials": schema.SingleNestedAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Object{
 							objectplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_github_authentication_o_auth": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -89,7 +86,6 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 										Required: true,
 									},
 									"option_title": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -104,14 +100,12 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 								Description: `Choose how to authenticate to GitHub`,
 							},
 							"source_github_authentication_personal_access_token": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"option_title": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -137,7 +131,6 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 						},
 					},
 					"page_size_for_large_streams": schema.Int64Attribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Int64{
 							int64planmodifier.RequiresReplace(),
 						},
@@ -150,7 +143,6 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 						Required: true,
 					},
 					"requests_per_hour": schema.Int64Attribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Int64{
 							int64planmodifier.RequiresReplace(),
 						},
@@ -185,7 +177,6 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

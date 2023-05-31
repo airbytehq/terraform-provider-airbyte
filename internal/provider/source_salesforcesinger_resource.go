@@ -87,21 +87,18 @@ func (r *SourceSalesforceSingerResource) Schema(ctx context.Context, req resourc
 						Required: true,
 					},
 					"is_sandbox": schema.BoolAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Bool{
 							boolplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"quota_percent_per_run": schema.NumberAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Number{
 							numberplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"quota_percent_total": schema.NumberAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Number{
 							numberplanmodifier.RequiresReplace(),
 						},
@@ -139,7 +136,6 @@ func (r *SourceSalesforceSingerResource) Schema(ctx context.Context, req resourc
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

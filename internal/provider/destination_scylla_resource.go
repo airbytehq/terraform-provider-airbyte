@@ -95,7 +95,6 @@ func (r *DestinationScyllaResource) Schema(ctx context.Context, req resource.Sch
 						Required: true,
 					},
 					"replication": schema.Int64Attribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Int64{
 							int64planmodifier.RequiresReplace(),
 						},

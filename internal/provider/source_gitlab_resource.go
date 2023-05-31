@@ -73,7 +73,6 @@ func (r *SourceGitlabResource) Schema(ctx context.Context, req resource.SchemaRe
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"source_gitlab_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -86,7 +85,6 @@ func (r *SourceGitlabResource) Schema(ctx context.Context, req resource.SchemaRe
 										Required: true,
 									},
 									"auth_type": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -127,7 +125,6 @@ func (r *SourceGitlabResource) Schema(ctx context.Context, req resource.SchemaRe
 								},
 							},
 							"source_gitlab_authorization_method_private_token": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -140,7 +137,6 @@ func (r *SourceGitlabResource) Schema(ctx context.Context, req resource.SchemaRe
 										Required: true,
 									},
 									"auth_type": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -159,14 +155,12 @@ func (r *SourceGitlabResource) Schema(ctx context.Context, req resource.SchemaRe
 						},
 					},
 					"groups": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"projects": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -201,7 +195,6 @@ func (r *SourceGitlabResource) Schema(ctx context.Context, req resource.SchemaRe
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

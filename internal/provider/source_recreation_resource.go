@@ -66,7 +66,6 @@ func (r *SourceRecreationResource) Schema(ctx context.Context, req resource.Sche
 						Required: true,
 					},
 					"query_campsites": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -92,7 +91,6 @@ func (r *SourceRecreationResource) Schema(ctx context.Context, req resource.Sche
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

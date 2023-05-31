@@ -66,7 +66,6 @@ func (r *SourceUsCensusResource) Schema(ctx context.Context, req resource.Schema
 						Required: true,
 					},
 					"query_params": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -98,7 +97,6 @@ func (r *SourceUsCensusResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

@@ -74,7 +74,6 @@ func (r *SourceFreshdeskResource) Schema(ctx context.Context, req resource.Schem
 						Required: true,
 					},
 					"requests_per_minute": schema.Int64Attribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Int64{
 							int64planmodifier.RequiresReplace(),
 						},
@@ -92,7 +91,6 @@ func (r *SourceFreshdeskResource) Schema(ctx context.Context, req resource.Schem
 						},
 					},
 					"start_date": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -110,7 +108,6 @@ func (r *SourceFreshdeskResource) Schema(ctx context.Context, req resource.Schem
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

@@ -85,7 +85,6 @@ func (r *SourceYoutubeAnalyticsResource) Schema(ctx context.Context, req resourc
 								Required: true,
 							},
 							"additional_properties": schema.StringAttribute{
-								Computed: true,
 								Optional: true,
 								Validators: []validator.String{
 									validators.IsValidJSON(),
@@ -114,7 +113,6 @@ func (r *SourceYoutubeAnalyticsResource) Schema(ctx context.Context, req resourc
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

@@ -65,7 +65,6 @@ func (r *DestinationTypesenseResource) Schema(ctx context.Context, req resource.
 						Required: true,
 					},
 					"batch_size": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -89,14 +88,12 @@ func (r *DestinationTypesenseResource) Schema(ctx context.Context, req resource.
 						Required: true,
 					},
 					"port": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"protocol": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},

@@ -72,7 +72,6 @@ func (r *DestinationRabbitmqResource) Schema(ctx context.Context, req resource.S
 						},
 					},
 					"exchange": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -85,14 +84,12 @@ func (r *DestinationRabbitmqResource) Schema(ctx context.Context, req resource.S
 						Required: true,
 					},
 					"password": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"port": schema.Int64Attribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Int64{
 							int64planmodifier.RequiresReplace(),
 						},
@@ -105,21 +102,18 @@ func (r *DestinationRabbitmqResource) Schema(ctx context.Context, req resource.S
 						Required: true,
 					},
 					"ssl": schema.BoolAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Bool{
 							boolplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"username": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"virtual_host": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},

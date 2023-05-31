@@ -66,7 +66,6 @@ func (r *SourceOpenweatherResource) Schema(ctx context.Context, req resource.Sch
 						Required: true,
 					},
 					"lang": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -150,7 +149,6 @@ func (r *SourceOpenweatherResource) Schema(ctx context.Context, req resource.Sch
 						},
 					},
 					"units": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -173,7 +171,6 @@ func (r *SourceOpenweatherResource) Schema(ctx context.Context, req resource.Sch
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

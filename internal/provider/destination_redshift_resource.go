@@ -85,7 +85,6 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 						Required: true,
 					},
 					"jdbc_url_params": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -110,14 +109,12 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 						Required: true,
 					},
 					"tunnel_method": schema.SingleNestedAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Object{
 							objectplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_redshift_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -139,7 +136,6 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"destination_redshift_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -185,7 +181,6 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"destination_redshift_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -236,14 +231,12 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 						},
 					},
 					"uploading_method": schema.SingleNestedAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Object{
 							objectplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_redshift_uploading_method_standard": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -264,7 +257,6 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 								Description: `The method how the data will be uploaded to the database.`,
 							},
 							"destination_redshift_uploading_method_s3_staging": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -277,14 +269,12 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 										Required: true,
 									},
 									"encryption": schema.SingleNestedAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.Object{
 											objectplanmodifier.RequiresReplace(),
 										},
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"destination_redshift_uploading_method_s3_staging_encryption_no_encryption": schema.SingleNestedAttribute{
-												Computed: true,
 												PlanModifiers: []planmodifier.Object{
 													objectplanmodifier.RequiresReplace(),
 												},
@@ -305,7 +295,6 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 												Description: `Staging data will be stored in plaintext.`,
 											},
 											"destination_redshift_uploading_method_s3_staging_encryption_aes_cbc_envelope_encryption": schema.SingleNestedAttribute{
-												Computed: true,
 												PlanModifiers: []planmodifier.Object{
 													objectplanmodifier.RequiresReplace(),
 												},
@@ -323,7 +312,6 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 														},
 													},
 													"key_encrypting_key": schema.StringAttribute{
-														Computed: true,
 														PlanModifiers: []planmodifier.String{
 															stringplanmodifier.RequiresReplace(),
 														},
@@ -338,14 +326,12 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 										},
 									},
 									"file_buffer_count": schema.Int64Attribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.Int64{
 											int64planmodifier.RequiresReplace(),
 										},
 										Optional: true,
 									},
 									"file_name_pattern": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -363,7 +349,6 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 										},
 									},
 									"purge_staging_data": schema.BoolAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.Bool{
 											boolplanmodifier.RequiresReplace(),
 										},
@@ -376,7 +361,6 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 										Required: true,
 									},
 									"s3_bucket_path": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},

@@ -62,7 +62,6 @@ func (r *SourcePolygonStockAPIResource) Schema(ctx context.Context, req resource
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"adjusted": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -84,7 +83,6 @@ func (r *SourcePolygonStockAPIResource) Schema(ctx context.Context, req resource
 						},
 					},
 					"limit": schema.Int64Attribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Int64{
 							int64planmodifier.RequiresReplace(),
 						},
@@ -97,7 +95,6 @@ func (r *SourcePolygonStockAPIResource) Schema(ctx context.Context, req resource
 						Required: true,
 					},
 					"sort": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -144,7 +141,6 @@ func (r *SourcePolygonStockAPIResource) Schema(ctx context.Context, req resource
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

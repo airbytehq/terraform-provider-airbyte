@@ -67,7 +67,6 @@ func (r *SourceAmplitudeResource) Schema(ctx context.Context, req resource.Schem
 						Required: true,
 					},
 					"data_region": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -81,7 +80,6 @@ func (r *SourceAmplitudeResource) Schema(ctx context.Context, req resource.Schem
 						Description: `Amplitude data region server`,
 					},
 					"request_time_range": schema.Int64Attribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Int64{
 							int64planmodifier.RequiresReplace(),
 						},
@@ -119,7 +117,6 @@ func (r *SourceAmplitudeResource) Schema(ctx context.Context, req resource.Schem
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

@@ -64,7 +64,6 @@ func (r *SourceSlackResource) Schema(ctx context.Context, req resource.SchemaReq
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"channel_filter": schema.ListAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.List{
 							listplanmodifier.RequiresReplace(),
 						},
@@ -72,14 +71,12 @@ func (r *SourceSlackResource) Schema(ctx context.Context, req resource.SchemaReq
 						ElementType: types.StringType,
 					},
 					"credentials": schema.SingleNestedAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Object{
 							objectplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_slack_authentication_mechanism_sign_in_via_slack_o_auth_": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -118,7 +115,6 @@ func (r *SourceSlackResource) Schema(ctx context.Context, req resource.SchemaReq
 								Description: `Choose how to authenticate into Slack`,
 							},
 							"source_slack_authentication_mechanism_api_token": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -190,7 +186,6 @@ func (r *SourceSlackResource) Schema(ctx context.Context, req resource.SchemaReq
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

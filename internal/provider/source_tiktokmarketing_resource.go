@@ -62,21 +62,18 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"attribution_window": schema.Int64Attribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Int64{
 							int64planmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"credentials": schema.SingleNestedAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Object{
 							objectplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_tiktok_marketing_authentication_method_o_auth2_0": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -89,7 +86,6 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 										Required: true,
 									},
 									"advertiser_id": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -102,7 +98,6 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 										Required: true,
 									},
 									"auth_type": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -123,7 +118,6 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 								Description: `Authentication method`,
 							},
 							"source_tiktok_marketing_authentication_method_sandbox_access_token": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -142,7 +136,6 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 										Required: true,
 									},
 									"auth_type": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -162,7 +155,6 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 						},
 					},
 					"end_date": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -183,7 +175,6 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 						},
 					},
 					"start_date": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -201,7 +192,6 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

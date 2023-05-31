@@ -79,7 +79,6 @@ func (r *SourceWhiskyHunterResource) Schema(ctx context.Context, req resource.Sc
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

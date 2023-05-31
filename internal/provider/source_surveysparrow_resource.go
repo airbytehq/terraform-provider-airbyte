@@ -69,21 +69,18 @@ func (r *SourceSurveySparrowResource) Schema(ctx context.Context, req resource.S
 						Required: true,
 					},
 					"region": schema.SingleNestedAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Object{
 							objectplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_survey_sparrow_base_url_eu_based_account": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"url_base": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -98,14 +95,12 @@ func (r *SourceSurveySparrowResource) Schema(ctx context.Context, req resource.S
 								Description: `Is your account location is EU based? If yes, the base url to retrieve data will be different.`,
 							},
 							"source_survey_sparrow_base_url_global_account": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"url_base": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -136,7 +131,6 @@ func (r *SourceSurveySparrowResource) Schema(ctx context.Context, req resource.S
 						},
 					},
 					"survey_id": schema.ListAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.List{
 							listplanmodifier.RequiresReplace(),
 						},
@@ -155,7 +149,6 @@ func (r *SourceSurveySparrowResource) Schema(ctx context.Context, req resource.S
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

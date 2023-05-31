@@ -67,7 +67,6 @@ func (r *SourceSmartsheetsResource) Schema(ctx context.Context, req resource.Sch
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"source_smartsheets_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -80,7 +79,6 @@ func (r *SourceSmartsheetsResource) Schema(ctx context.Context, req resource.Sch
 										Required: true,
 									},
 									"auth_type": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -121,7 +119,6 @@ func (r *SourceSmartsheetsResource) Schema(ctx context.Context, req resource.Sch
 								},
 							},
 							"source_smartsheets_authorization_method_api_access_token": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -134,7 +131,6 @@ func (r *SourceSmartsheetsResource) Schema(ctx context.Context, req resource.Sch
 										Required: true,
 									},
 									"auth_type": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -170,7 +166,6 @@ func (r *SourceSmartsheetsResource) Schema(ctx context.Context, req resource.Sch
 						Required: true,
 					},
 					"start_datetime": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -188,7 +183,6 @@ func (r *SourceSmartsheetsResource) Schema(ctx context.Context, req resource.Sch
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

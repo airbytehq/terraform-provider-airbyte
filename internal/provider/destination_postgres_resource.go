@@ -84,14 +84,12 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 						Required: true,
 					},
 					"jdbc_url_params": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"password": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -110,14 +108,12 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 						Required: true,
 					},
 					"ssl_mode": schema.SingleNestedAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Object{
 							objectplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_postgres_ssl_modes_disable": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -138,7 +134,6 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 								Description: `Disable SSL.`,
 							},
 							"destination_postgres_ssl_modes_allow": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -159,7 +154,6 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 								Description: `Allow SSL mode.`,
 							},
 							"destination_postgres_ssl_modes_prefer": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -180,7 +174,6 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 								Description: `Prefer SSL mode.`,
 							},
 							"destination_postgres_ssl_modes_require": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -201,7 +194,6 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 								Description: `Require SSL mode.`,
 							},
 							"destination_postgres_ssl_modes_verify_ca": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -214,7 +206,6 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 										Required: true,
 									},
 									"client_key_password": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -235,7 +226,6 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 								Description: `Verify-ca SSL mode.`,
 							},
 							"destination_postgres_ssl_modes_verify_full": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -260,7 +250,6 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 										Required: true,
 									},
 									"client_key_password": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -286,14 +275,12 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 						},
 					},
 					"tunnel_method": schema.SingleNestedAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Object{
 							objectplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_postgres_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -315,7 +302,6 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"destination_postgres_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -361,7 +347,6 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"destination_postgres_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},

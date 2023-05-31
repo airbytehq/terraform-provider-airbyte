@@ -61,7 +61,6 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"aws_account_id": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -74,7 +73,6 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 						Required: true,
 					},
 					"bucket_prefix": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -87,7 +85,6 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_aws_datalake_authentication_mode_iam_role": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -115,7 +112,6 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 								Description: `Choose How to Authenticate to AWS.`,
 							},
 							"destination_aws_datalake_authentication_mode_iam_user": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -165,21 +161,18 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 						},
 					},
 					"format": schema.SingleNestedAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Object{
 							objectplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_aws_datalake_output_format_wildcard_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"compression_codec": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -207,14 +200,12 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 								Description: `Format of the data output.`,
 							},
 							"destination_aws_datalake_output_format_wildcard_parquet_columnar_storage": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"compression_codec": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -249,21 +240,18 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 						},
 					},
 					"glue_catalog_float_as_decimal": schema.BoolAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Bool{
 							boolplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"lakeformation_database_default_tag_key": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"lakeformation_database_default_tag_values": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -276,14 +264,12 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 						Required: true,
 					},
 					"lakeformation_governed_tables": schema.BoolAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Bool{
 							boolplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"partitioning": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},

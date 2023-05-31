@@ -62,7 +62,6 @@ func (r *SourceAmazonAdsResource) Schema(ctx context.Context, req resource.Schem
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"auth_type": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -86,14 +85,12 @@ func (r *SourceAmazonAdsResource) Schema(ctx context.Context, req resource.Schem
 						Required: true,
 					},
 					"look_back_window": schema.Int64Attribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Int64{
 							int64planmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"profiles": schema.ListAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.List{
 							listplanmodifier.RequiresReplace(),
 						},
@@ -107,7 +104,6 @@ func (r *SourceAmazonAdsResource) Schema(ctx context.Context, req resource.Schem
 						Required: true,
 					},
 					"region": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -122,7 +118,6 @@ func (r *SourceAmazonAdsResource) Schema(ctx context.Context, req resource.Schem
 						Description: `Region to pull data from (EU/NA/FE). See <a href="https://advertising.amazon.com/API/docs/en-us/info/api-overview#api-endpoints">docs</a> for more details.`,
 					},
 					"report_record_types": schema.ListAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.List{
 							listplanmodifier.RequiresReplace(),
 						},
@@ -141,14 +136,12 @@ func (r *SourceAmazonAdsResource) Schema(ctx context.Context, req resource.Schem
 						},
 					},
 					"start_date": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"state_filter": schema.ListAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.List{
 							listplanmodifier.RequiresReplace(),
 						},
@@ -164,7 +157,6 @@ func (r *SourceAmazonAdsResource) Schema(ctx context.Context, req resource.Schem
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

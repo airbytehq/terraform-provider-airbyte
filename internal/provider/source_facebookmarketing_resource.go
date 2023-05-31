@@ -76,14 +76,12 @@ func (r *SourceFacebookMarketingResource) Schema(ctx context.Context, req resour
 						Required: true,
 					},
 					"action_breakdowns_allow_empty": schema.BoolAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Bool{
 							boolplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"custom_insights": schema.ListNestedAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.List{
 							listplanmodifier.RequiresReplace(),
 						},
@@ -91,33 +89,27 @@ func (r *SourceFacebookMarketingResource) Schema(ctx context.Context, req resour
 						NestedObject: schema.NestedAttributeObject{
 							Attributes: map[string]schema.Attribute{
 								"action_breakdowns": schema.ListAttribute{
-									Computed:    true,
 									Optional:    true,
 									ElementType: types.StringType,
 								},
 								"breakdowns": schema.ListAttribute{
-									Computed:    true,
 									Optional:    true,
 									ElementType: types.StringType,
 								},
 								"end_date": schema.StringAttribute{
-									Computed: true,
 									Optional: true,
 									Validators: []validator.String{
 										validators.IsRFC3339(),
 									},
 								},
 								"fields": schema.ListAttribute{
-									Computed:    true,
 									Optional:    true,
 									ElementType: types.StringType,
 								},
 								"insights_lookback_window": schema.Int64Attribute{
-									Computed: true,
 									Optional: true,
 								},
 								"level": schema.StringAttribute{
-									Computed: true,
 									Optional: true,
 									Validators: []validator.String{
 										stringvalidator.OneOf(
@@ -133,21 +125,18 @@ func (r *SourceFacebookMarketingResource) Schema(ctx context.Context, req resour
 									Required: true,
 								},
 								"start_date": schema.StringAttribute{
-									Computed: true,
 									Optional: true,
 									Validators: []validator.String{
 										validators.IsRFC3339(),
 									},
 								},
 								"time_increment": schema.Int64Attribute{
-									Computed: true,
 									Optional: true,
 								},
 							},
 						},
 					},
 					"end_date": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -157,35 +146,30 @@ func (r *SourceFacebookMarketingResource) Schema(ctx context.Context, req resour
 						},
 					},
 					"fetch_thumbnail_images": schema.BoolAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Bool{
 							boolplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"include_deleted": schema.BoolAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Bool{
 							boolplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"insights_lookback_window": schema.Int64Attribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Int64{
 							int64planmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"max_batch_size": schema.Int64Attribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Int64{
 							int64planmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"page_size": schema.Int64Attribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Int64{
 							int64planmodifier.RequiresReplace(),
 						},
@@ -220,7 +204,6 @@ func (r *SourceFacebookMarketingResource) Schema(ctx context.Context, req resour
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

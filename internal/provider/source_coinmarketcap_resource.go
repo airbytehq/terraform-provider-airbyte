@@ -91,7 +91,6 @@ func (r *SourceCoinmarketcapResource) Schema(ctx context.Context, req resource.S
 						},
 					},
 					"symbols": schema.ListAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.List{
 							listplanmodifier.RequiresReplace(),
 						},
@@ -107,7 +106,6 @@ func (r *SourceCoinmarketcapResource) Schema(ctx context.Context, req resource.S
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

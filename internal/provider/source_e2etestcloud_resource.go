@@ -68,7 +68,6 @@ func (r *SourceE2eTestCloudResource) Schema(ctx context.Context, req resource.Sc
 						Required: true,
 					},
 					"message_interval_ms": schema.Int64Attribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Int64{
 							int64planmodifier.RequiresReplace(),
 						},
@@ -81,14 +80,12 @@ func (r *SourceE2eTestCloudResource) Schema(ctx context.Context, req resource.Sc
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"source_e2e_test_cloud_mock_catalog_single_schema": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"stream_duplication": schema.Int64Attribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.Int64{
 											int64planmodifier.RequiresReplace(),
 										},
@@ -121,7 +118,6 @@ func (r *SourceE2eTestCloudResource) Schema(ctx context.Context, req resource.Sc
 								Description: `A catalog with one or multiple streams that share the same schema.`,
 							},
 							"source_e2e_test_cloud_mock_catalog_multi_schema": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -153,7 +149,6 @@ func (r *SourceE2eTestCloudResource) Schema(ctx context.Context, req resource.Sc
 						},
 					},
 					"seed": schema.Int64Attribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Int64{
 							int64planmodifier.RequiresReplace(),
 						},
@@ -171,7 +166,6 @@ func (r *SourceE2eTestCloudResource) Schema(ctx context.Context, req resource.Sc
 						},
 					},
 					"type": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -191,7 +185,6 @@ func (r *SourceE2eTestCloudResource) Schema(ctx context.Context, req resource.Sc
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

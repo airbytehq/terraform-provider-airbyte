@@ -67,7 +67,6 @@ func (r *SourceGnewsResource) Schema(ctx context.Context, req resource.SchemaReq
 						Required: true,
 					},
 					"country": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -109,14 +108,12 @@ func (r *SourceGnewsResource) Schema(ctx context.Context, req resource.SchemaReq
 						Description: `This parameter allows you to specify the country where the news articles returned by the API were published, the contents of the articles are not necessarily related to the specified country. You have to set as value the 2 letters code of the country you want to filter.`,
 					},
 					"end_date": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"in": schema.ListAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.List{
 							listplanmodifier.RequiresReplace(),
 						},
@@ -124,7 +121,6 @@ func (r *SourceGnewsResource) Schema(ctx context.Context, req resource.SchemaReq
 						ElementType: types.StringType,
 					},
 					"language": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -157,7 +153,6 @@ func (r *SourceGnewsResource) Schema(ctx context.Context, req resource.SchemaReq
 						},
 					},
 					"nullable": schema.ListAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.List{
 							listplanmodifier.RequiresReplace(),
 						},
@@ -171,7 +166,6 @@ func (r *SourceGnewsResource) Schema(ctx context.Context, req resource.SchemaReq
 						Required: true,
 					},
 					"sortby": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -198,21 +192,18 @@ func (r *SourceGnewsResource) Schema(ctx context.Context, req resource.SchemaReq
 						},
 					},
 					"start_date": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"top_headlines_query": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"top_headlines_topic": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -241,7 +232,6 @@ func (r *SourceGnewsResource) Schema(ctx context.Context, req resource.SchemaReq
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

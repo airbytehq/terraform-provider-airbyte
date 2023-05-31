@@ -73,7 +73,6 @@ func (r *SourceAuth0Resource) Schema(ctx context.Context, req resource.SchemaReq
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"source_auth0_authentication_method_o_auth2_confidential_application": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -111,7 +110,6 @@ func (r *SourceAuth0Resource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"source_auth0_authentication_method_o_auth2_access_token": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -161,7 +159,6 @@ func (r *SourceAuth0Resource) Schema(ctx context.Context, req resource.SchemaReq
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

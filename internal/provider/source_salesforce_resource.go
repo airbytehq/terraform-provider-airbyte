@@ -63,7 +63,6 @@ func (r *SourceSalesforceResource) Schema(ctx context.Context, req resource.Sche
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"auth_type": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -87,7 +86,6 @@ func (r *SourceSalesforceResource) Schema(ctx context.Context, req resource.Sche
 						Required: true,
 					},
 					"is_sandbox": schema.BoolAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Bool{
 							boolplanmodifier.RequiresReplace(),
 						},
@@ -111,7 +109,6 @@ func (r *SourceSalesforceResource) Schema(ctx context.Context, req resource.Sche
 						},
 					},
 					"start_date": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -121,7 +118,6 @@ func (r *SourceSalesforceResource) Schema(ctx context.Context, req resource.Sche
 						},
 					},
 					"streams_criteria": schema.ListNestedAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.List{
 							listplanmodifier.RequiresReplace(),
 						},
@@ -158,7 +154,6 @@ func (r *SourceSalesforceResource) Schema(ctx context.Context, req resource.Sche
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

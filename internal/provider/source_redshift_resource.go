@@ -74,7 +74,6 @@ func (r *SourceRedshiftResource) Schema(ctx context.Context, req resource.Schema
 						Required: true,
 					},
 					"jdbc_url_params": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -93,7 +92,6 @@ func (r *SourceRedshiftResource) Schema(ctx context.Context, req resource.Schema
 						Required: true,
 					},
 					"schemas": schema.ListAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.List{
 							listplanmodifier.RequiresReplace(),
 						},
@@ -126,7 +124,6 @@ func (r *SourceRedshiftResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

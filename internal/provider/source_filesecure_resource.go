@@ -93,7 +93,6 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"source_file_secure_storage_provider_https_public_web": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -111,7 +110,6 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 										},
 									},
 									"user_agent": schema.BoolAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.Bool{
 											boolplanmodifier.RequiresReplace(),
 										},
@@ -121,14 +119,12 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
 							},
 							"source_file_secure_storage_provider_gcs_google_cloud_storage": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"service_account_json": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -149,21 +145,18 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
 							},
 							"source_file_secure_storage_provider_s3_amazon_web_services": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"aws_access_key_id": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
 										Optional: true,
 									},
 									"aws_secret_access_key": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -184,21 +177,18 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
 							},
 							"source_file_secure_storage_provider_az_blob_azure_blob_storage": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"sas_token": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
 										Optional: true,
 									},
 									"shared_key": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -225,7 +215,6 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
 							},
 							"source_file_secure_storage_provider_ssh_secure_shell": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -238,14 +227,12 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 										Required: true,
 									},
 									"password": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
 										Optional: true,
 									},
 									"port": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -272,7 +259,6 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
 							},
 							"source_file_secure_storage_provider_scp_secure_copy_protocol": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -285,14 +271,12 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 										Required: true,
 									},
 									"password": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
 										Optional: true,
 									},
 									"port": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -319,7 +303,6 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
 							},
 							"source_file_secure_storage_provider_sftp_secure_file_transfer_protocol": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -332,14 +315,12 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 										Required: true,
 									},
 									"password": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
 										Optional: true,
 									},
 									"port": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -371,7 +352,6 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 						},
 					},
 					"reader_options": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -403,7 +383,6 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

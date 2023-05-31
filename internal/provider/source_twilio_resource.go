@@ -74,7 +74,6 @@ func (r *SourceTwilioResource) Schema(ctx context.Context, req resource.SchemaRe
 						Required: true,
 					},
 					"lookback_window": schema.Int64Attribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Int64{
 							int64planmodifier.RequiresReplace(),
 						},
@@ -109,7 +108,6 @@ func (r *SourceTwilioResource) Schema(ctx context.Context, req resource.SchemaRe
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

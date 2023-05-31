@@ -69,7 +69,6 @@ func (r *SourceNytimesResource) Schema(ctx context.Context, req resource.SchemaR
 						Required: true,
 					},
 					"end_date": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -95,7 +94,6 @@ func (r *SourceNytimesResource) Schema(ctx context.Context, req resource.SchemaR
 						Description: `Period of time (in days)`,
 					},
 					"share_type": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -136,7 +134,6 @@ func (r *SourceNytimesResource) Schema(ctx context.Context, req resource.SchemaR
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

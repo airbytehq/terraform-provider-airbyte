@@ -67,7 +67,6 @@ func (r *SourceTwitterResource) Schema(ctx context.Context, req resource.SchemaR
 						Required: true,
 					},
 					"end_date": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -94,7 +93,6 @@ func (r *SourceTwitterResource) Schema(ctx context.Context, req resource.SchemaR
 						},
 					},
 					"start_date": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -112,7 +110,6 @@ func (r *SourceTwitterResource) Schema(ctx context.Context, req resource.SchemaR
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

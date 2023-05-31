@@ -68,14 +68,12 @@ func (r *SourceOrbResource) Schema(ctx context.Context, req resource.SchemaReque
 						Required: true,
 					},
 					"lookback_window_days": schema.Int64Attribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Int64{
 							int64planmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"numeric_event_properties_keys": schema.ListAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.List{
 							listplanmodifier.RequiresReplace(),
 						},
@@ -83,7 +81,6 @@ func (r *SourceOrbResource) Schema(ctx context.Context, req resource.SchemaReque
 						ElementType: types.StringType,
 					},
 					"plan_id": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -107,7 +104,6 @@ func (r *SourceOrbResource) Schema(ctx context.Context, req resource.SchemaReque
 						Required: true,
 					},
 					"string_event_properties_keys": schema.ListAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.List{
 							listplanmodifier.RequiresReplace(),
 						},
@@ -115,7 +111,6 @@ func (r *SourceOrbResource) Schema(ctx context.Context, req resource.SchemaReque
 						ElementType: types.StringType,
 					},
 					"subscription_usage_grouping_key": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -130,7 +125,6 @@ func (r *SourceOrbResource) Schema(ctx context.Context, req resource.SchemaReque
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

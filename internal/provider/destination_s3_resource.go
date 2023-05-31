@@ -62,7 +62,6 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"access_key_id": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -80,7 +79,6 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 						},
 					},
 					"file_name_pattern": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -93,7 +91,6 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_s3_output_format_avro_apache_avro": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -106,7 +103,6 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 										Required: true,
 										Attributes: map[string]schema.Attribute{
 											"destination_s3_output_format_avro_apache_avro_compression_codec_no_compression": schema.SingleNestedAttribute{
-												Computed: true,
 												PlanModifiers: []planmodifier.Object{
 													objectplanmodifier.RequiresReplace(),
 												},
@@ -127,7 +123,6 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
 											"destination_s3_output_format_avro_apache_avro_compression_codec_deflate": schema.SingleNestedAttribute{
-												Computed: true,
 												PlanModifiers: []planmodifier.Object{
 													objectplanmodifier.RequiresReplace(),
 												},
@@ -154,7 +149,6 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
 											"destination_s3_output_format_avro_apache_avro_compression_codec_bzip2": schema.SingleNestedAttribute{
-												Computed: true,
 												PlanModifiers: []planmodifier.Object{
 													objectplanmodifier.RequiresReplace(),
 												},
@@ -175,7 +169,6 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
 											"destination_s3_output_format_avro_apache_avro_compression_codec_xz": schema.SingleNestedAttribute{
-												Computed: true,
 												PlanModifiers: []planmodifier.Object{
 													objectplanmodifier.RequiresReplace(),
 												},
@@ -202,7 +195,6 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
 											"destination_s3_output_format_avro_apache_avro_compression_codec_zstandard": schema.SingleNestedAttribute{
-												Computed: true,
 												PlanModifiers: []planmodifier.Object{
 													objectplanmodifier.RequiresReplace(),
 												},
@@ -226,7 +218,6 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 														Required: true,
 													},
 													"include_checksum": schema.BoolAttribute{
-														Computed: true,
 														PlanModifiers: []planmodifier.Bool{
 															boolplanmodifier.RequiresReplace(),
 														},
@@ -236,7 +227,6 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
 											"destination_s3_output_format_avro_apache_avro_compression_codec_snappy": schema.SingleNestedAttribute{
-												Computed: true,
 												PlanModifiers: []planmodifier.Object{
 													objectplanmodifier.RequiresReplace(),
 												},
@@ -276,28 +266,24 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 								Description: `Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details`,
 							},
 							"destination_s3_output_format_csv_comma_separated_values": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"compression": schema.SingleNestedAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.Object{
 											objectplanmodifier.RequiresReplace(),
 										},
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"destination_s3_output_format_csv_comma_separated_values_compression_no_compression": schema.SingleNestedAttribute{
-												Computed: true,
 												PlanModifiers: []planmodifier.Object{
 													objectplanmodifier.RequiresReplace(),
 												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
-														Computed: true,
 														PlanModifiers: []planmodifier.String{
 															stringplanmodifier.RequiresReplace(),
 														},
@@ -312,14 +298,12 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").`,
 											},
 											"destination_s3_output_format_csv_comma_separated_values_compression_gzip": schema.SingleNestedAttribute{
-												Computed: true,
 												PlanModifiers: []planmodifier.Object{
 													objectplanmodifier.RequiresReplace(),
 												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
-														Computed: true,
 														PlanModifiers: []planmodifier.String{
 															stringplanmodifier.RequiresReplace(),
 														},
@@ -366,28 +350,24 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 								Description: `Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details`,
 							},
 							"destination_s3_output_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"compression": schema.SingleNestedAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.Object{
 											objectplanmodifier.RequiresReplace(),
 										},
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"destination_s3_output_format_json_lines_newline_delimited_json_compression_no_compression": schema.SingleNestedAttribute{
-												Computed: true,
 												PlanModifiers: []planmodifier.Object{
 													objectplanmodifier.RequiresReplace(),
 												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
-														Computed: true,
 														PlanModifiers: []planmodifier.String{
 															stringplanmodifier.RequiresReplace(),
 														},
@@ -402,14 +382,12 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
 											},
 											"destination_s3_output_format_json_lines_newline_delimited_json_compression_gzip": schema.SingleNestedAttribute{
-												Computed: true,
 												PlanModifiers: []planmodifier.Object{
 													objectplanmodifier.RequiresReplace(),
 												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
-														Computed: true,
 														PlanModifiers: []planmodifier.String{
 															stringplanmodifier.RequiresReplace(),
 														},
@@ -429,7 +407,6 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 										},
 									},
 									"flattening": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -457,21 +434,18 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 								Description: `Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details`,
 							},
 							"destination_s3_output_format_parquet_columnar_storage": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"block_size_mb": schema.Int64Attribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.Int64{
 											int64planmodifier.RequiresReplace(),
 										},
 										Optional: true,
 									},
 									"compression_codec": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -490,14 +464,12 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 										Description: `The compression algorithm used to compress data pages.`,
 									},
 									"dictionary_encoding": schema.BoolAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.Bool{
 											boolplanmodifier.RequiresReplace(),
 										},
 										Optional: true,
 									},
 									"dictionary_page_size_kb": schema.Int64Attribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.Int64{
 											int64planmodifier.RequiresReplace(),
 										},
@@ -515,14 +487,12 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 										},
 									},
 									"max_padding_size_mb": schema.Int64Attribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.Int64{
 											int64planmodifier.RequiresReplace(),
 										},
 										Optional: true,
 									},
 									"page_size_kb": schema.Int64Attribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.Int64{
 											int64planmodifier.RequiresReplace(),
 										},
@@ -586,21 +556,18 @@ func (r *DestinationS3Resource) Schema(ctx context.Context, req resource.SchemaR
 						Description: `The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes.`,
 					},
 					"s3_endpoint": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"s3_path_format": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"secret_access_key": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},

@@ -59,7 +59,6 @@ func (r *DestinationMeilisearchResource) Schema(ctx context.Context, req resourc
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"api_key": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},

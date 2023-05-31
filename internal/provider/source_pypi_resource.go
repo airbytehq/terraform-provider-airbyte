@@ -77,7 +77,6 @@ func (r *SourcePypiResource) Schema(ctx context.Context, req resource.SchemaRequ
 						},
 					},
 					"version": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -92,7 +91,6 @@ func (r *SourcePypiResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

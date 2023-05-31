@@ -73,7 +73,6 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_databricks_data_source_recommended_managed_tables": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -94,7 +93,6 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 								Description: `Storage on which the delta lake is built.`,
 							},
 							"destination_databricks_data_source_amazon_s3": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -112,7 +110,6 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 										},
 									},
 									"file_name_pattern": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -183,7 +180,6 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 								Description: `Storage on which the delta lake is built.`,
 							},
 							"destination_databricks_data_source_azure_blob_storage": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -202,7 +198,6 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 										Required: true,
 									},
 									"azure_blob_storage_endpoint_domain_name": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -234,7 +229,6 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 						},
 					},
 					"database": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -253,7 +247,6 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 						Required: true,
 					},
 					"databricks_port": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -277,14 +270,12 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 						},
 					},
 					"purge_staging_data": schema.BoolAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Bool{
 							boolplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"schema": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},

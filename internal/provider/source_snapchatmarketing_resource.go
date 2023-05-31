@@ -73,7 +73,6 @@ func (r *SourceSnapchatMarketingResource) Schema(ctx context.Context, req resour
 						Required: true,
 					},
 					"end_date": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -100,7 +99,6 @@ func (r *SourceSnapchatMarketingResource) Schema(ctx context.Context, req resour
 						},
 					},
 					"start_date": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -118,7 +116,6 @@ func (r *SourceSnapchatMarketingResource) Schema(ctx context.Context, req resour
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

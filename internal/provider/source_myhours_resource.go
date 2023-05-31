@@ -67,7 +67,6 @@ func (r *SourceMyHoursResource) Schema(ctx context.Context, req resource.SchemaR
 						Required: true,
 					},
 					"logs_batch_size": schema.Int64Attribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Int64{
 							int64planmodifier.RequiresReplace(),
 						},
@@ -105,7 +104,6 @@ func (r *SourceMyHoursResource) Schema(ctx context.Context, req resource.SchemaR
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

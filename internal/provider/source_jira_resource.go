@@ -81,21 +81,18 @@ func (r *SourceJiraResource) Schema(ctx context.Context, req resource.SchemaRequ
 						Required: true,
 					},
 					"enable_experimental_streams": schema.BoolAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Bool{
 							boolplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"expand_issue_changelog": schema.BoolAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Bool{
 							boolplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"projects": schema.ListAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.List{
 							listplanmodifier.RequiresReplace(),
 						},
@@ -103,7 +100,6 @@ func (r *SourceJiraResource) Schema(ctx context.Context, req resource.SchemaRequ
 						ElementType: types.StringType,
 					},
 					"render_fields": schema.BoolAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Bool{
 							boolplanmodifier.RequiresReplace(),
 						},
@@ -121,7 +117,6 @@ func (r *SourceJiraResource) Schema(ctx context.Context, req resource.SchemaRequ
 						},
 					},
 					"start_date": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -139,7 +134,6 @@ func (r *SourceJiraResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

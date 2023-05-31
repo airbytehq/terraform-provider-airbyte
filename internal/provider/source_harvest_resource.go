@@ -67,21 +67,18 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 						Required: true,
 					},
 					"credentials": schema.SingleNestedAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Object{
 							objectplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_harvest_authentication_mechanism_authenticate_via_harvest_o_auth_": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -111,7 +108,6 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 										Required: true,
 									},
 									"additional_properties": schema.StringAttribute{
-										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											validators.IsValidJSON(),
@@ -122,7 +118,6 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 								Description: `Choose how to authenticate to Harvest.`,
 							},
 							"source_harvest_authentication_mechanism_authenticate_with_personal_access_token": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -135,7 +130,6 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 										Required: true,
 									},
 									"auth_type": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -147,7 +141,6 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 										},
 									},
 									"additional_properties": schema.StringAttribute{
-										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											validators.IsValidJSON(),
@@ -163,7 +156,6 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 						},
 					},
 					"replication_end_date": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -201,7 +193,6 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

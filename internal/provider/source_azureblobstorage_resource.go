@@ -74,7 +74,6 @@ func (r *SourceAzureBlobStorageResource) Schema(ctx context.Context, req resourc
 						Required: true,
 					},
 					"azure_blob_storage_blobs_prefix": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -87,14 +86,12 @@ func (r *SourceAzureBlobStorageResource) Schema(ctx context.Context, req resourc
 						Required: true,
 					},
 					"azure_blob_storage_endpoint": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"azure_blob_storage_schema_inference_limit": schema.Int64Attribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Int64{
 							int64planmodifier.RequiresReplace(),
 						},
@@ -107,7 +104,6 @@ func (r *SourceAzureBlobStorageResource) Schema(ctx context.Context, req resourc
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"source_azure_blob_storage_input_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -152,7 +148,6 @@ func (r *SourceAzureBlobStorageResource) Schema(ctx context.Context, req resourc
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

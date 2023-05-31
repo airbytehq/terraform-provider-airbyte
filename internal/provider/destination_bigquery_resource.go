@@ -61,14 +61,12 @@ func (r *DestinationBigqueryResource) Schema(ctx context.Context, req resource.S
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"big_query_client_buffer_size_mb": schema.Int64Attribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Int64{
 							int64planmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"credentials_json": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -143,14 +141,12 @@ func (r *DestinationBigqueryResource) Schema(ctx context.Context, req resource.S
 						},
 					},
 					"loading_method": schema.SingleNestedAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Object{
 							objectplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_bigquery_loading_method_standard_inserts": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -171,7 +167,6 @@ func (r *DestinationBigqueryResource) Schema(ctx context.Context, req resource.S
 								Description: `Loading method used to send select the way data will be uploaded to BigQuery. <br/><b>Standard Inserts</b> - Direct uploading using SQL INSERT statements. This method is extremely inefficient and provided only for quick testing. In almost all cases, you should use staging. <br/><b>GCS Staging</b> - Writes large batches of records to a file, uploads the file to GCS, then uses <b>COPY INTO table</b> to upload the file. Recommended for most workloads for better speed and scalability. Read more about GCS Staging <a href="https://docs.airbyte.com/integrations/destinations/bigquery#gcs-staging">here</a>.`,
 							},
 							"destination_bigquery_loading_method_gcs_staging": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -184,7 +179,6 @@ func (r *DestinationBigqueryResource) Schema(ctx context.Context, req resource.S
 										Required: true,
 										Attributes: map[string]schema.Attribute{
 											"destination_bigquery_loading_method_gcs_staging_credential_hmac_key": schema.SingleNestedAttribute{
-												Computed: true,
 												PlanModifiers: []planmodifier.Object{
 													objectplanmodifier.RequiresReplace(),
 												},
@@ -222,7 +216,6 @@ func (r *DestinationBigqueryResource) Schema(ctx context.Context, req resource.S
 										},
 									},
 									"file_buffer_count": schema.Int64Attribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.Int64{
 											int64planmodifier.RequiresReplace(),
 										},
@@ -241,7 +234,6 @@ func (r *DestinationBigqueryResource) Schema(ctx context.Context, req resource.S
 										Required: true,
 									},
 									"keep_files_in_gcs_bucket": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -280,7 +272,6 @@ func (r *DestinationBigqueryResource) Schema(ctx context.Context, req resource.S
 						Required: true,
 					},
 					"transformation_priority": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},

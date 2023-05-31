@@ -61,14 +61,12 @@ func (r *DestinationElasticsearchResource) Schema(ctx context.Context, req resou
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"authentication_method": schema.SingleNestedAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Object{
 							objectplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_elasticsearch_authentication_method_api_key_secret": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -101,7 +99,6 @@ func (r *DestinationElasticsearchResource) Schema(ctx context.Context, req resou
 								Description: `Use a api key and secret combination to authenticate`,
 							},
 							"destination_elasticsearch_authentication_method_username_password": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -139,7 +136,6 @@ func (r *DestinationElasticsearchResource) Schema(ctx context.Context, req resou
 						},
 					},
 					"ca_certificate": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -163,7 +159,6 @@ func (r *DestinationElasticsearchResource) Schema(ctx context.Context, req resou
 						Required: true,
 					},
 					"upsert": schema.BoolAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Bool{
 							boolplanmodifier.RequiresReplace(),
 						},

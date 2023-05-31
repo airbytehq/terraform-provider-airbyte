@@ -68,7 +68,6 @@ func (r *SourceQuickbooksResource) Schema(ctx context.Context, req resource.Sche
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"source_quickbooks_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -81,7 +80,6 @@ func (r *SourceQuickbooksResource) Schema(ctx context.Context, req resource.Sche
 										Required: true,
 									},
 									"auth_type": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -167,7 +165,6 @@ func (r *SourceQuickbooksResource) Schema(ctx context.Context, req resource.Sche
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

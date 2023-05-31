@@ -62,28 +62,24 @@ func (r *SourceGoogleAnalyticsV4Resource) Schema(ctx context.Context, req resour
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"credentials": schema.SingleNestedAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Object{
 							objectplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_google_analytics_v4_credentials_authenticate_via_google_oauth_": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
 										Optional: true,
 									},
 									"auth_type": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -116,14 +112,12 @@ func (r *SourceGoogleAnalyticsV4Resource) Schema(ctx context.Context, req resour
 								Description: `Credentials for the service`,
 							},
 							"source_google_analytics_v4_credentials_service_account_key_authentication": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -149,7 +143,6 @@ func (r *SourceGoogleAnalyticsV4Resource) Schema(ctx context.Context, req resour
 						},
 					},
 					"custom_reports": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -179,7 +172,6 @@ func (r *SourceGoogleAnalyticsV4Resource) Schema(ctx context.Context, req resour
 						Required: true,
 					},
 					"window_in_days": schema.Int64Attribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Int64{
 							int64planmodifier.RequiresReplace(),
 						},
@@ -194,7 +186,6 @@ func (r *SourceGoogleAnalyticsV4Resource) Schema(ctx context.Context, req resour
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

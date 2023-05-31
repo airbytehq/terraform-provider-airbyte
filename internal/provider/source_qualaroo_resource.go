@@ -84,7 +84,6 @@ func (r *SourceQualarooResource) Schema(ctx context.Context, req resource.Schema
 						Required: true,
 					},
 					"survey_ids": schema.ListAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.List{
 							listplanmodifier.RequiresReplace(),
 						},
@@ -106,7 +105,6 @@ func (r *SourceQualarooResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

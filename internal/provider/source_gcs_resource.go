@@ -97,7 +97,6 @@ func (r *SourceGcsResource) Schema(ctx context.Context, req resource.SchemaReque
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

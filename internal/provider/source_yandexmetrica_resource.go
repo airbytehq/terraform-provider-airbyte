@@ -73,7 +73,6 @@ func (r *SourceYandexMetricaResource) Schema(ctx context.Context, req resource.S
 						Required: true,
 					},
 					"end_date": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -111,7 +110,6 @@ func (r *SourceYandexMetricaResource) Schema(ctx context.Context, req resource.S
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

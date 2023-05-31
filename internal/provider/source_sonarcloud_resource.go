@@ -73,7 +73,6 @@ func (r *SourceSonarCloudResource) Schema(ctx context.Context, req resource.Sche
 						},
 					},
 					"end_date": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -100,7 +99,6 @@ func (r *SourceSonarCloudResource) Schema(ctx context.Context, req resource.Sche
 						},
 					},
 					"start_date": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -124,7 +122,6 @@ func (r *SourceSonarCloudResource) Schema(ctx context.Context, req resource.Sche
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

@@ -73,7 +73,6 @@ func (r *SourcePocketResource) Schema(ctx context.Context, req resource.SchemaRe
 						Required: true,
 					},
 					"content_type": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -88,7 +87,6 @@ func (r *SourcePocketResource) Schema(ctx context.Context, req resource.SchemaRe
 						Description: `Select the content type of the items to retrieve.`,
 					},
 					"detail_type": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -102,35 +100,30 @@ func (r *SourcePocketResource) Schema(ctx context.Context, req resource.SchemaRe
 						Description: `Select the granularity of the information about each item.`,
 					},
 					"domain": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"favorite": schema.BoolAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Bool{
 							boolplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"search": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"since": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 					},
 					"sort": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -157,7 +150,6 @@ func (r *SourcePocketResource) Schema(ctx context.Context, req resource.SchemaRe
 						},
 					},
 					"state": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -172,7 +164,6 @@ func (r *SourcePocketResource) Schema(ctx context.Context, req resource.SchemaRe
 						Description: `Select the state of the items to retrieve.`,
 					},
 					"tag": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -187,7 +178,6 @@ func (r *SourcePocketResource) Schema(ctx context.Context, req resource.SchemaRe
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

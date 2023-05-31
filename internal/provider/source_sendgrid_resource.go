@@ -78,7 +78,6 @@ func (r *SourceSendgridResource) Schema(ctx context.Context, req resource.Schema
 						},
 					},
 					"start_time": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -96,7 +95,6 @@ func (r *SourceSendgridResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

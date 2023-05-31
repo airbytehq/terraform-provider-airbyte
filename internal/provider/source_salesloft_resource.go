@@ -67,7 +67,6 @@ func (r *SourceSalesloftResource) Schema(ctx context.Context, req resource.Schem
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"source_salesloft_credentials_authenticate_via_o_auth": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -120,7 +119,6 @@ func (r *SourceSalesloftResource) Schema(ctx context.Context, req resource.Schem
 								},
 							},
 							"source_salesloft_credentials_authenticate_via_api_key": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -179,7 +177,6 @@ func (r *SourceSalesloftResource) Schema(ctx context.Context, req resource.Schem
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

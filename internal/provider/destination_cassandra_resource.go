@@ -66,7 +66,6 @@ func (r *DestinationCassandraResource) Schema(ctx context.Context, req resource.
 						Required: true,
 					},
 					"datacenter": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -102,7 +101,6 @@ func (r *DestinationCassandraResource) Schema(ctx context.Context, req resource.
 						Required: true,
 					},
 					"replication": schema.Int64Attribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Int64{
 							int64planmodifier.RequiresReplace(),
 						},

@@ -61,14 +61,12 @@ func (r *SourceZendeskTalkResource) Schema(ctx context.Context, req resource.Sch
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"credentials": schema.SingleNestedAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Object{
 							objectplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_zendesk_talk_authentication_api_token": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -81,7 +79,6 @@ func (r *SourceZendeskTalkResource) Schema(ctx context.Context, req resource.Sch
 										Required: true,
 									},
 									"auth_type": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -99,7 +96,6 @@ func (r *SourceZendeskTalkResource) Schema(ctx context.Context, req resource.Sch
 										Required: true,
 									},
 									"additional_properties": schema.StringAttribute{
-										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											validators.IsValidJSON(),
@@ -110,7 +106,6 @@ func (r *SourceZendeskTalkResource) Schema(ctx context.Context, req resource.Sch
 								Description: `Zendesk service provides two authentication methods. Choose between: ` + "`" + `OAuth2.0` + "`" + ` or ` + "`" + `API token` + "`" + `.`,
 							},
 							"source_zendesk_talk_authentication_o_auth2_0": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -123,7 +118,6 @@ func (r *SourceZendeskTalkResource) Schema(ctx context.Context, req resource.Sch
 										Required: true,
 									},
 									"auth_type": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -135,7 +129,6 @@ func (r *SourceZendeskTalkResource) Schema(ctx context.Context, req resource.Sch
 										},
 									},
 									"additional_properties": schema.StringAttribute{
-										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											validators.IsValidJSON(),
@@ -185,7 +178,6 @@ func (r *SourceZendeskTalkResource) Schema(ctx context.Context, req resource.Sch
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

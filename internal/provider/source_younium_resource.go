@@ -73,7 +73,6 @@ func (r *SourceYouniumResource) Schema(ctx context.Context, req resource.SchemaR
 						Required: true,
 					},
 					"playground": schema.BoolAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Bool{
 							boolplanmodifier.RequiresReplace(),
 						},
@@ -105,7 +104,6 @@ func (r *SourceYouniumResource) Schema(ctx context.Context, req resource.SchemaR
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

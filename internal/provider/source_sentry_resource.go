@@ -69,7 +69,6 @@ func (r *SourceSentryResource) Schema(ctx context.Context, req resource.SchemaRe
 						Required: true,
 					},
 					"discover_fields": schema.ListAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.List{
 							listplanmodifier.RequiresReplace(),
 						},
@@ -80,7 +79,6 @@ func (r *SourceSentryResource) Schema(ctx context.Context, req resource.SchemaRe
 						},
 					},
 					"hostname": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -118,7 +116,6 @@ func (r *SourceSentryResource) Schema(ctx context.Context, req resource.SchemaRe
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

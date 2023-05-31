@@ -75,7 +75,6 @@ func (r *SourceTrustpilotResource) Schema(ctx context.Context, req resource.Sche
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"source_trustpilot_authorization_method_o_auth_2_0": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -88,7 +87,6 @@ func (r *SourceTrustpilotResource) Schema(ctx context.Context, req resource.Sche
 										Required: true,
 									},
 									"auth_type": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -129,14 +127,12 @@ func (r *SourceTrustpilotResource) Schema(ctx context.Context, req resource.Sche
 								},
 							},
 							"source_trustpilot_authorization_method_api_key": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -187,7 +183,6 @@ func (r *SourceTrustpilotResource) Schema(ctx context.Context, req resource.Sche
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

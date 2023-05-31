@@ -61,21 +61,18 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"credentials": schema.SingleNestedAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Object{
 							objectplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_retently_authentication_mechanism_authenticate_via_retently_o_auth_": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -105,7 +102,6 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 										Required: true,
 									},
 									"additional_properties": schema.StringAttribute{
-										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											validators.IsValidJSON(),
@@ -116,7 +112,6 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 								Description: `Choose how to authenticate to Retently`,
 							},
 							"source_retently_authentication_mechanism_authenticate_with_api_token": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -129,7 +124,6 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 										Required: true,
 									},
 									"auth_type": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -141,7 +135,6 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 										},
 									},
 									"additional_properties": schema.StringAttribute{
-										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											validators.IsValidJSON(),
@@ -176,7 +169,6 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

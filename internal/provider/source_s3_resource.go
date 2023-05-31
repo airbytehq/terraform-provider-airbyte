@@ -70,70 +70,60 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 						Required: true,
 					},
 					"format": schema.SingleNestedAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Object{
 							objectplanmodifier.RequiresReplace(),
 						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_s3_file_format_csv": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"additional_reader_options": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
 										Optional: true,
 									},
 									"advanced_options": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
 										Optional: true,
 									},
 									"block_size": schema.Int64Attribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.Int64{
 											int64planmodifier.RequiresReplace(),
 										},
 										Optional: true,
 									},
 									"delimiter": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
 										Optional: true,
 									},
 									"double_quote": schema.BoolAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.Bool{
 											boolplanmodifier.RequiresReplace(),
 										},
 										Optional: true,
 									},
 									"encoding": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
 										Optional: true,
 									},
 									"escape_char": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
 										Optional: true,
 									},
 									"filetype": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -145,21 +135,18 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 										},
 									},
 									"infer_datatypes": schema.BoolAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.Bool{
 											boolplanmodifier.RequiresReplace(),
 										},
 										Optional: true,
 									},
 									"newlines_in_values": schema.BoolAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.Bool{
 											boolplanmodifier.RequiresReplace(),
 										},
 										Optional: true,
 									},
 									"quote_char": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -169,28 +156,24 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 								Description: `This connector utilises <a href="https: // arrow.apache.org/docs/python/generated/pyarrow.csv.open_csv.html" target="_blank">PyArrow (Apache Arrow)</a> for CSV parsing.`,
 							},
 							"source_s3_file_format_parquet": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"batch_size": schema.Int64Attribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.Int64{
 											int64planmodifier.RequiresReplace(),
 										},
 										Optional: true,
 									},
 									"buffer_size": schema.Int64Attribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.Int64{
 											int64planmodifier.RequiresReplace(),
 										},
 										Optional: true,
 									},
 									"columns": schema.ListAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.List{
 											listplanmodifier.RequiresReplace(),
 										},
@@ -198,7 +181,6 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 										ElementType: types.StringType,
 									},
 									"filetype": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -213,14 +195,12 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 								Description: `This connector utilises <a href="https://arrow.apache.org/docs/python/generated/pyarrow.parquet.ParquetFile.html" target="_blank">PyArrow (Apache Arrow)</a> for Parquet parsing.`,
 							},
 							"source_s3_file_format_avro": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"filetype": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -235,21 +215,18 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 								Description: `This connector utilises <a href="https://fastavro.readthedocs.io/en/latest/" target="_blank">fastavro</a> for Avro parsing.`,
 							},
 							"source_s3_file_format_jsonl": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"block_size": schema.Int64Attribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.Int64{
 											int64planmodifier.RequiresReplace(),
 										},
 										Optional: true,
 									},
 									"filetype": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -261,14 +238,12 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 										},
 									},
 									"newlines_in_values": schema.BoolAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.Bool{
 											boolplanmodifier.RequiresReplace(),
 										},
 										Optional: true,
 									},
 									"unexpected_field_behavior": schema.StringAttribute{
-										Computed: true,
 										PlanModifiers: []planmodifier.String{
 											stringplanmodifier.RequiresReplace(),
 										},
@@ -303,14 +278,12 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"aws_access_key_id": schema.StringAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.String{
 									stringplanmodifier.RequiresReplace(),
 								},
 								Optional: true,
 							},
 							"aws_secret_access_key": schema.StringAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.String{
 									stringplanmodifier.RequiresReplace(),
 								},
@@ -323,21 +296,18 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 								Required: true,
 							},
 							"endpoint": schema.StringAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.String{
 									stringplanmodifier.RequiresReplace(),
 								},
 								Optional: true,
 							},
 							"path_prefix": schema.StringAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.String{
 									stringplanmodifier.RequiresReplace(),
 								},
 								Optional: true,
 							},
 							"start_date": schema.StringAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.String{
 									stringplanmodifier.RequiresReplace(),
 								},
@@ -350,7 +320,6 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 						Description: `Use this to load files from S3 or S3-compatible services`,
 					},
 					"schema": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -376,7 +345,6 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

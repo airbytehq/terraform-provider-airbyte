@@ -75,7 +75,6 @@ func (r *SourceOnesignalResource) Schema(ctx context.Context, req resource.Schem
 									Required: true,
 								},
 								"app_name": schema.StringAttribute{
-									Computed: true,
 									Optional: true,
 								},
 							},
@@ -122,7 +121,6 @@ func (r *SourceOnesignalResource) Schema(ctx context.Context, req resource.Schem
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

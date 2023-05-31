@@ -62,7 +62,6 @@ func (r *SourceSurveymonkeyResource) Schema(ctx context.Context, req resource.Sc
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"credentials": schema.SingleNestedAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.Object{
 							objectplanmodifier.RequiresReplace(),
 						},
@@ -86,14 +85,12 @@ func (r *SourceSurveymonkeyResource) Schema(ctx context.Context, req resource.Sc
 								},
 							},
 							"client_id": schema.StringAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.String{
 									stringplanmodifier.RequiresReplace(),
 								},
 								Optional: true,
 							},
 							"client_secret": schema.StringAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.String{
 									stringplanmodifier.RequiresReplace(),
 								},
@@ -103,7 +100,6 @@ func (r *SourceSurveymonkeyResource) Schema(ctx context.Context, req resource.Sc
 						Description: `The authorization method to use to retrieve data from SurveyMonkey`,
 					},
 					"origin": schema.StringAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.String{
 							stringplanmodifier.RequiresReplace(),
 						},
@@ -138,7 +134,6 @@ func (r *SourceSurveymonkeyResource) Schema(ctx context.Context, req resource.Sc
 						},
 					},
 					"survey_ids": schema.ListAttribute{
-						Computed: true,
 						PlanModifiers: []planmodifier.List{
 							listplanmodifier.RequiresReplace(),
 						},
@@ -154,7 +149,6 @@ func (r *SourceSurveymonkeyResource) Schema(ctx context.Context, req resource.Sc
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},

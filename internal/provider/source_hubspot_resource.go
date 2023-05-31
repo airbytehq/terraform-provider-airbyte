@@ -67,7 +67,6 @@ func (r *SourceHubspotResource) Schema(ctx context.Context, req resource.SchemaR
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"source_hubspot_authentication_o_auth": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -107,7 +106,6 @@ func (r *SourceHubspotResource) Schema(ctx context.Context, req resource.SchemaR
 								Description: `Choose how to authenticate to HubSpot.`,
 							},
 							"source_hubspot_authentication_private_app": schema.SingleNestedAttribute{
-								Computed: true,
 								PlanModifiers: []planmodifier.Object{
 									objectplanmodifier.RequiresReplace(),
 								},
@@ -168,7 +166,6 @@ func (r *SourceHubspotResource) Schema(ctx context.Context, req resource.SchemaR
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
 				},
