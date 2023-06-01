@@ -34,12 +34,12 @@ type SourceAwsCloudtrailResource struct {
 
 // SourceAwsCloudtrailResourceModel describes the resource data model.
 type SourceAwsCloudtrailResourceModel struct {
-	Configuration SourceAwsCloudtrail `tfsdk:"configuration"`
-	Name          types.String        `tfsdk:"name"`
-	SecretID      types.String        `tfsdk:"secret_id"`
-	SourceID      types.String        `tfsdk:"source_id"`
-	SourceType    types.String        `tfsdk:"source_type"`
-	WorkspaceID   types.String        `tfsdk:"workspace_id"`
+	Configuration SourceAwsCloudtrailUpdate `tfsdk:"configuration"`
+	Name          types.String              `tfsdk:"name"`
+	SecretID      types.String              `tfsdk:"secret_id"`
+	SourceID      types.String              `tfsdk:"source_id"`
+	SourceType    types.String              `tfsdk:"source_type"`
+	WorkspaceID   types.String              `tfsdk:"workspace_id"`
 }
 
 func (r *SourceAwsCloudtrailResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -63,18 +63,18 @@ func (r *SourceAwsCloudtrailResource) Schema(ctx context.Context, req resource.S
 					"aws_secret_key": schema.StringAttribute{
 						Required: true,
 					},
+					"start_date": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							validators.IsValidDate(),
+						},
+					},
 					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"aws-cloudtrail",
 							),
-						},
-					},
-					"start_date": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							validators.IsValidDate(),
 						},
 					},
 				},
@@ -206,7 +206,7 @@ func (r *SourceAwsCloudtrailResource) Update(ctx context.Context, req resource.U
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

@@ -34,12 +34,12 @@ type SourceLinkedinAdsResource struct {
 
 // SourceLinkedinAdsResourceModel describes the resource data model.
 type SourceLinkedinAdsResourceModel struct {
-	Configuration SourceLinkedinAdsUpdate `tfsdk:"configuration"`
-	Name          types.String            `tfsdk:"name"`
-	SecretID      types.String            `tfsdk:"secret_id"`
-	SourceID      types.String            `tfsdk:"source_id"`
-	SourceType    types.String            `tfsdk:"source_type"`
-	WorkspaceID   types.String            `tfsdk:"workspace_id"`
+	Configuration SourceLinkedinAds `tfsdk:"configuration"`
+	Name          types.String      `tfsdk:"name"`
+	SecretID      types.String      `tfsdk:"secret_id"`
+	SourceID      types.String      `tfsdk:"source_id"`
+	SourceType    types.String      `tfsdk:"source_type"`
+	WorkspaceID   types.String      `tfsdk:"workspace_id"`
 }
 
 func (r *SourceLinkedinAdsResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -61,44 +61,6 @@ func (r *SourceLinkedinAdsResource) Schema(ctx context.Context, req resource.Sch
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_linkedin_ads_update_authentication_o_auth2_0": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"auth_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oAuth2.0",
-											),
-										},
-									},
-									"client_id": schema.StringAttribute{
-										Computed: true,
-									},
-									"client_secret": schema.StringAttribute{
-										Computed: true,
-									},
-									"refresh_token": schema.StringAttribute{
-										Computed: true,
-									},
-								},
-							},
-							"source_linkedin_ads_update_authentication_access_token": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Computed: true,
-									},
-									"auth_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"access_token",
-											),
-										},
-									},
-								},
-							},
 							"source_linkedin_ads_authentication_o_auth2_0": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -137,15 +99,47 @@ func (r *SourceLinkedinAdsResource) Schema(ctx context.Context, req resource.Sch
 									},
 								},
 							},
+							"source_linkedin_ads_update_authentication_o_auth2_0": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"auth_method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"oAuth2.0",
+											),
+										},
+									},
+									"client_id": schema.StringAttribute{
+										Computed: true,
+									},
+									"client_secret": schema.StringAttribute{
+										Computed: true,
+									},
+									"refresh_token": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+							},
+							"source_linkedin_ads_update_authentication_access_token": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"access_token": schema.StringAttribute{
+										Computed: true,
+									},
+									"auth_method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"access_token",
+											),
+										},
+									},
+								},
+							},
 						},
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
-						},
-					},
-					"start_date": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							validators.IsValidDate(),
 						},
 					},
 					"source_type": schema.StringAttribute{
@@ -154,6 +148,12 @@ func (r *SourceLinkedinAdsResource) Schema(ctx context.Context, req resource.Sch
 							stringvalidator.OneOf(
 								"linkedin-ads",
 							),
+						},
+					},
+					"start_date": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							validators.IsValidDate(),
 						},
 					},
 				},
@@ -285,7 +285,7 @@ func (r *SourceLinkedinAdsResource) Update(ctx context.Context, req resource.Upd
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

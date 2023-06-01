@@ -34,12 +34,12 @@ type SourceFacebookMarketingResource struct {
 
 // SourceFacebookMarketingResourceModel describes the resource data model.
 type SourceFacebookMarketingResourceModel struct {
-	Configuration SourceFacebookMarketingUpdate `tfsdk:"configuration"`
-	Name          types.String                  `tfsdk:"name"`
-	SecretID      types.String                  `tfsdk:"secret_id"`
-	SourceID      types.String                  `tfsdk:"source_id"`
-	SourceType    types.String                  `tfsdk:"source_type"`
-	WorkspaceID   types.String                  `tfsdk:"workspace_id"`
+	Configuration SourceFacebookMarketing `tfsdk:"configuration"`
+	Name          types.String            `tfsdk:"name"`
+	SecretID      types.String            `tfsdk:"secret_id"`
+	SourceID      types.String            `tfsdk:"source_id"`
+	SourceType    types.String            `tfsdk:"source_type"`
+	WorkspaceID   types.String            `tfsdk:"workspace_id"`
 }
 
 func (r *SourceFacebookMarketingResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -136,18 +136,18 @@ func (r *SourceFacebookMarketingResource) Schema(ctx context.Context, req resour
 					"page_size": schema.Int64Attribute{
 						Optional: true,
 					},
-					"start_date": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							validators.IsRFC3339(),
-						},
-					},
 					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"facebook-marketing",
 							),
+						},
+					},
+					"start_date": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							validators.IsRFC3339(),
 						},
 					},
 				},
@@ -279,7 +279,7 @@ func (r *SourceFacebookMarketingResource) Update(ctx context.Context, req resour
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

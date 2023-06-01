@@ -34,11 +34,11 @@ type DestinationMariadbColumnstoreResource struct {
 
 // DestinationMariadbColumnstoreResourceModel describes the resource data model.
 type DestinationMariadbColumnstoreResourceModel struct {
-	Configuration   DestinationMariadbColumnstore `tfsdk:"configuration"`
-	DestinationID   types.String                  `tfsdk:"destination_id"`
-	DestinationType types.String                  `tfsdk:"destination_type"`
-	Name            types.String                  `tfsdk:"name"`
-	WorkspaceID     types.String                  `tfsdk:"workspace_id"`
+	Configuration   DestinationMariadbColumnstoreUpdate `tfsdk:"configuration"`
+	DestinationID   types.String                        `tfsdk:"destination_id"`
+	DestinationType types.String                        `tfsdk:"destination_type"`
+	Name            types.String                        `tfsdk:"name"`
+	WorkspaceID     types.String                        `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationMariadbColumnstoreResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -56,14 +56,6 @@ func (r *DestinationMariadbColumnstoreResource) Schema(ctx context.Context, req 
 					"database": schema.StringAttribute{
 						Required: true,
 					},
-					"destination_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"mariadb-columnstore",
-							),
-						},
-					},
 					"host": schema.StringAttribute{
 						Required: true,
 					},
@@ -79,75 +71,6 @@ func (r *DestinationMariadbColumnstoreResource) Schema(ctx context.Context, req 
 					"tunnel_method": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"destination_mariadb_columnstore_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"tunnel_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"NO_TUNNEL",
-											),
-										},
-										Description: `No ssh tunnel needed to connect to database`,
-									},
-								},
-								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
-							},
-							"destination_mariadb_columnstore_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"ssh_key": schema.StringAttribute{
-										Required: true,
-									},
-									"tunnel_host": schema.StringAttribute{
-										Required: true,
-									},
-									"tunnel_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_KEY_AUTH",
-											),
-										},
-										Description: `Connect through a jump server tunnel host using username and ssh key`,
-									},
-									"tunnel_port": schema.Int64Attribute{
-										Required: true,
-									},
-									"tunnel_user": schema.StringAttribute{
-										Required: true,
-									},
-								},
-								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
-							},
-							"destination_mariadb_columnstore_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"tunnel_host": schema.StringAttribute{
-										Required: true,
-									},
-									"tunnel_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_PASSWORD_AUTH",
-											),
-										},
-										Description: `Connect through a jump server tunnel host using username and password authentication`,
-									},
-									"tunnel_port": schema.Int64Attribute{
-										Required: true,
-									},
-									"tunnel_user": schema.StringAttribute{
-										Required: true,
-									},
-									"tunnel_user_password": schema.StringAttribute{
-										Required: true,
-									},
-								},
-								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
-							},
 							"destination_mariadb_columnstore_update_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
@@ -217,6 +140,75 @@ func (r *DestinationMariadbColumnstoreResource) Schema(ctx context.Context, req 
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
+							"destination_mariadb_columnstore_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"tunnel_method": schema.StringAttribute{
+										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"NO_TUNNEL",
+											),
+										},
+										Description: `No ssh tunnel needed to connect to database`,
+									},
+								},
+								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
+							},
+							"destination_mariadb_columnstore_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"ssh_key": schema.StringAttribute{
+										Required: true,
+									},
+									"tunnel_host": schema.StringAttribute{
+										Required: true,
+									},
+									"tunnel_method": schema.StringAttribute{
+										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"SSH_KEY_AUTH",
+											),
+										},
+										Description: `Connect through a jump server tunnel host using username and ssh key`,
+									},
+									"tunnel_port": schema.Int64Attribute{
+										Required: true,
+									},
+									"tunnel_user": schema.StringAttribute{
+										Required: true,
+									},
+								},
+								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
+							},
+							"destination_mariadb_columnstore_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"tunnel_host": schema.StringAttribute{
+										Required: true,
+									},
+									"tunnel_method": schema.StringAttribute{
+										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"SSH_PASSWORD_AUTH",
+											),
+										},
+										Description: `Connect through a jump server tunnel host using username and password authentication`,
+									},
+									"tunnel_port": schema.Int64Attribute{
+										Required: true,
+									},
+									"tunnel_user": schema.StringAttribute{
+										Required: true,
+									},
+									"tunnel_user_password": schema.StringAttribute{
+										Required: true,
+									},
+								},
+								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
+							},
 						},
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
@@ -224,6 +216,14 @@ func (r *DestinationMariadbColumnstoreResource) Schema(ctx context.Context, req 
 					},
 					"username": schema.StringAttribute{
 						Required: true,
+					},
+					"destination_type": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"mariadb-columnstore",
+							),
+						},
 					},
 				},
 			},
@@ -351,7 +351,7 @@ func (r *DestinationMariadbColumnstoreResource) Update(ctx context.Context, req 
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

@@ -34,12 +34,12 @@ type SourceShopifyResource struct {
 
 // SourceShopifyResourceModel describes the resource data model.
 type SourceShopifyResourceModel struct {
-	Configuration SourceShopify `tfsdk:"configuration"`
-	Name          types.String  `tfsdk:"name"`
-	SecretID      types.String  `tfsdk:"secret_id"`
-	SourceID      types.String  `tfsdk:"source_id"`
-	SourceType    types.String  `tfsdk:"source_type"`
-	WorkspaceID   types.String  `tfsdk:"workspace_id"`
+	Configuration SourceShopifyUpdate `tfsdk:"configuration"`
+	Name          types.String        `tfsdk:"name"`
+	SecretID      types.String        `tfsdk:"secret_id"`
+	SourceID      types.String        `tfsdk:"source_id"`
+	SourceType    types.String        `tfsdk:"source_type"`
+	WorkspaceID   types.String        `tfsdk:"workspace_id"`
 }
 
 func (r *SourceShopifyResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -57,46 +57,6 @@ func (r *SourceShopifyResource) Schema(ctx context.Context, req resource.SchemaR
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_shopify_shopify_authorization_method_api_password": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"api_password": schema.StringAttribute{
-										Required: true,
-									},
-									"auth_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"api_password",
-											),
-										},
-									},
-								},
-								Description: `API Password Auth`,
-							},
-							"source_shopify_shopify_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Optional: true,
-									},
-									"auth_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-									},
-									"client_id": schema.StringAttribute{
-										Optional: true,
-									},
-									"client_secret": schema.StringAttribute{
-										Optional: true,
-									},
-								},
-								Description: `OAuth2.0`,
-							},
 							"source_shopify_update_shopify_authorization_method_api_password": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
@@ -137,6 +97,46 @@ func (r *SourceShopifyResource) Schema(ctx context.Context, req resource.SchemaR
 								},
 								Description: `OAuth2.0`,
 							},
+							"source_shopify_shopify_authorization_method_api_password": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"api_password": schema.StringAttribute{
+										Required: true,
+									},
+									"auth_method": schema.StringAttribute{
+										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"api_password",
+											),
+										},
+									},
+								},
+								Description: `API Password Auth`,
+							},
+							"source_shopify_shopify_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"access_token": schema.StringAttribute{
+										Optional: true,
+									},
+									"auth_method": schema.StringAttribute{
+										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"oauth2.0",
+											),
+										},
+									},
+									"client_id": schema.StringAttribute{
+										Optional: true,
+									},
+									"client_secret": schema.StringAttribute{
+										Optional: true,
+									},
+								},
+								Description: `OAuth2.0`,
+							},
 						},
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
@@ -145,18 +145,18 @@ func (r *SourceShopifyResource) Schema(ctx context.Context, req resource.SchemaR
 					"shop": schema.StringAttribute{
 						Required: true,
 					},
+					"start_date": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							validators.IsValidDate(),
+						},
+					},
 					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"shopify",
 							),
-						},
-					},
-					"start_date": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							validators.IsValidDate(),
 						},
 					},
 				},
@@ -288,7 +288,7 @@ func (r *SourceShopifyResource) Update(ctx context.Context, req resource.UpdateR
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

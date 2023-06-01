@@ -34,12 +34,12 @@ type SourceSnowflakeResource struct {
 
 // SourceSnowflakeResourceModel describes the resource data model.
 type SourceSnowflakeResourceModel struct {
-	Configuration SourceSnowflakeUpdate `tfsdk:"configuration"`
-	Name          types.String          `tfsdk:"name"`
-	SecretID      types.String          `tfsdk:"secret_id"`
-	SourceID      types.String          `tfsdk:"source_id"`
-	SourceType    types.String          `tfsdk:"source_type"`
-	WorkspaceID   types.String          `tfsdk:"workspace_id"`
+	Configuration SourceSnowflake `tfsdk:"configuration"`
+	Name          types.String    `tfsdk:"name"`
+	SecretID      types.String    `tfsdk:"secret_id"`
+	SourceID      types.String    `tfsdk:"source_id"`
+	SourceType    types.String    `tfsdk:"source_type"`
+	WorkspaceID   types.String    `tfsdk:"workspace_id"`
 }
 
 func (r *SourceSnowflakeResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -57,50 +57,6 @@ func (r *SourceSnowflakeResource) Schema(ctx context.Context, req resource.Schem
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_snowflake_update_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Computed: true,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"OAuth",
-											),
-										},
-									},
-									"client_id": schema.StringAttribute{
-										Computed: true,
-									},
-									"client_secret": schema.StringAttribute{
-										Computed: true,
-									},
-									"refresh_token": schema.StringAttribute{
-										Computed: true,
-									},
-								},
-							},
-							"source_snowflake_update_authorization_method_username_and_password": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"username/password",
-											),
-										},
-									},
-									"password": schema.StringAttribute{
-										Computed: true,
-									},
-									"username": schema.StringAttribute{
-										Computed: true,
-									},
-								},
-							},
 							"source_snowflake_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -145,6 +101,50 @@ func (r *SourceSnowflakeResource) Schema(ctx context.Context, req resource.Schem
 									},
 								},
 							},
+							"source_snowflake_update_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"access_token": schema.StringAttribute{
+										Computed: true,
+									},
+									"auth_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"OAuth",
+											),
+										},
+									},
+									"client_id": schema.StringAttribute{
+										Computed: true,
+									},
+									"client_secret": schema.StringAttribute{
+										Computed: true,
+									},
+									"refresh_token": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+							},
+							"source_snowflake_update_authorization_method_username_and_password": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"auth_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"username/password",
+											),
+										},
+									},
+									"password": schema.StringAttribute{
+										Computed: true,
+									},
+									"username": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+							},
 						},
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
@@ -165,9 +165,6 @@ func (r *SourceSnowflakeResource) Schema(ctx context.Context, req resource.Schem
 					"schema": schema.StringAttribute{
 						Optional: true,
 					},
-					"warehouse": schema.StringAttribute{
-						Required: true,
-					},
 					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -175,6 +172,9 @@ func (r *SourceSnowflakeResource) Schema(ctx context.Context, req resource.Schem
 								"snowflake",
 							),
 						},
+					},
+					"warehouse": schema.StringAttribute{
+						Required: true,
 					},
 				},
 			},
@@ -305,7 +305,7 @@ func (r *SourceSnowflakeResource) Update(ctx context.Context, req resource.Updat
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

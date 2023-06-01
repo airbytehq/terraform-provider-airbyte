@@ -34,11 +34,11 @@ type DestinationElasticsearchResource struct {
 
 // DestinationElasticsearchResourceModel describes the resource data model.
 type DestinationElasticsearchResourceModel struct {
-	Configuration   DestinationElasticsearch `tfsdk:"configuration"`
-	DestinationID   types.String             `tfsdk:"destination_id"`
-	DestinationType types.String             `tfsdk:"destination_type"`
-	Name            types.String             `tfsdk:"name"`
-	WorkspaceID     types.String             `tfsdk:"workspace_id"`
+	Configuration   DestinationElasticsearchUpdate `tfsdk:"configuration"`
+	DestinationID   types.String                   `tfsdk:"destination_id"`
+	DestinationType types.String                   `tfsdk:"destination_type"`
+	Name            types.String                   `tfsdk:"name"`
+	WorkspaceID     types.String                   `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationElasticsearchResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -56,46 +56,6 @@ func (r *DestinationElasticsearchResource) Schema(ctx context.Context, req resou
 					"authentication_method": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"destination_elasticsearch_authentication_method_api_key_secret": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"api_key_id": schema.StringAttribute{
-										Required: true,
-									},
-									"api_key_secret": schema.StringAttribute{
-										Required: true,
-									},
-									"method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"secret",
-											),
-										},
-									},
-								},
-								Description: `Use a api key and secret combination to authenticate`,
-							},
-							"destination_elasticsearch_authentication_method_username_password": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"basic",
-											),
-										},
-									},
-									"password": schema.StringAttribute{
-										Required: true,
-									},
-									"username": schema.StringAttribute{
-										Required: true,
-									},
-								},
-								Description: `Basic auth header with a username and password`,
-							},
 							"destination_elasticsearch_update_authentication_method_api_key_secret": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
@@ -136,12 +96,58 @@ func (r *DestinationElasticsearchResource) Schema(ctx context.Context, req resou
 								},
 								Description: `Basic auth header with a username and password`,
 							},
+							"destination_elasticsearch_authentication_method_api_key_secret": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"api_key_id": schema.StringAttribute{
+										Required: true,
+									},
+									"api_key_secret": schema.StringAttribute{
+										Required: true,
+									},
+									"method": schema.StringAttribute{
+										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"secret",
+											),
+										},
+									},
+								},
+								Description: `Use a api key and secret combination to authenticate`,
+							},
+							"destination_elasticsearch_authentication_method_username_password": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"method": schema.StringAttribute{
+										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"basic",
+											),
+										},
+									},
+									"password": schema.StringAttribute{
+										Required: true,
+									},
+									"username": schema.StringAttribute{
+										Required: true,
+									},
+								},
+								Description: `Basic auth header with a username and password`,
+							},
 						},
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
 					},
 					"ca_certificate": schema.StringAttribute{
+						Optional: true,
+					},
+					"endpoint": schema.StringAttribute{
+						Required: true,
+					},
+					"upsert": schema.BoolAttribute{
 						Optional: true,
 					},
 					"destination_type": schema.StringAttribute{
@@ -151,12 +157,6 @@ func (r *DestinationElasticsearchResource) Schema(ctx context.Context, req resou
 								"elasticsearch",
 							),
 						},
-					},
-					"endpoint": schema.StringAttribute{
-						Required: true,
-					},
-					"upsert": schema.BoolAttribute{
-						Optional: true,
 					},
 				},
 			},
@@ -284,7 +284,7 @@ func (r *DestinationElasticsearchResource) Update(ctx context.Context, req resou
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

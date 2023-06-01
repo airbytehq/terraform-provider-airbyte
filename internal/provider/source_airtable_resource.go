@@ -34,12 +34,12 @@ type SourceAirtableResource struct {
 
 // SourceAirtableResourceModel describes the resource data model.
 type SourceAirtableResourceModel struct {
-	Configuration SourceAirtableUpdate `tfsdk:"configuration"`
-	Name          types.String         `tfsdk:"name"`
-	SecretID      types.String         `tfsdk:"secret_id"`
-	SourceID      types.String         `tfsdk:"source_id"`
-	SourceType    types.String         `tfsdk:"source_type"`
-	WorkspaceID   types.String         `tfsdk:"workspace_id"`
+	Configuration SourceAirtable `tfsdk:"configuration"`
+	Name          types.String   `tfsdk:"name"`
+	SecretID      types.String   `tfsdk:"secret_id"`
+	SourceID      types.String   `tfsdk:"source_id"`
+	SourceType    types.String   `tfsdk:"source_type"`
+	WorkspaceID   types.String   `tfsdk:"workspace_id"`
 }
 
 func (r *SourceAirtableResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -57,53 +57,6 @@ func (r *SourceAirtableResource) Schema(ctx context.Context, req resource.Schema
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_airtable_update_authentication_o_auth2_0": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Computed: true,
-									},
-									"auth_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-									},
-									"client_id": schema.StringAttribute{
-										Computed: true,
-									},
-									"client_secret": schema.StringAttribute{
-										Computed: true,
-									},
-									"refresh_token": schema.StringAttribute{
-										Computed: true,
-									},
-									"token_expiry_date": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											validators.IsRFC3339(),
-										},
-									},
-								},
-							},
-							"source_airtable_update_authentication_personal_access_token": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"api_key": schema.StringAttribute{
-										Computed: true,
-									},
-									"auth_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"api_key",
-											),
-										},
-									},
-								},
-							},
 							"source_airtable_authentication_o_auth2_0": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -143,6 +96,53 @@ func (r *SourceAirtableResource) Schema(ctx context.Context, req resource.Schema
 									},
 									"auth_method": schema.StringAttribute{
 										Optional: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"api_key",
+											),
+										},
+									},
+								},
+							},
+							"source_airtable_update_authentication_o_auth2_0": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"access_token": schema.StringAttribute{
+										Computed: true,
+									},
+									"auth_method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"oauth2.0",
+											),
+										},
+									},
+									"client_id": schema.StringAttribute{
+										Computed: true,
+									},
+									"client_secret": schema.StringAttribute{
+										Computed: true,
+									},
+									"refresh_token": schema.StringAttribute{
+										Computed: true,
+									},
+									"token_expiry_date": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											validators.IsRFC3339(),
+										},
+									},
+								},
+							},
+							"source_airtable_update_authentication_personal_access_token": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"api_key": schema.StringAttribute{
+										Computed: true,
+									},
+									"auth_method": schema.StringAttribute{
+										Computed: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"api_key",
@@ -293,7 +293,7 @@ func (r *SourceAirtableResource) Update(ctx context.Context, req resource.Update
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

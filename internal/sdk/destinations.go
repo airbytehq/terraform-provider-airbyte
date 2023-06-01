@@ -7283,7 +7283,7 @@ func (s *destinations) PutDestinationAmazonSqs(ctx context.Context, request oper
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -7340,7 +7340,7 @@ func (s *destinations) PutDestinationAwsDatalake(ctx context.Context, request op
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -7397,7 +7397,7 @@ func (s *destinations) PutDestinationAzureBlobStorage(ctx context.Context, reque
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -7454,7 +7454,7 @@ func (s *destinations) PutDestinationBigquery(ctx context.Context, request opera
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -7511,7 +7511,7 @@ func (s *destinations) PutDestinationBigqueryDenormalized(ctx context.Context, r
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -7568,7 +7568,7 @@ func (s *destinations) PutDestinationCassandra(ctx context.Context, request oper
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -7625,7 +7625,7 @@ func (s *destinations) PutDestinationClickhouse(ctx context.Context, request ope
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -7682,7 +7682,7 @@ func (s *destinations) PutDestinationConvex(ctx context.Context, request operati
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -7739,7 +7739,7 @@ func (s *destinations) PutDestinationCumulio(ctx context.Context, request operat
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -7796,7 +7796,7 @@ func (s *destinations) PutDestinationDatabend(ctx context.Context, request opera
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -7853,7 +7853,7 @@ func (s *destinations) PutDestinationDatabricks(ctx context.Context, request ope
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -7910,7 +7910,7 @@ func (s *destinations) PutDestinationDevNull(ctx context.Context, request operat
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -7967,7 +7967,7 @@ func (s *destinations) PutDestinationDynamodb(ctx context.Context, request opera
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -8024,7 +8024,7 @@ func (s *destinations) PutDestinationElasticsearch(ctx context.Context, request 
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -8081,7 +8081,7 @@ func (s *destinations) PutDestinationFirebolt(ctx context.Context, request opera
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -8138,7 +8138,7 @@ func (s *destinations) PutDestinationFirestore(ctx context.Context, request oper
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -8195,7 +8195,7 @@ func (s *destinations) PutDestinationGcs(ctx context.Context, request operations
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -8252,7 +8252,7 @@ func (s *destinations) PutDestinationGoogleSheets(ctx context.Context, request o
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -8309,7 +8309,7 @@ func (s *destinations) PutDestinationKeen(ctx context.Context, request operation
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -8366,7 +8366,7 @@ func (s *destinations) PutDestinationKinesis(ctx context.Context, request operat
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -8423,7 +8423,7 @@ func (s *destinations) PutDestinationMariadbColumnstore(ctx context.Context, req
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -8480,7 +8480,7 @@ func (s *destinations) PutDestinationMeilisearch(ctx context.Context, request op
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -8537,7 +8537,7 @@ func (s *destinations) PutDestinationMongodb(ctx context.Context, request operat
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -8594,7 +8594,7 @@ func (s *destinations) PutDestinationMssql(ctx context.Context, request operatio
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -8651,7 +8651,7 @@ func (s *destinations) PutDestinationMysql(ctx context.Context, request operatio
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -8708,7 +8708,7 @@ func (s *destinations) PutDestinationOracle(ctx context.Context, request operati
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -8765,7 +8765,7 @@ func (s *destinations) PutDestinationPostgres(ctx context.Context, request opera
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -8822,7 +8822,7 @@ func (s *destinations) PutDestinationPubsub(ctx context.Context, request operati
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -8879,7 +8879,7 @@ func (s *destinations) PutDestinationPulsar(ctx context.Context, request operati
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -8936,7 +8936,7 @@ func (s *destinations) PutDestinationRabbitmq(ctx context.Context, request opera
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -8993,7 +8993,7 @@ func (s *destinations) PutDestinationRedis(ctx context.Context, request operatio
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -9050,7 +9050,7 @@ func (s *destinations) PutDestinationRedshift(ctx context.Context, request opera
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -9107,7 +9107,7 @@ func (s *destinations) PutDestinationRockset(ctx context.Context, request operat
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -9164,7 +9164,7 @@ func (s *destinations) PutDestinationS3(ctx context.Context, request operations.
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -9221,7 +9221,7 @@ func (s *destinations) PutDestinationS3Glue(ctx context.Context, request operati
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -9278,7 +9278,7 @@ func (s *destinations) PutDestinationScylla(ctx context.Context, request operati
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -9335,7 +9335,7 @@ func (s *destinations) PutDestinationSftpJSON(ctx context.Context, request opera
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -9392,7 +9392,7 @@ func (s *destinations) PutDestinationSnowflake(ctx context.Context, request oper
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -9449,7 +9449,7 @@ func (s *destinations) PutDestinationTypesense(ctx context.Context, request oper
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -9506,7 +9506,7 @@ func (s *destinations) PutDestinationVertica(ctx context.Context, request operat
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough

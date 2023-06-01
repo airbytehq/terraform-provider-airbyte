@@ -34,11 +34,11 @@ type DestinationFireboltResource struct {
 
 // DestinationFireboltResourceModel describes the resource data model.
 type DestinationFireboltResourceModel struct {
-	Configuration   DestinationFireboltUpdate `tfsdk:"configuration"`
-	DestinationID   types.String              `tfsdk:"destination_id"`
-	DestinationType types.String              `tfsdk:"destination_type"`
-	Name            types.String              `tfsdk:"name"`
-	WorkspaceID     types.String              `tfsdk:"workspace_id"`
+	Configuration   DestinationFirebolt `tfsdk:"configuration"`
+	DestinationID   types.String        `tfsdk:"destination_id"`
+	DestinationType types.String        `tfsdk:"destination_type"`
+	Name            types.String        `tfsdk:"name"`
+	WorkspaceID     types.String        `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationFireboltResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -59,6 +59,14 @@ func (r *DestinationFireboltResource) Schema(ctx context.Context, req resource.S
 					"database": schema.StringAttribute{
 						Required: true,
 					},
+					"destination_type": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"firebolt",
+							),
+						},
+					},
 					"engine": schema.StringAttribute{
 						Optional: true,
 					},
@@ -68,46 +76,6 @@ func (r *DestinationFireboltResource) Schema(ctx context.Context, req resource.S
 					"loading_method": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"destination_firebolt_update_loading_method_sql_inserts": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SQL",
-											),
-										},
-									},
-								},
-								Description: `Loading method used to select the way data will be uploaded to Firebolt`,
-							},
-							"destination_firebolt_update_loading_method_external_table_via_s3": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"aws_key_id": schema.StringAttribute{
-										Computed: true,
-									},
-									"aws_key_secret": schema.StringAttribute{
-										Computed: true,
-									},
-									"method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"S3",
-											),
-										},
-									},
-									"s3_bucket": schema.StringAttribute{
-										Computed: true,
-									},
-									"s3_region": schema.StringAttribute{
-										Computed: true,
-									},
-								},
-								Description: `Loading method used to select the way data will be uploaded to Firebolt`,
-							},
 							"destination_firebolt_loading_method_sql_inserts": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -148,6 +116,46 @@ func (r *DestinationFireboltResource) Schema(ctx context.Context, req resource.S
 								},
 								Description: `Loading method used to select the way data will be uploaded to Firebolt`,
 							},
+							"destination_firebolt_update_loading_method_sql_inserts": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"SQL",
+											),
+										},
+									},
+								},
+								Description: `Loading method used to select the way data will be uploaded to Firebolt`,
+							},
+							"destination_firebolt_update_loading_method_external_table_via_s3": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"aws_key_id": schema.StringAttribute{
+										Computed: true,
+									},
+									"aws_key_secret": schema.StringAttribute{
+										Computed: true,
+									},
+									"method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"S3",
+											),
+										},
+									},
+									"s3_bucket": schema.StringAttribute{
+										Computed: true,
+									},
+									"s3_region": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+								Description: `Loading method used to select the way data will be uploaded to Firebolt`,
+							},
 						},
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
@@ -158,14 +166,6 @@ func (r *DestinationFireboltResource) Schema(ctx context.Context, req resource.S
 					},
 					"username": schema.StringAttribute{
 						Required: true,
-					},
-					"destination_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"firebolt",
-							),
-						},
 					},
 				},
 			},
@@ -293,7 +293,7 @@ func (r *DestinationFireboltResource) Update(ctx context.Context, req resource.U
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

@@ -1103,7 +1103,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceAircallPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -1189,7 +1189,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceAirtablePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -1275,7 +1275,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceAlloydbPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -1361,7 +1361,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceAmazonAdsPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -1447,7 +1447,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceAmazonSqsPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -1533,7 +1533,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceAmplitudePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -1619,7 +1619,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceApifyDatasetPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -1705,7 +1705,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceAsanaPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -1791,7 +1791,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceAuth0PutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -1877,7 +1877,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceAwsCloudtrailPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -1963,7 +1963,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceAzureBlobStoragePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -2049,7 +2049,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceAzureTablePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -2135,7 +2135,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceBambooHrPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -2221,7 +2221,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceBigcommercePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -2307,7 +2307,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceBigqueryPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -2393,7 +2393,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceBingAdsPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -2479,7 +2479,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceBraintreePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -2565,7 +2565,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceBrazePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -2651,7 +2651,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceChargebeePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -2737,7 +2737,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceChartmogulPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -2823,7 +2823,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceClickhousePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -2909,7 +2909,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceClickupApiPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -2995,7 +2995,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceCloseComPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -3081,7 +3081,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceCodaPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -3167,7 +3167,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceCoinApiPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -3253,7 +3253,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceCoinmarketcapPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -3339,7 +3339,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceConfigcatPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -3425,7 +3425,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceConfluencePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -3511,7 +3511,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceDatascopePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -3597,7 +3597,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceDelightedPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -3683,7 +3683,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceDixaPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -3769,7 +3769,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceDockerhubPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -3855,7 +3855,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceDremioPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -3941,7 +3941,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceDynamodbPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -4027,7 +4027,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceE2eTestCloudPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -4113,7 +4113,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceEmailoctopusPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -4199,7 +4199,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceExchangeRatesPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -4285,7 +4285,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceFacebookMarketingPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -4371,7 +4371,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceFacebookPagesPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -4457,7 +4457,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceFakerPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -4543,7 +4543,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceFaunaPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -4629,7 +4629,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceFileSecurePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -4715,7 +4715,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceFireboltPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -4801,7 +4801,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceFreshcallerPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -4887,7 +4887,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceFreshdeskPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -4973,7 +4973,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceFreshsalesPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -5059,7 +5059,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceFreshservicePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -5145,7 +5145,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceGcsPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -5231,7 +5231,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceGetlagoPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -5317,7 +5317,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceGithubPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -5403,7 +5403,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceGitlabPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -5489,7 +5489,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceGlassfrogPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -5575,7 +5575,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceGnewsPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -5661,7 +5661,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceGoogleAdsPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -5747,7 +5747,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceGoogleAnalyticsDataApiPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -5833,7 +5833,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceGoogleAnalyticsV4PutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -5919,7 +5919,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceGoogleDirectoryPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -6005,7 +6005,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceGooglePagespeedInsightsPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -6091,7 +6091,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceGoogleSearchConsolePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -6177,7 +6177,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceGoogleSheetsPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -6263,7 +6263,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceGoogleWebfontsPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -6349,7 +6349,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceGoogleWorkspaceAdminReportsPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -6435,7 +6435,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceGreenhousePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -6521,7 +6521,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceGridlyPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -6607,7 +6607,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceHarvestPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -6693,7 +6693,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceHubplannerPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -6779,7 +6779,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceHubspotPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -6865,7 +6865,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceInsightlyPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -6951,7 +6951,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceInstagramPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -7037,7 +7037,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceInstatusPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -7123,7 +7123,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceIntercomPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -7209,7 +7209,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceIp2whoisPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -7295,7 +7295,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceIterablePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -7381,7 +7381,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceJiraPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -7467,7 +7467,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceK6CloudPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -7553,7 +7553,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceKlarnaPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -7639,7 +7639,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceKlaviyoPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -7725,7 +7725,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceKustomerSingerPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -7811,7 +7811,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceLaunchdarklyPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -7897,7 +7897,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceLemlistPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -7983,7 +7983,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceLinkedinAdsPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -8069,7 +8069,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceLinkedinPagesPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -8155,7 +8155,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceLinnworksPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -8241,7 +8241,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceLokalisePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -8327,7 +8327,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceMailchimpPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -8413,7 +8413,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceMailgunPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -8499,7 +8499,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceMailjetSmsPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -8585,7 +8585,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceMarketoPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -8671,7 +8671,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceMetabasePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -8757,7 +8757,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceMicrosoftTeamsPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -8843,7 +8843,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceMixpanelPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -8929,7 +8929,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceMondayPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -9015,7 +9015,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceMongodbPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -9101,7 +9101,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceMssqlPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -9187,7 +9187,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceMyHoursPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -9273,7 +9273,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceMysqlPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -9359,7 +9359,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceNetsuitePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -9445,7 +9445,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceNotionPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -9531,7 +9531,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceNytimesPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -9617,7 +9617,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceOktaPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -9703,7 +9703,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceOmnisendPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -9789,7 +9789,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceOnesignalPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -9875,7 +9875,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceOpenweatherPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -9961,7 +9961,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceOraclePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -10047,7 +10047,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceOrbPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -10133,7 +10133,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceOrbitPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -10219,7 +10219,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceOutreachPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -10305,7 +10305,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourcePaypalTransactionPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -10391,7 +10391,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourcePaystackPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -10477,7 +10477,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourcePendoPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -10563,7 +10563,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourcePersistiqPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -10649,7 +10649,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourcePexelsApiPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -10735,7 +10735,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourcePinterestPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -10821,7 +10821,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourcePipedrivePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -10907,7 +10907,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourcePocketPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -10993,7 +10993,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourcePokeapiPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -11079,7 +11079,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourcePolygonStockApiPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -11165,7 +11165,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourcePostgresPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -11251,7 +11251,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourcePosthogPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -11337,7 +11337,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourcePostmarkappPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -11423,7 +11423,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourcePrestashopPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -11509,7 +11509,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourcePublicApisPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -11595,7 +11595,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourcePunkApiPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -11681,7 +11681,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourcePypiPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -11767,7 +11767,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceQualarooPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -11853,7 +11853,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceQuickbooksPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -11939,7 +11939,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceRailzPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -12025,7 +12025,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceRechargePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -12111,7 +12111,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceRecreationPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -12197,7 +12197,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceRecruiteePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -12283,7 +12283,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceRecurlyPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -12369,7 +12369,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceRedshiftPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -12455,7 +12455,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceRetentlyPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -12541,7 +12541,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceRkiCovidPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -12627,7 +12627,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceRssPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -12713,7 +12713,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceS3PutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -12799,7 +12799,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceSalesforcePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -12885,7 +12885,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceSalesforceSingerPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -12971,7 +12971,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceSalesloftPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -13057,7 +13057,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceSapFieldglassPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -13143,7 +13143,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceSecodaPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -13229,7 +13229,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceSendgridPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -13315,7 +13315,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceSendinbluePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -13401,7 +13401,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceSenseforcePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -13487,7 +13487,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceSentryPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -13573,7 +13573,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceSftpPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -13659,7 +13659,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceSftpBulkPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -13745,7 +13745,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceShopifyPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -13831,7 +13831,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceShortioPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -13917,7 +13917,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceSlackPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -14003,7 +14003,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceSmailyPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -14089,7 +14089,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceSmartengagePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -14175,7 +14175,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceSmartsheetsPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -14261,7 +14261,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceSnapchatMarketingPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -14347,7 +14347,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceSnowflakePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -14433,7 +14433,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceSonarCloudPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -14519,7 +14519,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceSpacexApiPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -14605,7 +14605,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceSquarePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -14691,7 +14691,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceStravaPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -14777,7 +14777,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceStripePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -14863,7 +14863,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceSurveySparrowPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -14949,7 +14949,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceSurveymonkeyPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -15035,7 +15035,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceTempoPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -15121,7 +15121,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceTheGuardianApiPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -15207,7 +15207,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceTiktokMarketingPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -15293,7 +15293,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceTodoistPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -15379,7 +15379,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceTrelloPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -15465,7 +15465,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceTrustpilotPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -15551,7 +15551,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceTvmazeSchedulePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -15637,7 +15637,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceTwilioPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -15723,7 +15723,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceTwilioTaskrouterPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -15809,7 +15809,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceTwitterPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -15895,7 +15895,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceTypeformPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -15981,7 +15981,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceUsCensusPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -16067,7 +16067,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceVantagePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -16153,7 +16153,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceWebflowPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -16239,7 +16239,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceWhiskyHunterPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -16325,7 +16325,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceWikipediaPageviewsPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -16411,7 +16411,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceWoocommercePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -16497,7 +16497,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceXeroPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -16583,7 +16583,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceXkcdPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -16669,7 +16669,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceYandexMetricaPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -16755,7 +16755,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceYotpoPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -16841,7 +16841,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceYouniumPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -16927,7 +16927,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceYoutubeAnalyticsPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -17013,7 +17013,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceZendeskChatPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -17099,7 +17099,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceZendeskSunshinePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -17185,7 +17185,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceZendeskSupportPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -17271,7 +17271,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceZendeskTalkPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -17357,7 +17357,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceZenloopPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -17443,7 +17443,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceZohoCrmPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -17529,7 +17529,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceZoomPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -17615,7 +17615,7 @@ paths:
             schema:
               $ref: "#/components/schemas/SourceZuoraPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -17701,7 +17701,7 @@ paths:
             schema:
               $ref: "#/components/schemas/DestinationAmazonSqsPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -17787,7 +17787,7 @@ paths:
             schema:
               $ref: "#/components/schemas/DestinationAwsDatalakePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -17873,7 +17873,7 @@ paths:
             schema:
               $ref: "#/components/schemas/DestinationAzureBlobStoragePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -17959,7 +17959,7 @@ paths:
             schema:
               $ref: "#/components/schemas/DestinationBigqueryPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -18045,7 +18045,7 @@ paths:
             schema:
               $ref: "#/components/schemas/DestinationBigqueryDenormalizedPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -18131,7 +18131,7 @@ paths:
             schema:
               $ref: "#/components/schemas/DestinationCassandraPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -18217,7 +18217,7 @@ paths:
             schema:
               $ref: "#/components/schemas/DestinationClickhousePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -18303,7 +18303,7 @@ paths:
             schema:
               $ref: "#/components/schemas/DestinationConvexPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -18389,7 +18389,7 @@ paths:
             schema:
               $ref: "#/components/schemas/DestinationCumulioPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -18475,7 +18475,7 @@ paths:
             schema:
               $ref: "#/components/schemas/DestinationDatabendPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -18561,7 +18561,7 @@ paths:
             schema:
               $ref: "#/components/schemas/DestinationDatabricksPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -18647,7 +18647,7 @@ paths:
             schema:
               $ref: "#/components/schemas/DestinationDevNullPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -18733,7 +18733,7 @@ paths:
             schema:
               $ref: "#/components/schemas/DestinationDynamodbPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -18819,7 +18819,7 @@ paths:
             schema:
               $ref: "#/components/schemas/DestinationElasticsearchPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -18905,7 +18905,7 @@ paths:
             schema:
               $ref: "#/components/schemas/DestinationFireboltPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -18991,7 +18991,7 @@ paths:
             schema:
               $ref: "#/components/schemas/DestinationFirestorePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -19077,7 +19077,7 @@ paths:
             schema:
               $ref: "#/components/schemas/DestinationGcsPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -19163,7 +19163,7 @@ paths:
             schema:
               $ref: "#/components/schemas/DestinationGoogleSheetsPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -19249,7 +19249,7 @@ paths:
             schema:
               $ref: "#/components/schemas/DestinationKeenPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -19335,7 +19335,7 @@ paths:
             schema:
               $ref: "#/components/schemas/DestinationKinesisPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -19421,7 +19421,7 @@ paths:
             schema:
               $ref: "#/components/schemas/DestinationMariadbColumnstorePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -19507,7 +19507,7 @@ paths:
             schema:
               $ref: "#/components/schemas/DestinationMeilisearchPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -19593,7 +19593,7 @@ paths:
             schema:
               $ref: "#/components/schemas/DestinationMongodbPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -19679,7 +19679,7 @@ paths:
             schema:
               $ref: "#/components/schemas/DestinationMssqlPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -19765,7 +19765,7 @@ paths:
             schema:
               $ref: "#/components/schemas/DestinationMysqlPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -19851,7 +19851,7 @@ paths:
             schema:
               $ref: "#/components/schemas/DestinationOraclePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -19937,7 +19937,7 @@ paths:
             schema:
               $ref: "#/components/schemas/DestinationPostgresPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -20023,7 +20023,7 @@ paths:
             schema:
               $ref: "#/components/schemas/DestinationPubsubPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -20109,7 +20109,7 @@ paths:
             schema:
               $ref: "#/components/schemas/DestinationPulsarPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -20195,7 +20195,7 @@ paths:
             schema:
               $ref: "#/components/schemas/DestinationRabbitmqPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -20281,7 +20281,7 @@ paths:
             schema:
               $ref: "#/components/schemas/DestinationRedisPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -20367,7 +20367,7 @@ paths:
             schema:
               $ref: "#/components/schemas/DestinationRedshiftPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -20453,7 +20453,7 @@ paths:
             schema:
               $ref: "#/components/schemas/DestinationRocksetPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -20539,7 +20539,7 @@ paths:
             schema:
               $ref: "#/components/schemas/DestinationS3PutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -20625,7 +20625,7 @@ paths:
             schema:
               $ref: "#/components/schemas/DestinationS3GluePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -20711,7 +20711,7 @@ paths:
             schema:
               $ref: "#/components/schemas/DestinationScyllaPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -20797,7 +20797,7 @@ paths:
             schema:
               $ref: "#/components/schemas/DestinationSftpJsonPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -20883,7 +20883,7 @@ paths:
             schema:
               $ref: "#/components/schemas/DestinationSnowflakePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -20969,7 +20969,7 @@ paths:
             schema:
               $ref: "#/components/schemas/DestinationTypesensePutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -21055,7 +21055,7 @@ paths:
             schema:
               $ref: "#/components/schemas/DestinationVerticaPutRequest"
       responses:
-        "204":
+        "2XX":
           description: "The resource was updated successfully"
         "403":
           description: "Not allowed"
@@ -21612,13 +21612,10 @@ components:
       type: "object"
       required:
       - "workspaceId"
-      - "name"
       - "dataResidency"
       properties:
         workspaceId:
           format: "UUID"
-          type: "string"
-        name:
           type: "string"
         dataResidency:
           $ref: "#/components/schemas/GeographyEnum"

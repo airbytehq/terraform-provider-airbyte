@@ -34,12 +34,12 @@ type SourcePolygonStockAPIResource struct {
 
 // SourcePolygonStockAPIResourceModel describes the resource data model.
 type SourcePolygonStockAPIResourceModel struct {
-	Configuration SourcePolygonStockAPIUpdate `tfsdk:"configuration"`
-	Name          types.String                `tfsdk:"name"`
-	SecretID      types.String                `tfsdk:"secret_id"`
-	SourceID      types.String                `tfsdk:"source_id"`
-	SourceType    types.String                `tfsdk:"source_type"`
-	WorkspaceID   types.String                `tfsdk:"workspace_id"`
+	Configuration SourcePolygonStockAPI `tfsdk:"configuration"`
+	Name          types.String          `tfsdk:"name"`
+	SecretID      types.String          `tfsdk:"secret_id"`
+	SourceID      types.String          `tfsdk:"source_id"`
+	SourceType    types.String          `tfsdk:"source_type"`
+	WorkspaceID   types.String          `tfsdk:"workspace_id"`
 }
 
 func (r *SourcePolygonStockAPIResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -75,6 +75,14 @@ func (r *SourcePolygonStockAPIResource) Schema(ctx context.Context, req resource
 					"sort": schema.StringAttribute{
 						Optional: true,
 					},
+					"source_type": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"polygon-stock-api",
+							),
+						},
+					},
 					"start_date": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -86,14 +94,6 @@ func (r *SourcePolygonStockAPIResource) Schema(ctx context.Context, req resource
 					},
 					"timespan": schema.StringAttribute{
 						Required: true,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"polygon-stock-api",
-							),
-						},
 					},
 				},
 			},
@@ -224,7 +224,7 @@ func (r *SourcePolygonStockAPIResource) Update(ctx context.Context, req resource
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

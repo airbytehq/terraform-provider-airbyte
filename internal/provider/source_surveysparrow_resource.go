@@ -35,12 +35,12 @@ type SourceSurveySparrowResource struct {
 
 // SourceSurveySparrowResourceModel describes the resource data model.
 type SourceSurveySparrowResourceModel struct {
-	Configuration SourceSurveySparrowUpdate `tfsdk:"configuration"`
-	Name          types.String              `tfsdk:"name"`
-	SecretID      types.String              `tfsdk:"secret_id"`
-	SourceID      types.String              `tfsdk:"source_id"`
-	SourceType    types.String              `tfsdk:"source_type"`
-	WorkspaceID   types.String              `tfsdk:"workspace_id"`
+	Configuration SourceSurveySparrow `tfsdk:"configuration"`
+	Name          types.String        `tfsdk:"name"`
+	SecretID      types.String        `tfsdk:"secret_id"`
+	SourceID      types.String        `tfsdk:"source_id"`
+	SourceType    types.String        `tfsdk:"source_type"`
+	WorkspaceID   types.String        `tfsdk:"workspace_id"`
 }
 
 func (r *SourceSurveySparrowResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -61,34 +61,6 @@ func (r *SourceSurveySparrowResource) Schema(ctx context.Context, req resource.S
 					"region": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_survey_sparrow_update_base_url_eu_based_account": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"url_base": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"https://eu-api.surveysparrow.com/v3",
-											),
-										},
-									},
-								},
-								Description: `Is your account location is EU based? If yes, the base url to retrieve data will be different.`,
-							},
-							"source_survey_sparrow_update_base_url_global_account": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"url_base": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"https://api.surveysparrow.com/v3",
-											),
-										},
-									},
-								},
-								Description: `Is your account location is EU based? If yes, the base url to retrieve data will be different.`,
-							},
 							"source_survey_sparrow_base_url_eu_based_account": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -117,16 +89,37 @@ func (r *SourceSurveySparrowResource) Schema(ctx context.Context, req resource.S
 								},
 								Description: `Is your account location is EU based? If yes, the base url to retrieve data will be different.`,
 							},
+							"source_survey_sparrow_update_base_url_eu_based_account": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"url_base": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"https://eu-api.surveysparrow.com/v3",
+											),
+										},
+									},
+								},
+								Description: `Is your account location is EU based? If yes, the base url to retrieve data will be different.`,
+							},
+							"source_survey_sparrow_update_base_url_global_account": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"url_base": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"https://api.surveysparrow.com/v3",
+											),
+										},
+									},
+								},
+								Description: `Is your account location is EU based? If yes, the base url to retrieve data will be different.`,
+							},
 						},
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
-						},
-					},
-					"survey_id": schema.ListAttribute{
-						Optional:    true,
-						ElementType: types.StringType,
-						Validators: []validator.List{
-							listvalidator.ValueStringsAre(validators.IsValidJSON()),
 						},
 					},
 					"source_type": schema.StringAttribute{
@@ -135,6 +128,13 @@ func (r *SourceSurveySparrowResource) Schema(ctx context.Context, req resource.S
 							stringvalidator.OneOf(
 								"survey-sparrow",
 							),
+						},
+					},
+					"survey_id": schema.ListAttribute{
+						Optional:    true,
+						ElementType: types.StringType,
+						Validators: []validator.List{
+							listvalidator.ValueStringsAre(validators.IsValidJSON()),
 						},
 					},
 				},
@@ -266,7 +266,7 @@ func (r *SourceSurveySparrowResource) Update(ctx context.Context, req resource.U
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

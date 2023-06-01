@@ -35,12 +35,12 @@ type SourceSonarCloudResource struct {
 
 // SourceSonarCloudResourceModel describes the resource data model.
 type SourceSonarCloudResourceModel struct {
-	Configuration SourceSonarCloud `tfsdk:"configuration"`
-	Name          types.String     `tfsdk:"name"`
-	SecretID      types.String     `tfsdk:"secret_id"`
-	SourceID      types.String     `tfsdk:"source_id"`
-	SourceType    types.String     `tfsdk:"source_type"`
-	WorkspaceID   types.String     `tfsdk:"workspace_id"`
+	Configuration SourceSonarCloudUpdate `tfsdk:"configuration"`
+	Name          types.String           `tfsdk:"name"`
+	SecretID      types.String           `tfsdk:"secret_id"`
+	SourceID      types.String           `tfsdk:"source_id"`
+	SourceType    types.String           `tfsdk:"source_type"`
+	WorkspaceID   types.String           `tfsdk:"workspace_id"`
 }
 
 func (r *SourceSonarCloudResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -71,14 +71,6 @@ func (r *SourceSonarCloudResource) Schema(ctx context.Context, req resource.Sche
 					"organization": schema.StringAttribute{
 						Required: true,
 					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"sonar-cloud",
-							),
-						},
-					},
 					"start_date": schema.StringAttribute{
 						Optional: true,
 						Validators: []validator.String{
@@ -87,6 +79,14 @@ func (r *SourceSonarCloudResource) Schema(ctx context.Context, req resource.Sche
 					},
 					"user_token": schema.StringAttribute{
 						Required: true,
+					},
+					"source_type": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"sonar-cloud",
+							),
+						},
 					},
 				},
 			},
@@ -217,7 +217,7 @@ func (r *SourceSonarCloudResource) Update(ctx context.Context, req resource.Upda
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

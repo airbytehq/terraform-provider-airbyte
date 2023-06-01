@@ -34,12 +34,12 @@ type SourceS3Resource struct {
 
 // SourceS3ResourceModel describes the resource data model.
 type SourceS3ResourceModel struct {
-	Configuration SourceS3Update `tfsdk:"configuration"`
-	Name          types.String   `tfsdk:"name"`
-	SecretID      types.String   `tfsdk:"secret_id"`
-	SourceID      types.String   `tfsdk:"source_id"`
-	SourceType    types.String   `tfsdk:"source_type"`
-	WorkspaceID   types.String   `tfsdk:"workspace_id"`
+	Configuration SourceS3     `tfsdk:"configuration"`
+	Name          types.String `tfsdk:"name"`
+	SecretID      types.String `tfsdk:"secret_id"`
+	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
+	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
 func (r *SourceS3Resource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -60,119 +60,6 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 					"format": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_s3_update_file_format_csv": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"additional_reader_options": schema.StringAttribute{
-										Computed: true,
-									},
-									"advanced_options": schema.StringAttribute{
-										Computed: true,
-									},
-									"block_size": schema.Int64Attribute{
-										Computed: true,
-									},
-									"delimiter": schema.StringAttribute{
-										Computed: true,
-									},
-									"double_quote": schema.BoolAttribute{
-										Computed: true,
-									},
-									"encoding": schema.StringAttribute{
-										Computed: true,
-									},
-									"escape_char": schema.StringAttribute{
-										Computed: true,
-									},
-									"filetype": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"csv",
-											),
-										},
-									},
-									"infer_datatypes": schema.BoolAttribute{
-										Computed: true,
-									},
-									"newlines_in_values": schema.BoolAttribute{
-										Computed: true,
-									},
-									"quote_char": schema.StringAttribute{
-										Computed: true,
-									},
-								},
-								Description: `This connector utilises <a href="https: // arrow.apache.org/docs/python/generated/pyarrow.csv.open_csv.html" target="_blank">PyArrow (Apache Arrow)</a> for CSV parsing.`,
-							},
-							"source_s3_update_file_format_parquet": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"batch_size": schema.Int64Attribute{
-										Computed: true,
-									},
-									"buffer_size": schema.Int64Attribute{
-										Computed: true,
-									},
-									"columns": schema.ListAttribute{
-										Computed:    true,
-										ElementType: types.StringType,
-									},
-									"filetype": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"parquet",
-											),
-										},
-									},
-								},
-								Description: `This connector utilises <a href="https://arrow.apache.org/docs/python/generated/pyarrow.parquet.ParquetFile.html" target="_blank">PyArrow (Apache Arrow)</a> for Parquet parsing.`,
-							},
-							"source_s3_update_file_format_avro": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"filetype": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"avro",
-											),
-										},
-									},
-								},
-								Description: `This connector utilises <a href="https://fastavro.readthedocs.io/en/latest/" target="_blank">fastavro</a> for Avro parsing.`,
-							},
-							"source_s3_update_file_format_jsonl": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"block_size": schema.Int64Attribute{
-										Computed: true,
-									},
-									"filetype": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"jsonl",
-											),
-										},
-									},
-									"newlines_in_values": schema.BoolAttribute{
-										Computed: true,
-									},
-									"unexpected_field_behavior": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"ignore",
-												"infer",
-												"error",
-											),
-										},
-										Description: `How JSON fields outside of explicit_schema (if given) are treated. Check <a href="https://arrow.apache.org/docs/python/generated/pyarrow.json.ParseOptions.html" target="_blank">PyArrow documentation</a> for details`,
-									},
-								},
-								Description: `This connector uses <a href="https://arrow.apache.org/docs/python/json.html" target="_blank">PyArrow</a> for JSON Lines (jsonl) file parsing.`,
-							},
 							"source_s3_file_format_csv": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -274,6 +161,119 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 									},
 									"unexpected_field_behavior": schema.StringAttribute{
 										Optional: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"ignore",
+												"infer",
+												"error",
+											),
+										},
+										Description: `How JSON fields outside of explicit_schema (if given) are treated. Check <a href="https://arrow.apache.org/docs/python/generated/pyarrow.json.ParseOptions.html" target="_blank">PyArrow documentation</a> for details`,
+									},
+								},
+								Description: `This connector uses <a href="https://arrow.apache.org/docs/python/json.html" target="_blank">PyArrow</a> for JSON Lines (jsonl) file parsing.`,
+							},
+							"source_s3_update_file_format_csv": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"additional_reader_options": schema.StringAttribute{
+										Computed: true,
+									},
+									"advanced_options": schema.StringAttribute{
+										Computed: true,
+									},
+									"block_size": schema.Int64Attribute{
+										Computed: true,
+									},
+									"delimiter": schema.StringAttribute{
+										Computed: true,
+									},
+									"double_quote": schema.BoolAttribute{
+										Computed: true,
+									},
+									"encoding": schema.StringAttribute{
+										Computed: true,
+									},
+									"escape_char": schema.StringAttribute{
+										Computed: true,
+									},
+									"filetype": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"csv",
+											),
+										},
+									},
+									"infer_datatypes": schema.BoolAttribute{
+										Computed: true,
+									},
+									"newlines_in_values": schema.BoolAttribute{
+										Computed: true,
+									},
+									"quote_char": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+								Description: `This connector utilises <a href="https: // arrow.apache.org/docs/python/generated/pyarrow.csv.open_csv.html" target="_blank">PyArrow (Apache Arrow)</a> for CSV parsing.`,
+							},
+							"source_s3_update_file_format_parquet": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"batch_size": schema.Int64Attribute{
+										Computed: true,
+									},
+									"buffer_size": schema.Int64Attribute{
+										Computed: true,
+									},
+									"columns": schema.ListAttribute{
+										Computed:    true,
+										ElementType: types.StringType,
+									},
+									"filetype": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"parquet",
+											),
+										},
+									},
+								},
+								Description: `This connector utilises <a href="https://arrow.apache.org/docs/python/generated/pyarrow.parquet.ParquetFile.html" target="_blank">PyArrow (Apache Arrow)</a> for Parquet parsing.`,
+							},
+							"source_s3_update_file_format_avro": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"filetype": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"avro",
+											),
+										},
+									},
+								},
+								Description: `This connector utilises <a href="https://fastavro.readthedocs.io/en/latest/" target="_blank">fastavro</a> for Avro parsing.`,
+							},
+							"source_s3_update_file_format_jsonl": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"block_size": schema.Int64Attribute{
+										Computed: true,
+									},
+									"filetype": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"jsonl",
+											),
+										},
+									},
+									"newlines_in_values": schema.BoolAttribute{
+										Computed: true,
+									},
+									"unexpected_field_behavior": schema.StringAttribute{
+										Computed: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"ignore",
@@ -461,7 +461,7 @@ func (r *SourceS3Resource) Update(ctx context.Context, req resource.UpdateReques
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

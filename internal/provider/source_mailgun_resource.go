@@ -34,12 +34,12 @@ type SourceMailgunResource struct {
 
 // SourceMailgunResourceModel describes the resource data model.
 type SourceMailgunResourceModel struct {
-	Configuration SourceMailgun `tfsdk:"configuration"`
-	Name          types.String  `tfsdk:"name"`
-	SecretID      types.String  `tfsdk:"secret_id"`
-	SourceID      types.String  `tfsdk:"source_id"`
-	SourceType    types.String  `tfsdk:"source_type"`
-	WorkspaceID   types.String  `tfsdk:"workspace_id"`
+	Configuration SourceMailgunUpdate `tfsdk:"configuration"`
+	Name          types.String        `tfsdk:"name"`
+	SecretID      types.String        `tfsdk:"secret_id"`
+	SourceID      types.String        `tfsdk:"source_id"`
+	SourceType    types.String        `tfsdk:"source_type"`
+	WorkspaceID   types.String        `tfsdk:"workspace_id"`
 }
 
 func (r *SourceMailgunResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -60,18 +60,18 @@ func (r *SourceMailgunResource) Schema(ctx context.Context, req resource.SchemaR
 					"private_key": schema.StringAttribute{
 						Required: true,
 					},
+					"start_date": schema.StringAttribute{
+						Optional: true,
+						Validators: []validator.String{
+							validators.IsRFC3339(),
+						},
+					},
 					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"mailgun",
 							),
-						},
-					},
-					"start_date": schema.StringAttribute{
-						Optional: true,
-						Validators: []validator.String{
-							validators.IsRFC3339(),
 						},
 					},
 				},
@@ -203,7 +203,7 @@ func (r *SourceMailgunResource) Update(ctx context.Context, req resource.UpdateR
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

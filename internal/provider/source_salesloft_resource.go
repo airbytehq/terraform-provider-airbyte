@@ -34,12 +34,12 @@ type SourceSalesloftResource struct {
 
 // SourceSalesloftResourceModel describes the resource data model.
 type SourceSalesloftResourceModel struct {
-	Configuration SourceSalesloftUpdate `tfsdk:"configuration"`
-	Name          types.String          `tfsdk:"name"`
-	SecretID      types.String          `tfsdk:"secret_id"`
-	SourceID      types.String          `tfsdk:"source_id"`
-	SourceType    types.String          `tfsdk:"source_type"`
-	WorkspaceID   types.String          `tfsdk:"workspace_id"`
+	Configuration SourceSalesloft `tfsdk:"configuration"`
+	Name          types.String    `tfsdk:"name"`
+	SecretID      types.String    `tfsdk:"secret_id"`
+	SourceID      types.String    `tfsdk:"source_id"`
+	SourceType    types.String    `tfsdk:"source_type"`
+	WorkspaceID   types.String    `tfsdk:"workspace_id"`
 }
 
 func (r *SourceSalesloftResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -57,53 +57,6 @@ func (r *SourceSalesloftResource) Schema(ctx context.Context, req resource.Schem
 					"credentials": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
-							"source_salesloft_update_credentials_authenticate_via_o_auth": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Computed: true,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-									},
-									"client_id": schema.StringAttribute{
-										Computed: true,
-									},
-									"client_secret": schema.StringAttribute{
-										Computed: true,
-									},
-									"refresh_token": schema.StringAttribute{
-										Computed: true,
-									},
-									"token_expiry_date": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											validators.IsRFC3339(),
-										},
-									},
-								},
-							},
-							"source_salesloft_update_credentials_authenticate_via_api_key": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"api_key": schema.StringAttribute{
-										Computed: true,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"api_key",
-											),
-										},
-									},
-								},
-							},
 							"source_salesloft_credentials_authenticate_via_o_auth": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -151,15 +104,56 @@ func (r *SourceSalesloftResource) Schema(ctx context.Context, req resource.Schem
 									},
 								},
 							},
+							"source_salesloft_update_credentials_authenticate_via_o_auth": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"access_token": schema.StringAttribute{
+										Computed: true,
+									},
+									"auth_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"oauth2.0",
+											),
+										},
+									},
+									"client_id": schema.StringAttribute{
+										Computed: true,
+									},
+									"client_secret": schema.StringAttribute{
+										Computed: true,
+									},
+									"refresh_token": schema.StringAttribute{
+										Computed: true,
+									},
+									"token_expiry_date": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											validators.IsRFC3339(),
+										},
+									},
+								},
+							},
+							"source_salesloft_update_credentials_authenticate_via_api_key": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"api_key": schema.StringAttribute{
+										Computed: true,
+									},
+									"auth_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"api_key",
+											),
+										},
+									},
+								},
+							},
 						},
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
-						},
-					},
-					"start_date": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							validators.IsRFC3339(),
 						},
 					},
 					"source_type": schema.StringAttribute{
@@ -168,6 +162,12 @@ func (r *SourceSalesloftResource) Schema(ctx context.Context, req resource.Schem
 							stringvalidator.OneOf(
 								"salesloft",
 							),
+						},
+					},
+					"start_date": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							validators.IsRFC3339(),
 						},
 					},
 				},
@@ -299,7 +299,7 @@ func (r *SourceSalesloftResource) Update(ctx context.Context, req resource.Updat
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

@@ -34,12 +34,12 @@ type SourceAzureBlobStorageResource struct {
 
 // SourceAzureBlobStorageResourceModel describes the resource data model.
 type SourceAzureBlobStorageResourceModel struct {
-	Configuration SourceAzureBlobStorage `tfsdk:"configuration"`
-	Name          types.String           `tfsdk:"name"`
-	SecretID      types.String           `tfsdk:"secret_id"`
-	SourceID      types.String           `tfsdk:"source_id"`
-	SourceType    types.String           `tfsdk:"source_type"`
-	WorkspaceID   types.String           `tfsdk:"workspace_id"`
+	Configuration SourceAzureBlobStorageUpdate `tfsdk:"configuration"`
+	Name          types.String                 `tfsdk:"name"`
+	SecretID      types.String                 `tfsdk:"secret_id"`
+	SourceID      types.String                 `tfsdk:"source_id"`
+	SourceType    types.String                 `tfsdk:"source_type"`
+	WorkspaceID   types.String                 `tfsdk:"workspace_id"`
 }
 
 func (r *SourceAzureBlobStorageResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -75,11 +75,11 @@ func (r *SourceAzureBlobStorageResource) Schema(ctx context.Context, req resourc
 					"format": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
-							"source_azure_blob_storage_input_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
-								Optional: true,
+							"source_azure_blob_storage_update_input_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
+								Computed: true,
 								Attributes: map[string]schema.Attribute{
 									"format_type": schema.StringAttribute{
-										Required: true,
+										Computed: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"JSONL",
@@ -89,11 +89,11 @@ func (r *SourceAzureBlobStorageResource) Schema(ctx context.Context, req resourc
 								},
 								Description: `Input data format`,
 							},
-							"source_azure_blob_storage_update_input_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
-								Computed: true,
+							"source_azure_blob_storage_input_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"format_type": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"JSONL",
@@ -245,7 +245,7 @@ func (r *SourceAzureBlobStorageResource) Update(ctx context.Context, req resourc
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

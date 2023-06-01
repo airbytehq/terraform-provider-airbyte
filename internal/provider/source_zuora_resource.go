@@ -33,12 +33,12 @@ type SourceZuoraResource struct {
 
 // SourceZuoraResourceModel describes the resource data model.
 type SourceZuoraResourceModel struct {
-	Configuration SourceZuoraUpdate `tfsdk:"configuration"`
-	Name          types.String      `tfsdk:"name"`
-	SecretID      types.String      `tfsdk:"secret_id"`
-	SourceID      types.String      `tfsdk:"source_id"`
-	SourceType    types.String      `tfsdk:"source_type"`
-	WorkspaceID   types.String      `tfsdk:"workspace_id"`
+	Configuration SourceZuora  `tfsdk:"configuration"`
+	Name          types.String `tfsdk:"name"`
+	SecretID      types.String `tfsdk:"secret_id"`
+	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
+	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
 func (r *SourceZuoraResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -69,6 +69,14 @@ func (r *SourceZuoraResource) Schema(ctx context.Context, req resource.SchemaReq
 						},
 						Description: `Choose between ` + "`" + `Live` + "`" + `, or ` + "`" + `Unlimited` + "`" + ` - the optimized, replicated database at 12 hours freshness for high volume extraction <a href="https://knowledgecenter.zuora.com/Central_Platform/Query/Data_Query/A_Overview_of_Data_Query#Query_Processing_Limitations">Link</a>`,
 					},
+					"source_type": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"zuora",
+							),
+						},
+					},
 					"start_date": schema.StringAttribute{
 						Required: true,
 					},
@@ -91,14 +99,6 @@ func (r *SourceZuoraResource) Schema(ctx context.Context, req resource.SchemaReq
 					},
 					"window_in_days": schema.StringAttribute{
 						Optional: true,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"zuora",
-							),
-						},
 					},
 				},
 			},
@@ -229,7 +229,7 @@ func (r *SourceZuoraResource) Update(ctx context.Context, req resource.UpdateReq
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

@@ -34,12 +34,12 @@ type SourcePostgresResource struct {
 
 // SourcePostgresResourceModel describes the resource data model.
 type SourcePostgresResourceModel struct {
-	Configuration SourcePostgresUpdate `tfsdk:"configuration"`
-	Name          types.String         `tfsdk:"name"`
-	SecretID      types.String         `tfsdk:"secret_id"`
-	SourceID      types.String         `tfsdk:"source_id"`
-	SourceType    types.String         `tfsdk:"source_type"`
-	WorkspaceID   types.String         `tfsdk:"workspace_id"`
+	Configuration SourcePostgres `tfsdk:"configuration"`
+	Name          types.String   `tfsdk:"name"`
+	SecretID      types.String   `tfsdk:"secret_id"`
+	SourceID      types.String   `tfsdk:"source_id"`
+	SourceType    types.String   `tfsdk:"source_type"`
+	WorkspaceID   types.String   `tfsdk:"workspace_id"`
 }
 
 func (r *SourcePostgresResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -72,72 +72,6 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 					"replication_method": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_postgres_update_replication_method_standard": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Standard",
-											),
-										},
-									},
-								},
-								Description: `Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
-							},
-							"source_postgres_update_replication_method_logical_replication_cdc_": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"initial_waiting_seconds": schema.Int64Attribute{
-										Computed: true,
-									},
-									"lsn_commit_behaviour": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"While reading Data",
-												"After loading Data in the destination",
-											),
-										},
-										Description: `Determines when Airbtye should flush the LSN of processed WAL logs in the source database. ` + "`" + `After loading Data in the destination` + "`" + ` is default. If ` + "`" + `While reading Data` + "`" + ` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.`,
-									},
-									"method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"CDC",
-											),
-										},
-									},
-									"plugin": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"pgoutput",
-											),
-										},
-										Description: `A logical decoding plugin installed on the PostgreSQL server.`,
-									},
-									"publication": schema.StringAttribute{
-										Computed: true,
-									},
-									"queue_size": schema.Int64Attribute{
-										Computed: true,
-									},
-									"replication_slot": schema.StringAttribute{
-										Computed: true,
-									},
-									"additional_properties": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											validators.IsValidJSON(),
-										},
-										Description: `Parsed as JSON.`,
-									},
-								},
-								Description: `Logical replication uses the Postgres write-ahead log (WAL) to detect inserts, updates, and deletes. This needs to be configured on the source database itself. Only available on Postgres 10 and above. Read the <a href="https://docs.airbyte.com/integrations/sources/postgres">docs</a>.`,
-							},
 							"source_postgres_replication_method_standard": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -204,6 +138,72 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 								},
 								Description: `Logical replication uses the Postgres write-ahead log (WAL) to detect inserts, updates, and deletes. This needs to be configured on the source database itself. Only available on Postgres 10 and above. Read the <a href="https://docs.airbyte.com/integrations/sources/postgres">docs</a>.`,
 							},
+							"source_postgres_update_replication_method_standard": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Standard",
+											),
+										},
+									},
+								},
+								Description: `Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
+							},
+							"source_postgres_update_replication_method_logical_replication_cdc_": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"initial_waiting_seconds": schema.Int64Attribute{
+										Computed: true,
+									},
+									"lsn_commit_behaviour": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"While reading Data",
+												"After loading Data in the destination",
+											),
+										},
+										Description: `Determines when Airbtye should flush the LSN of processed WAL logs in the source database. ` + "`" + `After loading Data in the destination` + "`" + ` is default. If ` + "`" + `While reading Data` + "`" + ` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.`,
+									},
+									"method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"CDC",
+											),
+										},
+									},
+									"plugin": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"pgoutput",
+											),
+										},
+										Description: `A logical decoding plugin installed on the PostgreSQL server.`,
+									},
+									"publication": schema.StringAttribute{
+										Computed: true,
+									},
+									"queue_size": schema.Int64Attribute{
+										Computed: true,
+									},
+									"replication_slot": schema.StringAttribute{
+										Computed: true,
+									},
+									"additional_properties": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+										Description: `Parsed as JSON.`,
+									},
+								},
+								Description: `Logical replication uses the Postgres write-ahead log (WAL) to detect inserts, updates, and deletes. This needs to be configured on the source database itself. Only available on Postgres 10 and above. Read the <a href="https://docs.airbyte.com/integrations/sources/postgres">docs</a>.`,
+							},
 						},
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
@@ -213,159 +213,17 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 						Optional:    true,
 						ElementType: types.StringType,
 					},
+					"source_type": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"postgres",
+							),
+						},
+					},
 					"ssl_mode": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_postgres_update_ssl_modes_disable": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"disable",
-											),
-										},
-									},
-									"additional_properties": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											validators.IsValidJSON(),
-										},
-										Description: `Parsed as JSON.`,
-									},
-								},
-								Description: `Disables encryption of communication between Airbyte and source database.`,
-							},
-							"source_postgres_update_ssl_modes_allow": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"allow",
-											),
-										},
-									},
-									"additional_properties": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											validators.IsValidJSON(),
-										},
-										Description: `Parsed as JSON.`,
-									},
-								},
-								Description: `Enables encryption only when required by the source database.`,
-							},
-							"source_postgres_update_ssl_modes_prefer": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"prefer",
-											),
-										},
-									},
-									"additional_properties": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											validators.IsValidJSON(),
-										},
-										Description: `Parsed as JSON.`,
-									},
-								},
-								Description: `Allows unencrypted connection only if the source database does not support encryption.`,
-							},
-							"source_postgres_update_ssl_modes_require": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"require",
-											),
-										},
-									},
-									"additional_properties": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											validators.IsValidJSON(),
-										},
-										Description: `Parsed as JSON.`,
-									},
-								},
-								Description: `Always require encryption. If the source database server does not support encryption, connection will fail.`,
-							},
-							"source_postgres_update_ssl_modes_verify_ca": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"ca_certificate": schema.StringAttribute{
-										Computed: true,
-									},
-									"client_certificate": schema.StringAttribute{
-										Computed: true,
-									},
-									"client_key": schema.StringAttribute{
-										Computed: true,
-									},
-									"client_key_password": schema.StringAttribute{
-										Computed: true,
-									},
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"verify-ca",
-											),
-										},
-									},
-									"additional_properties": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											validators.IsValidJSON(),
-										},
-										Description: `Parsed as JSON.`,
-									},
-								},
-								Description: `Always require encryption and verifies that the source database server has a valid SSL certificate.`,
-							},
-							"source_postgres_update_ssl_modes_verify_full": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"ca_certificate": schema.StringAttribute{
-										Computed: true,
-									},
-									"client_certificate": schema.StringAttribute{
-										Computed: true,
-									},
-									"client_key": schema.StringAttribute{
-										Computed: true,
-									},
-									"client_key_password": schema.StringAttribute{
-										Computed: true,
-									},
-									"mode": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"verify-full",
-											),
-										},
-									},
-									"additional_properties": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											validators.IsValidJSON(),
-										},
-										Description: `Parsed as JSON.`,
-									},
-								},
-								Description: `This is the most secure mode. Always require encryption and verifies the identity of the source database server.`,
-							},
 							"source_postgres_ssl_modes_disable": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -516,6 +374,156 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 								},
 								Description: `This is the most secure mode. Always require encryption and verifies the identity of the source database server.`,
 							},
+							"source_postgres_update_ssl_modes_disable": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"mode": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"disable",
+											),
+										},
+									},
+									"additional_properties": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+										Description: `Parsed as JSON.`,
+									},
+								},
+								Description: `Disables encryption of communication between Airbyte and source database.`,
+							},
+							"source_postgres_update_ssl_modes_allow": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"mode": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"allow",
+											),
+										},
+									},
+									"additional_properties": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+										Description: `Parsed as JSON.`,
+									},
+								},
+								Description: `Enables encryption only when required by the source database.`,
+							},
+							"source_postgres_update_ssl_modes_prefer": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"mode": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"prefer",
+											),
+										},
+									},
+									"additional_properties": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+										Description: `Parsed as JSON.`,
+									},
+								},
+								Description: `Allows unencrypted connection only if the source database does not support encryption.`,
+							},
+							"source_postgres_update_ssl_modes_require": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"mode": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"require",
+											),
+										},
+									},
+									"additional_properties": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+										Description: `Parsed as JSON.`,
+									},
+								},
+								Description: `Always require encryption. If the source database server does not support encryption, connection will fail.`,
+							},
+							"source_postgres_update_ssl_modes_verify_ca": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"ca_certificate": schema.StringAttribute{
+										Computed: true,
+									},
+									"client_certificate": schema.StringAttribute{
+										Computed: true,
+									},
+									"client_key": schema.StringAttribute{
+										Computed: true,
+									},
+									"client_key_password": schema.StringAttribute{
+										Computed: true,
+									},
+									"mode": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"verify-ca",
+											),
+										},
+									},
+									"additional_properties": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+										Description: `Parsed as JSON.`,
+									},
+								},
+								Description: `Always require encryption and verifies that the source database server has a valid SSL certificate.`,
+							},
+							"source_postgres_update_ssl_modes_verify_full": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"ca_certificate": schema.StringAttribute{
+										Computed: true,
+									},
+									"client_certificate": schema.StringAttribute{
+										Computed: true,
+									},
+									"client_key": schema.StringAttribute{
+										Computed: true,
+									},
+									"client_key_password": schema.StringAttribute{
+										Computed: true,
+									},
+									"mode": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"verify-full",
+											),
+										},
+									},
+									"additional_properties": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+										Description: `Parsed as JSON.`,
+									},
+								},
+								Description: `This is the most secure mode. Always require encryption and verifies the identity of the source database server.`,
+							},
 						},
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
@@ -524,75 +532,6 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 					"tunnel_method": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_postgres_update_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"NO_TUNNEL",
-											),
-										},
-										Description: `No ssh tunnel needed to connect to database`,
-									},
-								},
-								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
-							},
-							"source_postgres_update_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"ssh_key": schema.StringAttribute{
-										Computed: true,
-									},
-									"tunnel_host": schema.StringAttribute{
-										Computed: true,
-									},
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_KEY_AUTH",
-											),
-										},
-										Description: `Connect through a jump server tunnel host using username and ssh key`,
-									},
-									"tunnel_port": schema.Int64Attribute{
-										Computed: true,
-									},
-									"tunnel_user": schema.StringAttribute{
-										Computed: true,
-									},
-								},
-								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
-							},
-							"source_postgres_update_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"tunnel_host": schema.StringAttribute{
-										Computed: true,
-									},
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_PASSWORD_AUTH",
-											),
-										},
-										Description: `Connect through a jump server tunnel host using username and password authentication`,
-									},
-									"tunnel_port": schema.Int64Attribute{
-										Computed: true,
-									},
-									"tunnel_user": schema.StringAttribute{
-										Computed: true,
-									},
-									"tunnel_user_password": schema.StringAttribute{
-										Computed: true,
-									},
-								},
-								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
-							},
 							"source_postgres_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -662,6 +601,75 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
+							"source_postgres_update_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"tunnel_method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"NO_TUNNEL",
+											),
+										},
+										Description: `No ssh tunnel needed to connect to database`,
+									},
+								},
+								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
+							},
+							"source_postgres_update_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"ssh_key": schema.StringAttribute{
+										Computed: true,
+									},
+									"tunnel_host": schema.StringAttribute{
+										Computed: true,
+									},
+									"tunnel_method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"SSH_KEY_AUTH",
+											),
+										},
+										Description: `Connect through a jump server tunnel host using username and ssh key`,
+									},
+									"tunnel_port": schema.Int64Attribute{
+										Computed: true,
+									},
+									"tunnel_user": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
+							},
+							"source_postgres_update_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"tunnel_host": schema.StringAttribute{
+										Computed: true,
+									},
+									"tunnel_method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"SSH_PASSWORD_AUTH",
+											),
+										},
+										Description: `Connect through a jump server tunnel host using username and password authentication`,
+									},
+									"tunnel_port": schema.Int64Attribute{
+										Computed: true,
+									},
+									"tunnel_user": schema.StringAttribute{
+										Computed: true,
+									},
+									"tunnel_user_password": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
+							},
 						},
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
@@ -669,14 +677,6 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"username": schema.StringAttribute{
 						Required: true,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"postgres",
-							),
-						},
 					},
 				},
 			},
@@ -807,7 +807,7 @@ func (r *SourcePostgresResource) Update(ctx context.Context, req resource.Update
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

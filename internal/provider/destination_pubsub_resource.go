@@ -33,11 +33,11 @@ type DestinationPubsubResource struct {
 
 // DestinationPubsubResourceModel describes the resource data model.
 type DestinationPubsubResourceModel struct {
-	Configuration   DestinationPubsubUpdate `tfsdk:"configuration"`
-	DestinationID   types.String            `tfsdk:"destination_id"`
-	DestinationType types.String            `tfsdk:"destination_type"`
-	Name            types.String            `tfsdk:"name"`
-	WorkspaceID     types.String            `tfsdk:"workspace_id"`
+	Configuration   DestinationPubsub `tfsdk:"configuration"`
+	DestinationID   types.String      `tfsdk:"destination_id"`
+	DestinationType types.String      `tfsdk:"destination_type"`
+	Name            types.String      `tfsdk:"name"`
+	WorkspaceID     types.String      `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationPubsubResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -67,6 +67,14 @@ func (r *DestinationPubsubResource) Schema(ctx context.Context, req resource.Sch
 					"credentials_json": schema.StringAttribute{
 						Required: true,
 					},
+					"destination_type": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"pubsub",
+							),
+						},
+					},
 					"ordering_enabled": schema.BoolAttribute{
 						Required: true,
 					},
@@ -75,14 +83,6 @@ func (r *DestinationPubsubResource) Schema(ctx context.Context, req resource.Sch
 					},
 					"topic_id": schema.StringAttribute{
 						Required: true,
-					},
-					"destination_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"pubsub",
-							),
-						},
 					},
 				},
 			},
@@ -210,7 +210,7 @@ func (r *DestinationPubsubResource) Update(ctx context.Context, req resource.Upd
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

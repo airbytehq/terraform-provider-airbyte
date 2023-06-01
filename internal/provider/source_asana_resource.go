@@ -34,12 +34,12 @@ type SourceAsanaResource struct {
 
 // SourceAsanaResourceModel describes the resource data model.
 type SourceAsanaResourceModel struct {
-	Configuration SourceAsana  `tfsdk:"configuration"`
-	Name          types.String `tfsdk:"name"`
-	SecretID      types.String `tfsdk:"secret_id"`
-	SourceID      types.String `tfsdk:"source_id"`
-	SourceType    types.String `tfsdk:"source_type"`
-	WorkspaceID   types.String `tfsdk:"workspace_id"`
+	Configuration SourceAsanaUpdate `tfsdk:"configuration"`
+	Name          types.String      `tfsdk:"name"`
+	SecretID      types.String      `tfsdk:"secret_id"`
+	SourceID      types.String      `tfsdk:"source_id"`
+	SourceType    types.String      `tfsdk:"source_type"`
+	WorkspaceID   types.String      `tfsdk:"workspace_id"`
 }
 
 func (r *SourceAsanaResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -57,48 +57,6 @@ func (r *SourceAsanaResource) Schema(ctx context.Context, req resource.SchemaReq
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_asana_authentication_mechanism_authenticate_via_asana_oauth_": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"client_id": schema.StringAttribute{
-										Required: true,
-									},
-									"client_secret": schema.StringAttribute{
-										Required: true,
-									},
-									"option_title": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"OAuth Credentials",
-											),
-										},
-										Description: `OAuth Credentials`,
-									},
-									"refresh_token": schema.StringAttribute{
-										Required: true,
-									},
-								},
-								Description: `Choose how to authenticate to Github`,
-							},
-							"source_asana_authentication_mechanism_authenticate_with_personal_access_token": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"option_title": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"PAT Credentials",
-											),
-										},
-										Description: `PAT Credentials`,
-									},
-									"personal_access_token": schema.StringAttribute{
-										Required: true,
-									},
-								},
-								Description: `Choose how to authenticate to Github`,
-							},
 							"source_asana_update_authentication_mechanism_authenticate_via_asana_oauth_": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
@@ -137,6 +95,48 @@ func (r *SourceAsanaResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"personal_access_token": schema.StringAttribute{
 										Computed: true,
+									},
+								},
+								Description: `Choose how to authenticate to Github`,
+							},
+							"source_asana_authentication_mechanism_authenticate_via_asana_oauth_": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"client_id": schema.StringAttribute{
+										Required: true,
+									},
+									"client_secret": schema.StringAttribute{
+										Required: true,
+									},
+									"option_title": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"OAuth Credentials",
+											),
+										},
+										Description: `OAuth Credentials`,
+									},
+									"refresh_token": schema.StringAttribute{
+										Required: true,
+									},
+								},
+								Description: `Choose how to authenticate to Github`,
+							},
+							"source_asana_authentication_mechanism_authenticate_with_personal_access_token": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"option_title": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"PAT Credentials",
+											),
+										},
+										Description: `PAT Credentials`,
+									},
+									"personal_access_token": schema.StringAttribute{
+										Required: true,
 									},
 								},
 								Description: `Choose how to authenticate to Github`,
@@ -283,7 +283,7 @@ func (r *SourceAsanaResource) Update(ctx context.Context, req resource.UpdateReq
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

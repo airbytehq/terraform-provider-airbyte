@@ -33,11 +33,11 @@ type DestinationCumulioResource struct {
 
 // DestinationCumulioResourceModel describes the resource data model.
 type DestinationCumulioResourceModel struct {
-	Configuration   DestinationCumulioUpdate `tfsdk:"configuration"`
-	DestinationID   types.String             `tfsdk:"destination_id"`
-	DestinationType types.String             `tfsdk:"destination_type"`
-	Name            types.String             `tfsdk:"name"`
-	WorkspaceID     types.String             `tfsdk:"workspace_id"`
+	Configuration   DestinationCumulio `tfsdk:"configuration"`
+	DestinationID   types.String       `tfsdk:"destination_id"`
+	DestinationType types.String       `tfsdk:"destination_type"`
+	Name            types.String       `tfsdk:"name"`
+	WorkspaceID     types.String       `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationCumulioResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -195,7 +195,7 @@ func (r *DestinationCumulioResource) Update(ctx context.Context, req resource.Up
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

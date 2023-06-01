@@ -33,11 +33,11 @@ type DestinationKinesisResource struct {
 
 // DestinationKinesisResourceModel describes the resource data model.
 type DestinationKinesisResourceModel struct {
-	Configuration   DestinationKinesis `tfsdk:"configuration"`
-	DestinationID   types.String       `tfsdk:"destination_id"`
-	DestinationType types.String       `tfsdk:"destination_type"`
-	Name            types.String       `tfsdk:"name"`
-	WorkspaceID     types.String       `tfsdk:"workspace_id"`
+	Configuration   DestinationKinesisUpdate `tfsdk:"configuration"`
+	DestinationID   types.String             `tfsdk:"destination_id"`
+	DestinationType types.String             `tfsdk:"destination_type"`
+	Name            types.String             `tfsdk:"name"`
+	WorkspaceID     types.String             `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationKinesisResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -58,14 +58,6 @@ func (r *DestinationKinesisResource) Schema(ctx context.Context, req resource.Sc
 					"buffer_size": schema.Int64Attribute{
 						Required: true,
 					},
-					"destination_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"kinesis",
-							),
-						},
-					},
 					"endpoint": schema.StringAttribute{
 						Required: true,
 					},
@@ -77,6 +69,14 @@ func (r *DestinationKinesisResource) Schema(ctx context.Context, req resource.Sc
 					},
 					"shard_count": schema.Int64Attribute{
 						Required: true,
+					},
+					"destination_type": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"kinesis",
+							),
+						},
 					},
 				},
 			},
@@ -204,7 +204,7 @@ func (r *DestinationKinesisResource) Update(ctx context.Context, req resource.Up
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

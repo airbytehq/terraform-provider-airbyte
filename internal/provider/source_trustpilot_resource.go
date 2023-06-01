@@ -34,12 +34,12 @@ type SourceTrustpilotResource struct {
 
 // SourceTrustpilotResourceModel describes the resource data model.
 type SourceTrustpilotResourceModel struct {
-	Configuration SourceTrustpilotUpdate `tfsdk:"configuration"`
-	Name          types.String           `tfsdk:"name"`
-	SecretID      types.String           `tfsdk:"secret_id"`
-	SourceID      types.String           `tfsdk:"source_id"`
-	SourceType    types.String           `tfsdk:"source_type"`
-	WorkspaceID   types.String           `tfsdk:"workspace_id"`
+	Configuration SourceTrustpilot `tfsdk:"configuration"`
+	Name          types.String     `tfsdk:"name"`
+	SecretID      types.String     `tfsdk:"secret_id"`
+	SourceID      types.String     `tfsdk:"source_id"`
+	SourceType    types.String     `tfsdk:"source_type"`
+	WorkspaceID   types.String     `tfsdk:"workspace_id"`
 }
 
 func (r *SourceTrustpilotResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -61,54 +61,6 @@ func (r *SourceTrustpilotResource) Schema(ctx context.Context, req resource.Sche
 					"credentials": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
-							"source_trustpilot_update_authorization_method_o_auth_2_0": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Computed: true,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-									},
-									"client_id": schema.StringAttribute{
-										Computed: true,
-									},
-									"client_secret": schema.StringAttribute{
-										Computed: true,
-									},
-									"refresh_token": schema.StringAttribute{
-										Computed: true,
-									},
-									"token_expiry_date": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											validators.IsRFC3339(),
-										},
-									},
-								},
-							},
-							"source_trustpilot_update_authorization_method_api_key": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"apikey",
-											),
-										},
-									},
-									"client_id": schema.StringAttribute{
-										Computed: true,
-									},
-								},
-								Description: `The API key authentication method gives you access to only the streams which are part of the Public API. When you want to get streams available via the Consumer API (e.g. the private reviews) you need to use authentication method OAuth 2.0.`,
-							},
 							"source_trustpilot_authorization_method_o_auth_2_0": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -157,13 +109,58 @@ func (r *SourceTrustpilotResource) Schema(ctx context.Context, req resource.Sche
 								},
 								Description: `The API key authentication method gives you access to only the streams which are part of the Public API. When you want to get streams available via the Consumer API (e.g. the private reviews) you need to use authentication method OAuth 2.0.`,
 							},
+							"source_trustpilot_update_authorization_method_o_auth_2_0": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"access_token": schema.StringAttribute{
+										Computed: true,
+									},
+									"auth_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"oauth2.0",
+											),
+										},
+									},
+									"client_id": schema.StringAttribute{
+										Computed: true,
+									},
+									"client_secret": schema.StringAttribute{
+										Computed: true,
+									},
+									"refresh_token": schema.StringAttribute{
+										Computed: true,
+									},
+									"token_expiry_date": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											validators.IsRFC3339(),
+										},
+									},
+								},
+							},
+							"source_trustpilot_update_authorization_method_api_key": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"auth_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"apikey",
+											),
+										},
+									},
+									"client_id": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+								Description: `The API key authentication method gives you access to only the streams which are part of the Public API. When you want to get streams available via the Consumer API (e.g. the private reviews) you need to use authentication method OAuth 2.0.`,
+							},
 						},
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
-					},
-					"start_date": schema.StringAttribute{
-						Required: true,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -172,6 +169,9 @@ func (r *SourceTrustpilotResource) Schema(ctx context.Context, req resource.Sche
 								"trustpilot",
 							),
 						},
+					},
+					"start_date": schema.StringAttribute{
+						Required: true,
 					},
 				},
 			},
@@ -302,7 +302,7 @@ func (r *SourceTrustpilotResource) Update(ctx context.Context, req resource.Upda
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

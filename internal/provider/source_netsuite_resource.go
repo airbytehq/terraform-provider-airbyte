@@ -33,12 +33,12 @@ type SourceNetsuiteResource struct {
 
 // SourceNetsuiteResourceModel describes the resource data model.
 type SourceNetsuiteResourceModel struct {
-	Configuration SourceNetsuite `tfsdk:"configuration"`
-	Name          types.String   `tfsdk:"name"`
-	SecretID      types.String   `tfsdk:"secret_id"`
-	SourceID      types.String   `tfsdk:"source_id"`
-	SourceType    types.String   `tfsdk:"source_type"`
-	WorkspaceID   types.String   `tfsdk:"workspace_id"`
+	Configuration SourceNetsuiteUpdate `tfsdk:"configuration"`
+	Name          types.String         `tfsdk:"name"`
+	SecretID      types.String         `tfsdk:"secret_id"`
+	SourceID      types.String         `tfsdk:"source_id"`
+	SourceType    types.String         `tfsdk:"source_type"`
+	WorkspaceID   types.String         `tfsdk:"workspace_id"`
 }
 
 func (r *SourceNetsuiteResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -66,14 +66,6 @@ func (r *SourceNetsuiteResource) Schema(ctx context.Context, req resource.Schema
 					"realm": schema.StringAttribute{
 						Required: true,
 					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"netsuite",
-							),
-						},
-					},
 					"start_datetime": schema.StringAttribute{
 						Required: true,
 					},
@@ -85,6 +77,14 @@ func (r *SourceNetsuiteResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"window_in_days": schema.Int64Attribute{
 						Optional: true,
+					},
+					"source_type": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"netsuite",
+							),
+						},
 					},
 				},
 			},
@@ -215,7 +215,7 @@ func (r *SourceNetsuiteResource) Update(ctx context.Context, req resource.Update
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

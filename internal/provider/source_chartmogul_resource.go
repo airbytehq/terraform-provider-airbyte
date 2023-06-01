@@ -34,12 +34,12 @@ type SourceChartmogulResource struct {
 
 // SourceChartmogulResourceModel describes the resource data model.
 type SourceChartmogulResourceModel struct {
-	Configuration SourceChartmogulUpdate `tfsdk:"configuration"`
-	Name          types.String           `tfsdk:"name"`
-	SecretID      types.String           `tfsdk:"secret_id"`
-	SourceID      types.String           `tfsdk:"source_id"`
-	SourceType    types.String           `tfsdk:"source_type"`
-	WorkspaceID   types.String           `tfsdk:"workspace_id"`
+	Configuration SourceChartmogul `tfsdk:"configuration"`
+	Name          types.String     `tfsdk:"name"`
+	SecretID      types.String     `tfsdk:"secret_id"`
+	SourceID      types.String     `tfsdk:"source_id"`
+	SourceType    types.String     `tfsdk:"source_type"`
+	WorkspaceID   types.String     `tfsdk:"workspace_id"`
 }
 
 func (r *SourceChartmogulResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -69,18 +69,18 @@ func (r *SourceChartmogulResource) Schema(ctx context.Context, req resource.Sche
 						},
 						Description: `Some APIs such as <a href="https://dev.chartmogul.com/reference/endpoint-overview-metrics-api">Metrics</a> require intervals to cluster data.`,
 					},
-					"start_date": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							validators.IsRFC3339(),
-						},
-					},
 					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"chartmogul",
 							),
+						},
+					},
+					"start_date": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							validators.IsRFC3339(),
 						},
 					},
 				},
@@ -212,7 +212,7 @@ func (r *SourceChartmogulResource) Update(ctx context.Context, req resource.Upda
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

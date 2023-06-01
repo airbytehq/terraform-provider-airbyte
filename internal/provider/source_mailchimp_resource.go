@@ -34,12 +34,12 @@ type SourceMailchimpResource struct {
 
 // SourceMailchimpResourceModel describes the resource data model.
 type SourceMailchimpResourceModel struct {
-	Configuration SourceMailchimpUpdate `tfsdk:"configuration"`
-	Name          types.String          `tfsdk:"name"`
-	SecretID      types.String          `tfsdk:"secret_id"`
-	SourceID      types.String          `tfsdk:"source_id"`
-	SourceType    types.String          `tfsdk:"source_type"`
-	WorkspaceID   types.String          `tfsdk:"workspace_id"`
+	Configuration SourceMailchimp `tfsdk:"configuration"`
+	Name          types.String    `tfsdk:"name"`
+	SecretID      types.String    `tfsdk:"secret_id"`
+	SourceID      types.String    `tfsdk:"source_id"`
+	SourceType    types.String    `tfsdk:"source_type"`
+	WorkspaceID   types.String    `tfsdk:"workspace_id"`
 }
 
 func (r *SourceMailchimpResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -60,44 +60,6 @@ func (r *SourceMailchimpResource) Schema(ctx context.Context, req resource.Schem
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_mailchimp_update_authentication_o_auth2_0": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Computed: true,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-									},
-									"client_id": schema.StringAttribute{
-										Computed: true,
-									},
-									"client_secret": schema.StringAttribute{
-										Computed: true,
-									},
-								},
-							},
-							"source_mailchimp_update_authentication_api_key": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"apikey": schema.StringAttribute{
-										Computed: true,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"apikey",
-											),
-										},
-									},
-								},
-							},
 							"source_mailchimp_authentication_o_auth2_0": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -128,6 +90,44 @@ func (r *SourceMailchimpResource) Schema(ctx context.Context, req resource.Schem
 									},
 									"auth_type": schema.StringAttribute{
 										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"apikey",
+											),
+										},
+									},
+								},
+							},
+							"source_mailchimp_update_authentication_o_auth2_0": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"access_token": schema.StringAttribute{
+										Computed: true,
+									},
+									"auth_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"oauth2.0",
+											),
+										},
+									},
+									"client_id": schema.StringAttribute{
+										Computed: true,
+									},
+									"client_secret": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+							},
+							"source_mailchimp_update_authentication_api_key": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"apikey": schema.StringAttribute{
+										Computed: true,
+									},
+									"auth_type": schema.StringAttribute{
+										Computed: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"apikey",
@@ -278,7 +278,7 @@ func (r *SourceMailchimpResource) Update(ctx context.Context, req resource.Updat
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

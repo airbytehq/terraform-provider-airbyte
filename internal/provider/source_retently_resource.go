@@ -34,12 +34,12 @@ type SourceRetentlyResource struct {
 
 // SourceRetentlyResourceModel describes the resource data model.
 type SourceRetentlyResourceModel struct {
-	Configuration SourceRetentlyUpdate `tfsdk:"configuration"`
-	Name          types.String         `tfsdk:"name"`
-	SecretID      types.String         `tfsdk:"secret_id"`
-	SourceID      types.String         `tfsdk:"source_id"`
-	SourceType    types.String         `tfsdk:"source_type"`
-	WorkspaceID   types.String         `tfsdk:"workspace_id"`
+	Configuration SourceRetently `tfsdk:"configuration"`
+	Name          types.String   `tfsdk:"name"`
+	SecretID      types.String   `tfsdk:"secret_id"`
+	SourceID      types.String   `tfsdk:"source_id"`
+	SourceType    types.String   `tfsdk:"source_type"`
+	WorkspaceID   types.String   `tfsdk:"workspace_id"`
 }
 
 func (r *SourceRetentlyResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -57,60 +57,6 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_retently_update_authentication_mechanism_authenticate_via_retently_o_auth_": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Client",
-											),
-										},
-									},
-									"client_id": schema.StringAttribute{
-										Computed: true,
-									},
-									"client_secret": schema.StringAttribute{
-										Computed: true,
-									},
-									"refresh_token": schema.StringAttribute{
-										Computed: true,
-									},
-									"additional_properties": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											validators.IsValidJSON(),
-										},
-										Description: `Parsed as JSON.`,
-									},
-								},
-								Description: `Choose how to authenticate to Retently`,
-							},
-							"source_retently_update_authentication_mechanism_authenticate_with_api_token": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"api_key": schema.StringAttribute{
-										Computed: true,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Token",
-											),
-										},
-									},
-									"additional_properties": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											validators.IsValidJSON(),
-										},
-										Description: `Parsed as JSON.`,
-									},
-								},
-								Description: `Choose how to authenticate to Retently`,
-							},
 							"source_retently_authentication_mechanism_authenticate_via_retently_o_auth_": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -149,6 +95,60 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 									},
 									"auth_type": schema.StringAttribute{
 										Optional: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Token",
+											),
+										},
+									},
+									"additional_properties": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+										Description: `Parsed as JSON.`,
+									},
+								},
+								Description: `Choose how to authenticate to Retently`,
+							},
+							"source_retently_update_authentication_mechanism_authenticate_via_retently_o_auth_": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"auth_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Client",
+											),
+										},
+									},
+									"client_id": schema.StringAttribute{
+										Computed: true,
+									},
+									"client_secret": schema.StringAttribute{
+										Computed: true,
+									},
+									"refresh_token": schema.StringAttribute{
+										Computed: true,
+									},
+									"additional_properties": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+										Description: `Parsed as JSON.`,
+									},
+								},
+								Description: `Choose how to authenticate to Retently`,
+							},
+							"source_retently_update_authentication_mechanism_authenticate_with_api_token": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"api_key": schema.StringAttribute{
+										Computed: true,
+									},
+									"auth_type": schema.StringAttribute{
+										Computed: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"Token",
@@ -307,7 +307,7 @@ func (r *SourceRetentlyResource) Update(ctx context.Context, req resource.Update
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

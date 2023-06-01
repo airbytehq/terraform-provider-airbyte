@@ -10,11 +10,11 @@ import (
 func (r *SourceGoogleSheetsResourceModel) ToCreateSDKType() *shared.SourceGoogleSheetsCreateRequest {
 	var credentials shared.SourceGoogleSheetsAuthentication
 	var sourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth *shared.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth
-	if r.Configuration.Credentials.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth != nil {
-		authType := shared.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuthAuthType(r.Configuration.Credentials.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth.AuthType.ValueString())
-		clientID := r.Configuration.Credentials.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth.ClientID.ValueString()
-		clientSecret := r.Configuration.Credentials.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth.ClientSecret.ValueString()
-		refreshToken := r.Configuration.Credentials.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth.RefreshToken.ValueString()
+	if r.Configuration.Credentials.SourceGoogleSheetsUpdateAuthenticationAuthenticateViaGoogleOAuth != nil {
+		authType := shared.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuthAuthType(r.Configuration.Credentials.SourceGoogleSheetsUpdateAuthenticationAuthenticateViaGoogleOAuth.AuthType.ValueString())
+		clientID := r.Configuration.Credentials.SourceGoogleSheetsUpdateAuthenticationAuthenticateViaGoogleOAuth.ClientID.ValueString()
+		clientSecret := r.Configuration.Credentials.SourceGoogleSheetsUpdateAuthenticationAuthenticateViaGoogleOAuth.ClientSecret.ValueString()
+		refreshToken := r.Configuration.Credentials.SourceGoogleSheetsUpdateAuthenticationAuthenticateViaGoogleOAuth.RefreshToken.ValueString()
 		sourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth = &shared.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth{
 			AuthType:     authType,
 			ClientID:     clientID,
@@ -28,9 +28,9 @@ func (r *SourceGoogleSheetsResourceModel) ToCreateSDKType() *shared.SourceGoogle
 		}
 	}
 	var sourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication *shared.SourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication
-	if r.Configuration.Credentials.SourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication != nil {
-		authType1 := shared.SourceGoogleSheetsAuthenticationServiceAccountKeyAuthenticationAuthType(r.Configuration.Credentials.SourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication.AuthType.ValueString())
-		serviceAccountInfo := r.Configuration.Credentials.SourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication.ServiceAccountInfo.ValueString()
+	if r.Configuration.Credentials.SourceGoogleSheetsUpdateAuthenticationServiceAccountKeyAuthentication != nil {
+		authType1 := shared.SourceGoogleSheetsAuthenticationServiceAccountKeyAuthenticationAuthType(r.Configuration.Credentials.SourceGoogleSheetsUpdateAuthenticationServiceAccountKeyAuthentication.AuthType.ValueString())
+		serviceAccountInfo := r.Configuration.Credentials.SourceGoogleSheetsUpdateAuthenticationServiceAccountKeyAuthentication.ServiceAccountInfo.ValueString()
 		sourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication = &shared.SourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication{
 			AuthType:           authType1,
 			ServiceAccountInfo: serviceAccountInfo,
@@ -75,11 +75,11 @@ func (r *SourceGoogleSheetsResourceModel) ToCreateSDKType() *shared.SourceGoogle
 func (r *SourceGoogleSheetsResourceModel) ToUpdateSDKType() *shared.SourceGoogleSheetsPutRequest {
 	var credentials shared.SourceGoogleSheetsUpdateAuthentication
 	var sourceGoogleSheetsUpdateAuthenticationAuthenticateViaGoogleOAuth *shared.SourceGoogleSheetsUpdateAuthenticationAuthenticateViaGoogleOAuth
-	if r.Configuration.Credentials.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth != nil {
-		authType := shared.SourceGoogleSheetsUpdateAuthenticationAuthenticateViaGoogleOAuthAuthType(r.Configuration.Credentials.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth.AuthType.ValueString())
-		clientID := r.Configuration.Credentials.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth.ClientID.ValueString()
-		clientSecret := r.Configuration.Credentials.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth.ClientSecret.ValueString()
-		refreshToken := r.Configuration.Credentials.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth.RefreshToken.ValueString()
+	if r.Configuration.Credentials.SourceGoogleSheetsUpdateAuthenticationAuthenticateViaGoogleOAuth != nil {
+		authType := shared.SourceGoogleSheetsUpdateAuthenticationAuthenticateViaGoogleOAuthAuthType(r.Configuration.Credentials.SourceGoogleSheetsUpdateAuthenticationAuthenticateViaGoogleOAuth.AuthType.ValueString())
+		clientID := r.Configuration.Credentials.SourceGoogleSheetsUpdateAuthenticationAuthenticateViaGoogleOAuth.ClientID.ValueString()
+		clientSecret := r.Configuration.Credentials.SourceGoogleSheetsUpdateAuthenticationAuthenticateViaGoogleOAuth.ClientSecret.ValueString()
+		refreshToken := r.Configuration.Credentials.SourceGoogleSheetsUpdateAuthenticationAuthenticateViaGoogleOAuth.RefreshToken.ValueString()
 		sourceGoogleSheetsUpdateAuthenticationAuthenticateViaGoogleOAuth = &shared.SourceGoogleSheetsUpdateAuthenticationAuthenticateViaGoogleOAuth{
 			AuthType:     authType,
 			ClientID:     clientID,
@@ -93,9 +93,9 @@ func (r *SourceGoogleSheetsResourceModel) ToUpdateSDKType() *shared.SourceGoogle
 		}
 	}
 	var sourceGoogleSheetsUpdateAuthenticationServiceAccountKeyAuthentication *shared.SourceGoogleSheetsUpdateAuthenticationServiceAccountKeyAuthentication
-	if r.Configuration.Credentials.SourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication != nil {
-		authType1 := shared.SourceGoogleSheetsUpdateAuthenticationServiceAccountKeyAuthenticationAuthType(r.Configuration.Credentials.SourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication.AuthType.ValueString())
-		serviceAccountInfo := r.Configuration.Credentials.SourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication.ServiceAccountInfo.ValueString()
+	if r.Configuration.Credentials.SourceGoogleSheetsUpdateAuthenticationServiceAccountKeyAuthentication != nil {
+		authType1 := shared.SourceGoogleSheetsUpdateAuthenticationServiceAccountKeyAuthenticationAuthType(r.Configuration.Credentials.SourceGoogleSheetsUpdateAuthenticationServiceAccountKeyAuthentication.AuthType.ValueString())
+		serviceAccountInfo := r.Configuration.Credentials.SourceGoogleSheetsUpdateAuthenticationServiceAccountKeyAuthentication.ServiceAccountInfo.ValueString()
 		sourceGoogleSheetsUpdateAuthenticationServiceAccountKeyAuthentication = &shared.SourceGoogleSheetsUpdateAuthenticationServiceAccountKeyAuthentication{
 			AuthType:           authType1,
 			ServiceAccountInfo: serviceAccountInfo,

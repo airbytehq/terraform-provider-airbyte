@@ -34,12 +34,12 @@ type SourceGoogleSheetsResource struct {
 
 // SourceGoogleSheetsResourceModel describes the resource data model.
 type SourceGoogleSheetsResourceModel struct {
-	Configuration SourceGoogleSheets `tfsdk:"configuration"`
-	Name          types.String       `tfsdk:"name"`
-	SecretID      types.String       `tfsdk:"secret_id"`
-	SourceID      types.String       `tfsdk:"source_id"`
-	SourceType    types.String       `tfsdk:"source_type"`
-	WorkspaceID   types.String       `tfsdk:"workspace_id"`
+	Configuration SourceGoogleSheetsUpdate `tfsdk:"configuration"`
+	Name          types.String             `tfsdk:"name"`
+	SecretID      types.String             `tfsdk:"secret_id"`
+	SourceID      types.String             `tfsdk:"source_id"`
+	SourceType    types.String             `tfsdk:"source_type"`
+	WorkspaceID   types.String             `tfsdk:"workspace_id"`
 }
 
 func (r *SourceGoogleSheetsResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -57,46 +57,6 @@ func (r *SourceGoogleSheetsResource) Schema(ctx context.Context, req resource.Sc
 					"credentials": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
-							"source_google_sheets_authentication_authenticate_via_google_o_auth_": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Client",
-											),
-										},
-									},
-									"client_id": schema.StringAttribute{
-										Required: true,
-									},
-									"client_secret": schema.StringAttribute{
-										Required: true,
-									},
-									"refresh_token": schema.StringAttribute{
-										Required: true,
-									},
-								},
-								Description: `Credentials for connecting to the Google Sheets API`,
-							},
-							"source_google_sheets_authentication_service_account_key_authentication": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Service",
-											),
-										},
-									},
-									"service_account_info": schema.StringAttribute{
-										Required: true,
-									},
-								},
-								Description: `Credentials for connecting to the Google Sheets API`,
-							},
 							"source_google_sheets_update_authentication_authenticate_via_google_o_auth_": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
@@ -137,6 +97,46 @@ func (r *SourceGoogleSheetsResource) Schema(ctx context.Context, req resource.Sc
 								},
 								Description: `Credentials for connecting to the Google Sheets API`,
 							},
+							"source_google_sheets_authentication_authenticate_via_google_o_auth_": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"auth_type": schema.StringAttribute{
+										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Client",
+											),
+										},
+									},
+									"client_id": schema.StringAttribute{
+										Required: true,
+									},
+									"client_secret": schema.StringAttribute{
+										Required: true,
+									},
+									"refresh_token": schema.StringAttribute{
+										Required: true,
+									},
+								},
+								Description: `Credentials for connecting to the Google Sheets API`,
+							},
+							"source_google_sheets_authentication_service_account_key_authentication": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"auth_type": schema.StringAttribute{
+										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Service",
+											),
+										},
+									},
+									"service_account_info": schema.StringAttribute{
+										Required: true,
+									},
+								},
+								Description: `Credentials for connecting to the Google Sheets API`,
+							},
 						},
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
@@ -145,6 +145,9 @@ func (r *SourceGoogleSheetsResource) Schema(ctx context.Context, req resource.Sc
 					"row_batch_size": schema.Int64Attribute{
 						Optional: true,
 					},
+					"spreadsheet_id": schema.StringAttribute{
+						Required: true,
+					},
 					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -152,9 +155,6 @@ func (r *SourceGoogleSheetsResource) Schema(ctx context.Context, req resource.Sc
 								"google-sheets",
 							),
 						},
-					},
-					"spreadsheet_id": schema.StringAttribute{
-						Required: true,
 					},
 				},
 			},
@@ -285,7 +285,7 @@ func (r *SourceGoogleSheetsResource) Update(ctx context.Context, req resource.Up
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

@@ -33,12 +33,12 @@ type SourceCoinmarketcapResource struct {
 
 // SourceCoinmarketcapResourceModel describes the resource data model.
 type SourceCoinmarketcapResourceModel struct {
-	Configuration SourceCoinmarketcap `tfsdk:"configuration"`
-	Name          types.String        `tfsdk:"name"`
-	SecretID      types.String        `tfsdk:"secret_id"`
-	SourceID      types.String        `tfsdk:"source_id"`
-	SourceType    types.String        `tfsdk:"source_type"`
-	WorkspaceID   types.String        `tfsdk:"workspace_id"`
+	Configuration SourceCoinmarketcapUpdate `tfsdk:"configuration"`
+	Name          types.String              `tfsdk:"name"`
+	SecretID      types.String              `tfsdk:"secret_id"`
+	SourceID      types.String              `tfsdk:"source_id"`
+	SourceType    types.String              `tfsdk:"source_type"`
+	WorkspaceID   types.String              `tfsdk:"workspace_id"`
 }
 
 func (r *SourceCoinmarketcapResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -66,6 +66,10 @@ func (r *SourceCoinmarketcapResource) Schema(ctx context.Context, req resource.S
 						},
 						Description: `/latest: Latest market ticker quotes and averages for cryptocurrencies and exchanges. /historical: Intervals of historic market data like OHLCV data or data for use in charting libraries. See <a href="https://coinmarketcap.com/api/documentation/v1/#section/Endpoint-Overview">here</a>.`,
 					},
+					"symbols": schema.ListAttribute{
+						Optional:    true,
+						ElementType: types.StringType,
+					},
 					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -73,10 +77,6 @@ func (r *SourceCoinmarketcapResource) Schema(ctx context.Context, req resource.S
 								"coinmarketcap",
 							),
 						},
-					},
-					"symbols": schema.ListAttribute{
-						Optional:    true,
-						ElementType: types.StringType,
 					},
 				},
 			},
@@ -207,7 +207,7 @@ func (r *SourceCoinmarketcapResource) Update(ctx context.Context, req resource.U
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

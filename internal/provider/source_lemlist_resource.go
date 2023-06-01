@@ -33,12 +33,12 @@ type SourceLemlistResource struct {
 
 // SourceLemlistResourceModel describes the resource data model.
 type SourceLemlistResourceModel struct {
-	Configuration SourceLemlistUpdate `tfsdk:"configuration"`
-	Name          types.String        `tfsdk:"name"`
-	SecretID      types.String        `tfsdk:"secret_id"`
-	SourceID      types.String        `tfsdk:"source_id"`
-	SourceType    types.String        `tfsdk:"source_type"`
-	WorkspaceID   types.String        `tfsdk:"workspace_id"`
+	Configuration SourceLemlist `tfsdk:"configuration"`
+	Name          types.String  `tfsdk:"name"`
+	SecretID      types.String  `tfsdk:"secret_id"`
+	SourceID      types.String  `tfsdk:"source_id"`
+	SourceType    types.String  `tfsdk:"source_type"`
+	WorkspaceID   types.String  `tfsdk:"workspace_id"`
 }
 
 func (r *SourceLemlistResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -193,7 +193,7 @@ func (r *SourceLemlistResource) Update(ctx context.Context, req resource.UpdateR
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

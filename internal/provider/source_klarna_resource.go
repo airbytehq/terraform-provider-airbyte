@@ -33,12 +33,12 @@ type SourceKlarnaResource struct {
 
 // SourceKlarnaResourceModel describes the resource data model.
 type SourceKlarnaResourceModel struct {
-	Configuration SourceKlarna `tfsdk:"configuration"`
-	Name          types.String `tfsdk:"name"`
-	SecretID      types.String `tfsdk:"secret_id"`
-	SourceID      types.String `tfsdk:"source_id"`
-	SourceType    types.String `tfsdk:"source_type"`
-	WorkspaceID   types.String `tfsdk:"workspace_id"`
+	Configuration SourceKlarnaUpdate `tfsdk:"configuration"`
+	Name          types.String       `tfsdk:"name"`
+	SecretID      types.String       `tfsdk:"secret_id"`
+	SourceID      types.String       `tfsdk:"source_id"`
+	SourceType    types.String       `tfsdk:"source_type"`
+	WorkspaceID   types.String       `tfsdk:"workspace_id"`
 }
 
 func (r *SourceKlarnaResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -70,6 +70,9 @@ func (r *SourceKlarnaResource) Schema(ctx context.Context, req resource.SchemaRe
 						},
 						Description: `Base url region (For playground eu https://docs.klarna.com/klarna-payments/api/payments-api/#tag/API-URLs). Supported 'eu', 'us', 'oc'`,
 					},
+					"username": schema.StringAttribute{
+						Required: true,
+					},
 					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -77,9 +80,6 @@ func (r *SourceKlarnaResource) Schema(ctx context.Context, req resource.SchemaRe
 								"klarna",
 							),
 						},
-					},
-					"username": schema.StringAttribute{
-						Required: true,
 					},
 				},
 			},
@@ -210,7 +210,7 @@ func (r *SourceKlarnaResource) Update(ctx context.Context, req resource.UpdateRe
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

@@ -33,12 +33,12 @@ type SourceMailjetSmsResource struct {
 
 // SourceMailjetSmsResourceModel describes the resource data model.
 type SourceMailjetSmsResourceModel struct {
-	Configuration SourceMailjetSms `tfsdk:"configuration"`
-	Name          types.String     `tfsdk:"name"`
-	SecretID      types.String     `tfsdk:"secret_id"`
-	SourceID      types.String     `tfsdk:"source_id"`
-	SourceType    types.String     `tfsdk:"source_type"`
-	WorkspaceID   types.String     `tfsdk:"workspace_id"`
+	Configuration SourceMailjetSmsUpdate `tfsdk:"configuration"`
+	Name          types.String           `tfsdk:"name"`
+	SecretID      types.String           `tfsdk:"secret_id"`
+	SourceID      types.String           `tfsdk:"source_id"`
+	SourceType    types.String           `tfsdk:"source_type"`
+	WorkspaceID   types.String           `tfsdk:"workspace_id"`
 }
 
 func (r *SourceMailjetSmsResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -56,6 +56,12 @@ func (r *SourceMailjetSmsResource) Schema(ctx context.Context, req resource.Sche
 					"end_date": schema.Int64Attribute{
 						Optional: true,
 					},
+					"start_date": schema.Int64Attribute{
+						Optional: true,
+					},
+					"token": schema.StringAttribute{
+						Required: true,
+					},
 					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -63,12 +69,6 @@ func (r *SourceMailjetSmsResource) Schema(ctx context.Context, req resource.Sche
 								"mailjet-sms",
 							),
 						},
-					},
-					"start_date": schema.Int64Attribute{
-						Optional: true,
-					},
-					"token": schema.StringAttribute{
-						Required: true,
 					},
 				},
 			},
@@ -199,7 +199,7 @@ func (r *SourceMailjetSmsResource) Update(ctx context.Context, req resource.Upda
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

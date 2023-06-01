@@ -33506,7 +33506,7 @@ func (s *sources) PutSourceAircall(ctx context.Context, request operations.PutSo
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -33563,7 +33563,7 @@ func (s *sources) PutSourceAirtable(ctx context.Context, request operations.PutS
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -33620,7 +33620,7 @@ func (s *sources) PutSourceAlloydb(ctx context.Context, request operations.PutSo
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -33677,7 +33677,7 @@ func (s *sources) PutSourceAmazonAds(ctx context.Context, request operations.Put
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -33734,7 +33734,7 @@ func (s *sources) PutSourceAmazonSqs(ctx context.Context, request operations.Put
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -33791,7 +33791,7 @@ func (s *sources) PutSourceAmplitude(ctx context.Context, request operations.Put
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -33848,7 +33848,7 @@ func (s *sources) PutSourceApifyDataset(ctx context.Context, request operations.
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -33905,7 +33905,7 @@ func (s *sources) PutSourceAsana(ctx context.Context, request operations.PutSour
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -33962,7 +33962,7 @@ func (s *sources) PutSourceAuth0(ctx context.Context, request operations.PutSour
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -34019,7 +34019,7 @@ func (s *sources) PutSourceAwsCloudtrail(ctx context.Context, request operations
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -34076,7 +34076,7 @@ func (s *sources) PutSourceAzureBlobStorage(ctx context.Context, request operati
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -34133,7 +34133,7 @@ func (s *sources) PutSourceAzureTable(ctx context.Context, request operations.Pu
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -34190,7 +34190,7 @@ func (s *sources) PutSourceBambooHr(ctx context.Context, request operations.PutS
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -34247,7 +34247,7 @@ func (s *sources) PutSourceBigcommerce(ctx context.Context, request operations.P
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -34304,7 +34304,7 @@ func (s *sources) PutSourceBigquery(ctx context.Context, request operations.PutS
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -34361,7 +34361,7 @@ func (s *sources) PutSourceBingAds(ctx context.Context, request operations.PutSo
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -34418,7 +34418,7 @@ func (s *sources) PutSourceBraintree(ctx context.Context, request operations.Put
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -34475,7 +34475,7 @@ func (s *sources) PutSourceBraze(ctx context.Context, request operations.PutSour
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -34532,7 +34532,7 @@ func (s *sources) PutSourceChargebee(ctx context.Context, request operations.Put
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -34589,7 +34589,7 @@ func (s *sources) PutSourceChartmogul(ctx context.Context, request operations.Pu
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -34646,7 +34646,7 @@ func (s *sources) PutSourceClickhouse(ctx context.Context, request operations.Pu
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -34703,7 +34703,7 @@ func (s *sources) PutSourceClickupAPI(ctx context.Context, request operations.Pu
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -34760,7 +34760,7 @@ func (s *sources) PutSourceCloseCom(ctx context.Context, request operations.PutS
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -34817,7 +34817,7 @@ func (s *sources) PutSourceCoda(ctx context.Context, request operations.PutSourc
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -34874,7 +34874,7 @@ func (s *sources) PutSourceCoinAPI(ctx context.Context, request operations.PutSo
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -34931,7 +34931,7 @@ func (s *sources) PutSourceCoinmarketcap(ctx context.Context, request operations
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -34988,7 +34988,7 @@ func (s *sources) PutSourceConfigcat(ctx context.Context, request operations.Put
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -35045,7 +35045,7 @@ func (s *sources) PutSourceConfluence(ctx context.Context, request operations.Pu
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -35102,7 +35102,7 @@ func (s *sources) PutSourceDatascope(ctx context.Context, request operations.Put
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -35159,7 +35159,7 @@ func (s *sources) PutSourceDelighted(ctx context.Context, request operations.Put
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -35216,7 +35216,7 @@ func (s *sources) PutSourceDixa(ctx context.Context, request operations.PutSourc
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -35273,7 +35273,7 @@ func (s *sources) PutSourceDockerhub(ctx context.Context, request operations.Put
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -35330,7 +35330,7 @@ func (s *sources) PutSourceDremio(ctx context.Context, request operations.PutSou
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -35387,7 +35387,7 @@ func (s *sources) PutSourceDynamodb(ctx context.Context, request operations.PutS
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -35444,7 +35444,7 @@ func (s *sources) PutSourceE2eTestCloud(ctx context.Context, request operations.
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -35501,7 +35501,7 @@ func (s *sources) PutSourceEmailoctopus(ctx context.Context, request operations.
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -35558,7 +35558,7 @@ func (s *sources) PutSourceExchangeRates(ctx context.Context, request operations
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -35615,7 +35615,7 @@ func (s *sources) PutSourceFacebookMarketing(ctx context.Context, request operat
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -35672,7 +35672,7 @@ func (s *sources) PutSourceFacebookPages(ctx context.Context, request operations
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -35729,7 +35729,7 @@ func (s *sources) PutSourceFaker(ctx context.Context, request operations.PutSour
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -35786,7 +35786,7 @@ func (s *sources) PutSourceFauna(ctx context.Context, request operations.PutSour
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -35843,7 +35843,7 @@ func (s *sources) PutSourceFileSecure(ctx context.Context, request operations.Pu
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -35900,7 +35900,7 @@ func (s *sources) PutSourceFirebolt(ctx context.Context, request operations.PutS
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -35957,7 +35957,7 @@ func (s *sources) PutSourceFreshcaller(ctx context.Context, request operations.P
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -36014,7 +36014,7 @@ func (s *sources) PutSourceFreshdesk(ctx context.Context, request operations.Put
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -36071,7 +36071,7 @@ func (s *sources) PutSourceFreshsales(ctx context.Context, request operations.Pu
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -36128,7 +36128,7 @@ func (s *sources) PutSourceFreshservice(ctx context.Context, request operations.
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -36185,7 +36185,7 @@ func (s *sources) PutSourceGcs(ctx context.Context, request operations.PutSource
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -36242,7 +36242,7 @@ func (s *sources) PutSourceGetlago(ctx context.Context, request operations.PutSo
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -36299,7 +36299,7 @@ func (s *sources) PutSourceGithub(ctx context.Context, request operations.PutSou
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -36356,7 +36356,7 @@ func (s *sources) PutSourceGitlab(ctx context.Context, request operations.PutSou
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -36413,7 +36413,7 @@ func (s *sources) PutSourceGlassfrog(ctx context.Context, request operations.Put
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -36470,7 +36470,7 @@ func (s *sources) PutSourceGnews(ctx context.Context, request operations.PutSour
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -36527,7 +36527,7 @@ func (s *sources) PutSourceGoogleAds(ctx context.Context, request operations.Put
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -36584,7 +36584,7 @@ func (s *sources) PutSourceGoogleAnalyticsDataAPI(ctx context.Context, request o
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -36641,7 +36641,7 @@ func (s *sources) PutSourceGoogleAnalyticsV4(ctx context.Context, request operat
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -36698,7 +36698,7 @@ func (s *sources) PutSourceGoogleDirectory(ctx context.Context, request operatio
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -36755,7 +36755,7 @@ func (s *sources) PutSourceGooglePagespeedInsights(ctx context.Context, request 
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -36812,7 +36812,7 @@ func (s *sources) PutSourceGoogleSearchConsole(ctx context.Context, request oper
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -36869,7 +36869,7 @@ func (s *sources) PutSourceGoogleSheets(ctx context.Context, request operations.
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -36926,7 +36926,7 @@ func (s *sources) PutSourceGoogleWebfonts(ctx context.Context, request operation
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -36983,7 +36983,7 @@ func (s *sources) PutSourceGoogleWorkspaceAdminReports(ctx context.Context, requ
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -37040,7 +37040,7 @@ func (s *sources) PutSourceGreenhouse(ctx context.Context, request operations.Pu
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -37097,7 +37097,7 @@ func (s *sources) PutSourceGridly(ctx context.Context, request operations.PutSou
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -37154,7 +37154,7 @@ func (s *sources) PutSourceHarvest(ctx context.Context, request operations.PutSo
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -37211,7 +37211,7 @@ func (s *sources) PutSourceHubplanner(ctx context.Context, request operations.Pu
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -37268,7 +37268,7 @@ func (s *sources) PutSourceHubspot(ctx context.Context, request operations.PutSo
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -37325,7 +37325,7 @@ func (s *sources) PutSourceInsightly(ctx context.Context, request operations.Put
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -37382,7 +37382,7 @@ func (s *sources) PutSourceInstagram(ctx context.Context, request operations.Put
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -37439,7 +37439,7 @@ func (s *sources) PutSourceInstatus(ctx context.Context, request operations.PutS
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -37496,7 +37496,7 @@ func (s *sources) PutSourceIntercom(ctx context.Context, request operations.PutS
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -37553,7 +37553,7 @@ func (s *sources) PutSourceIp2whois(ctx context.Context, request operations.PutS
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -37610,7 +37610,7 @@ func (s *sources) PutSourceIterable(ctx context.Context, request operations.PutS
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -37667,7 +37667,7 @@ func (s *sources) PutSourceJira(ctx context.Context, request operations.PutSourc
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -37724,7 +37724,7 @@ func (s *sources) PutSourceK6Cloud(ctx context.Context, request operations.PutSo
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -37781,7 +37781,7 @@ func (s *sources) PutSourceKlarna(ctx context.Context, request operations.PutSou
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -37838,7 +37838,7 @@ func (s *sources) PutSourceKlaviyo(ctx context.Context, request operations.PutSo
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -37895,7 +37895,7 @@ func (s *sources) PutSourceKustomerSinger(ctx context.Context, request operation
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -37952,7 +37952,7 @@ func (s *sources) PutSourceLaunchdarkly(ctx context.Context, request operations.
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -38009,7 +38009,7 @@ func (s *sources) PutSourceLemlist(ctx context.Context, request operations.PutSo
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -38066,7 +38066,7 @@ func (s *sources) PutSourceLinkedinAds(ctx context.Context, request operations.P
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -38123,7 +38123,7 @@ func (s *sources) PutSourceLinkedinPages(ctx context.Context, request operations
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -38180,7 +38180,7 @@ func (s *sources) PutSourceLinnworks(ctx context.Context, request operations.Put
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -38237,7 +38237,7 @@ func (s *sources) PutSourceLokalise(ctx context.Context, request operations.PutS
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -38294,7 +38294,7 @@ func (s *sources) PutSourceMailchimp(ctx context.Context, request operations.Put
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -38351,7 +38351,7 @@ func (s *sources) PutSourceMailgun(ctx context.Context, request operations.PutSo
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -38408,7 +38408,7 @@ func (s *sources) PutSourceMailjetSms(ctx context.Context, request operations.Pu
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -38465,7 +38465,7 @@ func (s *sources) PutSourceMarketo(ctx context.Context, request operations.PutSo
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -38522,7 +38522,7 @@ func (s *sources) PutSourceMetabase(ctx context.Context, request operations.PutS
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -38579,7 +38579,7 @@ func (s *sources) PutSourceMicrosoftTeams(ctx context.Context, request operation
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -38636,7 +38636,7 @@ func (s *sources) PutSourceMixpanel(ctx context.Context, request operations.PutS
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -38693,7 +38693,7 @@ func (s *sources) PutSourceMonday(ctx context.Context, request operations.PutSou
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -38750,7 +38750,7 @@ func (s *sources) PutSourceMongodb(ctx context.Context, request operations.PutSo
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -38807,7 +38807,7 @@ func (s *sources) PutSourceMssql(ctx context.Context, request operations.PutSour
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -38864,7 +38864,7 @@ func (s *sources) PutSourceMyHours(ctx context.Context, request operations.PutSo
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -38921,7 +38921,7 @@ func (s *sources) PutSourceMysql(ctx context.Context, request operations.PutSour
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -38978,7 +38978,7 @@ func (s *sources) PutSourceNetsuite(ctx context.Context, request operations.PutS
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -39035,7 +39035,7 @@ func (s *sources) PutSourceNotion(ctx context.Context, request operations.PutSou
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -39092,7 +39092,7 @@ func (s *sources) PutSourceNytimes(ctx context.Context, request operations.PutSo
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -39149,7 +39149,7 @@ func (s *sources) PutSourceOkta(ctx context.Context, request operations.PutSourc
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -39206,7 +39206,7 @@ func (s *sources) PutSourceOmnisend(ctx context.Context, request operations.PutS
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -39263,7 +39263,7 @@ func (s *sources) PutSourceOnesignal(ctx context.Context, request operations.Put
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -39320,7 +39320,7 @@ func (s *sources) PutSourceOpenweather(ctx context.Context, request operations.P
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -39377,7 +39377,7 @@ func (s *sources) PutSourceOracle(ctx context.Context, request operations.PutSou
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -39434,7 +39434,7 @@ func (s *sources) PutSourceOrb(ctx context.Context, request operations.PutSource
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -39491,7 +39491,7 @@ func (s *sources) PutSourceOrbit(ctx context.Context, request operations.PutSour
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -39548,7 +39548,7 @@ func (s *sources) PutSourceOutreach(ctx context.Context, request operations.PutS
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -39605,7 +39605,7 @@ func (s *sources) PutSourcePaypalTransaction(ctx context.Context, request operat
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -39662,7 +39662,7 @@ func (s *sources) PutSourcePaystack(ctx context.Context, request operations.PutS
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -39719,7 +39719,7 @@ func (s *sources) PutSourcePendo(ctx context.Context, request operations.PutSour
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -39776,7 +39776,7 @@ func (s *sources) PutSourcePersistiq(ctx context.Context, request operations.Put
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -39833,7 +39833,7 @@ func (s *sources) PutSourcePexelsAPI(ctx context.Context, request operations.Put
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -39890,7 +39890,7 @@ func (s *sources) PutSourcePinterest(ctx context.Context, request operations.Put
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -39947,7 +39947,7 @@ func (s *sources) PutSourcePipedrive(ctx context.Context, request operations.Put
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -40004,7 +40004,7 @@ func (s *sources) PutSourcePocket(ctx context.Context, request operations.PutSou
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -40061,7 +40061,7 @@ func (s *sources) PutSourcePokeapi(ctx context.Context, request operations.PutSo
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -40118,7 +40118,7 @@ func (s *sources) PutSourcePolygonStockAPI(ctx context.Context, request operatio
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -40175,7 +40175,7 @@ func (s *sources) PutSourcePostgres(ctx context.Context, request operations.PutS
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -40232,7 +40232,7 @@ func (s *sources) PutSourcePosthog(ctx context.Context, request operations.PutSo
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -40289,7 +40289,7 @@ func (s *sources) PutSourcePostmarkapp(ctx context.Context, request operations.P
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -40346,7 +40346,7 @@ func (s *sources) PutSourcePrestashop(ctx context.Context, request operations.Pu
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -40403,7 +40403,7 @@ func (s *sources) PutSourcePublicApis(ctx context.Context, request operations.Pu
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -40460,7 +40460,7 @@ func (s *sources) PutSourcePunkAPI(ctx context.Context, request operations.PutSo
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -40517,7 +40517,7 @@ func (s *sources) PutSourcePypi(ctx context.Context, request operations.PutSourc
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -40574,7 +40574,7 @@ func (s *sources) PutSourceQualaroo(ctx context.Context, request operations.PutS
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -40631,7 +40631,7 @@ func (s *sources) PutSourceQuickbooks(ctx context.Context, request operations.Pu
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -40688,7 +40688,7 @@ func (s *sources) PutSourceRailz(ctx context.Context, request operations.PutSour
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -40745,7 +40745,7 @@ func (s *sources) PutSourceRecharge(ctx context.Context, request operations.PutS
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -40802,7 +40802,7 @@ func (s *sources) PutSourceRecreation(ctx context.Context, request operations.Pu
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -40859,7 +40859,7 @@ func (s *sources) PutSourceRecruitee(ctx context.Context, request operations.Put
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -40916,7 +40916,7 @@ func (s *sources) PutSourceRecurly(ctx context.Context, request operations.PutSo
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -40973,7 +40973,7 @@ func (s *sources) PutSourceRedshift(ctx context.Context, request operations.PutS
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -41030,7 +41030,7 @@ func (s *sources) PutSourceRetently(ctx context.Context, request operations.PutS
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -41087,7 +41087,7 @@ func (s *sources) PutSourceRkiCovid(ctx context.Context, request operations.PutS
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -41144,7 +41144,7 @@ func (s *sources) PutSourceRss(ctx context.Context, request operations.PutSource
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -41201,7 +41201,7 @@ func (s *sources) PutSourceS3(ctx context.Context, request operations.PutSourceS
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -41258,7 +41258,7 @@ func (s *sources) PutSourceSalesforce(ctx context.Context, request operations.Pu
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -41315,7 +41315,7 @@ func (s *sources) PutSourceSalesforceSinger(ctx context.Context, request operati
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -41372,7 +41372,7 @@ func (s *sources) PutSourceSalesloft(ctx context.Context, request operations.Put
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -41429,7 +41429,7 @@ func (s *sources) PutSourceSapFieldglass(ctx context.Context, request operations
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -41486,7 +41486,7 @@ func (s *sources) PutSourceSecoda(ctx context.Context, request operations.PutSou
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -41543,7 +41543,7 @@ func (s *sources) PutSourceSendgrid(ctx context.Context, request operations.PutS
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -41600,7 +41600,7 @@ func (s *sources) PutSourceSendinblue(ctx context.Context, request operations.Pu
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -41657,7 +41657,7 @@ func (s *sources) PutSourceSenseforce(ctx context.Context, request operations.Pu
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -41714,7 +41714,7 @@ func (s *sources) PutSourceSentry(ctx context.Context, request operations.PutSou
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -41771,7 +41771,7 @@ func (s *sources) PutSourceSftp(ctx context.Context, request operations.PutSourc
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -41828,7 +41828,7 @@ func (s *sources) PutSourceSftpBulk(ctx context.Context, request operations.PutS
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -41885,7 +41885,7 @@ func (s *sources) PutSourceShopify(ctx context.Context, request operations.PutSo
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -41942,7 +41942,7 @@ func (s *sources) PutSourceShortio(ctx context.Context, request operations.PutSo
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -41999,7 +41999,7 @@ func (s *sources) PutSourceSlack(ctx context.Context, request operations.PutSour
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -42056,7 +42056,7 @@ func (s *sources) PutSourceSmaily(ctx context.Context, request operations.PutSou
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -42113,7 +42113,7 @@ func (s *sources) PutSourceSmartengage(ctx context.Context, request operations.P
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -42170,7 +42170,7 @@ func (s *sources) PutSourceSmartsheets(ctx context.Context, request operations.P
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -42227,7 +42227,7 @@ func (s *sources) PutSourceSnapchatMarketing(ctx context.Context, request operat
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -42284,7 +42284,7 @@ func (s *sources) PutSourceSnowflake(ctx context.Context, request operations.Put
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -42341,7 +42341,7 @@ func (s *sources) PutSourceSonarCloud(ctx context.Context, request operations.Pu
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -42398,7 +42398,7 @@ func (s *sources) PutSourceSpacexAPI(ctx context.Context, request operations.Put
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -42455,7 +42455,7 @@ func (s *sources) PutSourceSquare(ctx context.Context, request operations.PutSou
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -42512,7 +42512,7 @@ func (s *sources) PutSourceStrava(ctx context.Context, request operations.PutSou
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -42569,7 +42569,7 @@ func (s *sources) PutSourceStripe(ctx context.Context, request operations.PutSou
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -42626,7 +42626,7 @@ func (s *sources) PutSourceSurveySparrow(ctx context.Context, request operations
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -42683,7 +42683,7 @@ func (s *sources) PutSourceSurveymonkey(ctx context.Context, request operations.
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -42740,7 +42740,7 @@ func (s *sources) PutSourceTempo(ctx context.Context, request operations.PutSour
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -42797,7 +42797,7 @@ func (s *sources) PutSourceTheGuardianAPI(ctx context.Context, request operation
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -42854,7 +42854,7 @@ func (s *sources) PutSourceTiktokMarketing(ctx context.Context, request operatio
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -42911,7 +42911,7 @@ func (s *sources) PutSourceTodoist(ctx context.Context, request operations.PutSo
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -42968,7 +42968,7 @@ func (s *sources) PutSourceTrello(ctx context.Context, request operations.PutSou
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -43025,7 +43025,7 @@ func (s *sources) PutSourceTrustpilot(ctx context.Context, request operations.Pu
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -43082,7 +43082,7 @@ func (s *sources) PutSourceTvmazeSchedule(ctx context.Context, request operation
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -43139,7 +43139,7 @@ func (s *sources) PutSourceTwilio(ctx context.Context, request operations.PutSou
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -43196,7 +43196,7 @@ func (s *sources) PutSourceTwilioTaskrouter(ctx context.Context, request operati
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -43253,7 +43253,7 @@ func (s *sources) PutSourceTwitter(ctx context.Context, request operations.PutSo
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -43310,7 +43310,7 @@ func (s *sources) PutSourceTypeform(ctx context.Context, request operations.PutS
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -43367,7 +43367,7 @@ func (s *sources) PutSourceUsCensus(ctx context.Context, request operations.PutS
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -43424,7 +43424,7 @@ func (s *sources) PutSourceVantage(ctx context.Context, request operations.PutSo
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -43481,7 +43481,7 @@ func (s *sources) PutSourceWebflow(ctx context.Context, request operations.PutSo
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -43538,7 +43538,7 @@ func (s *sources) PutSourceWhiskyHunter(ctx context.Context, request operations.
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -43595,7 +43595,7 @@ func (s *sources) PutSourceWikipediaPageviews(ctx context.Context, request opera
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -43652,7 +43652,7 @@ func (s *sources) PutSourceWoocommerce(ctx context.Context, request operations.P
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -43709,7 +43709,7 @@ func (s *sources) PutSourceXero(ctx context.Context, request operations.PutSourc
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -43766,7 +43766,7 @@ func (s *sources) PutSourceXkcd(ctx context.Context, request operations.PutSourc
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -43823,7 +43823,7 @@ func (s *sources) PutSourceYandexMetrica(ctx context.Context, request operations
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -43880,7 +43880,7 @@ func (s *sources) PutSourceYotpo(ctx context.Context, request operations.PutSour
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -43937,7 +43937,7 @@ func (s *sources) PutSourceYounium(ctx context.Context, request operations.PutSo
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -43994,7 +43994,7 @@ func (s *sources) PutSourceYoutubeAnalytics(ctx context.Context, request operati
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -44051,7 +44051,7 @@ func (s *sources) PutSourceZendeskChat(ctx context.Context, request operations.P
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -44108,7 +44108,7 @@ func (s *sources) PutSourceZendeskSunshine(ctx context.Context, request operatio
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -44165,7 +44165,7 @@ func (s *sources) PutSourceZendeskSupport(ctx context.Context, request operation
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -44222,7 +44222,7 @@ func (s *sources) PutSourceZendeskTalk(ctx context.Context, request operations.P
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -44279,7 +44279,7 @@ func (s *sources) PutSourceZenloop(ctx context.Context, request operations.PutSo
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -44336,7 +44336,7 @@ func (s *sources) PutSourceZohoCrm(ctx context.Context, request operations.PutSo
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -44393,7 +44393,7 @@ func (s *sources) PutSourceZoom(ctx context.Context, request operations.PutSourc
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
@@ -44450,7 +44450,7 @@ func (s *sources) PutSourceZuora(ctx context.Context, request operations.PutSour
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough
