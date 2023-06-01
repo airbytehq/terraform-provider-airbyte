@@ -70,6 +70,60 @@ func (r *SourceAzureBlobStorageResourceModel) ToCreateSDKType() *shared.SourceAz
 	return &out
 }
 
+func (r *SourceAzureBlobStorageResourceModel) ToUpdateSDKType() *shared.SourceAzureBlobStoragePutRequest {
+	azureBlobStorageAccountKey := r.Configuration.AzureBlobStorageAccountKey.ValueString()
+	azureBlobStorageAccountName := r.Configuration.AzureBlobStorageAccountName.ValueString()
+	azureBlobStorageBlobsPrefix := new(string)
+	if !r.Configuration.AzureBlobStorageBlobsPrefix.IsUnknown() && !r.Configuration.AzureBlobStorageBlobsPrefix.IsNull() {
+		*azureBlobStorageBlobsPrefix = r.Configuration.AzureBlobStorageBlobsPrefix.ValueString()
+	} else {
+		azureBlobStorageBlobsPrefix = nil
+	}
+	azureBlobStorageContainerName := r.Configuration.AzureBlobStorageContainerName.ValueString()
+	azureBlobStorageEndpoint := new(string)
+	if !r.Configuration.AzureBlobStorageEndpoint.IsUnknown() && !r.Configuration.AzureBlobStorageEndpoint.IsNull() {
+		*azureBlobStorageEndpoint = r.Configuration.AzureBlobStorageEndpoint.ValueString()
+	} else {
+		azureBlobStorageEndpoint = nil
+	}
+	azureBlobStorageSchemaInferenceLimit := new(int64)
+	if !r.Configuration.AzureBlobStorageSchemaInferenceLimit.IsUnknown() && !r.Configuration.AzureBlobStorageSchemaInferenceLimit.IsNull() {
+		*azureBlobStorageSchemaInferenceLimit = r.Configuration.AzureBlobStorageSchemaInferenceLimit.ValueInt64()
+	} else {
+		azureBlobStorageSchemaInferenceLimit = nil
+	}
+	var format shared.SourceAzureBlobStorageUpdateInputFormat
+	var sourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON *shared.SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON
+	if r.Configuration.Format.SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON != nil {
+		formatType := shared.SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSONFormatType(r.Configuration.Format.SourceAzureBlobStorageInputFormatJSONLinesNewlineDelimitedJSON.FormatType.ValueString())
+		sourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON = &shared.SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON{
+			FormatType: formatType,
+		}
+	}
+	if sourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON != nil {
+		format = shared.SourceAzureBlobStorageUpdateInputFormat{
+			SourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON: sourceAzureBlobStorageUpdateInputFormatJSONLinesNewlineDelimitedJSON,
+		}
+	}
+	configuration := shared.SourceAzureBlobStorageUpdate{
+		AzureBlobStorageAccountKey:           azureBlobStorageAccountKey,
+		AzureBlobStorageAccountName:          azureBlobStorageAccountName,
+		AzureBlobStorageBlobsPrefix:          azureBlobStorageBlobsPrefix,
+		AzureBlobStorageContainerName:        azureBlobStorageContainerName,
+		AzureBlobStorageEndpoint:             azureBlobStorageEndpoint,
+		AzureBlobStorageSchemaInferenceLimit: azureBlobStorageSchemaInferenceLimit,
+		Format:                               format,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceAzureBlobStoragePutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceAzureBlobStorageResourceModel) ToDeleteSDKType() *shared.SourceAzureBlobStorageCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

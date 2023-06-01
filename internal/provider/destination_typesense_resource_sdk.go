@@ -47,6 +47,44 @@ func (r *DestinationTypesenseResourceModel) ToCreateSDKType() *shared.Destinatio
 	return &out
 }
 
+func (r *DestinationTypesenseResourceModel) ToUpdateSDKType() *shared.DestinationTypesensePutRequest {
+	apiKey := r.Configuration.APIKey.ValueString()
+	batchSize := new(string)
+	if !r.Configuration.BatchSize.IsUnknown() && !r.Configuration.BatchSize.IsNull() {
+		*batchSize = r.Configuration.BatchSize.ValueString()
+	} else {
+		batchSize = nil
+	}
+	host := r.Configuration.Host.ValueString()
+	port := new(string)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueString()
+	} else {
+		port = nil
+	}
+	protocol := new(string)
+	if !r.Configuration.Protocol.IsUnknown() && !r.Configuration.Protocol.IsNull() {
+		*protocol = r.Configuration.Protocol.ValueString()
+	} else {
+		protocol = nil
+	}
+	configuration := shared.DestinationTypesenseUpdate{
+		APIKey:    apiKey,
+		BatchSize: batchSize,
+		Host:      host,
+		Port:      port,
+		Protocol:  protocol,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.DestinationTypesensePutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *DestinationTypesenseResourceModel) ToDeleteSDKType() *shared.DestinationTypesenseCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

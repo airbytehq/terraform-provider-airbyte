@@ -33,6 +33,23 @@ func (r *SourceConfigcatResourceModel) ToCreateSDKType() *shared.SourceConfigcat
 	return &out
 }
 
+func (r *SourceConfigcatResourceModel) ToUpdateSDKType() *shared.SourceConfigcatPutRequest {
+	password := r.Configuration.Password.ValueString()
+	username := r.Configuration.Username.ValueString()
+	configuration := shared.SourceConfigcatUpdate{
+		Password: password,
+		Username: username,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceConfigcatPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceConfigcatResourceModel) ToDeleteSDKType() *shared.SourceConfigcatCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

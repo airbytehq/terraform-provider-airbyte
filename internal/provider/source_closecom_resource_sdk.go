@@ -39,6 +39,28 @@ func (r *SourceCloseComResourceModel) ToCreateSDKType() *shared.SourceCloseComCr
 	return &out
 }
 
+func (r *SourceCloseComResourceModel) ToUpdateSDKType() *shared.SourceCloseComPutRequest {
+	apiKey := r.Configuration.APIKey.ValueString()
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
+	configuration := shared.SourceCloseComUpdate{
+		APIKey:    apiKey,
+		StartDate: startDate,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceCloseComPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceCloseComResourceModel) ToDeleteSDKType() *shared.SourceCloseComCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

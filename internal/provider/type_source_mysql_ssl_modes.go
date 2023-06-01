@@ -3,8 +3,12 @@
 package provider
 
 type SourceMysqlSSLModes struct {
-	SourceMysqlSSLModesPreferred      *SourceMysqlSSLModesPreferred      `tfsdk:"source_mysql_ssl_modes_preferred"`
-	SourceMysqlSSLModesRequired       *SourceMysqlSSLModesRequired       `tfsdk:"source_mysql_ssl_modes_required"`
-	SourceMysqlSSLModesVerifyCA       *SourceMysqlSSLModesVerifyCA       `tfsdk:"source_mysql_ssl_modes_verify_ca"`
-	SourceMysqlSSLModesVerifyIdentity *SourceMysqlSSLModesVerifyIdentity `tfsdk:"source_mysql_ssl_modes_verify_identity"`
+	SourceMysqlSSLModesPreferred            *SourceMysqlSSLModesPreferred            `tfsdk:"source_mysql_ssl_modes_preferred"`
+	SourceMysqlSSLModesRequired             *SourceMysqlSSLModesRequired             `tfsdk:"source_mysql_ssl_modes_required"`
+	SourceMysqlSSLModesVerifyCA             *SourceMysqlSSLModesVerifyCA             `tfsdk:"source_mysql_ssl_modes_verify_ca"`
+	SourceMysqlSSLModesVerifyIdentity       *SourceMysqlSSLModesVerifyIdentity       `tfsdk:"source_mysql_ssl_modes_verify_identity"`
+	SourceMysqlUpdateSSLModesPreferred      *SourceMysqlUpdateSSLModesPreferred      `tfsdk:"source_mysql_update_ssl_modes_preferred"`
+	SourceMysqlUpdateSSLModesRequired       *SourceMysqlUpdateSSLModesRequired       `tfsdk:"source_mysql_update_ssl_modes_required"`
+	SourceMysqlUpdateSSLModesVerifyCA       *SourceMysqlUpdateSSLModesVerifyCA       `tfsdk:"source_mysql_update_ssl_modes_verify_ca"`
+	SourceMysqlUpdateSSLModesVerifyIdentity *SourceMysqlUpdateSSLModesVerifyIdentity `tfsdk:"source_mysql_update_ssl_modes_verify_identity"`
 }

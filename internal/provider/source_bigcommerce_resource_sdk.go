@@ -35,6 +35,25 @@ func (r *SourceBigcommerceResourceModel) ToCreateSDKType() *shared.SourceBigcomm
 	return &out
 }
 
+func (r *SourceBigcommerceResourceModel) ToUpdateSDKType() *shared.SourceBigcommercePutRequest {
+	accessToken := r.Configuration.AccessToken.ValueString()
+	startDate := r.Configuration.StartDate.ValueString()
+	storeHash := r.Configuration.StoreHash.ValueString()
+	configuration := shared.SourceBigcommerceUpdate{
+		AccessToken: accessToken,
+		StartDate:   startDate,
+		StoreHash:   storeHash,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceBigcommercePutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceBigcommerceResourceModel) ToDeleteSDKType() *shared.SourceBigcommerceCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

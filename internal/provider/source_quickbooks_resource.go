@@ -10,10 +10,6 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/boolplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -38,12 +34,12 @@ type SourceQuickbooksResource struct {
 
 // SourceQuickbooksResourceModel describes the resource data model.
 type SourceQuickbooksResourceModel struct {
-	Configuration SourceQuickbooks `tfsdk:"configuration"`
-	Name          types.String     `tfsdk:"name"`
-	SecretID      types.String     `tfsdk:"secret_id"`
-	SourceID      types.String     `tfsdk:"source_id"`
-	SourceType    types.String     `tfsdk:"source_type"`
-	WorkspaceID   types.String     `tfsdk:"workspace_id"`
+	Configuration SourceQuickbooksUpdate `tfsdk:"configuration"`
+	Name          types.String           `tfsdk:"name"`
+	SecretID      types.String           `tfsdk:"secret_id"`
+	SourceID      types.String           `tfsdk:"source_id"`
+	SourceType    types.String           `tfsdk:"source_type"`
+	WorkspaceID   types.String           `tfsdk:"workspace_id"`
 }
 
 func (r *SourceQuickbooksResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -56,33 +52,52 @@ func (r *SourceQuickbooksResource) Schema(ctx context.Context, req resource.Sche
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"credentials": schema.SingleNestedAttribute{
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Attributes: map[string]schema.Attribute{
-							"source_quickbooks_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
+							"source_quickbooks_update_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"access_token": schema.StringAttribute{
+										Computed: true,
+									},
+									"auth_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"oauth2.0",
+											),
+										},
+									},
+									"client_id": schema.StringAttribute{
+										Computed: true,
+									},
+									"client_secret": schema.StringAttribute{
+										Computed: true,
+									},
+									"realm_id": schema.StringAttribute{
+										Computed: true,
+									},
+									"refresh_token": schema.StringAttribute{
+										Computed: true,
+									},
+									"token_expiry_date": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											validators.IsRFC3339(),
+										},
+									},
 								},
+							},
+							"source_quickbooks_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"auth_type": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -91,33 +106,18 @@ func (r *SourceQuickbooksResource) Schema(ctx context.Context, req resource.Sche
 										},
 									},
 									"client_id": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"client_secret": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"realm_id": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"refresh_token": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"token_expiry_date": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											validators.IsRFC3339(),
@@ -131,15 +131,15 @@ func (r *SourceQuickbooksResource) Schema(ctx context.Context, req resource.Sche
 						},
 					},
 					"sandbox": schema.BoolAttribute{
-						PlanModifiers: []planmodifier.Bool{
-							boolplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
-					"source_type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
+					"start_date": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							validators.IsRFC3339(),
 						},
+					},
+					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -147,27 +147,12 @@ func (r *SourceQuickbooksResource) Schema(ctx context.Context, req resource.Sche
 							),
 						},
 					},
-					"start_date": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
-						Required: true,
-						Validators: []validator.String{
-							validators.IsRFC3339(),
-						},
-					},
 				},
 			},
 			"name": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Optional: true,
 			},
 			"source_id": schema.StringAttribute{
@@ -177,9 +162,6 @@ func (r *SourceQuickbooksResource) Schema(ctx context.Context, req resource.Sche
 				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 		},
@@ -279,7 +261,25 @@ func (r *SourceQuickbooksResource) Update(ctx context.Context, req resource.Upda
 		return
 	}
 
-	// Not Implemented; all attributes marked as RequiresReplace
+	sourceQuickbooksPutRequest := data.ToUpdateSDKType()
+	sourceID := data.SourceID.ValueString()
+	request := operations.PutSourceQuickbooksRequest{
+		SourceQuickbooksPutRequest: sourceQuickbooksPutRequest,
+		SourceID:                   sourceID,
+	}
+	res, err := r.client.Sources.PutSourceQuickbooks(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode != 204 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

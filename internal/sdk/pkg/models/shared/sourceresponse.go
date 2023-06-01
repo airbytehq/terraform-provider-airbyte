@@ -4,8 +4,10 @@ package shared
 
 // SourceResponse - Provides details of a single source.
 type SourceResponse struct {
-	Name        string `json:"name"`
-	SourceID    string `json:"sourceId"`
-	SourceType  string `json:"sourceType"`
-	WorkspaceID string `json:"workspaceId"`
+	// The values required to configure the source.
+	Configuration interface{} `json:"configuration"`
+	Name          string      `json:"name"`
+	SourceID      string      `json:"sourceId"`
+	SourceType    string      `json:"sourceType"`
+	WorkspaceID   string      `json:"workspaceId"`
 }

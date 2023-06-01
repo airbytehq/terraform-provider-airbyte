@@ -47,6 +47,36 @@ func (r *SourceXeroResourceModel) ToCreateSDKType() *shared.SourceXeroCreateRequ
 	return &out
 }
 
+func (r *SourceXeroResourceModel) ToUpdateSDKType() *shared.SourceXeroPutRequest {
+	accessToken := r.Configuration.Authentication.AccessToken.ValueString()
+	clientID := r.Configuration.Authentication.ClientID.ValueString()
+	clientSecret := r.Configuration.Authentication.ClientSecret.ValueString()
+	refreshToken := r.Configuration.Authentication.RefreshToken.ValueString()
+	tokenExpiryDate := r.Configuration.Authentication.TokenExpiryDate.ValueString()
+	authentication := shared.SourceXeroUpdateAuthenticateViaXeroOAuth{
+		AccessToken:     accessToken,
+		ClientID:        clientID,
+		ClientSecret:    clientSecret,
+		RefreshToken:    refreshToken,
+		TokenExpiryDate: tokenExpiryDate,
+	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	tenantID := r.Configuration.TenantID.ValueString()
+	configuration := shared.SourceXeroUpdate{
+		Authentication: authentication,
+		StartDate:      startDate,
+		TenantID:       tenantID,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceXeroPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceXeroResourceModel) ToDeleteSDKType() *shared.SourceXeroCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

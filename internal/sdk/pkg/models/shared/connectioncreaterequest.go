@@ -18,6 +18,7 @@ type ConnectionCreateRequest struct {
 	// Prefix that will be prepended to the name of each stream when it is written to the destination (ex. “airbyte_” causes “projects” => “airbyte_projects”).
 	Prefix *string `json:"prefix,omitempty"`
 	// schedule for when the the connection should run, per the schedule type
-	Schedule *ConnectionScheduleCreate `json:"schedule,omitempty"`
-	SourceID string                    `json:"sourceId"`
+	Schedule *ConnectionSchedule   `json:"schedule,omitempty"`
+	SourceID string                `json:"sourceId"`
+	Status   *ConnectionStatusEnum `json:"status,omitempty"`
 }

@@ -3,7 +3,10 @@
 package provider
 
 type DestinationRedisSSHTunnelMethod struct {
-	DestinationRedisSSHTunnelMethodNoTunnel               *DestinationClickhouseSSHTunnelMethodNoTunnel               `tfsdk:"destination_redis_ssh_tunnel_method_no_tunnel"`
-	DestinationRedisSSHTunnelMethodSSHKeyAuthentication   *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication   `tfsdk:"destination_redis_ssh_tunnel_method_ssh_key_authentication"`
-	DestinationRedisSSHTunnelMethodPasswordAuthentication *DestinationClickhouseSSHTunnelMethodPasswordAuthentication `tfsdk:"destination_redis_ssh_tunnel_method_password_authentication"`
+	DestinationRedisSSHTunnelMethodNoTunnel                     *DestinationClickhouseSSHTunnelMethodNoTunnel                     `tfsdk:"destination_redis_ssh_tunnel_method_no_tunnel"`
+	DestinationRedisSSHTunnelMethodSSHKeyAuthentication         *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication         `tfsdk:"destination_redis_ssh_tunnel_method_ssh_key_authentication"`
+	DestinationRedisSSHTunnelMethodPasswordAuthentication       *DestinationClickhouseSSHTunnelMethodPasswordAuthentication       `tfsdk:"destination_redis_ssh_tunnel_method_password_authentication"`
+	DestinationRedisUpdateSSHTunnelMethodNoTunnel               *DestinationClickhouseUpdateSSHTunnelMethodNoTunnel               `tfsdk:"destination_redis_update_ssh_tunnel_method_no_tunnel"`
+	DestinationRedisUpdateSSHTunnelMethodSSHKeyAuthentication   *DestinationClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication   `tfsdk:"destination_redis_update_ssh_tunnel_method_ssh_key_authentication"`
+	DestinationRedisUpdateSSHTunnelMethodPasswordAuthentication *DestinationClickhouseUpdateSSHTunnelMethodPasswordAuthentication `tfsdk:"destination_redis_update_ssh_tunnel_method_password_authentication"`
 }

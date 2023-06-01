@@ -39,6 +39,36 @@ func (r *DestinationScyllaResourceModel) ToCreateSDKType() *shared.DestinationSc
 	return &out
 }
 
+func (r *DestinationScyllaResourceModel) ToUpdateSDKType() *shared.DestinationScyllaPutRequest {
+	address := r.Configuration.Address.ValueString()
+	keyspace := r.Configuration.Keyspace.ValueString()
+	password := r.Configuration.Password.ValueString()
+	port := r.Configuration.Port.ValueInt64()
+	replication := new(int64)
+	if !r.Configuration.Replication.IsUnknown() && !r.Configuration.Replication.IsNull() {
+		*replication = r.Configuration.Replication.ValueInt64()
+	} else {
+		replication = nil
+	}
+	username := r.Configuration.Username.ValueString()
+	configuration := shared.DestinationScyllaUpdate{
+		Address:     address,
+		Keyspace:    keyspace,
+		Password:    password,
+		Port:        port,
+		Replication: replication,
+		Username:    username,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.DestinationScyllaPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *DestinationScyllaResourceModel) ToDeleteSDKType() *shared.DestinationScyllaCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

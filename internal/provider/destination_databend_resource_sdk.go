@@ -49,6 +49,46 @@ func (r *DestinationDatabendResourceModel) ToCreateSDKType() *shared.Destination
 	return &out
 }
 
+func (r *DestinationDatabendResourceModel) ToUpdateSDKType() *shared.DestinationDatabendPutRequest {
+	database := r.Configuration.Database.ValueString()
+	host := r.Configuration.Host.ValueString()
+	password := new(string)
+	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
+		*password = r.Configuration.Password.ValueString()
+	} else {
+		password = nil
+	}
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
+	} else {
+		port = nil
+	}
+	table := new(string)
+	if !r.Configuration.Table.IsUnknown() && !r.Configuration.Table.IsNull() {
+		*table = r.Configuration.Table.ValueString()
+	} else {
+		table = nil
+	}
+	username := r.Configuration.Username.ValueString()
+	configuration := shared.DestinationDatabendUpdate{
+		Database: database,
+		Host:     host,
+		Password: password,
+		Port:     port,
+		Table:    table,
+		Username: username,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.DestinationDatabendPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *DestinationDatabendResourceModel) ToDeleteSDKType() *shared.DestinationDatabendCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

@@ -10,28 +10,28 @@ import (
 	"time"
 )
 
-// SourceHubspotAuthenticationPrivateAppCredentials - Name of the credentials set
-type SourceHubspotAuthenticationPrivateAppCredentials string
+// SourceHubspotAuthenticationPrivateAppAuthType - Name of the credentials set
+type SourceHubspotAuthenticationPrivateAppAuthType string
 
 const (
-	SourceHubspotAuthenticationPrivateAppCredentialsPrivateAppCredentials SourceHubspotAuthenticationPrivateAppCredentials = "Private App Credentials"
+	SourceHubspotAuthenticationPrivateAppAuthTypePrivateAppCredentials SourceHubspotAuthenticationPrivateAppAuthType = "Private App Credentials"
 )
 
-func (e SourceHubspotAuthenticationPrivateAppCredentials) ToPointer() *SourceHubspotAuthenticationPrivateAppCredentials {
+func (e SourceHubspotAuthenticationPrivateAppAuthType) ToPointer() *SourceHubspotAuthenticationPrivateAppAuthType {
 	return &e
 }
 
-func (e *SourceHubspotAuthenticationPrivateAppCredentials) UnmarshalJSON(data []byte) error {
+func (e *SourceHubspotAuthenticationPrivateAppAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Private App Credentials":
-		*e = SourceHubspotAuthenticationPrivateAppCredentials(v)
+		*e = SourceHubspotAuthenticationPrivateAppAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceHubspotAuthenticationPrivateAppCredentials: %v", v)
+		return fmt.Errorf("invalid value for SourceHubspotAuthenticationPrivateAppAuthType: %v", v)
 	}
 }
 
@@ -40,31 +40,31 @@ type SourceHubspotAuthenticationPrivateApp struct {
 	// HubSpot Access token. See the <a href="https://developers.hubspot.com/docs/api/private-apps">Hubspot docs</a> if you need help finding this token.
 	AccessToken string `json:"access_token"`
 	// Name of the credentials set
-	CredentialsTitle SourceHubspotAuthenticationPrivateAppCredentials `json:"credentials_title"`
+	CredentialsTitle SourceHubspotAuthenticationPrivateAppAuthType `json:"credentials_title"`
 }
 
-// SourceHubspotAuthenticationOAuthCredentials - Name of the credentials
-type SourceHubspotAuthenticationOAuthCredentials string
+// SourceHubspotAuthenticationOAuthAuthType - Name of the credentials
+type SourceHubspotAuthenticationOAuthAuthType string
 
 const (
-	SourceHubspotAuthenticationOAuthCredentialsOAuthCredentials SourceHubspotAuthenticationOAuthCredentials = "OAuth Credentials"
+	SourceHubspotAuthenticationOAuthAuthTypeOAuthCredentials SourceHubspotAuthenticationOAuthAuthType = "OAuth Credentials"
 )
 
-func (e SourceHubspotAuthenticationOAuthCredentials) ToPointer() *SourceHubspotAuthenticationOAuthCredentials {
+func (e SourceHubspotAuthenticationOAuthAuthType) ToPointer() *SourceHubspotAuthenticationOAuthAuthType {
 	return &e
 }
 
-func (e *SourceHubspotAuthenticationOAuthCredentials) UnmarshalJSON(data []byte) error {
+func (e *SourceHubspotAuthenticationOAuthAuthType) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "OAuth Credentials":
-		*e = SourceHubspotAuthenticationOAuthCredentials(v)
+		*e = SourceHubspotAuthenticationOAuthAuthType(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceHubspotAuthenticationOAuthCredentials: %v", v)
+		return fmt.Errorf("invalid value for SourceHubspotAuthenticationOAuthAuthType: %v", v)
 	}
 }
 
@@ -75,7 +75,7 @@ type SourceHubspotAuthenticationOAuth struct {
 	// The client secret for your HubSpot developer application. See the <a href="https://legacydocs.hubspot.com/docs/methods/oauth2/oauth2-quickstart">Hubspot docs</a> if you need help finding this secret.
 	ClientSecret string `json:"client_secret"`
 	// Name of the credentials
-	CredentialsTitle SourceHubspotAuthenticationOAuthCredentials `json:"credentials_title"`
+	CredentialsTitle SourceHubspotAuthenticationOAuthAuthType `json:"credentials_title"`
 	// Refresh token to renew an expired access token. See the <a href="https://legacydocs.hubspot.com/docs/methods/oauth2/oauth2-quickstart">Hubspot docs</a> if you need help finding this token.
 	RefreshToken string `json:"refresh_token"`
 }

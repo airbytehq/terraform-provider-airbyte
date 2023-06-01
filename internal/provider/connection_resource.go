@@ -37,19 +37,19 @@ type ConnectionResource struct {
 
 // ConnectionResourceModel describes the resource data model.
 type ConnectionResourceModel struct {
-	Configurations                   *StreamConfigurations     `tfsdk:"configurations"`
-	ConnectionID                     types.String              `tfsdk:"connection_id"`
-	DataResidency                    types.String              `tfsdk:"data_residency"`
-	DestinationID                    types.String              `tfsdk:"destination_id"`
-	Name                             types.String              `tfsdk:"name"`
-	NamespaceDefinition              types.String              `tfsdk:"namespace_definition"`
-	NamespaceFormat                  types.String              `tfsdk:"namespace_format"`
-	NonBreakingSchemaUpdatesBehavior types.String              `tfsdk:"non_breaking_schema_updates_behavior"`
-	Prefix                           types.String              `tfsdk:"prefix"`
-	Schedule                         *ConnectionScheduleCreate `tfsdk:"schedule"`
-	SourceID                         types.String              `tfsdk:"source_id"`
-	Status                           types.String              `tfsdk:"status"`
-	WorkspaceID                      types.String              `tfsdk:"workspace_id"`
+	Configurations                   *StreamConfigurations `tfsdk:"configurations"`
+	ConnectionID                     types.String          `tfsdk:"connection_id"`
+	DataResidency                    types.String          `tfsdk:"data_residency"`
+	DestinationID                    types.String          `tfsdk:"destination_id"`
+	Name                             types.String          `tfsdk:"name"`
+	NamespaceDefinition              types.String          `tfsdk:"namespace_definition"`
+	NamespaceFormat                  types.String          `tfsdk:"namespace_format"`
+	NonBreakingSchemaUpdatesBehavior types.String          `tfsdk:"non_breaking_schema_updates_behavior"`
+	Prefix                           types.String          `tfsdk:"prefix"`
+	Schedule                         *ConnectionSchedule   `tfsdk:"schedule"`
+	SourceID                         types.String          `tfsdk:"source_id"`
+	Status                           types.String          `tfsdk:"status"`
+	WorkspaceID                      types.String          `tfsdk:"workspace_id"`
 }
 
 func (r *ConnectionResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -195,9 +195,6 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 							),
 						},
 					},
-					"basic_timing": schema.StringAttribute{
-						Computed: true,
-					},
 				},
 				Description: `schedule for when the the connection should run, per the schedule type`,
 			},
@@ -208,7 +205,10 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Required: true,
 			},
 			"status": schema.StringAttribute{
-				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
+				Optional: true,
 				Validators: []validator.String{
 					stringvalidator.OneOf(
 						"active",

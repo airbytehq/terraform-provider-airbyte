@@ -10,11 +10,6 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/boolplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/listplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -39,12 +34,12 @@ type SourceSalesforceResource struct {
 
 // SourceSalesforceResourceModel describes the resource data model.
 type SourceSalesforceResourceModel struct {
-	Configuration SourceSalesforce `tfsdk:"configuration"`
-	Name          types.String     `tfsdk:"name"`
-	SecretID      types.String     `tfsdk:"secret_id"`
-	SourceID      types.String     `tfsdk:"source_id"`
-	SourceType    types.String     `tfsdk:"source_type"`
-	WorkspaceID   types.String     `tfsdk:"workspace_id"`
+	Configuration SourceSalesforceUpdate `tfsdk:"configuration"`
+	Name          types.String           `tfsdk:"name"`
+	SecretID      types.String           `tfsdk:"secret_id"`
+	SourceID      types.String           `tfsdk:"source_id"`
+	SourceType    types.String           `tfsdk:"source_type"`
+	WorkspaceID   types.String           `tfsdk:"workspace_id"`
 }
 
 func (r *SourceSalesforceResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -57,15 +52,9 @@ func (r *SourceSalesforceResource) Schema(ctx context.Context, req resource.Sche
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"auth_type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -74,53 +63,24 @@ func (r *SourceSalesforceResource) Schema(ctx context.Context, req resource.Sche
 						},
 					},
 					"client_id": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"client_secret": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"is_sandbox": schema.BoolAttribute{
-						PlanModifiers: []planmodifier.Bool{
-							boolplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
 					"refresh_token": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
-					},
-					"source_type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"salesforce",
-							),
-						},
 					},
 					"start_date": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
 					},
 					"streams_criteria": schema.ListNestedAttribute{
-						PlanModifiers: []planmodifier.List{
-							listplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 						NestedObject: schema.NestedAttributeObject{
 							Attributes: map[string]schema.Attribute{
@@ -145,18 +105,20 @@ func (r *SourceSalesforceResource) Schema(ctx context.Context, req resource.Sche
 							},
 						},
 					},
+					"source_type": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"salesforce",
+							),
+						},
+					},
 				},
 			},
 			"name": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Optional: true,
 			},
 			"source_id": schema.StringAttribute{
@@ -166,9 +128,6 @@ func (r *SourceSalesforceResource) Schema(ctx context.Context, req resource.Sche
 				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 		},
@@ -268,7 +227,25 @@ func (r *SourceSalesforceResource) Update(ctx context.Context, req resource.Upda
 		return
 	}
 
-	// Not Implemented; all attributes marked as RequiresReplace
+	sourceSalesforcePutRequest := data.ToUpdateSDKType()
+	sourceID := data.SourceID.ValueString()
+	request := operations.PutSourceSalesforceRequest{
+		SourceSalesforcePutRequest: sourceSalesforcePutRequest,
+		SourceID:                   sourceID,
+	}
+	res, err := r.client.Sources.PutSourceSalesforce(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode != 204 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

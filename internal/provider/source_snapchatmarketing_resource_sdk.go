@@ -50,6 +50,39 @@ func (r *SourceSnapchatMarketingResourceModel) ToCreateSDKType() *shared.SourceS
 	return &out
 }
 
+func (r *SourceSnapchatMarketingResourceModel) ToUpdateSDKType() *shared.SourceSnapchatMarketingPutRequest {
+	clientID := r.Configuration.ClientID.ValueString()
+	clientSecret := r.Configuration.ClientSecret.ValueString()
+	endDate := new(customTypes.Date)
+	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
+		endDate = customTypes.MustNewDateFromString(r.Configuration.EndDate.ValueString())
+	} else {
+		endDate = nil
+	}
+	refreshToken := r.Configuration.RefreshToken.ValueString()
+	startDate := new(customTypes.Date)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
+	configuration := shared.SourceSnapchatMarketingUpdate{
+		ClientID:     clientID,
+		ClientSecret: clientSecret,
+		EndDate:      endDate,
+		RefreshToken: refreshToken,
+		StartDate:    startDate,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceSnapchatMarketingPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceSnapchatMarketingResourceModel) ToDeleteSDKType() *shared.SourceSnapchatMarketingCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

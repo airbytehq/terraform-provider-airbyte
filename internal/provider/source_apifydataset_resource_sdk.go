@@ -38,6 +38,28 @@ func (r *SourceApifyDatasetResourceModel) ToCreateSDKType() *shared.SourceApifyD
 	return &out
 }
 
+func (r *SourceApifyDatasetResourceModel) ToUpdateSDKType() *shared.SourceApifyDatasetPutRequest {
+	clean := new(bool)
+	if !r.Configuration.Clean.IsUnknown() && !r.Configuration.Clean.IsNull() {
+		*clean = r.Configuration.Clean.ValueBool()
+	} else {
+		clean = nil
+	}
+	datasetID := r.Configuration.DatasetID.ValueString()
+	configuration := shared.SourceApifyDatasetUpdate{
+		Clean:     clean,
+		DatasetID: datasetID,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceApifyDatasetPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceApifyDatasetResourceModel) ToDeleteSDKType() *shared.SourceApifyDatasetCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

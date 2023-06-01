@@ -50,6 +50,39 @@ func (r *SourceNytimesResourceModel) ToCreateSDKType() *shared.SourceNytimesCrea
 	return &out
 }
 
+func (r *SourceNytimesResourceModel) ToUpdateSDKType() *shared.SourceNytimesPutRequest {
+	apiKey := r.Configuration.APIKey.ValueString()
+	endDate := new(customTypes.Date)
+	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
+		endDate = customTypes.MustNewDateFromString(r.Configuration.EndDate.ValueString())
+	} else {
+		endDate = nil
+	}
+	period := shared.SourceNytimesUpdatePeriodUsedForMostPopularStreams(r.Configuration.Period.ValueInt64())
+	shareType := new(shared.SourceNytimesUpdateShareTypeUsedForMostPopularSharedStream)
+	if !r.Configuration.ShareType.IsUnknown() && !r.Configuration.ShareType.IsNull() {
+		*shareType = shared.SourceNytimesUpdateShareTypeUsedForMostPopularSharedStream(r.Configuration.ShareType.ValueString())
+	} else {
+		shareType = nil
+	}
+	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
+	configuration := shared.SourceNytimesUpdate{
+		APIKey:    apiKey,
+		EndDate:   endDate,
+		Period:    period,
+		ShareType: shareType,
+		StartDate: startDate,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceNytimesPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceNytimesResourceModel) ToDeleteSDKType() *shared.SourceNytimesCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

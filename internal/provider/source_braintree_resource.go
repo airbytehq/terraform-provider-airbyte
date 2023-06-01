@@ -10,9 +10,6 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -55,15 +52,9 @@ func (r *SourceBraintreeResource) Schema(ctx context.Context, req resource.Schem
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"environment": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -76,27 +67,15 @@ func (r *SourceBraintreeResource) Schema(ctx context.Context, req resource.Schem
 						Description: `Environment specifies where the data will come from.`,
 					},
 					"merchant_id": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"private_key": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"public_key": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"source_type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -105,9 +84,6 @@ func (r *SourceBraintreeResource) Schema(ctx context.Context, req resource.Schem
 						},
 					},
 					"start_date": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
@@ -116,15 +92,9 @@ func (r *SourceBraintreeResource) Schema(ctx context.Context, req resource.Schem
 				},
 			},
 			"name": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Optional: true,
 			},
 			"source_id": schema.StringAttribute{
@@ -134,9 +104,6 @@ func (r *SourceBraintreeResource) Schema(ctx context.Context, req resource.Schem
 				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 		},
@@ -236,7 +203,25 @@ func (r *SourceBraintreeResource) Update(ctx context.Context, req resource.Updat
 		return
 	}
 
-	// Not Implemented; all attributes marked as RequiresReplace
+	sourceBraintreePutRequest := data.ToUpdateSDKType()
+	sourceID := data.SourceID.ValueString()
+	request := operations.PutSourceBraintreeRequest{
+		SourceBraintreePutRequest: sourceBraintreePutRequest,
+		SourceID:                  sourceID,
+	}
+	res, err := r.client.Sources.PutSourceBraintree(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode != 204 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

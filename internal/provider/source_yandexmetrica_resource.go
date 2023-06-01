@@ -10,9 +10,6 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -55,36 +52,21 @@ func (r *SourceYandexMetricaResource) Schema(ctx context.Context, req resource.S
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"auth_token": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"counter_id": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"end_date": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
 					},
 					"source_type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -93,9 +75,6 @@ func (r *SourceYandexMetricaResource) Schema(ctx context.Context, req resource.S
 						},
 					},
 					"start_date": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
@@ -104,15 +83,9 @@ func (r *SourceYandexMetricaResource) Schema(ctx context.Context, req resource.S
 				},
 			},
 			"name": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Optional: true,
 			},
 			"source_id": schema.StringAttribute{
@@ -122,9 +95,6 @@ func (r *SourceYandexMetricaResource) Schema(ctx context.Context, req resource.S
 				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 		},
@@ -224,7 +194,25 @@ func (r *SourceYandexMetricaResource) Update(ctx context.Context, req resource.U
 		return
 	}
 
-	// Not Implemented; all attributes marked as RequiresReplace
+	sourceYandexMetricaPutRequest := data.ToUpdateSDKType()
+	sourceID := data.SourceID.ValueString()
+	request := operations.PutSourceYandexMetricaRequest{
+		SourceYandexMetricaPutRequest: sourceYandexMetricaPutRequest,
+		SourceID:                      sourceID,
+	}
+	res, err := r.client.Sources.PutSourceYandexMetrica(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode != 204 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

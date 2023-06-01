@@ -11,11 +11,11 @@ func (r *SourceAuth0ResourceModel) ToCreateSDKType() *shared.SourceAuth0CreateRe
 	baseURL := r.Configuration.BaseURL.ValueString()
 	var credentials shared.SourceAuth0AuthenticationMethod
 	var sourceAuth0AuthenticationMethodOAuth2ConfidentialApplication *shared.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication
-	if r.Configuration.Credentials.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication != nil {
-		audience := r.Configuration.Credentials.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication.Audience.ValueString()
-		authType := shared.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethod(r.Configuration.Credentials.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication.AuthType.ValueString())
-		clientID := r.Configuration.Credentials.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication.ClientID.ValueString()
-		clientSecret := r.Configuration.Credentials.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication.ClientSecret.ValueString()
+	if r.Configuration.Credentials.SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication != nil {
+		audience := r.Configuration.Credentials.SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication.Audience.ValueString()
+		authType := shared.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethod(r.Configuration.Credentials.SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication.AuthType.ValueString())
+		clientID := r.Configuration.Credentials.SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication.ClientID.ValueString()
+		clientSecret := r.Configuration.Credentials.SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication.ClientSecret.ValueString()
 		sourceAuth0AuthenticationMethodOAuth2ConfidentialApplication = &shared.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication{
 			Audience:     audience,
 			AuthType:     authType,
@@ -29,9 +29,9 @@ func (r *SourceAuth0ResourceModel) ToCreateSDKType() *shared.SourceAuth0CreateRe
 		}
 	}
 	var sourceAuth0AuthenticationMethodOAuth2AccessToken *shared.SourceAuth0AuthenticationMethodOAuth2AccessToken
-	if r.Configuration.Credentials.SourceAuth0AuthenticationMethodOAuth2AccessToken != nil {
-		accessToken := r.Configuration.Credentials.SourceAuth0AuthenticationMethodOAuth2AccessToken.AccessToken.ValueString()
-		authType1 := shared.SourceAuth0AuthenticationMethodOAuth2AccessTokenAuthenticationMethod(r.Configuration.Credentials.SourceAuth0AuthenticationMethodOAuth2AccessToken.AuthType.ValueString())
+	if r.Configuration.Credentials.SourceAuth0UpdateAuthenticationMethodOAuth2AccessToken != nil {
+		accessToken := r.Configuration.Credentials.SourceAuth0UpdateAuthenticationMethodOAuth2AccessToken.AccessToken.ValueString()
+		authType1 := shared.SourceAuth0AuthenticationMethodOAuth2AccessTokenAuthenticationMethod(r.Configuration.Credentials.SourceAuth0UpdateAuthenticationMethodOAuth2AccessToken.AuthType.ValueString())
 		sourceAuth0AuthenticationMethodOAuth2AccessToken = &shared.SourceAuth0AuthenticationMethodOAuth2AccessToken{
 			AccessToken: accessToken,
 			AuthType:    authType1,
@@ -60,6 +60,55 @@ func (r *SourceAuth0ResourceModel) ToCreateSDKType() *shared.SourceAuth0CreateRe
 		Configuration: configuration,
 		Name:          name,
 		SecretID:      secretID,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
+func (r *SourceAuth0ResourceModel) ToUpdateSDKType() *shared.SourceAuth0PutRequest {
+	baseURL := r.Configuration.BaseURL.ValueString()
+	var credentials shared.SourceAuth0UpdateAuthenticationMethod
+	var sourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication *shared.SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication
+	if r.Configuration.Credentials.SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication != nil {
+		audience := r.Configuration.Credentials.SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication.Audience.ValueString()
+		authType := shared.SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplicationAuthenticationMethod(r.Configuration.Credentials.SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication.AuthType.ValueString())
+		clientID := r.Configuration.Credentials.SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication.ClientID.ValueString()
+		clientSecret := r.Configuration.Credentials.SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication.ClientSecret.ValueString()
+		sourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication = &shared.SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication{
+			Audience:     audience,
+			AuthType:     authType,
+			ClientID:     clientID,
+			ClientSecret: clientSecret,
+		}
+	}
+	if sourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication != nil {
+		credentials = shared.SourceAuth0UpdateAuthenticationMethod{
+			SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication: sourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication,
+		}
+	}
+	var sourceAuth0UpdateAuthenticationMethodOAuth2AccessToken *shared.SourceAuth0UpdateAuthenticationMethodOAuth2AccessToken
+	if r.Configuration.Credentials.SourceAuth0UpdateAuthenticationMethodOAuth2AccessToken != nil {
+		accessToken := r.Configuration.Credentials.SourceAuth0UpdateAuthenticationMethodOAuth2AccessToken.AccessToken.ValueString()
+		authType1 := shared.SourceAuth0UpdateAuthenticationMethodOAuth2AccessTokenAuthenticationMethod(r.Configuration.Credentials.SourceAuth0UpdateAuthenticationMethodOAuth2AccessToken.AuthType.ValueString())
+		sourceAuth0UpdateAuthenticationMethodOAuth2AccessToken = &shared.SourceAuth0UpdateAuthenticationMethodOAuth2AccessToken{
+			AccessToken: accessToken,
+			AuthType:    authType1,
+		}
+	}
+	if sourceAuth0UpdateAuthenticationMethodOAuth2AccessToken != nil {
+		credentials = shared.SourceAuth0UpdateAuthenticationMethod{
+			SourceAuth0UpdateAuthenticationMethodOAuth2AccessToken: sourceAuth0UpdateAuthenticationMethodOAuth2AccessToken,
+		}
+	}
+	configuration := shared.SourceAuth0Update{
+		BaseURL:     baseURL,
+		Credentials: credentials,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceAuth0PutRequest{
+		Configuration: configuration,
+		Name:          name,
 		WorkspaceID:   workspaceID,
 	}
 	return &out

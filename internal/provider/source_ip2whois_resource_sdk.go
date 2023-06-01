@@ -43,6 +43,33 @@ func (r *SourceIp2whoisResourceModel) ToCreateSDKType() *shared.SourceIp2whoisCr
 	return &out
 }
 
+func (r *SourceIp2whoisResourceModel) ToUpdateSDKType() *shared.SourceIp2whoisPutRequest {
+	apiKey := new(string)
+	if !r.Configuration.APIKey.IsUnknown() && !r.Configuration.APIKey.IsNull() {
+		*apiKey = r.Configuration.APIKey.ValueString()
+	} else {
+		apiKey = nil
+	}
+	domain := new(string)
+	if !r.Configuration.Domain.IsUnknown() && !r.Configuration.Domain.IsNull() {
+		*domain = r.Configuration.Domain.ValueString()
+	} else {
+		domain = nil
+	}
+	configuration := shared.SourceIp2whoisUpdate{
+		APIKey: apiKey,
+		Domain: domain,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceIp2whoisPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceIp2whoisResourceModel) ToDeleteSDKType() *shared.SourceIp2whoisCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

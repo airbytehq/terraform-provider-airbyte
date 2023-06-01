@@ -35,6 +35,25 @@ func (r *SourceSmailyResourceModel) ToCreateSDKType() *shared.SourceSmailyCreate
 	return &out
 }
 
+func (r *SourceSmailyResourceModel) ToUpdateSDKType() *shared.SourceSmailyPutRequest {
+	apiPassword := r.Configuration.APIPassword.ValueString()
+	apiSubdomain := r.Configuration.APISubdomain.ValueString()
+	apiUsername := r.Configuration.APIUsername.ValueString()
+	configuration := shared.SourceSmailyUpdate{
+		APIPassword:  apiPassword,
+		APISubdomain: apiSubdomain,
+		APIUsername:  apiUsername,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceSmailyPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceSmailyResourceModel) ToDeleteSDKType() *shared.SourceSmailyCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

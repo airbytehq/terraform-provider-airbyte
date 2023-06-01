@@ -31,6 +31,21 @@ func (r *SourceDockerhubResourceModel) ToCreateSDKType() *shared.SourceDockerhub
 	return &out
 }
 
+func (r *SourceDockerhubResourceModel) ToUpdateSDKType() *shared.SourceDockerhubPutRequest {
+	dockerUsername := r.Configuration.DockerUsername.ValueString()
+	configuration := shared.SourceDockerhubUpdate{
+		DockerUsername: dockerUsername,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceDockerhubPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceDockerhubResourceModel) ToDeleteSDKType() *shared.SourceDockerhubCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

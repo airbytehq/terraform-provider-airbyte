@@ -33,6 +33,23 @@ func (r *SourceRecruiteeResourceModel) ToCreateSDKType() *shared.SourceRecruitee
 	return &out
 }
 
+func (r *SourceRecruiteeResourceModel) ToUpdateSDKType() *shared.SourceRecruiteePutRequest {
+	apiKey := r.Configuration.APIKey.ValueString()
+	companyID := r.Configuration.CompanyID.ValueInt64()
+	configuration := shared.SourceRecruiteeUpdate{
+		APIKey:    apiKey,
+		CompanyID: companyID,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceRecruiteePutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceRecruiteeResourceModel) ToDeleteSDKType() *shared.SourceRecruiteeCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

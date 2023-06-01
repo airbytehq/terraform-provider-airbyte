@@ -9,10 +9,6 @@ import (
 
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/listplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -55,21 +51,12 @@ func (r *SourceCoinmarketcapResource) Schema(ctx context.Context, req resource.S
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"api_key": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"data_type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -80,9 +67,6 @@ func (r *SourceCoinmarketcapResource) Schema(ctx context.Context, req resource.S
 						Description: `/latest: Latest market ticker quotes and averages for cryptocurrencies and exchanges. /historical: Intervals of historic market data like OHLCV data or data for use in charting libraries. See <a href="https://coinmarketcap.com/api/documentation/v1/#section/Endpoint-Overview">here</a>.`,
 					},
 					"source_type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -91,24 +75,15 @@ func (r *SourceCoinmarketcapResource) Schema(ctx context.Context, req resource.S
 						},
 					},
 					"symbols": schema.ListAttribute{
-						PlanModifiers: []planmodifier.List{
-							listplanmodifier.RequiresReplace(),
-						},
 						Optional:    true,
 						ElementType: types.StringType,
 					},
 				},
 			},
 			"name": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Optional: true,
 			},
 			"source_id": schema.StringAttribute{
@@ -118,9 +93,6 @@ func (r *SourceCoinmarketcapResource) Schema(ctx context.Context, req resource.S
 				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 		},
@@ -220,7 +192,25 @@ func (r *SourceCoinmarketcapResource) Update(ctx context.Context, req resource.U
 		return
 	}
 
-	// Not Implemented; all attributes marked as RequiresReplace
+	sourceCoinmarketcapPutRequest := data.ToUpdateSDKType()
+	sourceID := data.SourceID.ValueString()
+	request := operations.PutSourceCoinmarketcapRequest{
+		SourceCoinmarketcapPutRequest: sourceCoinmarketcapPutRequest,
+		SourceID:                      sourceID,
+	}
+	res, err := r.client.Sources.PutSourceCoinmarketcap(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode != 204 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

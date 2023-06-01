@@ -39,6 +39,29 @@ func (r *SourceOutreachResourceModel) ToCreateSDKType() *shared.SourceOutreachCr
 	return &out
 }
 
+func (r *SourceOutreachResourceModel) ToUpdateSDKType() *shared.SourceOutreachPutRequest {
+	clientID := r.Configuration.ClientID.ValueString()
+	clientSecret := r.Configuration.ClientSecret.ValueString()
+	redirectURI := r.Configuration.RedirectURI.ValueString()
+	refreshToken := r.Configuration.RefreshToken.ValueString()
+	startDate := r.Configuration.StartDate.ValueString()
+	configuration := shared.SourceOutreachUpdate{
+		ClientID:     clientID,
+		ClientSecret: clientSecret,
+		RedirectURI:  redirectURI,
+		RefreshToken: refreshToken,
+		StartDate:    startDate,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceOutreachPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceOutreachResourceModel) ToDeleteSDKType() *shared.SourceOutreachCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

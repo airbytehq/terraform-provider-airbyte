@@ -68,6 +68,57 @@ func (r *SourceSurveymonkeyResourceModel) ToCreateSDKType() *shared.SourceSurvey
 	return &out
 }
 
+func (r *SourceSurveymonkeyResourceModel) ToUpdateSDKType() *shared.SourceSurveymonkeyPutRequest {
+	var credentials *shared.SourceSurveymonkeyUpdateSurveyMonkeyAuthorizationMethod
+	if r.Configuration.Credentials != nil {
+		accessToken := r.Configuration.Credentials.AccessToken.ValueString()
+		authMethod := shared.SourceSurveymonkeyUpdateSurveyMonkeyAuthorizationMethodAuthMethod(r.Configuration.Credentials.AuthMethod.ValueString())
+		clientID := new(string)
+		if !r.Configuration.Credentials.ClientID.IsUnknown() && !r.Configuration.Credentials.ClientID.IsNull() {
+			*clientID = r.Configuration.Credentials.ClientID.ValueString()
+		} else {
+			clientID = nil
+		}
+		clientSecret := new(string)
+		if !r.Configuration.Credentials.ClientSecret.IsUnknown() && !r.Configuration.Credentials.ClientSecret.IsNull() {
+			*clientSecret = r.Configuration.Credentials.ClientSecret.ValueString()
+		} else {
+			clientSecret = nil
+		}
+		credentials = &shared.SourceSurveymonkeyUpdateSurveyMonkeyAuthorizationMethod{
+			AccessToken:  accessToken,
+			AuthMethod:   authMethod,
+			ClientID:     clientID,
+			ClientSecret: clientSecret,
+		}
+	}
+	origin := new(shared.SourceSurveymonkeyUpdateOriginDatacenterOfTheSurveyMonkeyAccount)
+	if !r.Configuration.Origin.IsUnknown() && !r.Configuration.Origin.IsNull() {
+		*origin = shared.SourceSurveymonkeyUpdateOriginDatacenterOfTheSurveyMonkeyAccount(r.Configuration.Origin.ValueString())
+	} else {
+		origin = nil
+	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	surveyIds := make([]string, 0)
+	for _, surveyIdsItem := range r.Configuration.SurveyIds {
+		surveyIds = append(surveyIds, surveyIdsItem.ValueString())
+	}
+	configuration := shared.SourceSurveymonkeyUpdate{
+		Credentials: credentials,
+		Origin:      origin,
+		StartDate:   startDate,
+		SurveyIds:   surveyIds,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceSurveymonkeyPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceSurveymonkeyResourceModel) ToDeleteSDKType() *shared.SourceSurveymonkeyCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

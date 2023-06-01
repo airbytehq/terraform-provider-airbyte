@@ -52,6 +52,42 @@ func (r *SourceZenloopResourceModel) ToCreateSDKType() *shared.SourceZenloopCrea
 	return &out
 }
 
+func (r *SourceZenloopResourceModel) ToUpdateSDKType() *shared.SourceZenloopPutRequest {
+	apiToken := r.Configuration.APIToken.ValueString()
+	dateFrom := new(string)
+	if !r.Configuration.DateFrom.IsUnknown() && !r.Configuration.DateFrom.IsNull() {
+		*dateFrom = r.Configuration.DateFrom.ValueString()
+	} else {
+		dateFrom = nil
+	}
+	surveyGroupID := new(string)
+	if !r.Configuration.SurveyGroupID.IsUnknown() && !r.Configuration.SurveyGroupID.IsNull() {
+		*surveyGroupID = r.Configuration.SurveyGroupID.ValueString()
+	} else {
+		surveyGroupID = nil
+	}
+	surveyID := new(string)
+	if !r.Configuration.SurveyID.IsUnknown() && !r.Configuration.SurveyID.IsNull() {
+		*surveyID = r.Configuration.SurveyID.ValueString()
+	} else {
+		surveyID = nil
+	}
+	configuration := shared.SourceZenloopUpdate{
+		APIToken:      apiToken,
+		DateFrom:      dateFrom,
+		SurveyGroupID: surveyGroupID,
+		SurveyID:      surveyID,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceZenloopPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceZenloopResourceModel) ToDeleteSDKType() *shared.SourceZenloopCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

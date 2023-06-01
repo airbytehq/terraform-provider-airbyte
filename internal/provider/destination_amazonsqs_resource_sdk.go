@@ -61,6 +61,58 @@ func (r *DestinationAmazonSqsResourceModel) ToCreateSDKType() *shared.Destinatio
 	return &out
 }
 
+func (r *DestinationAmazonSqsResourceModel) ToUpdateSDKType() *shared.DestinationAmazonSqsPutRequest {
+	accessKey := new(string)
+	if !r.Configuration.AccessKey.IsUnknown() && !r.Configuration.AccessKey.IsNull() {
+		*accessKey = r.Configuration.AccessKey.ValueString()
+	} else {
+		accessKey = nil
+	}
+	messageBodyKey := new(string)
+	if !r.Configuration.MessageBodyKey.IsUnknown() && !r.Configuration.MessageBodyKey.IsNull() {
+		*messageBodyKey = r.Configuration.MessageBodyKey.ValueString()
+	} else {
+		messageBodyKey = nil
+	}
+	messageDelay := new(int64)
+	if !r.Configuration.MessageDelay.IsUnknown() && !r.Configuration.MessageDelay.IsNull() {
+		*messageDelay = r.Configuration.MessageDelay.ValueInt64()
+	} else {
+		messageDelay = nil
+	}
+	messageGroupID := new(string)
+	if !r.Configuration.MessageGroupID.IsUnknown() && !r.Configuration.MessageGroupID.IsNull() {
+		*messageGroupID = r.Configuration.MessageGroupID.ValueString()
+	} else {
+		messageGroupID = nil
+	}
+	queueURL := r.Configuration.QueueURL.ValueString()
+	region := shared.DestinationAmazonSqsUpdateAWSRegion(r.Configuration.Region.ValueString())
+	secretKey := new(string)
+	if !r.Configuration.SecretKey.IsUnknown() && !r.Configuration.SecretKey.IsNull() {
+		*secretKey = r.Configuration.SecretKey.ValueString()
+	} else {
+		secretKey = nil
+	}
+	configuration := shared.DestinationAmazonSqsUpdate{
+		AccessKey:      accessKey,
+		MessageBodyKey: messageBodyKey,
+		MessageDelay:   messageDelay,
+		MessageGroupID: messageGroupID,
+		QueueURL:       queueURL,
+		Region:         region,
+		SecretKey:      secretKey,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.DestinationAmazonSqsPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *DestinationAmazonSqsResourceModel) ToDeleteSDKType() *shared.DestinationAmazonSqsCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

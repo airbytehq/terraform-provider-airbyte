@@ -53,6 +53,43 @@ func (r *SourceCoinAPIResourceModel) ToCreateSDKType() *shared.SourceCoinAPICrea
 	return &out
 }
 
+func (r *SourceCoinAPIResourceModel) ToUpdateSDKType() *shared.SourceCoinAPIPutRequest {
+	apiKey := r.Configuration.APIKey.ValueString()
+	endDate := new(string)
+	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
+		*endDate = r.Configuration.EndDate.ValueString()
+	} else {
+		endDate = nil
+	}
+	environment := shared.SourceCoinAPIUpdateEnvironment(r.Configuration.Environment.ValueString())
+	limit := new(int64)
+	if !r.Configuration.Limit.IsUnknown() && !r.Configuration.Limit.IsNull() {
+		*limit = r.Configuration.Limit.ValueInt64()
+	} else {
+		limit = nil
+	}
+	period := r.Configuration.Period.ValueString()
+	startDate := r.Configuration.StartDate.ValueString()
+	symbolID := r.Configuration.SymbolID.ValueString()
+	configuration := shared.SourceCoinAPIUpdate{
+		APIKey:      apiKey,
+		EndDate:     endDate,
+		Environment: environment,
+		Limit:       limit,
+		Period:      period,
+		StartDate:   startDate,
+		SymbolID:    symbolID,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceCoinAPIPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceCoinAPIResourceModel) ToDeleteSDKType() *shared.SourceCoinAPICreateRequest {
 	out := r.ToCreateSDKType()
 	return out

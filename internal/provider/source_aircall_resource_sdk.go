@@ -36,6 +36,25 @@ func (r *SourceAircallResourceModel) ToCreateSDKType() *shared.SourceAircallCrea
 	return &out
 }
 
+func (r *SourceAircallResourceModel) ToUpdateSDKType() *shared.SourceAircallPutRequest {
+	apiID := r.Configuration.APIID.ValueString()
+	apiToken := r.Configuration.APIToken.ValueString()
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	configuration := shared.SourceAircallUpdate{
+		APIID:     apiID,
+		APIToken:  apiToken,
+		StartDate: startDate,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceAircallPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceAircallResourceModel) ToDeleteSDKType() *shared.SourceAircallCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

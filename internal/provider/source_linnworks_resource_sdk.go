@@ -38,6 +38,27 @@ func (r *SourceLinnworksResourceModel) ToCreateSDKType() *shared.SourceLinnworks
 	return &out
 }
 
+func (r *SourceLinnworksResourceModel) ToUpdateSDKType() *shared.SourceLinnworksPutRequest {
+	applicationID := r.Configuration.ApplicationID.ValueString()
+	applicationSecret := r.Configuration.ApplicationSecret.ValueString()
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	token := r.Configuration.Token.ValueString()
+	configuration := shared.SourceLinnworksUpdate{
+		ApplicationID:     applicationID,
+		ApplicationSecret: applicationSecret,
+		StartDate:         startDate,
+		Token:             token,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceLinnworksPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceLinnworksResourceModel) ToDeleteSDKType() *shared.SourceLinnworksCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

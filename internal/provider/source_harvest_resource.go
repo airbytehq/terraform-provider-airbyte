@@ -10,9 +10,6 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -37,12 +34,12 @@ type SourceHarvestResource struct {
 
 // SourceHarvestResourceModel describes the resource data model.
 type SourceHarvestResourceModel struct {
-	Configuration SourceHarvest `tfsdk:"configuration"`
-	Name          types.String  `tfsdk:"name"`
-	SecretID      types.String  `tfsdk:"secret_id"`
-	SourceID      types.String  `tfsdk:"source_id"`
-	SourceType    types.String  `tfsdk:"source_type"`
-	WorkspaceID   types.String  `tfsdk:"workspace_id"`
+	Configuration SourceHarvestUpdate `tfsdk:"configuration"`
+	Name          types.String        `tfsdk:"name"`
+	SecretID      types.String        `tfsdk:"secret_id"`
+	SourceID      types.String        `tfsdk:"source_id"`
+	SourceType    types.String        `tfsdk:"source_type"`
+	WorkspaceID   types.String        `tfsdk:"workspace_id"`
 }
 
 func (r *SourceHarvestResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -55,33 +52,72 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"account_id": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"credentials": schema.SingleNestedAttribute{
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_harvest_authentication_mechanism_authenticate_via_harvest_o_auth_": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
+							"source_harvest_update_authentication_mechanism_authenticate_via_harvest_o_auth_": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"auth_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Client",
+											),
+										},
+									},
+									"client_id": schema.StringAttribute{
+										Computed: true,
+									},
+									"client_secret": schema.StringAttribute{
+										Computed: true,
+									},
+									"refresh_token": schema.StringAttribute{
+										Computed: true,
+									},
+									"additional_properties": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+										Description: `Parsed as JSON.`,
+									},
 								},
+								Description: `Choose how to authenticate to Harvest.`,
+							},
+							"source_harvest_update_authentication_mechanism_authenticate_with_personal_access_token": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"api_token": schema.StringAttribute{
+										Computed: true,
+									},
+									"auth_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Token",
+											),
+										},
+									},
+									"additional_properties": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+										Description: `Parsed as JSON.`,
+									},
+								},
+								Description: `Choose how to authenticate to Harvest.`,
+							},
+							"source_harvest_authentication_mechanism_authenticate_via_harvest_o_auth_": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -90,21 +126,12 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 										},
 									},
 									"client_id": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"client_secret": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"refresh_token": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"additional_properties": schema.StringAttribute{
@@ -118,21 +145,12 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 								Description: `Choose how to authenticate to Harvest.`,
 							},
 							"source_harvest_authentication_mechanism_authenticate_with_personal_access_token": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_token": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"auth_type": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -156,27 +174,18 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 						},
 					},
 					"replication_end_date": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
 					},
 					"replication_start_date": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
 					},
 					"source_type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -187,15 +196,9 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 				},
 			},
 			"name": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Optional: true,
 			},
 			"source_id": schema.StringAttribute{
@@ -205,9 +208,6 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 		},
@@ -307,7 +307,25 @@ func (r *SourceHarvestResource) Update(ctx context.Context, req resource.UpdateR
 		return
 	}
 
-	// Not Implemented; all attributes marked as RequiresReplace
+	sourceHarvestPutRequest := data.ToUpdateSDKType()
+	sourceID := data.SourceID.ValueString()
+	request := operations.PutSourceHarvestRequest{
+		SourceHarvestPutRequest: sourceHarvestPutRequest,
+		SourceID:                sourceID,
+	}
+	res, err := r.client.Sources.PutSourceHarvest(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode != 204 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

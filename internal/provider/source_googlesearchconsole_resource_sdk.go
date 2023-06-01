@@ -11,17 +11,17 @@ import (
 func (r *SourceGoogleSearchConsoleResourceModel) ToCreateSDKType() *shared.SourceGoogleSearchConsoleCreateRequest {
 	var authorization shared.SourceGoogleSearchConsoleAuthenticationType
 	var sourceGoogleSearchConsoleAuthenticationTypeOAuth *shared.SourceGoogleSearchConsoleAuthenticationTypeOAuth
-	if r.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeOAuth != nil {
+	if r.Configuration.Authorization.SourceGoogleSearchConsoleUpdateAuthenticationTypeOAuth != nil {
 		accessToken := new(string)
-		if !r.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeOAuth.AccessToken.IsUnknown() && !r.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeOAuth.AccessToken.IsNull() {
-			*accessToken = r.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeOAuth.AccessToken.ValueString()
+		if !r.Configuration.Authorization.SourceGoogleSearchConsoleUpdateAuthenticationTypeOAuth.AccessToken.IsUnknown() && !r.Configuration.Authorization.SourceGoogleSearchConsoleUpdateAuthenticationTypeOAuth.AccessToken.IsNull() {
+			*accessToken = r.Configuration.Authorization.SourceGoogleSearchConsoleUpdateAuthenticationTypeOAuth.AccessToken.ValueString()
 		} else {
 			accessToken = nil
 		}
-		authType := shared.SourceGoogleSearchConsoleAuthenticationTypeOAuthAuthType(r.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeOAuth.AuthType.ValueString())
-		clientID := r.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeOAuth.ClientID.ValueString()
-		clientSecret := r.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeOAuth.ClientSecret.ValueString()
-		refreshToken := r.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeOAuth.RefreshToken.ValueString()
+		authType := shared.SourceGoogleSearchConsoleAuthenticationTypeOAuthAuthType(r.Configuration.Authorization.SourceGoogleSearchConsoleUpdateAuthenticationTypeOAuth.AuthType.ValueString())
+		clientID := r.Configuration.Authorization.SourceGoogleSearchConsoleUpdateAuthenticationTypeOAuth.ClientID.ValueString()
+		clientSecret := r.Configuration.Authorization.SourceGoogleSearchConsoleUpdateAuthenticationTypeOAuth.ClientSecret.ValueString()
+		refreshToken := r.Configuration.Authorization.SourceGoogleSearchConsoleUpdateAuthenticationTypeOAuth.RefreshToken.ValueString()
 		sourceGoogleSearchConsoleAuthenticationTypeOAuth = &shared.SourceGoogleSearchConsoleAuthenticationTypeOAuth{
 			AccessToken:  accessToken,
 			AuthType:     authType,
@@ -36,10 +36,10 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToCreateSDKType() *shared.Sourc
 		}
 	}
 	var sourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication *shared.SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication
-	if r.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication != nil {
-		authType1 := shared.SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthenticationAuthType(r.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication.AuthType.ValueString())
-		email := r.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication.Email.ValueString()
-		serviceAccountInfo := r.Configuration.Authorization.SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication.ServiceAccountInfo.ValueString()
+	if r.Configuration.Authorization.SourceGoogleSearchConsoleUpdateAuthenticationTypeServiceAccountKeyAuthentication != nil {
+		authType1 := shared.SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthenticationAuthType(r.Configuration.Authorization.SourceGoogleSearchConsoleUpdateAuthenticationTypeServiceAccountKeyAuthentication.AuthType.ValueString())
+		email := r.Configuration.Authorization.SourceGoogleSearchConsoleUpdateAuthenticationTypeServiceAccountKeyAuthentication.Email.ValueString()
+		serviceAccountInfo := r.Configuration.Authorization.SourceGoogleSearchConsoleUpdateAuthenticationTypeServiceAccountKeyAuthentication.ServiceAccountInfo.ValueString()
 		sourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication = &shared.SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication{
 			AuthType:           authType1,
 			Email:              email,
@@ -57,6 +57,12 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToCreateSDKType() *shared.Sourc
 	} else {
 		customReports = nil
 	}
+	dataState := new(shared.SourceGoogleSearchConsoleDataState)
+	if !r.Configuration.DataState.IsUnknown() && !r.Configuration.DataState.IsNull() {
+		*dataState = shared.SourceGoogleSearchConsoleDataState(r.Configuration.DataState.ValueString())
+	} else {
+		dataState = nil
+	}
 	endDate := new(customTypes.Date)
 	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
 		endDate = customTypes.MustNewDateFromString(r.Configuration.EndDate.ValueString())
@@ -72,6 +78,7 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToCreateSDKType() *shared.Sourc
 	configuration := shared.SourceGoogleSearchConsole{
 		Authorization: authorization,
 		CustomReports: customReports,
+		DataState:     dataState,
 		EndDate:       endDate,
 		SiteUrls:      siteUrls,
 		SourceType:    sourceType,
@@ -89,6 +96,90 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToCreateSDKType() *shared.Sourc
 		Configuration: configuration,
 		Name:          name,
 		SecretID:      secretID,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
+func (r *SourceGoogleSearchConsoleResourceModel) ToUpdateSDKType() *shared.SourceGoogleSearchConsolePutRequest {
+	var authorization shared.SourceGoogleSearchConsoleUpdateAuthenticationType
+	var sourceGoogleSearchConsoleUpdateAuthenticationTypeOAuth *shared.SourceGoogleSearchConsoleUpdateAuthenticationTypeOAuth
+	if r.Configuration.Authorization.SourceGoogleSearchConsoleUpdateAuthenticationTypeOAuth != nil {
+		accessToken := new(string)
+		if !r.Configuration.Authorization.SourceGoogleSearchConsoleUpdateAuthenticationTypeOAuth.AccessToken.IsUnknown() && !r.Configuration.Authorization.SourceGoogleSearchConsoleUpdateAuthenticationTypeOAuth.AccessToken.IsNull() {
+			*accessToken = r.Configuration.Authorization.SourceGoogleSearchConsoleUpdateAuthenticationTypeOAuth.AccessToken.ValueString()
+		} else {
+			accessToken = nil
+		}
+		authType := shared.SourceGoogleSearchConsoleUpdateAuthenticationTypeOAuthAuthType(r.Configuration.Authorization.SourceGoogleSearchConsoleUpdateAuthenticationTypeOAuth.AuthType.ValueString())
+		clientID := r.Configuration.Authorization.SourceGoogleSearchConsoleUpdateAuthenticationTypeOAuth.ClientID.ValueString()
+		clientSecret := r.Configuration.Authorization.SourceGoogleSearchConsoleUpdateAuthenticationTypeOAuth.ClientSecret.ValueString()
+		refreshToken := r.Configuration.Authorization.SourceGoogleSearchConsoleUpdateAuthenticationTypeOAuth.RefreshToken.ValueString()
+		sourceGoogleSearchConsoleUpdateAuthenticationTypeOAuth = &shared.SourceGoogleSearchConsoleUpdateAuthenticationTypeOAuth{
+			AccessToken:  accessToken,
+			AuthType:     authType,
+			ClientID:     clientID,
+			ClientSecret: clientSecret,
+			RefreshToken: refreshToken,
+		}
+	}
+	if sourceGoogleSearchConsoleUpdateAuthenticationTypeOAuth != nil {
+		authorization = shared.SourceGoogleSearchConsoleUpdateAuthenticationType{
+			SourceGoogleSearchConsoleUpdateAuthenticationTypeOAuth: sourceGoogleSearchConsoleUpdateAuthenticationTypeOAuth,
+		}
+	}
+	var sourceGoogleSearchConsoleUpdateAuthenticationTypeServiceAccountKeyAuthentication *shared.SourceGoogleSearchConsoleUpdateAuthenticationTypeServiceAccountKeyAuthentication
+	if r.Configuration.Authorization.SourceGoogleSearchConsoleUpdateAuthenticationTypeServiceAccountKeyAuthentication != nil {
+		authType1 := shared.SourceGoogleSearchConsoleUpdateAuthenticationTypeServiceAccountKeyAuthenticationAuthType(r.Configuration.Authorization.SourceGoogleSearchConsoleUpdateAuthenticationTypeServiceAccountKeyAuthentication.AuthType.ValueString())
+		email := r.Configuration.Authorization.SourceGoogleSearchConsoleUpdateAuthenticationTypeServiceAccountKeyAuthentication.Email.ValueString()
+		serviceAccountInfo := r.Configuration.Authorization.SourceGoogleSearchConsoleUpdateAuthenticationTypeServiceAccountKeyAuthentication.ServiceAccountInfo.ValueString()
+		sourceGoogleSearchConsoleUpdateAuthenticationTypeServiceAccountKeyAuthentication = &shared.SourceGoogleSearchConsoleUpdateAuthenticationTypeServiceAccountKeyAuthentication{
+			AuthType:           authType1,
+			Email:              email,
+			ServiceAccountInfo: serviceAccountInfo,
+		}
+	}
+	if sourceGoogleSearchConsoleUpdateAuthenticationTypeServiceAccountKeyAuthentication != nil {
+		authorization = shared.SourceGoogleSearchConsoleUpdateAuthenticationType{
+			SourceGoogleSearchConsoleUpdateAuthenticationTypeServiceAccountKeyAuthentication: sourceGoogleSearchConsoleUpdateAuthenticationTypeServiceAccountKeyAuthentication,
+		}
+	}
+	customReports := new(string)
+	if !r.Configuration.CustomReports.IsUnknown() && !r.Configuration.CustomReports.IsNull() {
+		*customReports = r.Configuration.CustomReports.ValueString()
+	} else {
+		customReports = nil
+	}
+	dataState := new(shared.SourceGoogleSearchConsoleUpdateDataState)
+	if !r.Configuration.DataState.IsUnknown() && !r.Configuration.DataState.IsNull() {
+		*dataState = shared.SourceGoogleSearchConsoleUpdateDataState(r.Configuration.DataState.ValueString())
+	} else {
+		dataState = nil
+	}
+	endDate := new(customTypes.Date)
+	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
+		endDate = customTypes.MustNewDateFromString(r.Configuration.EndDate.ValueString())
+	} else {
+		endDate = nil
+	}
+	siteUrls := make([]string, 0)
+	for _, siteUrlsItem := range r.Configuration.SiteUrls {
+		siteUrls = append(siteUrls, siteUrlsItem.ValueString())
+	}
+	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
+	configuration := shared.SourceGoogleSearchConsoleUpdate{
+		Authorization: authorization,
+		CustomReports: customReports,
+		DataState:     dataState,
+		EndDate:       endDate,
+		SiteUrls:      siteUrls,
+		StartDate:     startDate,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceGoogleSearchConsolePutRequest{
+		Configuration: configuration,
+		Name:          name,
 		WorkspaceID:   workspaceID,
 	}
 	return &out

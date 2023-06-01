@@ -40,6 +40,30 @@ func (r *SourceGoogleWorkspaceAdminReportsResourceModel) ToCreateSDKType() *shar
 	return &out
 }
 
+func (r *SourceGoogleWorkspaceAdminReportsResourceModel) ToUpdateSDKType() *shared.SourceGoogleWorkspaceAdminReportsPutRequest {
+	credentialsJSON := r.Configuration.CredentialsJSON.ValueString()
+	email := r.Configuration.Email.ValueString()
+	lookback := new(int64)
+	if !r.Configuration.Lookback.IsUnknown() && !r.Configuration.Lookback.IsNull() {
+		*lookback = r.Configuration.Lookback.ValueInt64()
+	} else {
+		lookback = nil
+	}
+	configuration := shared.SourceGoogleWorkspaceAdminReportsUpdate{
+		CredentialsJSON: credentialsJSON,
+		Email:           email,
+		Lookback:        lookback,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceGoogleWorkspaceAdminReportsPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceGoogleWorkspaceAdminReportsResourceModel) ToDeleteSDKType() *shared.SourceGoogleWorkspaceAdminReportsCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

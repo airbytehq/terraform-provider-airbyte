@@ -63,6 +63,52 @@ func (r *SourcePolygonStockAPIResourceModel) ToCreateSDKType() *shared.SourcePol
 	return &out
 }
 
+func (r *SourcePolygonStockAPIResourceModel) ToUpdateSDKType() *shared.SourcePolygonStockAPIPutRequest {
+	adjusted := new(string)
+	if !r.Configuration.Adjusted.IsUnknown() && !r.Configuration.Adjusted.IsNull() {
+		*adjusted = r.Configuration.Adjusted.ValueString()
+	} else {
+		adjusted = nil
+	}
+	apiKey := r.Configuration.APIKey.ValueString()
+	endDate := customTypes.MustDateFromString(r.Configuration.EndDate.ValueString())
+	limit := new(int64)
+	if !r.Configuration.Limit.IsUnknown() && !r.Configuration.Limit.IsNull() {
+		*limit = r.Configuration.Limit.ValueInt64()
+	} else {
+		limit = nil
+	}
+	multiplier := r.Configuration.Multiplier.ValueInt64()
+	sort := new(string)
+	if !r.Configuration.Sort.IsUnknown() && !r.Configuration.Sort.IsNull() {
+		*sort = r.Configuration.Sort.ValueString()
+	} else {
+		sort = nil
+	}
+	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
+	stocksTicker := r.Configuration.StocksTicker.ValueString()
+	timespan := r.Configuration.Timespan.ValueString()
+	configuration := shared.SourcePolygonStockAPIUpdate{
+		Adjusted:     adjusted,
+		APIKey:       apiKey,
+		EndDate:      endDate,
+		Limit:        limit,
+		Multiplier:   multiplier,
+		Sort:         sort,
+		StartDate:    startDate,
+		StocksTicker: stocksTicker,
+		Timespan:     timespan,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourcePolygonStockAPIPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourcePolygonStockAPIResourceModel) ToDeleteSDKType() *shared.SourcePolygonStockAPICreateRequest {
 	out := r.ToCreateSDKType()
 	return out

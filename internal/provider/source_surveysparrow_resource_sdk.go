@@ -12,10 +12,10 @@ func (r *SourceSurveySparrowResourceModel) ToCreateSDKType() *shared.SourceSurve
 	accessToken := r.Configuration.AccessToken.ValueString()
 	var region *shared.SourceSurveySparrowBaseURL
 	var sourceSurveySparrowBaseURLEUBasedAccount *shared.SourceSurveySparrowBaseURLEUBasedAccount
-	if r.Configuration.Region.SourceSurveySparrowBaseURLEUBasedAccount != nil {
+	if r.Configuration.Region.SourceSurveySparrowUpdateBaseURLEUBasedAccount != nil {
 		urlBase := new(shared.SourceSurveySparrowBaseURLEUBasedAccountURLBase)
-		if !r.Configuration.Region.SourceSurveySparrowBaseURLEUBasedAccount.URLBase.IsUnknown() && !r.Configuration.Region.SourceSurveySparrowBaseURLEUBasedAccount.URLBase.IsNull() {
-			*urlBase = shared.SourceSurveySparrowBaseURLEUBasedAccountURLBase(r.Configuration.Region.SourceSurveySparrowBaseURLEUBasedAccount.URLBase.ValueString())
+		if !r.Configuration.Region.SourceSurveySparrowUpdateBaseURLEUBasedAccount.URLBase.IsUnknown() && !r.Configuration.Region.SourceSurveySparrowUpdateBaseURLEUBasedAccount.URLBase.IsNull() {
+			*urlBase = shared.SourceSurveySparrowBaseURLEUBasedAccountURLBase(r.Configuration.Region.SourceSurveySparrowUpdateBaseURLEUBasedAccount.URLBase.ValueString())
 		} else {
 			urlBase = nil
 		}
@@ -29,10 +29,10 @@ func (r *SourceSurveySparrowResourceModel) ToCreateSDKType() *shared.SourceSurve
 		}
 	}
 	var sourceSurveySparrowBaseURLGlobalAccount *shared.SourceSurveySparrowBaseURLGlobalAccount
-	if r.Configuration.Region.SourceSurveySparrowBaseURLGlobalAccount != nil {
+	if r.Configuration.Region.SourceSurveySparrowUpdateBaseURLGlobalAccount != nil {
 		urlBase1 := new(shared.SourceSurveySparrowBaseURLGlobalAccountURLBase)
-		if !r.Configuration.Region.SourceSurveySparrowBaseURLGlobalAccount.URLBase.IsUnknown() && !r.Configuration.Region.SourceSurveySparrowBaseURLGlobalAccount.URLBase.IsNull() {
-			*urlBase1 = shared.SourceSurveySparrowBaseURLGlobalAccountURLBase(r.Configuration.Region.SourceSurveySparrowBaseURLGlobalAccount.URLBase.ValueString())
+		if !r.Configuration.Region.SourceSurveySparrowUpdateBaseURLGlobalAccount.URLBase.IsUnknown() && !r.Configuration.Region.SourceSurveySparrowUpdateBaseURLGlobalAccount.URLBase.IsNull() {
+			*urlBase1 = shared.SourceSurveySparrowBaseURLGlobalAccountURLBase(r.Configuration.Region.SourceSurveySparrowUpdateBaseURLGlobalAccount.URLBase.ValueString())
 		} else {
 			urlBase1 = nil
 		}
@@ -70,6 +70,64 @@ func (r *SourceSurveySparrowResourceModel) ToCreateSDKType() *shared.SourceSurve
 		Configuration: configuration,
 		Name:          name,
 		SecretID:      secretID,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
+func (r *SourceSurveySparrowResourceModel) ToUpdateSDKType() *shared.SourceSurveySparrowPutRequest {
+	accessToken := r.Configuration.AccessToken.ValueString()
+	var region *shared.SourceSurveySparrowUpdateBaseURL
+	var sourceSurveySparrowUpdateBaseURLEUBasedAccount *shared.SourceSurveySparrowUpdateBaseURLEUBasedAccount
+	if r.Configuration.Region.SourceSurveySparrowUpdateBaseURLEUBasedAccount != nil {
+		urlBase := new(shared.SourceSurveySparrowUpdateBaseURLEUBasedAccountURLBase)
+		if !r.Configuration.Region.SourceSurveySparrowUpdateBaseURLEUBasedAccount.URLBase.IsUnknown() && !r.Configuration.Region.SourceSurveySparrowUpdateBaseURLEUBasedAccount.URLBase.IsNull() {
+			*urlBase = shared.SourceSurveySparrowUpdateBaseURLEUBasedAccountURLBase(r.Configuration.Region.SourceSurveySparrowUpdateBaseURLEUBasedAccount.URLBase.ValueString())
+		} else {
+			urlBase = nil
+		}
+		sourceSurveySparrowUpdateBaseURLEUBasedAccount = &shared.SourceSurveySparrowUpdateBaseURLEUBasedAccount{
+			URLBase: urlBase,
+		}
+	}
+	if sourceSurveySparrowUpdateBaseURLEUBasedAccount != nil {
+		region = &shared.SourceSurveySparrowUpdateBaseURL{
+			SourceSurveySparrowUpdateBaseURLEUBasedAccount: sourceSurveySparrowUpdateBaseURLEUBasedAccount,
+		}
+	}
+	var sourceSurveySparrowUpdateBaseURLGlobalAccount *shared.SourceSurveySparrowUpdateBaseURLGlobalAccount
+	if r.Configuration.Region.SourceSurveySparrowUpdateBaseURLGlobalAccount != nil {
+		urlBase1 := new(shared.SourceSurveySparrowUpdateBaseURLGlobalAccountURLBase)
+		if !r.Configuration.Region.SourceSurveySparrowUpdateBaseURLGlobalAccount.URLBase.IsUnknown() && !r.Configuration.Region.SourceSurveySparrowUpdateBaseURLGlobalAccount.URLBase.IsNull() {
+			*urlBase1 = shared.SourceSurveySparrowUpdateBaseURLGlobalAccountURLBase(r.Configuration.Region.SourceSurveySparrowUpdateBaseURLGlobalAccount.URLBase.ValueString())
+		} else {
+			urlBase1 = nil
+		}
+		sourceSurveySparrowUpdateBaseURLGlobalAccount = &shared.SourceSurveySparrowUpdateBaseURLGlobalAccount{
+			URLBase: urlBase1,
+		}
+	}
+	if sourceSurveySparrowUpdateBaseURLGlobalAccount != nil {
+		region = &shared.SourceSurveySparrowUpdateBaseURL{
+			SourceSurveySparrowUpdateBaseURLGlobalAccount: sourceSurveySparrowUpdateBaseURLGlobalAccount,
+		}
+	}
+	surveyID := make([]interface{}, 0)
+	for _, surveyIDItem := range r.Configuration.SurveyID {
+		var surveyIDTmp interface{}
+		_ = json.Unmarshal([]byte(surveyIDItem.ValueString()), &surveyIDTmp)
+		surveyID = append(surveyID, surveyIDTmp)
+	}
+	configuration := shared.SourceSurveySparrowUpdate{
+		AccessToken: accessToken,
+		Region:      region,
+		SurveyID:    surveyID,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceSurveySparrowPutRequest{
+		Configuration: configuration,
+		Name:          name,
 		WorkspaceID:   workspaceID,
 	}
 	return &out

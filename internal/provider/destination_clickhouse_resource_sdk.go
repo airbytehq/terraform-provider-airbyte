@@ -98,6 +98,95 @@ func (r *DestinationClickhouseResourceModel) ToCreateSDKType() *shared.Destinati
 	return &out
 }
 
+func (r *DestinationClickhouseResourceModel) ToUpdateSDKType() *shared.DestinationClickhousePutRequest {
+	database := r.Configuration.Database.ValueString()
+	host := r.Configuration.Host.ValueString()
+	jdbcURLParams := new(string)
+	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
+		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
+	} else {
+		jdbcURLParams = nil
+	}
+	password := new(string)
+	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
+		*password = r.Configuration.Password.ValueString()
+	} else {
+		password = nil
+	}
+	port := r.Configuration.Port.ValueInt64()
+	var tunnelMethod *shared.DestinationClickhouseUpdateSSHTunnelMethod
+	var destinationClickhouseUpdateSSHTunnelMethodNoTunnel *shared.DestinationClickhouseUpdateSSHTunnelMethodNoTunnel
+	if r.Configuration.TunnelMethod.DestinationClickhouseSSHTunnelMethodNoTunnel != nil {
+		tunnelMethod1 := shared.DestinationClickhouseUpdateSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.DestinationClickhouseSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
+		destinationClickhouseUpdateSSHTunnelMethodNoTunnel = &shared.DestinationClickhouseUpdateSSHTunnelMethodNoTunnel{
+			TunnelMethod: tunnelMethod1,
+		}
+	}
+	if destinationClickhouseUpdateSSHTunnelMethodNoTunnel != nil {
+		tunnelMethod = &shared.DestinationClickhouseUpdateSSHTunnelMethod{
+			DestinationClickhouseUpdateSSHTunnelMethodNoTunnel: destinationClickhouseUpdateSSHTunnelMethodNoTunnel,
+		}
+	}
+	var destinationClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication *shared.DestinationClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication
+	if r.Configuration.TunnelMethod.DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication != nil {
+		sshKey := r.Configuration.TunnelMethod.DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication.SSHKey.ValueString()
+		tunnelHost := r.Configuration.TunnelMethod.DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
+		tunnelMethod2 := shared.DestinationClickhouseUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
+		tunnelPort := r.Configuration.TunnelMethod.DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
+		tunnelUser := r.Configuration.TunnelMethod.DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
+		destinationClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication = &shared.DestinationClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication{
+			SSHKey:       sshKey,
+			TunnelHost:   tunnelHost,
+			TunnelMethod: tunnelMethod2,
+			TunnelPort:   tunnelPort,
+			TunnelUser:   tunnelUser,
+		}
+	}
+	if destinationClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication != nil {
+		tunnelMethod = &shared.DestinationClickhouseUpdateSSHTunnelMethod{
+			DestinationClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication: destinationClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication,
+		}
+	}
+	var destinationClickhouseUpdateSSHTunnelMethodPasswordAuthentication *shared.DestinationClickhouseUpdateSSHTunnelMethodPasswordAuthentication
+	if r.Configuration.TunnelMethod.DestinationClickhouseSSHTunnelMethodPasswordAuthentication != nil {
+		tunnelHost1 := r.Configuration.TunnelMethod.DestinationClickhouseSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
+		tunnelMethod3 := shared.DestinationClickhouseUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationClickhouseSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
+		tunnelPort1 := r.Configuration.TunnelMethod.DestinationClickhouseSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
+		tunnelUser1 := r.Configuration.TunnelMethod.DestinationClickhouseSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
+		tunnelUserPassword := r.Configuration.TunnelMethod.DestinationClickhouseSSHTunnelMethodPasswordAuthentication.TunnelUserPassword.ValueString()
+		destinationClickhouseUpdateSSHTunnelMethodPasswordAuthentication = &shared.DestinationClickhouseUpdateSSHTunnelMethodPasswordAuthentication{
+			TunnelHost:         tunnelHost1,
+			TunnelMethod:       tunnelMethod3,
+			TunnelPort:         tunnelPort1,
+			TunnelUser:         tunnelUser1,
+			TunnelUserPassword: tunnelUserPassword,
+		}
+	}
+	if destinationClickhouseUpdateSSHTunnelMethodPasswordAuthentication != nil {
+		tunnelMethod = &shared.DestinationClickhouseUpdateSSHTunnelMethod{
+			DestinationClickhouseUpdateSSHTunnelMethodPasswordAuthentication: destinationClickhouseUpdateSSHTunnelMethodPasswordAuthentication,
+		}
+	}
+	username := r.Configuration.Username.ValueString()
+	configuration := shared.DestinationClickhouseUpdate{
+		Database:      database,
+		Host:          host,
+		JdbcURLParams: jdbcURLParams,
+		Password:      password,
+		Port:          port,
+		TunnelMethod:  tunnelMethod,
+		Username:      username,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.DestinationClickhousePutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *DestinationClickhouseResourceModel) ToDeleteSDKType() *shared.DestinationClickhouseCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

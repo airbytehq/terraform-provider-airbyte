@@ -53,6 +53,50 @@ func (r *DestinationPubsubResourceModel) ToCreateSDKType() *shared.DestinationPu
 	return &out
 }
 
+func (r *DestinationPubsubResourceModel) ToUpdateSDKType() *shared.DestinationPubsubPutRequest {
+	batchingDelayThreshold := new(int64)
+	if !r.Configuration.BatchingDelayThreshold.IsUnknown() && !r.Configuration.BatchingDelayThreshold.IsNull() {
+		*batchingDelayThreshold = r.Configuration.BatchingDelayThreshold.ValueInt64()
+	} else {
+		batchingDelayThreshold = nil
+	}
+	batchingElementCountThreshold := new(int64)
+	if !r.Configuration.BatchingElementCountThreshold.IsUnknown() && !r.Configuration.BatchingElementCountThreshold.IsNull() {
+		*batchingElementCountThreshold = r.Configuration.BatchingElementCountThreshold.ValueInt64()
+	} else {
+		batchingElementCountThreshold = nil
+	}
+	batchingEnabled := r.Configuration.BatchingEnabled.ValueBool()
+	batchingRequestBytesThreshold := new(int64)
+	if !r.Configuration.BatchingRequestBytesThreshold.IsUnknown() && !r.Configuration.BatchingRequestBytesThreshold.IsNull() {
+		*batchingRequestBytesThreshold = r.Configuration.BatchingRequestBytesThreshold.ValueInt64()
+	} else {
+		batchingRequestBytesThreshold = nil
+	}
+	credentialsJSON := r.Configuration.CredentialsJSON.ValueString()
+	orderingEnabled := r.Configuration.OrderingEnabled.ValueBool()
+	projectID := r.Configuration.ProjectID.ValueString()
+	topicID := r.Configuration.TopicID.ValueString()
+	configuration := shared.DestinationPubsubUpdate{
+		BatchingDelayThreshold:        batchingDelayThreshold,
+		BatchingElementCountThreshold: batchingElementCountThreshold,
+		BatchingEnabled:               batchingEnabled,
+		BatchingRequestBytesThreshold: batchingRequestBytesThreshold,
+		CredentialsJSON:               credentialsJSON,
+		OrderingEnabled:               orderingEnabled,
+		ProjectID:                     projectID,
+		TopicID:                       topicID,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.DestinationPubsubPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *DestinationPubsubResourceModel) ToDeleteSDKType() *shared.DestinationPubsubCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

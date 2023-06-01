@@ -40,6 +40,30 @@ func (r *SourceQualarooResourceModel) ToCreateSDKType() *shared.SourceQualarooCr
 	return &out
 }
 
+func (r *SourceQualarooResourceModel) ToUpdateSDKType() *shared.SourceQualarooPutRequest {
+	key := r.Configuration.Key.ValueString()
+	startDate := r.Configuration.StartDate.ValueString()
+	surveyIds := make([]string, 0)
+	for _, surveyIdsItem := range r.Configuration.SurveyIds {
+		surveyIds = append(surveyIds, surveyIdsItem.ValueString())
+	}
+	token := r.Configuration.Token.ValueString()
+	configuration := shared.SourceQualarooUpdate{
+		Key:       key,
+		StartDate: startDate,
+		SurveyIds: surveyIds,
+		Token:     token,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceQualarooPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceQualarooResourceModel) ToDeleteSDKType() *shared.SourceQualarooCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

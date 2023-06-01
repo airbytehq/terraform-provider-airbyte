@@ -9,11 +9,6 @@ import (
 
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/boolplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -38,11 +33,11 @@ type DestinationPubsubResource struct {
 
 // DestinationPubsubResourceModel describes the resource data model.
 type DestinationPubsubResourceModel struct {
-	Configuration   DestinationPubsub `tfsdk:"configuration"`
-	DestinationID   types.String      `tfsdk:"destination_id"`
-	DestinationType types.String      `tfsdk:"destination_type"`
-	Name            types.String      `tfsdk:"name"`
-	WorkspaceID     types.String      `tfsdk:"workspace_id"`
+	Configuration   DestinationPubsubUpdate `tfsdk:"configuration"`
+	DestinationID   types.String            `tfsdk:"destination_id"`
+	DestinationType types.String            `tfsdk:"destination_type"`
+	Name            types.String            `tfsdk:"name"`
+	WorkspaceID     types.String            `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationPubsubResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -55,69 +50,39 @@ func (r *DestinationPubsubResource) Schema(ctx context.Context, req resource.Sch
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"batching_delay_threshold": schema.Int64Attribute{
-						PlanModifiers: []planmodifier.Int64{
-							int64planmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
 					"batching_element_count_threshold": schema.Int64Attribute{
-						PlanModifiers: []planmodifier.Int64{
-							int64planmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
 					"batching_enabled": schema.BoolAttribute{
-						PlanModifiers: []planmodifier.Bool{
-							boolplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"batching_request_bytes_threshold": schema.Int64Attribute{
-						PlanModifiers: []planmodifier.Int64{
-							int64planmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
 					"credentials_json": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
+						Required: true,
+					},
+					"ordering_enabled": schema.BoolAttribute{
+						Required: true,
+					},
+					"project_id": schema.StringAttribute{
+						Required: true,
+					},
+					"topic_id": schema.StringAttribute{
 						Required: true,
 					},
 					"destination_type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"pubsub",
 							),
 						},
-					},
-					"ordering_enabled": schema.BoolAttribute{
-						PlanModifiers: []planmodifier.Bool{
-							boolplanmodifier.RequiresReplace(),
-						},
-						Required: true,
-					},
-					"project_id": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
-						Required: true,
-					},
-					"topic_id": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
-						Required: true,
 					},
 				},
 			},
@@ -128,15 +93,9 @@ func (r *DestinationPubsubResource) Schema(ctx context.Context, req resource.Sch
 				Computed: true,
 			},
 			"name": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 			"workspace_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 		},
@@ -236,7 +195,25 @@ func (r *DestinationPubsubResource) Update(ctx context.Context, req resource.Upd
 		return
 	}
 
-	// Not Implemented; all attributes marked as RequiresReplace
+	destinationPubsubPutRequest := data.ToUpdateSDKType()
+	destinationID := data.DestinationID.ValueString()
+	request := operations.PutDestinationPubsubRequest{
+		DestinationPubsubPutRequest: destinationPubsubPutRequest,
+		DestinationID:               destinationID,
+	}
+	res, err := r.client.Destinations.PutDestinationPubsub(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode != 204 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

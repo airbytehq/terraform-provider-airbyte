@@ -48,6 +48,37 @@ func (r *SourceFreshdeskResourceModel) ToCreateSDKType() *shared.SourceFreshdesk
 	return &out
 }
 
+func (r *SourceFreshdeskResourceModel) ToUpdateSDKType() *shared.SourceFreshdeskPutRequest {
+	apiKey := r.Configuration.APIKey.ValueString()
+	domain := r.Configuration.Domain.ValueString()
+	requestsPerMinute := new(int64)
+	if !r.Configuration.RequestsPerMinute.IsUnknown() && !r.Configuration.RequestsPerMinute.IsNull() {
+		*requestsPerMinute = r.Configuration.RequestsPerMinute.ValueInt64()
+	} else {
+		requestsPerMinute = nil
+	}
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
+	configuration := shared.SourceFreshdeskUpdate{
+		APIKey:            apiKey,
+		Domain:            domain,
+		RequestsPerMinute: requestsPerMinute,
+		StartDate:         startDate,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceFreshdeskPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceFreshdeskResourceModel) ToDeleteSDKType() *shared.SourceFreshdeskCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

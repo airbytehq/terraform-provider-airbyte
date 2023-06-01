@@ -10,10 +10,6 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -56,64 +52,48 @@ func (r *SourceAzureBlobStorageResource) Schema(ctx context.Context, req resourc
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"azure_blob_storage_account_key": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"azure_blob_storage_account_name": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"azure_blob_storage_blobs_prefix": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
 					"azure_blob_storage_container_name": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"azure_blob_storage_endpoint": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
 					"azure_blob_storage_schema_inference_limit": schema.Int64Attribute{
-						PlanModifiers: []planmodifier.Int64{
-							int64planmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
 					"format": schema.SingleNestedAttribute{
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"source_azure_blob_storage_input_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"format_type": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"JSONL",
+											),
+										},
+									},
+								},
+								Description: `Input data format`,
+							},
+							"source_azure_blob_storage_update_input_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"format_type": schema.StringAttribute{
+										Computed: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"JSONL",
@@ -129,9 +109,6 @@ func (r *SourceAzureBlobStorageResource) Schema(ctx context.Context, req resourc
 						},
 					},
 					"source_type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -142,15 +119,9 @@ func (r *SourceAzureBlobStorageResource) Schema(ctx context.Context, req resourc
 				},
 			},
 			"name": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Optional: true,
 			},
 			"source_id": schema.StringAttribute{
@@ -160,9 +131,6 @@ func (r *SourceAzureBlobStorageResource) Schema(ctx context.Context, req resourc
 				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 		},
@@ -262,7 +230,25 @@ func (r *SourceAzureBlobStorageResource) Update(ctx context.Context, req resourc
 		return
 	}
 
-	// Not Implemented; all attributes marked as RequiresReplace
+	sourceAzureBlobStoragePutRequest := data.ToUpdateSDKType()
+	sourceID := data.SourceID.ValueString()
+	request := operations.PutSourceAzureBlobStorageRequest{
+		SourceAzureBlobStoragePutRequest: sourceAzureBlobStoragePutRequest,
+		SourceID:                         sourceID,
+	}
+	res, err := r.client.Sources.PutSourceAzureBlobStorage(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode != 204 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

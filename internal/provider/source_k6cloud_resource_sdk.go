@@ -31,6 +31,21 @@ func (r *SourceK6CloudResourceModel) ToCreateSDKType() *shared.SourceK6CloudCrea
 	return &out
 }
 
+func (r *SourceK6CloudResourceModel) ToUpdateSDKType() *shared.SourceK6CloudPutRequest {
+	apiToken := r.Configuration.APIToken.ValueString()
+	configuration := shared.SourceK6CloudUpdate{
+		APIToken: apiToken,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceK6CloudPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceK6CloudResourceModel) ToDeleteSDKType() *shared.SourceK6CloudCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

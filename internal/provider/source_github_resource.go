@@ -10,10 +10,6 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -38,12 +34,12 @@ type SourceGithubResource struct {
 
 // SourceGithubResourceModel describes the resource data model.
 type SourceGithubResourceModel struct {
-	Configuration SourceGithub `tfsdk:"configuration"`
-	Name          types.String `tfsdk:"name"`
-	SecretID      types.String `tfsdk:"secret_id"`
-	SourceID      types.String `tfsdk:"source_id"`
-	SourceType    types.String `tfsdk:"source_type"`
-	WorkspaceID   types.String `tfsdk:"workspace_id"`
+	Configuration SourceGithubUpdate `tfsdk:"configuration"`
+	Name          types.String       `tfsdk:"name"`
+	SecretID      types.String       `tfsdk:"secret_id"`
+	SourceID      types.String       `tfsdk:"source_id"`
+	SourceType    types.String       `tfsdk:"source_type"`
+	WorkspaceID   types.String       `tfsdk:"workspace_id"`
 }
 
 func (r *SourceGithubResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -56,39 +52,55 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"branch": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
 					"credentials": schema.SingleNestedAttribute{
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_github_authentication_o_auth": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
+							"source_github_update_authentication_o_auth": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"access_token": schema.StringAttribute{
+										Computed: true,
+									},
+									"option_title": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"OAuth Credentials",
+											),
+										},
+									},
 								},
+								Description: `Choose how to authenticate to GitHub`,
+							},
+							"source_github_update_authentication_personal_access_token": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"option_title": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"PAT Credentials",
+											),
+										},
+									},
+									"personal_access_token": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+								Description: `Choose how to authenticate to GitHub`,
+							},
+							"source_github_authentication_o_auth": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"option_title": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -100,15 +112,9 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 								Description: `Choose how to authenticate to GitHub`,
 							},
 							"source_github_authentication_personal_access_token": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"option_title": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -117,9 +123,6 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 										},
 									},
 									"personal_access_token": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 								},
@@ -130,28 +133,19 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 							validators.ExactlyOneChild(),
 						},
 					},
-					"page_size_for_large_streams": schema.Int64Attribute{
-						PlanModifiers: []planmodifier.Int64{
-							int64planmodifier.RequiresReplace(),
-						},
-						Optional: true,
-					},
 					"repository": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"requests_per_hour": schema.Int64Attribute{
-						PlanModifiers: []planmodifier.Int64{
-							int64planmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
-					"source_type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
+					"start_date": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							validators.IsRFC3339(),
 						},
+					},
+					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -159,27 +153,12 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 							),
 						},
 					},
-					"start_date": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
-						Required: true,
-						Validators: []validator.String{
-							validators.IsRFC3339(),
-						},
-					},
 				},
 			},
 			"name": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Optional: true,
 			},
 			"source_id": schema.StringAttribute{
@@ -189,9 +168,6 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 		},
@@ -291,7 +267,25 @@ func (r *SourceGithubResource) Update(ctx context.Context, req resource.UpdateRe
 		return
 	}
 
-	// Not Implemented; all attributes marked as RequiresReplace
+	sourceGithubPutRequest := data.ToUpdateSDKType()
+	sourceID := data.SourceID.ValueString()
+	request := operations.PutSourceGithubRequest{
+		SourceGithubPutRequest: sourceGithubPutRequest,
+		SourceID:               sourceID,
+	}
+	res, err := r.client.Sources.PutSourceGithub(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode != 204 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

@@ -40,6 +40,30 @@ func (r *SourceUsCensusResourceModel) ToCreateSDKType() *shared.SourceUsCensusCr
 	return &out
 }
 
+func (r *SourceUsCensusResourceModel) ToUpdateSDKType() *shared.SourceUsCensusPutRequest {
+	apiKey := r.Configuration.APIKey.ValueString()
+	queryParams := new(string)
+	if !r.Configuration.QueryParams.IsUnknown() && !r.Configuration.QueryParams.IsNull() {
+		*queryParams = r.Configuration.QueryParams.ValueString()
+	} else {
+		queryParams = nil
+	}
+	queryPath := r.Configuration.QueryPath.ValueString()
+	configuration := shared.SourceUsCensusUpdate{
+		APIKey:      apiKey,
+		QueryParams: queryParams,
+		QueryPath:   queryPath,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceUsCensusPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceUsCensusResourceModel) ToDeleteSDKType() *shared.SourceUsCensusCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

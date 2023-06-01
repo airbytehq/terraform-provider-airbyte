@@ -11,13 +11,13 @@ import (
 func (r *SourceSalesloftResourceModel) ToCreateSDKType() *shared.SourceSalesloftCreateRequest {
 	var credentials shared.SourceSalesloftCredentials
 	var sourceSalesloftCredentialsAuthenticateViaOAuth *shared.SourceSalesloftCredentialsAuthenticateViaOAuth
-	if r.Configuration.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth != nil {
-		accessToken := r.Configuration.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.AccessToken.ValueString()
-		authType := shared.SourceSalesloftCredentialsAuthenticateViaOAuthAuthType(r.Configuration.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.AuthType.ValueString())
-		clientID := r.Configuration.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.ClientID.ValueString()
-		clientSecret := r.Configuration.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.ClientSecret.ValueString()
-		refreshToken := r.Configuration.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.RefreshToken.ValueString()
-		tokenExpiryDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.Credentials.SourceSalesloftCredentialsAuthenticateViaOAuth.TokenExpiryDate.ValueString())
+	if r.Configuration.Credentials.SourceSalesloftUpdateCredentialsAuthenticateViaOAuth != nil {
+		accessToken := r.Configuration.Credentials.SourceSalesloftUpdateCredentialsAuthenticateViaOAuth.AccessToken.ValueString()
+		authType := shared.SourceSalesloftCredentialsAuthenticateViaOAuthAuthType(r.Configuration.Credentials.SourceSalesloftUpdateCredentialsAuthenticateViaOAuth.AuthType.ValueString())
+		clientID := r.Configuration.Credentials.SourceSalesloftUpdateCredentialsAuthenticateViaOAuth.ClientID.ValueString()
+		clientSecret := r.Configuration.Credentials.SourceSalesloftUpdateCredentialsAuthenticateViaOAuth.ClientSecret.ValueString()
+		refreshToken := r.Configuration.Credentials.SourceSalesloftUpdateCredentialsAuthenticateViaOAuth.RefreshToken.ValueString()
+		tokenExpiryDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.Credentials.SourceSalesloftUpdateCredentialsAuthenticateViaOAuth.TokenExpiryDate.ValueString())
 		sourceSalesloftCredentialsAuthenticateViaOAuth = &shared.SourceSalesloftCredentialsAuthenticateViaOAuth{
 			AccessToken:     accessToken,
 			AuthType:        authType,
@@ -33,9 +33,9 @@ func (r *SourceSalesloftResourceModel) ToCreateSDKType() *shared.SourceSalesloft
 		}
 	}
 	var sourceSalesloftCredentialsAuthenticateViaAPIKey *shared.SourceSalesloftCredentialsAuthenticateViaAPIKey
-	if r.Configuration.Credentials.SourceSalesloftCredentialsAuthenticateViaAPIKey != nil {
-		apiKey := r.Configuration.Credentials.SourceSalesloftCredentialsAuthenticateViaAPIKey.APIKey.ValueString()
-		authType1 := shared.SourceSalesloftCredentialsAuthenticateViaAPIKeyAuthType(r.Configuration.Credentials.SourceSalesloftCredentialsAuthenticateViaAPIKey.AuthType.ValueString())
+	if r.Configuration.Credentials.SourceSalesloftUpdateCredentialsAuthenticateViaAPIKey != nil {
+		apiKey := r.Configuration.Credentials.SourceSalesloftUpdateCredentialsAuthenticateViaAPIKey.APIKey.ValueString()
+		authType1 := shared.SourceSalesloftCredentialsAuthenticateViaAPIKeyAuthType(r.Configuration.Credentials.SourceSalesloftUpdateCredentialsAuthenticateViaAPIKey.AuthType.ValueString())
 		sourceSalesloftCredentialsAuthenticateViaAPIKey = &shared.SourceSalesloftCredentialsAuthenticateViaAPIKey{
 			APIKey:   apiKey,
 			AuthType: authType1,
@@ -65,6 +65,59 @@ func (r *SourceSalesloftResourceModel) ToCreateSDKType() *shared.SourceSalesloft
 		Configuration: configuration,
 		Name:          name,
 		SecretID:      secretID,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
+func (r *SourceSalesloftResourceModel) ToUpdateSDKType() *shared.SourceSalesloftPutRequest {
+	var credentials shared.SourceSalesloftUpdateCredentials
+	var sourceSalesloftUpdateCredentialsAuthenticateViaOAuth *shared.SourceSalesloftUpdateCredentialsAuthenticateViaOAuth
+	if r.Configuration.Credentials.SourceSalesloftUpdateCredentialsAuthenticateViaOAuth != nil {
+		accessToken := r.Configuration.Credentials.SourceSalesloftUpdateCredentialsAuthenticateViaOAuth.AccessToken.ValueString()
+		authType := shared.SourceSalesloftUpdateCredentialsAuthenticateViaOAuthAuthType(r.Configuration.Credentials.SourceSalesloftUpdateCredentialsAuthenticateViaOAuth.AuthType.ValueString())
+		clientID := r.Configuration.Credentials.SourceSalesloftUpdateCredentialsAuthenticateViaOAuth.ClientID.ValueString()
+		clientSecret := r.Configuration.Credentials.SourceSalesloftUpdateCredentialsAuthenticateViaOAuth.ClientSecret.ValueString()
+		refreshToken := r.Configuration.Credentials.SourceSalesloftUpdateCredentialsAuthenticateViaOAuth.RefreshToken.ValueString()
+		tokenExpiryDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.Credentials.SourceSalesloftUpdateCredentialsAuthenticateViaOAuth.TokenExpiryDate.ValueString())
+		sourceSalesloftUpdateCredentialsAuthenticateViaOAuth = &shared.SourceSalesloftUpdateCredentialsAuthenticateViaOAuth{
+			AccessToken:     accessToken,
+			AuthType:        authType,
+			ClientID:        clientID,
+			ClientSecret:    clientSecret,
+			RefreshToken:    refreshToken,
+			TokenExpiryDate: tokenExpiryDate,
+		}
+	}
+	if sourceSalesloftUpdateCredentialsAuthenticateViaOAuth != nil {
+		credentials = shared.SourceSalesloftUpdateCredentials{
+			SourceSalesloftUpdateCredentialsAuthenticateViaOAuth: sourceSalesloftUpdateCredentialsAuthenticateViaOAuth,
+		}
+	}
+	var sourceSalesloftUpdateCredentialsAuthenticateViaAPIKey *shared.SourceSalesloftUpdateCredentialsAuthenticateViaAPIKey
+	if r.Configuration.Credentials.SourceSalesloftUpdateCredentialsAuthenticateViaAPIKey != nil {
+		apiKey := r.Configuration.Credentials.SourceSalesloftUpdateCredentialsAuthenticateViaAPIKey.APIKey.ValueString()
+		authType1 := shared.SourceSalesloftUpdateCredentialsAuthenticateViaAPIKeyAuthType(r.Configuration.Credentials.SourceSalesloftUpdateCredentialsAuthenticateViaAPIKey.AuthType.ValueString())
+		sourceSalesloftUpdateCredentialsAuthenticateViaAPIKey = &shared.SourceSalesloftUpdateCredentialsAuthenticateViaAPIKey{
+			APIKey:   apiKey,
+			AuthType: authType1,
+		}
+	}
+	if sourceSalesloftUpdateCredentialsAuthenticateViaAPIKey != nil {
+		credentials = shared.SourceSalesloftUpdateCredentials{
+			SourceSalesloftUpdateCredentialsAuthenticateViaAPIKey: sourceSalesloftUpdateCredentialsAuthenticateViaAPIKey,
+		}
+	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	configuration := shared.SourceSalesloftUpdate{
+		Credentials: credentials,
+		StartDate:   startDate,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceSalesloftPutRequest{
+		Configuration: configuration,
+		Name:          name,
 		WorkspaceID:   workspaceID,
 	}
 	return &out

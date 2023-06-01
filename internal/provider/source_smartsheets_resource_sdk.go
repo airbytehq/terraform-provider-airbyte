@@ -87,6 +87,76 @@ func (r *SourceSmartsheetsResourceModel) ToCreateSDKType() *shared.SourceSmartsh
 	return &out
 }
 
+func (r *SourceSmartsheetsResourceModel) ToUpdateSDKType() *shared.SourceSmartsheetsPutRequest {
+	var credentials shared.SourceSmartsheetsUpdateAuthorizationMethod
+	var sourceSmartsheetsUpdateAuthorizationMethodOAuth20 *shared.SourceSmartsheetsUpdateAuthorizationMethodOAuth20
+	if r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20 != nil {
+		accessToken := r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.AccessToken.ValueString()
+		authType := new(shared.SourceSmartsheetsUpdateAuthorizationMethodOAuth20AuthType)
+		if !r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.AuthType.IsNull() {
+			*authType = shared.SourceSmartsheetsUpdateAuthorizationMethodOAuth20AuthType(r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.AuthType.ValueString())
+		} else {
+			authType = nil
+		}
+		clientID := r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.ClientID.ValueString()
+		clientSecret := r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.ClientSecret.ValueString()
+		refreshToken := r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.RefreshToken.ValueString()
+		tokenExpiryDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodOAuth20.TokenExpiryDate.ValueString())
+		sourceSmartsheetsUpdateAuthorizationMethodOAuth20 = &shared.SourceSmartsheetsUpdateAuthorizationMethodOAuth20{
+			AccessToken:     accessToken,
+			AuthType:        authType,
+			ClientID:        clientID,
+			ClientSecret:    clientSecret,
+			RefreshToken:    refreshToken,
+			TokenExpiryDate: tokenExpiryDate,
+		}
+	}
+	if sourceSmartsheetsUpdateAuthorizationMethodOAuth20 != nil {
+		credentials = shared.SourceSmartsheetsUpdateAuthorizationMethod{
+			SourceSmartsheetsUpdateAuthorizationMethodOAuth20: sourceSmartsheetsUpdateAuthorizationMethodOAuth20,
+		}
+	}
+	var sourceSmartsheetsUpdateAuthorizationMethodAPIAccessToken *shared.SourceSmartsheetsUpdateAuthorizationMethodAPIAccessToken
+	if r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodAPIAccessToken != nil {
+		accessToken1 := r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodAPIAccessToken.AccessToken.ValueString()
+		authType1 := new(shared.SourceSmartsheetsUpdateAuthorizationMethodAPIAccessTokenAuthType)
+		if !r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodAPIAccessToken.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodAPIAccessToken.AuthType.IsNull() {
+			*authType1 = shared.SourceSmartsheetsUpdateAuthorizationMethodAPIAccessTokenAuthType(r.Configuration.Credentials.SourceSmartsheetsAuthorizationMethodAPIAccessToken.AuthType.ValueString())
+		} else {
+			authType1 = nil
+		}
+		sourceSmartsheetsUpdateAuthorizationMethodAPIAccessToken = &shared.SourceSmartsheetsUpdateAuthorizationMethodAPIAccessToken{
+			AccessToken: accessToken1,
+			AuthType:    authType1,
+		}
+	}
+	if sourceSmartsheetsUpdateAuthorizationMethodAPIAccessToken != nil {
+		credentials = shared.SourceSmartsheetsUpdateAuthorizationMethod{
+			SourceSmartsheetsUpdateAuthorizationMethodAPIAccessToken: sourceSmartsheetsUpdateAuthorizationMethodAPIAccessToken,
+		}
+	}
+	spreadsheetID := r.Configuration.SpreadsheetID.ValueString()
+	startDatetime := new(time.Time)
+	if !r.Configuration.StartDatetime.IsUnknown() && !r.Configuration.StartDatetime.IsNull() {
+		*startDatetime, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDatetime.ValueString())
+	} else {
+		startDatetime = nil
+	}
+	configuration := shared.SourceSmartsheetsUpdate{
+		Credentials:   credentials,
+		SpreadsheetID: spreadsheetID,
+		StartDatetime: startDatetime,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceSmartsheetsPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceSmartsheetsResourceModel) ToDeleteSDKType() *shared.SourceSmartsheetsCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

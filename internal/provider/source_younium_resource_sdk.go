@@ -42,6 +42,32 @@ func (r *SourceYouniumResourceModel) ToCreateSDKType() *shared.SourceYouniumCrea
 	return &out
 }
 
+func (r *SourceYouniumResourceModel) ToUpdateSDKType() *shared.SourceYouniumPutRequest {
+	legalEntity := r.Configuration.LegalEntity.ValueString()
+	password := r.Configuration.Password.ValueString()
+	playground := new(bool)
+	if !r.Configuration.Playground.IsUnknown() && !r.Configuration.Playground.IsNull() {
+		*playground = r.Configuration.Playground.ValueBool()
+	} else {
+		playground = nil
+	}
+	username := r.Configuration.Username.ValueString()
+	configuration := shared.SourceYouniumUpdate{
+		LegalEntity: legalEntity,
+		Password:    password,
+		Playground:  playground,
+		Username:    username,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceYouniumPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceYouniumResourceModel) ToDeleteSDKType() *shared.SourceYouniumCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

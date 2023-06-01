@@ -33,6 +33,23 @@ func (r *SourceWebflowResourceModel) ToCreateSDKType() *shared.SourceWebflowCrea
 	return &out
 }
 
+func (r *SourceWebflowResourceModel) ToUpdateSDKType() *shared.SourceWebflowPutRequest {
+	apiKey := r.Configuration.APIKey.ValueString()
+	siteID := r.Configuration.SiteID.ValueString()
+	configuration := shared.SourceWebflowUpdate{
+		APIKey: apiKey,
+		SiteID: siteID,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceWebflowPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceWebflowResourceModel) ToDeleteSDKType() *shared.SourceWebflowCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

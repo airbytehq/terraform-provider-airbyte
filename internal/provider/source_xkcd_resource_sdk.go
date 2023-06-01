@@ -29,6 +29,16 @@ func (r *SourceXkcdResourceModel) ToCreateSDKType() *shared.SourceXkcdCreateRequ
 	return &out
 }
 
+func (r *SourceXkcdResourceModel) ToUpdateSDKType() *shared.SourceXkcdPutRequest {
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceXkcdPutRequest{
+		Name:        name,
+		WorkspaceID: workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceXkcdResourceModel) ToDeleteSDKType() *shared.SourceXkcdCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

@@ -33,6 +33,30 @@ func (r *DestinationRocksetResourceModel) ToCreateSDKType() *shared.DestinationR
 	return &out
 }
 
+func (r *DestinationRocksetResourceModel) ToUpdateSDKType() *shared.DestinationRocksetPutRequest {
+	apiKey := r.Configuration.APIKey.ValueString()
+	apiServer := new(string)
+	if !r.Configuration.APIServer.IsUnknown() && !r.Configuration.APIServer.IsNull() {
+		*apiServer = r.Configuration.APIServer.ValueString()
+	} else {
+		apiServer = nil
+	}
+	workspace := r.Configuration.Workspace.ValueString()
+	configuration := shared.DestinationRocksetUpdate{
+		APIKey:    apiKey,
+		APIServer: apiServer,
+		Workspace: workspace,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.DestinationRocksetPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *DestinationRocksetResourceModel) ToDeleteSDKType() *shared.DestinationRocksetCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

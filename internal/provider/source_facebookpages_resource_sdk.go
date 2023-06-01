@@ -33,6 +33,23 @@ func (r *SourceFacebookPagesResourceModel) ToCreateSDKType() *shared.SourceFaceb
 	return &out
 }
 
+func (r *SourceFacebookPagesResourceModel) ToUpdateSDKType() *shared.SourceFacebookPagesPutRequest {
+	accessToken := r.Configuration.AccessToken.ValueString()
+	pageID := r.Configuration.PageID.ValueString()
+	configuration := shared.SourceFacebookPagesUpdate{
+		AccessToken: accessToken,
+		PageID:      pageID,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceFacebookPagesPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceFacebookPagesResourceModel) ToDeleteSDKType() *shared.SourceFacebookPagesCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

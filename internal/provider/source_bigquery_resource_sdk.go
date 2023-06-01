@@ -40,6 +40,30 @@ func (r *SourceBigqueryResourceModel) ToCreateSDKType() *shared.SourceBigqueryCr
 	return &out
 }
 
+func (r *SourceBigqueryResourceModel) ToUpdateSDKType() *shared.SourceBigqueryPutRequest {
+	credentialsJSON := r.Configuration.CredentialsJSON.ValueString()
+	datasetID := new(string)
+	if !r.Configuration.DatasetID.IsUnknown() && !r.Configuration.DatasetID.IsNull() {
+		*datasetID = r.Configuration.DatasetID.ValueString()
+	} else {
+		datasetID = nil
+	}
+	projectID := r.Configuration.ProjectID.ValueString()
+	configuration := shared.SourceBigqueryUpdate{
+		CredentialsJSON: credentialsJSON,
+		DatasetID:       datasetID,
+		ProjectID:       projectID,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceBigqueryPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceBigqueryResourceModel) ToDeleteSDKType() *shared.SourceBigqueryCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

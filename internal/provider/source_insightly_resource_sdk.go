@@ -33,6 +33,23 @@ func (r *SourceInsightlyResourceModel) ToCreateSDKType() *shared.SourceInsightly
 	return &out
 }
 
+func (r *SourceInsightlyResourceModel) ToUpdateSDKType() *shared.SourceInsightlyPutRequest {
+	startDate := r.Configuration.StartDate.ValueString()
+	token := r.Configuration.Token.ValueString()
+	configuration := shared.SourceInsightlyUpdate{
+		StartDate: startDate,
+		Token:     token,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceInsightlyPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceInsightlyResourceModel) ToDeleteSDKType() *shared.SourceInsightlyCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

@@ -10,9 +10,6 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -37,12 +34,12 @@ type SourceYoutubeAnalyticsResource struct {
 
 // SourceYoutubeAnalyticsResourceModel describes the resource data model.
 type SourceYoutubeAnalyticsResourceModel struct {
-	Configuration SourceYoutubeAnalytics `tfsdk:"configuration"`
-	Name          types.String           `tfsdk:"name"`
-	SecretID      types.String           `tfsdk:"secret_id"`
-	SourceID      types.String           `tfsdk:"source_id"`
-	SourceType    types.String           `tfsdk:"source_type"`
-	WorkspaceID   types.String           `tfsdk:"workspace_id"`
+	Configuration SourceYoutubeAnalyticsUpdate `tfsdk:"configuration"`
+	Name          types.String                 `tfsdk:"name"`
+	SecretID      types.String                 `tfsdk:"secret_id"`
+	SourceID      types.String                 `tfsdk:"source_id"`
+	SourceType    types.String                 `tfsdk:"source_type"`
+	WorkspaceID   types.String                 `tfsdk:"workspace_id"`
 }
 
 func (r *SourceYoutubeAnalyticsResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -55,33 +52,18 @@ func (r *SourceYoutubeAnalyticsResource) Schema(ctx context.Context, req resourc
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"credentials": schema.SingleNestedAttribute{
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"client_id": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
 								Required: true,
 							},
 							"client_secret": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
 								Required: true,
 							},
 							"refresh_token": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
 								Required: true,
 							},
 							"additional_properties": schema.StringAttribute{
@@ -94,9 +76,6 @@ func (r *SourceYoutubeAnalyticsResource) Schema(ctx context.Context, req resourc
 						},
 					},
 					"source_type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -107,15 +86,9 @@ func (r *SourceYoutubeAnalyticsResource) Schema(ctx context.Context, req resourc
 				},
 			},
 			"name": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Optional: true,
 			},
 			"source_id": schema.StringAttribute{
@@ -125,9 +98,6 @@ func (r *SourceYoutubeAnalyticsResource) Schema(ctx context.Context, req resourc
 				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 		},
@@ -227,7 +197,25 @@ func (r *SourceYoutubeAnalyticsResource) Update(ctx context.Context, req resourc
 		return
 	}
 
-	// Not Implemented; all attributes marked as RequiresReplace
+	sourceYoutubeAnalyticsPutRequest := data.ToUpdateSDKType()
+	sourceID := data.SourceID.ValueString()
+	request := operations.PutSourceYoutubeAnalyticsRequest{
+		SourceYoutubeAnalyticsPutRequest: sourceYoutubeAnalyticsPutRequest,
+		SourceID:                         sourceID,
+	}
+	res, err := r.client.Sources.PutSourceYoutubeAnalytics(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode != 204 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

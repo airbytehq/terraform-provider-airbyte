@@ -31,6 +31,21 @@ func (r *SourceTodoistResourceModel) ToCreateSDKType() *shared.SourceTodoistCrea
 	return &out
 }
 
+func (r *SourceTodoistResourceModel) ToUpdateSDKType() *shared.SourceTodoistPutRequest {
+	token := r.Configuration.Token.ValueString()
+	configuration := shared.SourceTodoistUpdate{
+		Token: token,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceTodoistPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceTodoistResourceModel) ToDeleteSDKType() *shared.SourceTodoistCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

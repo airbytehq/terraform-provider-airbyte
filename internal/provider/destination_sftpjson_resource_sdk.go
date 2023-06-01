@@ -37,6 +37,34 @@ func (r *DestinationSftpJSONResourceModel) ToCreateSDKType() *shared.Destination
 	return &out
 }
 
+func (r *DestinationSftpJSONResourceModel) ToUpdateSDKType() *shared.DestinationSftpJSONPutRequest {
+	destinationPath := r.Configuration.DestinationPath.ValueString()
+	host := r.Configuration.Host.ValueString()
+	password := r.Configuration.Password.ValueString()
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
+	} else {
+		port = nil
+	}
+	username := r.Configuration.Username.ValueString()
+	configuration := shared.DestinationSftpJSONUpdate{
+		DestinationPath: destinationPath,
+		Host:            host,
+		Password:        password,
+		Port:            port,
+		Username:        username,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.DestinationSftpJSONPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *DestinationSftpJSONResourceModel) ToDeleteSDKType() *shared.DestinationSftpJSONCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

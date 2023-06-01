@@ -9,9 +9,6 @@ import (
 
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -36,11 +33,11 @@ type DestinationRocksetResource struct {
 
 // DestinationRocksetResourceModel describes the resource data model.
 type DestinationRocksetResourceModel struct {
-	Configuration   DestinationRockset `tfsdk:"configuration"`
-	DestinationID   types.String       `tfsdk:"destination_id"`
-	DestinationType types.String       `tfsdk:"destination_type"`
-	Name            types.String       `tfsdk:"name"`
-	WorkspaceID     types.String       `tfsdk:"workspace_id"`
+	Configuration   DestinationRocksetUpdate `tfsdk:"configuration"`
+	DestinationID   types.String             `tfsdk:"destination_id"`
+	DestinationType types.String             `tfsdk:"destination_type"`
+	Name            types.String             `tfsdk:"name"`
+	WorkspaceID     types.String             `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationRocksetResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -53,39 +50,24 @@ func (r *DestinationRocksetResource) Schema(ctx context.Context, req resource.Sc
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"api_key": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"api_server": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
+					"workspace": schema.StringAttribute{
+						Required: true,
+					},
 					"destination_type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"rockset",
 							),
 						},
-					},
-					"workspace": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
-						Required: true,
 					},
 				},
 			},
@@ -96,15 +78,9 @@ func (r *DestinationRocksetResource) Schema(ctx context.Context, req resource.Sc
 				Computed: true,
 			},
 			"name": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 			"workspace_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 		},
@@ -204,7 +180,25 @@ func (r *DestinationRocksetResource) Update(ctx context.Context, req resource.Up
 		return
 	}
 
-	// Not Implemented; all attributes marked as RequiresReplace
+	destinationRocksetPutRequest := data.ToUpdateSDKType()
+	destinationID := data.DestinationID.ValueString()
+	request := operations.PutDestinationRocksetRequest{
+		DestinationRocksetPutRequest: destinationRocksetPutRequest,
+		DestinationID:                destinationID,
+	}
+	res, err := r.client.Destinations.PutDestinationRockset(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode != 204 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

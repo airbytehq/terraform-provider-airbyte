@@ -169,8 +169,6 @@ type SourceGithub struct {
 	Branch *string `json:"branch,omitempty"`
 	// Choose how to authenticate to GitHub
 	Credentials *SourceGithubAuthentication `json:"credentials,omitempty"`
-	// The Github connector contains several streams with a large amount of data. The page size of such streams depends on the size of your repository. We recommended that you specify values between 10 and 30.
-	PageSizeForLargeStreams *int64 `json:"page_size_for_large_streams,omitempty"`
 	// Space-delimited list of GitHub organizations/repositories, e.g. `airbytehq/airbyte` for single repository, `airbytehq/*` for get all repositories from organization and `airbytehq/airbyte airbytehq/another-repo` for multiple repositories.
 	Repository string `json:"repository"`
 	// The GitHub API allows for a maximum of 5000 requests per hour (15000 for Github Enterprise). You can specify a lower value to limit your use of the API quota.

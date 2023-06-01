@@ -10,9 +10,6 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -37,12 +34,12 @@ type SourceRetentlyResource struct {
 
 // SourceRetentlyResourceModel describes the resource data model.
 type SourceRetentlyResourceModel struct {
-	Configuration SourceRetently `tfsdk:"configuration"`
-	Name          types.String   `tfsdk:"name"`
-	SecretID      types.String   `tfsdk:"secret_id"`
-	SourceID      types.String   `tfsdk:"source_id"`
-	SourceType    types.String   `tfsdk:"source_type"`
-	WorkspaceID   types.String   `tfsdk:"workspace_id"`
+	Configuration SourceRetentlyUpdate `tfsdk:"configuration"`
+	Name          types.String         `tfsdk:"name"`
+	SecretID      types.String         `tfsdk:"secret_id"`
+	SourceID      types.String         `tfsdk:"source_id"`
+	SourceType    types.String         `tfsdk:"source_type"`
+	WorkspaceID   types.String         `tfsdk:"workspace_id"`
 }
 
 func (r *SourceRetentlyResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -55,27 +52,69 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"credentials": schema.SingleNestedAttribute{
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_retently_authentication_mechanism_authenticate_via_retently_o_auth_": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
+							"source_retently_update_authentication_mechanism_authenticate_via_retently_o_auth_": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"auth_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Client",
+											),
+										},
+									},
+									"client_id": schema.StringAttribute{
+										Computed: true,
+									},
+									"client_secret": schema.StringAttribute{
+										Computed: true,
+									},
+									"refresh_token": schema.StringAttribute{
+										Computed: true,
+									},
+									"additional_properties": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+										Description: `Parsed as JSON.`,
+									},
 								},
+								Description: `Choose how to authenticate to Retently`,
+							},
+							"source_retently_update_authentication_mechanism_authenticate_with_api_token": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"api_key": schema.StringAttribute{
+										Computed: true,
+									},
+									"auth_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Token",
+											),
+										},
+									},
+									"additional_properties": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+										Description: `Parsed as JSON.`,
+									},
+								},
+								Description: `Choose how to authenticate to Retently`,
+							},
+							"source_retently_authentication_mechanism_authenticate_via_retently_o_auth_": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -84,21 +123,12 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 										},
 									},
 									"client_id": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"client_secret": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"refresh_token": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"additional_properties": schema.StringAttribute{
@@ -112,21 +142,12 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 								Description: `Choose how to authenticate to Retently`,
 							},
 							"source_retently_authentication_mechanism_authenticate_with_api_token": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_key": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"auth_type": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -150,9 +171,6 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 						},
 					},
 					"source_type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -163,15 +181,9 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 				},
 			},
 			"name": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Optional: true,
 			},
 			"source_id": schema.StringAttribute{
@@ -181,9 +193,6 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 		},
@@ -283,7 +292,25 @@ func (r *SourceRetentlyResource) Update(ctx context.Context, req resource.Update
 		return
 	}
 
-	// Not Implemented; all attributes marked as RequiresReplace
+	sourceRetentlyPutRequest := data.ToUpdateSDKType()
+	sourceID := data.SourceID.ValueString()
+	request := operations.PutSourceRetentlyRequest{
+		SourceRetentlyPutRequest: sourceRetentlyPutRequest,
+		SourceID:                 sourceID,
+	}
+	res, err := r.client.Sources.PutSourceRetently(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode != 204 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

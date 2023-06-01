@@ -56,6 +56,46 @@ func (r *SourceFireboltResourceModel) ToCreateSDKType() *shared.SourceFireboltCr
 	return &out
 }
 
+func (r *SourceFireboltResourceModel) ToUpdateSDKType() *shared.SourceFireboltPutRequest {
+	account := new(string)
+	if !r.Configuration.Account.IsUnknown() && !r.Configuration.Account.IsNull() {
+		*account = r.Configuration.Account.ValueString()
+	} else {
+		account = nil
+	}
+	database := r.Configuration.Database.ValueString()
+	engine := new(string)
+	if !r.Configuration.Engine.IsUnknown() && !r.Configuration.Engine.IsNull() {
+		*engine = r.Configuration.Engine.ValueString()
+	} else {
+		engine = nil
+	}
+	host := new(string)
+	if !r.Configuration.Host.IsUnknown() && !r.Configuration.Host.IsNull() {
+		*host = r.Configuration.Host.ValueString()
+	} else {
+		host = nil
+	}
+	password := r.Configuration.Password.ValueString()
+	username := r.Configuration.Username.ValueString()
+	configuration := shared.SourceFireboltUpdate{
+		Account:  account,
+		Database: database,
+		Engine:   engine,
+		Host:     host,
+		Password: password,
+		Username: username,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceFireboltPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceFireboltResourceModel) ToDeleteSDKType() *shared.SourceFireboltCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

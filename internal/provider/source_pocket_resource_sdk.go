@@ -96,6 +96,86 @@ func (r *SourcePocketResourceModel) ToCreateSDKType() *shared.SourcePocketCreate
 	return &out
 }
 
+func (r *SourcePocketResourceModel) ToUpdateSDKType() *shared.SourcePocketPutRequest {
+	accessToken := r.Configuration.AccessToken.ValueString()
+	consumerKey := r.Configuration.ConsumerKey.ValueString()
+	contentType := new(shared.SourcePocketUpdateContentType)
+	if !r.Configuration.ContentType.IsUnknown() && !r.Configuration.ContentType.IsNull() {
+		*contentType = shared.SourcePocketUpdateContentType(r.Configuration.ContentType.ValueString())
+	} else {
+		contentType = nil
+	}
+	detailType := new(shared.SourcePocketUpdateDetailType)
+	if !r.Configuration.DetailType.IsUnknown() && !r.Configuration.DetailType.IsNull() {
+		*detailType = shared.SourcePocketUpdateDetailType(r.Configuration.DetailType.ValueString())
+	} else {
+		detailType = nil
+	}
+	domain := new(string)
+	if !r.Configuration.Domain.IsUnknown() && !r.Configuration.Domain.IsNull() {
+		*domain = r.Configuration.Domain.ValueString()
+	} else {
+		domain = nil
+	}
+	favorite := new(bool)
+	if !r.Configuration.Favorite.IsUnknown() && !r.Configuration.Favorite.IsNull() {
+		*favorite = r.Configuration.Favorite.ValueBool()
+	} else {
+		favorite = nil
+	}
+	search := new(string)
+	if !r.Configuration.Search.IsUnknown() && !r.Configuration.Search.IsNull() {
+		*search = r.Configuration.Search.ValueString()
+	} else {
+		search = nil
+	}
+	since := new(string)
+	if !r.Configuration.Since.IsUnknown() && !r.Configuration.Since.IsNull() {
+		*since = r.Configuration.Since.ValueString()
+	} else {
+		since = nil
+	}
+	sort := new(shared.SourcePocketUpdateSortBy)
+	if !r.Configuration.Sort.IsUnknown() && !r.Configuration.Sort.IsNull() {
+		*sort = shared.SourcePocketUpdateSortBy(r.Configuration.Sort.ValueString())
+	} else {
+		sort = nil
+	}
+	state := new(shared.SourcePocketUpdateState)
+	if !r.Configuration.State.IsUnknown() && !r.Configuration.State.IsNull() {
+		*state = shared.SourcePocketUpdateState(r.Configuration.State.ValueString())
+	} else {
+		state = nil
+	}
+	tag := new(string)
+	if !r.Configuration.Tag.IsUnknown() && !r.Configuration.Tag.IsNull() {
+		*tag = r.Configuration.Tag.ValueString()
+	} else {
+		tag = nil
+	}
+	configuration := shared.SourcePocketUpdate{
+		AccessToken: accessToken,
+		ConsumerKey: consumerKey,
+		ContentType: contentType,
+		DetailType:  detailType,
+		Domain:      domain,
+		Favorite:    favorite,
+		Search:      search,
+		Since:       since,
+		Sort:        sort,
+		State:       state,
+		Tag:         tag,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourcePocketPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourcePocketResourceModel) ToDeleteSDKType() *shared.SourcePocketCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

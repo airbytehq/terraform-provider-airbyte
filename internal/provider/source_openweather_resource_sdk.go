@@ -49,6 +49,39 @@ func (r *SourceOpenweatherResourceModel) ToCreateSDKType() *shared.SourceOpenwea
 	return &out
 }
 
+func (r *SourceOpenweatherResourceModel) ToUpdateSDKType() *shared.SourceOpenweatherPutRequest {
+	appid := r.Configuration.Appid.ValueString()
+	lang := new(shared.SourceOpenweatherUpdateLanguage)
+	if !r.Configuration.Lang.IsUnknown() && !r.Configuration.Lang.IsNull() {
+		*lang = shared.SourceOpenweatherUpdateLanguage(r.Configuration.Lang.ValueString())
+	} else {
+		lang = nil
+	}
+	lat := r.Configuration.Lat.ValueString()
+	lon := r.Configuration.Lon.ValueString()
+	units := new(shared.SourceOpenweatherUpdateUnits)
+	if !r.Configuration.Units.IsUnknown() && !r.Configuration.Units.IsNull() {
+		*units = shared.SourceOpenweatherUpdateUnits(r.Configuration.Units.ValueString())
+	} else {
+		units = nil
+	}
+	configuration := shared.SourceOpenweatherUpdate{
+		Appid: appid,
+		Lang:  lang,
+		Lat:   lat,
+		Lon:   lon,
+		Units: units,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceOpenweatherPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceOpenweatherResourceModel) ToDeleteSDKType() *shared.SourceOpenweatherCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

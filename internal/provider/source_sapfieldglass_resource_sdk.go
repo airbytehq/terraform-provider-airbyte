@@ -31,6 +31,21 @@ func (r *SourceSapFieldglassResourceModel) ToCreateSDKType() *shared.SourceSapFi
 	return &out
 }
 
+func (r *SourceSapFieldglassResourceModel) ToUpdateSDKType() *shared.SourceSapFieldglassPutRequest {
+	apiKey := r.Configuration.APIKey.ValueString()
+	configuration := shared.SourceSapFieldglassUpdate{
+		APIKey: apiKey,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceSapFieldglassPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceSapFieldglassResourceModel) ToDeleteSDKType() *shared.SourceSapFieldglassCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

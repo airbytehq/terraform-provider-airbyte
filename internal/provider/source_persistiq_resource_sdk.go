@@ -31,6 +31,21 @@ func (r *SourcePersistiqResourceModel) ToCreateSDKType() *shared.SourcePersistiq
 	return &out
 }
 
+func (r *SourcePersistiqResourceModel) ToUpdateSDKType() *shared.SourcePersistiqPutRequest {
+	apiKey := r.Configuration.APIKey.ValueString()
+	configuration := shared.SourcePersistiqUpdate{
+		APIKey: apiKey,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourcePersistiqPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourcePersistiqResourceModel) ToDeleteSDKType() *shared.SourcePersistiqCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

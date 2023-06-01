@@ -10,12 +10,6 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/boolplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/listplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -58,52 +52,28 @@ func (r *SourceSlackResource) Schema(ctx context.Context, req resource.SchemaReq
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"channel_filter": schema.ListAttribute{
-						PlanModifiers: []planmodifier.List{
-							listplanmodifier.RequiresReplace(),
-						},
 						Optional:    true,
 						ElementType: types.StringType,
 					},
 					"credentials": schema.SingleNestedAttribute{
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_slack_authentication_mechanism_sign_in_via_slack_o_auth_": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"client_id": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"client_secret": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"option_title": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -115,22 +85,53 @@ func (r *SourceSlackResource) Schema(ctx context.Context, req resource.SchemaReq
 								Description: `Choose how to authenticate into Slack`,
 							},
 							"source_slack_authentication_mechanism_api_token": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_token": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"option_title": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"API Token Credentials",
+											),
+										},
+									},
+								},
+								Description: `Choose how to authenticate into Slack`,
+							},
+							"source_slack_update_authentication_mechanism_sign_in_via_slack_o_auth_": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"access_token": schema.StringAttribute{
+										Computed: true,
+									},
+									"client_id": schema.StringAttribute{
+										Computed: true,
+									},
+									"client_secret": schema.StringAttribute{
+										Computed: true,
+									},
+									"option_title": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Default OAuth2.0 authorization",
+											),
+										},
+									},
+								},
+								Description: `Choose how to authenticate into Slack`,
+							},
+							"source_slack_update_authentication_mechanism_api_token": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"api_token": schema.StringAttribute{
+										Computed: true,
+									},
+									"option_title": schema.StringAttribute{
+										Computed: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"API Token Credentials",
@@ -146,21 +147,12 @@ func (r *SourceSlackResource) Schema(ctx context.Context, req resource.SchemaReq
 						},
 					},
 					"join_channels": schema.BoolAttribute{
-						PlanModifiers: []planmodifier.Bool{
-							boolplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"lookback_window": schema.Int64Attribute{
-						PlanModifiers: []planmodifier.Int64{
-							int64planmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"source_type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -169,9 +161,6 @@ func (r *SourceSlackResource) Schema(ctx context.Context, req resource.SchemaReq
 						},
 					},
 					"start_date": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
@@ -180,15 +169,9 @@ func (r *SourceSlackResource) Schema(ctx context.Context, req resource.SchemaReq
 				},
 			},
 			"name": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Optional: true,
 			},
 			"source_id": schema.StringAttribute{
@@ -198,9 +181,6 @@ func (r *SourceSlackResource) Schema(ctx context.Context, req resource.SchemaReq
 				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 		},
@@ -300,7 +280,25 @@ func (r *SourceSlackResource) Update(ctx context.Context, req resource.UpdateReq
 		return
 	}
 
-	// Not Implemented; all attributes marked as RequiresReplace
+	sourceSlackPutRequest := data.ToUpdateSDKType()
+	sourceID := data.SourceID.ValueString()
+	request := operations.PutSourceSlackRequest{
+		SourceSlackPutRequest: sourceSlackPutRequest,
+		SourceID:              sourceID,
+	}
+	res, err := r.client.Sources.PutSourceSlack(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode != 204 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

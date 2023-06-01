@@ -71,6 +71,68 @@ func (r *DestinationPulsarResourceModel) ToCreateSDKType() *shared.DestinationPu
 	return &out
 }
 
+func (r *DestinationPulsarResourceModel) ToUpdateSDKType() *shared.DestinationPulsarPutRequest {
+	batchingEnabled := r.Configuration.BatchingEnabled.ValueBool()
+	batchingMaxMessages := r.Configuration.BatchingMaxMessages.ValueInt64()
+	batchingMaxPublishDelay := r.Configuration.BatchingMaxPublishDelay.ValueInt64()
+	blockIfQueueFull := r.Configuration.BlockIfQueueFull.ValueBool()
+	brokers := r.Configuration.Brokers.ValueString()
+	compressionType := shared.DestinationPulsarUpdateCompressionType(r.Configuration.CompressionType.ValueString())
+	maxPendingMessages := r.Configuration.MaxPendingMessages.ValueInt64()
+	maxPendingMessagesAcrossPartitions := r.Configuration.MaxPendingMessagesAcrossPartitions.ValueInt64()
+	producerName := new(string)
+	if !r.Configuration.ProducerName.IsUnknown() && !r.Configuration.ProducerName.IsNull() {
+		*producerName = r.Configuration.ProducerName.ValueString()
+	} else {
+		producerName = nil
+	}
+	producerSync := new(bool)
+	if !r.Configuration.ProducerSync.IsUnknown() && !r.Configuration.ProducerSync.IsNull() {
+		*producerSync = r.Configuration.ProducerSync.ValueBool()
+	} else {
+		producerSync = nil
+	}
+	sendTimeoutMs := r.Configuration.SendTimeoutMs.ValueInt64()
+	topicNamespace := r.Configuration.TopicNamespace.ValueString()
+	topicPattern := r.Configuration.TopicPattern.ValueString()
+	topicTenant := r.Configuration.TopicTenant.ValueString()
+	topicTest := new(string)
+	if !r.Configuration.TopicTest.IsUnknown() && !r.Configuration.TopicTest.IsNull() {
+		*topicTest = r.Configuration.TopicTest.ValueString()
+	} else {
+		topicTest = nil
+	}
+	topicType := shared.DestinationPulsarUpdateTopicType(r.Configuration.TopicType.ValueString())
+	useTLS := r.Configuration.UseTLS.ValueBool()
+	configuration := shared.DestinationPulsarUpdate{
+		BatchingEnabled:                    batchingEnabled,
+		BatchingMaxMessages:                batchingMaxMessages,
+		BatchingMaxPublishDelay:            batchingMaxPublishDelay,
+		BlockIfQueueFull:                   blockIfQueueFull,
+		Brokers:                            brokers,
+		CompressionType:                    compressionType,
+		MaxPendingMessages:                 maxPendingMessages,
+		MaxPendingMessagesAcrossPartitions: maxPendingMessagesAcrossPartitions,
+		ProducerName:                       producerName,
+		ProducerSync:                       producerSync,
+		SendTimeoutMs:                      sendTimeoutMs,
+		TopicNamespace:                     topicNamespace,
+		TopicPattern:                       topicPattern,
+		TopicTenant:                        topicTenant,
+		TopicTest:                          topicTest,
+		TopicType:                          topicType,
+		UseTLS:                             useTLS,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.DestinationPulsarPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *DestinationPulsarResourceModel) ToDeleteSDKType() *shared.DestinationPulsarCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

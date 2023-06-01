@@ -10,10 +10,6 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -56,33 +52,18 @@ func (r *SourceFaunaResource) Schema(ctx context.Context, req resource.SchemaReq
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"collection": schema.SingleNestedAttribute{
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"deletions": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Required: true,
 								Attributes: map[string]schema.Attribute{
 									"source_fauna_collection_deletion_mode_disabled": schema.SingleNestedAttribute{
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"deletion_mode": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
 												Required: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
@@ -97,22 +78,50 @@ func (r *SourceFaunaResource) Schema(ctx context.Context, req resource.SchemaReq
 											`Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted.`,
 									},
 									"source_fauna_collection_deletion_mode_enabled": schema.SingleNestedAttribute{
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"column": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
 												Required: true,
 											},
 											"deletion_mode": schema.StringAttribute{
-												PlanModifiers: []planmodifier.String{
-													stringplanmodifier.RequiresReplace(),
-												},
 												Required: true,
+												Validators: []validator.String{
+													stringvalidator.OneOf(
+														"deleted_field",
+													),
+												},
+											},
+										},
+										MarkdownDescription: `<b>This only applies to incremental syncs.</b> <br>` + "\n" +
+											`Enabling deletion mode informs your destination of deleted documents.<br>` + "\n" +
+											`Disabled - Leave this feature disabled, and ignore deleted documents.<br>` + "\n" +
+											`Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted.`,
+									},
+									"source_fauna_update_collection_deletion_mode_disabled": schema.SingleNestedAttribute{
+										Computed: true,
+										Attributes: map[string]schema.Attribute{
+											"deletion_mode": schema.StringAttribute{
+												Computed: true,
+												Validators: []validator.String{
+													stringvalidator.OneOf(
+														"ignore",
+													),
+												},
+											},
+										},
+										MarkdownDescription: `<b>This only applies to incremental syncs.</b> <br>` + "\n" +
+											`Enabling deletion mode informs your destination of deleted documents.<br>` + "\n" +
+											`Disabled - Leave this feature disabled, and ignore deleted documents.<br>` + "\n" +
+											`Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted.`,
+									},
+									"source_fauna_update_collection_deletion_mode_enabled": schema.SingleNestedAttribute{
+										Computed: true,
+										Attributes: map[string]schema.Attribute{
+											"column": schema.StringAttribute{
+												Computed: true,
+											},
+											"deletion_mode": schema.StringAttribute{
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"deleted_field",
@@ -131,42 +140,24 @@ func (r *SourceFaunaResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"page_size": schema.Int64Attribute{
-								PlanModifiers: []planmodifier.Int64{
-									int64planmodifier.RequiresReplace(),
-								},
 								Required: true,
 							},
 						},
 						Description: `Settings for the Fauna Collection.`,
 					},
 					"domain": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"port": schema.Int64Attribute{
-						PlanModifiers: []planmodifier.Int64{
-							int64planmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"scheme": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"secret": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"source_type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -177,15 +168,9 @@ func (r *SourceFaunaResource) Schema(ctx context.Context, req resource.SchemaReq
 				},
 			},
 			"name": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Optional: true,
 			},
 			"source_id": schema.StringAttribute{
@@ -195,9 +180,6 @@ func (r *SourceFaunaResource) Schema(ctx context.Context, req resource.SchemaReq
 				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 		},
@@ -297,7 +279,25 @@ func (r *SourceFaunaResource) Update(ctx context.Context, req resource.UpdateReq
 		return
 	}
 
-	// Not Implemented; all attributes marked as RequiresReplace
+	sourceFaunaPutRequest := data.ToUpdateSDKType()
+	sourceID := data.SourceID.ValueString()
+	request := operations.PutSourceFaunaRequest{
+		SourceFaunaPutRequest: sourceFaunaPutRequest,
+		SourceID:              sourceID,
+	}
+	res, err := r.client.Sources.PutSourceFauna(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode != 204 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

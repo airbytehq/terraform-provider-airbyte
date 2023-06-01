@@ -67,6 +67,56 @@ func (r *SourceSalesforceResourceModel) ToCreateSDKType() *shared.SourceSalesfor
 	return &out
 }
 
+func (r *SourceSalesforceResourceModel) ToUpdateSDKType() *shared.SourceSalesforcePutRequest {
+	authType := new(shared.SourceSalesforceUpdateAuthType)
+	if !r.Configuration.AuthType.IsUnknown() && !r.Configuration.AuthType.IsNull() {
+		*authType = shared.SourceSalesforceUpdateAuthType(r.Configuration.AuthType.ValueString())
+	} else {
+		authType = nil
+	}
+	clientID := r.Configuration.ClientID.ValueString()
+	clientSecret := r.Configuration.ClientSecret.ValueString()
+	isSandbox := new(bool)
+	if !r.Configuration.IsSandbox.IsUnknown() && !r.Configuration.IsSandbox.IsNull() {
+		*isSandbox = r.Configuration.IsSandbox.ValueBool()
+	} else {
+		isSandbox = nil
+	}
+	refreshToken := r.Configuration.RefreshToken.ValueString()
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
+	streamsCriteria := make([]shared.SourceSalesforceUpdateStreamsCriteria, 0)
+	for _, streamsCriteriaItem := range r.Configuration.StreamsCriteria {
+		criteria := shared.SourceSalesforceUpdateStreamsCriteriaSearchCriteria(streamsCriteriaItem.Criteria.ValueString())
+		value := streamsCriteriaItem.Value.ValueString()
+		streamsCriteria = append(streamsCriteria, shared.SourceSalesforceUpdateStreamsCriteria{
+			Criteria: criteria,
+			Value:    value,
+		})
+	}
+	configuration := shared.SourceSalesforceUpdate{
+		AuthType:        authType,
+		ClientID:        clientID,
+		ClientSecret:    clientSecret,
+		IsSandbox:       isSandbox,
+		RefreshToken:    refreshToken,
+		StartDate:       startDate,
+		StreamsCriteria: streamsCriteria,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceSalesforcePutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceSalesforceResourceModel) ToDeleteSDKType() *shared.SourceSalesforceCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

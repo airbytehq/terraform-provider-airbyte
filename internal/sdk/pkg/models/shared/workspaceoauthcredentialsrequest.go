@@ -6,7 +6,6 @@ package shared
 type WorkspaceOAuthCredentialsRequest struct {
 	// Whether you're setting this override for a source or destination
 	ActorType ActorTypeEnum `json:"actorType"`
-	// The configuration for this source/destination based on the OAuth section of the relevant specification.
-	Configuration map[string]interface{} `json:"configuration"`
-	Name          string                 `json:"name"`
+	// The name of the source i.e. google-ads
+	Name string `json:"name"`
 }

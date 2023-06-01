@@ -33,6 +33,23 @@ func (r *SourceTwilioTaskrouterResourceModel) ToCreateSDKType() *shared.SourceTw
 	return &out
 }
 
+func (r *SourceTwilioTaskrouterResourceModel) ToUpdateSDKType() *shared.SourceTwilioTaskrouterPutRequest {
+	accountSid := r.Configuration.AccountSid.ValueString()
+	authToken := r.Configuration.AuthToken.ValueString()
+	configuration := shared.SourceTwilioTaskrouterUpdate{
+		AccountSid: accountSid,
+		AuthToken:  authToken,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceTwilioTaskrouterPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceTwilioTaskrouterResourceModel) ToDeleteSDKType() *shared.SourceTwilioTaskrouterCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

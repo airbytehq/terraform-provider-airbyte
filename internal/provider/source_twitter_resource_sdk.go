@@ -48,6 +48,37 @@ func (r *SourceTwitterResourceModel) ToCreateSDKType() *shared.SourceTwitterCrea
 	return &out
 }
 
+func (r *SourceTwitterResourceModel) ToUpdateSDKType() *shared.SourceTwitterPutRequest {
+	apiKey := r.Configuration.APIKey.ValueString()
+	endDate := new(time.Time)
+	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
+		*endDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.EndDate.ValueString())
+	} else {
+		endDate = nil
+	}
+	query := r.Configuration.Query.ValueString()
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
+	configuration := shared.SourceTwitterUpdate{
+		APIKey:    apiKey,
+		EndDate:   endDate,
+		Query:     query,
+		StartDate: startDate,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceTwitterPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceTwitterResourceModel) ToDeleteSDKType() *shared.SourceTwitterCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

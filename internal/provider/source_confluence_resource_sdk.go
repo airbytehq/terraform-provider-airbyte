@@ -35,6 +35,25 @@ func (r *SourceConfluenceResourceModel) ToCreateSDKType() *shared.SourceConfluen
 	return &out
 }
 
+func (r *SourceConfluenceResourceModel) ToUpdateSDKType() *shared.SourceConfluencePutRequest {
+	apiToken := r.Configuration.APIToken.ValueString()
+	domainName := r.Configuration.DomainName.ValueString()
+	email := r.Configuration.Email.ValueString()
+	configuration := shared.SourceConfluenceUpdate{
+		APIToken:   apiToken,
+		DomainName: domainName,
+		Email:      email,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceConfluencePutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceConfluenceResourceModel) ToDeleteSDKType() *shared.SourceConfluenceCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

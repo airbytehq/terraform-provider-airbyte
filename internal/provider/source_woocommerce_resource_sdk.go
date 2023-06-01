@@ -38,6 +38,27 @@ func (r *SourceWoocommerceResourceModel) ToCreateSDKType() *shared.SourceWoocomm
 	return &out
 }
 
+func (r *SourceWoocommerceResourceModel) ToUpdateSDKType() *shared.SourceWoocommercePutRequest {
+	apiKey := r.Configuration.APIKey.ValueString()
+	apiSecret := r.Configuration.APISecret.ValueString()
+	shop := r.Configuration.Shop.ValueString()
+	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
+	configuration := shared.SourceWoocommerceUpdate{
+		APIKey:    apiKey,
+		APISecret: apiSecret,
+		Shop:      shop,
+		StartDate: startDate,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceWoocommercePutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceWoocommerceResourceModel) ToDeleteSDKType() *shared.SourceWoocommerceCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

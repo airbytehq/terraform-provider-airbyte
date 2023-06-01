@@ -9,10 +9,6 @@ import (
 
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/boolplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -37,11 +33,11 @@ type DestinationKeenResource struct {
 
 // DestinationKeenResourceModel describes the resource data model.
 type DestinationKeenResourceModel struct {
-	Configuration   DestinationKeen `tfsdk:"configuration"`
-	DestinationID   types.String    `tfsdk:"destination_id"`
-	DestinationType types.String    `tfsdk:"destination_type"`
-	Name            types.String    `tfsdk:"name"`
-	WorkspaceID     types.String    `tfsdk:"workspace_id"`
+	Configuration   DestinationKeenUpdate `tfsdk:"configuration"`
+	DestinationID   types.String          `tfsdk:"destination_id"`
+	DestinationType types.String          `tfsdk:"destination_type"`
+	Name            types.String          `tfsdk:"name"`
+	WorkspaceID     types.String          `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationKeenResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -54,39 +50,24 @@ func (r *DestinationKeenResource) Schema(ctx context.Context, req resource.Schem
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"api_key": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
+						Required: true,
+					},
+					"infer_timestamp": schema.BoolAttribute{
+						Optional: true,
+					},
+					"project_id": schema.StringAttribute{
 						Required: true,
 					},
 					"destination_type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"keen",
 							),
 						},
-					},
-					"infer_timestamp": schema.BoolAttribute{
-						PlanModifiers: []planmodifier.Bool{
-							boolplanmodifier.RequiresReplace(),
-						},
-						Optional: true,
-					},
-					"project_id": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
-						Required: true,
 					},
 				},
 			},
@@ -97,15 +78,9 @@ func (r *DestinationKeenResource) Schema(ctx context.Context, req resource.Schem
 				Computed: true,
 			},
 			"name": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 			"workspace_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 		},
@@ -205,7 +180,25 @@ func (r *DestinationKeenResource) Update(ctx context.Context, req resource.Updat
 		return
 	}
 
-	// Not Implemented; all attributes marked as RequiresReplace
+	destinationKeenPutRequest := data.ToUpdateSDKType()
+	destinationID := data.DestinationID.ValueString()
+	request := operations.PutDestinationKeenRequest{
+		DestinationKeenPutRequest: destinationKeenPutRequest,
+		DestinationID:             destinationID,
+	}
+	res, err := r.client.Destinations.PutDestinationKeen(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode != 204 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

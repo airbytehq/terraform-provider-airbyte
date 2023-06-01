@@ -39,6 +39,28 @@ func (r *SourceTypeformResourceModel) ToCreateSDKType() *shared.SourceTypeformCr
 	return &out
 }
 
+func (r *SourceTypeformResourceModel) ToUpdateSDKType() *shared.SourceTypeformPutRequest {
+	formIds := make([]string, 0)
+	for _, formIdsItem := range r.Configuration.FormIds {
+		formIds = append(formIds, formIdsItem.ValueString())
+	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	token := r.Configuration.Token.ValueString()
+	configuration := shared.SourceTypeformUpdate{
+		FormIds:   formIds,
+		StartDate: startDate,
+		Token:     token,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceTypeformPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceTypeformResourceModel) ToDeleteSDKType() *shared.SourceTypeformCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

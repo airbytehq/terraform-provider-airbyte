@@ -9,11 +9,6 @@ import (
 
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/boolplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -38,12 +33,12 @@ type SourceAmazonSqsResource struct {
 
 // SourceAmazonSqsResourceModel describes the resource data model.
 type SourceAmazonSqsResourceModel struct {
-	Configuration SourceAmazonSqs `tfsdk:"configuration"`
-	Name          types.String    `tfsdk:"name"`
-	SecretID      types.String    `tfsdk:"secret_id"`
-	SourceID      types.String    `tfsdk:"source_id"`
-	SourceType    types.String    `tfsdk:"source_type"`
-	WorkspaceID   types.String    `tfsdk:"workspace_id"`
+	Configuration SourceAmazonSqsUpdate `tfsdk:"configuration"`
+	Name          types.String          `tfsdk:"name"`
+	SecretID      types.String          `tfsdk:"secret_id"`
+	SourceID      types.String          `tfsdk:"source_id"`
+	SourceType    types.String          `tfsdk:"source_type"`
+	WorkspaceID   types.String          `tfsdk:"workspace_id"`
 }
 
 func (r *SourceAmazonSqsResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -56,51 +51,27 @@ func (r *SourceAmazonSqsResource) Schema(ctx context.Context, req resource.Schem
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"access_key": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
 					"attributes_to_return": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
 					"delete_messages": schema.BoolAttribute{
-						PlanModifiers: []planmodifier.Bool{
-							boolplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"max_batch_size": schema.Int64Attribute{
-						PlanModifiers: []planmodifier.Int64{
-							int64planmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
 					"max_wait_time": schema.Int64Attribute{
-						PlanModifiers: []planmodifier.Int64{
-							int64planmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
 					"queue_url": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"region": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -134,15 +105,12 @@ func (r *SourceAmazonSqsResource) Schema(ctx context.Context, req resource.Schem
 						Description: `AWS Region of the SQS Queue`,
 					},
 					"secret_key": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
+						Optional: true,
+					},
+					"visibility_timeout": schema.Int64Attribute{
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -150,24 +118,12 @@ func (r *SourceAmazonSqsResource) Schema(ctx context.Context, req resource.Schem
 							),
 						},
 					},
-					"visibility_timeout": schema.Int64Attribute{
-						PlanModifiers: []planmodifier.Int64{
-							int64planmodifier.RequiresReplace(),
-						},
-						Optional: true,
-					},
 				},
 			},
 			"name": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Optional: true,
 			},
 			"source_id": schema.StringAttribute{
@@ -177,9 +133,6 @@ func (r *SourceAmazonSqsResource) Schema(ctx context.Context, req resource.Schem
 				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 		},
@@ -279,7 +232,25 @@ func (r *SourceAmazonSqsResource) Update(ctx context.Context, req resource.Updat
 		return
 	}
 
-	// Not Implemented; all attributes marked as RequiresReplace
+	sourceAmazonSqsPutRequest := data.ToUpdateSDKType()
+	sourceID := data.SourceID.ValueString()
+	request := operations.PutSourceAmazonSqsRequest{
+		SourceAmazonSqsPutRequest: sourceAmazonSqsPutRequest,
+		SourceID:                  sourceID,
+	}
+	res, err := r.client.Sources.PutSourceAmazonSqs(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode != 204 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

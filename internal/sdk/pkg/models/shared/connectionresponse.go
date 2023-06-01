@@ -4,10 +4,12 @@ package shared
 
 // ConnectionResponse - Provides details of a single connection.
 type ConnectionResponse struct {
-	ConnectionID  string        `json:"connectionId"`
-	DataResidency GeographyEnum `json:"dataResidency"`
-	DestinationID string        `json:"destinationId"`
-	Name          string        `json:"name"`
+	// A list of configured stream options for a connection.
+	Configurations StreamConfigurations `json:"configurations"`
+	ConnectionID   string               `json:"connectionId"`
+	DataResidency  GeographyEnum        `json:"dataResidency"`
+	DestinationID  string               `json:"destinationId"`
+	Name           string               `json:"name"`
 	// Define the location where the data will be stored in the destination
 	NamespaceDefinition *NamespaceDefinitionEnum `json:"namespaceDefinition,omitempty"`
 	NamespaceFormat     *string                  `json:"namespaceFormat,omitempty"`

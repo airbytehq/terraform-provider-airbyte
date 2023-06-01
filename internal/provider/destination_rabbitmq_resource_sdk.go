@@ -68,6 +68,65 @@ func (r *DestinationRabbitmqResourceModel) ToCreateSDKType() *shared.Destination
 	return &out
 }
 
+func (r *DestinationRabbitmqResourceModel) ToUpdateSDKType() *shared.DestinationRabbitmqPutRequest {
+	exchange := new(string)
+	if !r.Configuration.Exchange.IsUnknown() && !r.Configuration.Exchange.IsNull() {
+		*exchange = r.Configuration.Exchange.ValueString()
+	} else {
+		exchange = nil
+	}
+	host := r.Configuration.Host.ValueString()
+	password := new(string)
+	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
+		*password = r.Configuration.Password.ValueString()
+	} else {
+		password = nil
+	}
+	port := new(int64)
+	if !r.Configuration.Port.IsUnknown() && !r.Configuration.Port.IsNull() {
+		*port = r.Configuration.Port.ValueInt64()
+	} else {
+		port = nil
+	}
+	routingKey := r.Configuration.RoutingKey.ValueString()
+	ssl := new(bool)
+	if !r.Configuration.Ssl.IsUnknown() && !r.Configuration.Ssl.IsNull() {
+		*ssl = r.Configuration.Ssl.ValueBool()
+	} else {
+		ssl = nil
+	}
+	username := new(string)
+	if !r.Configuration.Username.IsUnknown() && !r.Configuration.Username.IsNull() {
+		*username = r.Configuration.Username.ValueString()
+	} else {
+		username = nil
+	}
+	virtualHost := new(string)
+	if !r.Configuration.VirtualHost.IsUnknown() && !r.Configuration.VirtualHost.IsNull() {
+		*virtualHost = r.Configuration.VirtualHost.ValueString()
+	} else {
+		virtualHost = nil
+	}
+	configuration := shared.DestinationRabbitmqUpdate{
+		Exchange:    exchange,
+		Host:        host,
+		Password:    password,
+		Port:        port,
+		RoutingKey:  routingKey,
+		Ssl:         ssl,
+		Username:    username,
+		VirtualHost: virtualHost,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.DestinationRabbitmqPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *DestinationRabbitmqResourceModel) ToDeleteSDKType() *shared.DestinationRabbitmqCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

@@ -50,6 +50,39 @@ func (r *SourceSentryResourceModel) ToCreateSDKType() *shared.SourceSentryCreate
 	return &out
 }
 
+func (r *SourceSentryResourceModel) ToUpdateSDKType() *shared.SourceSentryPutRequest {
+	authToken := r.Configuration.AuthToken.ValueString()
+	discoverFields := make([]interface{}, 0)
+	for _, discoverFieldsItem := range r.Configuration.DiscoverFields {
+		var discoverFieldsTmp interface{}
+		_ = json.Unmarshal([]byte(discoverFieldsItem.ValueString()), &discoverFieldsTmp)
+		discoverFields = append(discoverFields, discoverFieldsTmp)
+	}
+	hostname := new(string)
+	if !r.Configuration.Hostname.IsUnknown() && !r.Configuration.Hostname.IsNull() {
+		*hostname = r.Configuration.Hostname.ValueString()
+	} else {
+		hostname = nil
+	}
+	organization := r.Configuration.Organization.ValueString()
+	project := r.Configuration.Project.ValueString()
+	configuration := shared.SourceSentryUpdate{
+		AuthToken:      authToken,
+		DiscoverFields: discoverFields,
+		Hostname:       hostname,
+		Organization:   organization,
+		Project:        project,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceSentryPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceSentryResourceModel) ToDeleteSDKType() *shared.SourceSentryCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

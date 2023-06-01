@@ -31,6 +31,21 @@ func (r *SourceSmartengageResourceModel) ToCreateSDKType() *shared.SourceSmarten
 	return &out
 }
 
+func (r *SourceSmartengageResourceModel) ToUpdateSDKType() *shared.SourceSmartengagePutRequest {
+	apiKey := r.Configuration.APIKey.ValueString()
+	configuration := shared.SourceSmartengageUpdate{
+		APIKey: apiKey,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceSmartengagePutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceSmartengageResourceModel) ToDeleteSDKType() *shared.SourceSmartengageCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

@@ -10,10 +10,6 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/boolplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -55,39 +51,21 @@ func (r *DestinationElasticsearchResource) Schema(ctx context.Context, req resou
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"authentication_method": schema.SingleNestedAttribute{
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_elasticsearch_authentication_method_api_key_secret": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_key_id": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"api_key_secret": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"method": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -99,15 +77,9 @@ func (r *DestinationElasticsearchResource) Schema(ctx context.Context, req resou
 								Description: `Use a api key and secret combination to authenticate`,
 							},
 							"destination_elasticsearch_authentication_method_username_password": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -116,16 +88,50 @@ func (r *DestinationElasticsearchResource) Schema(ctx context.Context, req resou
 										},
 									},
 									"password": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"username": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
+									},
+								},
+								Description: `Basic auth header with a username and password`,
+							},
+							"destination_elasticsearch_update_authentication_method_api_key_secret": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"api_key_id": schema.StringAttribute{
+										Computed: true,
+									},
+									"api_key_secret": schema.StringAttribute{
+										Computed: true,
+									},
+									"method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"secret",
+											),
+										},
+									},
+								},
+								Description: `Use a api key and secret combination to authenticate`,
+							},
+							"destination_elasticsearch_update_authentication_method_username_password": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"basic",
+											),
+										},
+									},
+									"password": schema.StringAttribute{
+										Computed: true,
+									},
+									"username": schema.StringAttribute{
+										Computed: true,
 									},
 								},
 								Description: `Basic auth header with a username and password`,
@@ -136,15 +142,9 @@ func (r *DestinationElasticsearchResource) Schema(ctx context.Context, req resou
 						},
 					},
 					"ca_certificate": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
 					"destination_type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -153,15 +153,9 @@ func (r *DestinationElasticsearchResource) Schema(ctx context.Context, req resou
 						},
 					},
 					"endpoint": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"upsert": schema.BoolAttribute{
-						PlanModifiers: []planmodifier.Bool{
-							boolplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
 				},
@@ -173,15 +167,9 @@ func (r *DestinationElasticsearchResource) Schema(ctx context.Context, req resou
 				Computed: true,
 			},
 			"name": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 			"workspace_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 		},
@@ -281,7 +269,25 @@ func (r *DestinationElasticsearchResource) Update(ctx context.Context, req resou
 		return
 	}
 
-	// Not Implemented; all attributes marked as RequiresReplace
+	destinationElasticsearchPutRequest := data.ToUpdateSDKType()
+	destinationID := data.DestinationID.ValueString()
+	request := operations.PutDestinationElasticsearchRequest{
+		DestinationElasticsearchPutRequest: destinationElasticsearchPutRequest,
+		DestinationID:                      destinationID,
+	}
+	res, err := r.client.Destinations.PutDestinationElasticsearch(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode != 204 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

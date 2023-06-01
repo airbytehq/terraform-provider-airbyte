@@ -40,6 +40,30 @@ func (r *SourceDixaResourceModel) ToCreateSDKType() *shared.SourceDixaCreateRequ
 	return &out
 }
 
+func (r *SourceDixaResourceModel) ToUpdateSDKType() *shared.SourceDixaPutRequest {
+	apiToken := r.Configuration.APIToken.ValueString()
+	batchSize := new(int64)
+	if !r.Configuration.BatchSize.IsUnknown() && !r.Configuration.BatchSize.IsNull() {
+		*batchSize = r.Configuration.BatchSize.ValueInt64()
+	} else {
+		batchSize = nil
+	}
+	startDate := r.Configuration.StartDate.ValueString()
+	configuration := shared.SourceDixaUpdate{
+		APIToken:  apiToken,
+		BatchSize: batchSize,
+		StartDate: startDate,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceDixaPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceDixaResourceModel) ToDeleteSDKType() *shared.SourceDixaCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

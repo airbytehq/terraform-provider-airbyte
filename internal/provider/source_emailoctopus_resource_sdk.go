@@ -31,6 +31,21 @@ func (r *SourceEmailoctopusResourceModel) ToCreateSDKType() *shared.SourceEmailo
 	return &out
 }
 
+func (r *SourceEmailoctopusResourceModel) ToUpdateSDKType() *shared.SourceEmailoctopusPutRequest {
+	apiKey := r.Configuration.APIKey.ValueString()
+	configuration := shared.SourceEmailoctopusUpdate{
+		APIKey: apiKey,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceEmailoctopusPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceEmailoctopusResourceModel) ToDeleteSDKType() *shared.SourceEmailoctopusCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

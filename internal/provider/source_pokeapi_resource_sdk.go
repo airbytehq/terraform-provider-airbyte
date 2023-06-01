@@ -31,6 +31,21 @@ func (r *SourcePokeapiResourceModel) ToCreateSDKType() *shared.SourcePokeapiCrea
 	return &out
 }
 
+func (r *SourcePokeapiResourceModel) ToUpdateSDKType() *shared.SourcePokeapiPutRequest {
+	pokemonName := r.Configuration.PokemonName.ValueString()
+	configuration := shared.SourcePokeapiUpdate{
+		PokemonName: pokemonName,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourcePokeapiPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourcePokeapiResourceModel) ToDeleteSDKType() *shared.SourcePokeapiCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

@@ -10,11 +10,6 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/boolplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -39,12 +34,12 @@ type SourceMixpanelResource struct {
 
 // SourceMixpanelResourceModel describes the resource data model.
 type SourceMixpanelResourceModel struct {
-	Configuration SourceMixpanel `tfsdk:"configuration"`
-	Name          types.String   `tfsdk:"name"`
-	SecretID      types.String   `tfsdk:"secret_id"`
-	SourceID      types.String   `tfsdk:"source_id"`
-	SourceType    types.String   `tfsdk:"source_type"`
-	WorkspaceID   types.String   `tfsdk:"workspace_id"`
+	Configuration SourceMixpanelUpdate `tfsdk:"configuration"`
+	Name          types.String         `tfsdk:"name"`
+	SecretID      types.String         `tfsdk:"secret_id"`
+	SourceID      types.String         `tfsdk:"source_id"`
+	SourceType    types.String         `tfsdk:"source_type"`
+	WorkspaceID   types.String         `tfsdk:"workspace_id"`
 }
 
 func (r *SourceMixpanelResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -57,33 +52,55 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"attribution_window": schema.Int64Attribute{
-						PlanModifiers: []planmodifier.Int64{
-							int64planmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
 					"credentials": schema.SingleNestedAttribute{
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_mixpanel_authentication_wildcard_service_account": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
+							"source_mixpanel_update_authentication_wildcard_service_account": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"option_title": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Service Account",
+											),
+										},
+									},
+									"secret": schema.StringAttribute{
+										Computed: true,
+									},
+									"username": schema.StringAttribute{
+										Computed: true,
+									},
 								},
+								Description: `Choose how to authenticate to Mixpanel`,
+							},
+							"source_mixpanel_update_authentication_wildcard_project_secret": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"api_secret": schema.StringAttribute{
+										Computed: true,
+									},
+									"option_title": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Project Secret",
+											),
+										},
+									},
+								},
+								Description: `Choose how to authenticate to Mixpanel`,
+							},
+							"source_mixpanel_authentication_wildcard_service_account": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"option_title": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -92,36 +109,21 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 										},
 									},
 									"secret": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"username": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 								},
 								Description: `Choose how to authenticate to Mixpanel`,
 							},
 							"source_mixpanel_authentication_wildcard_project_secret": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_secret": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"option_title": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -138,36 +140,21 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 						},
 					},
 					"date_window_size": schema.Int64Attribute{
-						PlanModifiers: []planmodifier.Int64{
-							int64planmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
 					"end_date": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
 					},
 					"project_id": schema.Int64Attribute{
-						PlanModifiers: []planmodifier.Int64{
-							int64planmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
 					"project_timezone": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
 					"region": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -178,15 +165,15 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 						Description: `The region of mixpanel domain instance either US or EU.`,
 					},
 					"select_properties_by_default": schema.BoolAttribute{
-						PlanModifiers: []planmodifier.Bool{
-							boolplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
-					"source_type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
+					"start_date": schema.StringAttribute{
+						Optional: true,
+						Validators: []validator.String{
+							validators.IsRFC3339(),
 						},
+					},
+					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -194,27 +181,12 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 							),
 						},
 					},
-					"start_date": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
-						Optional: true,
-						Validators: []validator.String{
-							validators.IsRFC3339(),
-						},
-					},
 				},
 			},
 			"name": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Optional: true,
 			},
 			"source_id": schema.StringAttribute{
@@ -224,9 +196,6 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 		},
@@ -326,7 +295,25 @@ func (r *SourceMixpanelResource) Update(ctx context.Context, req resource.Update
 		return
 	}
 
-	// Not Implemented; all attributes marked as RequiresReplace
+	sourceMixpanelPutRequest := data.ToUpdateSDKType()
+	sourceID := data.SourceID.ValueString()
+	request := operations.PutSourceMixpanelRequest{
+		SourceMixpanelPutRequest: sourceMixpanelPutRequest,
+		SourceID:                 sourceID,
+	}
+	res, err := r.client.Sources.PutSourceMixpanel(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode != 204 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

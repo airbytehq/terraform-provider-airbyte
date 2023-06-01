@@ -34,6 +34,31 @@ func (r *DestinationKinesisResourceModel) ToCreateSDKType() *shared.DestinationK
 	return &out
 }
 
+func (r *DestinationKinesisResourceModel) ToUpdateSDKType() *shared.DestinationKinesisPutRequest {
+	accessKey := r.Configuration.AccessKey.ValueString()
+	bufferSize := r.Configuration.BufferSize.ValueInt64()
+	endpoint := r.Configuration.Endpoint.ValueString()
+	privateKey := r.Configuration.PrivateKey.ValueString()
+	region := r.Configuration.Region.ValueString()
+	shardCount := r.Configuration.ShardCount.ValueInt64()
+	configuration := shared.DestinationKinesisUpdate{
+		AccessKey:  accessKey,
+		BufferSize: bufferSize,
+		Endpoint:   endpoint,
+		PrivateKey: privateKey,
+		Region:     region,
+		ShardCount: shardCount,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.DestinationKinesisPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *DestinationKinesisResourceModel) ToDeleteSDKType() *shared.DestinationKinesisCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

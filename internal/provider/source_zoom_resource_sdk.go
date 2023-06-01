@@ -31,6 +31,21 @@ func (r *SourceZoomResourceModel) ToCreateSDKType() *shared.SourceZoomCreateRequ
 	return &out
 }
 
+func (r *SourceZoomResourceModel) ToUpdateSDKType() *shared.SourceZoomPutRequest {
+	jwtToken := r.Configuration.JwtToken.ValueString()
+	configuration := shared.SourceZoomUpdate{
+		JwtToken: jwtToken,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceZoomPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceZoomResourceModel) ToDeleteSDKType() *shared.SourceZoomCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

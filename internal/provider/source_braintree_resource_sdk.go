@@ -45,6 +45,34 @@ func (r *SourceBraintreeResourceModel) ToCreateSDKType() *shared.SourceBraintree
 	return &out
 }
 
+func (r *SourceBraintreeResourceModel) ToUpdateSDKType() *shared.SourceBraintreePutRequest {
+	environment := shared.SourceBraintreeUpdateEnvironment(r.Configuration.Environment.ValueString())
+	merchantID := r.Configuration.MerchantID.ValueString()
+	privateKey := r.Configuration.PrivateKey.ValueString()
+	publicKey := r.Configuration.PublicKey.ValueString()
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
+	configuration := shared.SourceBraintreeUpdate{
+		Environment: environment,
+		MerchantID:  merchantID,
+		PrivateKey:  privateKey,
+		PublicKey:   publicKey,
+		StartDate:   startDate,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceBraintreePutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceBraintreeResourceModel) ToDeleteSDKType() *shared.SourceBraintreeCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

@@ -29,6 +29,16 @@ func (r *SourceWhiskyHunterResourceModel) ToCreateSDKType() *shared.SourceWhisky
 	return &out
 }
 
+func (r *SourceWhiskyHunterResourceModel) ToUpdateSDKType() *shared.SourceWhiskyHunterPutRequest {
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceWhiskyHunterPutRequest{
+		Name:        name,
+		WorkspaceID: workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceWhiskyHunterResourceModel) ToDeleteSDKType() *shared.SourceWhiskyHunterCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

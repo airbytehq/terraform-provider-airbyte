@@ -10,11 +10,6 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/listplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -57,57 +52,30 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"database": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"host": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"jdbc_url_params": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
 					"password": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
 					"port": schema.Int64Attribute{
-						PlanModifiers: []planmodifier.Int64{
-							int64planmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"replication_method": schema.SingleNestedAttribute{
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_mssql_replication_method_standard": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -119,15 +87,9 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								Description: `Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
 							},
 							"source_mssql_replication_method_logical_replication_cdc_": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"data_to_sync": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -138,15 +100,9 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 										Description: `What data should be synced under the CDC. "Existing and New" will read existing data as a snapshot, and sync new changes through CDC. "New Changes Only" will skip the initial snapshot, and only sync new changes through CDC.`,
 									},
 									"initial_waiting_seconds": schema.Int64Attribute{
-										PlanModifiers: []planmodifier.Int64{
-											int64planmodifier.RequiresReplace(),
-										},
 										Optional: true,
 									},
 									"method": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -155,10 +111,58 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 										},
 									},
 									"snapshot_isolation": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Snapshot",
+												"Read Committed",
+											),
+										},
+										Description: `Existing data in the database are synced through an initial snapshot. This parameter controls the isolation level that will be used during the initial snapshotting. If you choose the "Snapshot" level, you must enable the <a href="https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/snapshot-isolation-in-sql-server">snapshot isolation mode</a> on the database.`,
+									},
+								},
+								Description: `CDC uses {TBC} to detect inserts, updates, and deletes. This needs to be configured on the source database itself.`,
+							},
+							"source_mssql_update_replication_method_standard": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"STANDARD",
+											),
+										},
+									},
+								},
+								Description: `Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
+							},
+							"source_mssql_update_replication_method_logical_replication_cdc_": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"data_to_sync": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Existing and New",
+												"New Changes Only",
+											),
+										},
+										Description: `What data should be synced under the CDC. "Existing and New" will read existing data as a snapshot, and sync new changes through CDC. "New Changes Only" will skip the initial snapshot, and only sync new changes through CDC.`,
+									},
+									"initial_waiting_seconds": schema.Int64Attribute{
+										Computed: true,
+									},
+									"method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"CDC",
+											),
+										},
+									},
+									"snapshot_isolation": schema.StringAttribute{
+										Computed: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"Snapshot",
@@ -176,16 +180,10 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 						},
 					},
 					"schemas": schema.ListAttribute{
-						PlanModifiers: []planmodifier.List{
-							listplanmodifier.RequiresReplace(),
-						},
 						Optional:    true,
 						ElementType: types.StringType,
 					},
 					"source_type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -194,21 +192,12 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 						},
 					},
 					"ssl_method": schema.SingleNestedAttribute{
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_mssql_ssl_method_encrypted_trust_server_certificate_": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssl_method": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -220,22 +209,44 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								Description: `Use the certificate provided by the server without verification. (For testing purposes only!)`,
 							},
 							"source_mssql_ssl_method_encrypted_verify_certificate_": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"host_name_in_certificate": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 									},
 									"ssl_method": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"encrypted_verify_certificate",
+											),
+										},
+									},
+								},
+								Description: `Verify and use the certificate provided by the server.`,
+							},
+							"source_mssql_update_ssl_method_encrypted_trust_server_certificate_": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"ssl_method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"encrypted_trust_server_certificate",
+											),
+										},
+									},
+								},
+								Description: `Use the certificate provided by the server without verification. (For testing purposes only!)`,
+							},
+							"source_mssql_update_ssl_method_encrypted_verify_certificate_": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"host_name_in_certificate": schema.StringAttribute{
+										Computed: true,
+									},
+									"ssl_method": schema.StringAttribute{
+										Computed: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"encrypted_verify_certificate",
@@ -251,21 +262,12 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 						},
 					},
 					"tunnel_method": schema.SingleNestedAttribute{
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_mssql_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_method": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -278,27 +280,15 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"source_mssql_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"tunnel_host": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"tunnel_method": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -308,36 +298,21 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 										Description: `Connect through a jump server tunnel host using username and ssh key`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										PlanModifiers: []planmodifier.Int64{
-											int64planmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"tunnel_user": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"source_mssql_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_host": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"tunnel_method": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -347,22 +322,82 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 										Description: `Connect through a jump server tunnel host using username and password authentication`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										PlanModifiers: []planmodifier.Int64{
-											int64planmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"tunnel_user": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"tunnel_user_password": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
+									},
+								},
+								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
+							},
+							"source_mssql_update_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"tunnel_method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"NO_TUNNEL",
+											),
+										},
+										Description: `No ssh tunnel needed to connect to database`,
+									},
+								},
+								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
+							},
+							"source_mssql_update_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"ssh_key": schema.StringAttribute{
+										Computed: true,
+									},
+									"tunnel_host": schema.StringAttribute{
+										Computed: true,
+									},
+									"tunnel_method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"SSH_KEY_AUTH",
+											),
+										},
+										Description: `Connect through a jump server tunnel host using username and ssh key`,
+									},
+									"tunnel_port": schema.Int64Attribute{
+										Computed: true,
+									},
+									"tunnel_user": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
+							},
+							"source_mssql_update_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"tunnel_host": schema.StringAttribute{
+										Computed: true,
+									},
+									"tunnel_method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"SSH_PASSWORD_AUTH",
+											),
+										},
+										Description: `Connect through a jump server tunnel host using username and password authentication`,
+									},
+									"tunnel_port": schema.Int64Attribute{
+										Computed: true,
+									},
+									"tunnel_user": schema.StringAttribute{
+										Computed: true,
+									},
+									"tunnel_user_password": schema.StringAttribute{
+										Computed: true,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -373,23 +408,14 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 						},
 					},
 					"username": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 				},
 			},
 			"name": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Optional: true,
 			},
 			"source_id": schema.StringAttribute{
@@ -399,9 +425,6 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 		},
@@ -501,7 +524,25 @@ func (r *SourceMssqlResource) Update(ctx context.Context, req resource.UpdateReq
 		return
 	}
 
-	// Not Implemented; all attributes marked as RequiresReplace
+	sourceMssqlPutRequest := data.ToUpdateSDKType()
+	sourceID := data.SourceID.ValueString()
+	request := operations.PutSourceMssqlRequest{
+		SourceMssqlPutRequest: sourceMssqlPutRequest,
+		SourceID:              sourceID,
+	}
+	res, err := r.client.Sources.PutSourceMssql(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode != 204 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

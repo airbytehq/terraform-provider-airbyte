@@ -31,6 +31,21 @@ func (r *SourceSecodaResourceModel) ToCreateSDKType() *shared.SourceSecodaCreate
 	return &out
 }
 
+func (r *SourceSecodaResourceModel) ToUpdateSDKType() *shared.SourceSecodaPutRequest {
+	apiKey := r.Configuration.APIKey.ValueString()
+	configuration := shared.SourceSecodaUpdate{
+		APIKey: apiKey,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceSecodaPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceSecodaResourceModel) ToDeleteSDKType() *shared.SourceSecodaCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

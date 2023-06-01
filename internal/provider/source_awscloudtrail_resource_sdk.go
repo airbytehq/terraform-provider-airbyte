@@ -38,6 +38,27 @@ func (r *SourceAwsCloudtrailResourceModel) ToCreateSDKType() *shared.SourceAwsCl
 	return &out
 }
 
+func (r *SourceAwsCloudtrailResourceModel) ToUpdateSDKType() *shared.SourceAwsCloudtrailPutRequest {
+	awsKeyID := r.Configuration.AwsKeyID.ValueString()
+	awsRegionName := r.Configuration.AwsRegionName.ValueString()
+	awsSecretKey := r.Configuration.AwsSecretKey.ValueString()
+	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
+	configuration := shared.SourceAwsCloudtrailUpdate{
+		AwsKeyID:      awsKeyID,
+		AwsRegionName: awsRegionName,
+		AwsSecretKey:  awsSecretKey,
+		StartDate:     startDate,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceAwsCloudtrailPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceAwsCloudtrailResourceModel) ToDeleteSDKType() *shared.SourceAwsCloudtrailCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

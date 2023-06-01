@@ -23,9 +23,9 @@ func (r *DestinationAwsDatalakeResourceModel) ToCreateSDKType() *shared.Destinat
 	}
 	var credentials shared.DestinationAwsDatalakeAuthenticationMode
 	var destinationAwsDatalakeAuthenticationModeIAMRole *shared.DestinationAwsDatalakeAuthenticationModeIAMRole
-	if r.Configuration.Credentials.DestinationAwsDatalakeAuthenticationModeIAMRole != nil {
-		credentialsTitle := shared.DestinationAwsDatalakeAuthenticationModeIAMRoleCredentialsTitle(r.Configuration.Credentials.DestinationAwsDatalakeAuthenticationModeIAMRole.CredentialsTitle.ValueString())
-		roleArn := r.Configuration.Credentials.DestinationAwsDatalakeAuthenticationModeIAMRole.RoleArn.ValueString()
+	if r.Configuration.Credentials.DestinationAwsDatalakeUpdateAuthenticationModeIAMRole != nil {
+		credentialsTitle := shared.DestinationAwsDatalakeAuthenticationModeIAMRoleCredentialsTitle(r.Configuration.Credentials.DestinationAwsDatalakeUpdateAuthenticationModeIAMRole.CredentialsTitle.ValueString())
+		roleArn := r.Configuration.Credentials.DestinationAwsDatalakeUpdateAuthenticationModeIAMRole.RoleArn.ValueString()
 		destinationAwsDatalakeAuthenticationModeIAMRole = &shared.DestinationAwsDatalakeAuthenticationModeIAMRole{
 			CredentialsTitle: credentialsTitle,
 			RoleArn:          roleArn,
@@ -37,10 +37,10 @@ func (r *DestinationAwsDatalakeResourceModel) ToCreateSDKType() *shared.Destinat
 		}
 	}
 	var destinationAwsDatalakeAuthenticationModeIAMUser *shared.DestinationAwsDatalakeAuthenticationModeIAMUser
-	if r.Configuration.Credentials.DestinationAwsDatalakeAuthenticationModeIAMUser != nil {
-		awsAccessKeyID := r.Configuration.Credentials.DestinationAwsDatalakeAuthenticationModeIAMUser.AwsAccessKeyID.ValueString()
-		awsSecretAccessKey := r.Configuration.Credentials.DestinationAwsDatalakeAuthenticationModeIAMUser.AwsSecretAccessKey.ValueString()
-		credentialsTitle1 := shared.DestinationAwsDatalakeAuthenticationModeIAMUserCredentialsTitle(r.Configuration.Credentials.DestinationAwsDatalakeAuthenticationModeIAMUser.CredentialsTitle.ValueString())
+	if r.Configuration.Credentials.DestinationAwsDatalakeUpdateAuthenticationModeIAMUser != nil {
+		awsAccessKeyID := r.Configuration.Credentials.DestinationAwsDatalakeUpdateAuthenticationModeIAMUser.AwsAccessKeyID.ValueString()
+		awsSecretAccessKey := r.Configuration.Credentials.DestinationAwsDatalakeUpdateAuthenticationModeIAMUser.AwsSecretAccessKey.ValueString()
+		credentialsTitle1 := shared.DestinationAwsDatalakeAuthenticationModeIAMUserCredentialsTitle(r.Configuration.Credentials.DestinationAwsDatalakeUpdateAuthenticationModeIAMUser.CredentialsTitle.ValueString())
 		destinationAwsDatalakeAuthenticationModeIAMUser = &shared.DestinationAwsDatalakeAuthenticationModeIAMUser{
 			AwsAccessKeyID:     awsAccessKeyID,
 			AwsSecretAccessKey: awsSecretAccessKey,
@@ -55,14 +55,14 @@ func (r *DestinationAwsDatalakeResourceModel) ToCreateSDKType() *shared.Destinat
 	destinationType := shared.DestinationAwsDatalakeAwsDatalake(r.Configuration.DestinationType.ValueString())
 	var format *shared.DestinationAwsDatalakeOutputFormatWildcard
 	var destinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON *shared.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON
-	if r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON != nil {
+	if r.Configuration.Format.DestinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSON != nil {
 		compressionCodec := new(shared.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONCompressionCodecOptional)
-		if !r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON.CompressionCodec.IsUnknown() && !r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON.CompressionCodec.IsNull() {
-			*compressionCodec = shared.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONCompressionCodecOptional(r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON.CompressionCodec.ValueString())
+		if !r.Configuration.Format.DestinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSON.CompressionCodec.IsUnknown() && !r.Configuration.Format.DestinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSON.CompressionCodec.IsNull() {
+			*compressionCodec = shared.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONCompressionCodecOptional(r.Configuration.Format.DestinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSON.CompressionCodec.ValueString())
 		} else {
 			compressionCodec = nil
 		}
-		formatType := shared.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONFormatTypeWildcard(r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON.FormatType.ValueString())
+		formatType := shared.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONFormatTypeWildcard(r.Configuration.Format.DestinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSON.FormatType.ValueString())
 		destinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON = &shared.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON{
 			CompressionCodec: compressionCodec,
 			FormatType:       formatType,
@@ -74,14 +74,14 @@ func (r *DestinationAwsDatalakeResourceModel) ToCreateSDKType() *shared.Destinat
 		}
 	}
 	var destinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage *shared.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage
-	if r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage != nil {
+	if r.Configuration.Format.DestinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorage != nil {
 		compressionCodec1 := new(shared.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageCompressionCodecOptional)
-		if !r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage.CompressionCodec.IsUnknown() && !r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage.CompressionCodec.IsNull() {
-			*compressionCodec1 = shared.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageCompressionCodecOptional(r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage.CompressionCodec.ValueString())
+		if !r.Configuration.Format.DestinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorage.CompressionCodec.IsUnknown() && !r.Configuration.Format.DestinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorage.CompressionCodec.IsNull() {
+			*compressionCodec1 = shared.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageCompressionCodecOptional(r.Configuration.Format.DestinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorage.CompressionCodec.ValueString())
 		} else {
 			compressionCodec1 = nil
 		}
-		formatType1 := shared.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageFormatTypeWildcard(r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage.FormatType.ValueString())
+		formatType1 := shared.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageFormatTypeWildcard(r.Configuration.Format.DestinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorage.FormatType.ValueString())
 		destinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage = &shared.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage{
 			CompressionCodec: compressionCodec1,
 			FormatType:       formatType1,
@@ -142,6 +142,146 @@ func (r *DestinationAwsDatalakeResourceModel) ToCreateSDKType() *shared.Destinat
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.DestinationAwsDatalakeCreateRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
+func (r *DestinationAwsDatalakeResourceModel) ToUpdateSDKType() *shared.DestinationAwsDatalakePutRequest {
+	awsAccountID := new(string)
+	if !r.Configuration.AwsAccountID.IsUnknown() && !r.Configuration.AwsAccountID.IsNull() {
+		*awsAccountID = r.Configuration.AwsAccountID.ValueString()
+	} else {
+		awsAccountID = nil
+	}
+	bucketName := r.Configuration.BucketName.ValueString()
+	bucketPrefix := new(string)
+	if !r.Configuration.BucketPrefix.IsUnknown() && !r.Configuration.BucketPrefix.IsNull() {
+		*bucketPrefix = r.Configuration.BucketPrefix.ValueString()
+	} else {
+		bucketPrefix = nil
+	}
+	var credentials shared.DestinationAwsDatalakeUpdateAuthenticationMode
+	var destinationAwsDatalakeUpdateAuthenticationModeIAMRole *shared.DestinationAwsDatalakeUpdateAuthenticationModeIAMRole
+	if r.Configuration.Credentials.DestinationAwsDatalakeUpdateAuthenticationModeIAMRole != nil {
+		credentialsTitle := shared.DestinationAwsDatalakeUpdateAuthenticationModeIAMRoleCredentialsTitle(r.Configuration.Credentials.DestinationAwsDatalakeUpdateAuthenticationModeIAMRole.CredentialsTitle.ValueString())
+		roleArn := r.Configuration.Credentials.DestinationAwsDatalakeUpdateAuthenticationModeIAMRole.RoleArn.ValueString()
+		destinationAwsDatalakeUpdateAuthenticationModeIAMRole = &shared.DestinationAwsDatalakeUpdateAuthenticationModeIAMRole{
+			CredentialsTitle: credentialsTitle,
+			RoleArn:          roleArn,
+		}
+	}
+	if destinationAwsDatalakeUpdateAuthenticationModeIAMRole != nil {
+		credentials = shared.DestinationAwsDatalakeUpdateAuthenticationMode{
+			DestinationAwsDatalakeUpdateAuthenticationModeIAMRole: destinationAwsDatalakeUpdateAuthenticationModeIAMRole,
+		}
+	}
+	var destinationAwsDatalakeUpdateAuthenticationModeIAMUser *shared.DestinationAwsDatalakeUpdateAuthenticationModeIAMUser
+	if r.Configuration.Credentials.DestinationAwsDatalakeUpdateAuthenticationModeIAMUser != nil {
+		awsAccessKeyID := r.Configuration.Credentials.DestinationAwsDatalakeUpdateAuthenticationModeIAMUser.AwsAccessKeyID.ValueString()
+		awsSecretAccessKey := r.Configuration.Credentials.DestinationAwsDatalakeUpdateAuthenticationModeIAMUser.AwsSecretAccessKey.ValueString()
+		credentialsTitle1 := shared.DestinationAwsDatalakeUpdateAuthenticationModeIAMUserCredentialsTitle(r.Configuration.Credentials.DestinationAwsDatalakeUpdateAuthenticationModeIAMUser.CredentialsTitle.ValueString())
+		destinationAwsDatalakeUpdateAuthenticationModeIAMUser = &shared.DestinationAwsDatalakeUpdateAuthenticationModeIAMUser{
+			AwsAccessKeyID:     awsAccessKeyID,
+			AwsSecretAccessKey: awsSecretAccessKey,
+			CredentialsTitle:   credentialsTitle1,
+		}
+	}
+	if destinationAwsDatalakeUpdateAuthenticationModeIAMUser != nil {
+		credentials = shared.DestinationAwsDatalakeUpdateAuthenticationMode{
+			DestinationAwsDatalakeUpdateAuthenticationModeIAMUser: destinationAwsDatalakeUpdateAuthenticationModeIAMUser,
+		}
+	}
+	var format *shared.DestinationAwsDatalakeUpdateOutputFormatWildcard
+	var destinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSON *shared.DestinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSON
+	if r.Configuration.Format.DestinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSON != nil {
+		compressionCodec := new(shared.DestinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSONCompressionCodecOptional)
+		if !r.Configuration.Format.DestinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSON.CompressionCodec.IsUnknown() && !r.Configuration.Format.DestinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSON.CompressionCodec.IsNull() {
+			*compressionCodec = shared.DestinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSONCompressionCodecOptional(r.Configuration.Format.DestinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSON.CompressionCodec.ValueString())
+		} else {
+			compressionCodec = nil
+		}
+		formatType := shared.DestinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSONFormatTypeWildcard(r.Configuration.Format.DestinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSON.FormatType.ValueString())
+		destinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSON = &shared.DestinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSON{
+			CompressionCodec: compressionCodec,
+			FormatType:       formatType,
+		}
+	}
+	if destinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSON != nil {
+		format = &shared.DestinationAwsDatalakeUpdateOutputFormatWildcard{
+			DestinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSON: destinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSON,
+		}
+	}
+	var destinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorage *shared.DestinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorage
+	if r.Configuration.Format.DestinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorage != nil {
+		compressionCodec1 := new(shared.DestinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorageCompressionCodecOptional)
+		if !r.Configuration.Format.DestinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorage.CompressionCodec.IsUnknown() && !r.Configuration.Format.DestinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorage.CompressionCodec.IsNull() {
+			*compressionCodec1 = shared.DestinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorageCompressionCodecOptional(r.Configuration.Format.DestinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorage.CompressionCodec.ValueString())
+		} else {
+			compressionCodec1 = nil
+		}
+		formatType1 := shared.DestinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorageFormatTypeWildcard(r.Configuration.Format.DestinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorage.FormatType.ValueString())
+		destinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorage = &shared.DestinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorage{
+			CompressionCodec: compressionCodec1,
+			FormatType:       formatType1,
+		}
+	}
+	if destinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorage != nil {
+		format = &shared.DestinationAwsDatalakeUpdateOutputFormatWildcard{
+			DestinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorage: destinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorage,
+		}
+	}
+	glueCatalogFloatAsDecimal := new(bool)
+	if !r.Configuration.GlueCatalogFloatAsDecimal.IsUnknown() && !r.Configuration.GlueCatalogFloatAsDecimal.IsNull() {
+		*glueCatalogFloatAsDecimal = r.Configuration.GlueCatalogFloatAsDecimal.ValueBool()
+	} else {
+		glueCatalogFloatAsDecimal = nil
+	}
+	lakeformationDatabaseDefaultTagKey := new(string)
+	if !r.Configuration.LakeformationDatabaseDefaultTagKey.IsUnknown() && !r.Configuration.LakeformationDatabaseDefaultTagKey.IsNull() {
+		*lakeformationDatabaseDefaultTagKey = r.Configuration.LakeformationDatabaseDefaultTagKey.ValueString()
+	} else {
+		lakeformationDatabaseDefaultTagKey = nil
+	}
+	lakeformationDatabaseDefaultTagValues := new(string)
+	if !r.Configuration.LakeformationDatabaseDefaultTagValues.IsUnknown() && !r.Configuration.LakeformationDatabaseDefaultTagValues.IsNull() {
+		*lakeformationDatabaseDefaultTagValues = r.Configuration.LakeformationDatabaseDefaultTagValues.ValueString()
+	} else {
+		lakeformationDatabaseDefaultTagValues = nil
+	}
+	lakeformationDatabaseName := r.Configuration.LakeformationDatabaseName.ValueString()
+	lakeformationGovernedTables := new(bool)
+	if !r.Configuration.LakeformationGovernedTables.IsUnknown() && !r.Configuration.LakeformationGovernedTables.IsNull() {
+		*lakeformationGovernedTables = r.Configuration.LakeformationGovernedTables.ValueBool()
+	} else {
+		lakeformationGovernedTables = nil
+	}
+	partitioning := new(shared.DestinationAwsDatalakeUpdateChooseHowToPartitionData)
+	if !r.Configuration.Partitioning.IsUnknown() && !r.Configuration.Partitioning.IsNull() {
+		*partitioning = shared.DestinationAwsDatalakeUpdateChooseHowToPartitionData(r.Configuration.Partitioning.ValueString())
+	} else {
+		partitioning = nil
+	}
+	region := shared.DestinationAwsDatalakeUpdateS3BucketRegion(r.Configuration.Region.ValueString())
+	configuration := shared.DestinationAwsDatalakeUpdate{
+		AwsAccountID:                          awsAccountID,
+		BucketName:                            bucketName,
+		BucketPrefix:                          bucketPrefix,
+		Credentials:                           credentials,
+		Format:                                format,
+		GlueCatalogFloatAsDecimal:             glueCatalogFloatAsDecimal,
+		LakeformationDatabaseDefaultTagKey:    lakeformationDatabaseDefaultTagKey,
+		LakeformationDatabaseDefaultTagValues: lakeformationDatabaseDefaultTagValues,
+		LakeformationDatabaseName:             lakeformationDatabaseName,
+		LakeformationGovernedTables:           lakeformationGovernedTables,
+		Partitioning:                          partitioning,
+		Region:                                region,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.DestinationAwsDatalakePutRequest{
 		Configuration: configuration,
 		Name:          name,
 		WorkspaceID:   workspaceID,

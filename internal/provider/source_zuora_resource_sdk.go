@@ -46,6 +46,36 @@ func (r *SourceZuoraResourceModel) ToCreateSDKType() *shared.SourceZuoraCreateRe
 	return &out
 }
 
+func (r *SourceZuoraResourceModel) ToUpdateSDKType() *shared.SourceZuoraPutRequest {
+	clientID := r.Configuration.ClientID.ValueString()
+	clientSecret := r.Configuration.ClientSecret.ValueString()
+	dataQuery := shared.SourceZuoraUpdateDataQueryType(r.Configuration.DataQuery.ValueString())
+	startDate := r.Configuration.StartDate.ValueString()
+	tenantEndpoint := shared.SourceZuoraUpdateTenantEndpointLocation(r.Configuration.TenantEndpoint.ValueString())
+	windowInDays := new(string)
+	if !r.Configuration.WindowInDays.IsUnknown() && !r.Configuration.WindowInDays.IsNull() {
+		*windowInDays = r.Configuration.WindowInDays.ValueString()
+	} else {
+		windowInDays = nil
+	}
+	configuration := shared.SourceZuoraUpdate{
+		ClientID:       clientID,
+		ClientSecret:   clientSecret,
+		DataQuery:      dataQuery,
+		StartDate:      startDate,
+		TenantEndpoint: tenantEndpoint,
+		WindowInDays:   windowInDays,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceZuoraPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceZuoraResourceModel) ToDeleteSDKType() *shared.SourceZuoraCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

@@ -10,10 +10,6 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/boolplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -55,33 +51,18 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"accept_terms": schema.BoolAttribute{
-						PlanModifiers: []planmodifier.Bool{
-							boolplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"data_source": schema.SingleNestedAttribute{
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_databricks_data_source_recommended_managed_tables": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"data_source_type": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -93,15 +74,9 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 								Description: `Storage on which the delta lake is built.`,
 							},
 							"destination_databricks_data_source_amazon_s3": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"data_source_type": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -110,33 +85,18 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 										},
 									},
 									"file_name_pattern": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 									},
 									"s3_access_key_id": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"s3_bucket_name": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"s3_bucket_path": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"s3_bucket_region": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -171,49 +131,131 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 										Description: `The region of the S3 staging bucket to use if utilising a copy strategy.`,
 									},
 									"s3_secret_access_key": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 								},
 								Description: `Storage on which the delta lake is built.`,
 							},
 							"destination_databricks_data_source_azure_blob_storage": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"azure_blob_storage_account_name": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"azure_blob_storage_container_name": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"azure_blob_storage_endpoint_domain_name": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 									},
 									"azure_blob_storage_sas_token": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"data_source_type": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"AZURE_BLOB_STORAGE",
+											),
+										},
+									},
+								},
+								Description: `Storage on which the delta lake is built.`,
+							},
+							"destination_databricks_update_data_source_recommended_managed_tables": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"data_source_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"MANAGED_TABLES_STORAGE",
+											),
+										},
+									},
+								},
+								Description: `Storage on which the delta lake is built.`,
+							},
+							"destination_databricks_update_data_source_amazon_s3": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"data_source_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"S3_STORAGE",
+											),
+										},
+									},
+									"file_name_pattern": schema.StringAttribute{
+										Computed: true,
+									},
+									"s3_access_key_id": schema.StringAttribute{
+										Computed: true,
+									},
+									"s3_bucket_name": schema.StringAttribute{
+										Computed: true,
+									},
+									"s3_bucket_path": schema.StringAttribute{
+										Computed: true,
+									},
+									"s3_bucket_region": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"",
+												"us-east-1",
+												"us-east-2",
+												"us-west-1",
+												"us-west-2",
+												"af-south-1",
+												"ap-east-1",
+												"ap-south-1",
+												"ap-northeast-1",
+												"ap-northeast-2",
+												"ap-northeast-3",
+												"ap-southeast-1",
+												"ap-southeast-2",
+												"ca-central-1",
+												"cn-north-1",
+												"cn-northwest-1",
+												"eu-central-1",
+												"eu-north-1",
+												"eu-south-1",
+												"eu-west-1",
+												"eu-west-2",
+												"eu-west-3",
+												"sa-east-1",
+												"me-south-1",
+												"us-gov-east-1",
+												"us-gov-west-1",
+											),
+										},
+										Description: `The region of the S3 staging bucket to use if utilising a copy strategy.`,
+									},
+									"s3_secret_access_key": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+								Description: `Storage on which the delta lake is built.`,
+							},
+							"destination_databricks_update_data_source_azure_blob_storage": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"azure_blob_storage_account_name": schema.StringAttribute{
+										Computed: true,
+									},
+									"azure_blob_storage_container_name": schema.StringAttribute{
+										Computed: true,
+									},
+									"azure_blob_storage_endpoint_domain_name": schema.StringAttribute{
+										Computed: true,
+									},
+									"azure_blob_storage_sas_token": schema.StringAttribute{
+										Computed: true,
+									},
+									"data_source_type": schema.StringAttribute{
+										Computed: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"AZURE_BLOB_STORAGE",
@@ -229,39 +271,21 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 						},
 					},
 					"database": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
 					"databricks_http_path": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"databricks_personal_access_token": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"databricks_port": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
 					"databricks_server_hostname": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"destination_type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -270,15 +294,9 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 						},
 					},
 					"purge_staging_data": schema.BoolAttribute{
-						PlanModifiers: []planmodifier.Bool{
-							boolplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
 					"schema": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
 				},
@@ -290,15 +308,9 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 				Computed: true,
 			},
 			"name": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 			"workspace_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 		},
@@ -398,7 +410,25 @@ func (r *DestinationDatabricksResource) Update(ctx context.Context, req resource
 		return
 	}
 
-	// Not Implemented; all attributes marked as RequiresReplace
+	destinationDatabricksPutRequest := data.ToUpdateSDKType()
+	destinationID := data.DestinationID.ValueString()
+	request := operations.PutDestinationDatabricksRequest{
+		DestinationDatabricksPutRequest: destinationDatabricksPutRequest,
+		DestinationID:                   destinationID,
+	}
+	res, err := r.client.Destinations.PutDestinationDatabricks(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode != 204 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

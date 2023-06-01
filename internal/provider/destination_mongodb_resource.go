@@ -10,10 +10,6 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -55,27 +51,15 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"auth_type": schema.SingleNestedAttribute{
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_mongodb_authorization_type_none": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"authorization": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -87,15 +71,9 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 								Description: `None.`,
 							},
 							"destination_mongodb_authorization_type_login_password": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"authorization": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -104,16 +82,44 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 										},
 									},
 									"password": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"username": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
+									},
+								},
+								Description: `Login/Password.`,
+							},
+							"destination_mongodb_update_authorization_type_none": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"authorization": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"none",
+											),
+										},
+									},
+								},
+								Description: `None.`,
+							},
+							"destination_mongodb_update_authorization_type_login_password": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"authorization": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"login/password",
+											),
+										},
+									},
+									"password": schema.StringAttribute{
+										Computed: true,
+									},
+									"username": schema.StringAttribute{
+										Computed: true,
 									},
 								},
 								Description: `Login/Password.`,
@@ -124,15 +130,9 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 						},
 					},
 					"database": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"destination_type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -141,27 +141,15 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 						},
 					},
 					"instance_type": schema.SingleNestedAttribute{
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_mongodb_mongo_db_instance_type_standalone_mongo_db_instance": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"host": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"instance": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -170,24 +158,15 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 										},
 									},
 									"port": schema.Int64Attribute{
-										PlanModifiers: []planmodifier.Int64{
-											int64planmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 								},
 								Description: `MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.`,
 							},
 							"destination_mongodb_mongo_db_instance_type_replica_set": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"instance": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -196,37 +175,79 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 										},
 									},
 									"replica_set": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 									},
 									"server_addresses": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 								},
 								Description: `MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.`,
 							},
 							"destination_mongodb_mongo_db_instance_type_mongo_db_atlas": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"cluster_url": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"instance": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"atlas",
+											),
+										},
+									},
+								},
+								Description: `MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.`,
+							},
+							"destination_mongodb_update_mongo_db_instance_type_standalone_mongo_db_instance": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"host": schema.StringAttribute{
+										Computed: true,
+									},
+									"instance": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"standalone",
+											),
+										},
+									},
+									"port": schema.Int64Attribute{
+										Computed: true,
+									},
+								},
+								Description: `MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.`,
+							},
+							"destination_mongodb_update_mongo_db_instance_type_replica_set": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"instance": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"replica",
+											),
+										},
+									},
+									"replica_set": schema.StringAttribute{
+										Computed: true,
+									},
+									"server_addresses": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+								Description: `MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.`,
+							},
+							"destination_mongodb_update_mongo_db_instance_type_mongo_db_atlas": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"cluster_url": schema.StringAttribute{
+										Computed: true,
+									},
+									"instance": schema.StringAttribute{
+										Computed: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"atlas",
@@ -242,21 +263,12 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 						},
 					},
 					"tunnel_method": schema.SingleNestedAttribute{
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_mongodb_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_method": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -269,27 +281,15 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"destination_mongodb_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"tunnel_host": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"tunnel_method": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -299,36 +299,21 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 										Description: `Connect through a jump server tunnel host using username and ssh key`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										PlanModifiers: []planmodifier.Int64{
-											int64planmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"tunnel_user": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"destination_mongodb_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_host": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"tunnel_method": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -338,22 +323,82 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 										Description: `Connect through a jump server tunnel host using username and password authentication`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										PlanModifiers: []planmodifier.Int64{
-											int64planmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"tunnel_user": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"tunnel_user_password": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
+									},
+								},
+								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
+							},
+							"destination_mongodb_update_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"tunnel_method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"NO_TUNNEL",
+											),
+										},
+										Description: `No ssh tunnel needed to connect to database`,
+									},
+								},
+								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
+							},
+							"destination_mongodb_update_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"ssh_key": schema.StringAttribute{
+										Computed: true,
+									},
+									"tunnel_host": schema.StringAttribute{
+										Computed: true,
+									},
+									"tunnel_method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"SSH_KEY_AUTH",
+											),
+										},
+										Description: `Connect through a jump server tunnel host using username and ssh key`,
+									},
+									"tunnel_port": schema.Int64Attribute{
+										Computed: true,
+									},
+									"tunnel_user": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
+							},
+							"destination_mongodb_update_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"tunnel_host": schema.StringAttribute{
+										Computed: true,
+									},
+									"tunnel_method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"SSH_PASSWORD_AUTH",
+											),
+										},
+										Description: `Connect through a jump server tunnel host using username and password authentication`,
+									},
+									"tunnel_port": schema.Int64Attribute{
+										Computed: true,
+									},
+									"tunnel_user": schema.StringAttribute{
+										Computed: true,
+									},
+									"tunnel_user_password": schema.StringAttribute{
+										Computed: true,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -372,15 +417,9 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 				Computed: true,
 			},
 			"name": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 			"workspace_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 		},
@@ -480,7 +519,25 @@ func (r *DestinationMongodbResource) Update(ctx context.Context, req resource.Up
 		return
 	}
 
-	// Not Implemented; all attributes marked as RequiresReplace
+	destinationMongodbPutRequest := data.ToUpdateSDKType()
+	destinationID := data.DestinationID.ValueString()
+	request := operations.PutDestinationMongodbRequest{
+		DestinationMongodbPutRequest: destinationMongodbPutRequest,
+		DestinationID:                destinationID,
+	}
+	res, err := r.client.Destinations.PutDestinationMongodb(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode != 204 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

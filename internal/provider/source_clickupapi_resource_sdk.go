@@ -66,6 +66,56 @@ func (r *SourceClickupAPIResourceModel) ToCreateSDKType() *shared.SourceClickupA
 	return &out
 }
 
+func (r *SourceClickupAPIResourceModel) ToUpdateSDKType() *shared.SourceClickupAPIPutRequest {
+	apiToken := r.Configuration.APIToken.ValueString()
+	folderID := new(string)
+	if !r.Configuration.FolderID.IsUnknown() && !r.Configuration.FolderID.IsNull() {
+		*folderID = r.Configuration.FolderID.ValueString()
+	} else {
+		folderID = nil
+	}
+	includeClosedTasks := new(bool)
+	if !r.Configuration.IncludeClosedTasks.IsUnknown() && !r.Configuration.IncludeClosedTasks.IsNull() {
+		*includeClosedTasks = r.Configuration.IncludeClosedTasks.ValueBool()
+	} else {
+		includeClosedTasks = nil
+	}
+	listID := new(string)
+	if !r.Configuration.ListID.IsUnknown() && !r.Configuration.ListID.IsNull() {
+		*listID = r.Configuration.ListID.ValueString()
+	} else {
+		listID = nil
+	}
+	spaceID := new(string)
+	if !r.Configuration.SpaceID.IsUnknown() && !r.Configuration.SpaceID.IsNull() {
+		*spaceID = r.Configuration.SpaceID.ValueString()
+	} else {
+		spaceID = nil
+	}
+	teamID := new(string)
+	if !r.Configuration.TeamID.IsUnknown() && !r.Configuration.TeamID.IsNull() {
+		*teamID = r.Configuration.TeamID.ValueString()
+	} else {
+		teamID = nil
+	}
+	configuration := shared.SourceClickupAPIUpdate{
+		APIToken:           apiToken,
+		FolderID:           folderID,
+		IncludeClosedTasks: includeClosedTasks,
+		ListID:             listID,
+		SpaceID:            spaceID,
+		TeamID:             teamID,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceClickupAPIPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceClickupAPIResourceModel) ToDeleteSDKType() *shared.SourceClickupAPICreateRequest {
 	out := r.ToCreateSDKType()
 	return out

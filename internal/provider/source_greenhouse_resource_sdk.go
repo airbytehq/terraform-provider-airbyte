@@ -31,6 +31,21 @@ func (r *SourceGreenhouseResourceModel) ToCreateSDKType() *shared.SourceGreenhou
 	return &out
 }
 
+func (r *SourceGreenhouseResourceModel) ToUpdateSDKType() *shared.SourceGreenhousePutRequest {
+	apiKey := r.Configuration.APIKey.ValueString()
+	configuration := shared.SourceGreenhouseUpdate{
+		APIKey: apiKey,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceGreenhousePutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceGreenhouseResourceModel) ToDeleteSDKType() *shared.SourceGreenhouseCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

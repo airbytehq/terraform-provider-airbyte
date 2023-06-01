@@ -97,6 +97,8 @@ type SourcePostgresReplicationMethodLogicalReplicationCDC struct {
 	Plugin *SourcePostgresReplicationMethodLogicalReplicationCDCPlugin `json:"plugin,omitempty"`
 	// A Postgres publication used for consuming changes. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-4-create-publications-and-replication-identities-for-tables">publications and replication identities</a>.
 	Publication string `json:"publication"`
+	// The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful.
+	QueueSize *int64 `json:"queue_size,omitempty"`
 	// A plugin logical replication slot. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-3-create-replication-slot">replication slots</a>.
 	ReplicationSlot string `json:"replication_slot"`
 
@@ -122,6 +124,7 @@ func (c *SourcePostgresReplicationMethodLogicalReplicationCDC) UnmarshalJSON(bs 
 	delete(additionalFields, "method")
 	delete(additionalFields, "plugin")
 	delete(additionalFields, "publication")
+	delete(additionalFields, "queue_size")
 	delete(additionalFields, "replication_slot")
 
 	c.AdditionalProperties = additionalFields

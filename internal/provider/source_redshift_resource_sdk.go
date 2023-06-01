@@ -51,6 +51,41 @@ func (r *SourceRedshiftResourceModel) ToCreateSDKType() *shared.SourceRedshiftCr
 	return &out
 }
 
+func (r *SourceRedshiftResourceModel) ToUpdateSDKType() *shared.SourceRedshiftPutRequest {
+	database := r.Configuration.Database.ValueString()
+	host := r.Configuration.Host.ValueString()
+	jdbcURLParams := new(string)
+	if !r.Configuration.JdbcURLParams.IsUnknown() && !r.Configuration.JdbcURLParams.IsNull() {
+		*jdbcURLParams = r.Configuration.JdbcURLParams.ValueString()
+	} else {
+		jdbcURLParams = nil
+	}
+	password := r.Configuration.Password.ValueString()
+	port := r.Configuration.Port.ValueInt64()
+	schemas := make([]string, 0)
+	for _, schemasItem := range r.Configuration.Schemas {
+		schemas = append(schemas, schemasItem.ValueString())
+	}
+	username := r.Configuration.Username.ValueString()
+	configuration := shared.SourceRedshiftUpdate{
+		Database:      database,
+		Host:          host,
+		JdbcURLParams: jdbcURLParams,
+		Password:      password,
+		Port:          port,
+		Schemas:       schemas,
+		Username:      username,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceRedshiftPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceRedshiftResourceModel) ToDeleteSDKType() *shared.SourceRedshiftCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

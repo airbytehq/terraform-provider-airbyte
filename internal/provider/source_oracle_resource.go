@@ -10,11 +10,6 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/listplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -39,12 +34,12 @@ type SourceOracleResource struct {
 
 // SourceOracleResourceModel describes the resource data model.
 type SourceOracleResourceModel struct {
-	Configuration SourceOracle `tfsdk:"configuration"`
-	Name          types.String `tfsdk:"name"`
-	SecretID      types.String `tfsdk:"secret_id"`
-	SourceID      types.String `tfsdk:"source_id"`
-	SourceType    types.String `tfsdk:"source_type"`
-	WorkspaceID   types.String `tfsdk:"workspace_id"`
+	Configuration SourceOracleUpdate `tfsdk:"configuration"`
+	Name          types.String       `tfsdk:"name"`
+	SecretID      types.String       `tfsdk:"secret_id"`
+	SourceID      types.String       `tfsdk:"source_id"`
+	SourceType    types.String       `tfsdk:"source_type"`
+	WorkspaceID   types.String       `tfsdk:"workspace_id"`
 }
 
 func (r *SourceOracleResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -57,27 +52,49 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"connection_data": schema.SingleNestedAttribute{
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_oracle_connect_by_service_name": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
+							"source_oracle_update_connect_by_service_name": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"connection_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"service_name",
+											),
+										},
+									},
+									"service_name": schema.StringAttribute{
+										Computed: true,
+									},
 								},
+								Description: `Use service name`,
+							},
+							"source_oracle_update_connect_by_system_id_sid_": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"connection_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"sid",
+											),
+										},
+									},
+									"sid": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+								Description: `Use SID (Oracle System Identifier)`,
+							},
+							"source_oracle_connect_by_service_name": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"connection_type": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -86,24 +103,15 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 										},
 									},
 									"service_name": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 								},
 								Description: `Use service name`,
 							},
 							"source_oracle_connect_by_system_id_sid_": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"connection_type": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -112,9 +120,6 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 										},
 									},
 									"sid": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 								},
@@ -126,21 +131,54 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 						},
 					},
 					"encryption": schema.SingleNestedAttribute{
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Attributes: map[string]schema.Attribute{
-							"source_oracle_encryption_native_network_encryption_nne_": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
+							"source_oracle_update_encryption_native_network_encryption_nne_": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"encryption_algorithm": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"AES256",
+												"RC4_56",
+												"3DES168",
+											),
+										},
+										Description: `This parameter defines what encryption algorithm is used.`,
+									},
+									"encryption_method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"client_nne",
+											),
+										},
+									},
 								},
+								Description: `The native network encryption gives you the ability to encrypt database connections, without the configuration overhead of TCP/IP and SSL/TLS and without the need to open and listen on different ports.`,
+							},
+							"source_oracle_update_encryption_tls_encrypted_verify_certificate_": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"encryption_method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"encrypted_verify_certificate",
+											),
+										},
+									},
+									"ssl_certificate": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+								Description: `Verify and use the certificate provided by the server.`,
+							},
+							"source_oracle_encryption_native_network_encryption_nne_": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"encryption_algorithm": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -152,9 +190,6 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 										Description: `This parameter defines what encryption algorithm is used.`,
 									},
 									"encryption_method": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -166,15 +201,9 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 								Description: `The native network encryption gives you the ability to encrypt database connections, without the configuration overhead of TCP/IP and SSL/TLS and without the need to open and listen on different ports.`,
 							},
 							"source_oracle_encryption_tls_encrypted_verify_certificate_": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"encryption_method": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -183,9 +212,6 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 										},
 									},
 									"ssl_certificate": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 								},
@@ -197,63 +223,97 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 						},
 					},
 					"host": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"jdbc_url_params": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
 					"password": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
 					"port": schema.Int64Attribute{
-						PlanModifiers: []planmodifier.Int64{
-							int64planmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"schemas": schema.ListAttribute{
-						PlanModifiers: []planmodifier.List{
-							listplanmodifier.RequiresReplace(),
-						},
 						Optional:    true,
 						ElementType: types.StringType,
 					},
-					"source_type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"oracle",
-							),
-						},
-					},
 					"tunnel_method": schema.SingleNestedAttribute{
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_oracle_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
+							"source_oracle_update_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"tunnel_method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"NO_TUNNEL",
+											),
+										},
+										Description: `No ssh tunnel needed to connect to database`,
+									},
 								},
+								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
+							},
+							"source_oracle_update_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"ssh_key": schema.StringAttribute{
+										Computed: true,
+									},
+									"tunnel_host": schema.StringAttribute{
+										Computed: true,
+									},
+									"tunnel_method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"SSH_KEY_AUTH",
+											),
+										},
+										Description: `Connect through a jump server tunnel host using username and ssh key`,
+									},
+									"tunnel_port": schema.Int64Attribute{
+										Computed: true,
+									},
+									"tunnel_user": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
+							},
+							"source_oracle_update_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"tunnel_host": schema.StringAttribute{
+										Computed: true,
+									},
+									"tunnel_method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"SSH_PASSWORD_AUTH",
+											),
+										},
+										Description: `Connect through a jump server tunnel host using username and password authentication`,
+									},
+									"tunnel_port": schema.Int64Attribute{
+										Computed: true,
+									},
+									"tunnel_user": schema.StringAttribute{
+										Computed: true,
+									},
+									"tunnel_user_password": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
+							},
+							"source_oracle_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_method": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -266,27 +326,15 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"source_oracle_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"tunnel_host": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"tunnel_method": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -296,36 +344,21 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 										Description: `Connect through a jump server tunnel host using username and ssh key`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										PlanModifiers: []planmodifier.Int64{
-											int64planmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"tunnel_user": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"source_oracle_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_host": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"tunnel_method": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -335,21 +368,12 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 										Description: `Connect through a jump server tunnel host using username and password authentication`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										PlanModifiers: []planmodifier.Int64{
-											int64planmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"tunnel_user": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"tunnel_user_password": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 								},
@@ -361,23 +385,22 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 						},
 					},
 					"username": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
+					},
+					"source_type": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"oracle",
+							),
+						},
 					},
 				},
 			},
 			"name": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Optional: true,
 			},
 			"source_id": schema.StringAttribute{
@@ -387,9 +410,6 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 		},
@@ -489,7 +509,25 @@ func (r *SourceOracleResource) Update(ctx context.Context, req resource.UpdateRe
 		return
 	}
 
-	// Not Implemented; all attributes marked as RequiresReplace
+	sourceOraclePutRequest := data.ToUpdateSDKType()
+	sourceID := data.SourceID.ValueString()
+	request := operations.PutSourceOracleRequest{
+		SourceOraclePutRequest: sourceOraclePutRequest,
+		SourceID:               sourceID,
+	}
+	res, err := r.client.Sources.PutSourceOracle(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode != 204 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

@@ -61,6 +61,51 @@ func (r *SourcePexelsAPIResourceModel) ToCreateSDKType() *shared.SourcePexelsAPI
 	return &out
 }
 
+func (r *SourcePexelsAPIResourceModel) ToUpdateSDKType() *shared.SourcePexelsAPIPutRequest {
+	apiKey := r.Configuration.APIKey.ValueString()
+	color := new(string)
+	if !r.Configuration.Color.IsUnknown() && !r.Configuration.Color.IsNull() {
+		*color = r.Configuration.Color.ValueString()
+	} else {
+		color = nil
+	}
+	locale := new(string)
+	if !r.Configuration.Locale.IsUnknown() && !r.Configuration.Locale.IsNull() {
+		*locale = r.Configuration.Locale.ValueString()
+	} else {
+		locale = nil
+	}
+	orientation := new(string)
+	if !r.Configuration.Orientation.IsUnknown() && !r.Configuration.Orientation.IsNull() {
+		*orientation = r.Configuration.Orientation.ValueString()
+	} else {
+		orientation = nil
+	}
+	query := r.Configuration.Query.ValueString()
+	size := new(string)
+	if !r.Configuration.Size.IsUnknown() && !r.Configuration.Size.IsNull() {
+		*size = r.Configuration.Size.ValueString()
+	} else {
+		size = nil
+	}
+	configuration := shared.SourcePexelsAPIUpdate{
+		APIKey:      apiKey,
+		Color:       color,
+		Locale:      locale,
+		Orientation: orientation,
+		Query:       query,
+		Size:        size,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourcePexelsAPIPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourcePexelsAPIResourceModel) ToDeleteSDKType() *shared.SourcePexelsAPICreateRequest {
 	out := r.ToCreateSDKType()
 	return out

@@ -44,6 +44,33 @@ func (r *SourceYoutubeAnalyticsResourceModel) ToCreateSDKType() *shared.SourceYo
 	return &out
 }
 
+func (r *SourceYoutubeAnalyticsResourceModel) ToUpdateSDKType() *shared.SourceYoutubeAnalyticsPutRequest {
+	clientID := r.Configuration.Credentials.ClientID.ValueString()
+	clientSecret := r.Configuration.Credentials.ClientSecret.ValueString()
+	refreshToken := r.Configuration.Credentials.RefreshToken.ValueString()
+	var additionalProperties interface{}
+	if !r.Configuration.Credentials.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.AdditionalProperties.IsNull() {
+		_ = json.Unmarshal([]byte(r.Configuration.Credentials.AdditionalProperties.ValueString()), &additionalProperties)
+	}
+	credentials := shared.SourceYoutubeAnalyticsUpdateAuthenticateViaOAuth20{
+		ClientID:             clientID,
+		ClientSecret:         clientSecret,
+		RefreshToken:         refreshToken,
+		AdditionalProperties: additionalProperties,
+	}
+	configuration := shared.SourceYoutubeAnalyticsUpdate{
+		Credentials: credentials,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceYoutubeAnalyticsPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceYoutubeAnalyticsResourceModel) ToDeleteSDKType() *shared.SourceYoutubeAnalyticsCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

@@ -42,6 +42,32 @@ func (r *SourceMyHoursResourceModel) ToCreateSDKType() *shared.SourceMyHoursCrea
 	return &out
 }
 
+func (r *SourceMyHoursResourceModel) ToUpdateSDKType() *shared.SourceMyHoursPutRequest {
+	email := r.Configuration.Email.ValueString()
+	logsBatchSize := new(int64)
+	if !r.Configuration.LogsBatchSize.IsUnknown() && !r.Configuration.LogsBatchSize.IsNull() {
+		*logsBatchSize = r.Configuration.LogsBatchSize.ValueInt64()
+	} else {
+		logsBatchSize = nil
+	}
+	password := r.Configuration.Password.ValueString()
+	startDate := r.Configuration.StartDate.ValueString()
+	configuration := shared.SourceMyHoursUpdate{
+		Email:         email,
+		LogsBatchSize: logsBatchSize,
+		Password:      password,
+		StartDate:     startDate,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceMyHoursPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceMyHoursResourceModel) ToDeleteSDKType() *shared.SourceMyHoursCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

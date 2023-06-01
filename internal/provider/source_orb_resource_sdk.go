@@ -64,6 +64,54 @@ func (r *SourceOrbResourceModel) ToCreateSDKType() *shared.SourceOrbCreateReques
 	return &out
 }
 
+func (r *SourceOrbResourceModel) ToUpdateSDKType() *shared.SourceOrbPutRequest {
+	apiKey := r.Configuration.APIKey.ValueString()
+	lookbackWindowDays := new(int64)
+	if !r.Configuration.LookbackWindowDays.IsUnknown() && !r.Configuration.LookbackWindowDays.IsNull() {
+		*lookbackWindowDays = r.Configuration.LookbackWindowDays.ValueInt64()
+	} else {
+		lookbackWindowDays = nil
+	}
+	numericEventPropertiesKeys := make([]string, 0)
+	for _, numericEventPropertiesKeysItem := range r.Configuration.NumericEventPropertiesKeys {
+		numericEventPropertiesKeys = append(numericEventPropertiesKeys, numericEventPropertiesKeysItem.ValueString())
+	}
+	planID := new(string)
+	if !r.Configuration.PlanID.IsUnknown() && !r.Configuration.PlanID.IsNull() {
+		*planID = r.Configuration.PlanID.ValueString()
+	} else {
+		planID = nil
+	}
+	startDate := r.Configuration.StartDate.ValueString()
+	stringEventPropertiesKeys := make([]string, 0)
+	for _, stringEventPropertiesKeysItem := range r.Configuration.StringEventPropertiesKeys {
+		stringEventPropertiesKeys = append(stringEventPropertiesKeys, stringEventPropertiesKeysItem.ValueString())
+	}
+	subscriptionUsageGroupingKey := new(string)
+	if !r.Configuration.SubscriptionUsageGroupingKey.IsUnknown() && !r.Configuration.SubscriptionUsageGroupingKey.IsNull() {
+		*subscriptionUsageGroupingKey = r.Configuration.SubscriptionUsageGroupingKey.ValueString()
+	} else {
+		subscriptionUsageGroupingKey = nil
+	}
+	configuration := shared.SourceOrbUpdate{
+		APIKey:                       apiKey,
+		LookbackWindowDays:           lookbackWindowDays,
+		NumericEventPropertiesKeys:   numericEventPropertiesKeys,
+		PlanID:                       planID,
+		StartDate:                    startDate,
+		StringEventPropertiesKeys:    stringEventPropertiesKeys,
+		SubscriptionUsageGroupingKey: subscriptionUsageGroupingKey,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceOrbPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceOrbResourceModel) ToDeleteSDKType() *shared.SourceOrbCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

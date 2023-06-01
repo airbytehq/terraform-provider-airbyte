@@ -33,6 +33,23 @@ func (r *SourceDatascopeResourceModel) ToCreateSDKType() *shared.SourceDatascope
 	return &out
 }
 
+func (r *SourceDatascopeResourceModel) ToUpdateSDKType() *shared.SourceDatascopePutRequest {
+	apiKey := r.Configuration.APIKey.ValueString()
+	startDate := r.Configuration.StartDate.ValueString()
+	configuration := shared.SourceDatascopeUpdate{
+		APIKey:    apiKey,
+		StartDate: startDate,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceDatascopePutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceDatascopeResourceModel) ToDeleteSDKType() *shared.SourceDatascopeCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

@@ -54,6 +54,44 @@ func (r *SourceDynamodbResourceModel) ToCreateSDKType() *shared.SourceDynamodbCr
 	return &out
 }
 
+func (r *SourceDynamodbResourceModel) ToUpdateSDKType() *shared.SourceDynamodbPutRequest {
+	accessKeyID := r.Configuration.AccessKeyID.ValueString()
+	endpoint := new(string)
+	if !r.Configuration.Endpoint.IsUnknown() && !r.Configuration.Endpoint.IsNull() {
+		*endpoint = r.Configuration.Endpoint.ValueString()
+	} else {
+		endpoint = nil
+	}
+	region := new(shared.SourceDynamodbUpdateDynamodbRegion)
+	if !r.Configuration.Region.IsUnknown() && !r.Configuration.Region.IsNull() {
+		*region = shared.SourceDynamodbUpdateDynamodbRegion(r.Configuration.Region.ValueString())
+	} else {
+		region = nil
+	}
+	reservedAttributeNames := new(string)
+	if !r.Configuration.ReservedAttributeNames.IsUnknown() && !r.Configuration.ReservedAttributeNames.IsNull() {
+		*reservedAttributeNames = r.Configuration.ReservedAttributeNames.ValueString()
+	} else {
+		reservedAttributeNames = nil
+	}
+	secretAccessKey := r.Configuration.SecretAccessKey.ValueString()
+	configuration := shared.SourceDynamodbUpdate{
+		AccessKeyID:            accessKeyID,
+		Endpoint:               endpoint,
+		Region:                 region,
+		ReservedAttributeNames: reservedAttributeNames,
+		SecretAccessKey:        secretAccessKey,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceDynamodbPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceDynamodbResourceModel) ToDeleteSDKType() *shared.SourceDynamodbCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

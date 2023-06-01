@@ -31,6 +31,21 @@ func (r *SourceGetlagoResourceModel) ToCreateSDKType() *shared.SourceGetlagoCrea
 	return &out
 }
 
+func (r *SourceGetlagoResourceModel) ToUpdateSDKType() *shared.SourceGetlagoPutRequest {
+	apiKey := r.Configuration.APIKey.ValueString()
+	configuration := shared.SourceGetlagoUpdate{
+		APIKey: apiKey,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceGetlagoPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceGetlagoResourceModel) ToDeleteSDKType() *shared.SourceGetlagoCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

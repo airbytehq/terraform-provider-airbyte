@@ -47,6 +47,36 @@ func (r *SourceStravaResourceModel) ToCreateSDKType() *shared.SourceStravaCreate
 	return &out
 }
 
+func (r *SourceStravaResourceModel) ToUpdateSDKType() *shared.SourceStravaPutRequest {
+	athleteID := r.Configuration.AthleteID.ValueInt64()
+	authType := new(shared.SourceStravaUpdateAuthType)
+	if !r.Configuration.AuthType.IsUnknown() && !r.Configuration.AuthType.IsNull() {
+		*authType = shared.SourceStravaUpdateAuthType(r.Configuration.AuthType.ValueString())
+	} else {
+		authType = nil
+	}
+	clientID := r.Configuration.ClientID.ValueString()
+	clientSecret := r.Configuration.ClientSecret.ValueString()
+	refreshToken := r.Configuration.RefreshToken.ValueString()
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	configuration := shared.SourceStravaUpdate{
+		AthleteID:    athleteID,
+		AuthType:     authType,
+		ClientID:     clientID,
+		ClientSecret: clientSecret,
+		RefreshToken: refreshToken,
+		StartDate:    startDate,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceStravaPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceStravaResourceModel) ToDeleteSDKType() *shared.SourceStravaCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

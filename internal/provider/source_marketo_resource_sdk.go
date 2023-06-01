@@ -38,6 +38,27 @@ func (r *SourceMarketoResourceModel) ToCreateSDKType() *shared.SourceMarketoCrea
 	return &out
 }
 
+func (r *SourceMarketoResourceModel) ToUpdateSDKType() *shared.SourceMarketoPutRequest {
+	clientID := r.Configuration.ClientID.ValueString()
+	clientSecret := r.Configuration.ClientSecret.ValueString()
+	domainURL := r.Configuration.DomainURL.ValueString()
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	configuration := shared.SourceMarketoUpdate{
+		ClientID:     clientID,
+		ClientSecret: clientSecret,
+		DomainURL:    domainURL,
+		StartDate:    startDate,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceMarketoPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceMarketoResourceModel) ToDeleteSDKType() *shared.SourceMarketoCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

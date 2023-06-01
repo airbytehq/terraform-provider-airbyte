@@ -45,6 +45,35 @@ func (r *SourceMailjetSmsResourceModel) ToCreateSDKType() *shared.SourceMailjetS
 	return &out
 }
 
+func (r *SourceMailjetSmsResourceModel) ToUpdateSDKType() *shared.SourceMailjetSmsPutRequest {
+	endDate := new(int64)
+	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
+		*endDate = r.Configuration.EndDate.ValueInt64()
+	} else {
+		endDate = nil
+	}
+	startDate := new(int64)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate = r.Configuration.StartDate.ValueInt64()
+	} else {
+		startDate = nil
+	}
+	token := r.Configuration.Token.ValueString()
+	configuration := shared.SourceMailjetSmsUpdate{
+		EndDate:   endDate,
+		StartDate: startDate,
+		Token:     token,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceMailjetSmsPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceMailjetSmsResourceModel) ToDeleteSDKType() *shared.SourceMailjetSmsCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

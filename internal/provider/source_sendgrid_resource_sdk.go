@@ -39,6 +39,28 @@ func (r *SourceSendgridResourceModel) ToCreateSDKType() *shared.SourceSendgridCr
 	return &out
 }
 
+func (r *SourceSendgridResourceModel) ToUpdateSDKType() *shared.SourceSendgridPutRequest {
+	apikey := r.Configuration.Apikey.ValueString()
+	startTime := new(time.Time)
+	if !r.Configuration.StartTime.IsUnknown() && !r.Configuration.StartTime.IsNull() {
+		*startTime, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartTime.ValueString())
+	} else {
+		startTime = nil
+	}
+	configuration := shared.SourceSendgridUpdate{
+		Apikey:    apikey,
+		StartTime: startTime,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceSendgridPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceSendgridResourceModel) ToDeleteSDKType() *shared.SourceSendgridCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

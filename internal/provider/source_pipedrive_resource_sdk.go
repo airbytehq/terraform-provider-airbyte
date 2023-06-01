@@ -42,6 +42,31 @@ func (r *SourcePipedriveResourceModel) ToCreateSDKType() *shared.SourcePipedrive
 	return &out
 }
 
+func (r *SourcePipedriveResourceModel) ToUpdateSDKType() *shared.SourcePipedrivePutRequest {
+	var authorization *shared.SourcePipedriveUpdateAPIKeyAuthentication
+	if r.Configuration.Authorization != nil {
+		apiToken := r.Configuration.Authorization.APIToken.ValueString()
+		authType := shared.SourcePipedriveUpdateAPIKeyAuthenticationAuthType(r.Configuration.Authorization.AuthType.ValueString())
+		authorization = &shared.SourcePipedriveUpdateAPIKeyAuthentication{
+			APIToken: apiToken,
+			AuthType: authType,
+		}
+	}
+	replicationStartDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.ReplicationStartDate.ValueString())
+	configuration := shared.SourcePipedriveUpdate{
+		Authorization:        authorization,
+		ReplicationStartDate: replicationStartDate,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourcePipedrivePutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourcePipedriveResourceModel) ToDeleteSDKType() *shared.SourcePipedriveCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

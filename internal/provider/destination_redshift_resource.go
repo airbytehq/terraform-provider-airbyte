@@ -10,11 +10,6 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/boolplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -56,21 +51,12 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"database": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"destination_type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -79,51 +65,27 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 						},
 					},
 					"host": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"jdbc_url_params": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
 					"password": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"port": schema.Int64Attribute{
-						PlanModifiers: []planmodifier.Int64{
-							int64planmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"schema": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"tunnel_method": schema.SingleNestedAttribute{
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_redshift_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_method": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -136,27 +98,15 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"destination_redshift_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"tunnel_host": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"tunnel_method": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -166,36 +116,21 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 										Description: `Connect through a jump server tunnel host using username and ssh key`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										PlanModifiers: []planmodifier.Int64{
-											int64planmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"tunnel_user": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"destination_redshift_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_host": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"tunnel_method": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -205,22 +140,82 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 										Description: `Connect through a jump server tunnel host using username and password authentication`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										PlanModifiers: []planmodifier.Int64{
-											int64planmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"tunnel_user": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"tunnel_user_password": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
+									},
+								},
+								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
+							},
+							"destination_redshift_update_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"tunnel_method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"NO_TUNNEL",
+											),
+										},
+										Description: `No ssh tunnel needed to connect to database`,
+									},
+								},
+								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
+							},
+							"destination_redshift_update_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"ssh_key": schema.StringAttribute{
+										Computed: true,
+									},
+									"tunnel_host": schema.StringAttribute{
+										Computed: true,
+									},
+									"tunnel_method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"SSH_KEY_AUTH",
+											),
+										},
+										Description: `Connect through a jump server tunnel host using username and ssh key`,
+									},
+									"tunnel_port": schema.Int64Attribute{
+										Computed: true,
+									},
+									"tunnel_user": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
+							},
+							"destination_redshift_update_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"tunnel_host": schema.StringAttribute{
+										Computed: true,
+									},
+									"tunnel_method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"SSH_PASSWORD_AUTH",
+											),
+										},
+										Description: `Connect through a jump server tunnel host using username and password authentication`,
+									},
+									"tunnel_port": schema.Int64Attribute{
+										Computed: true,
+									},
+									"tunnel_user": schema.StringAttribute{
+										Computed: true,
+									},
+									"tunnel_user_password": schema.StringAttribute{
+										Computed: true,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -231,21 +226,12 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 						},
 					},
 					"uploading_method": schema.SingleNestedAttribute{
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_redshift_uploading_method_standard": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -257,33 +243,18 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 								Description: `The method how the data will be uploaded to the database.`,
 							},
 							"destination_redshift_uploading_method_s3_staging": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_key_id": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"encryption": schema.SingleNestedAttribute{
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"destination_redshift_uploading_method_s3_staging_encryption_no_encryption": schema.SingleNestedAttribute{
-												PlanModifiers: []planmodifier.Object{
-													objectplanmodifier.RequiresReplace(),
-												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"encryption_type": schema.StringAttribute{
-														PlanModifiers: []planmodifier.String{
-															stringplanmodifier.RequiresReplace(),
-														},
 														Required: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -295,15 +266,9 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 												Description: `Staging data will be stored in plaintext.`,
 											},
 											"destination_redshift_uploading_method_s3_staging_encryption_aes_cbc_envelope_encryption": schema.SingleNestedAttribute{
-												PlanModifiers: []planmodifier.Object{
-													objectplanmodifier.RequiresReplace(),
-												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"encryption_type": schema.StringAttribute{
-														PlanModifiers: []planmodifier.String{
-															stringplanmodifier.RequiresReplace(),
-														},
 														Required: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -312,9 +277,6 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 														},
 													},
 													"key_encrypting_key": schema.StringAttribute{
-														PlanModifiers: []planmodifier.String{
-															stringplanmodifier.RequiresReplace(),
-														},
 														Optional: true,
 													},
 												},
@@ -326,21 +288,12 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 										},
 									},
 									"file_buffer_count": schema.Int64Attribute{
-										PlanModifiers: []planmodifier.Int64{
-											int64planmodifier.RequiresReplace(),
-										},
 										Optional: true,
 									},
 									"file_name_pattern": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 									},
 									"method": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -349,27 +302,15 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 										},
 									},
 									"purge_staging_data": schema.BoolAttribute{
-										PlanModifiers: []planmodifier.Bool{
-											boolplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 									},
 									"s3_bucket_name": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"s3_bucket_path": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 									},
 									"s3_bucket_region": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -402,10 +343,127 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 										Description: `The region of the S3 staging bucket to use if utilising a COPY strategy. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html#:~:text=In-,Region,-%2C%20choose%20the%20AWS">AWS docs</a> for details.`,
 									},
 									"secret_access_key": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
+									},
+								},
+								Description: `The method how the data will be uploaded to the database.`,
+							},
+							"destination_redshift_update_uploading_method_standard": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Standard",
+											),
+										},
+									},
+								},
+								Description: `The method how the data will be uploaded to the database.`,
+							},
+							"destination_redshift_update_uploading_method_s3_staging": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"access_key_id": schema.StringAttribute{
+										Computed: true,
+									},
+									"encryption": schema.SingleNestedAttribute{
+										Computed: true,
+										Attributes: map[string]schema.Attribute{
+											"destination_redshift_update_uploading_method_s3_staging_encryption_no_encryption": schema.SingleNestedAttribute{
+												Computed: true,
+												Attributes: map[string]schema.Attribute{
+													"encryption_type": schema.StringAttribute{
+														Computed: true,
+														Validators: []validator.String{
+															stringvalidator.OneOf(
+																"none",
+															),
+														},
+													},
+												},
+												Description: `Staging data will be stored in plaintext.`,
+											},
+											"destination_redshift_update_uploading_method_s3_staging_encryption_aes_cbc_envelope_encryption": schema.SingleNestedAttribute{
+												Computed: true,
+												Attributes: map[string]schema.Attribute{
+													"encryption_type": schema.StringAttribute{
+														Computed: true,
+														Validators: []validator.String{
+															stringvalidator.OneOf(
+																"aes_cbc_envelope",
+															),
+														},
+													},
+													"key_encrypting_key": schema.StringAttribute{
+														Computed: true,
+													},
+												},
+												Description: `Staging data will be encrypted using AES-CBC envelope encryption.`,
+											},
+										},
+										Validators: []validator.Object{
+											validators.ExactlyOneChild(),
+										},
+									},
+									"file_buffer_count": schema.Int64Attribute{
+										Computed: true,
+									},
+									"file_name_pattern": schema.StringAttribute{
+										Computed: true,
+									},
+									"method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"S3 Staging",
+											),
+										},
+									},
+									"purge_staging_data": schema.BoolAttribute{
+										Computed: true,
+									},
+									"s3_bucket_name": schema.StringAttribute{
+										Computed: true,
+									},
+									"s3_bucket_path": schema.StringAttribute{
+										Computed: true,
+									},
+									"s3_bucket_region": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"",
+												"us-east-1",
+												"us-east-2",
+												"us-west-1",
+												"us-west-2",
+												"af-south-1",
+												"ap-east-1",
+												"ap-south-1",
+												"ap-northeast-1",
+												"ap-northeast-2",
+												"ap-northeast-3",
+												"ap-southeast-1",
+												"ap-southeast-2",
+												"ca-central-1",
+												"cn-north-1",
+												"cn-northwest-1",
+												"eu-central-1",
+												"eu-north-1",
+												"eu-south-1",
+												"eu-west-1",
+												"eu-west-2",
+												"eu-west-3",
+												"sa-east-1",
+												"me-south-1",
+											),
+										},
+										Description: `The region of the S3 staging bucket to use if utilising a COPY strategy. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html#:~:text=In-,Region,-%2C%20choose%20the%20AWS">AWS docs</a> for details.`,
+									},
+									"secret_access_key": schema.StringAttribute{
+										Computed: true,
 									},
 								},
 								Description: `The method how the data will be uploaded to the database.`,
@@ -416,9 +474,6 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 						},
 					},
 					"username": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 				},
@@ -430,15 +485,9 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 				Computed: true,
 			},
 			"name": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 			"workspace_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 		},
@@ -538,7 +587,25 @@ func (r *DestinationRedshiftResource) Update(ctx context.Context, req resource.U
 		return
 	}
 
-	// Not Implemented; all attributes marked as RequiresReplace
+	destinationRedshiftPutRequest := data.ToUpdateSDKType()
+	destinationID := data.DestinationID.ValueString()
+	request := operations.PutDestinationRedshiftRequest{
+		DestinationRedshiftPutRequest: destinationRedshiftPutRequest,
+		DestinationID:                 destinationID,
+	}
+	res, err := r.client.Destinations.PutDestinationRedshift(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode != 204 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

@@ -3,6 +3,8 @@
 package provider
 
 type SourceMysqlReplicationMethod struct {
-	SourceMysqlReplicationMethodStandard              *SourceMssqlReplicationMethodStandard              `tfsdk:"source_mysql_replication_method_standard"`
-	SourceMysqlReplicationMethodLogicalReplicationCDC *SourceMysqlReplicationMethodLogicalReplicationCDC `tfsdk:"source_mysql_replication_method_logical_replication_cdc_"`
+	SourceMysqlReplicationMethodStandard                    *SourceMssqlReplicationMethodStandard                    `tfsdk:"source_mysql_replication_method_standard"`
+	SourceMysqlReplicationMethodLogicalReplicationCDC       *SourceMysqlReplicationMethodLogicalReplicationCDC       `tfsdk:"source_mysql_replication_method_logical_replication_cdc_"`
+	SourceMysqlUpdateReplicationMethodStandard              *SourceMssqlUpdateReplicationMethodStandard              `tfsdk:"source_mysql_update_replication_method_standard"`
+	SourceMysqlUpdateReplicationMethodLogicalReplicationCDC *SourceMysqlUpdateReplicationMethodLogicalReplicationCDC `tfsdk:"source_mysql_update_replication_method_logical_replication_cdc_"`
 }

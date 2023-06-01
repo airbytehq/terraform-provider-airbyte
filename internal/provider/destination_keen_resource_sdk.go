@@ -33,6 +33,30 @@ func (r *DestinationKeenResourceModel) ToCreateSDKType() *shared.DestinationKeen
 	return &out
 }
 
+func (r *DestinationKeenResourceModel) ToUpdateSDKType() *shared.DestinationKeenPutRequest {
+	apiKey := r.Configuration.APIKey.ValueString()
+	inferTimestamp := new(bool)
+	if !r.Configuration.InferTimestamp.IsUnknown() && !r.Configuration.InferTimestamp.IsNull() {
+		*inferTimestamp = r.Configuration.InferTimestamp.ValueBool()
+	} else {
+		inferTimestamp = nil
+	}
+	projectID := r.Configuration.ProjectID.ValueString()
+	configuration := shared.DestinationKeenUpdate{
+		APIKey:         apiKey,
+		InferTimestamp: inferTimestamp,
+		ProjectID:      projectID,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.DestinationKeenPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *DestinationKeenResourceModel) ToDeleteSDKType() *shared.DestinationKeenCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

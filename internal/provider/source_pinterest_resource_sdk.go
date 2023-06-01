@@ -4,27 +4,28 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	customTypes "airbyte/internal/sdk/pkg/types"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
 func (r *SourcePinterestResourceModel) ToCreateSDKType() *shared.SourcePinterestCreateRequest {
 	var credentials *shared.SourcePinterestAuthorizationMethod
 	var sourcePinterestAuthorizationMethodOAuth20 *shared.SourcePinterestAuthorizationMethodOAuth20
-	if r.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20 != nil {
-		authMethod := shared.SourcePinterestAuthorizationMethodOAuth20AuthMethod(r.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20.AuthMethod.ValueString())
+	if r.Configuration.Credentials.SourcePinterestUpdateAuthorizationMethodOAuth20 != nil {
+		authMethod := shared.SourcePinterestAuthorizationMethodOAuth20AuthMethod(r.Configuration.Credentials.SourcePinterestUpdateAuthorizationMethodOAuth20.AuthMethod.ValueString())
 		clientID := new(string)
-		if !r.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20.ClientID.IsNull() {
-			*clientID = r.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20.ClientID.ValueString()
+		if !r.Configuration.Credentials.SourcePinterestUpdateAuthorizationMethodOAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.SourcePinterestUpdateAuthorizationMethodOAuth20.ClientID.IsNull() {
+			*clientID = r.Configuration.Credentials.SourcePinterestUpdateAuthorizationMethodOAuth20.ClientID.ValueString()
 		} else {
 			clientID = nil
 		}
 		clientSecret := new(string)
-		if !r.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20.ClientSecret.IsUnknown() && !r.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20.ClientSecret.IsNull() {
-			*clientSecret = r.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20.ClientSecret.ValueString()
+		if !r.Configuration.Credentials.SourcePinterestUpdateAuthorizationMethodOAuth20.ClientSecret.IsUnknown() && !r.Configuration.Credentials.SourcePinterestUpdateAuthorizationMethodOAuth20.ClientSecret.IsNull() {
+			*clientSecret = r.Configuration.Credentials.SourcePinterestUpdateAuthorizationMethodOAuth20.ClientSecret.ValueString()
 		} else {
 			clientSecret = nil
 		}
-		refreshToken := r.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20.RefreshToken.ValueString()
+		refreshToken := r.Configuration.Credentials.SourcePinterestUpdateAuthorizationMethodOAuth20.RefreshToken.ValueString()
 		sourcePinterestAuthorizationMethodOAuth20 = &shared.SourcePinterestAuthorizationMethodOAuth20{
 			AuthMethod:   authMethod,
 			ClientID:     clientID,
@@ -38,9 +39,9 @@ func (r *SourcePinterestResourceModel) ToCreateSDKType() *shared.SourcePinterest
 		}
 	}
 	var sourcePinterestAuthorizationMethodAccessToken *shared.SourcePinterestAuthorizationMethodAccessToken
-	if r.Configuration.Credentials.SourcePinterestAuthorizationMethodAccessToken != nil {
-		accessToken := r.Configuration.Credentials.SourcePinterestAuthorizationMethodAccessToken.AccessToken.ValueString()
-		authMethod1 := shared.SourcePinterestAuthorizationMethodAccessTokenAuthMethod(r.Configuration.Credentials.SourcePinterestAuthorizationMethodAccessToken.AuthMethod.ValueString())
+	if r.Configuration.Credentials.SourcePinterestUpdateAuthorizationMethodAccessToken != nil {
+		accessToken := r.Configuration.Credentials.SourcePinterestUpdateAuthorizationMethodAccessToken.AccessToken.ValueString()
+		authMethod1 := shared.SourcePinterestAuthorizationMethodAccessTokenAuthMethod(r.Configuration.Credentials.SourcePinterestUpdateAuthorizationMethodAccessToken.AuthMethod.ValueString())
 		sourcePinterestAuthorizationMethodAccessToken = &shared.SourcePinterestAuthorizationMethodAccessToken{
 			AccessToken: accessToken,
 			AuthMethod:  authMethod1,
@@ -52,7 +53,7 @@ func (r *SourcePinterestResourceModel) ToCreateSDKType() *shared.SourcePinterest
 		}
 	}
 	sourceType := shared.SourcePinterestPinterest(r.Configuration.SourceType.ValueString())
-	startDate := r.Configuration.StartDate.ValueString()
+	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	status := make([]shared.SourcePinterestStatus, 0)
 	for _, statusItem := range r.Configuration.Status {
 		status = append(status, shared.SourcePinterestStatus(statusItem.ValueString()))
@@ -75,6 +76,70 @@ func (r *SourcePinterestResourceModel) ToCreateSDKType() *shared.SourcePinterest
 		Configuration: configuration,
 		Name:          name,
 		SecretID:      secretID,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
+func (r *SourcePinterestResourceModel) ToUpdateSDKType() *shared.SourcePinterestPutRequest {
+	var credentials *shared.SourcePinterestUpdateAuthorizationMethod
+	var sourcePinterestUpdateAuthorizationMethodOAuth20 *shared.SourcePinterestUpdateAuthorizationMethodOAuth20
+	if r.Configuration.Credentials.SourcePinterestUpdateAuthorizationMethodOAuth20 != nil {
+		authMethod := shared.SourcePinterestUpdateAuthorizationMethodOAuth20AuthMethod(r.Configuration.Credentials.SourcePinterestUpdateAuthorizationMethodOAuth20.AuthMethod.ValueString())
+		clientID := new(string)
+		if !r.Configuration.Credentials.SourcePinterestUpdateAuthorizationMethodOAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.SourcePinterestUpdateAuthorizationMethodOAuth20.ClientID.IsNull() {
+			*clientID = r.Configuration.Credentials.SourcePinterestUpdateAuthorizationMethodOAuth20.ClientID.ValueString()
+		} else {
+			clientID = nil
+		}
+		clientSecret := new(string)
+		if !r.Configuration.Credentials.SourcePinterestUpdateAuthorizationMethodOAuth20.ClientSecret.IsUnknown() && !r.Configuration.Credentials.SourcePinterestUpdateAuthorizationMethodOAuth20.ClientSecret.IsNull() {
+			*clientSecret = r.Configuration.Credentials.SourcePinterestUpdateAuthorizationMethodOAuth20.ClientSecret.ValueString()
+		} else {
+			clientSecret = nil
+		}
+		refreshToken := r.Configuration.Credentials.SourcePinterestUpdateAuthorizationMethodOAuth20.RefreshToken.ValueString()
+		sourcePinterestUpdateAuthorizationMethodOAuth20 = &shared.SourcePinterestUpdateAuthorizationMethodOAuth20{
+			AuthMethod:   authMethod,
+			ClientID:     clientID,
+			ClientSecret: clientSecret,
+			RefreshToken: refreshToken,
+		}
+	}
+	if sourcePinterestUpdateAuthorizationMethodOAuth20 != nil {
+		credentials = &shared.SourcePinterestUpdateAuthorizationMethod{
+			SourcePinterestUpdateAuthorizationMethodOAuth20: sourcePinterestUpdateAuthorizationMethodOAuth20,
+		}
+	}
+	var sourcePinterestUpdateAuthorizationMethodAccessToken *shared.SourcePinterestUpdateAuthorizationMethodAccessToken
+	if r.Configuration.Credentials.SourcePinterestUpdateAuthorizationMethodAccessToken != nil {
+		accessToken := r.Configuration.Credentials.SourcePinterestUpdateAuthorizationMethodAccessToken.AccessToken.ValueString()
+		authMethod1 := shared.SourcePinterestUpdateAuthorizationMethodAccessTokenAuthMethod(r.Configuration.Credentials.SourcePinterestUpdateAuthorizationMethodAccessToken.AuthMethod.ValueString())
+		sourcePinterestUpdateAuthorizationMethodAccessToken = &shared.SourcePinterestUpdateAuthorizationMethodAccessToken{
+			AccessToken: accessToken,
+			AuthMethod:  authMethod1,
+		}
+	}
+	if sourcePinterestUpdateAuthorizationMethodAccessToken != nil {
+		credentials = &shared.SourcePinterestUpdateAuthorizationMethod{
+			SourcePinterestUpdateAuthorizationMethodAccessToken: sourcePinterestUpdateAuthorizationMethodAccessToken,
+		}
+	}
+	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
+	status := make([]shared.SourcePinterestUpdateStatus, 0)
+	for _, statusItem := range r.Configuration.Status {
+		status = append(status, shared.SourcePinterestUpdateStatus(statusItem.ValueString()))
+	}
+	configuration := shared.SourcePinterestUpdate{
+		Credentials: credentials,
+		StartDate:   startDate,
+		Status:      status,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourcePinterestPutRequest{
+		Configuration: configuration,
+		Name:          name,
 		WorkspaceID:   workspaceID,
 	}
 	return &out

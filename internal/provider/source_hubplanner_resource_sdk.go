@@ -31,6 +31,21 @@ func (r *SourceHubplannerResourceModel) ToCreateSDKType() *shared.SourceHubplann
 	return &out
 }
 
+func (r *SourceHubplannerResourceModel) ToUpdateSDKType() *shared.SourceHubplannerPutRequest {
+	apiKey := r.Configuration.APIKey.ValueString()
+	configuration := shared.SourceHubplannerUpdate{
+		APIKey: apiKey,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceHubplannerPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceHubplannerResourceModel) ToDeleteSDKType() *shared.SourceHubplannerCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

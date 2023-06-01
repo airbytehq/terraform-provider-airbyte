@@ -10,6 +10,7 @@ type SourcePostgresReplicationMethodLogicalReplicationCDC struct {
 	Method                types.String `tfsdk:"method"`
 	Plugin                types.String `tfsdk:"plugin"`
 	Publication           types.String `tfsdk:"publication"`
+	QueueSize             types.Int64  `tfsdk:"queue_size"`
 	ReplicationSlot       types.String `tfsdk:"replication_slot"`
 	AdditionalProperties  types.String `tfsdk:"additional_properties"`
 }

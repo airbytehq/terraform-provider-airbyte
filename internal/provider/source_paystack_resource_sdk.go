@@ -41,6 +41,30 @@ func (r *SourcePaystackResourceModel) ToCreateSDKType() *shared.SourcePaystackCr
 	return &out
 }
 
+func (r *SourcePaystackResourceModel) ToUpdateSDKType() *shared.SourcePaystackPutRequest {
+	lookbackWindowDays := new(int64)
+	if !r.Configuration.LookbackWindowDays.IsUnknown() && !r.Configuration.LookbackWindowDays.IsNull() {
+		*lookbackWindowDays = r.Configuration.LookbackWindowDays.ValueInt64()
+	} else {
+		lookbackWindowDays = nil
+	}
+	secretKey := r.Configuration.SecretKey.ValueString()
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	configuration := shared.SourcePaystackUpdate{
+		LookbackWindowDays: lookbackWindowDays,
+		SecretKey:          secretKey,
+		StartDate:          startDate,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourcePaystackPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourcePaystackResourceModel) ToDeleteSDKType() *shared.SourcePaystackCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

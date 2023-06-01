@@ -10,9 +10,6 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -37,11 +34,11 @@ type DestinationS3GlueResource struct {
 
 // DestinationS3GlueResourceModel describes the resource data model.
 type DestinationS3GlueResourceModel struct {
-	Configuration   DestinationS3Glue `tfsdk:"configuration"`
-	DestinationID   types.String      `tfsdk:"destination_id"`
-	DestinationType types.String      `tfsdk:"destination_type"`
-	Name            types.String      `tfsdk:"name"`
-	WorkspaceID     types.String      `tfsdk:"workspace_id"`
+	Configuration   DestinationS3GlueUpdate `tfsdk:"configuration"`
+	DestinationID   types.String            `tfsdk:"destination_id"`
+	DestinationType types.String            `tfsdk:"destination_type"`
+	Name            types.String            `tfsdk:"name"`
+	WorkspaceID     types.String            `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationS3GlueResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -54,62 +51,87 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"access_key_id": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
-					"destination_type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"s3-glue",
-							),
-						},
-					},
 					"file_name_pattern": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
 					"format": schema.SingleNestedAttribute{
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Attributes: map[string]schema.Attribute{
-							"destination_s3_glue_output_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
+							"destination_s3_glue_update_output_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"compression": schema.SingleNestedAttribute{
+										Computed: true,
+										Attributes: map[string]schema.Attribute{
+											"destination_s3_glue_update_output_format_json_lines_newline_delimited_json_compression_no_compression": schema.SingleNestedAttribute{
+												Computed: true,
+												Attributes: map[string]schema.Attribute{
+													"compression_type": schema.StringAttribute{
+														Computed: true,
+														Validators: []validator.String{
+															stringvalidator.OneOf(
+																"No Compression",
+															),
+														},
+													},
+												},
+												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
+											},
+											"destination_s3_glue_update_output_format_json_lines_newline_delimited_json_compression_gzip": schema.SingleNestedAttribute{
+												Computed: true,
+												Attributes: map[string]schema.Attribute{
+													"compression_type": schema.StringAttribute{
+														Computed: true,
+														Validators: []validator.String{
+															stringvalidator.OneOf(
+																"GZIP",
+															),
+														},
+													},
+												},
+												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
+											},
+										},
+										Validators: []validator.Object{
+											validators.ExactlyOneChild(),
+										},
+									},
+									"flattening": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"No flattening",
+												"Root level flattening",
+											),
+										},
+										Description: `Whether the input json data should be normalized (flattened) in the output JSON Lines. Please refer to docs for details.`,
+									},
+									"format_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"JSONL",
+											),
+										},
+									},
 								},
+								Description: `Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details`,
+							},
+							"destination_s3_glue_output_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"compression": schema.SingleNestedAttribute{
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"destination_s3_glue_output_format_json_lines_newline_delimited_json_compression_no_compression": schema.SingleNestedAttribute{
-												PlanModifiers: []planmodifier.Object{
-													objectplanmodifier.RequiresReplace(),
-												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
-														PlanModifiers: []planmodifier.String{
-															stringplanmodifier.RequiresReplace(),
-														},
 														Optional: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -121,15 +143,9 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
 											},
 											"destination_s3_glue_output_format_json_lines_newline_delimited_json_compression_gzip": schema.SingleNestedAttribute{
-												PlanModifiers: []planmodifier.Object{
-													objectplanmodifier.RequiresReplace(),
-												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
-														PlanModifiers: []planmodifier.String{
-															stringplanmodifier.RequiresReplace(),
-														},
 														Optional: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -146,9 +162,6 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 										},
 									},
 									"flattening": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -159,9 +172,6 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 										Description: `Whether the input json data should be normalized (flattened) in the output JSON Lines. Please refer to docs for details.`,
 									},
 									"format_type": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -178,15 +188,9 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 						},
 					},
 					"glue_database": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"glue_serialization_library": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -197,21 +201,12 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 						Description: `The library that your query engine will use for reading and writing data in your lake.`,
 					},
 					"s3_bucket_name": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"s3_bucket_path": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"s3_bucket_region": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -246,22 +241,21 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 						Description: `The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes.`,
 					},
 					"s3_endpoint": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
 					"s3_path_format": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
 					"secret_access_key": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
+					},
+					"destination_type": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"s3-glue",
+							),
+						},
 					},
 				},
 			},
@@ -272,15 +266,9 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 				Computed: true,
 			},
 			"name": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 			"workspace_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 		},
@@ -380,7 +368,25 @@ func (r *DestinationS3GlueResource) Update(ctx context.Context, req resource.Upd
 		return
 	}
 
-	// Not Implemented; all attributes marked as RequiresReplace
+	destinationS3GluePutRequest := data.ToUpdateSDKType()
+	destinationID := data.DestinationID.ValueString()
+	request := operations.PutDestinationS3GlueRequest{
+		DestinationS3GluePutRequest: destinationS3GluePutRequest,
+		DestinationID:               destinationID,
+	}
+	res, err := r.client.Destinations.PutDestinationS3Glue(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode != 204 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

@@ -10,11 +10,6 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/boolplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -39,11 +34,11 @@ type DestinationGcsResource struct {
 
 // DestinationGcsResourceModel describes the resource data model.
 type DestinationGcsResourceModel struct {
-	Configuration   DestinationGcs `tfsdk:"configuration"`
-	DestinationID   types.String   `tfsdk:"destination_id"`
-	DestinationType types.String   `tfsdk:"destination_type"`
-	Name            types.String   `tfsdk:"name"`
-	WorkspaceID     types.String   `tfsdk:"workspace_id"`
+	Configuration   DestinationGcsUpdate `tfsdk:"configuration"`
+	DestinationID   types.String         `tfsdk:"destination_id"`
+	DestinationType types.String         `tfsdk:"destination_type"`
+	Name            types.String         `tfsdk:"name"`
+	WorkspaceID     types.String         `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationGcsResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -56,27 +51,35 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"credential": schema.SingleNestedAttribute{
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Attributes: map[string]schema.Attribute{
-							"destination_gcs_authentication_hmac_key": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
+							"destination_gcs_update_authentication_hmac_key": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"credential_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"HMAC_KEY",
+											),
+										},
+									},
+									"hmac_key_access_id": schema.StringAttribute{
+										Computed: true,
+									},
+									"hmac_key_secret": schema.StringAttribute{
+										Computed: true,
+									},
 								},
+								Description: `An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>.`,
+							},
+							"destination_gcs_authentication_hmac_key": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"credential_type": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -85,15 +88,9 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 										},
 									},
 									"hmac_key_access_id": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"hmac_key_secret": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 								},
@@ -104,45 +101,291 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 							validators.ExactlyOneChild(),
 						},
 					},
-					"destination_type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"gcs",
-							),
-						},
-					},
 					"format": schema.SingleNestedAttribute{
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Attributes: map[string]schema.Attribute{
-							"destination_gcs_output_format_avro_apache_avro": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
+							"destination_gcs_update_output_format_avro_apache_avro": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"compression_codec": schema.SingleNestedAttribute{
+										Computed: true,
+										Attributes: map[string]schema.Attribute{
+											"destination_gcs_update_output_format_avro_apache_avro_compression_codec_no_compression": schema.SingleNestedAttribute{
+												Computed: true,
+												Attributes: map[string]schema.Attribute{
+													"codec": schema.StringAttribute{
+														Computed: true,
+														Validators: []validator.String{
+															stringvalidator.OneOf(
+																"no compression",
+															),
+														},
+													},
+												},
+												Description: `The compression algorithm used to compress data. Default to no compression.`,
+											},
+											"destination_gcs_update_output_format_avro_apache_avro_compression_codec_deflate": schema.SingleNestedAttribute{
+												Computed: true,
+												Attributes: map[string]schema.Attribute{
+													"codec": schema.StringAttribute{
+														Computed: true,
+														Validators: []validator.String{
+															stringvalidator.OneOf(
+																"Deflate",
+															),
+														},
+													},
+													"compression_level": schema.Int64Attribute{
+														Computed: true,
+													},
+												},
+												Description: `The compression algorithm used to compress data. Default to no compression.`,
+											},
+											"destination_gcs_update_output_format_avro_apache_avro_compression_codec_bzip2": schema.SingleNestedAttribute{
+												Computed: true,
+												Attributes: map[string]schema.Attribute{
+													"codec": schema.StringAttribute{
+														Computed: true,
+														Validators: []validator.String{
+															stringvalidator.OneOf(
+																"bzip2",
+															),
+														},
+													},
+												},
+												Description: `The compression algorithm used to compress data. Default to no compression.`,
+											},
+											"destination_gcs_update_output_format_avro_apache_avro_compression_codec_xz": schema.SingleNestedAttribute{
+												Computed: true,
+												Attributes: map[string]schema.Attribute{
+													"codec": schema.StringAttribute{
+														Computed: true,
+														Validators: []validator.String{
+															stringvalidator.OneOf(
+																"xz",
+															),
+														},
+													},
+													"compression_level": schema.Int64Attribute{
+														Computed: true,
+													},
+												},
+												Description: `The compression algorithm used to compress data. Default to no compression.`,
+											},
+											"destination_gcs_update_output_format_avro_apache_avro_compression_codec_zstandard": schema.SingleNestedAttribute{
+												Computed: true,
+												Attributes: map[string]schema.Attribute{
+													"codec": schema.StringAttribute{
+														Computed: true,
+														Validators: []validator.String{
+															stringvalidator.OneOf(
+																"zstandard",
+															),
+														},
+													},
+													"compression_level": schema.Int64Attribute{
+														Computed: true,
+													},
+													"include_checksum": schema.BoolAttribute{
+														Computed: true,
+													},
+												},
+												Description: `The compression algorithm used to compress data. Default to no compression.`,
+											},
+											"destination_gcs_update_output_format_avro_apache_avro_compression_codec_snappy": schema.SingleNestedAttribute{
+												Computed: true,
+												Attributes: map[string]schema.Attribute{
+													"codec": schema.StringAttribute{
+														Computed: true,
+														Validators: []validator.String{
+															stringvalidator.OneOf(
+																"snappy",
+															),
+														},
+													},
+												},
+												Description: `The compression algorithm used to compress data. Default to no compression.`,
+											},
+										},
+										Validators: []validator.Object{
+											validators.ExactlyOneChild(),
+										},
+									},
+									"format_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Avro",
+											),
+										},
+									},
 								},
+								Description: `Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.`,
+							},
+							"destination_gcs_update_output_format_csv_comma_separated_values": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"compression": schema.SingleNestedAttribute{
+										Computed: true,
+										Attributes: map[string]schema.Attribute{
+											"destination_gcs_update_output_format_csv_comma_separated_values_compression_no_compression": schema.SingleNestedAttribute{
+												Computed: true,
+												Attributes: map[string]schema.Attribute{
+													"compression_type": schema.StringAttribute{
+														Computed: true,
+														Validators: []validator.String{
+															stringvalidator.OneOf(
+																"No Compression",
+															),
+														},
+													},
+												},
+												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").`,
+											},
+											"destination_gcs_update_output_format_csv_comma_separated_values_compression_gzip": schema.SingleNestedAttribute{
+												Computed: true,
+												Attributes: map[string]schema.Attribute{
+													"compression_type": schema.StringAttribute{
+														Computed: true,
+														Validators: []validator.String{
+															stringvalidator.OneOf(
+																"GZIP",
+															),
+														},
+													},
+												},
+												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").`,
+											},
+										},
+										Validators: []validator.Object{
+											validators.ExactlyOneChild(),
+										},
+									},
+									"flattening": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"No flattening",
+												"Root level flattening",
+											),
+										},
+										Description: `Whether the input JSON data should be normalized (flattened) in the output CSV. Please refer to docs for details.`,
+									},
+									"format_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"CSV",
+											),
+										},
+									},
+								},
+								Description: `Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.`,
+							},
+							"destination_gcs_update_output_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"compression": schema.SingleNestedAttribute{
+										Computed: true,
+										Attributes: map[string]schema.Attribute{
+											"destination_gcs_update_output_format_json_lines_newline_delimited_json_compression_no_compression": schema.SingleNestedAttribute{
+												Computed: true,
+												Attributes: map[string]schema.Attribute{
+													"compression_type": schema.StringAttribute{
+														Computed: true,
+														Validators: []validator.String{
+															stringvalidator.OneOf(
+																"No Compression",
+															),
+														},
+													},
+												},
+												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
+											},
+											"destination_gcs_update_output_format_json_lines_newline_delimited_json_compression_gzip": schema.SingleNestedAttribute{
+												Computed: true,
+												Attributes: map[string]schema.Attribute{
+													"compression_type": schema.StringAttribute{
+														Computed: true,
+														Validators: []validator.String{
+															stringvalidator.OneOf(
+																"GZIP",
+															),
+														},
+													},
+												},
+												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
+											},
+										},
+										Validators: []validator.Object{
+											validators.ExactlyOneChild(),
+										},
+									},
+									"format_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"JSONL",
+											),
+										},
+									},
+								},
+								Description: `Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.`,
+							},
+							"destination_gcs_update_output_format_parquet_columnar_storage": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"block_size_mb": schema.Int64Attribute{
+										Computed: true,
+									},
+									"compression_codec": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"UNCOMPRESSED",
+												"SNAPPY",
+												"GZIP",
+												"LZO",
+												"BROTLI",
+												"LZ4",
+												"ZSTD",
+											),
+										},
+										Description: `The compression algorithm used to compress data pages.`,
+									},
+									"dictionary_encoding": schema.BoolAttribute{
+										Computed: true,
+									},
+									"dictionary_page_size_kb": schema.Int64Attribute{
+										Computed: true,
+									},
+									"format_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Parquet",
+											),
+										},
+									},
+									"max_padding_size_mb": schema.Int64Attribute{
+										Computed: true,
+									},
+									"page_size_kb": schema.Int64Attribute{
+										Computed: true,
+									},
+								},
+								Description: `Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.`,
+							},
+							"destination_gcs_output_format_avro_apache_avro": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"compression_codec": schema.SingleNestedAttribute{
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Attributes: map[string]schema.Attribute{
 											"destination_gcs_output_format_avro_apache_avro_compression_codec_no_compression": schema.SingleNestedAttribute{
-												PlanModifiers: []planmodifier.Object{
-													objectplanmodifier.RequiresReplace(),
-												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
-														PlanModifiers: []planmodifier.String{
-															stringplanmodifier.RequiresReplace(),
-														},
 														Required: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -154,15 +397,9 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
 											"destination_gcs_output_format_avro_apache_avro_compression_codec_deflate": schema.SingleNestedAttribute{
-												PlanModifiers: []planmodifier.Object{
-													objectplanmodifier.RequiresReplace(),
-												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
-														PlanModifiers: []planmodifier.String{
-															stringplanmodifier.RequiresReplace(),
-														},
 														Required: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -171,24 +408,15 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 														},
 													},
 													"compression_level": schema.Int64Attribute{
-														PlanModifiers: []planmodifier.Int64{
-															int64planmodifier.RequiresReplace(),
-														},
 														Optional: true,
 													},
 												},
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
 											"destination_gcs_output_format_avro_apache_avro_compression_codec_bzip2": schema.SingleNestedAttribute{
-												PlanModifiers: []planmodifier.Object{
-													objectplanmodifier.RequiresReplace(),
-												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
-														PlanModifiers: []planmodifier.String{
-															stringplanmodifier.RequiresReplace(),
-														},
 														Required: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -200,15 +428,9 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
 											"destination_gcs_output_format_avro_apache_avro_compression_codec_xz": schema.SingleNestedAttribute{
-												PlanModifiers: []planmodifier.Object{
-													objectplanmodifier.RequiresReplace(),
-												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
-														PlanModifiers: []planmodifier.String{
-															stringplanmodifier.RequiresReplace(),
-														},
 														Required: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -217,24 +439,15 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 														},
 													},
 													"compression_level": schema.Int64Attribute{
-														PlanModifiers: []planmodifier.Int64{
-															int64planmodifier.RequiresReplace(),
-														},
 														Optional: true,
 													},
 												},
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
 											"destination_gcs_output_format_avro_apache_avro_compression_codec_zstandard": schema.SingleNestedAttribute{
-												PlanModifiers: []planmodifier.Object{
-													objectplanmodifier.RequiresReplace(),
-												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
-														PlanModifiers: []planmodifier.String{
-															stringplanmodifier.RequiresReplace(),
-														},
 														Required: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -243,30 +456,18 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 														},
 													},
 													"compression_level": schema.Int64Attribute{
-														PlanModifiers: []planmodifier.Int64{
-															int64planmodifier.RequiresReplace(),
-														},
 														Optional: true,
 													},
 													"include_checksum": schema.BoolAttribute{
-														PlanModifiers: []planmodifier.Bool{
-															boolplanmodifier.RequiresReplace(),
-														},
 														Optional: true,
 													},
 												},
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
 											"destination_gcs_output_format_avro_apache_avro_compression_codec_snappy": schema.SingleNestedAttribute{
-												PlanModifiers: []planmodifier.Object{
-													objectplanmodifier.RequiresReplace(),
-												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
-														PlanModifiers: []planmodifier.String{
-															stringplanmodifier.RequiresReplace(),
-														},
 														Required: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -283,9 +484,6 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 										},
 									},
 									"format_type": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -297,27 +495,15 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 								Description: `Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.`,
 							},
 							"destination_gcs_output_format_csv_comma_separated_values": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"compression": schema.SingleNestedAttribute{
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"destination_gcs_output_format_csv_comma_separated_values_compression_no_compression": schema.SingleNestedAttribute{
-												PlanModifiers: []planmodifier.Object{
-													objectplanmodifier.RequiresReplace(),
-												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
-														PlanModifiers: []planmodifier.String{
-															stringplanmodifier.RequiresReplace(),
-														},
 														Optional: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -329,15 +515,9 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").`,
 											},
 											"destination_gcs_output_format_csv_comma_separated_values_compression_gzip": schema.SingleNestedAttribute{
-												PlanModifiers: []planmodifier.Object{
-													objectplanmodifier.RequiresReplace(),
-												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
-														PlanModifiers: []planmodifier.String{
-															stringplanmodifier.RequiresReplace(),
-														},
 														Optional: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -354,9 +534,6 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 										},
 									},
 									"flattening": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -367,9 +544,6 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 										Description: `Whether the input JSON data should be normalized (flattened) in the output CSV. Please refer to docs for details.`,
 									},
 									"format_type": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -381,27 +555,15 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 								Description: `Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.`,
 							},
 							"destination_gcs_output_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"compression": schema.SingleNestedAttribute{
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"destination_gcs_output_format_json_lines_newline_delimited_json_compression_no_compression": schema.SingleNestedAttribute{
-												PlanModifiers: []planmodifier.Object{
-													objectplanmodifier.RequiresReplace(),
-												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
-														PlanModifiers: []planmodifier.String{
-															stringplanmodifier.RequiresReplace(),
-														},
 														Optional: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -413,15 +575,9 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
 											},
 											"destination_gcs_output_format_json_lines_newline_delimited_json_compression_gzip": schema.SingleNestedAttribute{
-												PlanModifiers: []planmodifier.Object{
-													objectplanmodifier.RequiresReplace(),
-												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
-														PlanModifiers: []planmodifier.String{
-															stringplanmodifier.RequiresReplace(),
-														},
 														Optional: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -438,9 +594,6 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 										},
 									},
 									"format_type": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -452,21 +605,12 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 								Description: `Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.`,
 							},
 							"destination_gcs_output_format_parquet_columnar_storage": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"block_size_mb": schema.Int64Attribute{
-										PlanModifiers: []planmodifier.Int64{
-											int64planmodifier.RequiresReplace(),
-										},
 										Optional: true,
 									},
 									"compression_codec": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -482,21 +626,12 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 										Description: `The compression algorithm used to compress data pages.`,
 									},
 									"dictionary_encoding": schema.BoolAttribute{
-										PlanModifiers: []planmodifier.Bool{
-											boolplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 									},
 									"dictionary_page_size_kb": schema.Int64Attribute{
-										PlanModifiers: []planmodifier.Int64{
-											int64planmodifier.RequiresReplace(),
-										},
 										Optional: true,
 									},
 									"format_type": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -505,15 +640,9 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 										},
 									},
 									"max_padding_size_mb": schema.Int64Attribute{
-										PlanModifiers: []planmodifier.Int64{
-											int64planmodifier.RequiresReplace(),
-										},
 										Optional: true,
 									},
 									"page_size_kb": schema.Int64Attribute{
-										PlanModifiers: []planmodifier.Int64{
-											int64planmodifier.RequiresReplace(),
-										},
 										Optional: true,
 									},
 								},
@@ -525,21 +654,12 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 						},
 					},
 					"gcs_bucket_name": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"gcs_bucket_path": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"gcs_bucket_region": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -582,6 +702,14 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 						},
 						Description: `Select a Region of the GCS Bucket. Read more <a href="https://cloud.google.com/storage/docs/locations">here</a>.`,
 					},
+					"destination_type": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"gcs",
+							),
+						},
+					},
 				},
 			},
 			"destination_id": schema.StringAttribute{
@@ -591,15 +719,9 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 				Computed: true,
 			},
 			"name": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 			"workspace_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 		},
@@ -699,7 +821,25 @@ func (r *DestinationGcsResource) Update(ctx context.Context, req resource.Update
 		return
 	}
 
-	// Not Implemented; all attributes marked as RequiresReplace
+	destinationGcsPutRequest := data.ToUpdateSDKType()
+	destinationID := data.DestinationID.ValueString()
+	request := operations.PutDestinationGcsRequest{
+		DestinationGcsPutRequest: destinationGcsPutRequest,
+		DestinationID:            destinationID,
+	}
+	res, err := r.client.Destinations.PutDestinationGcs(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode != 204 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

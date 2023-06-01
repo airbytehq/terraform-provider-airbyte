@@ -161,6 +161,158 @@ func (r *DestinationMongodbResourceModel) ToCreateSDKType() *shared.DestinationM
 	return &out
 }
 
+func (r *DestinationMongodbResourceModel) ToUpdateSDKType() *shared.DestinationMongodbPutRequest {
+	var authType shared.DestinationMongodbUpdateAuthorizationType
+	var destinationMongodbUpdateAuthorizationTypeNone *shared.DestinationMongodbUpdateAuthorizationTypeNone
+	if r.Configuration.AuthType.DestinationMongodbAuthorizationTypeNone != nil {
+		authorization := shared.DestinationMongodbUpdateAuthorizationTypeNoneAuthorization(r.Configuration.AuthType.DestinationMongodbAuthorizationTypeNone.Authorization.ValueString())
+		destinationMongodbUpdateAuthorizationTypeNone = &shared.DestinationMongodbUpdateAuthorizationTypeNone{
+			Authorization: authorization,
+		}
+	}
+	if destinationMongodbUpdateAuthorizationTypeNone != nil {
+		authType = shared.DestinationMongodbUpdateAuthorizationType{
+			DestinationMongodbUpdateAuthorizationTypeNone: destinationMongodbUpdateAuthorizationTypeNone,
+		}
+	}
+	var destinationMongodbUpdateAuthorizationTypeLoginPassword *shared.DestinationMongodbUpdateAuthorizationTypeLoginPassword
+	if r.Configuration.AuthType.DestinationMongodbAuthorizationTypeLoginPassword != nil {
+		authorization1 := shared.DestinationMongodbUpdateAuthorizationTypeLoginPasswordAuthorization(r.Configuration.AuthType.DestinationMongodbAuthorizationTypeLoginPassword.Authorization.ValueString())
+		password := r.Configuration.AuthType.DestinationMongodbAuthorizationTypeLoginPassword.Password.ValueString()
+		username := r.Configuration.AuthType.DestinationMongodbAuthorizationTypeLoginPassword.Username.ValueString()
+		destinationMongodbUpdateAuthorizationTypeLoginPassword = &shared.DestinationMongodbUpdateAuthorizationTypeLoginPassword{
+			Authorization: authorization1,
+			Password:      password,
+			Username:      username,
+		}
+	}
+	if destinationMongodbUpdateAuthorizationTypeLoginPassword != nil {
+		authType = shared.DestinationMongodbUpdateAuthorizationType{
+			DestinationMongodbUpdateAuthorizationTypeLoginPassword: destinationMongodbUpdateAuthorizationTypeLoginPassword,
+		}
+	}
+	database := r.Configuration.Database.ValueString()
+	var instanceType *shared.DestinationMongodbUpdateMongoDbInstanceType
+	var destinationMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance *shared.DestinationMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance
+	if r.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance != nil {
+		host := r.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Host.ValueString()
+		instance := shared.DestinationMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstanceInstance(r.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Instance.ValueString())
+		port := r.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Port.ValueInt64()
+		destinationMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance = &shared.DestinationMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance{
+			Host:     host,
+			Instance: instance,
+			Port:     port,
+		}
+	}
+	if destinationMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance != nil {
+		instanceType = &shared.DestinationMongodbUpdateMongoDbInstanceType{
+			DestinationMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance: destinationMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance,
+		}
+	}
+	var destinationMongodbUpdateMongoDbInstanceTypeReplicaSet *shared.DestinationMongodbUpdateMongoDbInstanceTypeReplicaSet
+	if r.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeReplicaSet != nil {
+		instance1 := shared.DestinationMongodbUpdateMongoDbInstanceTypeReplicaSetInstance(r.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeReplicaSet.Instance.ValueString())
+		replicaSet := new(string)
+		if !r.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeReplicaSet.ReplicaSet.IsUnknown() && !r.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeReplicaSet.ReplicaSet.IsNull() {
+			*replicaSet = r.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeReplicaSet.ReplicaSet.ValueString()
+		} else {
+			replicaSet = nil
+		}
+		serverAddresses := r.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeReplicaSet.ServerAddresses.ValueString()
+		destinationMongodbUpdateMongoDbInstanceTypeReplicaSet = &shared.DestinationMongodbUpdateMongoDbInstanceTypeReplicaSet{
+			Instance:        instance1,
+			ReplicaSet:      replicaSet,
+			ServerAddresses: serverAddresses,
+		}
+	}
+	if destinationMongodbUpdateMongoDbInstanceTypeReplicaSet != nil {
+		instanceType = &shared.DestinationMongodbUpdateMongoDbInstanceType{
+			DestinationMongodbUpdateMongoDbInstanceTypeReplicaSet: destinationMongodbUpdateMongoDbInstanceTypeReplicaSet,
+		}
+	}
+	var destinationMongodbUpdateMongoDBInstanceTypeMongoDBAtlas *shared.DestinationMongodbUpdateMongoDBInstanceTypeMongoDBAtlas
+	if r.Configuration.InstanceType.DestinationMongodbMongoDBInstanceTypeMongoDBAtlas != nil {
+		clusterURL := r.Configuration.InstanceType.DestinationMongodbMongoDBInstanceTypeMongoDBAtlas.ClusterURL.ValueString()
+		instance2 := shared.DestinationMongodbUpdateMongoDBInstanceTypeMongoDBAtlasInstance(r.Configuration.InstanceType.DestinationMongodbMongoDBInstanceTypeMongoDBAtlas.Instance.ValueString())
+		destinationMongodbUpdateMongoDBInstanceTypeMongoDBAtlas = &shared.DestinationMongodbUpdateMongoDBInstanceTypeMongoDBAtlas{
+			ClusterURL: clusterURL,
+			Instance:   instance2,
+		}
+	}
+	if destinationMongodbUpdateMongoDBInstanceTypeMongoDBAtlas != nil {
+		instanceType = &shared.DestinationMongodbUpdateMongoDbInstanceType{
+			DestinationMongodbUpdateMongoDBInstanceTypeMongoDBAtlas: destinationMongodbUpdateMongoDBInstanceTypeMongoDBAtlas,
+		}
+	}
+	var tunnelMethod *shared.DestinationMongodbUpdateSSHTunnelMethod
+	var destinationMongodbUpdateSSHTunnelMethodNoTunnel *shared.DestinationMongodbUpdateSSHTunnelMethodNoTunnel
+	if r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodNoTunnel != nil {
+		tunnelMethod1 := shared.DestinationMongodbUpdateSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
+		destinationMongodbUpdateSSHTunnelMethodNoTunnel = &shared.DestinationMongodbUpdateSSHTunnelMethodNoTunnel{
+			TunnelMethod: tunnelMethod1,
+		}
+	}
+	if destinationMongodbUpdateSSHTunnelMethodNoTunnel != nil {
+		tunnelMethod = &shared.DestinationMongodbUpdateSSHTunnelMethod{
+			DestinationMongodbUpdateSSHTunnelMethodNoTunnel: destinationMongodbUpdateSSHTunnelMethodNoTunnel,
+		}
+	}
+	var destinationMongodbUpdateSSHTunnelMethodSSHKeyAuthentication *shared.DestinationMongodbUpdateSSHTunnelMethodSSHKeyAuthentication
+	if r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication != nil {
+		sshKey := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication.SSHKey.ValueString()
+		tunnelHost := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
+		tunnelMethod2 := shared.DestinationMongodbUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
+		tunnelPort := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
+		tunnelUser := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
+		destinationMongodbUpdateSSHTunnelMethodSSHKeyAuthentication = &shared.DestinationMongodbUpdateSSHTunnelMethodSSHKeyAuthentication{
+			SSHKey:       sshKey,
+			TunnelHost:   tunnelHost,
+			TunnelMethod: tunnelMethod2,
+			TunnelPort:   tunnelPort,
+			TunnelUser:   tunnelUser,
+		}
+	}
+	if destinationMongodbUpdateSSHTunnelMethodSSHKeyAuthentication != nil {
+		tunnelMethod = &shared.DestinationMongodbUpdateSSHTunnelMethod{
+			DestinationMongodbUpdateSSHTunnelMethodSSHKeyAuthentication: destinationMongodbUpdateSSHTunnelMethodSSHKeyAuthentication,
+		}
+	}
+	var destinationMongodbUpdateSSHTunnelMethodPasswordAuthentication *shared.DestinationMongodbUpdateSSHTunnelMethodPasswordAuthentication
+	if r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication != nil {
+		tunnelHost1 := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
+		tunnelMethod3 := shared.DestinationMongodbUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
+		tunnelPort1 := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
+		tunnelUser1 := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
+		tunnelUserPassword := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication.TunnelUserPassword.ValueString()
+		destinationMongodbUpdateSSHTunnelMethodPasswordAuthentication = &shared.DestinationMongodbUpdateSSHTunnelMethodPasswordAuthentication{
+			TunnelHost:         tunnelHost1,
+			TunnelMethod:       tunnelMethod3,
+			TunnelPort:         tunnelPort1,
+			TunnelUser:         tunnelUser1,
+			TunnelUserPassword: tunnelUserPassword,
+		}
+	}
+	if destinationMongodbUpdateSSHTunnelMethodPasswordAuthentication != nil {
+		tunnelMethod = &shared.DestinationMongodbUpdateSSHTunnelMethod{
+			DestinationMongodbUpdateSSHTunnelMethodPasswordAuthentication: destinationMongodbUpdateSSHTunnelMethodPasswordAuthentication,
+		}
+	}
+	configuration := shared.DestinationMongodbUpdate{
+		AuthType:     authType,
+		Database:     database,
+		InstanceType: instanceType,
+		TunnelMethod: tunnelMethod,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.DestinationMongodbPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *DestinationMongodbResourceModel) ToDeleteSDKType() *shared.DestinationMongodbCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

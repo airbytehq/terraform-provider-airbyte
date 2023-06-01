@@ -92,6 +92,82 @@ func (r *SourceGnewsResourceModel) ToCreateSDKType() *shared.SourceGnewsCreateRe
 	return &out
 }
 
+func (r *SourceGnewsResourceModel) ToUpdateSDKType() *shared.SourceGnewsPutRequest {
+	apiKey := r.Configuration.APIKey.ValueString()
+	country := new(shared.SourceGnewsUpdateCountry)
+	if !r.Configuration.Country.IsUnknown() && !r.Configuration.Country.IsNull() {
+		*country = shared.SourceGnewsUpdateCountry(r.Configuration.Country.ValueString())
+	} else {
+		country = nil
+	}
+	endDate := new(string)
+	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
+		*endDate = r.Configuration.EndDate.ValueString()
+	} else {
+		endDate = nil
+	}
+	in := make([]shared.SourceGnewsUpdateIn, 0)
+	for _, inItem := range r.Configuration.In {
+		in = append(in, shared.SourceGnewsUpdateIn(inItem.ValueString()))
+	}
+	language := new(shared.SourceGnewsUpdateLanguage)
+	if !r.Configuration.Language.IsUnknown() && !r.Configuration.Language.IsNull() {
+		*language = shared.SourceGnewsUpdateLanguage(r.Configuration.Language.ValueString())
+	} else {
+		language = nil
+	}
+	nullable := make([]shared.SourceGnewsUpdateNullable, 0)
+	for _, nullableItem := range r.Configuration.Nullable {
+		nullable = append(nullable, shared.SourceGnewsUpdateNullable(nullableItem.ValueString()))
+	}
+	query := r.Configuration.Query.ValueString()
+	sortby := new(shared.SourceGnewsUpdateSortBy)
+	if !r.Configuration.Sortby.IsUnknown() && !r.Configuration.Sortby.IsNull() {
+		*sortby = shared.SourceGnewsUpdateSortBy(r.Configuration.Sortby.ValueString())
+	} else {
+		sortby = nil
+	}
+	startDate := new(string)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate = r.Configuration.StartDate.ValueString()
+	} else {
+		startDate = nil
+	}
+	topHeadlinesQuery := new(string)
+	if !r.Configuration.TopHeadlinesQuery.IsUnknown() && !r.Configuration.TopHeadlinesQuery.IsNull() {
+		*topHeadlinesQuery = r.Configuration.TopHeadlinesQuery.ValueString()
+	} else {
+		topHeadlinesQuery = nil
+	}
+	topHeadlinesTopic := new(shared.SourceGnewsUpdateTopHeadlinesTopic)
+	if !r.Configuration.TopHeadlinesTopic.IsUnknown() && !r.Configuration.TopHeadlinesTopic.IsNull() {
+		*topHeadlinesTopic = shared.SourceGnewsUpdateTopHeadlinesTopic(r.Configuration.TopHeadlinesTopic.ValueString())
+	} else {
+		topHeadlinesTopic = nil
+	}
+	configuration := shared.SourceGnewsUpdate{
+		APIKey:            apiKey,
+		Country:           country,
+		EndDate:           endDate,
+		In:                in,
+		Language:          language,
+		Nullable:          nullable,
+		Query:             query,
+		Sortby:            sortby,
+		StartDate:         startDate,
+		TopHeadlinesQuery: topHeadlinesQuery,
+		TopHeadlinesTopic: topHeadlinesTopic,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceGnewsPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceGnewsResourceModel) ToDeleteSDKType() *shared.SourceGnewsCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

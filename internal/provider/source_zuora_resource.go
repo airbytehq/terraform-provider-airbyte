@@ -9,9 +9,6 @@ import (
 
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -36,12 +33,12 @@ type SourceZuoraResource struct {
 
 // SourceZuoraResourceModel describes the resource data model.
 type SourceZuoraResourceModel struct {
-	Configuration SourceZuora  `tfsdk:"configuration"`
-	Name          types.String `tfsdk:"name"`
-	SecretID      types.String `tfsdk:"secret_id"`
-	SourceID      types.String `tfsdk:"source_id"`
-	SourceType    types.String `tfsdk:"source_type"`
-	WorkspaceID   types.String `tfsdk:"workspace_id"`
+	Configuration SourceZuoraUpdate `tfsdk:"configuration"`
+	Name          types.String      `tfsdk:"name"`
+	SecretID      types.String      `tfsdk:"secret_id"`
+	SourceID      types.String      `tfsdk:"source_id"`
+	SourceType    types.String      `tfsdk:"source_type"`
+	WorkspaceID   types.String      `tfsdk:"workspace_id"`
 }
 
 func (r *SourceZuoraResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -54,27 +51,15 @@ func (r *SourceZuoraResource) Schema(ctx context.Context, req resource.SchemaReq
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"client_id": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"client_secret": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"data_query": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -84,27 +69,10 @@ func (r *SourceZuoraResource) Schema(ctx context.Context, req resource.SchemaReq
 						},
 						Description: `Choose between ` + "`" + `Live` + "`" + `, or ` + "`" + `Unlimited` + "`" + ` - the optimized, replicated database at 12 hours freshness for high volume extraction <a href="https://knowledgecenter.zuora.com/Central_Platform/Query/Data_Query/A_Overview_of_Data_Query#Query_Processing_Limitations">Link</a>`,
 					},
-					"source_type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"zuora",
-							),
-						},
-					},
 					"start_date": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"tenant_endpoint": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -122,23 +90,22 @@ func (r *SourceZuoraResource) Schema(ctx context.Context, req resource.SchemaReq
 						Description: `Please choose the right endpoint where your Tenant is located. More info by this <a href="https://www.zuora.com/developer/api-reference/#section/Introduction/Access-to-the-API">Link</a>`,
 					},
 					"window_in_days": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
+					},
+					"source_type": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"zuora",
+							),
+						},
 					},
 				},
 			},
 			"name": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Optional: true,
 			},
 			"source_id": schema.StringAttribute{
@@ -148,9 +115,6 @@ func (r *SourceZuoraResource) Schema(ctx context.Context, req resource.SchemaReq
 				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 		},
@@ -250,7 +214,25 @@ func (r *SourceZuoraResource) Update(ctx context.Context, req resource.UpdateReq
 		return
 	}
 
-	// Not Implemented; all attributes marked as RequiresReplace
+	sourceZuoraPutRequest := data.ToUpdateSDKType()
+	sourceID := data.SourceID.ValueString()
+	request := operations.PutSourceZuoraRequest{
+		SourceZuoraPutRequest: sourceZuoraPutRequest,
+		SourceID:              sourceID,
+	}
+	res, err := r.client.Sources.PutSourceZuora(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode != 204 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

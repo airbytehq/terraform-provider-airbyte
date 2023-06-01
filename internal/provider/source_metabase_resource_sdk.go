@@ -52,6 +52,42 @@ func (r *SourceMetabaseResourceModel) ToCreateSDKType() *shared.SourceMetabaseCr
 	return &out
 }
 
+func (r *SourceMetabaseResourceModel) ToUpdateSDKType() *shared.SourceMetabasePutRequest {
+	instanceAPIURL := r.Configuration.InstanceAPIURL.ValueString()
+	password := new(string)
+	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
+		*password = r.Configuration.Password.ValueString()
+	} else {
+		password = nil
+	}
+	sessionToken := new(string)
+	if !r.Configuration.SessionToken.IsUnknown() && !r.Configuration.SessionToken.IsNull() {
+		*sessionToken = r.Configuration.SessionToken.ValueString()
+	} else {
+		sessionToken = nil
+	}
+	username := new(string)
+	if !r.Configuration.Username.IsUnknown() && !r.Configuration.Username.IsNull() {
+		*username = r.Configuration.Username.ValueString()
+	} else {
+		username = nil
+	}
+	configuration := shared.SourceMetabaseUpdate{
+		InstanceAPIURL: instanceAPIURL,
+		Password:       password,
+		SessionToken:   sessionToken,
+		Username:       username,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceMetabasePutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceMetabaseResourceModel) ToDeleteSDKType() *shared.SourceMetabaseCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

@@ -33,6 +33,23 @@ func (r *SourcePostmarkappResourceModel) ToCreateSDKType() *shared.SourcePostmar
 	return &out
 }
 
+func (r *SourcePostmarkappResourceModel) ToUpdateSDKType() *shared.SourcePostmarkappPutRequest {
+	xPostmarkAccountToken := r.Configuration.XPostmarkAccountToken.ValueString()
+	xPostmarkServerToken := r.Configuration.XPostmarkServerToken.ValueString()
+	configuration := shared.SourcePostmarkappUpdate{
+		XPostmarkAccountToken: xPostmarkAccountToken,
+		XPostmarkServerToken:  xPostmarkServerToken,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourcePostmarkappPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourcePostmarkappResourceModel) ToDeleteSDKType() *shared.SourcePostmarkappCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

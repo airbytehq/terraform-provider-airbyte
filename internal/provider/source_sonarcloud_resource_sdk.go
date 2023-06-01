@@ -56,6 +56,44 @@ func (r *SourceSonarCloudResourceModel) ToCreateSDKType() *shared.SourceSonarClo
 	return &out
 }
 
+func (r *SourceSonarCloudResourceModel) ToUpdateSDKType() *shared.SourceSonarCloudPutRequest {
+	componentKeys := make([]interface{}, 0)
+	for _, componentKeysItem := range r.Configuration.ComponentKeys {
+		var componentKeysTmp interface{}
+		_ = json.Unmarshal([]byte(componentKeysItem.ValueString()), &componentKeysTmp)
+		componentKeys = append(componentKeys, componentKeysTmp)
+	}
+	endDate := new(customTypes.Date)
+	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
+		endDate = customTypes.MustNewDateFromString(r.Configuration.EndDate.ValueString())
+	} else {
+		endDate = nil
+	}
+	organization := r.Configuration.Organization.ValueString()
+	startDate := new(customTypes.Date)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
+	userToken := r.Configuration.UserToken.ValueString()
+	configuration := shared.SourceSonarCloudUpdate{
+		ComponentKeys: componentKeys,
+		EndDate:       endDate,
+		Organization:  organization,
+		StartDate:     startDate,
+		UserToken:     userToken,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceSonarCloudPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceSonarCloudResourceModel) ToDeleteSDKType() *shared.SourceSonarCloudCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

@@ -10,10 +10,6 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/boolplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -38,11 +34,11 @@ type DestinationAwsDatalakeResource struct {
 
 // DestinationAwsDatalakeResourceModel describes the resource data model.
 type DestinationAwsDatalakeResourceModel struct {
-	Configuration   DestinationAwsDatalake `tfsdk:"configuration"`
-	DestinationID   types.String           `tfsdk:"destination_id"`
-	DestinationType types.String           `tfsdk:"destination_type"`
-	Name            types.String           `tfsdk:"name"`
-	WorkspaceID     types.String           `tfsdk:"workspace_id"`
+	Configuration   DestinationAwsDatalakeUpdate `tfsdk:"configuration"`
+	DestinationID   types.String                 `tfsdk:"destination_id"`
+	DestinationType types.String                 `tfsdk:"destination_type"`
+	Name            types.String                 `tfsdk:"name"`
+	WorkspaceID     types.String                 `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationAwsDatalakeResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -55,45 +51,63 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"aws_account_id": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
 					"bucket_name": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"bucket_prefix": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
 					"credentials": schema.SingleNestedAttribute{
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Attributes: map[string]schema.Attribute{
-							"destination_aws_datalake_authentication_mode_iam_role": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
+							"destination_aws_datalake_update_authentication_mode_iam_role": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"credentials_title": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"IAM Role",
+											),
+										},
+										Description: `Name of the credentials`,
+									},
+									"role_arn": schema.StringAttribute{
+										Computed: true,
+									},
 								},
+								Description: `Choose How to Authenticate to AWS.`,
+							},
+							"destination_aws_datalake_update_authentication_mode_iam_user": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"aws_access_key_id": schema.StringAttribute{
+										Computed: true,
+									},
+									"aws_secret_access_key": schema.StringAttribute{
+										Computed: true,
+									},
+									"credentials_title": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"IAM User",
+											),
+										},
+										Description: `Name of the credentials`,
+									},
+								},
+								Description: `Choose How to Authenticate to AWS.`,
+							},
+							"destination_aws_datalake_authentication_mode_iam_role": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"credentials_title": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -103,36 +117,21 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 										Description: `Name of the credentials`,
 									},
 									"role_arn": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 								},
 								Description: `Choose How to Authenticate to AWS.`,
 							},
 							"destination_aws_datalake_authentication_mode_iam_user": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"aws_access_key_id": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"aws_secret_access_key": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"credentials_title": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -149,33 +148,63 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 							validators.ExactlyOneChild(),
 						},
 					},
-					"destination_type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"aws-datalake",
-							),
-						},
-					},
 					"format": schema.SingleNestedAttribute{
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"destination_aws_datalake_output_format_wildcard_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
+							"destination_aws_datalake_update_output_format_wildcard_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"compression_codec": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"UNCOMPRESSED",
+												"GZIP",
+											),
+										},
+										Description: `The compression algorithm used to compress data.`,
+									},
+									"format_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"JSONL",
+											),
+										},
+									},
 								},
+								Description: `Format of the data output.`,
+							},
+							"destination_aws_datalake_update_output_format_wildcard_parquet_columnar_storage": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"compression_codec": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"UNCOMPRESSED",
+												"SNAPPY",
+												"GZIP",
+												"ZSTD",
+											),
+										},
+										Description: `The compression algorithm used to compress data.`,
+									},
+									"format_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Parquet",
+											),
+										},
+									},
+								},
+								Description: `Format of the data output.`,
+							},
+							"destination_aws_datalake_output_format_wildcard_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"compression_codec": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -186,9 +215,6 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 										Description: `The compression algorithm used to compress data.`,
 									},
 									"format_type": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -200,15 +226,9 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 								Description: `Format of the data output.`,
 							},
 							"destination_aws_datalake_output_format_wildcard_parquet_columnar_storage": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"compression_codec": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -221,9 +241,6 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 										Description: `The compression algorithm used to compress data.`,
 									},
 									"format_type": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -240,39 +257,21 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 						},
 					},
 					"glue_catalog_float_as_decimal": schema.BoolAttribute{
-						PlanModifiers: []planmodifier.Bool{
-							boolplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
 					"lakeformation_database_default_tag_key": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
 					"lakeformation_database_default_tag_values": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
 					"lakeformation_database_name": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"lakeformation_governed_tables": schema.BoolAttribute{
-						PlanModifiers: []planmodifier.Bool{
-							boolplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
 					"partitioning": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -288,9 +287,6 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 						Description: `Partition data by cursor fields when a cursor field is a date`,
 					},
 					"region": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -324,6 +320,14 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 						},
 						Description: `The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes.`,
 					},
+					"destination_type": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"aws-datalake",
+							),
+						},
+					},
 				},
 			},
 			"destination_id": schema.StringAttribute{
@@ -333,15 +337,9 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 				Computed: true,
 			},
 			"name": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 			"workspace_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 		},
@@ -441,7 +439,25 @@ func (r *DestinationAwsDatalakeResource) Update(ctx context.Context, req resourc
 		return
 	}
 
-	// Not Implemented; all attributes marked as RequiresReplace
+	destinationAwsDatalakePutRequest := data.ToUpdateSDKType()
+	destinationID := data.DestinationID.ValueString()
+	request := operations.PutDestinationAwsDatalakeRequest{
+		DestinationAwsDatalakePutRequest: destinationAwsDatalakePutRequest,
+		DestinationID:                    destinationID,
+	}
+	res, err := r.client.Destinations.PutDestinationAwsDatalake(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode != 204 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

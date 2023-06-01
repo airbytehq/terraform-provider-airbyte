@@ -31,6 +31,21 @@ func (r *SourceRkiCovidResourceModel) ToCreateSDKType() *shared.SourceRkiCovidCr
 	return &out
 }
 
+func (r *SourceRkiCovidResourceModel) ToUpdateSDKType() *shared.SourceRkiCovidPutRequest {
+	startDate := r.Configuration.StartDate.ValueString()
+	configuration := shared.SourceRkiCovidUpdate{
+		StartDate: startDate,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceRkiCovidPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceRkiCovidResourceModel) ToDeleteSDKType() *shared.SourceRkiCovidCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

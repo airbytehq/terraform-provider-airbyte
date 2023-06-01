@@ -10,10 +10,6 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -55,33 +51,18 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"big_query_client_buffer_size_mb": schema.Int64Attribute{
-						PlanModifiers: []planmodifier.Int64{
-							int64planmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
 					"credentials_json": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
 					"dataset_id": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"dataset_location": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -130,9 +111,6 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 						Description: `The location of the dataset. Warning: Changes made after creation will not be applied. The default "US" value is used if not set explicitly. Read more <a href="https://cloud.google.com/bigquery/docs/locations">here</a>.`,
 					},
 					"destination_type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -141,21 +119,12 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 						},
 					},
 					"loading_method": schema.SingleNestedAttribute{
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_bigquery_denormalized_loading_method_standard_inserts": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -167,27 +136,15 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 								Description: `Loading method used to send select the way data will be uploaded to BigQuery. <br/><b>Standard Inserts</b> - Direct uploading using SQL INSERT statements. This method is extremely inefficient and provided only for quick testing. In almost all cases, you should use staging. <br/><b>GCS Staging</b> - Writes large batches of records to a file, uploads the file to GCS, then uses <b>COPY INTO table</b> to upload the file. Recommended for most workloads for better speed and scalability. Read more about GCS Staging <a href="https://docs.airbyte.com/integrations/destinations/bigquery#gcs-staging">here</a>.`,
 							},
 							"destination_bigquery_denormalized_loading_method_gcs_staging": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"credential": schema.SingleNestedAttribute{
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Attributes: map[string]schema.Attribute{
 											"destination_bigquery_denormalized_loading_method_gcs_staging_credential_hmac_key": schema.SingleNestedAttribute{
-												PlanModifiers: []planmodifier.Object{
-													objectplanmodifier.RequiresReplace(),
-												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"credential_type": schema.StringAttribute{
-														PlanModifiers: []planmodifier.String{
-															stringplanmodifier.RequiresReplace(),
-														},
 														Required: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -196,15 +153,9 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 														},
 													},
 													"hmac_key_access_id": schema.StringAttribute{
-														PlanModifiers: []planmodifier.String{
-															stringplanmodifier.RequiresReplace(),
-														},
 														Required: true,
 													},
 													"hmac_key_secret": schema.StringAttribute{
-														PlanModifiers: []planmodifier.String{
-															stringplanmodifier.RequiresReplace(),
-														},
 														Required: true,
 													},
 												},
@@ -216,27 +167,15 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 										},
 									},
 									"file_buffer_count": schema.Int64Attribute{
-										PlanModifiers: []planmodifier.Int64{
-											int64planmodifier.RequiresReplace(),
-										},
 										Optional: true,
 									},
 									"gcs_bucket_name": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"gcs_bucket_path": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"keep_files_in_gcs_bucket": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -247,10 +186,82 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 										Description: `This upload method is supposed to temporary store records in GCS bucket. By this select you can chose if these records should be removed from GCS when migration has finished. The default "Delete all tmp files from GCS" value is used if not set explicitly.`,
 									},
 									"method": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"GCS Staging",
+											),
+										},
+									},
+								},
+								Description: `Loading method used to send select the way data will be uploaded to BigQuery. <br/><b>Standard Inserts</b> - Direct uploading using SQL INSERT statements. This method is extremely inefficient and provided only for quick testing. In almost all cases, you should use staging. <br/><b>GCS Staging</b> - Writes large batches of records to a file, uploads the file to GCS, then uses <b>COPY INTO table</b> to upload the file. Recommended for most workloads for better speed and scalability. Read more about GCS Staging <a href="https://docs.airbyte.com/integrations/destinations/bigquery#gcs-staging">here</a>.`,
+							},
+							"destination_bigquery_denormalized_update_loading_method_standard_inserts": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Standard",
+											),
+										},
+									},
+								},
+								Description: `Loading method used to send select the way data will be uploaded to BigQuery. <br/><b>Standard Inserts</b> - Direct uploading using SQL INSERT statements. This method is extremely inefficient and provided only for quick testing. In almost all cases, you should use staging. <br/><b>GCS Staging</b> - Writes large batches of records to a file, uploads the file to GCS, then uses <b>COPY INTO table</b> to upload the file. Recommended for most workloads for better speed and scalability. Read more about GCS Staging <a href="https://docs.airbyte.com/integrations/destinations/bigquery#gcs-staging">here</a>.`,
+							},
+							"destination_bigquery_denormalized_update_loading_method_gcs_staging": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"credential": schema.SingleNestedAttribute{
+										Computed: true,
+										Attributes: map[string]schema.Attribute{
+											"destination_bigquery_denormalized_update_loading_method_gcs_staging_credential_hmac_key": schema.SingleNestedAttribute{
+												Computed: true,
+												Attributes: map[string]schema.Attribute{
+													"credential_type": schema.StringAttribute{
+														Computed: true,
+														Validators: []validator.String{
+															stringvalidator.OneOf(
+																"HMAC_KEY",
+															),
+														},
+													},
+													"hmac_key_access_id": schema.StringAttribute{
+														Computed: true,
+													},
+													"hmac_key_secret": schema.StringAttribute{
+														Computed: true,
+													},
+												},
+												Description: `An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>.`,
+											},
+										},
+										Validators: []validator.Object{
+											validators.ExactlyOneChild(),
+										},
+									},
+									"file_buffer_count": schema.Int64Attribute{
+										Computed: true,
+									},
+									"gcs_bucket_name": schema.StringAttribute{
+										Computed: true,
+									},
+									"gcs_bucket_path": schema.StringAttribute{
+										Computed: true,
+									},
+									"keep_files_in_gcs_bucket": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Delete all tmp files from GCS",
+												"Keep all tmp files in GCS",
+											),
+										},
+										Description: `This upload method is supposed to temporary store records in GCS bucket. By this select you can chose if these records should be removed from GCS when migration has finished. The default "Delete all tmp files from GCS" value is used if not set explicitly.`,
+									},
+									"method": schema.StringAttribute{
+										Computed: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"GCS Staging",
@@ -266,9 +277,6 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 						},
 					},
 					"project_id": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 				},
@@ -280,15 +288,9 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 				Computed: true,
 			},
 			"name": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 			"workspace_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 		},
@@ -388,7 +390,25 @@ func (r *DestinationBigqueryDenormalizedResource) Update(ctx context.Context, re
 		return
 	}
 
-	// Not Implemented; all attributes marked as RequiresReplace
+	destinationBigqueryDenormalizedPutRequest := data.ToUpdateSDKType()
+	destinationID := data.DestinationID.ValueString()
+	request := operations.PutDestinationBigqueryDenormalizedRequest{
+		DestinationBigqueryDenormalizedPutRequest: destinationBigqueryDenormalizedPutRequest,
+		DestinationID: destinationID,
+	}
+	res, err := r.client.Destinations.PutDestinationBigqueryDenormalized(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode != 204 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

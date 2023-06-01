@@ -40,6 +40,30 @@ func (r *SourceAzureTableResourceModel) ToCreateSDKType() *shared.SourceAzureTab
 	return &out
 }
 
+func (r *SourceAzureTableResourceModel) ToUpdateSDKType() *shared.SourceAzureTablePutRequest {
+	storageAccessKey := r.Configuration.StorageAccessKey.ValueString()
+	storageAccountName := r.Configuration.StorageAccountName.ValueString()
+	storageEndpointSuffix := new(string)
+	if !r.Configuration.StorageEndpointSuffix.IsUnknown() && !r.Configuration.StorageEndpointSuffix.IsNull() {
+		*storageEndpointSuffix = r.Configuration.StorageEndpointSuffix.ValueString()
+	} else {
+		storageEndpointSuffix = nil
+	}
+	configuration := shared.SourceAzureTableUpdate{
+		StorageAccessKey:      storageAccessKey,
+		StorageAccountName:    storageAccountName,
+		StorageEndpointSuffix: storageEndpointSuffix,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceAzureTablePutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceAzureTableResourceModel) ToDeleteSDKType() *shared.SourceAzureTableCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

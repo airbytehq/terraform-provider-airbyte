@@ -49,6 +49,38 @@ func (r *SourceZohoCrmResourceModel) ToCreateSDKType() *shared.SourceZohoCrmCrea
 	return &out
 }
 
+func (r *SourceZohoCrmResourceModel) ToUpdateSDKType() *shared.SourceZohoCrmPutRequest {
+	clientID := r.Configuration.ClientID.ValueString()
+	clientSecret := r.Configuration.ClientSecret.ValueString()
+	dcRegion := shared.SourceZohoCrmUpdateDataCenterLocation(r.Configuration.DcRegion.ValueString())
+	edition := shared.SourceZohoCRMUpdateZohoCRMEdition(r.Configuration.Edition.ValueString())
+	environment := shared.SourceZohoCrmUpdateEnvironment(r.Configuration.Environment.ValueString())
+	refreshToken := r.Configuration.RefreshToken.ValueString()
+	startDatetime := new(time.Time)
+	if !r.Configuration.StartDatetime.IsUnknown() && !r.Configuration.StartDatetime.IsNull() {
+		*startDatetime, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDatetime.ValueString())
+	} else {
+		startDatetime = nil
+	}
+	configuration := shared.SourceZohoCrmUpdate{
+		ClientID:      clientID,
+		ClientSecret:  clientSecret,
+		DcRegion:      dcRegion,
+		Edition:       edition,
+		Environment:   environment,
+		RefreshToken:  refreshToken,
+		StartDatetime: startDatetime,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceZohoCrmPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceZohoCrmResourceModel) ToDeleteSDKType() *shared.SourceZohoCrmCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

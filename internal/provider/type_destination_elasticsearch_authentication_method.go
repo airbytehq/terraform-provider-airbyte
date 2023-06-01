@@ -3,6 +3,8 @@
 package provider
 
 type DestinationElasticsearchAuthenticationMethod struct {
-	DestinationElasticsearchAuthenticationMethodAPIKeySecret     *DestinationElasticsearchAuthenticationMethodAPIKeySecret     `tfsdk:"destination_elasticsearch_authentication_method_api_key_secret"`
-	DestinationElasticsearchAuthenticationMethodUsernamePassword *DestinationElasticsearchAuthenticationMethodUsernamePassword `tfsdk:"destination_elasticsearch_authentication_method_username_password"`
+	DestinationElasticsearchAuthenticationMethodAPIKeySecret           *DestinationElasticsearchAuthenticationMethodAPIKeySecret           `tfsdk:"destination_elasticsearch_authentication_method_api_key_secret"`
+	DestinationElasticsearchAuthenticationMethodUsernamePassword       *DestinationElasticsearchAuthenticationMethodUsernamePassword       `tfsdk:"destination_elasticsearch_authentication_method_username_password"`
+	DestinationElasticsearchUpdateAuthenticationMethodAPIKeySecret     *DestinationElasticsearchUpdateAuthenticationMethodAPIKeySecret     `tfsdk:"destination_elasticsearch_update_authentication_method_api_key_secret"`
+	DestinationElasticsearchUpdateAuthenticationMethodUsernamePassword *DestinationElasticsearchUpdateAuthenticationMethodUsernamePassword `tfsdk:"destination_elasticsearch_update_authentication_method_username_password"`
 }

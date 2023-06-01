@@ -10,11 +10,6 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/boolplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -56,33 +51,18 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"credentials": schema.SingleNestedAttribute{
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_snowflake_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"auth_type": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -91,35 +71,20 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 										},
 									},
 									"client_id": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 									},
 									"client_secret": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 									},
 									"refresh_token": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 								},
 							},
 							"destination_snowflake_authorization_method_key_pair_authentication": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -128,29 +93,17 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 										},
 									},
 									"private_key": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"private_key_password": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 									},
 								},
 							},
 							"destination_snowflake_authorization_method_username_and_password": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -159,10 +112,67 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 										},
 									},
 									"password": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
+									},
+								},
+							},
+							"destination_snowflake_update_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"access_token": schema.StringAttribute{
+										Computed: true,
+									},
+									"auth_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"OAuth2.0",
+											),
+										},
+									},
+									"client_id": schema.StringAttribute{
+										Computed: true,
+									},
+									"client_secret": schema.StringAttribute{
+										Computed: true,
+									},
+									"refresh_token": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+							},
+							"destination_snowflake_update_authorization_method_key_pair_authentication": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"auth_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Key Pair Authentication",
+											),
+										},
+									},
+									"private_key": schema.StringAttribute{
+										Computed: true,
+									},
+									"private_key_password": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+							},
+							"destination_snowflake_update_authorization_method_username_and_password": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"auth_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Username and Password",
+											),
+										},
+									},
+									"password": schema.StringAttribute{
+										Computed: true,
 									},
 								},
 							},
@@ -172,15 +182,9 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 						},
 					},
 					"database": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"destination_type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -189,39 +193,21 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 						},
 					},
 					"file_buffer_count": schema.Int64Attribute{
-						PlanModifiers: []planmodifier.Int64{
-							int64planmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
 					"host": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"jdbc_url_params": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
 					"loading_method": schema.SingleNestedAttribute{
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_snowflake_data_staging_method_select_another_option": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -233,15 +219,9 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 								Description: `Select another option`,
 							},
 							"destination_snowflake_data_staging_method_recommended_internal_staging": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -253,33 +233,18 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 								Description: `Recommended for large production workloads for better speed and scalability.`,
 							},
 							"destination_snowflake_data_staging_method_aws_s3_staging": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_key_id": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"encryption": schema.SingleNestedAttribute{
-										PlanModifiers: []planmodifier.Object{
-											objectplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"destination_snowflake_data_staging_method_aws_s3_staging_encryption_no_encryption": schema.SingleNestedAttribute{
-												PlanModifiers: []planmodifier.Object{
-													objectplanmodifier.RequiresReplace(),
-												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"encryption_type": schema.StringAttribute{
-														PlanModifiers: []planmodifier.String{
-															stringplanmodifier.RequiresReplace(),
-														},
 														Required: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -291,15 +256,9 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 												Description: `Staging data will be stored in plaintext.`,
 											},
 											"destination_snowflake_data_staging_method_aws_s3_staging_encryption_aes_cbc_envelope_encryption": schema.SingleNestedAttribute{
-												PlanModifiers: []planmodifier.Object{
-													objectplanmodifier.RequiresReplace(),
-												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"encryption_type": schema.StringAttribute{
-														PlanModifiers: []planmodifier.String{
-															stringplanmodifier.RequiresReplace(),
-														},
 														Required: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -308,9 +267,6 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 														},
 													},
 													"key_encrypting_key": schema.StringAttribute{
-														PlanModifiers: []planmodifier.String{
-															stringplanmodifier.RequiresReplace(),
-														},
 														Optional: true,
 													},
 												},
@@ -322,15 +278,9 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 										},
 									},
 									"file_name_pattern": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 									},
 									"method": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -339,21 +289,12 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 										},
 									},
 									"purge_staging_data": schema.BoolAttribute{
-										PlanModifiers: []planmodifier.Bool{
-											boolplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 									},
 									"s3_bucket_name": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"s3_bucket_region": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -386,36 +327,21 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 										Description: `Enter the region where your S3 bucket resides`,
 									},
 									"secret_access_key": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 								},
 								Description: `Recommended for large production workloads for better speed and scalability.`,
 							},
 							"destination_snowflake_data_staging_method_google_cloud_storage_staging": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"bucket_name": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"credentials_json": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"method": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -424,10 +350,158 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 										},
 									},
 									"project_id": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
+									},
+								},
+								Description: `Recommended for large production workloads for better speed and scalability.`,
+							},
+							"destination_snowflake_update_data_staging_method_select_another_option": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Standard",
+											),
+										},
+									},
+								},
+								Description: `Select another option`,
+							},
+							"destination_snowflake_update_data_staging_method_recommended_internal_staging": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Internal Staging",
+											),
+										},
+									},
+								},
+								Description: `Recommended for large production workloads for better speed and scalability.`,
+							},
+							"destination_snowflake_update_data_staging_method_aws_s3_staging": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"access_key_id": schema.StringAttribute{
+										Computed: true,
+									},
+									"encryption": schema.SingleNestedAttribute{
+										Computed: true,
+										Attributes: map[string]schema.Attribute{
+											"destination_snowflake_update_data_staging_method_aws_s3_staging_encryption_no_encryption": schema.SingleNestedAttribute{
+												Computed: true,
+												Attributes: map[string]schema.Attribute{
+													"encryption_type": schema.StringAttribute{
+														Computed: true,
+														Validators: []validator.String{
+															stringvalidator.OneOf(
+																"none",
+															),
+														},
+													},
+												},
+												Description: `Staging data will be stored in plaintext.`,
+											},
+											"destination_snowflake_update_data_staging_method_aws_s3_staging_encryption_aes_cbc_envelope_encryption": schema.SingleNestedAttribute{
+												Computed: true,
+												Attributes: map[string]schema.Attribute{
+													"encryption_type": schema.StringAttribute{
+														Computed: true,
+														Validators: []validator.String{
+															stringvalidator.OneOf(
+																"aes_cbc_envelope",
+															),
+														},
+													},
+													"key_encrypting_key": schema.StringAttribute{
+														Computed: true,
+													},
+												},
+												Description: `Staging data will be encrypted using AES-CBC envelope encryption.`,
+											},
+										},
+										Validators: []validator.Object{
+											validators.ExactlyOneChild(),
+										},
+									},
+									"file_name_pattern": schema.StringAttribute{
+										Computed: true,
+									},
+									"method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"S3 Staging",
+											),
+										},
+									},
+									"purge_staging_data": schema.BoolAttribute{
+										Computed: true,
+									},
+									"s3_bucket_name": schema.StringAttribute{
+										Computed: true,
+									},
+									"s3_bucket_region": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"",
+												"us-east-1",
+												"us-east-2",
+												"us-west-1",
+												"us-west-2",
+												"af-south-1",
+												"ap-east-1",
+												"ap-south-1",
+												"ap-northeast-1",
+												"ap-northeast-2",
+												"ap-northeast-3",
+												"ap-southeast-1",
+												"ap-southeast-2",
+												"ca-central-1",
+												"cn-north-1",
+												"cn-northwest-1",
+												"eu-central-1",
+												"eu-west-1",
+												"eu-west-2",
+												"eu-west-3",
+												"eu-south-1",
+												"eu-north-1",
+												"sa-east-1",
+												"me-south-1",
+											),
+										},
+										Description: `Enter the region where your S3 bucket resides`,
+									},
+									"secret_access_key": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+								Description: `Recommended for large production workloads for better speed and scalability.`,
+							},
+							"destination_snowflake_update_data_staging_method_google_cloud_storage_staging": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"bucket_name": schema.StringAttribute{
+										Computed: true,
+									},
+									"credentials_json": schema.StringAttribute{
+										Computed: true,
+									},
+									"method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"GCS Staging",
+											),
+										},
+									},
+									"project_id": schema.StringAttribute{
+										Computed: true,
 									},
 								},
 								Description: `Recommended for large production workloads for better speed and scalability.`,
@@ -438,27 +512,15 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 						},
 					},
 					"role": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"schema": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"username": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"warehouse": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 				},
@@ -470,15 +532,9 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 				Computed: true,
 			},
 			"name": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 			"workspace_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 		},
@@ -578,7 +634,25 @@ func (r *DestinationSnowflakeResource) Update(ctx context.Context, req resource.
 		return
 	}
 
-	// Not Implemented; all attributes marked as RequiresReplace
+	destinationSnowflakePutRequest := data.ToUpdateSDKType()
+	destinationID := data.DestinationID.ValueString()
+	request := operations.PutDestinationSnowflakeRequest{
+		DestinationSnowflakePutRequest: destinationSnowflakePutRequest,
+		DestinationID:                  destinationID,
+	}
+	res, err := r.client.Destinations.PutDestinationSnowflake(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode != 204 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

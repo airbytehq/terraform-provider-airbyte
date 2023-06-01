@@ -10,10 +10,6 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/listplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -38,12 +34,12 @@ type SourceGoogleSearchConsoleResource struct {
 
 // SourceGoogleSearchConsoleResourceModel describes the resource data model.
 type SourceGoogleSearchConsoleResourceModel struct {
-	Configuration SourceGoogleSearchConsole `tfsdk:"configuration"`
-	Name          types.String              `tfsdk:"name"`
-	SecretID      types.String              `tfsdk:"secret_id"`
-	SourceID      types.String              `tfsdk:"source_id"`
-	SourceType    types.String              `tfsdk:"source_type"`
-	WorkspaceID   types.String              `tfsdk:"workspace_id"`
+	Configuration SourceGoogleSearchConsoleUpdate `tfsdk:"configuration"`
+	Name          types.String                    `tfsdk:"name"`
+	SecretID      types.String                    `tfsdk:"secret_id"`
+	SourceID      types.String                    `tfsdk:"source_id"`
+	SourceType    types.String                    `tfsdk:"source_type"`
+	WorkspaceID   types.String                    `tfsdk:"workspace_id"`
 }
 
 func (r *SourceGoogleSearchConsoleResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -56,33 +52,62 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"authorization": schema.SingleNestedAttribute{
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Attributes: map[string]schema.Attribute{
-							"source_google_search_console_authentication_type_o_auth": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
+							"source_google_search_console_update_authentication_type_o_auth": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"access_token": schema.StringAttribute{
+										Computed: true,
+									},
+									"auth_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Client",
+											),
+										},
+									},
+									"client_id": schema.StringAttribute{
+										Computed: true,
+									},
+									"client_secret": schema.StringAttribute{
+										Computed: true,
+									},
+									"refresh_token": schema.StringAttribute{
+										Computed: true,
+									},
 								},
+							},
+							"source_google_search_console_update_authentication_type_service_account_key_authentication": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"auth_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Service",
+											),
+										},
+									},
+									"email": schema.StringAttribute{
+										Computed: true,
+									},
+									"service_account_info": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+							},
+							"source_google_search_console_authentication_type_o_auth": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 									},
 									"auth_type": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -91,35 +116,20 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 										},
 									},
 									"client_id": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"client_secret": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"refresh_token": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 								},
 							},
 							"source_google_search_console_authentication_type_service_account_key_authentication": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -128,15 +138,9 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 										},
 									},
 									"email": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"service_account_info": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 								},
@@ -147,31 +151,35 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 						},
 					},
 					"custom_reports": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
-					"end_date": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
+					"data_state": schema.StringAttribute{
+						Optional: true,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"final",
+								"all",
+							),
 						},
+						Description: `If "final" or if this parameter is omitted, the returned data will include only finalized data. Setting this parameter to "all" should not be used with Incremental Sync mode as it may cause data loss. If "all", data will include fresh data.`,
+					},
+					"end_date": schema.StringAttribute{
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
 					},
 					"site_urls": schema.ListAttribute{
-						PlanModifiers: []planmodifier.List{
-							listplanmodifier.RequiresReplace(),
-						},
 						Required:    true,
 						ElementType: types.StringType,
 					},
-					"source_type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
+					"start_date": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							validators.IsValidDate(),
 						},
+					},
+					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -179,27 +187,12 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 							),
 						},
 					},
-					"start_date": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
-						Required: true,
-						Validators: []validator.String{
-							validators.IsValidDate(),
-						},
-					},
 				},
 			},
 			"name": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Optional: true,
 			},
 			"source_id": schema.StringAttribute{
@@ -209,9 +202,6 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 		},
@@ -311,7 +301,25 @@ func (r *SourceGoogleSearchConsoleResource) Update(ctx context.Context, req reso
 		return
 	}
 
-	// Not Implemented; all attributes marked as RequiresReplace
+	sourceGoogleSearchConsolePutRequest := data.ToUpdateSDKType()
+	sourceID := data.SourceID.ValueString()
+	request := operations.PutSourceGoogleSearchConsoleRequest{
+		SourceGoogleSearchConsolePutRequest: sourceGoogleSearchConsolePutRequest,
+		SourceID:                            sourceID,
+	}
+	res, err := r.client.Sources.PutSourceGoogleSearchConsole(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode != 204 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

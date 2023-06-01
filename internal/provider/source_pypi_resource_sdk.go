@@ -38,6 +38,28 @@ func (r *SourcePypiResourceModel) ToCreateSDKType() *shared.SourcePypiCreateRequ
 	return &out
 }
 
+func (r *SourcePypiResourceModel) ToUpdateSDKType() *shared.SourcePypiPutRequest {
+	projectName := r.Configuration.ProjectName.ValueString()
+	version := new(string)
+	if !r.Configuration.Version.IsUnknown() && !r.Configuration.Version.IsNull() {
+		*version = r.Configuration.Version.ValueString()
+	} else {
+		version = nil
+	}
+	configuration := shared.SourcePypiUpdate{
+		ProjectName: projectName,
+		Version:     version,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourcePypiPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourcePypiResourceModel) ToDeleteSDKType() *shared.SourcePypiCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

@@ -31,6 +31,21 @@ func (r *SourceRssResourceModel) ToCreateSDKType() *shared.SourceRssCreateReques
 	return &out
 }
 
+func (r *SourceRssResourceModel) ToUpdateSDKType() *shared.SourceRssPutRequest {
+	url := r.Configuration.URL.ValueString()
+	configuration := shared.SourceRssUpdate{
+		URL: url,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceRssPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceRssResourceModel) ToDeleteSDKType() *shared.SourceRssCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

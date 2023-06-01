@@ -3,7 +3,10 @@
 package provider
 
 type SourceClickhouseSSHTunnelMethod struct {
-	SourceClickhouseSSHTunnelMethodNoTunnel               *DestinationClickhouseSSHTunnelMethodNoTunnel               `tfsdk:"source_clickhouse_ssh_tunnel_method_no_tunnel"`
-	SourceClickhouseSSHTunnelMethodSSHKeyAuthentication   *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication   `tfsdk:"source_clickhouse_ssh_tunnel_method_ssh_key_authentication"`
-	SourceClickhouseSSHTunnelMethodPasswordAuthentication *DestinationClickhouseSSHTunnelMethodPasswordAuthentication `tfsdk:"source_clickhouse_ssh_tunnel_method_password_authentication"`
+	SourceClickhouseSSHTunnelMethodNoTunnel                     *DestinationClickhouseSSHTunnelMethodNoTunnel                     `tfsdk:"source_clickhouse_ssh_tunnel_method_no_tunnel"`
+	SourceClickhouseSSHTunnelMethodSSHKeyAuthentication         *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication         `tfsdk:"source_clickhouse_ssh_tunnel_method_ssh_key_authentication"`
+	SourceClickhouseSSHTunnelMethodPasswordAuthentication       *DestinationClickhouseSSHTunnelMethodPasswordAuthentication       `tfsdk:"source_clickhouse_ssh_tunnel_method_password_authentication"`
+	SourceClickhouseUpdateSSHTunnelMethodNoTunnel               *DestinationClickhouseUpdateSSHTunnelMethodNoTunnel               `tfsdk:"source_clickhouse_update_ssh_tunnel_method_no_tunnel"`
+	SourceClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication   *DestinationClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication   `tfsdk:"source_clickhouse_update_ssh_tunnel_method_ssh_key_authentication"`
+	SourceClickhouseUpdateSSHTunnelMethodPasswordAuthentication *DestinationClickhouseUpdateSSHTunnelMethodPasswordAuthentication `tfsdk:"source_clickhouse_update_ssh_tunnel_method_password_authentication"`
 }

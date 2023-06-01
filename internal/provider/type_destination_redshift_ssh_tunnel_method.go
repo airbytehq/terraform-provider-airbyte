@@ -3,7 +3,10 @@
 package provider
 
 type DestinationRedshiftSSHTunnelMethod struct {
-	DestinationRedshiftSSHTunnelMethodNoTunnel               *DestinationClickhouseSSHTunnelMethodNoTunnel               `tfsdk:"destination_redshift_ssh_tunnel_method_no_tunnel"`
-	DestinationRedshiftSSHTunnelMethodSSHKeyAuthentication   *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication   `tfsdk:"destination_redshift_ssh_tunnel_method_ssh_key_authentication"`
-	DestinationRedshiftSSHTunnelMethodPasswordAuthentication *DestinationClickhouseSSHTunnelMethodPasswordAuthentication `tfsdk:"destination_redshift_ssh_tunnel_method_password_authentication"`
+	DestinationRedshiftSSHTunnelMethodNoTunnel                     *DestinationClickhouseSSHTunnelMethodNoTunnel                     `tfsdk:"destination_redshift_ssh_tunnel_method_no_tunnel"`
+	DestinationRedshiftSSHTunnelMethodSSHKeyAuthentication         *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication         `tfsdk:"destination_redshift_ssh_tunnel_method_ssh_key_authentication"`
+	DestinationRedshiftSSHTunnelMethodPasswordAuthentication       *DestinationClickhouseSSHTunnelMethodPasswordAuthentication       `tfsdk:"destination_redshift_ssh_tunnel_method_password_authentication"`
+	DestinationRedshiftUpdateSSHTunnelMethodNoTunnel               *DestinationClickhouseUpdateSSHTunnelMethodNoTunnel               `tfsdk:"destination_redshift_update_ssh_tunnel_method_no_tunnel"`
+	DestinationRedshiftUpdateSSHTunnelMethodSSHKeyAuthentication   *DestinationClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication   `tfsdk:"destination_redshift_update_ssh_tunnel_method_ssh_key_authentication"`
+	DestinationRedshiftUpdateSSHTunnelMethodPasswordAuthentication *DestinationClickhouseUpdateSSHTunnelMethodPasswordAuthentication `tfsdk:"destination_redshift_update_ssh_tunnel_method_password_authentication"`
 }

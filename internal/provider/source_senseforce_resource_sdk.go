@@ -45,6 +45,34 @@ func (r *SourceSenseforceResourceModel) ToCreateSDKType() *shared.SourceSensefor
 	return &out
 }
 
+func (r *SourceSenseforceResourceModel) ToUpdateSDKType() *shared.SourceSenseforcePutRequest {
+	accessToken := r.Configuration.AccessToken.ValueString()
+	backendURL := r.Configuration.BackendURL.ValueString()
+	datasetID := r.Configuration.DatasetID.ValueString()
+	sliceRange := new(int64)
+	if !r.Configuration.SliceRange.IsUnknown() && !r.Configuration.SliceRange.IsNull() {
+		*sliceRange = r.Configuration.SliceRange.ValueInt64()
+	} else {
+		sliceRange = nil
+	}
+	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
+	configuration := shared.SourceSenseforceUpdate{
+		AccessToken: accessToken,
+		BackendURL:  backendURL,
+		DatasetID:   datasetID,
+		SliceRange:  sliceRange,
+		StartDate:   startDate,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceSenseforcePutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceSenseforceResourceModel) ToDeleteSDKType() *shared.SourceSenseforceCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

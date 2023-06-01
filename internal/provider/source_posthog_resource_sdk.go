@@ -41,6 +41,30 @@ func (r *SourcePosthogResourceModel) ToCreateSDKType() *shared.SourcePosthogCrea
 	return &out
 }
 
+func (r *SourcePosthogResourceModel) ToUpdateSDKType() *shared.SourcePosthogPutRequest {
+	apiKey := r.Configuration.APIKey.ValueString()
+	baseURL := new(string)
+	if !r.Configuration.BaseURL.IsUnknown() && !r.Configuration.BaseURL.IsNull() {
+		*baseURL = r.Configuration.BaseURL.ValueString()
+	} else {
+		baseURL = nil
+	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	configuration := shared.SourcePosthogUpdate{
+		APIKey:    apiKey,
+		BaseURL:   baseURL,
+		StartDate: startDate,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourcePosthogPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourcePosthogResourceModel) ToDeleteSDKType() *shared.SourcePosthogCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

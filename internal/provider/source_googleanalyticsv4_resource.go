@@ -10,10 +10,6 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -38,12 +34,12 @@ type SourceGoogleAnalyticsV4Resource struct {
 
 // SourceGoogleAnalyticsV4ResourceModel describes the resource data model.
 type SourceGoogleAnalyticsV4ResourceModel struct {
-	Configuration SourceGoogleAnalyticsV4 `tfsdk:"configuration"`
-	Name          types.String            `tfsdk:"name"`
-	SecretID      types.String            `tfsdk:"secret_id"`
-	SourceID      types.String            `tfsdk:"source_id"`
-	SourceType    types.String            `tfsdk:"source_type"`
-	WorkspaceID   types.String            `tfsdk:"workspace_id"`
+	Configuration SourceGoogleAnalyticsV4Update `tfsdk:"configuration"`
+	Name          types.String                  `tfsdk:"name"`
+	SecretID      types.String                  `tfsdk:"secret_id"`
+	SourceID      types.String                  `tfsdk:"source_id"`
+	SourceType    types.String                  `tfsdk:"source_type"`
+	WorkspaceID   types.String                  `tfsdk:"workspace_id"`
 }
 
 func (r *SourceGoogleAnalyticsV4Resource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -56,33 +52,61 @@ func (r *SourceGoogleAnalyticsV4Resource) Schema(ctx context.Context, req resour
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"credentials": schema.SingleNestedAttribute{
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_google_analytics_v4_credentials_authenticate_via_google_oauth_": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
+							"source_google_analytics_v4_update_credentials_authenticate_via_google_oauth_": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"access_token": schema.StringAttribute{
+										Computed: true,
+									},
+									"auth_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Client",
+											),
+										},
+									},
+									"client_id": schema.StringAttribute{
+										Computed: true,
+									},
+									"client_secret": schema.StringAttribute{
+										Computed: true,
+									},
+									"refresh_token": schema.StringAttribute{
+										Computed: true,
+									},
 								},
+								Description: `Credentials for the service`,
+							},
+							"source_google_analytics_v4_update_credentials_service_account_key_authentication": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"auth_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Service",
+											),
+										},
+									},
+									"credentials_json": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+								Description: `Credentials for the service`,
+							},
+							"source_google_analytics_v4_credentials_authenticate_via_google_oauth_": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 									},
 									"auth_type": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -91,36 +115,21 @@ func (r *SourceGoogleAnalyticsV4Resource) Schema(ctx context.Context, req resour
 										},
 									},
 									"client_id": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"client_secret": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 									"refresh_token": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 								},
 								Description: `Credentials for the service`,
 							},
 							"source_google_analytics_v4_credentials_service_account_key_authentication": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -129,9 +138,6 @@ func (r *SourceGoogleAnalyticsV4Resource) Schema(ctx context.Context, req resour
 										},
 									},
 									"credentials_json": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Required: true,
 									},
 								},
@@ -143,15 +149,18 @@ func (r *SourceGoogleAnalyticsV4Resource) Schema(ctx context.Context, req resour
 						},
 					},
 					"custom_reports": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
+						Optional: true,
+					},
+					"start_date": schema.StringAttribute{
+						Required: true,
+					},
+					"view_id": schema.StringAttribute{
+						Required: true,
+					},
+					"window_in_days": schema.Int64Attribute{
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -159,36 +168,12 @@ func (r *SourceGoogleAnalyticsV4Resource) Schema(ctx context.Context, req resour
 							),
 						},
 					},
-					"start_date": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
-						Required: true,
-					},
-					"view_id": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
-						Required: true,
-					},
-					"window_in_days": schema.Int64Attribute{
-						PlanModifiers: []planmodifier.Int64{
-							int64planmodifier.RequiresReplace(),
-						},
-						Optional: true,
-					},
 				},
 			},
 			"name": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Optional: true,
 			},
 			"source_id": schema.StringAttribute{
@@ -198,9 +183,6 @@ func (r *SourceGoogleAnalyticsV4Resource) Schema(ctx context.Context, req resour
 				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 		},
@@ -300,7 +282,25 @@ func (r *SourceGoogleAnalyticsV4Resource) Update(ctx context.Context, req resour
 		return
 	}
 
-	// Not Implemented; all attributes marked as RequiresReplace
+	sourceGoogleAnalyticsV4PutRequest := data.ToUpdateSDKType()
+	sourceID := data.SourceID.ValueString()
+	request := operations.PutSourceGoogleAnalyticsV4Request{
+		SourceGoogleAnalyticsV4PutRequest: sourceGoogleAnalyticsV4PutRequest,
+		SourceID:                          sourceID,
+	}
+	res, err := r.client.Sources.PutSourceGoogleAnalyticsV4(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode != 204 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

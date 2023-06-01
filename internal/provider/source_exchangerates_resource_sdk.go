@@ -48,6 +48,37 @@ func (r *SourceExchangeRatesResourceModel) ToCreateSDKType() *shared.SourceExcha
 	return &out
 }
 
+func (r *SourceExchangeRatesResourceModel) ToUpdateSDKType() *shared.SourceExchangeRatesPutRequest {
+	accessKey := r.Configuration.AccessKey.ValueString()
+	base := new(string)
+	if !r.Configuration.Base.IsUnknown() && !r.Configuration.Base.IsNull() {
+		*base = r.Configuration.Base.ValueString()
+	} else {
+		base = nil
+	}
+	ignoreWeekends := new(bool)
+	if !r.Configuration.IgnoreWeekends.IsUnknown() && !r.Configuration.IgnoreWeekends.IsNull() {
+		*ignoreWeekends = r.Configuration.IgnoreWeekends.ValueBool()
+	} else {
+		ignoreWeekends = nil
+	}
+	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
+	configuration := shared.SourceExchangeRatesUpdate{
+		AccessKey:      accessKey,
+		Base:           base,
+		IgnoreWeekends: ignoreWeekends,
+		StartDate:      startDate,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceExchangeRatesPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceExchangeRatesResourceModel) ToDeleteSDKType() *shared.SourceExchangeRatesCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

@@ -50,6 +50,39 @@ func (r *SourceStripeResourceModel) ToCreateSDKType() *shared.SourceStripeCreate
 	return &out
 }
 
+func (r *SourceStripeResourceModel) ToUpdateSDKType() *shared.SourceStripePutRequest {
+	accountID := r.Configuration.AccountID.ValueString()
+	clientSecret := r.Configuration.ClientSecret.ValueString()
+	lookbackWindowDays := new(int64)
+	if !r.Configuration.LookbackWindowDays.IsUnknown() && !r.Configuration.LookbackWindowDays.IsNull() {
+		*lookbackWindowDays = r.Configuration.LookbackWindowDays.ValueInt64()
+	} else {
+		lookbackWindowDays = nil
+	}
+	sliceRange := new(int64)
+	if !r.Configuration.SliceRange.IsUnknown() && !r.Configuration.SliceRange.IsNull() {
+		*sliceRange = r.Configuration.SliceRange.ValueInt64()
+	} else {
+		sliceRange = nil
+	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	configuration := shared.SourceStripeUpdate{
+		AccountID:          accountID,
+		ClientSecret:       clientSecret,
+		LookbackWindowDays: lookbackWindowDays,
+		SliceRange:         sliceRange,
+		StartDate:          startDate,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceStripePutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceStripeResourceModel) ToDeleteSDKType() *shared.SourceStripeCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

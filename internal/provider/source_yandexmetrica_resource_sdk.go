@@ -43,6 +43,32 @@ func (r *SourceYandexMetricaResourceModel) ToCreateSDKType() *shared.SourceYande
 	return &out
 }
 
+func (r *SourceYandexMetricaResourceModel) ToUpdateSDKType() *shared.SourceYandexMetricaPutRequest {
+	authToken := r.Configuration.AuthToken.ValueString()
+	counterID := r.Configuration.CounterID.ValueString()
+	endDate := new(customTypes.Date)
+	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
+		endDate = customTypes.MustNewDateFromString(r.Configuration.EndDate.ValueString())
+	} else {
+		endDate = nil
+	}
+	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
+	configuration := shared.SourceYandexMetricaUpdate{
+		AuthToken: authToken,
+		CounterID: counterID,
+		EndDate:   endDate,
+		StartDate: startDate,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceYandexMetricaPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceYandexMetricaResourceModel) ToDeleteSDKType() *shared.SourceYandexMetricaCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

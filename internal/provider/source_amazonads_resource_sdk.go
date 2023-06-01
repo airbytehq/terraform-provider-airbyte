@@ -78,6 +78,68 @@ func (r *SourceAmazonAdsResourceModel) ToCreateSDKType() *shared.SourceAmazonAds
 	return &out
 }
 
+func (r *SourceAmazonAdsResourceModel) ToUpdateSDKType() *shared.SourceAmazonAdsPutRequest {
+	authType := new(shared.SourceAmazonAdsUpdateAuthType)
+	if !r.Configuration.AuthType.IsUnknown() && !r.Configuration.AuthType.IsNull() {
+		*authType = shared.SourceAmazonAdsUpdateAuthType(r.Configuration.AuthType.ValueString())
+	} else {
+		authType = nil
+	}
+	clientID := r.Configuration.ClientID.ValueString()
+	clientSecret := r.Configuration.ClientSecret.ValueString()
+	lookBackWindow := new(int64)
+	if !r.Configuration.LookBackWindow.IsUnknown() && !r.Configuration.LookBackWindow.IsNull() {
+		*lookBackWindow = r.Configuration.LookBackWindow.ValueInt64()
+	} else {
+		lookBackWindow = nil
+	}
+	profiles := make([]int64, 0)
+	for _, profilesItem := range r.Configuration.Profiles {
+		profiles = append(profiles, profilesItem.ValueInt64())
+	}
+	refreshToken := r.Configuration.RefreshToken.ValueString()
+	region := new(shared.SourceAmazonAdsUpdateRegion)
+	if !r.Configuration.Region.IsUnknown() && !r.Configuration.Region.IsNull() {
+		*region = shared.SourceAmazonAdsUpdateRegion(r.Configuration.Region.ValueString())
+	} else {
+		region = nil
+	}
+	reportRecordTypes := make([]shared.SourceAmazonAdsUpdateReportRecordTypes, 0)
+	for _, reportRecordTypesItem := range r.Configuration.ReportRecordTypes {
+		reportRecordTypes = append(reportRecordTypes, shared.SourceAmazonAdsUpdateReportRecordTypes(reportRecordTypesItem.ValueString()))
+	}
+	startDate := new(string)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate = r.Configuration.StartDate.ValueString()
+	} else {
+		startDate = nil
+	}
+	stateFilter := make([]shared.SourceAmazonAdsUpdateStateFilter, 0)
+	for _, stateFilterItem := range r.Configuration.StateFilter {
+		stateFilter = append(stateFilter, shared.SourceAmazonAdsUpdateStateFilter(stateFilterItem.ValueString()))
+	}
+	configuration := shared.SourceAmazonAdsUpdate{
+		AuthType:          authType,
+		ClientID:          clientID,
+		ClientSecret:      clientSecret,
+		LookBackWindow:    lookBackWindow,
+		Profiles:          profiles,
+		RefreshToken:      refreshToken,
+		Region:            region,
+		ReportRecordTypes: reportRecordTypes,
+		StartDate:         startDate,
+		StateFilter:       stateFilter,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceAmazonAdsPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceAmazonAdsResourceModel) ToDeleteSDKType() *shared.SourceAmazonAdsCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

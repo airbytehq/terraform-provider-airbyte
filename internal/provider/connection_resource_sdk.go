@@ -79,7 +79,7 @@ func (r *ConnectionResourceModel) ToCreateSDKType() *shared.ConnectionCreateRequ
 	} else {
 		prefix = nil
 	}
-	var schedule *shared.ConnectionScheduleCreate
+	var schedule *shared.ConnectionSchedule
 	if r.Schedule != nil {
 		cronExpression := new(string)
 		if !r.Schedule.CronExpression.IsUnknown() && !r.Schedule.CronExpression.IsNull() {
@@ -88,12 +88,18 @@ func (r *ConnectionResourceModel) ToCreateSDKType() *shared.ConnectionCreateRequ
 			cronExpression = nil
 		}
 		scheduleType := shared.ScheduleTypeEnum(r.Schedule.ScheduleType.ValueString())
-		schedule = &shared.ConnectionScheduleCreate{
+		schedule = &shared.ConnectionSchedule{
 			CronExpression: cronExpression,
 			ScheduleType:   scheduleType,
 		}
 	}
 	sourceID := r.SourceID.ValueString()
+	status := new(shared.ConnectionStatusEnum)
+	if !r.Status.IsUnknown() && !r.Status.IsNull() {
+		*status = shared.ConnectionStatusEnum(r.Status.ValueString())
+	} else {
+		status = nil
+	}
 	out := shared.ConnectionCreateRequest{
 		Configurations:                   configurations,
 		DataResidency:                    dataResidency,
@@ -105,6 +111,7 @@ func (r *ConnectionResourceModel) ToCreateSDKType() *shared.ConnectionCreateRequ
 		Prefix:                           prefix,
 		Schedule:                         schedule,
 		SourceID:                         sourceID,
+		Status:                           status,
 	}
 	return &out
 }
@@ -115,6 +122,22 @@ func (r *ConnectionResourceModel) ToDeleteSDKType() *shared.ConnectionCreateRequ
 }
 
 func (r *ConnectionResourceModel) RefreshFromCreateResponse(resp *shared.ConnectionResponse) {
+	r.Configurations.Streams = nil
+	for _, streamsItem := range resp.Configurations.Streams {
+		var streams1 StreamConfiguration
+		streams1.CursorField = nil
+		for _, v := range streamsItem.CursorField {
+			streams1.CursorField = append(streams1.CursorField, types.StringValue(v))
+		}
+		streams1.Name = types.StringValue(streamsItem.Name)
+		// Not Implemented streamsItem.PrimaryKey, {"RefType":"","Format":"","Name":"","Type":"array","ItemType":{"Type":"array","ItemType":{"BaseName":"","RefType":"","Comments":null,"Discriminator":null,"Name":"","Scope":"","Enum":null,"Output":false,"Extensions":{"Symbol":"CursorField"},"AdditionalProperties":null,"Type":"string","Fields":[],"Format":"","Truncated":false,"Input":false,"Example":null,"ItemType":null,"AssociatedTypes":[]},"AssociatedTypes":[],"Scope":"","BaseName":"","Truncated":false,"Example":null,"Name":"","Enum":null,"RefType":"","Output":false,"AdditionalProperties":null,"Discriminator":null,"Comments":null,"Format":"","Fields":[],"Input":false,"Extensions":{"Symbol":"PrimaryKey"}},"Scope":"","Extensions":{},"Enum":null,"Truncated":false,"Input":false,"Output":false,"Discriminator":null,"Fields":[],"BaseName":"","Comments":null,"Example":null,"AssociatedTypes":[],"AdditionalProperties":null}, true, , , streams1.PrimaryKey
+		if streamsItem.SyncMode != nil {
+			streams1.SyncMode = types.StringValue(string(*streamsItem.SyncMode))
+		} else {
+			streams1.SyncMode = types.StringNull()
+		}
+		r.Configurations.Streams = append(r.Configurations.Streams, streams1)
+	}
 	r.ConnectionID = types.StringValue(resp.ConnectionID)
 	r.DataResidency = types.StringValue(string(resp.DataResidency))
 	r.DestinationID = types.StringValue(resp.DestinationID)
@@ -139,17 +162,7 @@ func (r *ConnectionResourceModel) RefreshFromCreateResponse(resp *shared.Connect
 	} else {
 		r.Prefix = types.StringNull()
 	}
-	if resp.Schedule.CronExpression != nil {
-		r.Schedule.CronExpression = types.StringValue(*resp.Schedule.CronExpression)
-	} else {
-		r.Schedule.CronExpression = types.StringNull()
-	}
 	r.Schedule.ScheduleType = types.StringValue(string(resp.Schedule.ScheduleType))
-	if resp.Schedule.BasicTiming != nil {
-		r.Schedule.BasicTiming = types.StringValue(*resp.Schedule.BasicTiming)
-	} else {
-		r.Schedule.BasicTiming = types.StringNull()
-	}
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.Status = types.StringValue(string(resp.Status))
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)

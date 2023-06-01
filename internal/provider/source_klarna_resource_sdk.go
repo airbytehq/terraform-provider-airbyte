@@ -37,6 +37,27 @@ func (r *SourceKlarnaResourceModel) ToCreateSDKType() *shared.SourceKlarnaCreate
 	return &out
 }
 
+func (r *SourceKlarnaResourceModel) ToUpdateSDKType() *shared.SourceKlarnaPutRequest {
+	password := r.Configuration.Password.ValueString()
+	playground := r.Configuration.Playground.ValueBool()
+	region := shared.SourceKlarnaUpdateRegion(r.Configuration.Region.ValueString())
+	username := r.Configuration.Username.ValueString()
+	configuration := shared.SourceKlarnaUpdate{
+		Password:   password,
+		Playground: playground,
+		Region:     region,
+		Username:   username,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceKlarnaPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceKlarnaResourceModel) ToDeleteSDKType() *shared.SourceKlarnaCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

@@ -31,6 +31,28 @@ func (r *DestinationFirestoreResourceModel) ToCreateSDKType() *shared.Destinatio
 	return &out
 }
 
+func (r *DestinationFirestoreResourceModel) ToUpdateSDKType() *shared.DestinationFirestorePutRequest {
+	credentialsJSON := new(string)
+	if !r.Configuration.CredentialsJSON.IsUnknown() && !r.Configuration.CredentialsJSON.IsNull() {
+		*credentialsJSON = r.Configuration.CredentialsJSON.ValueString()
+	} else {
+		credentialsJSON = nil
+	}
+	projectID := r.Configuration.ProjectID.ValueString()
+	configuration := shared.DestinationFirestoreUpdate{
+		CredentialsJSON: credentialsJSON,
+		ProjectID:       projectID,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.DestinationFirestorePutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *DestinationFirestoreResourceModel) ToDeleteSDKType() *shared.DestinationFirestoreCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

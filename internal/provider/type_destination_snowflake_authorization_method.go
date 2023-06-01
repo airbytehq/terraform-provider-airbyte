@@ -3,7 +3,10 @@
 package provider
 
 type DestinationSnowflakeAuthorizationMethod struct {
-	DestinationSnowflakeAuthorizationMethodOAuth20               *DestinationSnowflakeAuthorizationMethodOAuth20               `tfsdk:"destination_snowflake_authorization_method_o_auth2_0"`
-	DestinationSnowflakeAuthorizationMethodKeyPairAuthentication *DestinationSnowflakeAuthorizationMethodKeyPairAuthentication `tfsdk:"destination_snowflake_authorization_method_key_pair_authentication"`
-	DestinationSnowflakeAuthorizationMethodUsernameAndPassword   *DestinationSnowflakeAuthorizationMethodUsernameAndPassword   `tfsdk:"destination_snowflake_authorization_method_username_and_password"`
+	DestinationSnowflakeAuthorizationMethodOAuth20                     *DestinationSnowflakeAuthorizationMethodOAuth20                     `tfsdk:"destination_snowflake_authorization_method_o_auth2_0"`
+	DestinationSnowflakeAuthorizationMethodKeyPairAuthentication       *DestinationSnowflakeAuthorizationMethodKeyPairAuthentication       `tfsdk:"destination_snowflake_authorization_method_key_pair_authentication"`
+	DestinationSnowflakeAuthorizationMethodUsernameAndPassword         *DestinationSnowflakeAuthorizationMethodUsernameAndPassword         `tfsdk:"destination_snowflake_authorization_method_username_and_password"`
+	DestinationSnowflakeUpdateAuthorizationMethodOAuth20               *DestinationSnowflakeUpdateAuthorizationMethodOAuth20               `tfsdk:"destination_snowflake_update_authorization_method_o_auth2_0"`
+	DestinationSnowflakeUpdateAuthorizationMethodKeyPairAuthentication *DestinationSnowflakeUpdateAuthorizationMethodKeyPairAuthentication `tfsdk:"destination_snowflake_update_authorization_method_key_pair_authentication"`
+	DestinationSnowflakeUpdateAuthorizationMethodUsernameAndPassword   *DestinationSnowflakeUpdateAuthorizationMethodUsernameAndPassword   `tfsdk:"destination_snowflake_update_authorization_method_username_and_password"`
 }

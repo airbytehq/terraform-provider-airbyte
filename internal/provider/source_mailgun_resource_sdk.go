@@ -46,6 +46,35 @@ func (r *SourceMailgunResourceModel) ToCreateSDKType() *shared.SourceMailgunCrea
 	return &out
 }
 
+func (r *SourceMailgunResourceModel) ToUpdateSDKType() *shared.SourceMailgunPutRequest {
+	domainRegion := new(string)
+	if !r.Configuration.DomainRegion.IsUnknown() && !r.Configuration.DomainRegion.IsNull() {
+		*domainRegion = r.Configuration.DomainRegion.ValueString()
+	} else {
+		domainRegion = nil
+	}
+	privateKey := r.Configuration.PrivateKey.ValueString()
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
+	configuration := shared.SourceMailgunUpdate{
+		DomainRegion: domainRegion,
+		PrivateKey:   privateKey,
+		StartDate:    startDate,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceMailgunPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceMailgunResourceModel) ToDeleteSDKType() *shared.SourceMailgunCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

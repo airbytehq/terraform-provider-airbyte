@@ -3,7 +3,10 @@
 package provider
 
 type DestinationMysqlSSHTunnelMethod struct {
-	DestinationMysqlSSHTunnelMethodNoTunnel               *DestinationClickhouseSSHTunnelMethodNoTunnel               `tfsdk:"destination_mysql_ssh_tunnel_method_no_tunnel"`
-	DestinationMysqlSSHTunnelMethodSSHKeyAuthentication   *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication   `tfsdk:"destination_mysql_ssh_tunnel_method_ssh_key_authentication"`
-	DestinationMysqlSSHTunnelMethodPasswordAuthentication *DestinationClickhouseSSHTunnelMethodPasswordAuthentication `tfsdk:"destination_mysql_ssh_tunnel_method_password_authentication"`
+	DestinationMysqlSSHTunnelMethodNoTunnel                     *DestinationClickhouseSSHTunnelMethodNoTunnel                     `tfsdk:"destination_mysql_ssh_tunnel_method_no_tunnel"`
+	DestinationMysqlSSHTunnelMethodSSHKeyAuthentication         *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication         `tfsdk:"destination_mysql_ssh_tunnel_method_ssh_key_authentication"`
+	DestinationMysqlSSHTunnelMethodPasswordAuthentication       *DestinationClickhouseSSHTunnelMethodPasswordAuthentication       `tfsdk:"destination_mysql_ssh_tunnel_method_password_authentication"`
+	DestinationMysqlUpdateSSHTunnelMethodNoTunnel               *DestinationClickhouseUpdateSSHTunnelMethodNoTunnel               `tfsdk:"destination_mysql_update_ssh_tunnel_method_no_tunnel"`
+	DestinationMysqlUpdateSSHTunnelMethodSSHKeyAuthentication   *DestinationClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication   `tfsdk:"destination_mysql_update_ssh_tunnel_method_ssh_key_authentication"`
+	DestinationMysqlUpdateSSHTunnelMethodPasswordAuthentication *DestinationClickhouseUpdateSSHTunnelMethodPasswordAuthentication `tfsdk:"destination_mysql_update_ssh_tunnel_method_password_authentication"`
 }

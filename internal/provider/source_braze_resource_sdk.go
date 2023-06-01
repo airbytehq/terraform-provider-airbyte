@@ -36,6 +36,25 @@ func (r *SourceBrazeResourceModel) ToCreateSDKType() *shared.SourceBrazeCreateRe
 	return &out
 }
 
+func (r *SourceBrazeResourceModel) ToUpdateSDKType() *shared.SourceBrazePutRequest {
+	apiKey := r.Configuration.APIKey.ValueString()
+	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
+	url := r.Configuration.URL.ValueString()
+	configuration := shared.SourceBrazeUpdate{
+		APIKey:    apiKey,
+		StartDate: startDate,
+		URL:       url,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceBrazePutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceBrazeResourceModel) ToDeleteSDKType() *shared.SourceBrazeCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

@@ -73,6 +73,63 @@ func (r *SourceFaunaResourceModel) ToCreateSDKType() *shared.SourceFaunaCreateRe
 	return &out
 }
 
+func (r *SourceFaunaResourceModel) ToUpdateSDKType() *shared.SourceFaunaPutRequest {
+	var collection *shared.SourceFaunaUpdateCollection
+	if r.Configuration.Collection != nil {
+		var deletions shared.SourceFaunaUpdateCollectionDeletionMode
+		var sourceFaunaUpdateCollectionDeletionModeDisabled *shared.SourceFaunaUpdateCollectionDeletionModeDisabled
+		if r.Configuration.Collection.Deletions.SourceFaunaCollectionDeletionModeDisabled != nil {
+			deletionMode := shared.SourceFaunaUpdateCollectionDeletionModeDisabledDeletionMode(r.Configuration.Collection.Deletions.SourceFaunaCollectionDeletionModeDisabled.DeletionMode.ValueString())
+			sourceFaunaUpdateCollectionDeletionModeDisabled = &shared.SourceFaunaUpdateCollectionDeletionModeDisabled{
+				DeletionMode: deletionMode,
+			}
+		}
+		if sourceFaunaUpdateCollectionDeletionModeDisabled != nil {
+			deletions = shared.SourceFaunaUpdateCollectionDeletionMode{
+				SourceFaunaUpdateCollectionDeletionModeDisabled: sourceFaunaUpdateCollectionDeletionModeDisabled,
+			}
+		}
+		var sourceFaunaUpdateCollectionDeletionModeEnabled *shared.SourceFaunaUpdateCollectionDeletionModeEnabled
+		if r.Configuration.Collection.Deletions.SourceFaunaCollectionDeletionModeEnabled != nil {
+			column := r.Configuration.Collection.Deletions.SourceFaunaCollectionDeletionModeEnabled.Column.ValueString()
+			deletionMode1 := shared.SourceFaunaUpdateCollectionDeletionModeEnabledDeletionMode(r.Configuration.Collection.Deletions.SourceFaunaCollectionDeletionModeEnabled.DeletionMode.ValueString())
+			sourceFaunaUpdateCollectionDeletionModeEnabled = &shared.SourceFaunaUpdateCollectionDeletionModeEnabled{
+				Column:       column,
+				DeletionMode: deletionMode1,
+			}
+		}
+		if sourceFaunaUpdateCollectionDeletionModeEnabled != nil {
+			deletions = shared.SourceFaunaUpdateCollectionDeletionMode{
+				SourceFaunaUpdateCollectionDeletionModeEnabled: sourceFaunaUpdateCollectionDeletionModeEnabled,
+			}
+		}
+		pageSize := r.Configuration.Collection.PageSize.ValueInt64()
+		collection = &shared.SourceFaunaUpdateCollection{
+			Deletions: deletions,
+			PageSize:  pageSize,
+		}
+	}
+	domain := r.Configuration.Domain.ValueString()
+	port := r.Configuration.Port.ValueInt64()
+	scheme := r.Configuration.Scheme.ValueString()
+	secret := r.Configuration.Secret.ValueString()
+	configuration := shared.SourceFaunaUpdate{
+		Collection: collection,
+		Domain:     domain,
+		Port:       port,
+		Scheme:     scheme,
+		Secret:     secret,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceFaunaPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceFaunaResourceModel) ToDeleteSDKType() *shared.SourceFaunaCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

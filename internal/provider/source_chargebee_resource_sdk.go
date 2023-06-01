@@ -38,6 +38,27 @@ func (r *SourceChargebeeResourceModel) ToCreateSDKType() *shared.SourceChargebee
 	return &out
 }
 
+func (r *SourceChargebeeResourceModel) ToUpdateSDKType() *shared.SourceChargebeePutRequest {
+	productCatalog := shared.SourceChargebeeUpdateProductCatalog(r.Configuration.ProductCatalog.ValueString())
+	site := r.Configuration.Site.ValueString()
+	siteAPIKey := r.Configuration.SiteAPIKey.ValueString()
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	configuration := shared.SourceChargebeeUpdate{
+		ProductCatalog: productCatalog,
+		Site:           site,
+		SiteAPIKey:     siteAPIKey,
+		StartDate:      startDate,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceChargebeePutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceChargebeeResourceModel) ToDeleteSDKType() *shared.SourceChargebeeCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

@@ -69,6 +69,58 @@ func (r *SourceJiraResourceModel) ToCreateSDKType() *shared.SourceJiraCreateRequ
 	return &out
 }
 
+func (r *SourceJiraResourceModel) ToUpdateSDKType() *shared.SourceJiraPutRequest {
+	apiToken := r.Configuration.APIToken.ValueString()
+	domain := r.Configuration.Domain.ValueString()
+	email := r.Configuration.Email.ValueString()
+	enableExperimentalStreams := new(bool)
+	if !r.Configuration.EnableExperimentalStreams.IsUnknown() && !r.Configuration.EnableExperimentalStreams.IsNull() {
+		*enableExperimentalStreams = r.Configuration.EnableExperimentalStreams.ValueBool()
+	} else {
+		enableExperimentalStreams = nil
+	}
+	expandIssueChangelog := new(bool)
+	if !r.Configuration.ExpandIssueChangelog.IsUnknown() && !r.Configuration.ExpandIssueChangelog.IsNull() {
+		*expandIssueChangelog = r.Configuration.ExpandIssueChangelog.ValueBool()
+	} else {
+		expandIssueChangelog = nil
+	}
+	projects := make([]string, 0)
+	for _, projectsItem := range r.Configuration.Projects {
+		projects = append(projects, projectsItem.ValueString())
+	}
+	renderFields := new(bool)
+	if !r.Configuration.RenderFields.IsUnknown() && !r.Configuration.RenderFields.IsNull() {
+		*renderFields = r.Configuration.RenderFields.ValueBool()
+	} else {
+		renderFields = nil
+	}
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
+	configuration := shared.SourceJiraUpdate{
+		APIToken:                  apiToken,
+		Domain:                    domain,
+		Email:                     email,
+		EnableExperimentalStreams: enableExperimentalStreams,
+		ExpandIssueChangelog:      expandIssueChangelog,
+		Projects:                  projects,
+		RenderFields:              renderFields,
+		StartDate:                 startDate,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceJiraPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceJiraResourceModel) ToDeleteSDKType() *shared.SourceJiraCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

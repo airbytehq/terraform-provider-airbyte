@@ -34,6 +34,23 @@ func (r *SourceRechargeResourceModel) ToCreateSDKType() *shared.SourceRechargeCr
 	return &out
 }
 
+func (r *SourceRechargeResourceModel) ToUpdateSDKType() *shared.SourceRechargePutRequest {
+	accessToken := r.Configuration.AccessToken.ValueString()
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	configuration := shared.SourceRechargeUpdate{
+		AccessToken: accessToken,
+		StartDate:   startDate,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceRechargePutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceRechargeResourceModel) ToDeleteSDKType() *shared.SourceRechargeCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

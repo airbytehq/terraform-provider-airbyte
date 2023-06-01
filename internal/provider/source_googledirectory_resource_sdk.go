@@ -33,6 +33,23 @@ func (r *SourceGoogleDirectoryResourceModel) ToCreateSDKType() *shared.SourceGoo
 	return &out
 }
 
+func (r *SourceGoogleDirectoryResourceModel) ToUpdateSDKType() *shared.SourceGoogleDirectoryPutRequest {
+	credentialsJSON := r.Configuration.CredentialsJSON.ValueString()
+	email := r.Configuration.Email.ValueString()
+	configuration := shared.SourceGoogleDirectoryUpdate{
+		CredentialsJSON: credentialsJSON,
+		Email:           email,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceGoogleDirectoryPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceGoogleDirectoryResourceModel) ToDeleteSDKType() *shared.SourceGoogleDirectoryCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

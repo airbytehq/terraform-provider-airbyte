@@ -50,6 +50,39 @@ func (r *SourceFreshcallerResourceModel) ToCreateSDKType() *shared.SourceFreshca
 	return &out
 }
 
+func (r *SourceFreshcallerResourceModel) ToUpdateSDKType() *shared.SourceFreshcallerPutRequest {
+	apiKey := r.Configuration.APIKey.ValueString()
+	domain := r.Configuration.Domain.ValueString()
+	requestsPerMinute := new(int64)
+	if !r.Configuration.RequestsPerMinute.IsUnknown() && !r.Configuration.RequestsPerMinute.IsNull() {
+		*requestsPerMinute = r.Configuration.RequestsPerMinute.ValueInt64()
+	} else {
+		requestsPerMinute = nil
+	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	syncLagMinutes := new(int64)
+	if !r.Configuration.SyncLagMinutes.IsUnknown() && !r.Configuration.SyncLagMinutes.IsNull() {
+		*syncLagMinutes = r.Configuration.SyncLagMinutes.ValueInt64()
+	} else {
+		syncLagMinutes = nil
+	}
+	configuration := shared.SourceFreshcallerUpdate{
+		APIKey:            apiKey,
+		Domain:            domain,
+		RequestsPerMinute: requestsPerMinute,
+		StartDate:         startDate,
+		SyncLagMinutes:    syncLagMinutes,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceFreshcallerPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceFreshcallerResourceModel) ToDeleteSDKType() *shared.SourceFreshcallerCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

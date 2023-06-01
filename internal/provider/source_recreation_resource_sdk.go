@@ -38,6 +38,28 @@ func (r *SourceRecreationResourceModel) ToCreateSDKType() *shared.SourceRecreati
 	return &out
 }
 
+func (r *SourceRecreationResourceModel) ToUpdateSDKType() *shared.SourceRecreationPutRequest {
+	apikey := r.Configuration.Apikey.ValueString()
+	queryCampsites := new(string)
+	if !r.Configuration.QueryCampsites.IsUnknown() && !r.Configuration.QueryCampsites.IsNull() {
+		*queryCampsites = r.Configuration.QueryCampsites.ValueString()
+	} else {
+		queryCampsites = nil
+	}
+	configuration := shared.SourceRecreationUpdate{
+		Apikey:         apikey,
+		QueryCampsites: queryCampsites,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceRecreationPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceRecreationResourceModel) ToDeleteSDKType() *shared.SourceRecreationCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

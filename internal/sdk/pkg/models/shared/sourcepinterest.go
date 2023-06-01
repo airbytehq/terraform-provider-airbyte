@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/types"
 	"bytes"
 	"encoding/json"
 	"errors"
@@ -199,7 +200,7 @@ type SourcePinterest struct {
 	Credentials *SourcePinterestAuthorizationMethod `json:"credentials,omitempty"`
 	SourceType  SourcePinterestPinterest            `json:"sourceType"`
 	// A date in the format YYYY-MM-DD. If you have not set a date, it would be defaulted to latest allowed date by api (89 days from today).
-	StartDate string `json:"start_date"`
+	StartDate types.Date `json:"start_date"`
 	// Entity statuses based off of campaigns, ad_groups, and ads. If you do not have a status set, it will be ignored completely.
 	Status []SourcePinterestStatus `json:"status,omitempty"`
 }

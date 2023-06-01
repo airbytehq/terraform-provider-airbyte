@@ -66,6 +66,55 @@ func (r *SourceBingAdsResourceModel) ToCreateSDKType() *shared.SourceBingAdsCrea
 	return &out
 }
 
+func (r *SourceBingAdsResourceModel) ToUpdateSDKType() *shared.SourceBingAdsPutRequest {
+	authMethod := new(shared.SourceBingAdsUpdateAuthMethod)
+	if !r.Configuration.AuthMethod.IsUnknown() && !r.Configuration.AuthMethod.IsNull() {
+		*authMethod = shared.SourceBingAdsUpdateAuthMethod(r.Configuration.AuthMethod.ValueString())
+	} else {
+		authMethod = nil
+	}
+	clientID := r.Configuration.ClientID.ValueString()
+	clientSecret := new(string)
+	if !r.Configuration.ClientSecret.IsUnknown() && !r.Configuration.ClientSecret.IsNull() {
+		*clientSecret = r.Configuration.ClientSecret.ValueString()
+	} else {
+		clientSecret = nil
+	}
+	developerToken := r.Configuration.DeveloperToken.ValueString()
+	lookbackWindow := new(int64)
+	if !r.Configuration.LookbackWindow.IsUnknown() && !r.Configuration.LookbackWindow.IsNull() {
+		*lookbackWindow = r.Configuration.LookbackWindow.ValueInt64()
+	} else {
+		lookbackWindow = nil
+	}
+	refreshToken := r.Configuration.RefreshToken.ValueString()
+	reportsStartDate := customTypes.MustDateFromString(r.Configuration.ReportsStartDate.ValueString())
+	tenantID := new(string)
+	if !r.Configuration.TenantID.IsUnknown() && !r.Configuration.TenantID.IsNull() {
+		*tenantID = r.Configuration.TenantID.ValueString()
+	} else {
+		tenantID = nil
+	}
+	configuration := shared.SourceBingAdsUpdate{
+		AuthMethod:       authMethod,
+		ClientID:         clientID,
+		ClientSecret:     clientSecret,
+		DeveloperToken:   developerToken,
+		LookbackWindow:   lookbackWindow,
+		RefreshToken:     refreshToken,
+		ReportsStartDate: reportsStartDate,
+		TenantID:         tenantID,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceBingAdsPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceBingAdsResourceModel) ToDeleteSDKType() *shared.SourceBingAdsCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

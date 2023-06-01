@@ -84,6 +84,73 @@ func (r *SourceSftpBulkResourceModel) ToCreateSDKType() *shared.SourceSftpBulkCr
 	return &out
 }
 
+func (r *SourceSftpBulkResourceModel) ToUpdateSDKType() *shared.SourceSftpBulkPutRequest {
+	fileMostRecent := new(bool)
+	if !r.Configuration.FileMostRecent.IsUnknown() && !r.Configuration.FileMostRecent.IsNull() {
+		*fileMostRecent = r.Configuration.FileMostRecent.ValueBool()
+	} else {
+		fileMostRecent = nil
+	}
+	filePattern := new(string)
+	if !r.Configuration.FilePattern.IsUnknown() && !r.Configuration.FilePattern.IsNull() {
+		*filePattern = r.Configuration.FilePattern.ValueString()
+	} else {
+		filePattern = nil
+	}
+	fileType := new(shared.SourceSftpBulkUpdateFileType)
+	if !r.Configuration.FileType.IsUnknown() && !r.Configuration.FileType.IsNull() {
+		*fileType = shared.SourceSftpBulkUpdateFileType(r.Configuration.FileType.ValueString())
+	} else {
+		fileType = nil
+	}
+	folderPath := r.Configuration.FolderPath.ValueString()
+	host := r.Configuration.Host.ValueString()
+	password := new(string)
+	if !r.Configuration.Password.IsUnknown() && !r.Configuration.Password.IsNull() {
+		*password = r.Configuration.Password.ValueString()
+	} else {
+		password = nil
+	}
+	port := r.Configuration.Port.ValueInt64()
+	privateKey := new(string)
+	if !r.Configuration.PrivateKey.IsUnknown() && !r.Configuration.PrivateKey.IsNull() {
+		*privateKey = r.Configuration.PrivateKey.ValueString()
+	} else {
+		privateKey = nil
+	}
+	separator := new(string)
+	if !r.Configuration.Separator.IsUnknown() && !r.Configuration.Separator.IsNull() {
+		*separator = r.Configuration.Separator.ValueString()
+	} else {
+		separator = nil
+	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	streamName := r.Configuration.StreamName.ValueString()
+	username := r.Configuration.Username.ValueString()
+	configuration := shared.SourceSftpBulkUpdate{
+		FileMostRecent: fileMostRecent,
+		FilePattern:    filePattern,
+		FileType:       fileType,
+		FolderPath:     folderPath,
+		Host:           host,
+		Password:       password,
+		Port:           port,
+		PrivateKey:     privateKey,
+		Separator:      separator,
+		StartDate:      startDate,
+		StreamName:     streamName,
+		Username:       username,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceSftpBulkPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceSftpBulkResourceModel) ToDeleteSDKType() *shared.SourceSftpBulkCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

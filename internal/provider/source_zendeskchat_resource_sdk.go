@@ -95,6 +95,84 @@ func (r *SourceZendeskChatResourceModel) ToCreateSDKType() *shared.SourceZendesk
 	return &out
 }
 
+func (r *SourceZendeskChatResourceModel) ToUpdateSDKType() *shared.SourceZendeskChatPutRequest {
+	var credentials *shared.SourceZendeskChatUpdateAuthorizationMethod
+	var sourceZendeskChatUpdateAuthorizationMethodOAuth20 *shared.SourceZendeskChatUpdateAuthorizationMethodOAuth20
+	if r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20 != nil {
+		accessToken := new(string)
+		if !r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.AccessToken.IsUnknown() && !r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.AccessToken.IsNull() {
+			*accessToken = r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.AccessToken.ValueString()
+		} else {
+			accessToken = nil
+		}
+		clientID := new(string)
+		if !r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.ClientID.IsNull() {
+			*clientID = r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.ClientID.ValueString()
+		} else {
+			clientID = nil
+		}
+		clientSecret := new(string)
+		if !r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.ClientSecret.IsUnknown() && !r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.ClientSecret.IsNull() {
+			*clientSecret = r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.ClientSecret.ValueString()
+		} else {
+			clientSecret = nil
+		}
+		credentials1 := shared.SourceZendeskChatUpdateAuthorizationMethodOAuth20Credentials(r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.Credentials.ValueString())
+		refreshToken := new(string)
+		if !r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.RefreshToken.IsUnknown() && !r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.RefreshToken.IsNull() {
+			*refreshToken = r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodOAuth20.RefreshToken.ValueString()
+		} else {
+			refreshToken = nil
+		}
+		sourceZendeskChatUpdateAuthorizationMethodOAuth20 = &shared.SourceZendeskChatUpdateAuthorizationMethodOAuth20{
+			AccessToken:  accessToken,
+			ClientID:     clientID,
+			ClientSecret: clientSecret,
+			Credentials:  credentials1,
+			RefreshToken: refreshToken,
+		}
+	}
+	if sourceZendeskChatUpdateAuthorizationMethodOAuth20 != nil {
+		credentials = &shared.SourceZendeskChatUpdateAuthorizationMethod{
+			SourceZendeskChatUpdateAuthorizationMethodOAuth20: sourceZendeskChatUpdateAuthorizationMethodOAuth20,
+		}
+	}
+	var sourceZendeskChatUpdateAuthorizationMethodAccessToken *shared.SourceZendeskChatUpdateAuthorizationMethodAccessToken
+	if r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodAccessToken != nil {
+		accessToken1 := r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodAccessToken.AccessToken.ValueString()
+		credentials2 := shared.SourceZendeskChatUpdateAuthorizationMethodAccessTokenCredentials(r.Configuration.Credentials.SourceZendeskChatAuthorizationMethodAccessToken.Credentials.ValueString())
+		sourceZendeskChatUpdateAuthorizationMethodAccessToken = &shared.SourceZendeskChatUpdateAuthorizationMethodAccessToken{
+			AccessToken: accessToken1,
+			Credentials: credentials2,
+		}
+	}
+	if sourceZendeskChatUpdateAuthorizationMethodAccessToken != nil {
+		credentials = &shared.SourceZendeskChatUpdateAuthorizationMethod{
+			SourceZendeskChatUpdateAuthorizationMethodAccessToken: sourceZendeskChatUpdateAuthorizationMethodAccessToken,
+		}
+	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	subdomain := new(string)
+	if !r.Configuration.Subdomain.IsUnknown() && !r.Configuration.Subdomain.IsNull() {
+		*subdomain = r.Configuration.Subdomain.ValueString()
+	} else {
+		subdomain = nil
+	}
+	configuration := shared.SourceZendeskChatUpdate{
+		Credentials: credentials,
+		StartDate:   startDate,
+		Subdomain:   subdomain,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceZendeskChatPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceZendeskChatResourceModel) ToDeleteSDKType() *shared.SourceZendeskChatCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

@@ -10,12 +10,6 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/boolplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/listplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -40,12 +34,12 @@ type SourceS3Resource struct {
 
 // SourceS3ResourceModel describes the resource data model.
 type SourceS3ResourceModel struct {
-	Configuration SourceS3     `tfsdk:"configuration"`
-	Name          types.String `tfsdk:"name"`
-	SecretID      types.String `tfsdk:"secret_id"`
-	SourceID      types.String `tfsdk:"source_id"`
-	SourceType    types.String `tfsdk:"source_type"`
-	WorkspaceID   types.String `tfsdk:"workspace_id"`
+	Configuration SourceS3Update `tfsdk:"configuration"`
+	Name          types.String   `tfsdk:"name"`
+	SecretID      types.String   `tfsdk:"secret_id"`
+	SourceID      types.String   `tfsdk:"source_id"`
+	SourceType    types.String   `tfsdk:"source_type"`
+	WorkspaceID   types.String   `tfsdk:"workspace_id"`
 }
 
 func (r *SourceS3Resource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -58,75 +52,152 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"dataset": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"format": schema.SingleNestedAttribute{
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_s3_file_format_csv": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
+							"source_s3_update_file_format_csv": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"additional_reader_options": schema.StringAttribute{
+										Computed: true,
+									},
+									"advanced_options": schema.StringAttribute{
+										Computed: true,
+									},
+									"block_size": schema.Int64Attribute{
+										Computed: true,
+									},
+									"delimiter": schema.StringAttribute{
+										Computed: true,
+									},
+									"double_quote": schema.BoolAttribute{
+										Computed: true,
+									},
+									"encoding": schema.StringAttribute{
+										Computed: true,
+									},
+									"escape_char": schema.StringAttribute{
+										Computed: true,
+									},
+									"filetype": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"csv",
+											),
+										},
+									},
+									"infer_datatypes": schema.BoolAttribute{
+										Computed: true,
+									},
+									"newlines_in_values": schema.BoolAttribute{
+										Computed: true,
+									},
+									"quote_char": schema.StringAttribute{
+										Computed: true,
+									},
 								},
+								Description: `This connector utilises <a href="https: // arrow.apache.org/docs/python/generated/pyarrow.csv.open_csv.html" target="_blank">PyArrow (Apache Arrow)</a> for CSV parsing.`,
+							},
+							"source_s3_update_file_format_parquet": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"batch_size": schema.Int64Attribute{
+										Computed: true,
+									},
+									"buffer_size": schema.Int64Attribute{
+										Computed: true,
+									},
+									"columns": schema.ListAttribute{
+										Computed:    true,
+										ElementType: types.StringType,
+									},
+									"filetype": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"parquet",
+											),
+										},
+									},
+								},
+								Description: `This connector utilises <a href="https://arrow.apache.org/docs/python/generated/pyarrow.parquet.ParquetFile.html" target="_blank">PyArrow (Apache Arrow)</a> for Parquet parsing.`,
+							},
+							"source_s3_update_file_format_avro": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"filetype": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"avro",
+											),
+										},
+									},
+								},
+								Description: `This connector utilises <a href="https://fastavro.readthedocs.io/en/latest/" target="_blank">fastavro</a> for Avro parsing.`,
+							},
+							"source_s3_update_file_format_jsonl": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"block_size": schema.Int64Attribute{
+										Computed: true,
+									},
+									"filetype": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"jsonl",
+											),
+										},
+									},
+									"newlines_in_values": schema.BoolAttribute{
+										Computed: true,
+									},
+									"unexpected_field_behavior": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"ignore",
+												"infer",
+												"error",
+											),
+										},
+										Description: `How JSON fields outside of explicit_schema (if given) are treated. Check <a href="https://arrow.apache.org/docs/python/generated/pyarrow.json.ParseOptions.html" target="_blank">PyArrow documentation</a> for details`,
+									},
+								},
+								Description: `This connector uses <a href="https://arrow.apache.org/docs/python/json.html" target="_blank">PyArrow</a> for JSON Lines (jsonl) file parsing.`,
+							},
+							"source_s3_file_format_csv": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"additional_reader_options": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 									},
 									"advanced_options": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 									},
 									"block_size": schema.Int64Attribute{
-										PlanModifiers: []planmodifier.Int64{
-											int64planmodifier.RequiresReplace(),
-										},
 										Optional: true,
 									},
 									"delimiter": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 									},
 									"double_quote": schema.BoolAttribute{
-										PlanModifiers: []planmodifier.Bool{
-											boolplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 									},
 									"encoding": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 									},
 									"escape_char": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 									},
 									"filetype": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -135,55 +206,31 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 										},
 									},
 									"infer_datatypes": schema.BoolAttribute{
-										PlanModifiers: []planmodifier.Bool{
-											boolplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 									},
 									"newlines_in_values": schema.BoolAttribute{
-										PlanModifiers: []planmodifier.Bool{
-											boolplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 									},
 									"quote_char": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 									},
 								},
 								Description: `This connector utilises <a href="https: // arrow.apache.org/docs/python/generated/pyarrow.csv.open_csv.html" target="_blank">PyArrow (Apache Arrow)</a> for CSV parsing.`,
 							},
 							"source_s3_file_format_parquet": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"batch_size": schema.Int64Attribute{
-										PlanModifiers: []planmodifier.Int64{
-											int64planmodifier.RequiresReplace(),
-										},
 										Optional: true,
 									},
 									"buffer_size": schema.Int64Attribute{
-										PlanModifiers: []planmodifier.Int64{
-											int64planmodifier.RequiresReplace(),
-										},
 										Optional: true,
 									},
 									"columns": schema.ListAttribute{
-										PlanModifiers: []planmodifier.List{
-											listplanmodifier.RequiresReplace(),
-										},
 										Optional:    true,
 										ElementType: types.StringType,
 									},
 									"filetype": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -195,15 +242,9 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 								Description: `This connector utilises <a href="https://arrow.apache.org/docs/python/generated/pyarrow.parquet.ParquetFile.html" target="_blank">PyArrow (Apache Arrow)</a> for Parquet parsing.`,
 							},
 							"source_s3_file_format_avro": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"filetype": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -215,21 +256,12 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 								Description: `This connector utilises <a href="https://fastavro.readthedocs.io/en/latest/" target="_blank">fastavro</a> for Avro parsing.`,
 							},
 							"source_s3_file_format_jsonl": schema.SingleNestedAttribute{
-								PlanModifiers: []planmodifier.Object{
-									objectplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"block_size": schema.Int64Attribute{
-										PlanModifiers: []planmodifier.Int64{
-											int64planmodifier.RequiresReplace(),
-										},
 										Optional: true,
 									},
 									"filetype": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -238,15 +270,9 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 										},
 									},
 									"newlines_in_values": schema.BoolAttribute{
-										PlanModifiers: []planmodifier.Bool{
-											boolplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 									},
 									"unexpected_field_behavior": schema.StringAttribute{
-										PlanModifiers: []planmodifier.String{
-											stringplanmodifier.RequiresReplace(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -266,51 +292,27 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 						},
 					},
 					"path_pattern": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"provider": schema.SingleNestedAttribute{
-						PlanModifiers: []planmodifier.Object{
-							objectplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"aws_access_key_id": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 							},
 							"aws_secret_access_key": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 							},
 							"bucket": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
 								Required: true,
 							},
 							"endpoint": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 							},
 							"path_prefix": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 							},
 							"start_date": schema.StringAttribute{
-								PlanModifiers: []planmodifier.String{
-									stringplanmodifier.RequiresReplace(),
-								},
 								Optional: true,
 								Validators: []validator.String{
 									validators.IsRFC3339(),
@@ -320,15 +322,9 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 						Description: `Use this to load files from S3 or S3-compatible services`,
 					},
 					"schema": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -339,15 +335,9 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 				},
 			},
 			"name": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Optional: true,
 			},
 			"source_id": schema.StringAttribute{
@@ -357,9 +347,6 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 		},
@@ -459,7 +446,25 @@ func (r *SourceS3Resource) Update(ctx context.Context, req resource.UpdateReques
 		return
 	}
 
-	// Not Implemented; all attributes marked as RequiresReplace
+	sourceS3PutRequest := data.ToUpdateSDKType()
+	sourceID := data.SourceID.ValueString()
+	request := operations.PutSourceS3Request{
+		SourceS3PutRequest: sourceS3PutRequest,
+		SourceID:           sourceID,
+	}
+	res, err := r.client.Sources.PutSourceS3(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode != 204 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

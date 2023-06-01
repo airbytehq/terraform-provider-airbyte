@@ -31,6 +31,21 @@ func (r *SourceSendinblueResourceModel) ToCreateSDKType() *shared.SourceSendinbl
 	return &out
 }
 
+func (r *SourceSendinblueResourceModel) ToUpdateSDKType() *shared.SourceSendinbluePutRequest {
+	apiKey := r.Configuration.APIKey.ValueString()
+	configuration := shared.SourceSendinblueUpdate{
+		APIKey: apiKey,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceSendinbluePutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceSendinblueResourceModel) ToDeleteSDKType() *shared.SourceSendinblueCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

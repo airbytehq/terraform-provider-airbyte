@@ -43,6 +43,33 @@ func (r *SourceSpacexAPIResourceModel) ToCreateSDKType() *shared.SourceSpacexAPI
 	return &out
 }
 
+func (r *SourceSpacexAPIResourceModel) ToUpdateSDKType() *shared.SourceSpacexAPIPutRequest {
+	id := new(string)
+	if !r.Configuration.ID.IsUnknown() && !r.Configuration.ID.IsNull() {
+		*id = r.Configuration.ID.ValueString()
+	} else {
+		id = nil
+	}
+	options := new(string)
+	if !r.Configuration.Options.IsUnknown() && !r.Configuration.Options.IsNull() {
+		*options = r.Configuration.Options.ValueString()
+	} else {
+		options = nil
+	}
+	configuration := shared.SourceSpacexAPIUpdate{
+		ID:      id,
+		Options: options,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceSpacexAPIPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceSpacexAPIResourceModel) ToDeleteSDKType() *shared.SourceSpacexAPICreateRequest {
 	out := r.ToCreateSDKType()
 	return out

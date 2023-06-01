@@ -36,6 +36,25 @@ func (r *SourceChartmogulResourceModel) ToCreateSDKType() *shared.SourceChartmog
 	return &out
 }
 
+func (r *SourceChartmogulResourceModel) ToUpdateSDKType() *shared.SourceChartmogulPutRequest {
+	apiKey := r.Configuration.APIKey.ValueString()
+	interval := shared.SourceChartmogulUpdateInterval(r.Configuration.Interval.ValueString())
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	configuration := shared.SourceChartmogulUpdate{
+		APIKey:    apiKey,
+		Interval:  interval,
+		StartDate: startDate,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceChartmogulPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceChartmogulResourceModel) ToDeleteSDKType() *shared.SourceChartmogulCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

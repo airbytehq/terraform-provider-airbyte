@@ -34,6 +34,23 @@ func (r *SourceIntercomResourceModel) ToCreateSDKType() *shared.SourceIntercomCr
 	return &out
 }
 
+func (r *SourceIntercomResourceModel) ToUpdateSDKType() *shared.SourceIntercomPutRequest {
+	accessToken := r.Configuration.AccessToken.ValueString()
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	configuration := shared.SourceIntercomUpdate{
+		AccessToken: accessToken,
+		StartDate:   startDate,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceIntercomPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceIntercomResourceModel) ToDeleteSDKType() *shared.SourceIntercomCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

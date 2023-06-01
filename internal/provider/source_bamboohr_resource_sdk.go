@@ -47,6 +47,37 @@ func (r *SourceBambooHrResourceModel) ToCreateSDKType() *shared.SourceBambooHrCr
 	return &out
 }
 
+func (r *SourceBambooHrResourceModel) ToUpdateSDKType() *shared.SourceBambooHrPutRequest {
+	apiKey := r.Configuration.APIKey.ValueString()
+	customReportsFields := new(string)
+	if !r.Configuration.CustomReportsFields.IsUnknown() && !r.Configuration.CustomReportsFields.IsNull() {
+		*customReportsFields = r.Configuration.CustomReportsFields.ValueString()
+	} else {
+		customReportsFields = nil
+	}
+	customReportsIncludeDefaultFields := new(bool)
+	if !r.Configuration.CustomReportsIncludeDefaultFields.IsUnknown() && !r.Configuration.CustomReportsIncludeDefaultFields.IsNull() {
+		*customReportsIncludeDefaultFields = r.Configuration.CustomReportsIncludeDefaultFields.ValueBool()
+	} else {
+		customReportsIncludeDefaultFields = nil
+	}
+	subdomain := r.Configuration.Subdomain.ValueString()
+	configuration := shared.SourceBambooHrUpdate{
+		APIKey:                            apiKey,
+		CustomReportsFields:               customReportsFields,
+		CustomReportsIncludeDefaultFields: customReportsIncludeDefaultFields,
+		Subdomain:                         subdomain,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceBambooHrPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceBambooHrResourceModel) ToDeleteSDKType() *shared.SourceBambooHrCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

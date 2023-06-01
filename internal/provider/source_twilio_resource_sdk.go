@@ -43,6 +43,32 @@ func (r *SourceTwilioResourceModel) ToCreateSDKType() *shared.SourceTwilioCreate
 	return &out
 }
 
+func (r *SourceTwilioResourceModel) ToUpdateSDKType() *shared.SourceTwilioPutRequest {
+	accountSid := r.Configuration.AccountSid.ValueString()
+	authToken := r.Configuration.AuthToken.ValueString()
+	lookbackWindow := new(int64)
+	if !r.Configuration.LookbackWindow.IsUnknown() && !r.Configuration.LookbackWindow.IsNull() {
+		*lookbackWindow = r.Configuration.LookbackWindow.ValueInt64()
+	} else {
+		lookbackWindow = nil
+	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	configuration := shared.SourceTwilioUpdate{
+		AccountSid:     accountSid,
+		AuthToken:      authToken,
+		LookbackWindow: lookbackWindow,
+		StartDate:      startDate,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceTwilioPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceTwilioResourceModel) ToDeleteSDKType() *shared.SourceTwilioCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

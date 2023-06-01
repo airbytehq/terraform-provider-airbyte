@@ -47,6 +47,37 @@ func (r *SourceTvmazeScheduleResourceModel) ToCreateSDKType() *shared.SourceTvma
 	return &out
 }
 
+func (r *SourceTvmazeScheduleResourceModel) ToUpdateSDKType() *shared.SourceTvmazeSchedulePutRequest {
+	domesticScheduleCountryCode := r.Configuration.DomesticScheduleCountryCode.ValueString()
+	endDate := new(string)
+	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
+		*endDate = r.Configuration.EndDate.ValueString()
+	} else {
+		endDate = nil
+	}
+	startDate := r.Configuration.StartDate.ValueString()
+	webScheduleCountryCode := new(string)
+	if !r.Configuration.WebScheduleCountryCode.IsUnknown() && !r.Configuration.WebScheduleCountryCode.IsNull() {
+		*webScheduleCountryCode = r.Configuration.WebScheduleCountryCode.ValueString()
+	} else {
+		webScheduleCountryCode = nil
+	}
+	configuration := shared.SourceTvmazeScheduleUpdate{
+		DomesticScheduleCountryCode: domesticScheduleCountryCode,
+		EndDate:                     endDate,
+		StartDate:                   startDate,
+		WebScheduleCountryCode:      webScheduleCountryCode,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceTvmazeSchedulePutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceTvmazeScheduleResourceModel) ToDeleteSDKType() *shared.SourceTvmazeScheduleCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

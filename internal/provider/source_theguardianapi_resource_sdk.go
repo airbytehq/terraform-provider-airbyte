@@ -61,6 +61,51 @@ func (r *SourceTheGuardianAPIResourceModel) ToCreateSDKType() *shared.SourceTheG
 	return &out
 }
 
+func (r *SourceTheGuardianAPIResourceModel) ToUpdateSDKType() *shared.SourceTheGuardianAPIPutRequest {
+	apiKey := r.Configuration.APIKey.ValueString()
+	endDate := new(string)
+	if !r.Configuration.EndDate.IsUnknown() && !r.Configuration.EndDate.IsNull() {
+		*endDate = r.Configuration.EndDate.ValueString()
+	} else {
+		endDate = nil
+	}
+	query := new(string)
+	if !r.Configuration.Query.IsUnknown() && !r.Configuration.Query.IsNull() {
+		*query = r.Configuration.Query.ValueString()
+	} else {
+		query = nil
+	}
+	section := new(string)
+	if !r.Configuration.Section.IsUnknown() && !r.Configuration.Section.IsNull() {
+		*section = r.Configuration.Section.ValueString()
+	} else {
+		section = nil
+	}
+	startDate := r.Configuration.StartDate.ValueString()
+	tag := new(string)
+	if !r.Configuration.Tag.IsUnknown() && !r.Configuration.Tag.IsNull() {
+		*tag = r.Configuration.Tag.ValueString()
+	} else {
+		tag = nil
+	}
+	configuration := shared.SourceTheGuardianAPIUpdate{
+		APIKey:    apiKey,
+		EndDate:   endDate,
+		Query:     query,
+		Section:   section,
+		StartDate: startDate,
+		Tag:       tag,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceTheGuardianAPIPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceTheGuardianAPIResourceModel) ToDeleteSDKType() *shared.SourceTheGuardianAPICreateRequest {
 	out := r.ToCreateSDKType()
 	return out

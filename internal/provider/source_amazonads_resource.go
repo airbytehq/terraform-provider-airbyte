@@ -9,11 +9,6 @@ import (
 
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/int64planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/listplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -38,12 +33,12 @@ type SourceAmazonAdsResource struct {
 
 // SourceAmazonAdsResourceModel describes the resource data model.
 type SourceAmazonAdsResourceModel struct {
-	Configuration SourceAmazonAds `tfsdk:"configuration"`
-	Name          types.String    `tfsdk:"name"`
-	SecretID      types.String    `tfsdk:"secret_id"`
-	SourceID      types.String    `tfsdk:"source_id"`
-	SourceType    types.String    `tfsdk:"source_type"`
-	WorkspaceID   types.String    `tfsdk:"workspace_id"`
+	Configuration SourceAmazonAdsUpdate `tfsdk:"configuration"`
+	Name          types.String          `tfsdk:"name"`
+	SecretID      types.String          `tfsdk:"secret_id"`
+	SourceID      types.String          `tfsdk:"source_id"`
+	SourceType    types.String          `tfsdk:"source_type"`
+	WorkspaceID   types.String          `tfsdk:"workspace_id"`
 }
 
 func (r *SourceAmazonAdsResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -56,15 +51,9 @@ func (r *SourceAmazonAdsResource) Schema(ctx context.Context, req resource.Schem
 
 		Attributes: map[string]schema.Attribute{
 			"configuration": schema.SingleNestedAttribute{
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"auth_type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -73,40 +62,22 @@ func (r *SourceAmazonAdsResource) Schema(ctx context.Context, req resource.Schem
 						},
 					},
 					"client_id": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"client_secret": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"look_back_window": schema.Int64Attribute{
-						PlanModifiers: []planmodifier.Int64{
-							int64planmodifier.RequiresReplace(),
-						},
 						Optional: true,
 					},
 					"profiles": schema.ListAttribute{
-						PlanModifiers: []planmodifier.List{
-							listplanmodifier.RequiresReplace(),
-						},
 						Optional:    true,
 						ElementType: types.Int64Type,
 					},
 					"refresh_token": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 					},
 					"region": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -118,16 +89,17 @@ func (r *SourceAmazonAdsResource) Schema(ctx context.Context, req resource.Schem
 						Description: `Region to pull data from (EU/NA/FE). See <a href="https://advertising.amazon.com/API/docs/en-us/info/api-overview#api-endpoints">docs</a> for more details.`,
 					},
 					"report_record_types": schema.ListAttribute{
-						PlanModifiers: []planmodifier.List{
-							listplanmodifier.RequiresReplace(),
-						},
+						Optional:    true,
+						ElementType: types.StringType,
+					},
+					"start_date": schema.StringAttribute{
+						Optional: true,
+					},
+					"state_filter": schema.ListAttribute{
 						Optional:    true,
 						ElementType: types.StringType,
 					},
 					"source_type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -135,31 +107,12 @@ func (r *SourceAmazonAdsResource) Schema(ctx context.Context, req resource.Schem
 							),
 						},
 					},
-					"start_date": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
-						Optional: true,
-					},
-					"state_filter": schema.ListAttribute{
-						PlanModifiers: []planmodifier.List{
-							listplanmodifier.RequiresReplace(),
-						},
-						Optional:    true,
-						ElementType: types.StringType,
-					},
 				},
 			},
 			"name": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Optional: true,
 			},
 			"source_id": schema.StringAttribute{
@@ -169,9 +122,6 @@ func (r *SourceAmazonAdsResource) Schema(ctx context.Context, req resource.Schem
 				Computed: true,
 			},
 			"workspace_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 		},
@@ -271,7 +221,25 @@ func (r *SourceAmazonAdsResource) Update(ctx context.Context, req resource.Updat
 		return
 	}
 
-	// Not Implemented; all attributes marked as RequiresReplace
+	sourceAmazonAdsPutRequest := data.ToUpdateSDKType()
+	sourceID := data.SourceID.ValueString()
+	request := operations.PutSourceAmazonAdsRequest{
+		SourceAmazonAdsPutRequest: sourceAmazonAdsPutRequest,
+		SourceID:                  sourceID,
+	}
+	res, err := r.client.Sources.PutSourceAmazonAds(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode != 204 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

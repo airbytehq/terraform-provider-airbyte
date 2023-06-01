@@ -53,6 +53,42 @@ func (r *SourceOnesignalResourceModel) ToCreateSDKType() *shared.SourceOnesignal
 	return &out
 }
 
+func (r *SourceOnesignalResourceModel) ToUpdateSDKType() *shared.SourceOnesignalPutRequest {
+	applications := make([]shared.SourceOnesignalUpdateApplications, 0)
+	for _, applicationsItem := range r.Configuration.Applications {
+		appAPIKey := applicationsItem.AppAPIKey.ValueString()
+		appID := applicationsItem.AppID.ValueString()
+		appName := new(string)
+		if !applicationsItem.AppName.IsUnknown() && !applicationsItem.AppName.IsNull() {
+			*appName = applicationsItem.AppName.ValueString()
+		} else {
+			appName = nil
+		}
+		applications = append(applications, shared.SourceOnesignalUpdateApplications{
+			AppAPIKey: appAPIKey,
+			AppID:     appID,
+			AppName:   appName,
+		})
+	}
+	outcomeNames := r.Configuration.OutcomeNames.ValueString()
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	userAuthKey := r.Configuration.UserAuthKey.ValueString()
+	configuration := shared.SourceOnesignalUpdate{
+		Applications: applications,
+		OutcomeNames: outcomeNames,
+		StartDate:    startDate,
+		UserAuthKey:  userAuthKey,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceOnesignalPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceOnesignalResourceModel) ToDeleteSDKType() *shared.SourceOnesignalCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

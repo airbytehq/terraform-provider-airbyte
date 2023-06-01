@@ -55,6 +55,44 @@ func (r *SourcePaypalTransactionResourceModel) ToCreateSDKType() *shared.SourceP
 	return &out
 }
 
+func (r *SourcePaypalTransactionResourceModel) ToUpdateSDKType() *shared.SourcePaypalTransactionPutRequest {
+	clientID := new(string)
+	if !r.Configuration.ClientID.IsUnknown() && !r.Configuration.ClientID.IsNull() {
+		*clientID = r.Configuration.ClientID.ValueString()
+	} else {
+		clientID = nil
+	}
+	clientSecret := new(string)
+	if !r.Configuration.ClientSecret.IsUnknown() && !r.Configuration.ClientSecret.IsNull() {
+		*clientSecret = r.Configuration.ClientSecret.ValueString()
+	} else {
+		clientSecret = nil
+	}
+	isSandbox := r.Configuration.IsSandbox.ValueBool()
+	refreshToken := new(string)
+	if !r.Configuration.RefreshToken.IsUnknown() && !r.Configuration.RefreshToken.IsNull() {
+		*refreshToken = r.Configuration.RefreshToken.ValueString()
+	} else {
+		refreshToken = nil
+	}
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	configuration := shared.SourcePaypalTransactionUpdate{
+		ClientID:     clientID,
+		ClientSecret: clientSecret,
+		IsSandbox:    isSandbox,
+		RefreshToken: refreshToken,
+		StartDate:    startDate,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourcePaypalTransactionPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourcePaypalTransactionResourceModel) ToDeleteSDKType() *shared.SourcePaypalTransactionCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

@@ -46,6 +46,43 @@ func (r *DestinationCassandraResourceModel) ToCreateSDKType() *shared.Destinatio
 	return &out
 }
 
+func (r *DestinationCassandraResourceModel) ToUpdateSDKType() *shared.DestinationCassandraPutRequest {
+	address := r.Configuration.Address.ValueString()
+	datacenter := new(string)
+	if !r.Configuration.Datacenter.IsUnknown() && !r.Configuration.Datacenter.IsNull() {
+		*datacenter = r.Configuration.Datacenter.ValueString()
+	} else {
+		datacenter = nil
+	}
+	keyspace := r.Configuration.Keyspace.ValueString()
+	password := r.Configuration.Password.ValueString()
+	port := r.Configuration.Port.ValueInt64()
+	replication := new(int64)
+	if !r.Configuration.Replication.IsUnknown() && !r.Configuration.Replication.IsNull() {
+		*replication = r.Configuration.Replication.ValueInt64()
+	} else {
+		replication = nil
+	}
+	username := r.Configuration.Username.ValueString()
+	configuration := shared.DestinationCassandraUpdate{
+		Address:     address,
+		Datacenter:  datacenter,
+		Keyspace:    keyspace,
+		Password:    password,
+		Port:        port,
+		Replication: replication,
+		Username:    username,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.DestinationCassandraPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *DestinationCassandraResourceModel) ToDeleteSDKType() *shared.DestinationCassandraCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

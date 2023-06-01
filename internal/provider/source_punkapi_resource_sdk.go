@@ -40,6 +40,30 @@ func (r *SourcePunkAPIResourceModel) ToCreateSDKType() *shared.SourcePunkAPICrea
 	return &out
 }
 
+func (r *SourcePunkAPIResourceModel) ToUpdateSDKType() *shared.SourcePunkAPIPutRequest {
+	brewedAfter := r.Configuration.BrewedAfter.ValueString()
+	brewedBefore := r.Configuration.BrewedBefore.ValueString()
+	id := new(string)
+	if !r.Configuration.ID.IsUnknown() && !r.Configuration.ID.IsNull() {
+		*id = r.Configuration.ID.ValueString()
+	} else {
+		id = nil
+	}
+	configuration := shared.SourcePunkAPIUpdate{
+		BrewedAfter:  brewedAfter,
+		BrewedBefore: brewedBefore,
+		ID:           id,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourcePunkAPIPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourcePunkAPIResourceModel) ToDeleteSDKType() *shared.SourcePunkAPICreateRequest {
 	out := r.ToCreateSDKType()
 	return out

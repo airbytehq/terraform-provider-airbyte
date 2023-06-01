@@ -31,6 +31,21 @@ func (r *SourceCodaResourceModel) ToCreateSDKType() *shared.SourceCodaCreateRequ
 	return &out
 }
 
+func (r *SourceCodaResourceModel) ToUpdateSDKType() *shared.SourceCodaPutRequest {
+	authToken := r.Configuration.AuthToken.ValueString()
+	configuration := shared.SourceCodaUpdate{
+		AuthToken: authToken,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceCodaPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceCodaResourceModel) ToDeleteSDKType() *shared.SourceCodaCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

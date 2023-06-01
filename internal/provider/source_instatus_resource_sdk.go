@@ -31,6 +31,21 @@ func (r *SourceInstatusResourceModel) ToCreateSDKType() *shared.SourceInstatusCr
 	return &out
 }
 
+func (r *SourceInstatusResourceModel) ToUpdateSDKType() *shared.SourceInstatusPutRequest {
+	apiKey := r.Configuration.APIKey.ValueString()
+	configuration := shared.SourceInstatusUpdate{
+		APIKey: apiKey,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceInstatusPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceInstatusResourceModel) ToDeleteSDKType() *shared.SourceInstatusCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

@@ -36,6 +36,25 @@ func (r *SourcePrestashopResourceModel) ToCreateSDKType() *shared.SourcePrestash
 	return &out
 }
 
+func (r *SourcePrestashopResourceModel) ToUpdateSDKType() *shared.SourcePrestashopPutRequest {
+	accessKey := r.Configuration.AccessKey.ValueString()
+	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
+	url := r.Configuration.URL.ValueString()
+	configuration := shared.SourcePrestashopUpdate{
+		AccessKey: accessKey,
+		StartDate: startDate,
+		URL:       url,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourcePrestashopPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourcePrestashopResourceModel) ToDeleteSDKType() *shared.SourcePrestashopCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

@@ -41,6 +41,30 @@ func (r *SourceTrelloResourceModel) ToCreateSDKType() *shared.SourceTrelloCreate
 	return &out
 }
 
+func (r *SourceTrelloResourceModel) ToUpdateSDKType() *shared.SourceTrelloPutRequest {
+	boardIds := make([]string, 0)
+	for _, boardIdsItem := range r.Configuration.BoardIds {
+		boardIds = append(boardIds, boardIdsItem.ValueString())
+	}
+	key := r.Configuration.Key.ValueString()
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	token := r.Configuration.Token.ValueString()
+	configuration := shared.SourceTrelloUpdate{
+		BoardIds:  boardIds,
+		Key:       key,
+		StartDate: startDate,
+		Token:     token,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceTrelloPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceTrelloResourceModel) ToDeleteSDKType() *shared.SourceTrelloCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

@@ -31,6 +31,21 @@ func (r *SourceLaunchdarklyResourceModel) ToCreateSDKType() *shared.SourceLaunch
 	return &out
 }
 
+func (r *SourceLaunchdarklyResourceModel) ToUpdateSDKType() *shared.SourceLaunchdarklyPutRequest {
+	accessToken := r.Configuration.AccessToken.ValueString()
+	configuration := shared.SourceLaunchdarklyUpdate{
+		AccessToken: accessToken,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceLaunchdarklyPutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceLaunchdarklyResourceModel) ToDeleteSDKType() *shared.SourceLaunchdarklyCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

@@ -49,6 +49,39 @@ func (r *SourceAmplitudeResourceModel) ToCreateSDKType() *shared.SourceAmplitude
 	return &out
 }
 
+func (r *SourceAmplitudeResourceModel) ToUpdateSDKType() *shared.SourceAmplitudePutRequest {
+	apiKey := r.Configuration.APIKey.ValueString()
+	dataRegion := new(shared.SourceAmplitudeUpdateDataRegion)
+	if !r.Configuration.DataRegion.IsUnknown() && !r.Configuration.DataRegion.IsNull() {
+		*dataRegion = shared.SourceAmplitudeUpdateDataRegion(r.Configuration.DataRegion.ValueString())
+	} else {
+		dataRegion = nil
+	}
+	requestTimeRange := new(int64)
+	if !r.Configuration.RequestTimeRange.IsUnknown() && !r.Configuration.RequestTimeRange.IsNull() {
+		*requestTimeRange = r.Configuration.RequestTimeRange.ValueInt64()
+	} else {
+		requestTimeRange = nil
+	}
+	secretKey := r.Configuration.SecretKey.ValueString()
+	startDate := r.Configuration.StartDate.ValueString()
+	configuration := shared.SourceAmplitudeUpdate{
+		APIKey:           apiKey,
+		DataRegion:       dataRegion,
+		RequestTimeRange: requestTimeRange,
+		SecretKey:        secretKey,
+		StartDate:        startDate,
+	}
+	name := r.Name.ValueString()
+	workspaceID := r.WorkspaceID.ValueString()
+	out := shared.SourceAmplitudePutRequest{
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
+	}
+	return &out
+}
+
 func (r *SourceAmplitudeResourceModel) ToDeleteSDKType() *shared.SourceAmplitudeCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
