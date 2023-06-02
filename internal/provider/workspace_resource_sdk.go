@@ -27,5 +27,6 @@ func (r *WorkspaceResourceModel) ToDeleteSDKType() *shared.WorkspaceCreateReques
 
 func (r *WorkspaceResourceModel) RefreshFromCreateResponse(resp *shared.WorkspaceResponse) {
 	r.DataResidency = types.StringValue(string(resp.DataResidency))
+	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }

@@ -34,12 +34,12 @@ type SourceNotionResource struct {
 
 // SourceNotionResourceModel describes the resource data model.
 type SourceNotionResourceModel struct {
-	Configuration SourceNotion `tfsdk:"configuration"`
-	Name          types.String `tfsdk:"name"`
-	SecretID      types.String `tfsdk:"secret_id"`
-	SourceID      types.String `tfsdk:"source_id"`
-	SourceType    types.String `tfsdk:"source_type"`
-	WorkspaceID   types.String `tfsdk:"workspace_id"`
+	Configuration SourceNotionUpdate `tfsdk:"configuration"`
+	Name          types.String       `tfsdk:"name"`
+	SecretID      types.String       `tfsdk:"secret_id"`
+	SourceID      types.String       `tfsdk:"source_id"`
+	SourceType    types.String       `tfsdk:"source_type"`
+	WorkspaceID   types.String       `tfsdk:"workspace_id"`
 }
 
 func (r *SourceNotionResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -57,46 +57,6 @@ func (r *SourceNotionResource) Schema(ctx context.Context, req resource.SchemaRe
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_notion_authenticate_using_o_auth2_0": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Required: true,
-									},
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"OAuth2.0",
-											),
-										},
-									},
-									"client_id": schema.StringAttribute{
-										Required: true,
-									},
-									"client_secret": schema.StringAttribute{
-										Required: true,
-									},
-								},
-								Description: `Pick an authentication method.`,
-							},
-							"source_notion_authenticate_using_access_token": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"token",
-											),
-										},
-									},
-									"token": schema.StringAttribute{
-										Required: true,
-									},
-								},
-								Description: `Pick an authentication method.`,
-							},
 							"source_notion_update_authenticate_using_o_auth2_0": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
@@ -137,9 +97,55 @@ func (r *SourceNotionResource) Schema(ctx context.Context, req resource.SchemaRe
 								},
 								Description: `Pick an authentication method.`,
 							},
+							"source_notion_authenticate_using_o_auth2_0": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"access_token": schema.StringAttribute{
+										Required: true,
+									},
+									"auth_type": schema.StringAttribute{
+										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"OAuth2.0",
+											),
+										},
+									},
+									"client_id": schema.StringAttribute{
+										Required: true,
+									},
+									"client_secret": schema.StringAttribute{
+										Required: true,
+									},
+								},
+								Description: `Pick an authentication method.`,
+							},
+							"source_notion_authenticate_using_access_token": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"auth_type": schema.StringAttribute{
+										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"token",
+											),
+										},
+									},
+									"token": schema.StringAttribute{
+										Required: true,
+									},
+								},
+								Description: `Pick an authentication method.`,
+							},
 						},
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
+						},
+					},
+					"start_date": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							validators.IsRFC3339(),
 						},
 					},
 					"source_type": schema.StringAttribute{
@@ -148,12 +154,6 @@ func (r *SourceNotionResource) Schema(ctx context.Context, req resource.SchemaRe
 							stringvalidator.OneOf(
 								"notion",
 							),
-						},
-					},
-					"start_date": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							validators.IsRFC3339(),
 						},
 					},
 				},

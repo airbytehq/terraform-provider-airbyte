@@ -32,7 +32,7 @@ func (e *SourceSpacexAPISpacexAPI) UnmarshalJSON(data []byte) error {
 }
 
 type SourceSpacexAPI struct {
-	ID         *string                  `json:"id,omitempty"`
-	Options    *string                  `json:"options,omitempty"`
-	SourceType SourceSpacexAPISpacexAPI `json:"sourceType"`
+	ID         *string                   `json:"id,omitempty"`
+	Options    *string                   `json:"options,omitempty"`
+	SourceType *SourceSpacexAPISpacexAPI `json:"sourceType,omitempty"`
 }

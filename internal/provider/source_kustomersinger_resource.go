@@ -33,12 +33,12 @@ type SourceKustomerSingerResource struct {
 
 // SourceKustomerSingerResourceModel describes the resource data model.
 type SourceKustomerSingerResourceModel struct {
-	Configuration SourceKustomerSinger `tfsdk:"configuration"`
-	Name          types.String         `tfsdk:"name"`
-	SecretID      types.String         `tfsdk:"secret_id"`
-	SourceID      types.String         `tfsdk:"source_id"`
-	SourceType    types.String         `tfsdk:"source_type"`
-	WorkspaceID   types.String         `tfsdk:"workspace_id"`
+	Configuration SourceKustomerSingerUpdate `tfsdk:"configuration"`
+	Name          types.String               `tfsdk:"name"`
+	SecretID      types.String               `tfsdk:"secret_id"`
+	SourceID      types.String               `tfsdk:"source_id"`
+	SourceType    types.String               `tfsdk:"source_type"`
+	WorkspaceID   types.String               `tfsdk:"workspace_id"`
 }
 
 func (r *SourceKustomerSingerResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -56,6 +56,9 @@ func (r *SourceKustomerSingerResource) Schema(ctx context.Context, req resource.
 					"api_token": schema.StringAttribute{
 						Required: true,
 					},
+					"start_date": schema.StringAttribute{
+						Required: true,
+					},
 					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -63,9 +66,6 @@ func (r *SourceKustomerSingerResource) Schema(ctx context.Context, req resource.
 								"kustomer-singer",
 							),
 						},
-					},
-					"start_date": schema.StringAttribute{
-						Required: true,
 					},
 				},
 			},

@@ -11,8 +11,8 @@ func (r *DestinationDevNullResourceModel) ToCreateSDKType() *shared.DestinationD
 	destinationType := shared.DestinationDevNullDevNull(r.Configuration.DestinationType.ValueString())
 	var testDestination shared.DestinationDevNullTestDestination
 	var destinationDevNullTestDestinationSilent *shared.DestinationDevNullTestDestinationSilent
-	if r.Configuration.TestDestination.DestinationDevNullTestDestinationSilent != nil {
-		testDestinationType := shared.DestinationDevNullTestDestinationSilentTestDestinationType(r.Configuration.TestDestination.DestinationDevNullTestDestinationSilent.TestDestinationType.ValueString())
+	if r.Configuration.TestDestination.DestinationDevNullUpdateTestDestinationSilent != nil {
+		testDestinationType := shared.DestinationDevNullTestDestinationSilentTestDestinationType(r.Configuration.TestDestination.DestinationDevNullUpdateTestDestinationSilent.TestDestinationType.ValueString())
 		destinationDevNullTestDestinationSilent = &shared.DestinationDevNullTestDestinationSilent{
 			TestDestinationType: testDestinationType,
 		}
@@ -39,8 +39,8 @@ func (r *DestinationDevNullResourceModel) ToCreateSDKType() *shared.DestinationD
 func (r *DestinationDevNullResourceModel) ToUpdateSDKType() *shared.DestinationDevNullPutRequest {
 	var testDestination shared.DestinationDevNullUpdateTestDestination
 	var destinationDevNullUpdateTestDestinationSilent *shared.DestinationDevNullUpdateTestDestinationSilent
-	if r.Configuration.TestDestination.DestinationDevNullTestDestinationSilent != nil {
-		testDestinationType := shared.DestinationDevNullUpdateTestDestinationSilentTestDestinationType(r.Configuration.TestDestination.DestinationDevNullTestDestinationSilent.TestDestinationType.ValueString())
+	if r.Configuration.TestDestination.DestinationDevNullUpdateTestDestinationSilent != nil {
+		testDestinationType := shared.DestinationDevNullUpdateTestDestinationSilentTestDestinationType(r.Configuration.TestDestination.DestinationDevNullUpdateTestDestinationSilent.TestDestinationType.ValueString())
 		destinationDevNullUpdateTestDestinationSilent = &shared.DestinationDevNullUpdateTestDestinationSilent{
 			TestDestinationType: testDestinationType,
 		}

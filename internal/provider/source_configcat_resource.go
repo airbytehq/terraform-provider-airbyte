@@ -33,12 +33,12 @@ type SourceConfigcatResource struct {
 
 // SourceConfigcatResourceModel describes the resource data model.
 type SourceConfigcatResourceModel struct {
-	Configuration SourceConfigcat `tfsdk:"configuration"`
-	Name          types.String    `tfsdk:"name"`
-	SecretID      types.String    `tfsdk:"secret_id"`
-	SourceID      types.String    `tfsdk:"source_id"`
-	SourceType    types.String    `tfsdk:"source_type"`
-	WorkspaceID   types.String    `tfsdk:"workspace_id"`
+	Configuration SourceConfigcatUpdate `tfsdk:"configuration"`
+	Name          types.String          `tfsdk:"name"`
+	SecretID      types.String          `tfsdk:"secret_id"`
+	SourceID      types.String          `tfsdk:"source_id"`
+	SourceType    types.String          `tfsdk:"source_type"`
+	WorkspaceID   types.String          `tfsdk:"workspace_id"`
 }
 
 func (r *SourceConfigcatResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -56,6 +56,9 @@ func (r *SourceConfigcatResource) Schema(ctx context.Context, req resource.Schem
 					"password": schema.StringAttribute{
 						Required: true,
 					},
+					"username": schema.StringAttribute{
+						Required: true,
+					},
 					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -63,9 +66,6 @@ func (r *SourceConfigcatResource) Schema(ctx context.Context, req resource.Schem
 								"configcat",
 							),
 						},
-					},
-					"username": schema.StringAttribute{
-						Required: true,
 					},
 				},
 			},

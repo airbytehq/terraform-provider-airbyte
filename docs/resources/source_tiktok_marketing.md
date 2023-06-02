@@ -33,15 +33,12 @@ SourceTiktokMarketing Resource
 <a id="nestedatt--configuration"></a>
 ### Nested Schema for `configuration`
 
-Required:
-
-- `source_type` (String)
-
 Optional:
 
 - `attribution_window` (Number)
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
 - `end_date` (String)
+- `source_type` (String)
 - `start_date` (String)
 
 <a id="nestedatt--configuration--credentials"></a>

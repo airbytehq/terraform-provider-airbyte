@@ -34,12 +34,12 @@ type SourceHarvestResource struct {
 
 // SourceHarvestResourceModel describes the resource data model.
 type SourceHarvestResourceModel struct {
-	Configuration SourceHarvest `tfsdk:"configuration"`
-	Name          types.String  `tfsdk:"name"`
-	SecretID      types.String  `tfsdk:"secret_id"`
-	SourceID      types.String  `tfsdk:"source_id"`
-	SourceType    types.String  `tfsdk:"source_type"`
-	WorkspaceID   types.String  `tfsdk:"workspace_id"`
+	Configuration SourceHarvestUpdate `tfsdk:"configuration"`
+	Name          types.String        `tfsdk:"name"`
+	SecretID      types.String        `tfsdk:"secret_id"`
+	SourceID      types.String        `tfsdk:"source_id"`
+	SourceType    types.String        `tfsdk:"source_type"`
+	WorkspaceID   types.String        `tfsdk:"workspace_id"`
 }
 
 func (r *SourceHarvestResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -60,60 +60,6 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_harvest_authentication_mechanism_authenticate_via_harvest_o_auth_": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Client",
-											),
-										},
-									},
-									"client_id": schema.StringAttribute{
-										Required: true,
-									},
-									"client_secret": schema.StringAttribute{
-										Required: true,
-									},
-									"refresh_token": schema.StringAttribute{
-										Required: true,
-									},
-									"additional_properties": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											validators.IsValidJSON(),
-										},
-										Description: `Parsed as JSON.`,
-									},
-								},
-								Description: `Choose how to authenticate to Harvest.`,
-							},
-							"source_harvest_authentication_mechanism_authenticate_with_personal_access_token": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"api_token": schema.StringAttribute{
-										Required: true,
-									},
-									"auth_type": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Token",
-											),
-										},
-									},
-									"additional_properties": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											validators.IsValidJSON(),
-										},
-										Description: `Parsed as JSON.`,
-									},
-								},
-								Description: `Choose how to authenticate to Harvest.`,
-							},
 							"source_harvest_update_authentication_mechanism_authenticate_via_harvest_o_auth_": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
@@ -152,6 +98,60 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 									},
 									"auth_type": schema.StringAttribute{
 										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Token",
+											),
+										},
+									},
+									"additional_properties": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+										Description: `Parsed as JSON.`,
+									},
+								},
+								Description: `Choose how to authenticate to Harvest.`,
+							},
+							"source_harvest_authentication_mechanism_authenticate_via_harvest_o_auth_": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"auth_type": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Client",
+											),
+										},
+									},
+									"client_id": schema.StringAttribute{
+										Required: true,
+									},
+									"client_secret": schema.StringAttribute{
+										Required: true,
+									},
+									"refresh_token": schema.StringAttribute{
+										Required: true,
+									},
+									"additional_properties": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+										Description: `Parsed as JSON.`,
+									},
+								},
+								Description: `Choose how to authenticate to Harvest.`,
+							},
+							"source_harvest_authentication_mechanism_authenticate_with_personal_access_token": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"api_token": schema.StringAttribute{
+										Required: true,
+									},
+									"auth_type": schema.StringAttribute{
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"Token",

@@ -3,6 +3,7 @@
 package shared
 
 type SourcePublicApisPutRequest struct {
-	Name        string `json:"name"`
-	WorkspaceID string `json:"workspaceId"`
+	Configuration SourcePublicApisUpdate `json:"configuration"`
+	Name          string                 `json:"name"`
+	WorkspaceID   string                 `json:"workspaceId"`
 }

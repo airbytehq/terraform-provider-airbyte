@@ -33,11 +33,11 @@ type DestinationGoogleSheetsResource struct {
 
 // DestinationGoogleSheetsResourceModel describes the resource data model.
 type DestinationGoogleSheetsResourceModel struct {
-	Configuration   DestinationGoogleSheets `tfsdk:"configuration"`
-	DestinationID   types.String            `tfsdk:"destination_id"`
-	DestinationType types.String            `tfsdk:"destination_type"`
-	Name            types.String            `tfsdk:"name"`
-	WorkspaceID     types.String            `tfsdk:"workspace_id"`
+	Configuration   DestinationGoogleSheetsUpdate `tfsdk:"configuration"`
+	DestinationID   types.String                  `tfsdk:"destination_id"`
+	DestinationType types.String                  `tfsdk:"destination_type"`
+	Name            types.String                  `tfsdk:"name"`
+	WorkspaceID     types.String                  `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationGoogleSheetsResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -67,6 +67,9 @@ func (r *DestinationGoogleSheetsResource) Schema(ctx context.Context, req resour
 						},
 						Description: `Google API Credentials for connecting to Google Sheets and Google Drive APIs`,
 					},
+					"spreadsheet_id": schema.StringAttribute{
+						Required: true,
+					},
 					"destination_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -74,9 +77,6 @@ func (r *DestinationGoogleSheetsResource) Schema(ctx context.Context, req resour
 								"google-sheets",
 							),
 						},
-					},
-					"spreadsheet_id": schema.StringAttribute{
-						Required: true,
 					},
 				},
 			},

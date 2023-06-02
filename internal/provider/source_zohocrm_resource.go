@@ -34,12 +34,12 @@ type SourceZohoCrmResource struct {
 
 // SourceZohoCrmResourceModel describes the resource data model.
 type SourceZohoCrmResourceModel struct {
-	Configuration SourceZohoCrm `tfsdk:"configuration"`
-	Name          types.String  `tfsdk:"name"`
-	SecretID      types.String  `tfsdk:"secret_id"`
-	SourceID      types.String  `tfsdk:"source_id"`
-	SourceType    types.String  `tfsdk:"source_type"`
-	WorkspaceID   types.String  `tfsdk:"workspace_id"`
+	Configuration SourceZohoCrmUpdate `tfsdk:"configuration"`
+	Name          types.String        `tfsdk:"name"`
+	SecretID      types.String        `tfsdk:"secret_id"`
+	SourceID      types.String        `tfsdk:"source_id"`
+	SourceType    types.String        `tfsdk:"source_type"`
+	WorkspaceID   types.String        `tfsdk:"workspace_id"`
 }
 
 func (r *SourceZohoCrmResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -101,18 +101,18 @@ func (r *SourceZohoCrmResource) Schema(ctx context.Context, req resource.SchemaR
 					"refresh_token": schema.StringAttribute{
 						Required: true,
 					},
+					"start_datetime": schema.StringAttribute{
+						Optional: true,
+						Validators: []validator.String{
+							validators.IsRFC3339(),
+						},
+					},
 					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"zoho-crm",
 							),
-						},
-					},
-					"start_datetime": schema.StringAttribute{
-						Optional: true,
-						Validators: []validator.String{
-							validators.IsRFC3339(),
 						},
 					},
 				},

@@ -66,7 +66,12 @@ func (r *SourceAirtableResourceModel) ToCreateSDKType() *shared.SourceAirtableCr
 			SourceAirtableAuthenticationPersonalAccessToken: sourceAirtableAuthenticationPersonalAccessToken,
 		}
 	}
-	sourceType := shared.SourceAirtableAirtable(r.Configuration.SourceType.ValueString())
+	sourceType := new(shared.SourceAirtableAirtable)
+	if !r.Configuration.SourceType.IsUnknown() && !r.Configuration.SourceType.IsNull() {
+		*sourceType = shared.SourceAirtableAirtable(r.Configuration.SourceType.ValueString())
+	} else {
+		sourceType = nil
+	}
 	configuration := shared.SourceAirtable{
 		Credentials: credentials,
 		SourceType:  sourceType,

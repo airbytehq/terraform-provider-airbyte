@@ -33,12 +33,12 @@ type SourceFreshserviceResource struct {
 
 // SourceFreshserviceResourceModel describes the resource data model.
 type SourceFreshserviceResourceModel struct {
-	Configuration SourceFreshservice `tfsdk:"configuration"`
-	Name          types.String       `tfsdk:"name"`
-	SecretID      types.String       `tfsdk:"secret_id"`
-	SourceID      types.String       `tfsdk:"source_id"`
-	SourceType    types.String       `tfsdk:"source_type"`
-	WorkspaceID   types.String       `tfsdk:"workspace_id"`
+	Configuration SourceFreshserviceUpdate `tfsdk:"configuration"`
+	Name          types.String             `tfsdk:"name"`
+	SecretID      types.String             `tfsdk:"secret_id"`
+	SourceID      types.String             `tfsdk:"source_id"`
+	SourceType    types.String             `tfsdk:"source_type"`
+	WorkspaceID   types.String             `tfsdk:"workspace_id"`
 }
 
 func (r *SourceFreshserviceResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -59,6 +59,9 @@ func (r *SourceFreshserviceResource) Schema(ctx context.Context, req resource.Sc
 					"domain_name": schema.StringAttribute{
 						Required: true,
 					},
+					"start_date": schema.StringAttribute{
+						Required: true,
+					},
 					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -66,9 +69,6 @@ func (r *SourceFreshserviceResource) Schema(ctx context.Context, req resource.Sc
 								"freshservice",
 							),
 						},
-					},
-					"start_date": schema.StringAttribute{
-						Required: true,
 					},
 				},
 			},

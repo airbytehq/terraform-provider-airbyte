@@ -34,12 +34,12 @@ type SourceMongodbResource struct {
 
 // SourceMongodbResourceModel describes the resource data model.
 type SourceMongodbResourceModel struct {
-	Configuration SourceMongodb `tfsdk:"configuration"`
-	Name          types.String  `tfsdk:"name"`
-	SecretID      types.String  `tfsdk:"secret_id"`
-	SourceID      types.String  `tfsdk:"source_id"`
-	SourceType    types.String  `tfsdk:"source_type"`
-	WorkspaceID   types.String  `tfsdk:"workspace_id"`
+	Configuration SourceMongodbUpdate `tfsdk:"configuration"`
+	Name          types.String        `tfsdk:"name"`
+	SecretID      types.String        `tfsdk:"secret_id"`
+	SourceID      types.String        `tfsdk:"source_id"`
+	SourceType    types.String        `tfsdk:"source_type"`
+	WorkspaceID   types.String        `tfsdk:"workspace_id"`
 }
 
 func (r *SourceMongodbResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -63,63 +63,6 @@ func (r *SourceMongodbResource) Schema(ctx context.Context, req resource.SchemaR
 					"instance_type": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_mongodb_mongo_db_instance_type_standalone_mongo_db_instance": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"host": schema.StringAttribute{
-										Required: true,
-									},
-									"instance": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"standalone",
-											),
-										},
-									},
-									"port": schema.Int64Attribute{
-										Required: true,
-									},
-								},
-								Description: `The MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.`,
-							},
-							"source_mongodb_mongo_db_instance_type_replica_set": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"instance": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"replica",
-											),
-										},
-									},
-									"replica_set": schema.StringAttribute{
-										Optional: true,
-									},
-									"server_addresses": schema.StringAttribute{
-										Required: true,
-									},
-								},
-								Description: `The MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.`,
-							},
-							"source_mongodb_mongo_db_instance_type_mongo_db_atlas": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"cluster_url": schema.StringAttribute{
-										Required: true,
-									},
-									"instance": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"atlas",
-											),
-										},
-									},
-								},
-								Description: `The MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.`,
-							},
 							"source_mongodb_update_mongo_db_instance_type_standalone_mongo_db_instance": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
@@ -177,12 +120,72 @@ func (r *SourceMongodbResource) Schema(ctx context.Context, req resource.SchemaR
 								},
 								Description: `The MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.`,
 							},
+							"source_mongodb_mongo_db_instance_type_standalone_mongo_db_instance": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"host": schema.StringAttribute{
+										Required: true,
+									},
+									"instance": schema.StringAttribute{
+										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"standalone",
+											),
+										},
+									},
+									"port": schema.Int64Attribute{
+										Required: true,
+									},
+								},
+								Description: `The MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.`,
+							},
+							"source_mongodb_mongo_db_instance_type_replica_set": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"instance": schema.StringAttribute{
+										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"replica",
+											),
+										},
+									},
+									"replica_set": schema.StringAttribute{
+										Optional: true,
+									},
+									"server_addresses": schema.StringAttribute{
+										Required: true,
+									},
+								},
+								Description: `The MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.`,
+							},
+							"source_mongodb_mongo_db_instance_type_mongo_db_atlas": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"cluster_url": schema.StringAttribute{
+										Required: true,
+									},
+									"instance": schema.StringAttribute{
+										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"atlas",
+											),
+										},
+									},
+								},
+								Description: `The MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.`,
+							},
 						},
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
 					},
 					"password": schema.StringAttribute{
+						Optional: true,
+					},
+					"user": schema.StringAttribute{
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{
@@ -192,9 +195,6 @@ func (r *SourceMongodbResource) Schema(ctx context.Context, req resource.SchemaR
 								"mongodb",
 							),
 						},
-					},
-					"user": schema.StringAttribute{
-						Optional: true,
 					},
 				},
 			},

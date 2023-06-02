@@ -66,8 +66,8 @@ Required:
 
 - `schedule_type` (String)
 
-Optional:
+Read-Only:
 
-- `cron_expression` (String)
+- `basic_timing` (String)
 
 

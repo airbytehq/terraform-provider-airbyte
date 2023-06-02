@@ -8,7 +8,12 @@ import (
 )
 
 func (r *SourceXkcdResourceModel) ToCreateSDKType() *shared.SourceXkcdCreateRequest {
-	sourceType := shared.SourceXkcdXkcd(r.Configuration.SourceType.ValueString())
+	sourceType := new(shared.SourceXkcdXkcd)
+	if !r.Configuration.SourceType.IsUnknown() && !r.Configuration.SourceType.IsNull() {
+		*sourceType = shared.SourceXkcdXkcd(r.Configuration.SourceType.ValueString())
+	} else {
+		sourceType = nil
+	}
 	configuration := shared.SourceXkcd{
 		SourceType: sourceType,
 	}
@@ -30,11 +35,13 @@ func (r *SourceXkcdResourceModel) ToCreateSDKType() *shared.SourceXkcdCreateRequ
 }
 
 func (r *SourceXkcdResourceModel) ToUpdateSDKType() *shared.SourceXkcdPutRequest {
+	configuration := shared.SourceXkcdUpdate{}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceXkcdPutRequest{
-		Name:        name,
-		WorkspaceID: workspaceID,
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
 	}
 	return &out
 }

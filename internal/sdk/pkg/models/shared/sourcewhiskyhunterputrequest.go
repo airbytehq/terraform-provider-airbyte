@@ -3,6 +3,7 @@
 package shared
 
 type SourceWhiskyHunterPutRequest struct {
-	Name        string `json:"name"`
-	WorkspaceID string `json:"workspaceId"`
+	Configuration SourceWhiskyHunterUpdate `json:"configuration"`
+	Name          string                   `json:"name"`
+	WorkspaceID   string                   `json:"workspaceId"`
 }

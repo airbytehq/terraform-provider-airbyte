@@ -32,8 +32,8 @@ func (r *DestinationOracleResourceModel) ToCreateSDKType() *shared.DestinationOr
 	sid := r.Configuration.Sid.ValueString()
 	var tunnelMethod *shared.DestinationOracleSSHTunnelMethod
 	var destinationOracleSSHTunnelMethodNoTunnel *shared.DestinationOracleSSHTunnelMethodNoTunnel
-	if r.Configuration.TunnelMethod.DestinationOracleUpdateSSHTunnelMethodNoTunnel != nil {
-		tunnelMethod1 := shared.DestinationOracleSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.DestinationOracleUpdateSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
+	if r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodNoTunnel != nil {
+		tunnelMethod1 := shared.DestinationOracleSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
 		destinationOracleSSHTunnelMethodNoTunnel = &shared.DestinationOracleSSHTunnelMethodNoTunnel{
 			TunnelMethod: tunnelMethod1,
 		}
@@ -44,12 +44,12 @@ func (r *DestinationOracleResourceModel) ToCreateSDKType() *shared.DestinationOr
 		}
 	}
 	var destinationOracleSSHTunnelMethodSSHKeyAuthentication *shared.DestinationOracleSSHTunnelMethodSSHKeyAuthentication
-	if r.Configuration.TunnelMethod.DestinationOracleUpdateSSHTunnelMethodSSHKeyAuthentication != nil {
-		sshKey := r.Configuration.TunnelMethod.DestinationOracleUpdateSSHTunnelMethodSSHKeyAuthentication.SSHKey.ValueString()
-		tunnelHost := r.Configuration.TunnelMethod.DestinationOracleUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
-		tunnelMethod2 := shared.DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationOracleUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
-		tunnelPort := r.Configuration.TunnelMethod.DestinationOracleUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
-		tunnelUser := r.Configuration.TunnelMethod.DestinationOracleUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
+	if r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodSSHKeyAuthentication != nil {
+		sshKey := r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodSSHKeyAuthentication.SSHKey.ValueString()
+		tunnelHost := r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
+		tunnelMethod2 := shared.DestinationOracleSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
+		tunnelPort := r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
+		tunnelUser := r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
 		destinationOracleSSHTunnelMethodSSHKeyAuthentication = &shared.DestinationOracleSSHTunnelMethodSSHKeyAuthentication{
 			SSHKey:       sshKey,
 			TunnelHost:   tunnelHost,
@@ -64,12 +64,12 @@ func (r *DestinationOracleResourceModel) ToCreateSDKType() *shared.DestinationOr
 		}
 	}
 	var destinationOracleSSHTunnelMethodPasswordAuthentication *shared.DestinationOracleSSHTunnelMethodPasswordAuthentication
-	if r.Configuration.TunnelMethod.DestinationOracleUpdateSSHTunnelMethodPasswordAuthentication != nil {
-		tunnelHost1 := r.Configuration.TunnelMethod.DestinationOracleUpdateSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
-		tunnelMethod3 := shared.DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationOracleUpdateSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
-		tunnelPort1 := r.Configuration.TunnelMethod.DestinationOracleUpdateSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
-		tunnelUser1 := r.Configuration.TunnelMethod.DestinationOracleUpdateSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
-		tunnelUserPassword := r.Configuration.TunnelMethod.DestinationOracleUpdateSSHTunnelMethodPasswordAuthentication.TunnelUserPassword.ValueString()
+	if r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodPasswordAuthentication != nil {
+		tunnelHost1 := r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
+		tunnelMethod3 := shared.DestinationOracleSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
+		tunnelPort1 := r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
+		tunnelUser1 := r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
+		tunnelUserPassword := r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodPasswordAuthentication.TunnelUserPassword.ValueString()
 		destinationOracleSSHTunnelMethodPasswordAuthentication = &shared.DestinationOracleSSHTunnelMethodPasswordAuthentication{
 			TunnelHost:         tunnelHost1,
 			TunnelMethod:       tunnelMethod3,
@@ -129,8 +129,8 @@ func (r *DestinationOracleResourceModel) ToUpdateSDKType() *shared.DestinationOr
 	sid := r.Configuration.Sid.ValueString()
 	var tunnelMethod *shared.DestinationOracleUpdateSSHTunnelMethod
 	var destinationOracleUpdateSSHTunnelMethodNoTunnel *shared.DestinationOracleUpdateSSHTunnelMethodNoTunnel
-	if r.Configuration.TunnelMethod.DestinationOracleUpdateSSHTunnelMethodNoTunnel != nil {
-		tunnelMethod1 := shared.DestinationOracleUpdateSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.DestinationOracleUpdateSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
+	if r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodNoTunnel != nil {
+		tunnelMethod1 := shared.DestinationOracleUpdateSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
 		destinationOracleUpdateSSHTunnelMethodNoTunnel = &shared.DestinationOracleUpdateSSHTunnelMethodNoTunnel{
 			TunnelMethod: tunnelMethod1,
 		}
@@ -141,12 +141,12 @@ func (r *DestinationOracleResourceModel) ToUpdateSDKType() *shared.DestinationOr
 		}
 	}
 	var destinationOracleUpdateSSHTunnelMethodSSHKeyAuthentication *shared.DestinationOracleUpdateSSHTunnelMethodSSHKeyAuthentication
-	if r.Configuration.TunnelMethod.DestinationOracleUpdateSSHTunnelMethodSSHKeyAuthentication != nil {
-		sshKey := r.Configuration.TunnelMethod.DestinationOracleUpdateSSHTunnelMethodSSHKeyAuthentication.SSHKey.ValueString()
-		tunnelHost := r.Configuration.TunnelMethod.DestinationOracleUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
-		tunnelMethod2 := shared.DestinationOracleUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationOracleUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
-		tunnelPort := r.Configuration.TunnelMethod.DestinationOracleUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
-		tunnelUser := r.Configuration.TunnelMethod.DestinationOracleUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
+	if r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodSSHKeyAuthentication != nil {
+		sshKey := r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodSSHKeyAuthentication.SSHKey.ValueString()
+		tunnelHost := r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
+		tunnelMethod2 := shared.DestinationOracleUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
+		tunnelPort := r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
+		tunnelUser := r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
 		destinationOracleUpdateSSHTunnelMethodSSHKeyAuthentication = &shared.DestinationOracleUpdateSSHTunnelMethodSSHKeyAuthentication{
 			SSHKey:       sshKey,
 			TunnelHost:   tunnelHost,
@@ -161,12 +161,12 @@ func (r *DestinationOracleResourceModel) ToUpdateSDKType() *shared.DestinationOr
 		}
 	}
 	var destinationOracleUpdateSSHTunnelMethodPasswordAuthentication *shared.DestinationOracleUpdateSSHTunnelMethodPasswordAuthentication
-	if r.Configuration.TunnelMethod.DestinationOracleUpdateSSHTunnelMethodPasswordAuthentication != nil {
-		tunnelHost1 := r.Configuration.TunnelMethod.DestinationOracleUpdateSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
-		tunnelMethod3 := shared.DestinationOracleUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationOracleUpdateSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
-		tunnelPort1 := r.Configuration.TunnelMethod.DestinationOracleUpdateSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
-		tunnelUser1 := r.Configuration.TunnelMethod.DestinationOracleUpdateSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
-		tunnelUserPassword := r.Configuration.TunnelMethod.DestinationOracleUpdateSSHTunnelMethodPasswordAuthentication.TunnelUserPassword.ValueString()
+	if r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodPasswordAuthentication != nil {
+		tunnelHost1 := r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
+		tunnelMethod3 := shared.DestinationOracleUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
+		tunnelPort1 := r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
+		tunnelUser1 := r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
+		tunnelUserPassword := r.Configuration.TunnelMethod.DestinationOracleSSHTunnelMethodPasswordAuthentication.TunnelUserPassword.ValueString()
 		destinationOracleUpdateSSHTunnelMethodPasswordAuthentication = &shared.DestinationOracleUpdateSSHTunnelMethodPasswordAuthentication{
 			TunnelHost:         tunnelHost1,
 			TunnelMethod:       tunnelMethod3,

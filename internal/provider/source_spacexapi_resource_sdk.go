@@ -20,7 +20,12 @@ func (r *SourceSpacexAPIResourceModel) ToCreateSDKType() *shared.SourceSpacexAPI
 	} else {
 		options = nil
 	}
-	sourceType := shared.SourceSpacexAPISpacexAPI(r.Configuration.SourceType.ValueString())
+	sourceType := new(shared.SourceSpacexAPISpacexAPI)
+	if !r.Configuration.SourceType.IsUnknown() && !r.Configuration.SourceType.IsNull() {
+		*sourceType = shared.SourceSpacexAPISpacexAPI(r.Configuration.SourceType.ValueString())
+	} else {
+		sourceType = nil
+	}
 	configuration := shared.SourceSpacexAPI{
 		ID:         id,
 		Options:    options,

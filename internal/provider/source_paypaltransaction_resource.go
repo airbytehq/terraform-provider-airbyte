@@ -34,12 +34,12 @@ type SourcePaypalTransactionResource struct {
 
 // SourcePaypalTransactionResourceModel describes the resource data model.
 type SourcePaypalTransactionResourceModel struct {
-	Configuration SourcePaypalTransactionUpdate `tfsdk:"configuration"`
-	Name          types.String                  `tfsdk:"name"`
-	SecretID      types.String                  `tfsdk:"secret_id"`
-	SourceID      types.String                  `tfsdk:"source_id"`
-	SourceType    types.String                  `tfsdk:"source_type"`
-	WorkspaceID   types.String                  `tfsdk:"workspace_id"`
+	Configuration SourcePaypalTransaction `tfsdk:"configuration"`
+	Name          types.String            `tfsdk:"name"`
+	SecretID      types.String            `tfsdk:"secret_id"`
+	SourceID      types.String            `tfsdk:"source_id"`
+	SourceType    types.String            `tfsdk:"source_type"`
+	WorkspaceID   types.String            `tfsdk:"workspace_id"`
 }
 
 func (r *SourcePaypalTransactionResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -66,18 +66,18 @@ func (r *SourcePaypalTransactionResource) Schema(ctx context.Context, req resour
 					"refresh_token": schema.StringAttribute{
 						Optional: true,
 					},
-					"start_date": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							validators.IsRFC3339(),
-						},
-					},
 					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"paypal-transaction",
 							),
+						},
+					},
+					"start_date": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							validators.IsRFC3339(),
 						},
 					},
 				},

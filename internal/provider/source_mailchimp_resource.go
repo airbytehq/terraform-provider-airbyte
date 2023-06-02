@@ -34,12 +34,12 @@ type SourceMailchimpResource struct {
 
 // SourceMailchimpResourceModel describes the resource data model.
 type SourceMailchimpResourceModel struct {
-	Configuration SourceMailchimp `tfsdk:"configuration"`
-	Name          types.String    `tfsdk:"name"`
-	SecretID      types.String    `tfsdk:"secret_id"`
-	SourceID      types.String    `tfsdk:"source_id"`
-	SourceType    types.String    `tfsdk:"source_type"`
-	WorkspaceID   types.String    `tfsdk:"workspace_id"`
+	Configuration SourceMailchimpUpdate `tfsdk:"configuration"`
+	Name          types.String          `tfsdk:"name"`
+	SecretID      types.String          `tfsdk:"secret_id"`
+	SourceID      types.String          `tfsdk:"source_id"`
+	SourceType    types.String          `tfsdk:"source_type"`
+	WorkspaceID   types.String          `tfsdk:"workspace_id"`
 }
 
 func (r *SourceMailchimpResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -60,44 +60,6 @@ func (r *SourceMailchimpResource) Schema(ctx context.Context, req resource.Schem
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_mailchimp_authentication_o_auth2_0": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Required: true,
-									},
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-									},
-									"client_id": schema.StringAttribute{
-										Optional: true,
-									},
-									"client_secret": schema.StringAttribute{
-										Optional: true,
-									},
-								},
-							},
-							"source_mailchimp_authentication_api_key": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"apikey": schema.StringAttribute{
-										Required: true,
-									},
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"apikey",
-											),
-										},
-									},
-								},
-							},
 							"source_mailchimp_update_authentication_o_auth2_0": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
@@ -128,6 +90,44 @@ func (r *SourceMailchimpResource) Schema(ctx context.Context, req resource.Schem
 									},
 									"auth_type": schema.StringAttribute{
 										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"apikey",
+											),
+										},
+									},
+								},
+							},
+							"source_mailchimp_authentication_o_auth2_0": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"access_token": schema.StringAttribute{
+										Required: true,
+									},
+									"auth_type": schema.StringAttribute{
+										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"oauth2.0",
+											),
+										},
+									},
+									"client_id": schema.StringAttribute{
+										Optional: true,
+									},
+									"client_secret": schema.StringAttribute{
+										Optional: true,
+									},
+								},
+							},
+							"source_mailchimp_authentication_api_key": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"apikey": schema.StringAttribute{
+										Required: true,
+									},
+									"auth_type": schema.StringAttribute{
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"apikey",

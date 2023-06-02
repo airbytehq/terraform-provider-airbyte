@@ -34,12 +34,12 @@ type SourceYotpoResource struct {
 
 // SourceYotpoResourceModel describes the resource data model.
 type SourceYotpoResourceModel struct {
-	Configuration SourceYotpoUpdate `tfsdk:"configuration"`
-	Name          types.String      `tfsdk:"name"`
-	SecretID      types.String      `tfsdk:"secret_id"`
-	SourceID      types.String      `tfsdk:"source_id"`
-	SourceType    types.String      `tfsdk:"source_type"`
-	WorkspaceID   types.String      `tfsdk:"workspace_id"`
+	Configuration SourceYotpo  `tfsdk:"configuration"`
+	Name          types.String `tfsdk:"name"`
+	SecretID      types.String `tfsdk:"secret_id"`
+	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
+	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
 func (r *SourceYotpoResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -63,18 +63,18 @@ func (r *SourceYotpoResource) Schema(ctx context.Context, req resource.SchemaReq
 					"email": schema.StringAttribute{
 						Required: true,
 					},
-					"start_date": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							validators.IsRFC3339(),
-						},
-					},
 					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"yotpo",
 							),
+						},
+					},
+					"start_date": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							validators.IsRFC3339(),
 						},
 					},
 				},

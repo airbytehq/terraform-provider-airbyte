@@ -33,12 +33,12 @@ type SourcePypiResource struct {
 
 // SourcePypiResourceModel describes the resource data model.
 type SourcePypiResourceModel struct {
-	Configuration SourcePypi   `tfsdk:"configuration"`
-	Name          types.String `tfsdk:"name"`
-	SecretID      types.String `tfsdk:"secret_id"`
-	SourceID      types.String `tfsdk:"source_id"`
-	SourceType    types.String `tfsdk:"source_type"`
-	WorkspaceID   types.String `tfsdk:"workspace_id"`
+	Configuration SourcePypiUpdate `tfsdk:"configuration"`
+	Name          types.String     `tfsdk:"name"`
+	SecretID      types.String     `tfsdk:"secret_id"`
+	SourceID      types.String     `tfsdk:"source_id"`
+	SourceType    types.String     `tfsdk:"source_type"`
+	WorkspaceID   types.String     `tfsdk:"workspace_id"`
 }
 
 func (r *SourcePypiResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -56,6 +56,9 @@ func (r *SourcePypiResource) Schema(ctx context.Context, req resource.SchemaRequ
 					"project_name": schema.StringAttribute{
 						Required: true,
 					},
+					"version": schema.StringAttribute{
+						Optional: true,
+					},
 					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -63,9 +66,6 @@ func (r *SourcePypiResource) Schema(ctx context.Context, req resource.SchemaRequ
 								"pypi",
 							),
 						},
-					},
-					"version": schema.StringAttribute{
-						Optional: true,
 					},
 				},
 			},

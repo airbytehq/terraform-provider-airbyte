@@ -33,12 +33,12 @@ type SourceCodaResource struct {
 
 // SourceCodaResourceModel describes the resource data model.
 type SourceCodaResourceModel struct {
-	Configuration SourceCodaUpdate `tfsdk:"configuration"`
-	Name          types.String     `tfsdk:"name"`
-	SecretID      types.String     `tfsdk:"secret_id"`
-	SourceID      types.String     `tfsdk:"source_id"`
-	SourceType    types.String     `tfsdk:"source_type"`
-	WorkspaceID   types.String     `tfsdk:"workspace_id"`
+	Configuration SourceCoda   `tfsdk:"configuration"`
+	Name          types.String `tfsdk:"name"`
+	SecretID      types.String `tfsdk:"secret_id"`
+	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
+	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
 func (r *SourceCodaResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {

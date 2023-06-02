@@ -34,12 +34,12 @@ type SourceMicrosoftTeamsResource struct {
 
 // SourceMicrosoftTeamsResourceModel describes the resource data model.
 type SourceMicrosoftTeamsResourceModel struct {
-	Configuration SourceMicrosoftTeamsUpdate `tfsdk:"configuration"`
-	Name          types.String               `tfsdk:"name"`
-	SecretID      types.String               `tfsdk:"secret_id"`
-	SourceID      types.String               `tfsdk:"source_id"`
-	SourceType    types.String               `tfsdk:"source_type"`
-	WorkspaceID   types.String               `tfsdk:"workspace_id"`
+	Configuration SourceMicrosoftTeams `tfsdk:"configuration"`
+	Name          types.String         `tfsdk:"name"`
+	SecretID      types.String         `tfsdk:"secret_id"`
+	SourceID      types.String         `tfsdk:"source_id"`
+	SourceType    types.String         `tfsdk:"source_type"`
+	WorkspaceID   types.String         `tfsdk:"workspace_id"`
 }
 
 func (r *SourceMicrosoftTeamsResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -57,55 +57,6 @@ func (r *SourceMicrosoftTeamsResource) Schema(ctx context.Context, req resource.
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_microsoft_teams_update_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0_": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Client",
-											),
-										},
-									},
-									"client_id": schema.StringAttribute{
-										Computed: true,
-									},
-									"client_secret": schema.StringAttribute{
-										Computed: true,
-									},
-									"refresh_token": schema.StringAttribute{
-										Computed: true,
-									},
-									"tenant_id": schema.StringAttribute{
-										Computed: true,
-									},
-								},
-								Description: `Choose how to authenticate to Microsoft`,
-							},
-							"source_microsoft_teams_update_authentication_mechanism_authenticate_via_microsoft": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Token",
-											),
-										},
-									},
-									"client_id": schema.StringAttribute{
-										Computed: true,
-									},
-									"client_secret": schema.StringAttribute{
-										Computed: true,
-									},
-									"tenant_id": schema.StringAttribute{
-										Computed: true,
-									},
-								},
-								Description: `Choose how to authenticate to Microsoft`,
-							},
 							"source_microsoft_teams_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0_": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -151,6 +102,55 @@ func (r *SourceMicrosoftTeamsResource) Schema(ctx context.Context, req resource.
 									},
 									"tenant_id": schema.StringAttribute{
 										Required: true,
+									},
+								},
+								Description: `Choose how to authenticate to Microsoft`,
+							},
+							"source_microsoft_teams_update_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0_": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"auth_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Client",
+											),
+										},
+									},
+									"client_id": schema.StringAttribute{
+										Computed: true,
+									},
+									"client_secret": schema.StringAttribute{
+										Computed: true,
+									},
+									"refresh_token": schema.StringAttribute{
+										Computed: true,
+									},
+									"tenant_id": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+								Description: `Choose how to authenticate to Microsoft`,
+							},
+							"source_microsoft_teams_update_authentication_mechanism_authenticate_via_microsoft": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"auth_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Token",
+											),
+										},
+									},
+									"client_id": schema.StringAttribute{
+										Computed: true,
+									},
+									"client_secret": schema.StringAttribute{
+										Computed: true,
+									},
+									"tenant_id": schema.StringAttribute{
+										Computed: true,
 									},
 								},
 								Description: `Choose how to authenticate to Microsoft`,

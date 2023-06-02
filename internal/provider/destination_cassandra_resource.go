@@ -33,11 +33,11 @@ type DestinationCassandraResource struct {
 
 // DestinationCassandraResourceModel describes the resource data model.
 type DestinationCassandraResourceModel struct {
-	Configuration   DestinationCassandraUpdate `tfsdk:"configuration"`
-	DestinationID   types.String               `tfsdk:"destination_id"`
-	DestinationType types.String               `tfsdk:"destination_type"`
-	Name            types.String               `tfsdk:"name"`
-	WorkspaceID     types.String               `tfsdk:"workspace_id"`
+	Configuration   DestinationCassandra `tfsdk:"configuration"`
+	DestinationID   types.String         `tfsdk:"destination_id"`
+	DestinationType types.String         `tfsdk:"destination_type"`
+	Name            types.String         `tfsdk:"name"`
+	WorkspaceID     types.String         `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationCassandraResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -58,6 +58,14 @@ func (r *DestinationCassandraResource) Schema(ctx context.Context, req resource.
 					"datacenter": schema.StringAttribute{
 						Optional: true,
 					},
+					"destination_type": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"cassandra",
+							),
+						},
+					},
 					"keyspace": schema.StringAttribute{
 						Required: true,
 					},
@@ -72,14 +80,6 @@ func (r *DestinationCassandraResource) Schema(ctx context.Context, req resource.
 					},
 					"username": schema.StringAttribute{
 						Required: true,
-					},
-					"destination_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"cassandra",
-							),
-						},
 					},
 				},
 			},

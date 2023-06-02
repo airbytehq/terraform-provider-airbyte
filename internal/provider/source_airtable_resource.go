@@ -157,7 +157,7 @@ func (r *SourceAirtableResource) Schema(ctx context.Context, req resource.Schema
 						},
 					},
 					"source_type": schema.StringAttribute{
-						Required: true,
+						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"airtable",

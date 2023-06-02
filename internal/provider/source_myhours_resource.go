@@ -33,12 +33,12 @@ type SourceMyHoursResource struct {
 
 // SourceMyHoursResourceModel describes the resource data model.
 type SourceMyHoursResourceModel struct {
-	Configuration SourceMyHoursUpdate `tfsdk:"configuration"`
-	Name          types.String        `tfsdk:"name"`
-	SecretID      types.String        `tfsdk:"secret_id"`
-	SourceID      types.String        `tfsdk:"source_id"`
-	SourceType    types.String        `tfsdk:"source_type"`
-	WorkspaceID   types.String        `tfsdk:"workspace_id"`
+	Configuration SourceMyHours `tfsdk:"configuration"`
+	Name          types.String  `tfsdk:"name"`
+	SecretID      types.String  `tfsdk:"secret_id"`
+	SourceID      types.String  `tfsdk:"source_id"`
+	SourceType    types.String  `tfsdk:"source_type"`
+	WorkspaceID   types.String  `tfsdk:"workspace_id"`
 }
 
 func (r *SourceMyHoursResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -62,9 +62,6 @@ func (r *SourceMyHoursResource) Schema(ctx context.Context, req resource.SchemaR
 					"password": schema.StringAttribute{
 						Required: true,
 					},
-					"start_date": schema.StringAttribute{
-						Required: true,
-					},
 					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -72,6 +69,9 @@ func (r *SourceMyHoursResource) Schema(ctx context.Context, req resource.SchemaR
 								"my-hours",
 							),
 						},
+					},
+					"start_date": schema.StringAttribute{
+						Required: true,
 					},
 				},
 			},

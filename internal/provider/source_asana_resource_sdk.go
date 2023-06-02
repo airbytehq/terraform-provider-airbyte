@@ -51,7 +51,12 @@ func (r *SourceAsanaResourceModel) ToCreateSDKType() *shared.SourceAsanaCreateRe
 			SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken: sourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken,
 		}
 	}
-	sourceType := shared.SourceAsanaAsana(r.Configuration.SourceType.ValueString())
+	sourceType := new(shared.SourceAsanaAsana)
+	if !r.Configuration.SourceType.IsUnknown() && !r.Configuration.SourceType.IsNull() {
+		*sourceType = shared.SourceAsanaAsana(r.Configuration.SourceType.ValueString())
+	} else {
+		sourceType = nil
+	}
 	configuration := shared.SourceAsana{
 		Credentials: credentials,
 		SourceType:  sourceType,

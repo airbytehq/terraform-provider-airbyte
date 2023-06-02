@@ -210,8 +210,8 @@ type SourceMixpanel struct {
 	// The region of mixpanel domain instance either US or EU.
 	Region *SourceMixpanelRegion `json:"region,omitempty"`
 	// Setting this config parameter to TRUE ensures that new properties on events and engage records are captured. Otherwise new properties will be ignored.
-	SelectPropertiesByDefault *bool                  `json:"select_properties_by_default,omitempty"`
-	SourceType                SourceMixpanelMixpanel `json:"sourceType"`
+	SelectPropertiesByDefault *bool                   `json:"select_properties_by_default,omitempty"`
+	SourceType                *SourceMixpanelMixpanel `json:"sourceType,omitempty"`
 	// The date in the format YYYY-MM-DD. Any data before this date will not be replicated. If this option is not set, the connector will replicate data from up to one year ago by default.
 	StartDate *time.Time `json:"start_date,omitempty"`
 }

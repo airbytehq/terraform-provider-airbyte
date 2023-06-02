@@ -54,7 +54,7 @@ func (r *SourceWhiskyHunterResource) Schema(ctx context.Context, req resource.Sc
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"source_type": schema.StringAttribute{
-						Required: true,
+						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"whisky-hunter",

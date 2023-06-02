@@ -81,16 +81,9 @@ func (r *ConnectionResourceModel) ToCreateSDKType() *shared.ConnectionCreateRequ
 	}
 	var schedule *shared.ConnectionSchedule
 	if r.Schedule != nil {
-		cronExpression := new(string)
-		if !r.Schedule.CronExpression.IsUnknown() && !r.Schedule.CronExpression.IsNull() {
-			*cronExpression = r.Schedule.CronExpression.ValueString()
-		} else {
-			cronExpression = nil
-		}
 		scheduleType := shared.ScheduleTypeEnum(r.Schedule.ScheduleType.ValueString())
 		schedule = &shared.ConnectionSchedule{
-			CronExpression: cronExpression,
-			ScheduleType:   scheduleType,
+			ScheduleType: scheduleType,
 		}
 	}
 	sourceID := r.SourceID.ValueString()
@@ -116,6 +109,104 @@ func (r *ConnectionResourceModel) ToCreateSDKType() *shared.ConnectionCreateRequ
 	return &out
 }
 
+func (r *ConnectionResourceModel) ToUpdateSDKType() *shared.ConnectionPatchRequest {
+	var configurations *shared.StreamConfigurations
+	if r.Configurations != nil {
+		streams := make([]shared.StreamConfiguration, 0)
+		for _, streamsItem := range r.Configurations.Streams {
+			cursorField := make([]string, 0)
+			for _, cursorFieldItem := range streamsItem.CursorField {
+				cursorField = append(cursorField, cursorFieldItem.ValueString())
+			}
+			name := streamsItem.Name.ValueString()
+			primaryKey := make([][]string, 0)
+			for _, primaryKeyItem := range streamsItem.PrimaryKey {
+				primaryKeyTmp := make([]string, 0)
+				for _, item := range primaryKeyItem {
+					primaryKeyTmp = append(primaryKeyTmp, item.ValueString())
+				}
+				primaryKey = append(primaryKey, primaryKeyTmp)
+			}
+			syncMode := new(shared.ConnectionSyncModeEnum)
+			if !streamsItem.SyncMode.IsUnknown() && !streamsItem.SyncMode.IsNull() {
+				*syncMode = shared.ConnectionSyncModeEnum(streamsItem.SyncMode.ValueString())
+			} else {
+				syncMode = nil
+			}
+			streams = append(streams, shared.StreamConfiguration{
+				CursorField: cursorField,
+				Name:        name,
+				PrimaryKey:  primaryKey,
+				SyncMode:    syncMode,
+			})
+		}
+		configurations = &shared.StreamConfigurations{
+			Streams: streams,
+		}
+	}
+	dataResidency := new(shared.GeographyEnumNoDefault)
+	if !r.DataResidency.IsUnknown() && !r.DataResidency.IsNull() {
+		*dataResidency = shared.GeographyEnumNoDefault(r.DataResidency.ValueString())
+	} else {
+		dataResidency = nil
+	}
+	name1 := new(string)
+	if !r.Name.IsUnknown() && !r.Name.IsNull() {
+		*name1 = r.Name.ValueString()
+	} else {
+		name1 = nil
+	}
+	namespaceDefinition := new(shared.NamespaceDefinitionEnumNoDefault)
+	if !r.NamespaceDefinition.IsUnknown() && !r.NamespaceDefinition.IsNull() {
+		*namespaceDefinition = shared.NamespaceDefinitionEnumNoDefault(r.NamespaceDefinition.ValueString())
+	} else {
+		namespaceDefinition = nil
+	}
+	namespaceFormat := new(string)
+	if !r.NamespaceFormat.IsUnknown() && !r.NamespaceFormat.IsNull() {
+		*namespaceFormat = r.NamespaceFormat.ValueString()
+	} else {
+		namespaceFormat = nil
+	}
+	nonBreakingSchemaUpdatesBehavior := new(shared.NonBreakingSchemaUpdatesBehaviorEnumNoDefault)
+	if !r.NonBreakingSchemaUpdatesBehavior.IsUnknown() && !r.NonBreakingSchemaUpdatesBehavior.IsNull() {
+		*nonBreakingSchemaUpdatesBehavior = shared.NonBreakingSchemaUpdatesBehaviorEnumNoDefault(r.NonBreakingSchemaUpdatesBehavior.ValueString())
+	} else {
+		nonBreakingSchemaUpdatesBehavior = nil
+	}
+	prefix := new(string)
+	if !r.Prefix.IsUnknown() && !r.Prefix.IsNull() {
+		*prefix = r.Prefix.ValueString()
+	} else {
+		prefix = nil
+	}
+	var schedule *shared.ConnectionSchedule
+	if r.Schedule != nil {
+		scheduleType := shared.ScheduleTypeEnum(r.Schedule.ScheduleType.ValueString())
+		schedule = &shared.ConnectionSchedule{
+			ScheduleType: scheduleType,
+		}
+	}
+	status := new(shared.ConnectionStatusEnum)
+	if !r.Status.IsUnknown() && !r.Status.IsNull() {
+		*status = shared.ConnectionStatusEnum(r.Status.ValueString())
+	} else {
+		status = nil
+	}
+	out := shared.ConnectionPatchRequest{
+		Configurations:                   configurations,
+		DataResidency:                    dataResidency,
+		Name:                             name1,
+		NamespaceDefinition:              namespaceDefinition,
+		NamespaceFormat:                  namespaceFormat,
+		NonBreakingSchemaUpdatesBehavior: nonBreakingSchemaUpdatesBehavior,
+		Prefix:                           prefix,
+		Schedule:                         schedule,
+		Status:                           status,
+	}
+	return &out
+}
+
 func (r *ConnectionResourceModel) ToDeleteSDKType() *shared.ConnectionCreateRequest {
 	out := r.ToCreateSDKType()
 	return out
@@ -130,7 +221,7 @@ func (r *ConnectionResourceModel) RefreshFromCreateResponse(resp *shared.Connect
 			streams1.CursorField = append(streams1.CursorField, types.StringValue(v))
 		}
 		streams1.Name = types.StringValue(streamsItem.Name)
-		// Not Implemented streamsItem.PrimaryKey, {"Format":"","Discriminator":null,"BaseName":"","Fields":[],"Enum":null,"RefType":"","Input":false,"AdditionalProperties":null,"Type":"array","Scope":"","Truncated":false,"Extensions":{},"Example":null,"AssociatedTypes":[],"ItemType":{"Extensions":{"Symbol":"PrimaryKey"},"Input":false,"Type":"array","Fields":[],"AssociatedTypes":[],"RefType":"","Comments":null,"Output":false,"Example":null,"Format":"","Name":"","ItemType":{"Scope":"","Comments":null,"Extensions":{"Symbol":"CursorField"},"Example":null,"RefType":"","Truncated":false,"Name":"","AssociatedTypes":[],"Enum":null,"BaseName":"","Output":false,"AdditionalProperties":null,"Discriminator":null,"Type":"string","ItemType":null,"Fields":[],"Input":false,"Format":""},"Scope":"","BaseName":"","Enum":null,"Truncated":false,"AdditionalProperties":null,"Discriminator":null},"Comments":null,"Output":false,"Name":""}, true, , , streams1.PrimaryKey
+		// Not Implemented streamsItem.PrimaryKey, {"Output":false,"Extensions":{},"Example":null,"RefType":"","Scope":"","BaseName":"","Type":"array","Fields":[],"AssociatedTypes":[],"Enum":null,"AdditionalProperties":null,"Discriminator":null,"Name":"","Truncated":false,"Comments":null,"Input":false,"Format":"","ItemType":{"Format":"","Enum":null,"BaseName":"","Scope":"","Comments":null,"Output":false,"Extensions":{"Symbol":"PrimaryKey"},"Example":null,"Name":"","ItemType":{"Type":"string","Scope":"","Truncated":false,"Comments":null,"Extensions":{"Symbol":"CursorField"},"Name":"","AdditionalProperties":null,"Fields":[],"BaseName":"","Output":false,"Example":null,"Discriminator":null,"ItemType":null,"AssociatedTypes":[],"Enum":null,"RefType":"","Input":false,"Format":""},"Type":"array","Fields":[],"Truncated":false,"Input":false,"AdditionalProperties":null,"Discriminator":null,"AssociatedTypes":[],"RefType":""}}, true, , , streams1.PrimaryKey
 		if streamsItem.SyncMode != nil {
 			streams1.SyncMode = types.StringValue(string(*streamsItem.SyncMode))
 		} else {
@@ -163,7 +254,16 @@ func (r *ConnectionResourceModel) RefreshFromCreateResponse(resp *shared.Connect
 		r.Prefix = types.StringNull()
 	}
 	r.Schedule.ScheduleType = types.StringValue(string(resp.Schedule.ScheduleType))
+	if resp.Schedule.BasicTiming != nil {
+		r.Schedule.BasicTiming = types.StringValue(*resp.Schedule.BasicTiming)
+	} else {
+		r.Schedule.BasicTiming = types.StringNull()
+	}
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.Status = types.StringValue(string(resp.Status))
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *ConnectionResourceModel) RefreshFromUpdateResponse(resp *shared.ConnectionResponse) {
+	r.RefreshFromCreateResponse(resp)
 }

@@ -34,12 +34,12 @@ type SourceGoogleSearchConsoleResource struct {
 
 // SourceGoogleSearchConsoleResourceModel describes the resource data model.
 type SourceGoogleSearchConsoleResourceModel struct {
-	Configuration SourceGoogleSearchConsole `tfsdk:"configuration"`
-	Name          types.String              `tfsdk:"name"`
-	SecretID      types.String              `tfsdk:"secret_id"`
-	SourceID      types.String              `tfsdk:"source_id"`
-	SourceType    types.String              `tfsdk:"source_type"`
-	WorkspaceID   types.String              `tfsdk:"workspace_id"`
+	Configuration SourceGoogleSearchConsoleUpdate `tfsdk:"configuration"`
+	Name          types.String                    `tfsdk:"name"`
+	SecretID      types.String                    `tfsdk:"secret_id"`
+	SourceID      types.String                    `tfsdk:"source_id"`
+	SourceType    types.String                    `tfsdk:"source_type"`
+	WorkspaceID   types.String                    `tfsdk:"workspace_id"`
 }
 
 func (r *SourceGoogleSearchConsoleResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -57,50 +57,6 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 					"authorization": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
-							"source_google_search_console_authentication_type_o_auth": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Optional: true,
-									},
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Client",
-											),
-										},
-									},
-									"client_id": schema.StringAttribute{
-										Required: true,
-									},
-									"client_secret": schema.StringAttribute{
-										Required: true,
-									},
-									"refresh_token": schema.StringAttribute{
-										Required: true,
-									},
-								},
-							},
-							"source_google_search_console_authentication_type_service_account_key_authentication": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Service",
-											),
-										},
-									},
-									"email": schema.StringAttribute{
-										Required: true,
-									},
-									"service_account_info": schema.StringAttribute{
-										Required: true,
-									},
-								},
-							},
 							"source_google_search_console_update_authentication_type_o_auth": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
@@ -145,6 +101,50 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 									},
 								},
 							},
+							"source_google_search_console_authentication_type_o_auth": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"access_token": schema.StringAttribute{
+										Optional: true,
+									},
+									"auth_type": schema.StringAttribute{
+										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Client",
+											),
+										},
+									},
+									"client_id": schema.StringAttribute{
+										Required: true,
+									},
+									"client_secret": schema.StringAttribute{
+										Required: true,
+									},
+									"refresh_token": schema.StringAttribute{
+										Required: true,
+									},
+								},
+							},
+							"source_google_search_console_authentication_type_service_account_key_authentication": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"auth_type": schema.StringAttribute{
+										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Service",
+											),
+										},
+									},
+									"email": schema.StringAttribute{
+										Required: true,
+									},
+									"service_account_info": schema.StringAttribute{
+										Required: true,
+									},
+								},
+							},
 						},
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
@@ -173,18 +173,18 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 						Required:    true,
 						ElementType: types.StringType,
 					},
+					"start_date": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							validators.IsValidDate(),
+						},
+					},
 					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"google-search-console",
 							),
-						},
-					},
-					"start_date": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							validators.IsValidDate(),
 						},
 					},
 				},

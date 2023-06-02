@@ -33,12 +33,12 @@ type SourceFireboltResource struct {
 
 // SourceFireboltResourceModel describes the resource data model.
 type SourceFireboltResourceModel struct {
-	Configuration SourceFirebolt `tfsdk:"configuration"`
-	Name          types.String   `tfsdk:"name"`
-	SecretID      types.String   `tfsdk:"secret_id"`
-	SourceID      types.String   `tfsdk:"source_id"`
-	SourceType    types.String   `tfsdk:"source_type"`
-	WorkspaceID   types.String   `tfsdk:"workspace_id"`
+	Configuration SourceFireboltUpdate `tfsdk:"configuration"`
+	Name          types.String         `tfsdk:"name"`
+	SecretID      types.String         `tfsdk:"secret_id"`
+	SourceID      types.String         `tfsdk:"source_id"`
+	SourceType    types.String         `tfsdk:"source_type"`
+	WorkspaceID   types.String         `tfsdk:"workspace_id"`
 }
 
 func (r *SourceFireboltResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -68,6 +68,9 @@ func (r *SourceFireboltResource) Schema(ctx context.Context, req resource.Schema
 					"password": schema.StringAttribute{
 						Required: true,
 					},
+					"username": schema.StringAttribute{
+						Required: true,
+					},
 					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -75,9 +78,6 @@ func (r *SourceFireboltResource) Schema(ctx context.Context, req resource.Schema
 								"firebolt",
 							),
 						},
-					},
-					"username": schema.StringAttribute{
-						Required: true,
 					},
 				},
 			},

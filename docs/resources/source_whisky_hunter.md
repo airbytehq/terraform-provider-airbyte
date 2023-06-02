@@ -33,7 +33,7 @@ SourceWhiskyHunter Resource
 <a id="nestedatt--configuration"></a>
 ### Nested Schema for `configuration`
 
-Required:
+Optional:
 
 - `source_type` (String)
 

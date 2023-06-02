@@ -9,10 +9,6 @@ import (
 
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/listplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/objectplanmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -62,15 +58,9 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 
 		Attributes: map[string]schema.Attribute{
 			"configurations": schema.SingleNestedAttribute{
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplace(),
-				},
 				Optional: true,
 				Attributes: map[string]schema.Attribute{
 					"streams": schema.ListNestedAttribute{
-						PlanModifiers: []planmodifier.List{
-							listplanmodifier.RequiresReplace(),
-						},
 						Optional: true,
 						NestedObject: schema.NestedAttributeObject{
 							Attributes: map[string]schema.Attribute{
@@ -108,9 +98,6 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Computed: true,
 			},
 			"data_residency": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Optional: true,
 				Validators: []validator.String{
 					stringvalidator.OneOf(
@@ -121,21 +108,12 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 				},
 			},
 			"destination_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 			"name": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Optional: true,
 			},
 			"namespace_definition": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Optional: true,
 				Validators: []validator.String{
 					stringvalidator.OneOf(
@@ -147,15 +125,9 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Description: `Define the location where the data will be stored in the destination`,
 			},
 			"namespace_format": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Optional: true,
 			},
 			"non_breaking_schema_updates_behavior": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Optional: true,
 				Validators: []validator.String{
 					stringvalidator.OneOf(
@@ -166,27 +138,12 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Description: `Set how Airbyte handles syncs when it detects a non-breaking schema change in the source`,
 			},
 			"prefix": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Optional: true,
 			},
 			"schedule": schema.SingleNestedAttribute{
-				PlanModifiers: []planmodifier.Object{
-					objectplanmodifier.RequiresReplace(),
-				},
 				Optional: true,
 				Attributes: map[string]schema.Attribute{
-					"cron_expression": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
-						Optional: true,
-					},
 					"schedule_type": schema.StringAttribute{
-						PlanModifiers: []planmodifier.String{
-							stringplanmodifier.RequiresReplace(),
-						},
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -195,19 +152,16 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 							),
 						},
 					},
+					"basic_timing": schema.StringAttribute{
+						Computed: true,
+					},
 				},
 				Description: `schedule for when the the connection should run, per the schedule type`,
 			},
 			"source_id": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Required: true,
 			},
 			"status": schema.StringAttribute{
-				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
-				},
 				Optional: true,
 				Validators: []validator.String{
 					stringvalidator.OneOf(
@@ -317,7 +271,30 @@ func (r *ConnectionResource) Update(ctx context.Context, req resource.UpdateRequ
 		return
 	}
 
-	// Not Implemented; all attributes marked as RequiresReplace
+	connectionPatchRequest := *data.ToUpdateSDKType()
+	connectionID := data.ConnectionID.ValueString()
+	request := operations.PatchConnectionRequest{
+		ConnectionPatchRequest: connectionPatchRequest,
+		ConnectionID:           connectionID,
+	}
+	res, err := r.client.Connections.PatchConnection(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
+	if res.ConnectionResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+		return
+	}
+	data.RefreshFromUpdateResponse(res.ConnectionResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

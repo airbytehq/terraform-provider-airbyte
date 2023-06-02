@@ -62,7 +62,12 @@ func (r *SourceRetentlyResourceModel) ToCreateSDKType() *shared.SourceRetentlyCr
 			SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken: sourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken,
 		}
 	}
-	sourceType := shared.SourceRetentlyRetently(r.Configuration.SourceType.ValueString())
+	sourceType := new(shared.SourceRetentlyRetently)
+	if !r.Configuration.SourceType.IsUnknown() && !r.Configuration.SourceType.IsNull() {
+		*sourceType = shared.SourceRetentlyRetently(r.Configuration.SourceType.ValueString())
+	} else {
+		sourceType = nil
+	}
 	configuration := shared.SourceRetently{
 		Credentials: credentials,
 		SourceType:  sourceType,

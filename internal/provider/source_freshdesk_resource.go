@@ -34,12 +34,12 @@ type SourceFreshdeskResource struct {
 
 // SourceFreshdeskResourceModel describes the resource data model.
 type SourceFreshdeskResourceModel struct {
-	Configuration SourceFreshdeskUpdate `tfsdk:"configuration"`
-	Name          types.String          `tfsdk:"name"`
-	SecretID      types.String          `tfsdk:"secret_id"`
-	SourceID      types.String          `tfsdk:"source_id"`
-	SourceType    types.String          `tfsdk:"source_type"`
-	WorkspaceID   types.String          `tfsdk:"workspace_id"`
+	Configuration SourceFreshdesk `tfsdk:"configuration"`
+	Name          types.String    `tfsdk:"name"`
+	SecretID      types.String    `tfsdk:"secret_id"`
+	SourceID      types.String    `tfsdk:"source_id"`
+	SourceType    types.String    `tfsdk:"source_type"`
+	WorkspaceID   types.String    `tfsdk:"workspace_id"`
 }
 
 func (r *SourceFreshdeskResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -63,18 +63,18 @@ func (r *SourceFreshdeskResource) Schema(ctx context.Context, req resource.Schem
 					"requests_per_minute": schema.Int64Attribute{
 						Optional: true,
 					},
-					"start_date": schema.StringAttribute{
-						Optional: true,
-						Validators: []validator.String{
-							validators.IsRFC3339(),
-						},
-					},
 					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"freshdesk",
 							),
+						},
+					},
+					"start_date": schema.StringAttribute{
+						Optional: true,
+						Validators: []validator.String{
+							validators.IsRFC3339(),
 						},
 					},
 				},

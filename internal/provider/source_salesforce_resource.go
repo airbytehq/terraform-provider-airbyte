@@ -34,12 +34,12 @@ type SourceSalesforceResource struct {
 
 // SourceSalesforceResourceModel describes the resource data model.
 type SourceSalesforceResourceModel struct {
-	Configuration SourceSalesforce `tfsdk:"configuration"`
-	Name          types.String     `tfsdk:"name"`
-	SecretID      types.String     `tfsdk:"secret_id"`
-	SourceID      types.String     `tfsdk:"source_id"`
-	SourceType    types.String     `tfsdk:"source_type"`
-	WorkspaceID   types.String     `tfsdk:"workspace_id"`
+	Configuration SourceSalesforceUpdate `tfsdk:"configuration"`
+	Name          types.String           `tfsdk:"name"`
+	SecretID      types.String           `tfsdk:"secret_id"`
+	SourceID      types.String           `tfsdk:"source_id"`
+	SourceType    types.String           `tfsdk:"source_type"`
+	WorkspaceID   types.String           `tfsdk:"workspace_id"`
 }
 
 func (r *SourceSalesforceResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -74,14 +74,6 @@ func (r *SourceSalesforceResource) Schema(ctx context.Context, req resource.Sche
 					"refresh_token": schema.StringAttribute{
 						Required: true,
 					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"salesforce",
-							),
-						},
-					},
 					"start_date": schema.StringAttribute{
 						Optional: true,
 						Validators: []validator.String{
@@ -111,6 +103,14 @@ func (r *SourceSalesforceResource) Schema(ctx context.Context, req resource.Sche
 									Required: true,
 								},
 							},
+						},
+					},
+					"source_type": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"salesforce",
+							),
 						},
 					},
 				},

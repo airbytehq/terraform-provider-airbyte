@@ -266,5 +266,5 @@ func (e *SourceRetentlyRetently) UnmarshalJSON(data []byte) error {
 type SourceRetently struct {
 	// Choose how to authenticate to Retently
 	Credentials *SourceRetentlyAuthenticationMechanism `json:"credentials,omitempty"`
-	SourceType  SourceRetentlyRetently                 `json:"sourceType"`
+	SourceType  *SourceRetentlyRetently                `json:"sourceType,omitempty"`
 }

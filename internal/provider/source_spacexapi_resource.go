@@ -33,12 +33,12 @@ type SourceSpacexAPIResource struct {
 
 // SourceSpacexAPIResourceModel describes the resource data model.
 type SourceSpacexAPIResourceModel struct {
-	Configuration SourceSpacexAPIUpdate `tfsdk:"configuration"`
-	Name          types.String          `tfsdk:"name"`
-	SecretID      types.String          `tfsdk:"secret_id"`
-	SourceID      types.String          `tfsdk:"source_id"`
-	SourceType    types.String          `tfsdk:"source_type"`
-	WorkspaceID   types.String          `tfsdk:"workspace_id"`
+	Configuration SourceSpacexAPI `tfsdk:"configuration"`
+	Name          types.String    `tfsdk:"name"`
+	SecretID      types.String    `tfsdk:"secret_id"`
+	SourceID      types.String    `tfsdk:"source_id"`
+	SourceType    types.String    `tfsdk:"source_type"`
+	WorkspaceID   types.String    `tfsdk:"workspace_id"`
 }
 
 func (r *SourceSpacexAPIResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -60,7 +60,7 @@ func (r *SourceSpacexAPIResource) Schema(ctx context.Context, req resource.Schem
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{
-						Required: true,
+						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"spacex-api",

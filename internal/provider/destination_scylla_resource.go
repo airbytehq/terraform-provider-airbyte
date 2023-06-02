@@ -33,11 +33,11 @@ type DestinationScyllaResource struct {
 
 // DestinationScyllaResourceModel describes the resource data model.
 type DestinationScyllaResourceModel struct {
-	Configuration   DestinationScylla `tfsdk:"configuration"`
-	DestinationID   types.String      `tfsdk:"destination_id"`
-	DestinationType types.String      `tfsdk:"destination_type"`
-	Name            types.String      `tfsdk:"name"`
-	WorkspaceID     types.String      `tfsdk:"workspace_id"`
+	Configuration   DestinationScyllaUpdate `tfsdk:"configuration"`
+	DestinationID   types.String            `tfsdk:"destination_id"`
+	DestinationType types.String            `tfsdk:"destination_type"`
+	Name            types.String            `tfsdk:"name"`
+	WorkspaceID     types.String            `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationScyllaResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -55,14 +55,6 @@ func (r *DestinationScyllaResource) Schema(ctx context.Context, req resource.Sch
 					"address": schema.StringAttribute{
 						Required: true,
 					},
-					"destination_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"scylla",
-							),
-						},
-					},
 					"keyspace": schema.StringAttribute{
 						Required: true,
 					},
@@ -77,6 +69,14 @@ func (r *DestinationScyllaResource) Schema(ctx context.Context, req resource.Sch
 					},
 					"username": schema.StringAttribute{
 						Required: true,
+					},
+					"destination_type": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"scylla",
+							),
+						},
 					},
 				},
 			},

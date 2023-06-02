@@ -54,7 +54,7 @@ func (r *SourceXkcdResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"source_type": schema.StringAttribute{
-						Required: true,
+						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"xkcd",

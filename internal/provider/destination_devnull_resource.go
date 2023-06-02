@@ -34,11 +34,11 @@ type DestinationDevNullResource struct {
 
 // DestinationDevNullResourceModel describes the resource data model.
 type DestinationDevNullResourceModel struct {
-	Configuration   DestinationDevNull `tfsdk:"configuration"`
-	DestinationID   types.String       `tfsdk:"destination_id"`
-	DestinationType types.String       `tfsdk:"destination_type"`
-	Name            types.String       `tfsdk:"name"`
-	WorkspaceID     types.String       `tfsdk:"workspace_id"`
+	Configuration   DestinationDevNullUpdate `tfsdk:"configuration"`
+	DestinationID   types.String             `tfsdk:"destination_id"`
+	DestinationType types.String             `tfsdk:"destination_type"`
+	Name            types.String             `tfsdk:"name"`
+	WorkspaceID     types.String             `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationDevNullResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -53,31 +53,9 @@ func (r *DestinationDevNullResource) Schema(ctx context.Context, req resource.Sc
 			"configuration": schema.SingleNestedAttribute{
 				Required: true,
 				Attributes: map[string]schema.Attribute{
-					"destination_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"dev-null",
-							),
-						},
-					},
 					"test_destination": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
-							"destination_dev_null_test_destination_silent": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"test_destination_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SILENT",
-											),
-										},
-									},
-								},
-								Description: `The type of destination to be used`,
-							},
 							"destination_dev_null_update_test_destination_silent": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
@@ -92,9 +70,31 @@ func (r *DestinationDevNullResource) Schema(ctx context.Context, req resource.Sc
 								},
 								Description: `The type of destination to be used`,
 							},
+							"destination_dev_null_test_destination_silent": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"test_destination_type": schema.StringAttribute{
+										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"SILENT",
+											),
+										},
+									},
+								},
+								Description: `The type of destination to be used`,
+							},
 						},
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
+						},
+					},
+					"destination_type": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"dev-null",
+							),
 						},
 					},
 				},

@@ -30,11 +30,13 @@ func (r *SourcePublicApisResourceModel) ToCreateSDKType() *shared.SourcePublicAp
 }
 
 func (r *SourcePublicApisResourceModel) ToUpdateSDKType() *shared.SourcePublicApisPutRequest {
+	configuration := shared.SourcePublicApisUpdate{}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourcePublicApisPutRequest{
-		Name:        name,
-		WorkspaceID: workspaceID,
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
 	}
 	return &out
 }

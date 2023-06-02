@@ -34,11 +34,11 @@ type DestinationAzureBlobStorageResource struct {
 
 // DestinationAzureBlobStorageResourceModel describes the resource data model.
 type DestinationAzureBlobStorageResourceModel struct {
-	Configuration   DestinationAzureBlobStorage `tfsdk:"configuration"`
-	DestinationID   types.String                `tfsdk:"destination_id"`
-	DestinationType types.String                `tfsdk:"destination_type"`
-	Name            types.String                `tfsdk:"name"`
-	WorkspaceID     types.String                `tfsdk:"workspace_id"`
+	Configuration   DestinationAzureBlobStorageUpdate `tfsdk:"configuration"`
+	DestinationID   types.String                      `tfsdk:"destination_id"`
+	DestinationType types.String                      `tfsdk:"destination_type"`
+	Name            types.String                      `tfsdk:"name"`
+	WorkspaceID     types.String                      `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationAzureBlobStorageResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -71,55 +71,9 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 					"azure_blob_storage_spill_size": schema.Int64Attribute{
 						Optional: true,
 					},
-					"destination_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"azure-blob-storage",
-							),
-						},
-					},
 					"format": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
-							"destination_azure_blob_storage_output_format_csv_comma_separated_values": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"flattening": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"No flattening",
-												"Root level flattening",
-											),
-										},
-										Description: `Whether the input json data should be normalized (flattened) in the output CSV. Please refer to docs for details.`,
-									},
-									"format_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"CSV",
-											),
-										},
-									},
-								},
-								Description: `Output data format`,
-							},
-							"destination_azure_blob_storage_output_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"format_type": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"JSONL",
-											),
-										},
-									},
-								},
-								Description: `Output data format`,
-							},
 							"destination_azure_blob_storage_update_output_format_csv_comma_separated_values": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
@@ -158,9 +112,55 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 								},
 								Description: `Output data format`,
 							},
+							"destination_azure_blob_storage_output_format_csv_comma_separated_values": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"flattening": schema.StringAttribute{
+										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"No flattening",
+												"Root level flattening",
+											),
+										},
+										Description: `Whether the input json data should be normalized (flattened) in the output CSV. Please refer to docs for details.`,
+									},
+									"format_type": schema.StringAttribute{
+										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"CSV",
+											),
+										},
+									},
+								},
+								Description: `Output data format`,
+							},
+							"destination_azure_blob_storage_output_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"format_type": schema.StringAttribute{
+										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"JSONL",
+											),
+										},
+									},
+								},
+								Description: `Output data format`,
+							},
 						},
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
+						},
+					},
+					"destination_type": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"azure-blob-storage",
+							),
 						},
 					},
 				},

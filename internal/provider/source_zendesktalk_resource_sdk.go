@@ -12,18 +12,18 @@ import (
 func (r *SourceZendeskTalkResourceModel) ToCreateSDKType() *shared.SourceZendeskTalkCreateRequest {
 	var credentials *shared.SourceZendeskTalkAuthentication
 	var sourceZendeskTalkAuthenticationAPIToken *shared.SourceZendeskTalkAuthenticationAPIToken
-	if r.Configuration.Credentials.SourceZendeskTalkUpdateAuthenticationAPIToken != nil {
-		apiToken := r.Configuration.Credentials.SourceZendeskTalkUpdateAuthenticationAPIToken.APIToken.ValueString()
+	if r.Configuration.Credentials.SourceZendeskTalkAuthenticationAPIToken != nil {
+		apiToken := r.Configuration.Credentials.SourceZendeskTalkAuthenticationAPIToken.APIToken.ValueString()
 		authType := new(shared.SourceZendeskTalkAuthenticationAPITokenAuthType)
-		if !r.Configuration.Credentials.SourceZendeskTalkUpdateAuthenticationAPIToken.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceZendeskTalkUpdateAuthenticationAPIToken.AuthType.IsNull() {
-			*authType = shared.SourceZendeskTalkAuthenticationAPITokenAuthType(r.Configuration.Credentials.SourceZendeskTalkUpdateAuthenticationAPIToken.AuthType.ValueString())
+		if !r.Configuration.Credentials.SourceZendeskTalkAuthenticationAPIToken.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceZendeskTalkAuthenticationAPIToken.AuthType.IsNull() {
+			*authType = shared.SourceZendeskTalkAuthenticationAPITokenAuthType(r.Configuration.Credentials.SourceZendeskTalkAuthenticationAPIToken.AuthType.ValueString())
 		} else {
 			authType = nil
 		}
-		email := r.Configuration.Credentials.SourceZendeskTalkUpdateAuthenticationAPIToken.Email.ValueString()
+		email := r.Configuration.Credentials.SourceZendeskTalkAuthenticationAPIToken.Email.ValueString()
 		var additionalProperties interface{}
-		if !r.Configuration.Credentials.SourceZendeskTalkUpdateAuthenticationAPIToken.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.SourceZendeskTalkUpdateAuthenticationAPIToken.AdditionalProperties.IsNull() {
-			_ = json.Unmarshal([]byte(r.Configuration.Credentials.SourceZendeskTalkUpdateAuthenticationAPIToken.AdditionalProperties.ValueString()), &additionalProperties)
+		if !r.Configuration.Credentials.SourceZendeskTalkAuthenticationAPIToken.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.SourceZendeskTalkAuthenticationAPIToken.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.Credentials.SourceZendeskTalkAuthenticationAPIToken.AdditionalProperties.ValueString()), &additionalProperties)
 		}
 		sourceZendeskTalkAuthenticationAPIToken = &shared.SourceZendeskTalkAuthenticationAPIToken{
 			APIToken:             apiToken,
@@ -38,17 +38,17 @@ func (r *SourceZendeskTalkResourceModel) ToCreateSDKType() *shared.SourceZendesk
 		}
 	}
 	var sourceZendeskTalkAuthenticationOAuth20 *shared.SourceZendeskTalkAuthenticationOAuth20
-	if r.Configuration.Credentials.SourceZendeskTalkUpdateAuthenticationOAuth20 != nil {
-		accessToken := r.Configuration.Credentials.SourceZendeskTalkUpdateAuthenticationOAuth20.AccessToken.ValueString()
+	if r.Configuration.Credentials.SourceZendeskTalkAuthenticationOAuth20 != nil {
+		accessToken := r.Configuration.Credentials.SourceZendeskTalkAuthenticationOAuth20.AccessToken.ValueString()
 		authType1 := new(shared.SourceZendeskTalkAuthenticationOAuth20AuthType)
-		if !r.Configuration.Credentials.SourceZendeskTalkUpdateAuthenticationOAuth20.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceZendeskTalkUpdateAuthenticationOAuth20.AuthType.IsNull() {
-			*authType1 = shared.SourceZendeskTalkAuthenticationOAuth20AuthType(r.Configuration.Credentials.SourceZendeskTalkUpdateAuthenticationOAuth20.AuthType.ValueString())
+		if !r.Configuration.Credentials.SourceZendeskTalkAuthenticationOAuth20.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceZendeskTalkAuthenticationOAuth20.AuthType.IsNull() {
+			*authType1 = shared.SourceZendeskTalkAuthenticationOAuth20AuthType(r.Configuration.Credentials.SourceZendeskTalkAuthenticationOAuth20.AuthType.ValueString())
 		} else {
 			authType1 = nil
 		}
 		var additionalProperties1 interface{}
-		if !r.Configuration.Credentials.SourceZendeskTalkUpdateAuthenticationOAuth20.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.SourceZendeskTalkUpdateAuthenticationOAuth20.AdditionalProperties.IsNull() {
-			_ = json.Unmarshal([]byte(r.Configuration.Credentials.SourceZendeskTalkUpdateAuthenticationOAuth20.AdditionalProperties.ValueString()), &additionalProperties1)
+		if !r.Configuration.Credentials.SourceZendeskTalkAuthenticationOAuth20.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.SourceZendeskTalkAuthenticationOAuth20.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.Credentials.SourceZendeskTalkAuthenticationOAuth20.AdditionalProperties.ValueString()), &additionalProperties1)
 		}
 		sourceZendeskTalkAuthenticationOAuth20 = &shared.SourceZendeskTalkAuthenticationOAuth20{
 			AccessToken:          accessToken,
@@ -90,18 +90,18 @@ func (r *SourceZendeskTalkResourceModel) ToCreateSDKType() *shared.SourceZendesk
 func (r *SourceZendeskTalkResourceModel) ToUpdateSDKType() *shared.SourceZendeskTalkPutRequest {
 	var credentials *shared.SourceZendeskTalkUpdateAuthentication
 	var sourceZendeskTalkUpdateAuthenticationAPIToken *shared.SourceZendeskTalkUpdateAuthenticationAPIToken
-	if r.Configuration.Credentials.SourceZendeskTalkUpdateAuthenticationAPIToken != nil {
-		apiToken := r.Configuration.Credentials.SourceZendeskTalkUpdateAuthenticationAPIToken.APIToken.ValueString()
+	if r.Configuration.Credentials.SourceZendeskTalkAuthenticationAPIToken != nil {
+		apiToken := r.Configuration.Credentials.SourceZendeskTalkAuthenticationAPIToken.APIToken.ValueString()
 		authType := new(shared.SourceZendeskTalkUpdateAuthenticationAPITokenAuthType)
-		if !r.Configuration.Credentials.SourceZendeskTalkUpdateAuthenticationAPIToken.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceZendeskTalkUpdateAuthenticationAPIToken.AuthType.IsNull() {
-			*authType = shared.SourceZendeskTalkUpdateAuthenticationAPITokenAuthType(r.Configuration.Credentials.SourceZendeskTalkUpdateAuthenticationAPIToken.AuthType.ValueString())
+		if !r.Configuration.Credentials.SourceZendeskTalkAuthenticationAPIToken.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceZendeskTalkAuthenticationAPIToken.AuthType.IsNull() {
+			*authType = shared.SourceZendeskTalkUpdateAuthenticationAPITokenAuthType(r.Configuration.Credentials.SourceZendeskTalkAuthenticationAPIToken.AuthType.ValueString())
 		} else {
 			authType = nil
 		}
-		email := r.Configuration.Credentials.SourceZendeskTalkUpdateAuthenticationAPIToken.Email.ValueString()
+		email := r.Configuration.Credentials.SourceZendeskTalkAuthenticationAPIToken.Email.ValueString()
 		var additionalProperties interface{}
-		if !r.Configuration.Credentials.SourceZendeskTalkUpdateAuthenticationAPIToken.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.SourceZendeskTalkUpdateAuthenticationAPIToken.AdditionalProperties.IsNull() {
-			_ = json.Unmarshal([]byte(r.Configuration.Credentials.SourceZendeskTalkUpdateAuthenticationAPIToken.AdditionalProperties.ValueString()), &additionalProperties)
+		if !r.Configuration.Credentials.SourceZendeskTalkAuthenticationAPIToken.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.SourceZendeskTalkAuthenticationAPIToken.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.Credentials.SourceZendeskTalkAuthenticationAPIToken.AdditionalProperties.ValueString()), &additionalProperties)
 		}
 		sourceZendeskTalkUpdateAuthenticationAPIToken = &shared.SourceZendeskTalkUpdateAuthenticationAPIToken{
 			APIToken:             apiToken,
@@ -116,17 +116,17 @@ func (r *SourceZendeskTalkResourceModel) ToUpdateSDKType() *shared.SourceZendesk
 		}
 	}
 	var sourceZendeskTalkUpdateAuthenticationOAuth20 *shared.SourceZendeskTalkUpdateAuthenticationOAuth20
-	if r.Configuration.Credentials.SourceZendeskTalkUpdateAuthenticationOAuth20 != nil {
-		accessToken := r.Configuration.Credentials.SourceZendeskTalkUpdateAuthenticationOAuth20.AccessToken.ValueString()
+	if r.Configuration.Credentials.SourceZendeskTalkAuthenticationOAuth20 != nil {
+		accessToken := r.Configuration.Credentials.SourceZendeskTalkAuthenticationOAuth20.AccessToken.ValueString()
 		authType1 := new(shared.SourceZendeskTalkUpdateAuthenticationOAuth20AuthType)
-		if !r.Configuration.Credentials.SourceZendeskTalkUpdateAuthenticationOAuth20.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceZendeskTalkUpdateAuthenticationOAuth20.AuthType.IsNull() {
-			*authType1 = shared.SourceZendeskTalkUpdateAuthenticationOAuth20AuthType(r.Configuration.Credentials.SourceZendeskTalkUpdateAuthenticationOAuth20.AuthType.ValueString())
+		if !r.Configuration.Credentials.SourceZendeskTalkAuthenticationOAuth20.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceZendeskTalkAuthenticationOAuth20.AuthType.IsNull() {
+			*authType1 = shared.SourceZendeskTalkUpdateAuthenticationOAuth20AuthType(r.Configuration.Credentials.SourceZendeskTalkAuthenticationOAuth20.AuthType.ValueString())
 		} else {
 			authType1 = nil
 		}
 		var additionalProperties1 interface{}
-		if !r.Configuration.Credentials.SourceZendeskTalkUpdateAuthenticationOAuth20.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.SourceZendeskTalkUpdateAuthenticationOAuth20.AdditionalProperties.IsNull() {
-			_ = json.Unmarshal([]byte(r.Configuration.Credentials.SourceZendeskTalkUpdateAuthenticationOAuth20.AdditionalProperties.ValueString()), &additionalProperties1)
+		if !r.Configuration.Credentials.SourceZendeskTalkAuthenticationOAuth20.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.SourceZendeskTalkAuthenticationOAuth20.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.Credentials.SourceZendeskTalkAuthenticationOAuth20.AdditionalProperties.ValueString()), &additionalProperties1)
 		}
 		sourceZendeskTalkUpdateAuthenticationOAuth20 = &shared.SourceZendeskTalkUpdateAuthenticationOAuth20{
 			AccessToken:          accessToken,

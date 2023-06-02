@@ -10,16 +10,16 @@ import (
 func (r *SourceLinkedinPagesResourceModel) ToCreateSDKType() *shared.SourceLinkedinPagesCreateRequest {
 	var credentials *shared.SourceLinkedinPagesAuthentication
 	var sourceLinkedinPagesAuthenticationOAuth20 *shared.SourceLinkedinPagesAuthenticationOAuth20
-	if r.Configuration.Credentials.SourceLinkedinPagesUpdateAuthenticationOAuth20 != nil {
+	if r.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20 != nil {
 		authMethod := new(shared.SourceLinkedinPagesAuthenticationOAuth20AuthMethod)
-		if !r.Configuration.Credentials.SourceLinkedinPagesUpdateAuthenticationOAuth20.AuthMethod.IsUnknown() && !r.Configuration.Credentials.SourceLinkedinPagesUpdateAuthenticationOAuth20.AuthMethod.IsNull() {
-			*authMethod = shared.SourceLinkedinPagesAuthenticationOAuth20AuthMethod(r.Configuration.Credentials.SourceLinkedinPagesUpdateAuthenticationOAuth20.AuthMethod.ValueString())
+		if !r.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20.AuthMethod.IsUnknown() && !r.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20.AuthMethod.IsNull() {
+			*authMethod = shared.SourceLinkedinPagesAuthenticationOAuth20AuthMethod(r.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20.AuthMethod.ValueString())
 		} else {
 			authMethod = nil
 		}
-		clientID := r.Configuration.Credentials.SourceLinkedinPagesUpdateAuthenticationOAuth20.ClientID.ValueString()
-		clientSecret := r.Configuration.Credentials.SourceLinkedinPagesUpdateAuthenticationOAuth20.ClientSecret.ValueString()
-		refreshToken := r.Configuration.Credentials.SourceLinkedinPagesUpdateAuthenticationOAuth20.RefreshToken.ValueString()
+		clientID := r.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20.ClientID.ValueString()
+		clientSecret := r.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20.ClientSecret.ValueString()
+		refreshToken := r.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20.RefreshToken.ValueString()
 		sourceLinkedinPagesAuthenticationOAuth20 = &shared.SourceLinkedinPagesAuthenticationOAuth20{
 			AuthMethod:   authMethod,
 			ClientID:     clientID,
@@ -33,11 +33,11 @@ func (r *SourceLinkedinPagesResourceModel) ToCreateSDKType() *shared.SourceLinke
 		}
 	}
 	var sourceLinkedinPagesAuthenticationAccessToken *shared.SourceLinkedinPagesAuthenticationAccessToken
-	if r.Configuration.Credentials.SourceLinkedinPagesUpdateAuthenticationAccessToken != nil {
-		accessToken := r.Configuration.Credentials.SourceLinkedinPagesUpdateAuthenticationAccessToken.AccessToken.ValueString()
+	if r.Configuration.Credentials.SourceLinkedinPagesAuthenticationAccessToken != nil {
+		accessToken := r.Configuration.Credentials.SourceLinkedinPagesAuthenticationAccessToken.AccessToken.ValueString()
 		authMethod1 := new(shared.SourceLinkedinPagesAuthenticationAccessTokenAuthMethod)
-		if !r.Configuration.Credentials.SourceLinkedinPagesUpdateAuthenticationAccessToken.AuthMethod.IsUnknown() && !r.Configuration.Credentials.SourceLinkedinPagesUpdateAuthenticationAccessToken.AuthMethod.IsNull() {
-			*authMethod1 = shared.SourceLinkedinPagesAuthenticationAccessTokenAuthMethod(r.Configuration.Credentials.SourceLinkedinPagesUpdateAuthenticationAccessToken.AuthMethod.ValueString())
+		if !r.Configuration.Credentials.SourceLinkedinPagesAuthenticationAccessToken.AuthMethod.IsUnknown() && !r.Configuration.Credentials.SourceLinkedinPagesAuthenticationAccessToken.AuthMethod.IsNull() {
+			*authMethod1 = shared.SourceLinkedinPagesAuthenticationAccessTokenAuthMethod(r.Configuration.Credentials.SourceLinkedinPagesAuthenticationAccessToken.AuthMethod.ValueString())
 		} else {
 			authMethod1 = nil
 		}
@@ -78,16 +78,16 @@ func (r *SourceLinkedinPagesResourceModel) ToCreateSDKType() *shared.SourceLinke
 func (r *SourceLinkedinPagesResourceModel) ToUpdateSDKType() *shared.SourceLinkedinPagesPutRequest {
 	var credentials *shared.SourceLinkedinPagesUpdateAuthentication
 	var sourceLinkedinPagesUpdateAuthenticationOAuth20 *shared.SourceLinkedinPagesUpdateAuthenticationOAuth20
-	if r.Configuration.Credentials.SourceLinkedinPagesUpdateAuthenticationOAuth20 != nil {
+	if r.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20 != nil {
 		authMethod := new(shared.SourceLinkedinPagesUpdateAuthenticationOAuth20AuthMethod)
-		if !r.Configuration.Credentials.SourceLinkedinPagesUpdateAuthenticationOAuth20.AuthMethod.IsUnknown() && !r.Configuration.Credentials.SourceLinkedinPagesUpdateAuthenticationOAuth20.AuthMethod.IsNull() {
-			*authMethod = shared.SourceLinkedinPagesUpdateAuthenticationOAuth20AuthMethod(r.Configuration.Credentials.SourceLinkedinPagesUpdateAuthenticationOAuth20.AuthMethod.ValueString())
+		if !r.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20.AuthMethod.IsUnknown() && !r.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20.AuthMethod.IsNull() {
+			*authMethod = shared.SourceLinkedinPagesUpdateAuthenticationOAuth20AuthMethod(r.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20.AuthMethod.ValueString())
 		} else {
 			authMethod = nil
 		}
-		clientID := r.Configuration.Credentials.SourceLinkedinPagesUpdateAuthenticationOAuth20.ClientID.ValueString()
-		clientSecret := r.Configuration.Credentials.SourceLinkedinPagesUpdateAuthenticationOAuth20.ClientSecret.ValueString()
-		refreshToken := r.Configuration.Credentials.SourceLinkedinPagesUpdateAuthenticationOAuth20.RefreshToken.ValueString()
+		clientID := r.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20.ClientID.ValueString()
+		clientSecret := r.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20.ClientSecret.ValueString()
+		refreshToken := r.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20.RefreshToken.ValueString()
 		sourceLinkedinPagesUpdateAuthenticationOAuth20 = &shared.SourceLinkedinPagesUpdateAuthenticationOAuth20{
 			AuthMethod:   authMethod,
 			ClientID:     clientID,
@@ -101,11 +101,11 @@ func (r *SourceLinkedinPagesResourceModel) ToUpdateSDKType() *shared.SourceLinke
 		}
 	}
 	var sourceLinkedinPagesUpdateAuthenticationAccessToken *shared.SourceLinkedinPagesUpdateAuthenticationAccessToken
-	if r.Configuration.Credentials.SourceLinkedinPagesUpdateAuthenticationAccessToken != nil {
-		accessToken := r.Configuration.Credentials.SourceLinkedinPagesUpdateAuthenticationAccessToken.AccessToken.ValueString()
+	if r.Configuration.Credentials.SourceLinkedinPagesAuthenticationAccessToken != nil {
+		accessToken := r.Configuration.Credentials.SourceLinkedinPagesAuthenticationAccessToken.AccessToken.ValueString()
 		authMethod1 := new(shared.SourceLinkedinPagesUpdateAuthenticationAccessTokenAuthMethod)
-		if !r.Configuration.Credentials.SourceLinkedinPagesUpdateAuthenticationAccessToken.AuthMethod.IsUnknown() && !r.Configuration.Credentials.SourceLinkedinPagesUpdateAuthenticationAccessToken.AuthMethod.IsNull() {
-			*authMethod1 = shared.SourceLinkedinPagesUpdateAuthenticationAccessTokenAuthMethod(r.Configuration.Credentials.SourceLinkedinPagesUpdateAuthenticationAccessToken.AuthMethod.ValueString())
+		if !r.Configuration.Credentials.SourceLinkedinPagesAuthenticationAccessToken.AuthMethod.IsUnknown() && !r.Configuration.Credentials.SourceLinkedinPagesAuthenticationAccessToken.AuthMethod.IsNull() {
+			*authMethod1 = shared.SourceLinkedinPagesUpdateAuthenticationAccessTokenAuthMethod(r.Configuration.Credentials.SourceLinkedinPagesAuthenticationAccessToken.AuthMethod.ValueString())
 		} else {
 			authMethod1 = nil
 		}

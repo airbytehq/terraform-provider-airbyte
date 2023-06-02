@@ -33,13 +33,10 @@ SourceSpacexAPI Resource
 <a id="nestedatt--configuration"></a>
 ### Nested Schema for `configuration`
 
-Required:
-
-- `source_type` (String)
-
 Optional:
 
 - `id` (String)
 - `options` (String)
+- `source_type` (String)
 
 

@@ -33,13 +33,10 @@ SourceIp2whois Resource
 <a id="nestedatt--configuration"></a>
 ### Nested Schema for `configuration`
 
-Required:
-
-- `source_type` (String)
-
 Optional:
 
 - `api_key` (String)
 - `domain` (String)
+- `source_type` (String)
 
 

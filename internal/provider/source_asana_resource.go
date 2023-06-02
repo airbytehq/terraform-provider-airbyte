@@ -147,7 +147,7 @@ func (r *SourceAsanaResource) Schema(ctx context.Context, req resource.SchemaReq
 						},
 					},
 					"source_type": schema.StringAttribute{
-						Required: true,
+						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"asana",

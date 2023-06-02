@@ -34,11 +34,11 @@ type DestinationBigqueryResource struct {
 
 // DestinationBigqueryResourceModel describes the resource data model.
 type DestinationBigqueryResourceModel struct {
-	Configuration   DestinationBigqueryUpdate `tfsdk:"configuration"`
-	DestinationID   types.String              `tfsdk:"destination_id"`
-	DestinationType types.String              `tfsdk:"destination_type"`
-	Name            types.String              `tfsdk:"name"`
-	WorkspaceID     types.String              `tfsdk:"workspace_id"`
+	Configuration   DestinationBigquery `tfsdk:"configuration"`
+	DestinationID   types.String        `tfsdk:"destination_id"`
+	DestinationType types.String        `tfsdk:"destination_type"`
+	Name            types.String        `tfsdk:"name"`
+	WorkspaceID     types.String        `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationBigqueryResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -110,84 +110,17 @@ func (r *DestinationBigqueryResource) Schema(ctx context.Context, req resource.S
 						},
 						Description: `The location of the dataset. Warning: Changes made after creation will not be applied. Read more <a href="https://cloud.google.com/bigquery/docs/locations">here</a>.`,
 					},
+					"destination_type": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"bigquery",
+							),
+						},
+					},
 					"loading_method": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"destination_bigquery_update_loading_method_standard_inserts": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Standard",
-											),
-										},
-									},
-								},
-								Description: `Loading method used to send select the way data will be uploaded to BigQuery. <br/><b>Standard Inserts</b> - Direct uploading using SQL INSERT statements. This method is extremely inefficient and provided only for quick testing. In almost all cases, you should use staging. <br/><b>GCS Staging</b> - Writes large batches of records to a file, uploads the file to GCS, then uses <b>COPY INTO table</b> to upload the file. Recommended for most workloads for better speed and scalability. Read more about GCS Staging <a href="https://docs.airbyte.com/integrations/destinations/bigquery#gcs-staging">here</a>.`,
-							},
-							"destination_bigquery_update_loading_method_gcs_staging": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"credential": schema.SingleNestedAttribute{
-										Computed: true,
-										Attributes: map[string]schema.Attribute{
-											"destination_bigquery_update_loading_method_gcs_staging_credential_hmac_key": schema.SingleNestedAttribute{
-												Computed: true,
-												Attributes: map[string]schema.Attribute{
-													"credential_type": schema.StringAttribute{
-														Computed: true,
-														Validators: []validator.String{
-															stringvalidator.OneOf(
-																"HMAC_KEY",
-															),
-														},
-													},
-													"hmac_key_access_id": schema.StringAttribute{
-														Computed: true,
-													},
-													"hmac_key_secret": schema.StringAttribute{
-														Computed: true,
-													},
-												},
-												Description: `An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>.`,
-											},
-										},
-										Validators: []validator.Object{
-											validators.ExactlyOneChild(),
-										},
-									},
-									"file_buffer_count": schema.Int64Attribute{
-										Computed: true,
-									},
-									"gcs_bucket_name": schema.StringAttribute{
-										Computed: true,
-									},
-									"gcs_bucket_path": schema.StringAttribute{
-										Computed: true,
-									},
-									"keep_files_in_gcs_bucket": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Delete all tmp files from GCS",
-												"Keep all tmp files in GCS",
-											),
-										},
-										Description: `This upload method is supposed to temporary store records in GCS bucket. By this select you can chose if these records should be removed from GCS when migration has finished. The default "Delete all tmp files from GCS" value is used if not set explicitly.`,
-									},
-									"method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"GCS Staging",
-											),
-										},
-									},
-								},
-								Description: `Loading method used to send select the way data will be uploaded to BigQuery. <br/><b>Standard Inserts</b> - Direct uploading using SQL INSERT statements. This method is extremely inefficient and provided only for quick testing. In almost all cases, you should use staging. <br/><b>GCS Staging</b> - Writes large batches of records to a file, uploads the file to GCS, then uses <b>COPY INTO table</b> to upload the file. Recommended for most workloads for better speed and scalability. Read more about GCS Staging <a href="https://docs.airbyte.com/integrations/destinations/bigquery#gcs-staging">here</a>.`,
-							},
 							"destination_bigquery_loading_method_standard_inserts": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -263,6 +196,81 @@ func (r *DestinationBigqueryResource) Schema(ctx context.Context, req resource.S
 								},
 								Description: `Loading method used to send select the way data will be uploaded to BigQuery. <br/><b>Standard Inserts</b> - Direct uploading using SQL INSERT statements. This method is extremely inefficient and provided only for quick testing. In almost all cases, you should use staging. <br/><b>GCS Staging</b> - Writes large batches of records to a file, uploads the file to GCS, then uses <b>COPY INTO table</b> to upload the file. Recommended for most workloads for better speed and scalability. Read more about GCS Staging <a href="https://docs.airbyte.com/integrations/destinations/bigquery#gcs-staging">here</a>.`,
 							},
+							"destination_bigquery_update_loading_method_standard_inserts": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Standard",
+											),
+										},
+									},
+								},
+								Description: `Loading method used to send select the way data will be uploaded to BigQuery. <br/><b>Standard Inserts</b> - Direct uploading using SQL INSERT statements. This method is extremely inefficient and provided only for quick testing. In almost all cases, you should use staging. <br/><b>GCS Staging</b> - Writes large batches of records to a file, uploads the file to GCS, then uses <b>COPY INTO table</b> to upload the file. Recommended for most workloads for better speed and scalability. Read more about GCS Staging <a href="https://docs.airbyte.com/integrations/destinations/bigquery#gcs-staging">here</a>.`,
+							},
+							"destination_bigquery_update_loading_method_gcs_staging": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"credential": schema.SingleNestedAttribute{
+										Computed: true,
+										Attributes: map[string]schema.Attribute{
+											"destination_bigquery_update_loading_method_gcs_staging_credential_hmac_key": schema.SingleNestedAttribute{
+												Computed: true,
+												Attributes: map[string]schema.Attribute{
+													"credential_type": schema.StringAttribute{
+														Computed: true,
+														Validators: []validator.String{
+															stringvalidator.OneOf(
+																"HMAC_KEY",
+															),
+														},
+													},
+													"hmac_key_access_id": schema.StringAttribute{
+														Computed: true,
+													},
+													"hmac_key_secret": schema.StringAttribute{
+														Computed: true,
+													},
+												},
+												Description: `An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>.`,
+											},
+										},
+										Validators: []validator.Object{
+											validators.ExactlyOneChild(),
+										},
+									},
+									"file_buffer_count": schema.Int64Attribute{
+										Computed: true,
+									},
+									"gcs_bucket_name": schema.StringAttribute{
+										Computed: true,
+									},
+									"gcs_bucket_path": schema.StringAttribute{
+										Computed: true,
+									},
+									"keep_files_in_gcs_bucket": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Delete all tmp files from GCS",
+												"Keep all tmp files in GCS",
+											),
+										},
+										Description: `This upload method is supposed to temporary store records in GCS bucket. By this select you can chose if these records should be removed from GCS when migration has finished. The default "Delete all tmp files from GCS" value is used if not set explicitly.`,
+									},
+									"method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"GCS Staging",
+											),
+										},
+									},
+								},
+								Description: `Loading method used to send select the way data will be uploaded to BigQuery. <br/><b>Standard Inserts</b> - Direct uploading using SQL INSERT statements. This method is extremely inefficient and provided only for quick testing. In almost all cases, you should use staging. <br/><b>GCS Staging</b> - Writes large batches of records to a file, uploads the file to GCS, then uses <b>COPY INTO table</b> to upload the file. Recommended for most workloads for better speed and scalability. Read more about GCS Staging <a href="https://docs.airbyte.com/integrations/destinations/bigquery#gcs-staging">here</a>.`,
+							},
 						},
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
@@ -280,14 +288,6 @@ func (r *DestinationBigqueryResource) Schema(ctx context.Context, req resource.S
 							),
 						},
 						Description: `Interactive run type means that the query is executed as soon as possible, and these queries count towards concurrent rate limit and daily limit. Read more about interactive run type <a href="https://cloud.google.com/bigquery/docs/running-queries#queries">here</a>. Batch queries are queued and started as soon as idle resources are available in the BigQuery shared resource pool, which usually occurs within a few minutes. Batch queries don’t count towards your concurrent rate limit. Read more about batch queries <a href="https://cloud.google.com/bigquery/docs/running-queries#batch">here</a>. The default "interactive" value is used if not set explicitly.`,
-					},
-					"destination_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"bigquery",
-							),
-						},
 					},
 				},
 			},

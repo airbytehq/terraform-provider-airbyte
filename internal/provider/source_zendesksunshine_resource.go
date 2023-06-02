@@ -34,12 +34,12 @@ type SourceZendeskSunshineResource struct {
 
 // SourceZendeskSunshineResourceModel describes the resource data model.
 type SourceZendeskSunshineResourceModel struct {
-	Configuration SourceZendeskSunshineUpdate `tfsdk:"configuration"`
-	Name          types.String                `tfsdk:"name"`
-	SecretID      types.String                `tfsdk:"secret_id"`
-	SourceID      types.String                `tfsdk:"source_id"`
-	SourceType    types.String                `tfsdk:"source_type"`
-	WorkspaceID   types.String                `tfsdk:"workspace_id"`
+	Configuration SourceZendeskSunshine `tfsdk:"configuration"`
+	Name          types.String          `tfsdk:"name"`
+	SecretID      types.String          `tfsdk:"secret_id"`
+	SourceID      types.String          `tfsdk:"source_id"`
+	SourceType    types.String          `tfsdk:"source_type"`
+	WorkspaceID   types.String          `tfsdk:"workspace_id"`
 }
 
 func (r *SourceZendeskSunshineResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -57,47 +57,6 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_zendesk_sunshine_update_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Computed: true,
-									},
-									"auth_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-									},
-									"client_id": schema.StringAttribute{
-										Computed: true,
-									},
-									"client_secret": schema.StringAttribute{
-										Computed: true,
-									},
-								},
-							},
-							"source_zendesk_sunshine_update_authorization_method_api_token": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"api_token": schema.StringAttribute{
-										Computed: true,
-									},
-									"auth_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"api_token",
-											),
-										},
-									},
-									"email": schema.StringAttribute{
-										Computed: true,
-									},
-								},
-							},
 							"source_zendesk_sunshine_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -139,16 +98,51 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 									},
 								},
 							},
+							"source_zendesk_sunshine_update_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"access_token": schema.StringAttribute{
+										Computed: true,
+									},
+									"auth_method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"oauth2.0",
+											),
+										},
+									},
+									"client_id": schema.StringAttribute{
+										Computed: true,
+									},
+									"client_secret": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+							},
+							"source_zendesk_sunshine_update_authorization_method_api_token": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"api_token": schema.StringAttribute{
+										Computed: true,
+									},
+									"auth_method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"api_token",
+											),
+										},
+									},
+									"email": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+							},
 						},
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
-					},
-					"start_date": schema.StringAttribute{
-						Required: true,
-					},
-					"subdomain": schema.StringAttribute{
-						Required: true,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -157,6 +151,12 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 								"zendesk-sunshine",
 							),
 						},
+					},
+					"start_date": schema.StringAttribute{
+						Required: true,
+					},
+					"subdomain": schema.StringAttribute{
+						Required: true,
 					},
 				},
 			},

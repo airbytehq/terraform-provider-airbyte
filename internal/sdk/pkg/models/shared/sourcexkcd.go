@@ -32,5 +32,5 @@ func (e *SourceXkcdXkcd) UnmarshalJSON(data []byte) error {
 }
 
 type SourceXkcd struct {
-	SourceType SourceXkcdXkcd `json:"sourceType"`
+	SourceType *SourceXkcdXkcd `json:"sourceType,omitempty"`
 }

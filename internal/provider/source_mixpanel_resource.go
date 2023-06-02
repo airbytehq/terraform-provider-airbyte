@@ -34,12 +34,12 @@ type SourceMixpanelResource struct {
 
 // SourceMixpanelResourceModel describes the resource data model.
 type SourceMixpanelResourceModel struct {
-	Configuration SourceMixpanelUpdate `tfsdk:"configuration"`
-	Name          types.String         `tfsdk:"name"`
-	SecretID      types.String         `tfsdk:"secret_id"`
-	SourceID      types.String         `tfsdk:"source_id"`
-	SourceType    types.String         `tfsdk:"source_type"`
-	WorkspaceID   types.String         `tfsdk:"workspace_id"`
+	Configuration SourceMixpanel `tfsdk:"configuration"`
+	Name          types.String   `tfsdk:"name"`
+	SecretID      types.String   `tfsdk:"secret_id"`
+	SourceID      types.String   `tfsdk:"source_id"`
+	SourceType    types.String   `tfsdk:"source_type"`
+	WorkspaceID   types.String   `tfsdk:"workspace_id"`
 }
 
 func (r *SourceMixpanelResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -60,43 +60,6 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_mixpanel_update_authentication_wildcard_service_account": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"option_title": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Service Account",
-											),
-										},
-									},
-									"secret": schema.StringAttribute{
-										Computed: true,
-									},
-									"username": schema.StringAttribute{
-										Computed: true,
-									},
-								},
-								Description: `Choose how to authenticate to Mixpanel`,
-							},
-							"source_mixpanel_update_authentication_wildcard_project_secret": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"api_secret": schema.StringAttribute{
-										Computed: true,
-									},
-									"option_title": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Project Secret",
-											),
-										},
-									},
-								},
-								Description: `Choose how to authenticate to Mixpanel`,
-							},
 							"source_mixpanel_authentication_wildcard_service_account": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -125,6 +88,43 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 									},
 									"option_title": schema.StringAttribute{
 										Optional: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Project Secret",
+											),
+										},
+									},
+								},
+								Description: `Choose how to authenticate to Mixpanel`,
+							},
+							"source_mixpanel_update_authentication_wildcard_service_account": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"option_title": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Service Account",
+											),
+										},
+									},
+									"secret": schema.StringAttribute{
+										Computed: true,
+									},
+									"username": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+								Description: `Choose how to authenticate to Mixpanel`,
+							},
+							"source_mixpanel_update_authentication_wildcard_project_secret": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"api_secret": schema.StringAttribute{
+										Computed: true,
+									},
+									"option_title": schema.StringAttribute{
+										Computed: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"Project Secret",
@@ -167,18 +167,18 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 					"select_properties_by_default": schema.BoolAttribute{
 						Optional: true,
 					},
-					"start_date": schema.StringAttribute{
-						Optional: true,
-						Validators: []validator.String{
-							validators.IsRFC3339(),
-						},
-					},
 					"source_type": schema.StringAttribute{
-						Required: true,
+						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"mixpanel",
 							),
+						},
+					},
+					"start_date": schema.StringAttribute{
+						Optional: true,
+						Validators: []validator.String{
+							validators.IsRFC3339(),
 						},
 					},
 				},

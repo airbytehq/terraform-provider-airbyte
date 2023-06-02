@@ -34,12 +34,12 @@ type SourceZendeskChatResource struct {
 
 // SourceZendeskChatResourceModel describes the resource data model.
 type SourceZendeskChatResourceModel struct {
-	Configuration SourceZendeskChatUpdate `tfsdk:"configuration"`
-	Name          types.String            `tfsdk:"name"`
-	SecretID      types.String            `tfsdk:"secret_id"`
-	SourceID      types.String            `tfsdk:"source_id"`
-	SourceType    types.String            `tfsdk:"source_type"`
-	WorkspaceID   types.String            `tfsdk:"workspace_id"`
+	Configuration SourceZendeskChat `tfsdk:"configuration"`
+	Name          types.String      `tfsdk:"name"`
+	SecretID      types.String      `tfsdk:"secret_id"`
+	SourceID      types.String      `tfsdk:"source_id"`
+	SourceType    types.String      `tfsdk:"source_type"`
+	WorkspaceID   types.String      `tfsdk:"workspace_id"`
 }
 
 func (r *SourceZendeskChatResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -57,47 +57,6 @@ func (r *SourceZendeskChatResource) Schema(ctx context.Context, req resource.Sch
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_zendesk_chat_update_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Computed: true,
-									},
-									"client_id": schema.StringAttribute{
-										Computed: true,
-									},
-									"client_secret": schema.StringAttribute{
-										Computed: true,
-									},
-									"credentials": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-									},
-									"refresh_token": schema.StringAttribute{
-										Computed: true,
-									},
-								},
-							},
-							"source_zendesk_chat_update_authorization_method_access_token": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Computed: true,
-									},
-									"credentials": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"access_token",
-											),
-										},
-									},
-								},
-							},
 							"source_zendesk_chat_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -139,9 +98,58 @@ func (r *SourceZendeskChatResource) Schema(ctx context.Context, req resource.Sch
 									},
 								},
 							},
+							"source_zendesk_chat_update_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"access_token": schema.StringAttribute{
+										Computed: true,
+									},
+									"client_id": schema.StringAttribute{
+										Computed: true,
+									},
+									"client_secret": schema.StringAttribute{
+										Computed: true,
+									},
+									"credentials": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"oauth2.0",
+											),
+										},
+									},
+									"refresh_token": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+							},
+							"source_zendesk_chat_update_authorization_method_access_token": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"access_token": schema.StringAttribute{
+										Computed: true,
+									},
+									"credentials": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"access_token",
+											),
+										},
+									},
+								},
+							},
 						},
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
+						},
+					},
+					"source_type": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"zendesk-chat",
+							),
 						},
 					},
 					"start_date": schema.StringAttribute{
@@ -152,14 +160,6 @@ func (r *SourceZendeskChatResource) Schema(ctx context.Context, req resource.Sch
 					},
 					"subdomain": schema.StringAttribute{
 						Optional: true,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"zendesk-chat",
-							),
-						},
 					},
 				},
 			},

@@ -171,5 +171,5 @@ func (e *SourceAsanaAsana) UnmarshalJSON(data []byte) error {
 type SourceAsana struct {
 	// Choose how to authenticate to Github
 	Credentials *SourceAsanaAuthenticationMechanism `json:"credentials,omitempty"`
-	SourceType  SourceAsanaAsana                    `json:"sourceType"`
+	SourceType  *SourceAsanaAsana                   `json:"sourceType,omitempty"`
 }

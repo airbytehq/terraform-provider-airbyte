@@ -33,12 +33,12 @@ type SourceBambooHrResource struct {
 
 // SourceBambooHrResourceModel describes the resource data model.
 type SourceBambooHrResourceModel struct {
-	Configuration SourceBambooHr `tfsdk:"configuration"`
-	Name          types.String   `tfsdk:"name"`
-	SecretID      types.String   `tfsdk:"secret_id"`
-	SourceID      types.String   `tfsdk:"source_id"`
-	SourceType    types.String   `tfsdk:"source_type"`
-	WorkspaceID   types.String   `tfsdk:"workspace_id"`
+	Configuration SourceBambooHrUpdate `tfsdk:"configuration"`
+	Name          types.String         `tfsdk:"name"`
+	SecretID      types.String         `tfsdk:"secret_id"`
+	SourceID      types.String         `tfsdk:"source_id"`
+	SourceType    types.String         `tfsdk:"source_type"`
+	WorkspaceID   types.String         `tfsdk:"workspace_id"`
 }
 
 func (r *SourceBambooHrResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -62,6 +62,9 @@ func (r *SourceBambooHrResource) Schema(ctx context.Context, req resource.Schema
 					"custom_reports_include_default_fields": schema.BoolAttribute{
 						Optional: true,
 					},
+					"subdomain": schema.StringAttribute{
+						Required: true,
+					},
 					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -69,9 +72,6 @@ func (r *SourceBambooHrResource) Schema(ctx context.Context, req resource.Schema
 								"bamboo-hr",
 							),
 						},
-					},
-					"subdomain": schema.StringAttribute{
-						Required: true,
 					},
 				},
 			},

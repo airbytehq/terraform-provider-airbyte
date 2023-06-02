@@ -16,10 +16,10 @@ variable "key" {
 }
 
 resource "airbyte_workspace" "my_workspace" {
-  name = "Test Workspace"
+  name = "My Test Workspace"
 }
 
-resource "airbyte_source_pokeapi" "pikachu" {
+resource "airbyte_source_pokeapi" "kido" {
   name         = "pikachu"
   workspace_id = airbyte_workspace.my_workspace.workspace_id
   configuration = {

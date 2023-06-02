@@ -33,10 +33,6 @@ SourceMixpanel Resource
 <a id="nestedatt--configuration"></a>
 ### Nested Schema for `configuration`
 
-Required:
-
-- `source_type` (String)
-
 Optional:
 
 - `attribution_window` (Number)
@@ -47,6 +43,7 @@ Optional:
 - `project_timezone` (String)
 - `region` (String) The region of mixpanel domain instance either US or EU.
 - `select_properties_by_default` (Boolean)
+- `source_type` (String)
 - `start_date` (String)
 
 <a id="nestedatt--configuration--credentials"></a>

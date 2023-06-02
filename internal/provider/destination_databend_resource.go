@@ -33,11 +33,11 @@ type DestinationDatabendResource struct {
 
 // DestinationDatabendResourceModel describes the resource data model.
 type DestinationDatabendResourceModel struct {
-	Configuration   DestinationDatabendUpdate `tfsdk:"configuration"`
-	DestinationID   types.String              `tfsdk:"destination_id"`
-	DestinationType types.String              `tfsdk:"destination_type"`
-	Name            types.String              `tfsdk:"name"`
-	WorkspaceID     types.String              `tfsdk:"workspace_id"`
+	Configuration   DestinationDatabend `tfsdk:"configuration"`
+	DestinationID   types.String        `tfsdk:"destination_id"`
+	DestinationType types.String        `tfsdk:"destination_type"`
+	Name            types.String        `tfsdk:"name"`
+	WorkspaceID     types.String        `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationDatabendResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -55,6 +55,14 @@ func (r *DestinationDatabendResource) Schema(ctx context.Context, req resource.S
 					"database": schema.StringAttribute{
 						Required: true,
 					},
+					"destination_type": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"databend",
+							),
+						},
+					},
 					"host": schema.StringAttribute{
 						Required: true,
 					},
@@ -69,14 +77,6 @@ func (r *DestinationDatabendResource) Schema(ctx context.Context, req resource.S
 					},
 					"username": schema.StringAttribute{
 						Required: true,
-					},
-					"destination_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"databend",
-							),
-						},
 					},
 				},
 			},

@@ -33,12 +33,12 @@ type SourceOrbitResource struct {
 
 // SourceOrbitResourceModel describes the resource data model.
 type SourceOrbitResourceModel struct {
-	Configuration SourceOrbit  `tfsdk:"configuration"`
-	Name          types.String `tfsdk:"name"`
-	SecretID      types.String `tfsdk:"secret_id"`
-	SourceID      types.String `tfsdk:"source_id"`
-	SourceType    types.String `tfsdk:"source_type"`
-	WorkspaceID   types.String `tfsdk:"workspace_id"`
+	Configuration SourceOrbitUpdate `tfsdk:"configuration"`
+	Name          types.String      `tfsdk:"name"`
+	SecretID      types.String      `tfsdk:"secret_id"`
+	SourceID      types.String      `tfsdk:"source_id"`
+	SourceType    types.String      `tfsdk:"source_type"`
+	WorkspaceID   types.String      `tfsdk:"workspace_id"`
 }
 
 func (r *SourceOrbitResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -56,6 +56,12 @@ func (r *SourceOrbitResource) Schema(ctx context.Context, req resource.SchemaReq
 					"api_token": schema.StringAttribute{
 						Required: true,
 					},
+					"start_date": schema.StringAttribute{
+						Optional: true,
+					},
+					"workspace": schema.StringAttribute{
+						Required: true,
+					},
 					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -63,12 +69,6 @@ func (r *SourceOrbitResource) Schema(ctx context.Context, req resource.SchemaReq
 								"orbit",
 							),
 						},
-					},
-					"start_date": schema.StringAttribute{
-						Optional: true,
-					},
-					"workspace": schema.StringAttribute{
-						Required: true,
 					},
 				},
 			},

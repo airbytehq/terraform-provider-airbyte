@@ -172,5 +172,5 @@ func (e *SourceAirtableAirtable) UnmarshalJSON(data []byte) error {
 
 type SourceAirtable struct {
 	Credentials *SourceAirtableAuthentication `json:"credentials,omitempty"`
-	SourceType  SourceAirtableAirtable        `json:"sourceType"`
+	SourceType  *SourceAirtableAirtable       `json:"sourceType,omitempty"`
 }

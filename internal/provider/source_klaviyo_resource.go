@@ -34,12 +34,12 @@ type SourceKlaviyoResource struct {
 
 // SourceKlaviyoResourceModel describes the resource data model.
 type SourceKlaviyoResourceModel struct {
-	Configuration SourceKlaviyoUpdate `tfsdk:"configuration"`
-	Name          types.String        `tfsdk:"name"`
-	SecretID      types.String        `tfsdk:"secret_id"`
-	SourceID      types.String        `tfsdk:"source_id"`
-	SourceType    types.String        `tfsdk:"source_type"`
-	WorkspaceID   types.String        `tfsdk:"workspace_id"`
+	Configuration SourceKlaviyo `tfsdk:"configuration"`
+	Name          types.String  `tfsdk:"name"`
+	SecretID      types.String  `tfsdk:"secret_id"`
+	SourceID      types.String  `tfsdk:"source_id"`
+	SourceType    types.String  `tfsdk:"source_type"`
+	WorkspaceID   types.String  `tfsdk:"workspace_id"`
 }
 
 func (r *SourceKlaviyoResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -57,18 +57,18 @@ func (r *SourceKlaviyoResource) Schema(ctx context.Context, req resource.SchemaR
 					"api_key": schema.StringAttribute{
 						Required: true,
 					},
-					"start_date": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							validators.IsRFC3339(),
-						},
-					},
 					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"klaviyo",
 							),
+						},
+					},
+					"start_date": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							validators.IsRFC3339(),
 						},
 					},
 				},

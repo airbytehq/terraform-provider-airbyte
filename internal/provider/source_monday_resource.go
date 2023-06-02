@@ -34,12 +34,12 @@ type SourceMondayResource struct {
 
 // SourceMondayResourceModel describes the resource data model.
 type SourceMondayResourceModel struct {
-	Configuration SourceMondayUpdate `tfsdk:"configuration"`
-	Name          types.String       `tfsdk:"name"`
-	SecretID      types.String       `tfsdk:"secret_id"`
-	SourceID      types.String       `tfsdk:"source_id"`
-	SourceType    types.String       `tfsdk:"source_type"`
-	WorkspaceID   types.String       `tfsdk:"workspace_id"`
+	Configuration SourceMonday `tfsdk:"configuration"`
+	Name          types.String `tfsdk:"name"`
+	SecretID      types.String `tfsdk:"secret_id"`
+	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
+	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
 func (r *SourceMondayResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -57,47 +57,6 @@ func (r *SourceMondayResource) Schema(ctx context.Context, req resource.SchemaRe
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_monday_update_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Computed: true,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-									},
-									"client_id": schema.StringAttribute{
-										Computed: true,
-									},
-									"client_secret": schema.StringAttribute{
-										Computed: true,
-									},
-									"subdomain": schema.StringAttribute{
-										Computed: true,
-									},
-								},
-							},
-							"source_monday_update_authorization_method_api_token": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"api_token": schema.StringAttribute{
-										Computed: true,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"api_token",
-											),
-										},
-									},
-								},
-							},
 							"source_monday_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -131,6 +90,47 @@ func (r *SourceMondayResource) Schema(ctx context.Context, req resource.SchemaRe
 									},
 									"auth_type": schema.StringAttribute{
 										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"api_token",
+											),
+										},
+									},
+								},
+							},
+							"source_monday_update_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"access_token": schema.StringAttribute{
+										Computed: true,
+									},
+									"auth_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"oauth2.0",
+											),
+										},
+									},
+									"client_id": schema.StringAttribute{
+										Computed: true,
+									},
+									"client_secret": schema.StringAttribute{
+										Computed: true,
+									},
+									"subdomain": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+							},
+							"source_monday_update_authorization_method_api_token": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"api_token": schema.StringAttribute{
+										Computed: true,
+									},
+									"auth_type": schema.StringAttribute{
+										Computed: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"api_token",

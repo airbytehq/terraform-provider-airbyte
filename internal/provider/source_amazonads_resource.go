@@ -33,12 +33,12 @@ type SourceAmazonAdsResource struct {
 
 // SourceAmazonAdsResourceModel describes the resource data model.
 type SourceAmazonAdsResourceModel struct {
-	Configuration SourceAmazonAdsUpdate `tfsdk:"configuration"`
-	Name          types.String          `tfsdk:"name"`
-	SecretID      types.String          `tfsdk:"secret_id"`
-	SourceID      types.String          `tfsdk:"source_id"`
-	SourceType    types.String          `tfsdk:"source_type"`
-	WorkspaceID   types.String          `tfsdk:"workspace_id"`
+	Configuration SourceAmazonAds `tfsdk:"configuration"`
+	Name          types.String    `tfsdk:"name"`
+	SecretID      types.String    `tfsdk:"secret_id"`
+	SourceID      types.String    `tfsdk:"source_id"`
+	SourceType    types.String    `tfsdk:"source_type"`
+	WorkspaceID   types.String    `tfsdk:"workspace_id"`
 }
 
 func (r *SourceAmazonAdsResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -92,13 +92,6 @@ func (r *SourceAmazonAdsResource) Schema(ctx context.Context, req resource.Schem
 						Optional:    true,
 						ElementType: types.StringType,
 					},
-					"start_date": schema.StringAttribute{
-						Optional: true,
-					},
-					"state_filter": schema.ListAttribute{
-						Optional:    true,
-						ElementType: types.StringType,
-					},
 					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -106,6 +99,13 @@ func (r *SourceAmazonAdsResource) Schema(ctx context.Context, req resource.Schem
 								"amazon-ads",
 							),
 						},
+					},
+					"start_date": schema.StringAttribute{
+						Optional: true,
+					},
+					"state_filter": schema.ListAttribute{
+						Optional:    true,
+						ElementType: types.StringType,
 					},
 				},
 			},

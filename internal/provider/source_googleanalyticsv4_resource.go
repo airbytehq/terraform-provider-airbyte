@@ -34,12 +34,12 @@ type SourceGoogleAnalyticsV4Resource struct {
 
 // SourceGoogleAnalyticsV4ResourceModel describes the resource data model.
 type SourceGoogleAnalyticsV4ResourceModel struct {
-	Configuration SourceGoogleAnalyticsV4 `tfsdk:"configuration"`
-	Name          types.String            `tfsdk:"name"`
-	SecretID      types.String            `tfsdk:"secret_id"`
-	SourceID      types.String            `tfsdk:"source_id"`
-	SourceType    types.String            `tfsdk:"source_type"`
-	WorkspaceID   types.String            `tfsdk:"workspace_id"`
+	Configuration SourceGoogleAnalyticsV4Update `tfsdk:"configuration"`
+	Name          types.String                  `tfsdk:"name"`
+	SecretID      types.String                  `tfsdk:"secret_id"`
+	SourceID      types.String                  `tfsdk:"source_id"`
+	SourceType    types.String                  `tfsdk:"source_type"`
+	WorkspaceID   types.String                  `tfsdk:"workspace_id"`
 }
 
 func (r *SourceGoogleAnalyticsV4Resource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -57,49 +57,6 @@ func (r *SourceGoogleAnalyticsV4Resource) Schema(ctx context.Context, req resour
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_google_analytics_v4_credentials_authenticate_via_google_oauth_": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Optional: true,
-									},
-									"auth_type": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Client",
-											),
-										},
-									},
-									"client_id": schema.StringAttribute{
-										Required: true,
-									},
-									"client_secret": schema.StringAttribute{
-										Required: true,
-									},
-									"refresh_token": schema.StringAttribute{
-										Required: true,
-									},
-								},
-								Description: `Credentials for the service`,
-							},
-							"source_google_analytics_v4_credentials_service_account_key_authentication": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Service",
-											),
-										},
-									},
-									"credentials_json": schema.StringAttribute{
-										Required: true,
-									},
-								},
-								Description: `Credentials for the service`,
-							},
 							"source_google_analytics_v4_update_credentials_authenticate_via_google_oauth_": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
@@ -143,6 +100,49 @@ func (r *SourceGoogleAnalyticsV4Resource) Schema(ctx context.Context, req resour
 								},
 								Description: `Credentials for the service`,
 							},
+							"source_google_analytics_v4_credentials_authenticate_via_google_oauth_": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"access_token": schema.StringAttribute{
+										Optional: true,
+									},
+									"auth_type": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Client",
+											),
+										},
+									},
+									"client_id": schema.StringAttribute{
+										Required: true,
+									},
+									"client_secret": schema.StringAttribute{
+										Required: true,
+									},
+									"refresh_token": schema.StringAttribute{
+										Required: true,
+									},
+								},
+								Description: `Credentials for the service`,
+							},
+							"source_google_analytics_v4_credentials_service_account_key_authentication": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"auth_type": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Service",
+											),
+										},
+									},
+									"credentials_json": schema.StringAttribute{
+										Required: true,
+									},
+								},
+								Description: `Credentials for the service`,
+							},
 						},
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
@@ -150,14 +150,6 @@ func (r *SourceGoogleAnalyticsV4Resource) Schema(ctx context.Context, req resour
 					},
 					"custom_reports": schema.StringAttribute{
 						Optional: true,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"google-analytics-v4",
-							),
-						},
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
@@ -167,6 +159,14 @@ func (r *SourceGoogleAnalyticsV4Resource) Schema(ctx context.Context, req resour
 					},
 					"window_in_days": schema.Int64Attribute{
 						Optional: true,
+					},
+					"source_type": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"google-analytics-v4",
+							),
+						},
 					},
 				},
 			},

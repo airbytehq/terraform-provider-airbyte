@@ -34,12 +34,12 @@ type SourceZendeskTalkResource struct {
 
 // SourceZendeskTalkResourceModel describes the resource data model.
 type SourceZendeskTalkResourceModel struct {
-	Configuration SourceZendeskTalkUpdate `tfsdk:"configuration"`
-	Name          types.String            `tfsdk:"name"`
-	SecretID      types.String            `tfsdk:"secret_id"`
-	SourceID      types.String            `tfsdk:"source_id"`
-	SourceType    types.String            `tfsdk:"source_type"`
-	WorkspaceID   types.String            `tfsdk:"workspace_id"`
+	Configuration SourceZendeskTalk `tfsdk:"configuration"`
+	Name          types.String      `tfsdk:"name"`
+	SecretID      types.String      `tfsdk:"secret_id"`
+	SourceID      types.String      `tfsdk:"source_id"`
+	SourceType    types.String      `tfsdk:"source_type"`
+	WorkspaceID   types.String      `tfsdk:"workspace_id"`
 }
 
 func (r *SourceZendeskTalkResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -57,57 +57,6 @@ func (r *SourceZendeskTalkResource) Schema(ctx context.Context, req resource.Sch
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_zendesk_talk_update_authentication_api_token": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"api_token": schema.StringAttribute{
-										Computed: true,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"api_token",
-											),
-										},
-									},
-									"email": schema.StringAttribute{
-										Computed: true,
-									},
-									"additional_properties": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											validators.IsValidJSON(),
-										},
-										Description: `Parsed as JSON.`,
-									},
-								},
-								Description: `Zendesk service provides two authentication methods. Choose between: ` + "`" + `OAuth2.0` + "`" + ` or ` + "`" + `API token` + "`" + `.`,
-							},
-							"source_zendesk_talk_update_authentication_o_auth2_0": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Computed: true,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-									},
-									"additional_properties": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											validators.IsValidJSON(),
-										},
-										Description: `Parsed as JSON.`,
-									},
-								},
-								Description: `Zendesk service provides two authentication methods. Choose between: ` + "`" + `OAuth2.0` + "`" + ` or ` + "`" + `API token` + "`" + `.`,
-							},
 							"source_zendesk_talk_authentication_api_token": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -159,9 +108,68 @@ func (r *SourceZendeskTalkResource) Schema(ctx context.Context, req resource.Sch
 								},
 								Description: `Zendesk service provides two authentication methods. Choose between: ` + "`" + `OAuth2.0` + "`" + ` or ` + "`" + `API token` + "`" + `.`,
 							},
+							"source_zendesk_talk_update_authentication_api_token": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"api_token": schema.StringAttribute{
+										Computed: true,
+									},
+									"auth_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"api_token",
+											),
+										},
+									},
+									"email": schema.StringAttribute{
+										Computed: true,
+									},
+									"additional_properties": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+										Description: `Parsed as JSON.`,
+									},
+								},
+								Description: `Zendesk service provides two authentication methods. Choose between: ` + "`" + `OAuth2.0` + "`" + ` or ` + "`" + `API token` + "`" + `.`,
+							},
+							"source_zendesk_talk_update_authentication_o_auth2_0": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"access_token": schema.StringAttribute{
+										Computed: true,
+									},
+									"auth_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"oauth2.0",
+											),
+										},
+									},
+									"additional_properties": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+										Description: `Parsed as JSON.`,
+									},
+								},
+								Description: `Zendesk service provides two authentication methods. Choose between: ` + "`" + `OAuth2.0` + "`" + ` or ` + "`" + `API token` + "`" + `.`,
+							},
 						},
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
+						},
+					},
+					"source_type": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"zendesk-talk",
+							),
 						},
 					},
 					"start_date": schema.StringAttribute{
@@ -172,14 +180,6 @@ func (r *SourceZendeskTalkResource) Schema(ctx context.Context, req resource.Sch
 					},
 					"subdomain": schema.StringAttribute{
 						Required: true,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"zendesk-talk",
-							),
-						},
 					},
 				},
 			},

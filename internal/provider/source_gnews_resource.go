@@ -33,12 +33,12 @@ type SourceGnewsResource struct {
 
 // SourceGnewsResourceModel describes the resource data model.
 type SourceGnewsResourceModel struct {
-	Configuration SourceGnewsUpdate `tfsdk:"configuration"`
-	Name          types.String      `tfsdk:"name"`
-	SecretID      types.String      `tfsdk:"secret_id"`
-	SourceID      types.String      `tfsdk:"source_id"`
-	SourceType    types.String      `tfsdk:"source_type"`
-	WorkspaceID   types.String      `tfsdk:"workspace_id"`
+	Configuration SourceGnews  `tfsdk:"configuration"`
+	Name          types.String `tfsdk:"name"`
+	SecretID      types.String `tfsdk:"secret_id"`
+	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
+	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
 func (r *SourceGnewsResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -149,6 +149,14 @@ func (r *SourceGnewsResource) Schema(ctx context.Context, req resource.SchemaReq
 							`  - publishedAt = sort by publication date, the articles with the most recent publication date are returned first` + "\n" +
 							`  - relevance = sort by best match to keywords, the articles with the best match are returned first`,
 					},
+					"source_type": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"gnews",
+							),
+						},
+					},
 					"start_date": schema.StringAttribute{
 						Optional: true,
 					},
@@ -171,14 +179,6 @@ func (r *SourceGnewsResource) Schema(ctx context.Context, req resource.SchemaReq
 							),
 						},
 						Description: `This parameter allows you to change the category for the request.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"gnews",
-							),
-						},
 					},
 				},
 			},

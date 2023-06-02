@@ -32,5 +32,5 @@ func (e *SourceWhiskyHunterWhiskyHunter) UnmarshalJSON(data []byte) error {
 }
 
 type SourceWhiskyHunter struct {
-	SourceType SourceWhiskyHunterWhiskyHunter `json:"sourceType"`
+	SourceType *SourceWhiskyHunterWhiskyHunter `json:"sourceType,omitempty"`
 }

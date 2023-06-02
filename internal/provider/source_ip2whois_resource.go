@@ -60,7 +60,7 @@ func (r *SourceIp2whoisResource) Schema(ctx context.Context, req resource.Schema
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{
-						Required: true,
+						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"ip2whois",

@@ -3,6 +3,7 @@
 package shared
 
 type SourceXkcdPutRequest struct {
-	Name        string `json:"name"`
-	WorkspaceID string `json:"workspaceId"`
+	Configuration SourceXkcdUpdate `json:"configuration"`
+	Name          string           `json:"name"`
+	WorkspaceID   string           `json:"workspaceId"`
 }

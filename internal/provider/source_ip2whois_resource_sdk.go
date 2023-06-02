@@ -20,7 +20,12 @@ func (r *SourceIp2whoisResourceModel) ToCreateSDKType() *shared.SourceIp2whoisCr
 	} else {
 		domain = nil
 	}
-	sourceType := shared.SourceIp2whoisIp2whois(r.Configuration.SourceType.ValueString())
+	sourceType := new(shared.SourceIp2whoisIp2whois)
+	if !r.Configuration.SourceType.IsUnknown() && !r.Configuration.SourceType.IsNull() {
+		*sourceType = shared.SourceIp2whoisIp2whois(r.Configuration.SourceType.ValueString())
+	} else {
+		sourceType = nil
+	}
 	configuration := shared.SourceIp2whois{
 		APIKey:     apiKey,
 		Domain:     domain,

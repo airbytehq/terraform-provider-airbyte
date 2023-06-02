@@ -34,12 +34,12 @@ type SourceTiktokMarketingResource struct {
 
 // SourceTiktokMarketingResourceModel describes the resource data model.
 type SourceTiktokMarketingResourceModel struct {
-	Configuration SourceTiktokMarketingUpdate `tfsdk:"configuration"`
-	Name          types.String                `tfsdk:"name"`
-	SecretID      types.String                `tfsdk:"secret_id"`
-	SourceID      types.String                `tfsdk:"source_id"`
-	SourceType    types.String                `tfsdk:"source_type"`
-	WorkspaceID   types.String                `tfsdk:"workspace_id"`
+	Configuration SourceTiktokMarketing `tfsdk:"configuration"`
+	Name          types.String          `tfsdk:"name"`
+	SecretID      types.String          `tfsdk:"secret_id"`
+	SourceID      types.String          `tfsdk:"source_id"`
+	SourceType    types.String          `tfsdk:"source_type"`
+	WorkspaceID   types.String          `tfsdk:"workspace_id"`
 }
 
 func (r *SourceTiktokMarketingResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -60,52 +60,6 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_tiktok_marketing_update_authentication_method_o_auth2_0": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Computed: true,
-									},
-									"advertiser_id": schema.StringAttribute{
-										Computed: true,
-									},
-									"app_id": schema.StringAttribute{
-										Computed: true,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-									},
-									"secret": schema.StringAttribute{
-										Computed: true,
-									},
-								},
-								Description: `Authentication method`,
-							},
-							"source_tiktok_marketing_update_authentication_method_sandbox_access_token": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Computed: true,
-									},
-									"advertiser_id": schema.StringAttribute{
-										Computed: true,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"sandbox_access_token",
-											),
-										},
-									},
-								},
-								Description: `Authentication method`,
-							},
 							"source_tiktok_marketing_authentication_method_o_auth2_0": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -152,6 +106,52 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 								},
 								Description: `Authentication method`,
 							},
+							"source_tiktok_marketing_update_authentication_method_o_auth2_0": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"access_token": schema.StringAttribute{
+										Computed: true,
+									},
+									"advertiser_id": schema.StringAttribute{
+										Computed: true,
+									},
+									"app_id": schema.StringAttribute{
+										Computed: true,
+									},
+									"auth_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"oauth2.0",
+											),
+										},
+									},
+									"secret": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+								Description: `Authentication method`,
+							},
+							"source_tiktok_marketing_update_authentication_method_sandbox_access_token": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"access_token": schema.StringAttribute{
+										Computed: true,
+									},
+									"advertiser_id": schema.StringAttribute{
+										Computed: true,
+									},
+									"auth_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"sandbox_access_token",
+											),
+										},
+									},
+								},
+								Description: `Authentication method`,
+							},
 						},
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
@@ -163,18 +163,18 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 							validators.IsValidDate(),
 						},
 					},
-					"start_date": schema.StringAttribute{
-						Optional: true,
-						Validators: []validator.String{
-							validators.IsValidDate(),
-						},
-					},
 					"source_type": schema.StringAttribute{
-						Required: true,
+						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"tiktok-marketing",
 							),
+						},
+					},
+					"start_date": schema.StringAttribute{
+						Optional: true,
+						Validators: []validator.String{
+							validators.IsValidDate(),
 						},
 					},
 				},

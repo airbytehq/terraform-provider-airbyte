@@ -34,12 +34,12 @@ type SourceHubspotResource struct {
 
 // SourceHubspotResourceModel describes the resource data model.
 type SourceHubspotResourceModel struct {
-	Configuration SourceHubspotUpdate `tfsdk:"configuration"`
-	Name          types.String        `tfsdk:"name"`
-	SecretID      types.String        `tfsdk:"secret_id"`
-	SourceID      types.String        `tfsdk:"source_id"`
-	SourceType    types.String        `tfsdk:"source_type"`
-	WorkspaceID   types.String        `tfsdk:"workspace_id"`
+	Configuration SourceHubspot `tfsdk:"configuration"`
+	Name          types.String  `tfsdk:"name"`
+	SecretID      types.String  `tfsdk:"secret_id"`
+	SourceID      types.String  `tfsdk:"source_id"`
+	SourceType    types.String  `tfsdk:"source_type"`
+	WorkspaceID   types.String  `tfsdk:"workspace_id"`
 }
 
 func (r *SourceHubspotResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -57,48 +57,6 @@ func (r *SourceHubspotResource) Schema(ctx context.Context, req resource.SchemaR
 					"credentials": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
-							"source_hubspot_update_authentication_o_auth": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"client_id": schema.StringAttribute{
-										Computed: true,
-									},
-									"client_secret": schema.StringAttribute{
-										Computed: true,
-									},
-									"credentials_title": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"OAuth Credentials",
-											),
-										},
-										Description: `Name of the credentials`,
-									},
-									"refresh_token": schema.StringAttribute{
-										Computed: true,
-									},
-								},
-								Description: `Choose how to authenticate to HubSpot.`,
-							},
-							"source_hubspot_update_authentication_private_app": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Computed: true,
-									},
-									"credentials_title": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Private App Credentials",
-											),
-										},
-										Description: `Name of the credentials set`,
-									},
-								},
-								Description: `Choose how to authenticate to HubSpot.`,
-							},
 							"source_hubspot_authentication_o_auth": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -141,15 +99,51 @@ func (r *SourceHubspotResource) Schema(ctx context.Context, req resource.SchemaR
 								},
 								Description: `Choose how to authenticate to HubSpot.`,
 							},
+							"source_hubspot_update_authentication_o_auth": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"client_id": schema.StringAttribute{
+										Computed: true,
+									},
+									"client_secret": schema.StringAttribute{
+										Computed: true,
+									},
+									"credentials_title": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"OAuth Credentials",
+											),
+										},
+										Description: `Name of the credentials`,
+									},
+									"refresh_token": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+								Description: `Choose how to authenticate to HubSpot.`,
+							},
+							"source_hubspot_update_authentication_private_app": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"access_token": schema.StringAttribute{
+										Computed: true,
+									},
+									"credentials_title": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Private App Credentials",
+											),
+										},
+										Description: `Name of the credentials set`,
+									},
+								},
+								Description: `Choose how to authenticate to HubSpot.`,
+							},
 						},
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
-						},
-					},
-					"start_date": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							validators.IsRFC3339(),
 						},
 					},
 					"source_type": schema.StringAttribute{
@@ -158,6 +152,12 @@ func (r *SourceHubspotResource) Schema(ctx context.Context, req resource.SchemaR
 							stringvalidator.OneOf(
 								"hubspot",
 							),
+						},
+					},
+					"start_date": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							validators.IsRFC3339(),
 						},
 					},
 				},

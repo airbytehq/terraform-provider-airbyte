@@ -33,12 +33,12 @@ type SourceAmazonSqsResource struct {
 
 // SourceAmazonSqsResourceModel describes the resource data model.
 type SourceAmazonSqsResourceModel struct {
-	Configuration SourceAmazonSqsUpdate `tfsdk:"configuration"`
-	Name          types.String          `tfsdk:"name"`
-	SecretID      types.String          `tfsdk:"secret_id"`
-	SourceID      types.String          `tfsdk:"source_id"`
-	SourceType    types.String          `tfsdk:"source_type"`
-	WorkspaceID   types.String          `tfsdk:"workspace_id"`
+	Configuration SourceAmazonSqs `tfsdk:"configuration"`
+	Name          types.String    `tfsdk:"name"`
+	SecretID      types.String    `tfsdk:"secret_id"`
+	SourceID      types.String    `tfsdk:"source_id"`
+	SourceType    types.String    `tfsdk:"source_type"`
+	WorkspaceID   types.String    `tfsdk:"workspace_id"`
 }
 
 func (r *SourceAmazonSqsResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -107,9 +107,6 @@ func (r *SourceAmazonSqsResource) Schema(ctx context.Context, req resource.Schem
 					"secret_key": schema.StringAttribute{
 						Optional: true,
 					},
-					"visibility_timeout": schema.Int64Attribute{
-						Optional: true,
-					},
 					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -117,6 +114,9 @@ func (r *SourceAmazonSqsResource) Schema(ctx context.Context, req resource.Schem
 								"amazon-sqs",
 							),
 						},
+					},
+					"visibility_timeout": schema.Int64Attribute{
+						Optional: true,
 					},
 				},
 			},

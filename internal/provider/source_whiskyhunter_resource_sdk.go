@@ -8,7 +8,12 @@ import (
 )
 
 func (r *SourceWhiskyHunterResourceModel) ToCreateSDKType() *shared.SourceWhiskyHunterCreateRequest {
-	sourceType := shared.SourceWhiskyHunterWhiskyHunter(r.Configuration.SourceType.ValueString())
+	sourceType := new(shared.SourceWhiskyHunterWhiskyHunter)
+	if !r.Configuration.SourceType.IsUnknown() && !r.Configuration.SourceType.IsNull() {
+		*sourceType = shared.SourceWhiskyHunterWhiskyHunter(r.Configuration.SourceType.ValueString())
+	} else {
+		sourceType = nil
+	}
 	configuration := shared.SourceWhiskyHunter{
 		SourceType: sourceType,
 	}
@@ -30,11 +35,13 @@ func (r *SourceWhiskyHunterResourceModel) ToCreateSDKType() *shared.SourceWhisky
 }
 
 func (r *SourceWhiskyHunterResourceModel) ToUpdateSDKType() *shared.SourceWhiskyHunterPutRequest {
+	configuration := shared.SourceWhiskyHunterUpdate{}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceWhiskyHunterPutRequest{
-		Name:        name,
-		WorkspaceID: workspaceID,
+		Configuration: configuration,
+		Name:          name,
+		WorkspaceID:   workspaceID,
 	}
 	return &out
 }
