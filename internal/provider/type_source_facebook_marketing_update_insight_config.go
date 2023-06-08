@@ -4,7 +4,7 @@ package provider
 
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
-type SourceFacebookMarketingInsightConfig struct {
+type SourceFacebookMarketingUpdateInsightConfig struct {
 	ActionBreakdowns       []types.String `tfsdk:"action_breakdowns"`
 	Breakdowns             []types.String `tfsdk:"breakdowns"`
 	EndDate                types.String   `tfsdk:"end_date"`

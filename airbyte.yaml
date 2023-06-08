@@ -21603,6 +21603,7 @@ components:
           type: "string"
       x-speakeasy-entity: Workspace
     WorkspaceUpdateRequest:
+      x-speakeasy-entity: Workspace
       required:
       - "name"
       type: "object"
@@ -21611,6 +21612,7 @@ components:
           description: "Name of the workspace"
           type: "string"
     WorkspaceResponse:
+      x-speakeasy-entity: Workspace
       title: "Root Type for WorkspaceResponse"
       description: "Provides details of a single workspace."
       type: "object"

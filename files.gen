@@ -248,7 +248,7 @@ internal/provider/type_source_e2e_test_cloud_mock_catalog.go
 internal/provider/type_source_e2e_test_cloud.go
 internal/provider/type_source_emailoctopus.go
 internal/provider/type_source_exchange_rates.go
-internal/provider/type_source_facebook_marketing_insight_config.go
+internal/provider/type_source_facebook_marketing_update_insight_config.go
 internal/provider/type_source_facebook_marketing.go
 internal/provider/type_source_facebook_pages.go
 internal/provider/type_source_faker.go
@@ -2546,6 +2546,7 @@ internal/sdk/pkg/models/shared/workspacesresponse.go
 internal/sdk/pkg/models/shared/workspaceupdaterequest.go
 internal/sdk/pkg/models/shared/security.go
 internal/sdk/pkg/models/shared/connectionresponseroottypeforconnectionresponse.go
+internal/sdk/pkg/models/shared/workspaceresponseroottypeforworkspaceresponse.go
 USAGE.md
 internal/provider/provider.go
 internal/provider/connection_resource.go
