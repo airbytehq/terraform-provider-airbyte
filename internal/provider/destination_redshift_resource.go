@@ -97,33 +97,6 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
-							"destination_redshift_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"ssh_key": schema.StringAttribute{
-										Required: true,
-									},
-									"tunnel_host": schema.StringAttribute{
-										Required: true,
-									},
-									"tunnel_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_KEY_AUTH",
-											),
-										},
-										Description: `Connect through a jump server tunnel host using username and ssh key`,
-									},
-									"tunnel_port": schema.Int64Attribute{
-										Required: true,
-									},
-									"tunnel_user": schema.StringAttribute{
-										Required: true,
-									},
-								},
-								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
-							},
 							"destination_redshift_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -151,6 +124,33 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
+							"destination_redshift_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"ssh_key": schema.StringAttribute{
+										Required: true,
+									},
+									"tunnel_host": schema.StringAttribute{
+										Required: true,
+									},
+									"tunnel_method": schema.StringAttribute{
+										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"SSH_KEY_AUTH",
+											),
+										},
+										Description: `Connect through a jump server tunnel host using username and ssh key`,
+									},
+									"tunnel_port": schema.Int64Attribute{
+										Required: true,
+									},
+									"tunnel_user": schema.StringAttribute{
+										Required: true,
+									},
+								},
+								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
+							},
 							"destination_redshift_update_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
@@ -162,33 +162,6 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 											),
 										},
 										Description: `No ssh tunnel needed to connect to database`,
-									},
-								},
-								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
-							},
-							"destination_redshift_update_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"ssh_key": schema.StringAttribute{
-										Computed: true,
-									},
-									"tunnel_host": schema.StringAttribute{
-										Computed: true,
-									},
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_KEY_AUTH",
-											),
-										},
-										Description: `Connect through a jump server tunnel host using username and ssh key`,
-									},
-									"tunnel_port": schema.Int64Attribute{
-										Computed: true,
-									},
-									"tunnel_user": schema.StringAttribute{
-										Computed: true,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -220,6 +193,33 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
+							"destination_redshift_update_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"ssh_key": schema.StringAttribute{
+										Computed: true,
+									},
+									"tunnel_host": schema.StringAttribute{
+										Computed: true,
+									},
+									"tunnel_method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"SSH_KEY_AUTH",
+											),
+										},
+										Description: `Connect through a jump server tunnel host using username and ssh key`,
+									},
+									"tunnel_port": schema.Int64Attribute{
+										Computed: true,
+									},
+									"tunnel_user": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
+							},
 						},
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
@@ -228,20 +228,6 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 					"uploading_method": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"destination_redshift_uploading_method_standard": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Standard",
-											),
-										},
-									},
-								},
-								Description: `The method how the data will be uploaded to the database.`,
-							},
 							"destination_redshift_uploading_method_s3_staging": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -348,11 +334,11 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 								},
 								Description: `The method how the data will be uploaded to the database.`,
 							},
-							"destination_redshift_update_uploading_method_standard": schema.SingleNestedAttribute{
-								Computed: true,
+							"destination_redshift_uploading_method_standard": schema.SingleNestedAttribute{
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"Standard",
@@ -464,6 +450,20 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 									},
 									"secret_access_key": schema.StringAttribute{
 										Computed: true,
+									},
+								},
+								Description: `The method how the data will be uploaded to the database.`,
+							},
+							"destination_redshift_update_uploading_method_standard": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Standard",
+											),
+										},
 									},
 								},
 								Description: `The method how the data will be uploaded to the database.`,

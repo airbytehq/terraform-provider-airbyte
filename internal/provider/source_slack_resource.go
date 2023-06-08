@@ -61,6 +61,23 @@ func (r *SourceSlackResource) Schema(ctx context.Context, req resource.SchemaReq
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
+							"source_slack_authentication_mechanism_api_token": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"api_token": schema.StringAttribute{
+										Required: true,
+									},
+									"option_title": schema.StringAttribute{
+										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"API Token Credentials",
+											),
+										},
+									},
+								},
+								Description: `Choose how to authenticate into Slack`,
+							},
 							"source_slack_authentication_mechanism_sign_in_via_slack_o_auth_": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -84,14 +101,14 @@ func (r *SourceSlackResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 								Description: `Choose how to authenticate into Slack`,
 							},
-							"source_slack_authentication_mechanism_api_token": schema.SingleNestedAttribute{
-								Optional: true,
+							"source_slack_update_authentication_mechanism_api_token": schema.SingleNestedAttribute{
+								Computed: true,
 								Attributes: map[string]schema.Attribute{
 									"api_token": schema.StringAttribute{
-										Required: true,
+										Computed: true,
 									},
 									"option_title": schema.StringAttribute{
-										Required: true,
+										Computed: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"API Token Credentials",
@@ -118,23 +135,6 @@ func (r *SourceSlackResource) Schema(ctx context.Context, req resource.SchemaReq
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"Default OAuth2.0 authorization",
-											),
-										},
-									},
-								},
-								Description: `Choose how to authenticate into Slack`,
-							},
-							"source_slack_update_authentication_mechanism_api_token": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"api_token": schema.StringAttribute{
-										Computed: true,
-									},
-									"option_title": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"API Token Credentials",
 											),
 										},
 									},

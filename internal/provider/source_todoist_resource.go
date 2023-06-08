@@ -33,12 +33,12 @@ type SourceTodoistResource struct {
 
 // SourceTodoistResourceModel describes the resource data model.
 type SourceTodoistResourceModel struct {
-	Configuration SourceTodoistUpdate `tfsdk:"configuration"`
-	Name          types.String        `tfsdk:"name"`
-	SecretID      types.String        `tfsdk:"secret_id"`
-	SourceID      types.String        `tfsdk:"source_id"`
-	SourceType    types.String        `tfsdk:"source_type"`
-	WorkspaceID   types.String        `tfsdk:"workspace_id"`
+	Configuration SourceTodoist `tfsdk:"configuration"`
+	Name          types.String  `tfsdk:"name"`
+	SecretID      types.String  `tfsdk:"secret_id"`
+	SourceID      types.String  `tfsdk:"source_id"`
+	SourceType    types.String  `tfsdk:"source_type"`
+	WorkspaceID   types.String  `tfsdk:"workspace_id"`
 }
 
 func (r *SourceTodoistResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -53,9 +53,6 @@ func (r *SourceTodoistResource) Schema(ctx context.Context, req resource.SchemaR
 			"configuration": schema.SingleNestedAttribute{
 				Required: true,
 				Attributes: map[string]schema.Attribute{
-					"token": schema.StringAttribute{
-						Required: true,
-					},
 					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -63,6 +60,9 @@ func (r *SourceTodoistResource) Schema(ctx context.Context, req resource.SchemaR
 								"todoist",
 							),
 						},
+					},
+					"token": schema.StringAttribute{
+						Required: true,
 					},
 				},
 			},

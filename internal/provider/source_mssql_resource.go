@@ -72,20 +72,6 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 					"replication_method": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_mssql_replication_method_standard": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"STANDARD",
-											),
-										},
-									},
-								},
-								Description: `Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
-							},
 							"source_mssql_replication_method_logical_replication_cdc_": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -123,11 +109,11 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 								Description: `CDC uses {TBC} to detect inserts, updates, and deletes. This needs to be configured on the source database itself.`,
 							},
-							"source_mssql_update_replication_method_standard": schema.SingleNestedAttribute{
-								Computed: true,
+							"source_mssql_replication_method_standard": schema.SingleNestedAttribute{
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"STANDARD",
@@ -173,6 +159,20 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 								},
 								Description: `CDC uses {TBC} to detect inserts, updates, and deletes. This needs to be configured on the source database itself.`,
+							},
+							"source_mssql_update_replication_method_standard": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"STANDARD",
+											),
+										},
+									},
+								},
+								Description: `Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
 							},
 						},
 						Validators: []validator.Object{
@@ -279,33 +279,6 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
-							"source_mssql_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"ssh_key": schema.StringAttribute{
-										Required: true,
-									},
-									"tunnel_host": schema.StringAttribute{
-										Required: true,
-									},
-									"tunnel_method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_KEY_AUTH",
-											),
-										},
-										Description: `Connect through a jump server tunnel host using username and ssh key`,
-									},
-									"tunnel_port": schema.Int64Attribute{
-										Required: true,
-									},
-									"tunnel_user": schema.StringAttribute{
-										Required: true,
-									},
-								},
-								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
-							},
 							"source_mssql_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -333,6 +306,33 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
+							"source_mssql_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"ssh_key": schema.StringAttribute{
+										Required: true,
+									},
+									"tunnel_host": schema.StringAttribute{
+										Required: true,
+									},
+									"tunnel_method": schema.StringAttribute{
+										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"SSH_KEY_AUTH",
+											),
+										},
+										Description: `Connect through a jump server tunnel host using username and ssh key`,
+									},
+									"tunnel_port": schema.Int64Attribute{
+										Required: true,
+									},
+									"tunnel_user": schema.StringAttribute{
+										Required: true,
+									},
+								},
+								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
+							},
 							"source_mssql_update_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
@@ -344,33 +344,6 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 											),
 										},
 										Description: `No ssh tunnel needed to connect to database`,
-									},
-								},
-								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
-							},
-							"source_mssql_update_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"ssh_key": schema.StringAttribute{
-										Computed: true,
-									},
-									"tunnel_host": schema.StringAttribute{
-										Computed: true,
-									},
-									"tunnel_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH_KEY_AUTH",
-											),
-										},
-										Description: `Connect through a jump server tunnel host using username and ssh key`,
-									},
-									"tunnel_port": schema.Int64Attribute{
-										Computed: true,
-									},
-									"tunnel_user": schema.StringAttribute{
-										Computed: true,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -397,6 +370,33 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 										Computed: true,
 									},
 									"tunnel_user_password": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
+							},
+							"source_mssql_update_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"ssh_key": schema.StringAttribute{
+										Computed: true,
+									},
+									"tunnel_host": schema.StringAttribute{
+										Computed: true,
+									},
+									"tunnel_method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"SSH_KEY_AUTH",
+											),
+										},
+										Description: `Connect through a jump server tunnel host using username and ssh key`,
+									},
+									"tunnel_port": schema.Int64Attribute{
+										Computed: true,
+									},
+									"tunnel_user": schema.StringAttribute{
 										Computed: true,
 									},
 								},

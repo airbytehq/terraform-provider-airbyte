@@ -52,6 +52,9 @@ func (r *DestinationSftpJSONResource) Schema(ctx context.Context, req resource.S
 			"configuration": schema.SingleNestedAttribute{
 				Required: true,
 				Attributes: map[string]schema.Attribute{
+					"destination_path": schema.StringAttribute{
+						Required: true,
+					},
 					"destination_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -59,9 +62,6 @@ func (r *DestinationSftpJSONResource) Schema(ctx context.Context, req resource.S
 								"sftp-json",
 							),
 						},
-					},
-					"destination_path": schema.StringAttribute{
-						Required: true,
 					},
 					"host": schema.StringAttribute{
 						Required: true,

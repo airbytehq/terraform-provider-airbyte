@@ -60,6 +60,23 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
+							"source_mixpanel_authentication_wildcard_project_secret": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"api_secret": schema.StringAttribute{
+										Required: true,
+									},
+									"option_title": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Project Secret",
+											),
+										},
+									},
+								},
+								Description: `Choose how to authenticate to Mixpanel`,
+							},
 							"source_mixpanel_authentication_wildcard_service_account": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -80,14 +97,14 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 								},
 								Description: `Choose how to authenticate to Mixpanel`,
 							},
-							"source_mixpanel_authentication_wildcard_project_secret": schema.SingleNestedAttribute{
-								Optional: true,
+							"source_mixpanel_update_authentication_wildcard_project_secret": schema.SingleNestedAttribute{
+								Computed: true,
 								Attributes: map[string]schema.Attribute{
 									"api_secret": schema.StringAttribute{
-										Required: true,
+										Computed: true,
 									},
 									"option_title": schema.StringAttribute{
-										Optional: true,
+										Computed: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"Project Secret",
@@ -113,23 +130,6 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 									},
 									"username": schema.StringAttribute{
 										Computed: true,
-									},
-								},
-								Description: `Choose how to authenticate to Mixpanel`,
-							},
-							"source_mixpanel_update_authentication_wildcard_project_secret": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"api_secret": schema.StringAttribute{
-										Computed: true,
-									},
-									"option_title": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Project Secret",
-											),
-										},
 									},
 								},
 								Description: `Choose how to authenticate to Mixpanel`,

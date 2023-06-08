@@ -3,8 +3,8 @@
 package provider
 
 type SourceZendeskChatAuthorizationMethod struct {
-	SourceZendeskChatAuthorizationMethodOAuth20           *SourceZendeskChatAuthorizationMethodOAuth20           `tfsdk:"source_zendesk_chat_authorization_method_o_auth2_0"`
 	SourceZendeskChatAuthorizationMethodAccessToken       *SourceZendeskChatAuthorizationMethodAccessToken       `tfsdk:"source_zendesk_chat_authorization_method_access_token"`
-	SourceZendeskChatUpdateAuthorizationMethodOAuth20     *SourceZendeskChatUpdateAuthorizationMethodOAuth20     `tfsdk:"source_zendesk_chat_update_authorization_method_o_auth2_0"`
+	SourceZendeskChatAuthorizationMethodOAuth20           *SourceZendeskChatAuthorizationMethodOAuth20           `tfsdk:"source_zendesk_chat_authorization_method_o_auth2_0"`
 	SourceZendeskChatUpdateAuthorizationMethodAccessToken *SourceZendeskChatUpdateAuthorizationMethodAccessToken `tfsdk:"source_zendesk_chat_update_authorization_method_access_token"`
+	SourceZendeskChatUpdateAuthorizationMethodOAuth20     *SourceZendeskChatUpdateAuthorizationMethodOAuth20     `tfsdk:"source_zendesk_chat_update_authorization_method_o_auth2_0"`
 }

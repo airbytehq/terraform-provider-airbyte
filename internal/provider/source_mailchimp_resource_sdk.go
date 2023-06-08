@@ -16,26 +16,10 @@ func (r *SourceMailchimpResourceModel) ToCreateSDKType() *shared.SourceMailchimp
 	}
 	var credentials *shared.SourceMailchimpAuthentication
 	var sourceMailchimpAuthenticationOAuth20 *shared.SourceMailchimpAuthenticationOAuth20
-	if r.Configuration.Credentials.SourceMailchimpUpdateAuthenticationOAuth20 != nil {
-		accessToken := r.Configuration.Credentials.SourceMailchimpUpdateAuthenticationOAuth20.AccessToken.ValueString()
-		authType := shared.SourceMailchimpAuthenticationOAuth20AuthType(r.Configuration.Credentials.SourceMailchimpUpdateAuthenticationOAuth20.AuthType.ValueString())
-		clientID := new(string)
-		if !r.Configuration.Credentials.SourceMailchimpUpdateAuthenticationOAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.SourceMailchimpUpdateAuthenticationOAuth20.ClientID.IsNull() {
-			*clientID = r.Configuration.Credentials.SourceMailchimpUpdateAuthenticationOAuth20.ClientID.ValueString()
-		} else {
-			clientID = nil
-		}
-		clientSecret := new(string)
-		if !r.Configuration.Credentials.SourceMailchimpUpdateAuthenticationOAuth20.ClientSecret.IsUnknown() && !r.Configuration.Credentials.SourceMailchimpUpdateAuthenticationOAuth20.ClientSecret.IsNull() {
-			*clientSecret = r.Configuration.Credentials.SourceMailchimpUpdateAuthenticationOAuth20.ClientSecret.ValueString()
-		} else {
-			clientSecret = nil
-		}
+	if r.Configuration.Credentials.SourceMailchimpAuthenticationAPIKey != nil {
+		authType := shared.SourceMailchimpAuthenticationOAuth20AuthType(r.Configuration.Credentials.SourceMailchimpAuthenticationAPIKey.AuthType.ValueString())
 		sourceMailchimpAuthenticationOAuth20 = &shared.SourceMailchimpAuthenticationOAuth20{
-			AccessToken:  accessToken,
-			AuthType:     authType,
-			ClientID:     clientID,
-			ClientSecret: clientSecret,
+			AuthType: authType,
 		}
 	}
 	if sourceMailchimpAuthenticationOAuth20 != nil {
@@ -44,11 +28,9 @@ func (r *SourceMailchimpResourceModel) ToCreateSDKType() *shared.SourceMailchimp
 		}
 	}
 	var sourceMailchimpAuthenticationAPIKey *shared.SourceMailchimpAuthenticationAPIKey
-	if r.Configuration.Credentials.SourceMailchimpUpdateAuthenticationAPIKey != nil {
-		apikey := r.Configuration.Credentials.SourceMailchimpUpdateAuthenticationAPIKey.Apikey.ValueString()
-		authType1 := shared.SourceMailchimpAuthenticationAPIKeyAuthType(r.Configuration.Credentials.SourceMailchimpUpdateAuthenticationAPIKey.AuthType.ValueString())
+	if r.Configuration.Credentials.SourceMailchimpAuthenticationOAuth20 != nil {
+		authType1 := shared.SourceMailchimpAuthenticationAPIKeyAuthType(r.Configuration.Credentials.SourceMailchimpAuthenticationOAuth20.AuthType.ValueString())
 		sourceMailchimpAuthenticationAPIKey = &shared.SourceMailchimpAuthenticationAPIKey{
-			Apikey:   apikey,
 			AuthType: authType1,
 		}
 	}
@@ -89,26 +71,10 @@ func (r *SourceMailchimpResourceModel) ToUpdateSDKType() *shared.SourceMailchimp
 	}
 	var credentials *shared.SourceMailchimpUpdateAuthentication
 	var sourceMailchimpUpdateAuthenticationOAuth20 *shared.SourceMailchimpUpdateAuthenticationOAuth20
-	if r.Configuration.Credentials.SourceMailchimpUpdateAuthenticationOAuth20 != nil {
-		accessToken := r.Configuration.Credentials.SourceMailchimpUpdateAuthenticationOAuth20.AccessToken.ValueString()
-		authType := shared.SourceMailchimpUpdateAuthenticationOAuth20AuthType(r.Configuration.Credentials.SourceMailchimpUpdateAuthenticationOAuth20.AuthType.ValueString())
-		clientID := new(string)
-		if !r.Configuration.Credentials.SourceMailchimpUpdateAuthenticationOAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.SourceMailchimpUpdateAuthenticationOAuth20.ClientID.IsNull() {
-			*clientID = r.Configuration.Credentials.SourceMailchimpUpdateAuthenticationOAuth20.ClientID.ValueString()
-		} else {
-			clientID = nil
-		}
-		clientSecret := new(string)
-		if !r.Configuration.Credentials.SourceMailchimpUpdateAuthenticationOAuth20.ClientSecret.IsUnknown() && !r.Configuration.Credentials.SourceMailchimpUpdateAuthenticationOAuth20.ClientSecret.IsNull() {
-			*clientSecret = r.Configuration.Credentials.SourceMailchimpUpdateAuthenticationOAuth20.ClientSecret.ValueString()
-		} else {
-			clientSecret = nil
-		}
+	if r.Configuration.Credentials.SourceMailchimpAuthenticationAPIKey != nil {
+		authType := shared.SourceMailchimpUpdateAuthenticationOAuth20AuthType(r.Configuration.Credentials.SourceMailchimpAuthenticationAPIKey.AuthType.ValueString())
 		sourceMailchimpUpdateAuthenticationOAuth20 = &shared.SourceMailchimpUpdateAuthenticationOAuth20{
-			AccessToken:  accessToken,
-			AuthType:     authType,
-			ClientID:     clientID,
-			ClientSecret: clientSecret,
+			AuthType: authType,
 		}
 	}
 	if sourceMailchimpUpdateAuthenticationOAuth20 != nil {
@@ -117,11 +83,9 @@ func (r *SourceMailchimpResourceModel) ToUpdateSDKType() *shared.SourceMailchimp
 		}
 	}
 	var sourceMailchimpUpdateAuthenticationAPIKey *shared.SourceMailchimpUpdateAuthenticationAPIKey
-	if r.Configuration.Credentials.SourceMailchimpUpdateAuthenticationAPIKey != nil {
-		apikey := r.Configuration.Credentials.SourceMailchimpUpdateAuthenticationAPIKey.Apikey.ValueString()
-		authType1 := shared.SourceMailchimpUpdateAuthenticationAPIKeyAuthType(r.Configuration.Credentials.SourceMailchimpUpdateAuthenticationAPIKey.AuthType.ValueString())
+	if r.Configuration.Credentials.SourceMailchimpAuthenticationOAuth20 != nil {
+		authType1 := shared.SourceMailchimpUpdateAuthenticationAPIKeyAuthType(r.Configuration.Credentials.SourceMailchimpAuthenticationOAuth20.AuthType.ValueString())
 		sourceMailchimpUpdateAuthenticationAPIKey = &shared.SourceMailchimpUpdateAuthenticationAPIKey{
-			Apikey:   apikey,
 			AuthType: authType1,
 		}
 	}

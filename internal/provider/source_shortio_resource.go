@@ -33,12 +33,12 @@ type SourceShortioResource struct {
 
 // SourceShortioResourceModel describes the resource data model.
 type SourceShortioResourceModel struct {
-	Configuration SourceShortioUpdate `tfsdk:"configuration"`
-	Name          types.String        `tfsdk:"name"`
-	SecretID      types.String        `tfsdk:"secret_id"`
-	SourceID      types.String        `tfsdk:"source_id"`
-	SourceType    types.String        `tfsdk:"source_type"`
-	WorkspaceID   types.String        `tfsdk:"workspace_id"`
+	Configuration SourceShortio `tfsdk:"configuration"`
+	Name          types.String  `tfsdk:"name"`
+	SecretID      types.String  `tfsdk:"secret_id"`
+	SourceID      types.String  `tfsdk:"source_id"`
+	SourceType    types.String  `tfsdk:"source_type"`
+	WorkspaceID   types.String  `tfsdk:"workspace_id"`
 }
 
 func (r *SourceShortioResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -59,9 +59,6 @@ func (r *SourceShortioResource) Schema(ctx context.Context, req resource.SchemaR
 					"secret_key": schema.StringAttribute{
 						Required: true,
 					},
-					"start_date": schema.StringAttribute{
-						Required: true,
-					},
 					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -69,6 +66,9 @@ func (r *SourceShortioResource) Schema(ctx context.Context, req resource.SchemaR
 								"shortio",
 							),
 						},
+					},
+					"start_date": schema.StringAttribute{
+						Required: true,
 					},
 				},
 			},

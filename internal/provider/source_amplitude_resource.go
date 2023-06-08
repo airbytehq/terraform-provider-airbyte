@@ -33,12 +33,12 @@ type SourceAmplitudeResource struct {
 
 // SourceAmplitudeResourceModel describes the resource data model.
 type SourceAmplitudeResourceModel struct {
-	Configuration SourceAmplitudeUpdate `tfsdk:"configuration"`
-	Name          types.String          `tfsdk:"name"`
-	SecretID      types.String          `tfsdk:"secret_id"`
-	SourceID      types.String          `tfsdk:"source_id"`
-	SourceType    types.String          `tfsdk:"source_type"`
-	WorkspaceID   types.String          `tfsdk:"workspace_id"`
+	Configuration SourceAmplitude `tfsdk:"configuration"`
+	Name          types.String    `tfsdk:"name"`
+	SecretID      types.String    `tfsdk:"secret_id"`
+	SourceID      types.String    `tfsdk:"source_id"`
+	SourceType    types.String    `tfsdk:"source_type"`
+	WorkspaceID   types.String    `tfsdk:"workspace_id"`
 }
 
 func (r *SourceAmplitudeResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -72,9 +72,6 @@ func (r *SourceAmplitudeResource) Schema(ctx context.Context, req resource.Schem
 					"secret_key": schema.StringAttribute{
 						Required: true,
 					},
-					"start_date": schema.StringAttribute{
-						Required: true,
-					},
 					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -82,6 +79,9 @@ func (r *SourceAmplitudeResource) Schema(ctx context.Context, req resource.Schem
 								"amplitude",
 							),
 						},
+					},
+					"start_date": schema.StringAttribute{
+						Required: true,
 					},
 				},
 			},

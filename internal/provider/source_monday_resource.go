@@ -57,6 +57,22 @@ func (r *SourceMondayResource) Schema(ctx context.Context, req resource.SchemaRe
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
+							"source_monday_authorization_method_api_token": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"api_token": schema.StringAttribute{
+										Required: true,
+									},
+									"auth_type": schema.StringAttribute{
+										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"api_token",
+											),
+										},
+									},
+								},
+							},
 							"source_monday_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -82,14 +98,14 @@ func (r *SourceMondayResource) Schema(ctx context.Context, req resource.SchemaRe
 									},
 								},
 							},
-							"source_monday_authorization_method_api_token": schema.SingleNestedAttribute{
-								Optional: true,
+							"source_monday_update_authorization_method_api_token": schema.SingleNestedAttribute{
+								Computed: true,
 								Attributes: map[string]schema.Attribute{
 									"api_token": schema.StringAttribute{
-										Required: true,
+										Computed: true,
 									},
 									"auth_type": schema.StringAttribute{
-										Required: true,
+										Computed: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"api_token",
@@ -120,22 +136,6 @@ func (r *SourceMondayResource) Schema(ctx context.Context, req resource.SchemaRe
 									},
 									"subdomain": schema.StringAttribute{
 										Computed: true,
-									},
-								},
-							},
-							"source_monday_update_authorization_method_api_token": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"api_token": schema.StringAttribute{
-										Computed: true,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"api_token",
-											),
-										},
 									},
 								},
 							},

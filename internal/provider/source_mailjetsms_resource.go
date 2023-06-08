@@ -33,12 +33,12 @@ type SourceMailjetSmsResource struct {
 
 // SourceMailjetSmsResourceModel describes the resource data model.
 type SourceMailjetSmsResourceModel struct {
-	Configuration SourceMailjetSmsUpdate `tfsdk:"configuration"`
-	Name          types.String           `tfsdk:"name"`
-	SecretID      types.String           `tfsdk:"secret_id"`
-	SourceID      types.String           `tfsdk:"source_id"`
-	SourceType    types.String           `tfsdk:"source_type"`
-	WorkspaceID   types.String           `tfsdk:"workspace_id"`
+	Configuration SourceMailjetSms `tfsdk:"configuration"`
+	Name          types.String     `tfsdk:"name"`
+	SecretID      types.String     `tfsdk:"secret_id"`
+	SourceID      types.String     `tfsdk:"source_id"`
+	SourceType    types.String     `tfsdk:"source_type"`
+	WorkspaceID   types.String     `tfsdk:"workspace_id"`
 }
 
 func (r *SourceMailjetSmsResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -56,12 +56,6 @@ func (r *SourceMailjetSmsResource) Schema(ctx context.Context, req resource.Sche
 					"end_date": schema.Int64Attribute{
 						Optional: true,
 					},
-					"start_date": schema.Int64Attribute{
-						Optional: true,
-					},
-					"token": schema.StringAttribute{
-						Required: true,
-					},
 					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -69,6 +63,12 @@ func (r *SourceMailjetSmsResource) Schema(ctx context.Context, req resource.Sche
 								"mailjet-sms",
 							),
 						},
+					},
+					"start_date": schema.Int64Attribute{
+						Optional: true,
+					},
+					"token": schema.StringAttribute{
+						Required: true,
 					},
 				},
 			},

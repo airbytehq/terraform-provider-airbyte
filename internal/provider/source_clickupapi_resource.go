@@ -33,12 +33,12 @@ type SourceClickupAPIResource struct {
 
 // SourceClickupAPIResourceModel describes the resource data model.
 type SourceClickupAPIResourceModel struct {
-	Configuration SourceClickupAPIUpdate `tfsdk:"configuration"`
-	Name          types.String           `tfsdk:"name"`
-	SecretID      types.String           `tfsdk:"secret_id"`
-	SourceID      types.String           `tfsdk:"source_id"`
-	SourceType    types.String           `tfsdk:"source_type"`
-	WorkspaceID   types.String           `tfsdk:"workspace_id"`
+	Configuration SourceClickupAPI `tfsdk:"configuration"`
+	Name          types.String     `tfsdk:"name"`
+	SecretID      types.String     `tfsdk:"secret_id"`
+	SourceID      types.String     `tfsdk:"source_id"`
+	SourceType    types.String     `tfsdk:"source_type"`
+	WorkspaceID   types.String     `tfsdk:"workspace_id"`
 }
 
 func (r *SourceClickupAPIResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -65,12 +65,6 @@ func (r *SourceClickupAPIResource) Schema(ctx context.Context, req resource.Sche
 					"list_id": schema.StringAttribute{
 						Optional: true,
 					},
-					"space_id": schema.StringAttribute{
-						Optional: true,
-					},
-					"team_id": schema.StringAttribute{
-						Optional: true,
-					},
 					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -78,6 +72,12 @@ func (r *SourceClickupAPIResource) Schema(ctx context.Context, req resource.Sche
 								"clickup-api",
 							),
 						},
+					},
+					"space_id": schema.StringAttribute{
+						Optional: true,
+					},
+					"team_id": schema.StringAttribute{
+						Optional: true,
 					},
 				},
 			},

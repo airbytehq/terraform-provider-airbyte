@@ -61,6 +61,23 @@ func (r *SourceTrustpilotResource) Schema(ctx context.Context, req resource.Sche
 					"credentials": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
+							"source_trustpilot_authorization_method_api_key": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"auth_type": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"apikey",
+											),
+										},
+									},
+									"client_id": schema.StringAttribute{
+										Required: true,
+									},
+								},
+								Description: `The API key authentication method gives you access to only the streams which are part of the Public API. When you want to get streams available via the Consumer API (e.g. the private reviews) you need to use authentication method OAuth 2.0.`,
+							},
 							"source_trustpilot_authorization_method_o_auth_2_0": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -92,11 +109,11 @@ func (r *SourceTrustpilotResource) Schema(ctx context.Context, req resource.Sche
 									},
 								},
 							},
-							"source_trustpilot_authorization_method_api_key": schema.SingleNestedAttribute{
-								Optional: true,
+							"source_trustpilot_update_authorization_method_api_key": schema.SingleNestedAttribute{
+								Computed: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
-										Optional: true,
+										Computed: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"apikey",
@@ -104,7 +121,7 @@ func (r *SourceTrustpilotResource) Schema(ctx context.Context, req resource.Sche
 										},
 									},
 									"client_id": schema.StringAttribute{
-										Required: true,
+										Computed: true,
 									},
 								},
 								Description: `The API key authentication method gives you access to only the streams which are part of the Public API. When you want to get streams available via the Consumer API (e.g. the private reviews) you need to use authentication method OAuth 2.0.`,
@@ -139,23 +156,6 @@ func (r *SourceTrustpilotResource) Schema(ctx context.Context, req resource.Sche
 										},
 									},
 								},
-							},
-							"source_trustpilot_update_authorization_method_api_key": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"apikey",
-											),
-										},
-									},
-									"client_id": schema.StringAttribute{
-										Computed: true,
-									},
-								},
-								Description: `The API key authentication method gives you access to only the streams which are part of the Public API. When you want to get streams available via the Consumer API (e.g. the private reviews) you need to use authentication method OAuth 2.0.`,
 							},
 						},
 						Validators: []validator.Object{

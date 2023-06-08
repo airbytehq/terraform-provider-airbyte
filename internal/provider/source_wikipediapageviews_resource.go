@@ -33,12 +33,12 @@ type SourceWikipediaPageviewsResource struct {
 
 // SourceWikipediaPageviewsResourceModel describes the resource data model.
 type SourceWikipediaPageviewsResourceModel struct {
-	Configuration SourceWikipediaPageviewsUpdate `tfsdk:"configuration"`
-	Name          types.String                   `tfsdk:"name"`
-	SecretID      types.String                   `tfsdk:"secret_id"`
-	SourceID      types.String                   `tfsdk:"source_id"`
-	SourceType    types.String                   `tfsdk:"source_type"`
-	WorkspaceID   types.String                   `tfsdk:"workspace_id"`
+	Configuration SourceWikipediaPageviews `tfsdk:"configuration"`
+	Name          types.String             `tfsdk:"name"`
+	SecretID      types.String             `tfsdk:"secret_id"`
+	SourceID      types.String             `tfsdk:"source_id"`
+	SourceType    types.String             `tfsdk:"source_type"`
+	WorkspaceID   types.String             `tfsdk:"workspace_id"`
 }
 
 func (r *SourceWikipediaPageviewsResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -71,9 +71,6 @@ func (r *SourceWikipediaPageviewsResource) Schema(ctx context.Context, req resou
 					"project": schema.StringAttribute{
 						Required: true,
 					},
-					"start": schema.StringAttribute{
-						Required: true,
-					},
 					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -81,6 +78,9 @@ func (r *SourceWikipediaPageviewsResource) Schema(ctx context.Context, req resou
 								"wikipedia-pageviews",
 							),
 						},
+					},
+					"start": schema.StringAttribute{
+						Required: true,
 					},
 				},
 			},

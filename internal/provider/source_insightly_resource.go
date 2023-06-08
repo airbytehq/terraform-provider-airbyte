@@ -33,12 +33,12 @@ type SourceInsightlyResource struct {
 
 // SourceInsightlyResourceModel describes the resource data model.
 type SourceInsightlyResourceModel struct {
-	Configuration SourceInsightlyUpdate `tfsdk:"configuration"`
-	Name          types.String          `tfsdk:"name"`
-	SecretID      types.String          `tfsdk:"secret_id"`
-	SourceID      types.String          `tfsdk:"source_id"`
-	SourceType    types.String          `tfsdk:"source_type"`
-	WorkspaceID   types.String          `tfsdk:"workspace_id"`
+	Configuration SourceInsightly `tfsdk:"configuration"`
+	Name          types.String    `tfsdk:"name"`
+	SecretID      types.String    `tfsdk:"secret_id"`
+	SourceID      types.String    `tfsdk:"source_id"`
+	SourceType    types.String    `tfsdk:"source_type"`
+	WorkspaceID   types.String    `tfsdk:"workspace_id"`
 }
 
 func (r *SourceInsightlyResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -53,12 +53,6 @@ func (r *SourceInsightlyResource) Schema(ctx context.Context, req resource.Schem
 			"configuration": schema.SingleNestedAttribute{
 				Required: true,
 				Attributes: map[string]schema.Attribute{
-					"start_date": schema.StringAttribute{
-						Required: true,
-					},
-					"token": schema.StringAttribute{
-						Required: true,
-					},
 					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -66,6 +60,12 @@ func (r *SourceInsightlyResource) Schema(ctx context.Context, req resource.Schem
 								"insightly",
 							),
 						},
+					},
+					"start_date": schema.StringAttribute{
+						Required: true,
+					},
+					"token": schema.StringAttribute{
+						Required: true,
 					},
 				},
 			},

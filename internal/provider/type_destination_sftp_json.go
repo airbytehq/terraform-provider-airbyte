@@ -5,8 +5,8 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DestinationSftpJSON struct {
-	DestinationType types.String `tfsdk:"destination_type"`
 	DestinationPath types.String `tfsdk:"destination_path"`
+	DestinationType types.String `tfsdk:"destination_type"`
 	Host            types.String `tfsdk:"host"`
 	Password        types.String `tfsdk:"password"`
 	Port            types.Int64  `tfsdk:"port"`

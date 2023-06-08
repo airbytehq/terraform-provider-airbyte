@@ -33,12 +33,12 @@ type SourceMetabaseResource struct {
 
 // SourceMetabaseResourceModel describes the resource data model.
 type SourceMetabaseResourceModel struct {
-	Configuration SourceMetabaseUpdate `tfsdk:"configuration"`
-	Name          types.String         `tfsdk:"name"`
-	SecretID      types.String         `tfsdk:"secret_id"`
-	SourceID      types.String         `tfsdk:"source_id"`
-	SourceType    types.String         `tfsdk:"source_type"`
-	WorkspaceID   types.String         `tfsdk:"workspace_id"`
+	Configuration SourceMetabase `tfsdk:"configuration"`
+	Name          types.String   `tfsdk:"name"`
+	SecretID      types.String   `tfsdk:"secret_id"`
+	SourceID      types.String   `tfsdk:"source_id"`
+	SourceType    types.String   `tfsdk:"source_type"`
+	WorkspaceID   types.String   `tfsdk:"workspace_id"`
 }
 
 func (r *SourceMetabaseResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -62,9 +62,6 @@ func (r *SourceMetabaseResource) Schema(ctx context.Context, req resource.Schema
 					"session_token": schema.StringAttribute{
 						Optional: true,
 					},
-					"username": schema.StringAttribute{
-						Optional: true,
-					},
 					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -72,6 +69,9 @@ func (r *SourceMetabaseResource) Schema(ctx context.Context, req resource.Schema
 								"metabase",
 							),
 						},
+					},
+					"username": schema.StringAttribute{
+						Optional: true,
 					},
 				},
 			},

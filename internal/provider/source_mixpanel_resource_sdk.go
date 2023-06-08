@@ -17,19 +17,15 @@ func (r *SourceMixpanelResourceModel) ToCreateSDKType() *shared.SourceMixpanelCr
 	}
 	var credentials *shared.SourceMixpanelAuthenticationWildcard
 	var sourceMixpanelAuthenticationWildcardServiceAccount *shared.SourceMixpanelAuthenticationWildcardServiceAccount
-	if r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount != nil {
+	if r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardProjectSecret != nil {
 		optionTitle := new(shared.SourceMixpanelAuthenticationWildcardServiceAccountOptionTitle)
-		if !r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount.OptionTitle.IsUnknown() && !r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount.OptionTitle.IsNull() {
-			*optionTitle = shared.SourceMixpanelAuthenticationWildcardServiceAccountOptionTitle(r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount.OptionTitle.ValueString())
+		if !r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardProjectSecret.OptionTitle.IsUnknown() && !r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardProjectSecret.OptionTitle.IsNull() {
+			*optionTitle = shared.SourceMixpanelAuthenticationWildcardServiceAccountOptionTitle(r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardProjectSecret.OptionTitle.ValueString())
 		} else {
 			optionTitle = nil
 		}
-		secret := r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount.Secret.ValueString()
-		username := r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount.Username.ValueString()
 		sourceMixpanelAuthenticationWildcardServiceAccount = &shared.SourceMixpanelAuthenticationWildcardServiceAccount{
 			OptionTitle: optionTitle,
-			Secret:      secret,
-			Username:    username,
 		}
 	}
 	if sourceMixpanelAuthenticationWildcardServiceAccount != nil {
@@ -38,16 +34,14 @@ func (r *SourceMixpanelResourceModel) ToCreateSDKType() *shared.SourceMixpanelCr
 		}
 	}
 	var sourceMixpanelAuthenticationWildcardProjectSecret *shared.SourceMixpanelAuthenticationWildcardProjectSecret
-	if r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardProjectSecret != nil {
-		apiSecret := r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardProjectSecret.APISecret.ValueString()
+	if r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount != nil {
 		optionTitle1 := new(shared.SourceMixpanelAuthenticationWildcardProjectSecretOptionTitle)
-		if !r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardProjectSecret.OptionTitle.IsUnknown() && !r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardProjectSecret.OptionTitle.IsNull() {
-			*optionTitle1 = shared.SourceMixpanelAuthenticationWildcardProjectSecretOptionTitle(r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardProjectSecret.OptionTitle.ValueString())
+		if !r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount.OptionTitle.IsUnknown() && !r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount.OptionTitle.IsNull() {
+			*optionTitle1 = shared.SourceMixpanelAuthenticationWildcardProjectSecretOptionTitle(r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount.OptionTitle.ValueString())
 		} else {
 			optionTitle1 = nil
 		}
 		sourceMixpanelAuthenticationWildcardProjectSecret = &shared.SourceMixpanelAuthenticationWildcardProjectSecret{
-			APISecret:   apiSecret,
 			OptionTitle: optionTitle1,
 		}
 	}
@@ -142,19 +136,15 @@ func (r *SourceMixpanelResourceModel) ToUpdateSDKType() *shared.SourceMixpanelPu
 	}
 	var credentials *shared.SourceMixpanelUpdateAuthenticationWildcard
 	var sourceMixpanelUpdateAuthenticationWildcardServiceAccount *shared.SourceMixpanelUpdateAuthenticationWildcardServiceAccount
-	if r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount != nil {
+	if r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardProjectSecret != nil {
 		optionTitle := new(shared.SourceMixpanelUpdateAuthenticationWildcardServiceAccountOptionTitle)
-		if !r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount.OptionTitle.IsUnknown() && !r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount.OptionTitle.IsNull() {
-			*optionTitle = shared.SourceMixpanelUpdateAuthenticationWildcardServiceAccountOptionTitle(r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount.OptionTitle.ValueString())
+		if !r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardProjectSecret.OptionTitle.IsUnknown() && !r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardProjectSecret.OptionTitle.IsNull() {
+			*optionTitle = shared.SourceMixpanelUpdateAuthenticationWildcardServiceAccountOptionTitle(r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardProjectSecret.OptionTitle.ValueString())
 		} else {
 			optionTitle = nil
 		}
-		secret := r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount.Secret.ValueString()
-		username := r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount.Username.ValueString()
 		sourceMixpanelUpdateAuthenticationWildcardServiceAccount = &shared.SourceMixpanelUpdateAuthenticationWildcardServiceAccount{
 			OptionTitle: optionTitle,
-			Secret:      secret,
-			Username:    username,
 		}
 	}
 	if sourceMixpanelUpdateAuthenticationWildcardServiceAccount != nil {
@@ -163,16 +153,14 @@ func (r *SourceMixpanelResourceModel) ToUpdateSDKType() *shared.SourceMixpanelPu
 		}
 	}
 	var sourceMixpanelUpdateAuthenticationWildcardProjectSecret *shared.SourceMixpanelUpdateAuthenticationWildcardProjectSecret
-	if r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardProjectSecret != nil {
-		apiSecret := r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardProjectSecret.APISecret.ValueString()
+	if r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount != nil {
 		optionTitle1 := new(shared.SourceMixpanelUpdateAuthenticationWildcardProjectSecretOptionTitle)
-		if !r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardProjectSecret.OptionTitle.IsUnknown() && !r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardProjectSecret.OptionTitle.IsNull() {
-			*optionTitle1 = shared.SourceMixpanelUpdateAuthenticationWildcardProjectSecretOptionTitle(r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardProjectSecret.OptionTitle.ValueString())
+		if !r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount.OptionTitle.IsUnknown() && !r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount.OptionTitle.IsNull() {
+			*optionTitle1 = shared.SourceMixpanelUpdateAuthenticationWildcardProjectSecretOptionTitle(r.Configuration.Credentials.SourceMixpanelAuthenticationWildcardServiceAccount.OptionTitle.ValueString())
 		} else {
 			optionTitle1 = nil
 		}
 		sourceMixpanelUpdateAuthenticationWildcardProjectSecret = &shared.SourceMixpanelUpdateAuthenticationWildcardProjectSecret{
-			APISecret:   apiSecret,
 			OptionTitle: optionTitle1,
 		}
 	}

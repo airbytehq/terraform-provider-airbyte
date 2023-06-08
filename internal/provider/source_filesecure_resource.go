@@ -34,12 +34,12 @@ type SourceFileSecureResource struct {
 
 // SourceFileSecureResourceModel describes the resource data model.
 type SourceFileSecureResourceModel struct {
-	Configuration SourceFileSecureUpdate `tfsdk:"configuration"`
-	Name          types.String           `tfsdk:"name"`
-	SecretID      types.String           `tfsdk:"secret_id"`
-	SourceID      types.String           `tfsdk:"source_id"`
-	SourceType    types.String           `tfsdk:"source_type"`
-	WorkspaceID   types.String           `tfsdk:"workspace_id"`
+	Configuration SourceFileSecure `tfsdk:"configuration"`
+	Name          types.String     `tfsdk:"name"`
+	SecretID      types.String     `tfsdk:"secret_id"`
+	SourceID      types.String     `tfsdk:"source_id"`
+	SourceType    types.String     `tfsdk:"source_type"`
+	WorkspaceID   types.String     `tfsdk:"workspace_id"`
 }
 
 func (r *SourceFileSecureResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -76,215 +76,6 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 					"provider": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
-							"source_file_secure_update_storage_provider_https_public_web": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"storage": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"HTTPS",
-											),
-										},
-									},
-									"user_agent": schema.BoolAttribute{
-										Computed: true,
-									},
-								},
-								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
-							},
-							"source_file_secure_update_storage_provider_gcs_google_cloud_storage": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"service_account_json": schema.StringAttribute{
-										Computed: true,
-									},
-									"storage": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"GCS",
-											),
-										},
-									},
-								},
-								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
-							},
-							"source_file_secure_update_storage_provider_s3_amazon_web_services": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"aws_access_key_id": schema.StringAttribute{
-										Computed: true,
-									},
-									"aws_secret_access_key": schema.StringAttribute{
-										Computed: true,
-									},
-									"storage": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"S3",
-											),
-										},
-									},
-								},
-								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
-							},
-							"source_file_secure_update_storage_provider_az_blob_azure_blob_storage": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"sas_token": schema.StringAttribute{
-										Computed: true,
-									},
-									"shared_key": schema.StringAttribute{
-										Computed: true,
-									},
-									"storage": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"AzBlob",
-											),
-										},
-									},
-									"storage_account": schema.StringAttribute{
-										Computed: true,
-									},
-								},
-								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
-							},
-							"source_file_secure_update_storage_provider_ssh_secure_shell": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"host": schema.StringAttribute{
-										Computed: true,
-									},
-									"password": schema.StringAttribute{
-										Computed: true,
-									},
-									"port": schema.StringAttribute{
-										Computed: true,
-									},
-									"storage": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SSH",
-											),
-										},
-									},
-									"user": schema.StringAttribute{
-										Computed: true,
-									},
-								},
-								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
-							},
-							"source_file_secure_update_storage_provider_scp_secure_copy_protocol": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"host": schema.StringAttribute{
-										Computed: true,
-									},
-									"password": schema.StringAttribute{
-										Computed: true,
-									},
-									"port": schema.StringAttribute{
-										Computed: true,
-									},
-									"storage": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SCP",
-											),
-										},
-									},
-									"user": schema.StringAttribute{
-										Computed: true,
-									},
-								},
-								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
-							},
-							"source_file_secure_update_storage_provider_sftp_secure_file_transfer_protocol": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"host": schema.StringAttribute{
-										Computed: true,
-									},
-									"password": schema.StringAttribute{
-										Computed: true,
-									},
-									"port": schema.StringAttribute{
-										Computed: true,
-									},
-									"storage": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SFTP",
-											),
-										},
-									},
-									"user": schema.StringAttribute{
-										Computed: true,
-									},
-								},
-								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
-							},
-							"source_file_secure_storage_provider_https_public_web": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"storage": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"HTTPS",
-											),
-										},
-									},
-									"user_agent": schema.BoolAttribute{
-										Optional: true,
-									},
-								},
-								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
-							},
-							"source_file_secure_storage_provider_gcs_google_cloud_storage": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"service_account_json": schema.StringAttribute{
-										Optional: true,
-									},
-									"storage": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"GCS",
-											),
-										},
-									},
-								},
-								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
-							},
-							"source_file_secure_storage_provider_s3_amazon_web_services": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"aws_access_key_id": schema.StringAttribute{
-										Optional: true,
-									},
-									"aws_secret_access_key": schema.StringAttribute{
-										Optional: true,
-									},
-									"storage": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"S3",
-											),
-										},
-									},
-								},
-								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
-							},
 							"source_file_secure_storage_provider_az_blob_azure_blob_storage": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -308,28 +99,56 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 								},
 								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
 							},
-							"source_file_secure_storage_provider_ssh_secure_shell": schema.SingleNestedAttribute{
+							"source_file_secure_storage_provider_gcs_google_cloud_storage": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
-									"host": schema.StringAttribute{
-										Required: true,
-									},
-									"password": schema.StringAttribute{
-										Optional: true,
-									},
-									"port": schema.StringAttribute{
+									"service_account_json": schema.StringAttribute{
 										Optional: true,
 									},
 									"storage": schema.StringAttribute{
 										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
-												"SSH",
+												"GCS",
 											),
 										},
 									},
-									"user": schema.StringAttribute{
+								},
+								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
+							},
+							"source_file_secure_storage_provider_https_public_web": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"storage": schema.StringAttribute{
 										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"HTTPS",
+											),
+										},
+									},
+									"user_agent": schema.BoolAttribute{
+										Optional: true,
+									},
+								},
+								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
+							},
+							"source_file_secure_storage_provider_s3_amazon_web_services": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"aws_access_key_id": schema.StringAttribute{
+										Optional: true,
+									},
+									"aws_secret_access_key": schema.StringAttribute{
+										Optional: true,
+									},
+									"storage": schema.StringAttribute{
+										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"S3",
+											),
+										},
 									},
 								},
 								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
@@ -386,6 +205,187 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 								},
 								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
 							},
+							"source_file_secure_storage_provider_ssh_secure_shell": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"host": schema.StringAttribute{
+										Required: true,
+									},
+									"password": schema.StringAttribute{
+										Optional: true,
+									},
+									"port": schema.StringAttribute{
+										Optional: true,
+									},
+									"storage": schema.StringAttribute{
+										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"SSH",
+											),
+										},
+									},
+									"user": schema.StringAttribute{
+										Required: true,
+									},
+								},
+								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
+							},
+							"source_file_secure_update_storage_provider_az_blob_azure_blob_storage": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"sas_token": schema.StringAttribute{
+										Computed: true,
+									},
+									"shared_key": schema.StringAttribute{
+										Computed: true,
+									},
+									"storage": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"AzBlob",
+											),
+										},
+									},
+									"storage_account": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
+							},
+							"source_file_secure_update_storage_provider_gcs_google_cloud_storage": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"service_account_json": schema.StringAttribute{
+										Computed: true,
+									},
+									"storage": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"GCS",
+											),
+										},
+									},
+								},
+								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
+							},
+							"source_file_secure_update_storage_provider_https_public_web": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"storage": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"HTTPS",
+											),
+										},
+									},
+									"user_agent": schema.BoolAttribute{
+										Computed: true,
+									},
+								},
+								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
+							},
+							"source_file_secure_update_storage_provider_s3_amazon_web_services": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"aws_access_key_id": schema.StringAttribute{
+										Computed: true,
+									},
+									"aws_secret_access_key": schema.StringAttribute{
+										Computed: true,
+									},
+									"storage": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"S3",
+											),
+										},
+									},
+								},
+								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
+							},
+							"source_file_secure_update_storage_provider_scp_secure_copy_protocol": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"host": schema.StringAttribute{
+										Computed: true,
+									},
+									"password": schema.StringAttribute{
+										Computed: true,
+									},
+									"port": schema.StringAttribute{
+										Computed: true,
+									},
+									"storage": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"SCP",
+											),
+										},
+									},
+									"user": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
+							},
+							"source_file_secure_update_storage_provider_sftp_secure_file_transfer_protocol": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"host": schema.StringAttribute{
+										Computed: true,
+									},
+									"password": schema.StringAttribute{
+										Computed: true,
+									},
+									"port": schema.StringAttribute{
+										Computed: true,
+									},
+									"storage": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"SFTP",
+											),
+										},
+									},
+									"user": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
+							},
+							"source_file_secure_update_storage_provider_ssh_secure_shell": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"host": schema.StringAttribute{
+										Computed: true,
+									},
+									"password": schema.StringAttribute{
+										Computed: true,
+									},
+									"port": schema.StringAttribute{
+										Computed: true,
+									},
+									"storage": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"SSH",
+											),
+										},
+									},
+									"user": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
+							},
 						},
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
@@ -394,9 +394,6 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 					"reader_options": schema.StringAttribute{
 						Optional: true,
 					},
-					"url": schema.StringAttribute{
-						Required: true,
-					},
 					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -404,6 +401,9 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 								"file-secure",
 							),
 						},
+					},
+					"url": schema.StringAttribute{
+						Required: true,
 					},
 				},
 			},

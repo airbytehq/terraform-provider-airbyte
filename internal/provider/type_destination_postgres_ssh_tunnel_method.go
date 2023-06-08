@@ -4,9 +4,9 @@ package provider
 
 type DestinationPostgresSSHTunnelMethod struct {
 	DestinationPostgresSSHTunnelMethodNoTunnel                     *DestinationClickhouseSSHTunnelMethodNoTunnel                     `tfsdk:"destination_postgres_ssh_tunnel_method_no_tunnel"`
-	DestinationPostgresSSHTunnelMethodSSHKeyAuthentication         *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication         `tfsdk:"destination_postgres_ssh_tunnel_method_ssh_key_authentication"`
 	DestinationPostgresSSHTunnelMethodPasswordAuthentication       *DestinationClickhouseSSHTunnelMethodPasswordAuthentication       `tfsdk:"destination_postgres_ssh_tunnel_method_password_authentication"`
+	DestinationPostgresSSHTunnelMethodSSHKeyAuthentication         *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication         `tfsdk:"destination_postgres_ssh_tunnel_method_ssh_key_authentication"`
 	DestinationPostgresUpdateSSHTunnelMethodNoTunnel               *DestinationClickhouseUpdateSSHTunnelMethodNoTunnel               `tfsdk:"destination_postgres_update_ssh_tunnel_method_no_tunnel"`
-	DestinationPostgresUpdateSSHTunnelMethodSSHKeyAuthentication   *DestinationClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication   `tfsdk:"destination_postgres_update_ssh_tunnel_method_ssh_key_authentication"`
 	DestinationPostgresUpdateSSHTunnelMethodPasswordAuthentication *DestinationClickhouseUpdateSSHTunnelMethodPasswordAuthentication `tfsdk:"destination_postgres_update_ssh_tunnel_method_password_authentication"`
+	DestinationPostgresUpdateSSHTunnelMethodSSHKeyAuthentication   *DestinationClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication   `tfsdk:"destination_postgres_update_ssh_tunnel_method_ssh_key_authentication"`
 }

@@ -25,8 +25,8 @@ func (r *SourceMssqlResourceModel) ToCreateSDKType() *shared.SourceMssqlCreateRe
 	port := r.Configuration.Port.ValueInt64()
 	var replicationMethod *shared.SourceMssqlReplicationMethod
 	var sourceMssqlReplicationMethodStandard *shared.SourceMssqlReplicationMethodStandard
-	if r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodStandard != nil {
-		method := shared.SourceMssqlReplicationMethodStandardMethod(r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodStandard.Method.ValueString())
+	if r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC != nil {
+		method := shared.SourceMssqlReplicationMethodStandardMethod(r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.Method.ValueString())
 		sourceMssqlReplicationMethodStandard = &shared.SourceMssqlReplicationMethodStandard{
 			Method: method,
 		}
@@ -37,31 +37,10 @@ func (r *SourceMssqlResourceModel) ToCreateSDKType() *shared.SourceMssqlCreateRe
 		}
 	}
 	var sourceMssqlReplicationMethodLogicalReplicationCDC *shared.SourceMssqlReplicationMethodLogicalReplicationCDC
-	if r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC != nil {
-		dataToSync := new(shared.SourceMssqlReplicationMethodLogicalReplicationCDCDataToSync)
-		if !r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.DataToSync.IsUnknown() && !r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.DataToSync.IsNull() {
-			*dataToSync = shared.SourceMssqlReplicationMethodLogicalReplicationCDCDataToSync(r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.DataToSync.ValueString())
-		} else {
-			dataToSync = nil
-		}
-		initialWaitingSeconds := new(int64)
-		if !r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds.IsUnknown() && !r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds.IsNull() {
-			*initialWaitingSeconds = r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds.ValueInt64()
-		} else {
-			initialWaitingSeconds = nil
-		}
-		method1 := shared.SourceMssqlReplicationMethodLogicalReplicationCDCMethod(r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.Method.ValueString())
-		snapshotIsolation := new(shared.SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevel)
-		if !r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.SnapshotIsolation.IsUnknown() && !r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.SnapshotIsolation.IsNull() {
-			*snapshotIsolation = shared.SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevel(r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.SnapshotIsolation.ValueString())
-		} else {
-			snapshotIsolation = nil
-		}
+	if r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodStandard != nil {
+		method1 := shared.SourceMssqlReplicationMethodLogicalReplicationCDCMethod(r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodStandard.Method.ValueString())
 		sourceMssqlReplicationMethodLogicalReplicationCDC = &shared.SourceMssqlReplicationMethodLogicalReplicationCDC{
-			DataToSync:            dataToSync,
-			InitialWaitingSeconds: initialWaitingSeconds,
-			Method:                method1,
-			SnapshotIsolation:     snapshotIsolation,
+			Method: method1,
 		}
 	}
 	if sourceMssqlReplicationMethodLogicalReplicationCDC != nil {
@@ -120,14 +99,12 @@ func (r *SourceMssqlResourceModel) ToCreateSDKType() *shared.SourceMssqlCreateRe
 		}
 	}
 	var sourceMssqlSSHTunnelMethodSSHKeyAuthentication *shared.SourceMssqlSSHTunnelMethodSSHKeyAuthentication
-	if r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication != nil {
-		sshKey := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.SSHKey.ValueString()
-		tunnelHost := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
-		tunnelMethod2 := shared.SourceMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
-		tunnelPort := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
-		tunnelUser := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
+	if r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication != nil {
+		tunnelHost := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
+		tunnelMethod2 := shared.SourceMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
+		tunnelPort := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
+		tunnelUser := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
 		sourceMssqlSSHTunnelMethodSSHKeyAuthentication = &shared.SourceMssqlSSHTunnelMethodSSHKeyAuthentication{
-			SSHKey:       sshKey,
 			TunnelHost:   tunnelHost,
 			TunnelMethod: tunnelMethod2,
 			TunnelPort:   tunnelPort,
@@ -140,18 +117,16 @@ func (r *SourceMssqlResourceModel) ToCreateSDKType() *shared.SourceMssqlCreateRe
 		}
 	}
 	var sourceMssqlSSHTunnelMethodPasswordAuthentication *shared.SourceMssqlSSHTunnelMethodPasswordAuthentication
-	if r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication != nil {
-		tunnelHost1 := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
-		tunnelMethod3 := shared.SourceMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
-		tunnelPort1 := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
-		tunnelUser1 := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
-		tunnelUserPassword := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelUserPassword.ValueString()
+	if r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication != nil {
+		tunnelHost1 := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
+		tunnelMethod3 := shared.SourceMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
+		tunnelPort1 := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
+		tunnelUser1 := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
 		sourceMssqlSSHTunnelMethodPasswordAuthentication = &shared.SourceMssqlSSHTunnelMethodPasswordAuthentication{
-			TunnelHost:         tunnelHost1,
-			TunnelMethod:       tunnelMethod3,
-			TunnelPort:         tunnelPort1,
-			TunnelUser:         tunnelUser1,
-			TunnelUserPassword: tunnelUserPassword,
+			TunnelHost:   tunnelHost1,
+			TunnelMethod: tunnelMethod3,
+			TunnelPort:   tunnelPort1,
+			TunnelUser:   tunnelUser1,
 		}
 	}
 	if sourceMssqlSSHTunnelMethodPasswordAuthentication != nil {
@@ -208,8 +183,8 @@ func (r *SourceMssqlResourceModel) ToUpdateSDKType() *shared.SourceMssqlPutReque
 	port := r.Configuration.Port.ValueInt64()
 	var replicationMethod *shared.SourceMssqlUpdateReplicationMethod
 	var sourceMssqlUpdateReplicationMethodStandard *shared.SourceMssqlUpdateReplicationMethodStandard
-	if r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodStandard != nil {
-		method := shared.SourceMssqlUpdateReplicationMethodStandardMethod(r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodStandard.Method.ValueString())
+	if r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC != nil {
+		method := shared.SourceMssqlUpdateReplicationMethodStandardMethod(r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.Method.ValueString())
 		sourceMssqlUpdateReplicationMethodStandard = &shared.SourceMssqlUpdateReplicationMethodStandard{
 			Method: method,
 		}
@@ -220,31 +195,10 @@ func (r *SourceMssqlResourceModel) ToUpdateSDKType() *shared.SourceMssqlPutReque
 		}
 	}
 	var sourceMssqlUpdateReplicationMethodLogicalReplicationCDC *shared.SourceMssqlUpdateReplicationMethodLogicalReplicationCDC
-	if r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC != nil {
-		dataToSync := new(shared.SourceMssqlUpdateReplicationMethodLogicalReplicationCDCDataToSync)
-		if !r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.DataToSync.IsUnknown() && !r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.DataToSync.IsNull() {
-			*dataToSync = shared.SourceMssqlUpdateReplicationMethodLogicalReplicationCDCDataToSync(r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.DataToSync.ValueString())
-		} else {
-			dataToSync = nil
-		}
-		initialWaitingSeconds := new(int64)
-		if !r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds.IsUnknown() && !r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds.IsNull() {
-			*initialWaitingSeconds = r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds.ValueInt64()
-		} else {
-			initialWaitingSeconds = nil
-		}
-		method1 := shared.SourceMssqlUpdateReplicationMethodLogicalReplicationCDCMethod(r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.Method.ValueString())
-		snapshotIsolation := new(shared.SourceMssqlUpdateReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevel)
-		if !r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.SnapshotIsolation.IsUnknown() && !r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.SnapshotIsolation.IsNull() {
-			*snapshotIsolation = shared.SourceMssqlUpdateReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevel(r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.SnapshotIsolation.ValueString())
-		} else {
-			snapshotIsolation = nil
-		}
+	if r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodStandard != nil {
+		method1 := shared.SourceMssqlUpdateReplicationMethodLogicalReplicationCDCMethod(r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodStandard.Method.ValueString())
 		sourceMssqlUpdateReplicationMethodLogicalReplicationCDC = &shared.SourceMssqlUpdateReplicationMethodLogicalReplicationCDC{
-			DataToSync:            dataToSync,
-			InitialWaitingSeconds: initialWaitingSeconds,
-			Method:                method1,
-			SnapshotIsolation:     snapshotIsolation,
+			Method: method1,
 		}
 	}
 	if sourceMssqlUpdateReplicationMethodLogicalReplicationCDC != nil {
@@ -302,14 +256,12 @@ func (r *SourceMssqlResourceModel) ToUpdateSDKType() *shared.SourceMssqlPutReque
 		}
 	}
 	var sourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication *shared.SourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication
-	if r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication != nil {
-		sshKey := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.SSHKey.ValueString()
-		tunnelHost := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
-		tunnelMethod2 := shared.SourceMssqlUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
-		tunnelPort := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
-		tunnelUser := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
+	if r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication != nil {
+		tunnelHost := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
+		tunnelMethod2 := shared.SourceMssqlUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
+		tunnelPort := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
+		tunnelUser := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
 		sourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication = &shared.SourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication{
-			SSHKey:       sshKey,
 			TunnelHost:   tunnelHost,
 			TunnelMethod: tunnelMethod2,
 			TunnelPort:   tunnelPort,
@@ -322,18 +274,16 @@ func (r *SourceMssqlResourceModel) ToUpdateSDKType() *shared.SourceMssqlPutReque
 		}
 	}
 	var sourceMssqlUpdateSSHTunnelMethodPasswordAuthentication *shared.SourceMssqlUpdateSSHTunnelMethodPasswordAuthentication
-	if r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication != nil {
-		tunnelHost1 := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
-		tunnelMethod3 := shared.SourceMssqlUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
-		tunnelPort1 := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
-		tunnelUser1 := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
-		tunnelUserPassword := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelUserPassword.ValueString()
+	if r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication != nil {
+		tunnelHost1 := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
+		tunnelMethod3 := shared.SourceMssqlUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
+		tunnelPort1 := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
+		tunnelUser1 := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
 		sourceMssqlUpdateSSHTunnelMethodPasswordAuthentication = &shared.SourceMssqlUpdateSSHTunnelMethodPasswordAuthentication{
-			TunnelHost:         tunnelHost1,
-			TunnelMethod:       tunnelMethod3,
-			TunnelPort:         tunnelPort1,
-			TunnelUser:         tunnelUser1,
-			TunnelUserPassword: tunnelUserPassword,
+			TunnelHost:   tunnelHost1,
+			TunnelMethod: tunnelMethod3,
+			TunnelPort:   tunnelPort1,
+			TunnelUser:   tunnelUser1,
 		}
 	}
 	if sourceMssqlUpdateSSHTunnelMethodPasswordAuthentication != nil {

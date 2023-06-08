@@ -60,6 +60,20 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 					"format": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
+							"source_s3_file_format_avro": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"filetype": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"avro",
+											),
+										},
+									},
+								},
+								Description: `This connector utilises <a href="https://fastavro.readthedocs.io/en/latest/" target="_blank">fastavro</a> for Avro parsing.`,
+							},
 							"source_s3_file_format_csv": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -104,44 +118,6 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 								Description: `This connector utilises <a href="https: // arrow.apache.org/docs/python/generated/pyarrow.csv.open_csv.html" target="_blank">PyArrow (Apache Arrow)</a> for CSV parsing.`,
 							},
-							"source_s3_file_format_parquet": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"batch_size": schema.Int64Attribute{
-										Optional: true,
-									},
-									"buffer_size": schema.Int64Attribute{
-										Optional: true,
-									},
-									"columns": schema.ListAttribute{
-										Optional:    true,
-										ElementType: types.StringType,
-									},
-									"filetype": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"parquet",
-											),
-										},
-									},
-								},
-								Description: `This connector utilises <a href="https://arrow.apache.org/docs/python/generated/pyarrow.parquet.ParquetFile.html" target="_blank">PyArrow (Apache Arrow)</a> for Parquet parsing.`,
-							},
-							"source_s3_file_format_avro": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"filetype": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"avro",
-											),
-										},
-									},
-								},
-								Description: `This connector utilises <a href="https://fastavro.readthedocs.io/en/latest/" target="_blank">fastavro</a> for Avro parsing.`,
-							},
 							"source_s3_file_format_jsonl": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -172,6 +148,44 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 									},
 								},
 								Description: `This connector uses <a href="https://arrow.apache.org/docs/python/json.html" target="_blank">PyArrow</a> for JSON Lines (jsonl) file parsing.`,
+							},
+							"source_s3_file_format_parquet": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"batch_size": schema.Int64Attribute{
+										Optional: true,
+									},
+									"buffer_size": schema.Int64Attribute{
+										Optional: true,
+									},
+									"columns": schema.ListAttribute{
+										Optional:    true,
+										ElementType: types.StringType,
+									},
+									"filetype": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"parquet",
+											),
+										},
+									},
+								},
+								Description: `This connector utilises <a href="https://arrow.apache.org/docs/python/generated/pyarrow.parquet.ParquetFile.html" target="_blank">PyArrow (Apache Arrow)</a> for Parquet parsing.`,
+							},
+							"source_s3_update_file_format_avro": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"filetype": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"avro",
+											),
+										},
+									},
+								},
+								Description: `This connector utilises <a href="https://fastavro.readthedocs.io/en/latest/" target="_blank">fastavro</a> for Avro parsing.`,
 							},
 							"source_s3_update_file_format_csv": schema.SingleNestedAttribute{
 								Computed: true,
@@ -217,44 +231,6 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 								},
 								Description: `This connector utilises <a href="https: // arrow.apache.org/docs/python/generated/pyarrow.csv.open_csv.html" target="_blank">PyArrow (Apache Arrow)</a> for CSV parsing.`,
 							},
-							"source_s3_update_file_format_parquet": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"batch_size": schema.Int64Attribute{
-										Computed: true,
-									},
-									"buffer_size": schema.Int64Attribute{
-										Computed: true,
-									},
-									"columns": schema.ListAttribute{
-										Computed:    true,
-										ElementType: types.StringType,
-									},
-									"filetype": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"parquet",
-											),
-										},
-									},
-								},
-								Description: `This connector utilises <a href="https://arrow.apache.org/docs/python/generated/pyarrow.parquet.ParquetFile.html" target="_blank">PyArrow (Apache Arrow)</a> for Parquet parsing.`,
-							},
-							"source_s3_update_file_format_avro": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"filetype": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"avro",
-											),
-										},
-									},
-								},
-								Description: `This connector utilises <a href="https://fastavro.readthedocs.io/en/latest/" target="_blank">fastavro</a> for Avro parsing.`,
-							},
 							"source_s3_update_file_format_jsonl": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
@@ -285,6 +261,30 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 									},
 								},
 								Description: `This connector uses <a href="https://arrow.apache.org/docs/python/json.html" target="_blank">PyArrow</a> for JSON Lines (jsonl) file parsing.`,
+							},
+							"source_s3_update_file_format_parquet": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"batch_size": schema.Int64Attribute{
+										Computed: true,
+									},
+									"buffer_size": schema.Int64Attribute{
+										Computed: true,
+									},
+									"columns": schema.ListAttribute{
+										Computed:    true,
+										ElementType: types.StringType,
+									},
+									"filetype": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"parquet",
+											),
+										},
+									},
+								},
+								Description: `This connector utilises <a href="https://arrow.apache.org/docs/python/generated/pyarrow.parquet.ParquetFile.html" target="_blank">PyArrow (Apache Arrow)</a> for Parquet parsing.`,
 							},
 						},
 						Validators: []validator.Object{

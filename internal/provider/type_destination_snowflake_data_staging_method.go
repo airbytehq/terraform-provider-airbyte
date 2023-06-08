@@ -3,12 +3,12 @@
 package provider
 
 type DestinationSnowflakeDataStagingMethod struct {
-	DestinationSnowflakeDataStagingMethodSelectAnotherOption              *DestinationSnowflakeDataStagingMethodSelectAnotherOption              `tfsdk:"destination_snowflake_data_staging_method_select_another_option"`
 	DestinationSnowflakeDataStagingMethodRecommendedInternalStaging       *DestinationSnowflakeDataStagingMethodRecommendedInternalStaging       `tfsdk:"destination_snowflake_data_staging_method_recommended_internal_staging"`
 	DestinationSnowflakeDataStagingMethodAWSS3Staging                     *DestinationSnowflakeDataStagingMethodAWSS3Staging                     `tfsdk:"destination_snowflake_data_staging_method_aws_s3_staging"`
 	DestinationSnowflakeDataStagingMethodGoogleCloudStorageStaging        *DestinationSnowflakeDataStagingMethodGoogleCloudStorageStaging        `tfsdk:"destination_snowflake_data_staging_method_google_cloud_storage_staging"`
-	DestinationSnowflakeUpdateDataStagingMethodSelectAnotherOption        *DestinationSnowflakeUpdateDataStagingMethodSelectAnotherOption        `tfsdk:"destination_snowflake_update_data_staging_method_select_another_option"`
+	DestinationSnowflakeDataStagingMethodSelectAnotherOption              *DestinationSnowflakeDataStagingMethodSelectAnotherOption              `tfsdk:"destination_snowflake_data_staging_method_select_another_option"`
 	DestinationSnowflakeUpdateDataStagingMethodRecommendedInternalStaging *DestinationSnowflakeUpdateDataStagingMethodRecommendedInternalStaging `tfsdk:"destination_snowflake_update_data_staging_method_recommended_internal_staging"`
 	DestinationSnowflakeUpdateDataStagingMethodAWSS3Staging               *DestinationSnowflakeUpdateDataStagingMethodAWSS3Staging               `tfsdk:"destination_snowflake_update_data_staging_method_aws_s3_staging"`
 	DestinationSnowflakeUpdateDataStagingMethodGoogleCloudStorageStaging  *DestinationSnowflakeUpdateDataStagingMethodGoogleCloudStorageStaging  `tfsdk:"destination_snowflake_update_data_staging_method_google_cloud_storage_staging"`
+	DestinationSnowflakeUpdateDataStagingMethodSelectAnotherOption        *DestinationSnowflakeUpdateDataStagingMethodSelectAnotherOption        `tfsdk:"destination_snowflake_update_data_staging_method_select_another_option"`
 }

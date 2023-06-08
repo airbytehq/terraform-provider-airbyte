@@ -4,9 +4,9 @@ package provider
 
 type DestinationOracleSSHTunnelMethod struct {
 	DestinationOracleSSHTunnelMethodNoTunnel                     *DestinationClickhouseSSHTunnelMethodNoTunnel                     `tfsdk:"destination_oracle_ssh_tunnel_method_no_tunnel"`
-	DestinationOracleSSHTunnelMethodSSHKeyAuthentication         *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication         `tfsdk:"destination_oracle_ssh_tunnel_method_ssh_key_authentication"`
 	DestinationOracleSSHTunnelMethodPasswordAuthentication       *DestinationClickhouseSSHTunnelMethodPasswordAuthentication       `tfsdk:"destination_oracle_ssh_tunnel_method_password_authentication"`
+	DestinationOracleSSHTunnelMethodSSHKeyAuthentication         *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication         `tfsdk:"destination_oracle_ssh_tunnel_method_ssh_key_authentication"`
 	DestinationOracleUpdateSSHTunnelMethodNoTunnel               *DestinationClickhouseUpdateSSHTunnelMethodNoTunnel               `tfsdk:"destination_oracle_update_ssh_tunnel_method_no_tunnel"`
-	DestinationOracleUpdateSSHTunnelMethodSSHKeyAuthentication   *DestinationClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication   `tfsdk:"destination_oracle_update_ssh_tunnel_method_ssh_key_authentication"`
 	DestinationOracleUpdateSSHTunnelMethodPasswordAuthentication *DestinationClickhouseUpdateSSHTunnelMethodPasswordAuthentication `tfsdk:"destination_oracle_update_ssh_tunnel_method_password_authentication"`
+	DestinationOracleUpdateSSHTunnelMethodSSHKeyAuthentication   *DestinationClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication   `tfsdk:"destination_oracle_update_ssh_tunnel_method_ssh_key_authentication"`
 }

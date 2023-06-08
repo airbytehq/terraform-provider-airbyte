@@ -34,12 +34,12 @@ type SourceSmartsheetsResource struct {
 
 // SourceSmartsheetsResourceModel describes the resource data model.
 type SourceSmartsheetsResourceModel struct {
-	Configuration SourceSmartsheetsUpdate `tfsdk:"configuration"`
-	Name          types.String            `tfsdk:"name"`
-	SecretID      types.String            `tfsdk:"secret_id"`
-	SourceID      types.String            `tfsdk:"source_id"`
-	SourceType    types.String            `tfsdk:"source_type"`
-	WorkspaceID   types.String            `tfsdk:"workspace_id"`
+	Configuration SourceSmartsheets `tfsdk:"configuration"`
+	Name          types.String      `tfsdk:"name"`
+	SecretID      types.String      `tfsdk:"secret_id"`
+	SourceID      types.String      `tfsdk:"source_id"`
+	SourceType    types.String      `tfsdk:"source_type"`
+	WorkspaceID   types.String      `tfsdk:"workspace_id"`
 }
 
 func (r *SourceSmartsheetsResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -57,45 +57,14 @@ func (r *SourceSmartsheetsResource) Schema(ctx context.Context, req resource.Sch
 					"credentials": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
-							"source_smartsheets_update_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
-								Computed: true,
+							"source_smartsheets_authorization_method_api_access_token": schema.SingleNestedAttribute{
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2.0",
-											),
-										},
-									},
-									"client_id": schema.StringAttribute{
-										Computed: true,
-									},
-									"client_secret": schema.StringAttribute{
-										Computed: true,
-									},
-									"refresh_token": schema.StringAttribute{
-										Computed: true,
-									},
-									"token_expiry_date": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											validators.IsRFC3339(),
-										},
-									},
-								},
-							},
-							"source_smartsheets_update_authorization_method_api_access_token": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Computed: true,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"access_token",
@@ -135,18 +104,49 @@ func (r *SourceSmartsheetsResource) Schema(ctx context.Context, req resource.Sch
 									},
 								},
 							},
-							"source_smartsheets_authorization_method_api_access_token": schema.SingleNestedAttribute{
-								Optional: true,
+							"source_smartsheets_update_authorization_method_api_access_token": schema.SingleNestedAttribute{
+								Computed: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Required: true,
+										Computed: true,
 									},
 									"auth_type": schema.StringAttribute{
-										Optional: true,
+										Computed: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"access_token",
 											),
+										},
+									},
+								},
+							},
+							"source_smartsheets_update_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"access_token": schema.StringAttribute{
+										Computed: true,
+									},
+									"auth_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"oauth2.0",
+											),
+										},
+									},
+									"client_id": schema.StringAttribute{
+										Computed: true,
+									},
+									"client_secret": schema.StringAttribute{
+										Computed: true,
+									},
+									"refresh_token": schema.StringAttribute{
+										Computed: true,
+									},
+									"token_expiry_date": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											validators.IsRFC3339(),
 										},
 									},
 								},
@@ -156,6 +156,14 @@ func (r *SourceSmartsheetsResource) Schema(ctx context.Context, req resource.Sch
 							validators.ExactlyOneChild(),
 						},
 					},
+					"source_type": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"smartsheets",
+							),
+						},
+					},
 					"spreadsheet_id": schema.StringAttribute{
 						Required: true,
 					},
@@ -163,14 +171,6 @@ func (r *SourceSmartsheetsResource) Schema(ctx context.Context, req resource.Sch
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
-						},
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"smartsheets",
-							),
 						},
 					},
 				},

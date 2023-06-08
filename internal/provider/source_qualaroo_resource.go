@@ -33,12 +33,12 @@ type SourceQualarooResource struct {
 
 // SourceQualarooResourceModel describes the resource data model.
 type SourceQualarooResourceModel struct {
-	Configuration SourceQualarooUpdate `tfsdk:"configuration"`
-	Name          types.String         `tfsdk:"name"`
-	SecretID      types.String         `tfsdk:"secret_id"`
-	SourceID      types.String         `tfsdk:"source_id"`
-	SourceType    types.String         `tfsdk:"source_type"`
-	WorkspaceID   types.String         `tfsdk:"workspace_id"`
+	Configuration SourceQualaroo `tfsdk:"configuration"`
+	Name          types.String   `tfsdk:"name"`
+	SecretID      types.String   `tfsdk:"secret_id"`
+	SourceID      types.String   `tfsdk:"source_id"`
+	SourceType    types.String   `tfsdk:"source_type"`
+	WorkspaceID   types.String   `tfsdk:"workspace_id"`
 }
 
 func (r *SourceQualarooResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -56,6 +56,14 @@ func (r *SourceQualarooResource) Schema(ctx context.Context, req resource.Schema
 					"key": schema.StringAttribute{
 						Required: true,
 					},
+					"source_type": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"qualaroo",
+							),
+						},
+					},
 					"start_date": schema.StringAttribute{
 						Required: true,
 					},
@@ -65,14 +73,6 @@ func (r *SourceQualarooResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"token": schema.StringAttribute{
 						Required: true,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"qualaroo",
-							),
-						},
 					},
 				},
 			},

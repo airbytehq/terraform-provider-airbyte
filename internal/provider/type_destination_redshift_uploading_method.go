@@ -3,8 +3,8 @@
 package provider
 
 type DestinationRedshiftUploadingMethod struct {
-	DestinationRedshiftUploadingMethodStandard        *DestinationRedshiftUploadingMethodStandard        `tfsdk:"destination_redshift_uploading_method_standard"`
 	DestinationRedshiftUploadingMethodS3Staging       *DestinationRedshiftUploadingMethodS3Staging       `tfsdk:"destination_redshift_uploading_method_s3_staging"`
-	DestinationRedshiftUpdateUploadingMethodStandard  *DestinationRedshiftUpdateUploadingMethodStandard  `tfsdk:"destination_redshift_update_uploading_method_standard"`
+	DestinationRedshiftUploadingMethodStandard        *DestinationRedshiftUploadingMethodStandard        `tfsdk:"destination_redshift_uploading_method_standard"`
 	DestinationRedshiftUpdateUploadingMethodS3Staging *DestinationRedshiftUpdateUploadingMethodS3Staging `tfsdk:"destination_redshift_update_uploading_method_s3_staging"`
+	DestinationRedshiftUpdateUploadingMethodStandard  *DestinationRedshiftUpdateUploadingMethodStandard  `tfsdk:"destination_redshift_update_uploading_method_standard"`
 }

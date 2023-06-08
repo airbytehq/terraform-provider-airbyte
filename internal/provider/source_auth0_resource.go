@@ -60,6 +60,22 @@ func (r *SourceAuth0Resource) Schema(ctx context.Context, req resource.SchemaReq
 					"credentials": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
+							"source_auth0_authentication_method_o_auth2_access_token": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"access_token": schema.StringAttribute{
+										Required: true,
+									},
+									"auth_type": schema.StringAttribute{
+										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"oauth2_access_token",
+											),
+										},
+									},
+								},
+							},
 							"source_auth0_authentication_method_o_auth2_confidential_application": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -82,14 +98,14 @@ func (r *SourceAuth0Resource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 								},
 							},
-							"source_auth0_authentication_method_o_auth2_access_token": schema.SingleNestedAttribute{
-								Optional: true,
+							"source_auth0_update_authentication_method_o_auth2_access_token": schema.SingleNestedAttribute{
+								Computed: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Required: true,
+										Computed: true,
 									},
 									"auth_type": schema.StringAttribute{
-										Required: true,
+										Computed: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"oauth2_access_token",
@@ -117,22 +133,6 @@ func (r *SourceAuth0Resource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"client_secret": schema.StringAttribute{
 										Computed: true,
-									},
-								},
-							},
-							"source_auth0_update_authentication_method_o_auth2_access_token": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Computed: true,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"oauth2_access_token",
-											),
-										},
 									},
 								},
 							},

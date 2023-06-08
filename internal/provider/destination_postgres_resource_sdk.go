@@ -27,8 +27,8 @@ func (r *DestinationPostgresResourceModel) ToCreateSDKType() *shared.Destination
 	schema := r.Configuration.Schema.ValueString()
 	var sslMode *shared.DestinationPostgresSSLModes
 	var destinationPostgresSSLModesDisable *shared.DestinationPostgresSSLModesDisable
-	if r.Configuration.SslMode.DestinationPostgresSSLModesDisable != nil {
-		mode := shared.DestinationPostgresSSLModesDisableMode(r.Configuration.SslMode.DestinationPostgresSSLModesDisable.Mode.ValueString())
+	if r.Configuration.SslMode.DestinationPostgresSSLModesAllow != nil {
+		mode := shared.DestinationPostgresSSLModesDisableMode(r.Configuration.SslMode.DestinationPostgresSSLModesAllow.Mode.ValueString())
 		destinationPostgresSSLModesDisable = &shared.DestinationPostgresSSLModesDisable{
 			Mode: mode,
 		}
@@ -39,8 +39,8 @@ func (r *DestinationPostgresResourceModel) ToCreateSDKType() *shared.Destination
 		}
 	}
 	var destinationPostgresSSLModesAllow *shared.DestinationPostgresSSLModesAllow
-	if r.Configuration.SslMode.DestinationPostgresSSLModesAllow != nil {
-		mode1 := shared.DestinationPostgresSSLModesAllowMode(r.Configuration.SslMode.DestinationPostgresSSLModesAllow.Mode.ValueString())
+	if r.Configuration.SslMode.DestinationPostgresSSLModesDisable != nil {
+		mode1 := shared.DestinationPostgresSSLModesAllowMode(r.Configuration.SslMode.DestinationPostgresSSLModesDisable.Mode.ValueString())
 		destinationPostgresSSLModesAllow = &shared.DestinationPostgresSSLModesAllow{
 			Mode: mode1,
 		}
@@ -134,14 +134,12 @@ func (r *DestinationPostgresResourceModel) ToCreateSDKType() *shared.Destination
 		}
 	}
 	var destinationPostgresSSHTunnelMethodSSHKeyAuthentication *shared.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication
-	if r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication != nil {
-		sshKey := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication.SSHKey.ValueString()
-		tunnelHost := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
-		tunnelMethod2 := shared.DestinationPostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
-		tunnelPort := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
-		tunnelUser := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
+	if r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodPasswordAuthentication != nil {
+		tunnelHost := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
+		tunnelMethod2 := shared.DestinationPostgresSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
+		tunnelPort := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
+		tunnelUser := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
 		destinationPostgresSSHTunnelMethodSSHKeyAuthentication = &shared.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication{
-			SSHKey:       sshKey,
 			TunnelHost:   tunnelHost,
 			TunnelMethod: tunnelMethod2,
 			TunnelPort:   tunnelPort,
@@ -154,18 +152,16 @@ func (r *DestinationPostgresResourceModel) ToCreateSDKType() *shared.Destination
 		}
 	}
 	var destinationPostgresSSHTunnelMethodPasswordAuthentication *shared.DestinationPostgresSSHTunnelMethodPasswordAuthentication
-	if r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodPasswordAuthentication != nil {
-		tunnelHost1 := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
-		tunnelMethod3 := shared.DestinationPostgresSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
-		tunnelPort1 := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
-		tunnelUser1 := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
-		tunnelUserPassword := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodPasswordAuthentication.TunnelUserPassword.ValueString()
+	if r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication != nil {
+		tunnelHost1 := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
+		tunnelMethod3 := shared.DestinationPostgresSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
+		tunnelPort1 := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
+		tunnelUser1 := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
 		destinationPostgresSSHTunnelMethodPasswordAuthentication = &shared.DestinationPostgresSSHTunnelMethodPasswordAuthentication{
-			TunnelHost:         tunnelHost1,
-			TunnelMethod:       tunnelMethod3,
-			TunnelPort:         tunnelPort1,
-			TunnelUser:         tunnelUser1,
-			TunnelUserPassword: tunnelUserPassword,
+			TunnelHost:   tunnelHost1,
+			TunnelMethod: tunnelMethod3,
+			TunnelPort:   tunnelPort1,
+			TunnelUser:   tunnelUser1,
 		}
 	}
 	if destinationPostgresSSHTunnelMethodPasswordAuthentication != nil {
@@ -215,8 +211,8 @@ func (r *DestinationPostgresResourceModel) ToUpdateSDKType() *shared.Destination
 	schema := r.Configuration.Schema.ValueString()
 	var sslMode *shared.DestinationPostgresUpdateSSLModes
 	var destinationPostgresUpdateSSLModesDisable *shared.DestinationPostgresUpdateSSLModesDisable
-	if r.Configuration.SslMode.DestinationPostgresSSLModesDisable != nil {
-		mode := shared.DestinationPostgresUpdateSSLModesDisableMode(r.Configuration.SslMode.DestinationPostgresSSLModesDisable.Mode.ValueString())
+	if r.Configuration.SslMode.DestinationPostgresSSLModesAllow != nil {
+		mode := shared.DestinationPostgresUpdateSSLModesDisableMode(r.Configuration.SslMode.DestinationPostgresSSLModesAllow.Mode.ValueString())
 		destinationPostgresUpdateSSLModesDisable = &shared.DestinationPostgresUpdateSSLModesDisable{
 			Mode: mode,
 		}
@@ -227,8 +223,8 @@ func (r *DestinationPostgresResourceModel) ToUpdateSDKType() *shared.Destination
 		}
 	}
 	var destinationPostgresUpdateSSLModesAllow *shared.DestinationPostgresUpdateSSLModesAllow
-	if r.Configuration.SslMode.DestinationPostgresSSLModesAllow != nil {
-		mode1 := shared.DestinationPostgresUpdateSSLModesAllowMode(r.Configuration.SslMode.DestinationPostgresSSLModesAllow.Mode.ValueString())
+	if r.Configuration.SslMode.DestinationPostgresSSLModesDisable != nil {
+		mode1 := shared.DestinationPostgresUpdateSSLModesAllowMode(r.Configuration.SslMode.DestinationPostgresSSLModesDisable.Mode.ValueString())
 		destinationPostgresUpdateSSLModesAllow = &shared.DestinationPostgresUpdateSSLModesAllow{
 			Mode: mode1,
 		}
@@ -322,14 +318,12 @@ func (r *DestinationPostgresResourceModel) ToUpdateSDKType() *shared.Destination
 		}
 	}
 	var destinationPostgresUpdateSSHTunnelMethodSSHKeyAuthentication *shared.DestinationPostgresUpdateSSHTunnelMethodSSHKeyAuthentication
-	if r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication != nil {
-		sshKey := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication.SSHKey.ValueString()
-		tunnelHost := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
-		tunnelMethod2 := shared.DestinationPostgresUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
-		tunnelPort := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
-		tunnelUser := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
+	if r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodPasswordAuthentication != nil {
+		tunnelHost := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
+		tunnelMethod2 := shared.DestinationPostgresUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
+		tunnelPort := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
+		tunnelUser := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
 		destinationPostgresUpdateSSHTunnelMethodSSHKeyAuthentication = &shared.DestinationPostgresUpdateSSHTunnelMethodSSHKeyAuthentication{
-			SSHKey:       sshKey,
 			TunnelHost:   tunnelHost,
 			TunnelMethod: tunnelMethod2,
 			TunnelPort:   tunnelPort,
@@ -342,18 +336,16 @@ func (r *DestinationPostgresResourceModel) ToUpdateSDKType() *shared.Destination
 		}
 	}
 	var destinationPostgresUpdateSSHTunnelMethodPasswordAuthentication *shared.DestinationPostgresUpdateSSHTunnelMethodPasswordAuthentication
-	if r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodPasswordAuthentication != nil {
-		tunnelHost1 := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
-		tunnelMethod3 := shared.DestinationPostgresUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
-		tunnelPort1 := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
-		tunnelUser1 := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
-		tunnelUserPassword := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodPasswordAuthentication.TunnelUserPassword.ValueString()
+	if r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication != nil {
+		tunnelHost1 := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
+		tunnelMethod3 := shared.DestinationPostgresUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
+		tunnelPort1 := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
+		tunnelUser1 := r.Configuration.TunnelMethod.DestinationPostgresSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
 		destinationPostgresUpdateSSHTunnelMethodPasswordAuthentication = &shared.DestinationPostgresUpdateSSHTunnelMethodPasswordAuthentication{
-			TunnelHost:         tunnelHost1,
-			TunnelMethod:       tunnelMethod3,
-			TunnelPort:         tunnelPort1,
-			TunnelUser:         tunnelUser1,
-			TunnelUserPassword: tunnelUserPassword,
+			TunnelHost:   tunnelHost1,
+			TunnelMethod: tunnelMethod3,
+			TunnelPort:   tunnelPort1,
+			TunnelUser:   tunnelUser1,
 		}
 	}
 	if destinationPostgresUpdateSSHTunnelMethodPasswordAuthentication != nil {

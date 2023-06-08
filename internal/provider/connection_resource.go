@@ -143,6 +143,9 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 			"schedule": schema.SingleNestedAttribute{
 				Optional: true,
 				Attributes: map[string]schema.Attribute{
+					"basic_timing": schema.StringAttribute{
+						Computed: true,
+					},
 					"schedule_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -151,9 +154,6 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 								"cron",
 							),
 						},
-					},
-					"basic_timing": schema.StringAttribute{
-						Computed: true,
 					},
 				},
 				Description: `schedule for when the the connection should run, per the schedule type`,

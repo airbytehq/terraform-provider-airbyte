@@ -34,12 +34,12 @@ type SourceTypeformResource struct {
 
 // SourceTypeformResourceModel describes the resource data model.
 type SourceTypeformResourceModel struct {
-	Configuration SourceTypeformUpdate `tfsdk:"configuration"`
-	Name          types.String         `tfsdk:"name"`
-	SecretID      types.String         `tfsdk:"secret_id"`
-	SourceID      types.String         `tfsdk:"source_id"`
-	SourceType    types.String         `tfsdk:"source_type"`
-	WorkspaceID   types.String         `tfsdk:"workspace_id"`
+	Configuration SourceTypeform `tfsdk:"configuration"`
+	Name          types.String   `tfsdk:"name"`
+	SecretID      types.String   `tfsdk:"secret_id"`
+	SourceID      types.String   `tfsdk:"source_id"`
+	SourceType    types.String   `tfsdk:"source_type"`
+	WorkspaceID   types.String   `tfsdk:"workspace_id"`
 }
 
 func (r *SourceTypeformResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -58,6 +58,14 @@ func (r *SourceTypeformResource) Schema(ctx context.Context, req resource.Schema
 						Optional:    true,
 						ElementType: types.StringType,
 					},
+					"source_type": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"typeform",
+							),
+						},
+					},
 					"start_date": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -66,14 +74,6 @@ func (r *SourceTypeformResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"token": schema.StringAttribute{
 						Required: true,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"typeform",
-							),
-						},
 					},
 				},
 			},

@@ -10,8 +10,8 @@ import (
 func (r *DestinationMongodbResourceModel) ToCreateSDKType() *shared.DestinationMongodbCreateRequest {
 	var authType shared.DestinationMongodbAuthorizationType
 	var destinationMongodbAuthorizationTypeNone *shared.DestinationMongodbAuthorizationTypeNone
-	if r.Configuration.AuthType.DestinationMongodbAuthorizationTypeNone != nil {
-		authorization := shared.DestinationMongodbAuthorizationTypeNoneAuthorization(r.Configuration.AuthType.DestinationMongodbAuthorizationTypeNone.Authorization.ValueString())
+	if r.Configuration.AuthType.DestinationMongodbAuthorizationTypeLoginPassword != nil {
+		authorization := shared.DestinationMongodbAuthorizationTypeNoneAuthorization(r.Configuration.AuthType.DestinationMongodbAuthorizationTypeLoginPassword.Authorization.ValueString())
 		destinationMongodbAuthorizationTypeNone = &shared.DestinationMongodbAuthorizationTypeNone{
 			Authorization: authorization,
 		}
@@ -22,14 +22,10 @@ func (r *DestinationMongodbResourceModel) ToCreateSDKType() *shared.DestinationM
 		}
 	}
 	var destinationMongodbAuthorizationTypeLoginPassword *shared.DestinationMongodbAuthorizationTypeLoginPassword
-	if r.Configuration.AuthType.DestinationMongodbAuthorizationTypeLoginPassword != nil {
-		authorization1 := shared.DestinationMongodbAuthorizationTypeLoginPasswordAuthorization(r.Configuration.AuthType.DestinationMongodbAuthorizationTypeLoginPassword.Authorization.ValueString())
-		password := r.Configuration.AuthType.DestinationMongodbAuthorizationTypeLoginPassword.Password.ValueString()
-		username := r.Configuration.AuthType.DestinationMongodbAuthorizationTypeLoginPassword.Username.ValueString()
+	if r.Configuration.AuthType.DestinationMongodbAuthorizationTypeNone != nil {
+		authorization1 := shared.DestinationMongodbAuthorizationTypeLoginPasswordAuthorization(r.Configuration.AuthType.DestinationMongodbAuthorizationTypeNone.Authorization.ValueString())
 		destinationMongodbAuthorizationTypeLoginPassword = &shared.DestinationMongodbAuthorizationTypeLoginPassword{
 			Authorization: authorization1,
-			Password:      password,
-			Username:      username,
 		}
 	}
 	if destinationMongodbAuthorizationTypeLoginPassword != nil {
@@ -41,14 +37,10 @@ func (r *DestinationMongodbResourceModel) ToCreateSDKType() *shared.DestinationM
 	destinationType := shared.DestinationMongodbMongodb(r.Configuration.DestinationType.ValueString())
 	var instanceType *shared.DestinationMongodbMongoDbInstanceType
 	var destinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance *shared.DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance
-	if r.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance != nil {
-		host := r.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Host.ValueString()
-		instance := shared.DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstance(r.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Instance.ValueString())
-		port := r.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Port.ValueInt64()
+	if r.Configuration.InstanceType.DestinationMongodbMongoDBInstanceTypeMongoDBAtlas != nil {
+		instance := shared.DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstanceInstance(r.Configuration.InstanceType.DestinationMongodbMongoDBInstanceTypeMongoDBAtlas.Instance.ValueString())
 		destinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance = &shared.DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance{
-			Host:     host,
 			Instance: instance,
-			Port:     port,
 		}
 	}
 	if destinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance != nil {
@@ -78,12 +70,10 @@ func (r *DestinationMongodbResourceModel) ToCreateSDKType() *shared.DestinationM
 		}
 	}
 	var destinationMongodbMongoDBInstanceTypeMongoDBAtlas *shared.DestinationMongodbMongoDBInstanceTypeMongoDBAtlas
-	if r.Configuration.InstanceType.DestinationMongodbMongoDBInstanceTypeMongoDBAtlas != nil {
-		clusterURL := r.Configuration.InstanceType.DestinationMongodbMongoDBInstanceTypeMongoDBAtlas.ClusterURL.ValueString()
-		instance2 := shared.DestinationMongodbMongoDBInstanceTypeMongoDBAtlasInstance(r.Configuration.InstanceType.DestinationMongodbMongoDBInstanceTypeMongoDBAtlas.Instance.ValueString())
+	if r.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance != nil {
+		instance2 := shared.DestinationMongodbMongoDBInstanceTypeMongoDBAtlasInstance(r.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Instance.ValueString())
 		destinationMongodbMongoDBInstanceTypeMongoDBAtlas = &shared.DestinationMongodbMongoDBInstanceTypeMongoDBAtlas{
-			ClusterURL: clusterURL,
-			Instance:   instance2,
+			Instance: instance2,
 		}
 	}
 	if destinationMongodbMongoDBInstanceTypeMongoDBAtlas != nil {
@@ -105,14 +95,12 @@ func (r *DestinationMongodbResourceModel) ToCreateSDKType() *shared.DestinationM
 		}
 	}
 	var destinationMongodbSSHTunnelMethodSSHKeyAuthentication *shared.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication
-	if r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication != nil {
-		sshKey := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication.SSHKey.ValueString()
-		tunnelHost := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
-		tunnelMethod2 := shared.DestinationMongodbSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
-		tunnelPort := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
-		tunnelUser := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
+	if r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication != nil {
+		tunnelHost := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
+		tunnelMethod2 := shared.DestinationMongodbSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
+		tunnelPort := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
+		tunnelUser := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
 		destinationMongodbSSHTunnelMethodSSHKeyAuthentication = &shared.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication{
-			SSHKey:       sshKey,
 			TunnelHost:   tunnelHost,
 			TunnelMethod: tunnelMethod2,
 			TunnelPort:   tunnelPort,
@@ -125,18 +113,16 @@ func (r *DestinationMongodbResourceModel) ToCreateSDKType() *shared.DestinationM
 		}
 	}
 	var destinationMongodbSSHTunnelMethodPasswordAuthentication *shared.DestinationMongodbSSHTunnelMethodPasswordAuthentication
-	if r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication != nil {
-		tunnelHost1 := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
-		tunnelMethod3 := shared.DestinationMongodbSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
-		tunnelPort1 := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
-		tunnelUser1 := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
-		tunnelUserPassword := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication.TunnelUserPassword.ValueString()
+	if r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication != nil {
+		tunnelHost1 := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
+		tunnelMethod3 := shared.DestinationMongodbSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
+		tunnelPort1 := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
+		tunnelUser1 := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
 		destinationMongodbSSHTunnelMethodPasswordAuthentication = &shared.DestinationMongodbSSHTunnelMethodPasswordAuthentication{
-			TunnelHost:         tunnelHost1,
-			TunnelMethod:       tunnelMethod3,
-			TunnelPort:         tunnelPort1,
-			TunnelUser:         tunnelUser1,
-			TunnelUserPassword: tunnelUserPassword,
+			TunnelHost:   tunnelHost1,
+			TunnelMethod: tunnelMethod3,
+			TunnelPort:   tunnelPort1,
+			TunnelUser:   tunnelUser1,
 		}
 	}
 	if destinationMongodbSSHTunnelMethodPasswordAuthentication != nil {
@@ -164,8 +150,8 @@ func (r *DestinationMongodbResourceModel) ToCreateSDKType() *shared.DestinationM
 func (r *DestinationMongodbResourceModel) ToUpdateSDKType() *shared.DestinationMongodbPutRequest {
 	var authType shared.DestinationMongodbUpdateAuthorizationType
 	var destinationMongodbUpdateAuthorizationTypeNone *shared.DestinationMongodbUpdateAuthorizationTypeNone
-	if r.Configuration.AuthType.DestinationMongodbAuthorizationTypeNone != nil {
-		authorization := shared.DestinationMongodbUpdateAuthorizationTypeNoneAuthorization(r.Configuration.AuthType.DestinationMongodbAuthorizationTypeNone.Authorization.ValueString())
+	if r.Configuration.AuthType.DestinationMongodbAuthorizationTypeLoginPassword != nil {
+		authorization := shared.DestinationMongodbUpdateAuthorizationTypeNoneAuthorization(r.Configuration.AuthType.DestinationMongodbAuthorizationTypeLoginPassword.Authorization.ValueString())
 		destinationMongodbUpdateAuthorizationTypeNone = &shared.DestinationMongodbUpdateAuthorizationTypeNone{
 			Authorization: authorization,
 		}
@@ -176,14 +162,10 @@ func (r *DestinationMongodbResourceModel) ToUpdateSDKType() *shared.DestinationM
 		}
 	}
 	var destinationMongodbUpdateAuthorizationTypeLoginPassword *shared.DestinationMongodbUpdateAuthorizationTypeLoginPassword
-	if r.Configuration.AuthType.DestinationMongodbAuthorizationTypeLoginPassword != nil {
-		authorization1 := shared.DestinationMongodbUpdateAuthorizationTypeLoginPasswordAuthorization(r.Configuration.AuthType.DestinationMongodbAuthorizationTypeLoginPassword.Authorization.ValueString())
-		password := r.Configuration.AuthType.DestinationMongodbAuthorizationTypeLoginPassword.Password.ValueString()
-		username := r.Configuration.AuthType.DestinationMongodbAuthorizationTypeLoginPassword.Username.ValueString()
+	if r.Configuration.AuthType.DestinationMongodbAuthorizationTypeNone != nil {
+		authorization1 := shared.DestinationMongodbUpdateAuthorizationTypeLoginPasswordAuthorization(r.Configuration.AuthType.DestinationMongodbAuthorizationTypeNone.Authorization.ValueString())
 		destinationMongodbUpdateAuthorizationTypeLoginPassword = &shared.DestinationMongodbUpdateAuthorizationTypeLoginPassword{
 			Authorization: authorization1,
-			Password:      password,
-			Username:      username,
 		}
 	}
 	if destinationMongodbUpdateAuthorizationTypeLoginPassword != nil {
@@ -194,14 +176,10 @@ func (r *DestinationMongodbResourceModel) ToUpdateSDKType() *shared.DestinationM
 	database := r.Configuration.Database.ValueString()
 	var instanceType *shared.DestinationMongodbUpdateMongoDbInstanceType
 	var destinationMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance *shared.DestinationMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance
-	if r.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance != nil {
-		host := r.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Host.ValueString()
-		instance := shared.DestinationMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstanceInstance(r.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Instance.ValueString())
-		port := r.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Port.ValueInt64()
+	if r.Configuration.InstanceType.DestinationMongodbMongoDBInstanceTypeMongoDBAtlas != nil {
+		instance := shared.DestinationMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstanceInstance(r.Configuration.InstanceType.DestinationMongodbMongoDBInstanceTypeMongoDBAtlas.Instance.ValueString())
 		destinationMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance = &shared.DestinationMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance{
-			Host:     host,
 			Instance: instance,
-			Port:     port,
 		}
 	}
 	if destinationMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance != nil {
@@ -231,12 +209,10 @@ func (r *DestinationMongodbResourceModel) ToUpdateSDKType() *shared.DestinationM
 		}
 	}
 	var destinationMongodbUpdateMongoDBInstanceTypeMongoDBAtlas *shared.DestinationMongodbUpdateMongoDBInstanceTypeMongoDBAtlas
-	if r.Configuration.InstanceType.DestinationMongodbMongoDBInstanceTypeMongoDBAtlas != nil {
-		clusterURL := r.Configuration.InstanceType.DestinationMongodbMongoDBInstanceTypeMongoDBAtlas.ClusterURL.ValueString()
-		instance2 := shared.DestinationMongodbUpdateMongoDBInstanceTypeMongoDBAtlasInstance(r.Configuration.InstanceType.DestinationMongodbMongoDBInstanceTypeMongoDBAtlas.Instance.ValueString())
+	if r.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance != nil {
+		instance2 := shared.DestinationMongodbUpdateMongoDBInstanceTypeMongoDBAtlasInstance(r.Configuration.InstanceType.DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance.Instance.ValueString())
 		destinationMongodbUpdateMongoDBInstanceTypeMongoDBAtlas = &shared.DestinationMongodbUpdateMongoDBInstanceTypeMongoDBAtlas{
-			ClusterURL: clusterURL,
-			Instance:   instance2,
+			Instance: instance2,
 		}
 	}
 	if destinationMongodbUpdateMongoDBInstanceTypeMongoDBAtlas != nil {
@@ -258,14 +234,12 @@ func (r *DestinationMongodbResourceModel) ToUpdateSDKType() *shared.DestinationM
 		}
 	}
 	var destinationMongodbUpdateSSHTunnelMethodSSHKeyAuthentication *shared.DestinationMongodbUpdateSSHTunnelMethodSSHKeyAuthentication
-	if r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication != nil {
-		sshKey := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication.SSHKey.ValueString()
-		tunnelHost := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
-		tunnelMethod2 := shared.DestinationMongodbUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
-		tunnelPort := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
-		tunnelUser := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
+	if r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication != nil {
+		tunnelHost := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
+		tunnelMethod2 := shared.DestinationMongodbUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
+		tunnelPort := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
+		tunnelUser := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
 		destinationMongodbUpdateSSHTunnelMethodSSHKeyAuthentication = &shared.DestinationMongodbUpdateSSHTunnelMethodSSHKeyAuthentication{
-			SSHKey:       sshKey,
 			TunnelHost:   tunnelHost,
 			TunnelMethod: tunnelMethod2,
 			TunnelPort:   tunnelPort,
@@ -278,18 +252,16 @@ func (r *DestinationMongodbResourceModel) ToUpdateSDKType() *shared.DestinationM
 		}
 	}
 	var destinationMongodbUpdateSSHTunnelMethodPasswordAuthentication *shared.DestinationMongodbUpdateSSHTunnelMethodPasswordAuthentication
-	if r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication != nil {
-		tunnelHost1 := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
-		tunnelMethod3 := shared.DestinationMongodbUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
-		tunnelPort1 := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
-		tunnelUser1 := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
-		tunnelUserPassword := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodPasswordAuthentication.TunnelUserPassword.ValueString()
+	if r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication != nil {
+		tunnelHost1 := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
+		tunnelMethod3 := shared.DestinationMongodbUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
+		tunnelPort1 := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
+		tunnelUser1 := r.Configuration.TunnelMethod.DestinationMongodbSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
 		destinationMongodbUpdateSSHTunnelMethodPasswordAuthentication = &shared.DestinationMongodbUpdateSSHTunnelMethodPasswordAuthentication{
-			TunnelHost:         tunnelHost1,
-			TunnelMethod:       tunnelMethod3,
-			TunnelPort:         tunnelPort1,
-			TunnelUser:         tunnelUser1,
-			TunnelUserPassword: tunnelUserPassword,
+			TunnelHost:   tunnelHost1,
+			TunnelMethod: tunnelMethod3,
+			TunnelPort:   tunnelPort1,
+			TunnelUser:   tunnelUser1,
 		}
 	}
 	if destinationMongodbUpdateSSHTunnelMethodPasswordAuthentication != nil {

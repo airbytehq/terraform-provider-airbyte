@@ -34,12 +34,12 @@ type SourceOnesignalResource struct {
 
 // SourceOnesignalResourceModel describes the resource data model.
 type SourceOnesignalResourceModel struct {
-	Configuration SourceOnesignalUpdate `tfsdk:"configuration"`
-	Name          types.String          `tfsdk:"name"`
-	SecretID      types.String          `tfsdk:"secret_id"`
-	SourceID      types.String          `tfsdk:"source_id"`
-	SourceType    types.String          `tfsdk:"source_type"`
-	WorkspaceID   types.String          `tfsdk:"workspace_id"`
+	Configuration SourceOnesignal `tfsdk:"configuration"`
+	Name          types.String    `tfsdk:"name"`
+	SecretID      types.String    `tfsdk:"secret_id"`
+	SourceID      types.String    `tfsdk:"source_id"`
+	SourceType    types.String    `tfsdk:"source_type"`
+	WorkspaceID   types.String    `tfsdk:"workspace_id"`
 }
 
 func (r *SourceOnesignalResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -73,6 +73,14 @@ func (r *SourceOnesignalResource) Schema(ctx context.Context, req resource.Schem
 					"outcome_names": schema.StringAttribute{
 						Required: true,
 					},
+					"source_type": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"onesignal",
+							),
+						},
+					},
 					"start_date": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -81,14 +89,6 @@ func (r *SourceOnesignalResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"user_auth_key": schema.StringAttribute{
 						Required: true,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"onesignal",
-							),
-						},
 					},
 				},
 			},

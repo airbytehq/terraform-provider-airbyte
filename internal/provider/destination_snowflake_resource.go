@@ -56,6 +56,25 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
+							"destination_snowflake_authorization_method_key_pair_authentication": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"auth_type": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Key Pair Authentication",
+											),
+										},
+									},
+									"private_key": schema.StringAttribute{
+										Required: true,
+									},
+									"private_key_password": schema.StringAttribute{
+										Optional: true,
+									},
+								},
+							},
 							"destination_snowflake_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -81,25 +100,6 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 									},
 								},
 							},
-							"destination_snowflake_authorization_method_key_pair_authentication": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Key Pair Authentication",
-											),
-										},
-									},
-									"private_key": schema.StringAttribute{
-										Required: true,
-									},
-									"private_key_password": schema.StringAttribute{
-										Optional: true,
-									},
-								},
-							},
 							"destination_snowflake_authorization_method_username_and_password": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -113,6 +113,25 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 									},
 									"password": schema.StringAttribute{
 										Required: true,
+									},
+								},
+							},
+							"destination_snowflake_update_authorization_method_key_pair_authentication": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"auth_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Key Pair Authentication",
+											),
+										},
+									},
+									"private_key": schema.StringAttribute{
+										Computed: true,
+									},
+									"private_key_password": schema.StringAttribute{
+										Computed: true,
 									},
 								},
 							},
@@ -137,25 +156,6 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 										Computed: true,
 									},
 									"refresh_token": schema.StringAttribute{
-										Computed: true,
-									},
-								},
-							},
-							"destination_snowflake_update_authorization_method_key_pair_authentication": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Key Pair Authentication",
-											),
-										},
-									},
-									"private_key": schema.StringAttribute{
-										Computed: true,
-									},
-									"private_key_password": schema.StringAttribute{
 										Computed: true,
 									},
 								},
@@ -204,20 +204,6 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 					"loading_method": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"destination_snowflake_data_staging_method_select_another_option": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Standard",
-											),
-										},
-									},
-								},
-								Description: `Select another option`,
-							},
 							"destination_snowflake_data_staging_method_recommended_internal_staging": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -355,11 +341,11 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 								},
 								Description: `Recommended for large production workloads for better speed and scalability.`,
 							},
-							"destination_snowflake_update_data_staging_method_select_another_option": schema.SingleNestedAttribute{
-								Computed: true,
+							"destination_snowflake_data_staging_method_select_another_option": schema.SingleNestedAttribute{
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"Standard",
@@ -505,6 +491,20 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 									},
 								},
 								Description: `Recommended for large production workloads for better speed and scalability.`,
+							},
+							"destination_snowflake_update_data_staging_method_select_another_option": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Standard",
+											),
+										},
+									},
+								},
+								Description: `Select another option`,
 							},
 						},
 						Validators: []validator.Object{

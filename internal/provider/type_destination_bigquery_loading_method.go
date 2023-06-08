@@ -3,8 +3,8 @@
 package provider
 
 type DestinationBigqueryLoadingMethod struct {
-	DestinationBigqueryLoadingMethodStandardInserts       *DestinationBigqueryLoadingMethodStandardInserts       `tfsdk:"destination_bigquery_loading_method_standard_inserts"`
 	DestinationBigqueryLoadingMethodGCSStaging            *DestinationBigqueryLoadingMethodGCSStaging            `tfsdk:"destination_bigquery_loading_method_gcs_staging"`
-	DestinationBigqueryUpdateLoadingMethodStandardInserts *DestinationBigqueryUpdateLoadingMethodStandardInserts `tfsdk:"destination_bigquery_update_loading_method_standard_inserts"`
+	DestinationBigqueryLoadingMethodStandardInserts       *DestinationBigqueryLoadingMethodStandardInserts       `tfsdk:"destination_bigquery_loading_method_standard_inserts"`
 	DestinationBigqueryUpdateLoadingMethodGCSStaging      *DestinationBigqueryUpdateLoadingMethodGCSStaging      `tfsdk:"destination_bigquery_update_loading_method_gcs_staging"`
+	DestinationBigqueryUpdateLoadingMethodStandardInserts *DestinationBigqueryUpdateLoadingMethodStandardInserts `tfsdk:"destination_bigquery_update_loading_method_standard_inserts"`
 }

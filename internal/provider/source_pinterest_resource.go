@@ -57,6 +57,22 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
+							"source_pinterest_authorization_method_access_token": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"access_token": schema.StringAttribute{
+										Required: true,
+									},
+									"auth_method": schema.StringAttribute{
+										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"access_token",
+											),
+										},
+									},
+								},
+							},
 							"source_pinterest_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -79,14 +95,14 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 									},
 								},
 							},
-							"source_pinterest_authorization_method_access_token": schema.SingleNestedAttribute{
-								Optional: true,
+							"source_pinterest_update_authorization_method_access_token": schema.SingleNestedAttribute{
+								Computed: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Required: true,
+										Computed: true,
 									},
 									"auth_method": schema.StringAttribute{
-										Required: true,
+										Computed: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"access_token",
@@ -114,22 +130,6 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 									},
 									"refresh_token": schema.StringAttribute{
 										Computed: true,
-									},
-								},
-							},
-							"source_pinterest_update_authorization_method_access_token": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Computed: true,
-									},
-									"auth_method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"access_token",
-											),
-										},
 									},
 								},
 							},

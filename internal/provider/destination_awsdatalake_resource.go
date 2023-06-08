@@ -34,11 +34,11 @@ type DestinationAwsDatalakeResource struct {
 
 // DestinationAwsDatalakeResourceModel describes the resource data model.
 type DestinationAwsDatalakeResourceModel struct {
-	Configuration   DestinationAwsDatalakeUpdate `tfsdk:"configuration"`
-	DestinationID   types.String                 `tfsdk:"destination_id"`
-	DestinationType types.String                 `tfsdk:"destination_type"`
-	Name            types.String                 `tfsdk:"name"`
-	WorkspaceID     types.String                 `tfsdk:"workspace_id"`
+	Configuration   DestinationAwsDatalake `tfsdk:"configuration"`
+	DestinationID   types.String           `tfsdk:"destination_id"`
+	DestinationType types.String           `tfsdk:"destination_type"`
+	Name            types.String           `tfsdk:"name"`
+	WorkspaceID     types.String           `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationAwsDatalakeResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -65,45 +65,6 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 					"credentials": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
-							"destination_aws_datalake_update_authentication_mode_iam_role": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"credentials_title": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"IAM Role",
-											),
-										},
-										Description: `Name of the credentials`,
-									},
-									"role_arn": schema.StringAttribute{
-										Computed: true,
-									},
-								},
-								Description: `Choose How to Authenticate to AWS.`,
-							},
-							"destination_aws_datalake_update_authentication_mode_iam_user": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"aws_access_key_id": schema.StringAttribute{
-										Computed: true,
-									},
-									"aws_secret_access_key": schema.StringAttribute{
-										Computed: true,
-									},
-									"credentials_title": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"IAM User",
-											),
-										},
-										Description: `Name of the credentials`,
-									},
-								},
-								Description: `Choose How to Authenticate to AWS.`,
-							},
 							"destination_aws_datalake_authentication_mode_iam_role": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -143,64 +104,61 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 								},
 								Description: `Choose How to Authenticate to AWS.`,
 							},
+							"destination_aws_datalake_update_authentication_mode_iam_role": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"credentials_title": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"IAM Role",
+											),
+										},
+										Description: `Name of the credentials`,
+									},
+									"role_arn": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+								Description: `Choose How to Authenticate to AWS.`,
+							},
+							"destination_aws_datalake_update_authentication_mode_iam_user": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"aws_access_key_id": schema.StringAttribute{
+										Computed: true,
+									},
+									"aws_secret_access_key": schema.StringAttribute{
+										Computed: true,
+									},
+									"credentials_title": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"IAM User",
+											),
+										},
+										Description: `Name of the credentials`,
+									},
+								},
+								Description: `Choose How to Authenticate to AWS.`,
+							},
 						},
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
 					},
+					"destination_type": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"aws-datalake",
+							),
+						},
+					},
 					"format": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"destination_aws_datalake_update_output_format_wildcard_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"compression_codec": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"UNCOMPRESSED",
-												"GZIP",
-											),
-										},
-										Description: `The compression algorithm used to compress data.`,
-									},
-									"format_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"JSONL",
-											),
-										},
-									},
-								},
-								Description: `Format of the data output.`,
-							},
-							"destination_aws_datalake_update_output_format_wildcard_parquet_columnar_storage": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"compression_codec": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"UNCOMPRESSED",
-												"SNAPPY",
-												"GZIP",
-												"ZSTD",
-											),
-										},
-										Description: `The compression algorithm used to compress data.`,
-									},
-									"format_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Parquet",
-											),
-										},
-									},
-								},
-								Description: `Format of the data output.`,
-							},
 							"destination_aws_datalake_output_format_wildcard_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -242,6 +200,56 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 									},
 									"format_type": schema.StringAttribute{
 										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Parquet",
+											),
+										},
+									},
+								},
+								Description: `Format of the data output.`,
+							},
+							"destination_aws_datalake_update_output_format_wildcard_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"compression_codec": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"UNCOMPRESSED",
+												"GZIP",
+											),
+										},
+										Description: `The compression algorithm used to compress data.`,
+									},
+									"format_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"JSONL",
+											),
+										},
+									},
+								},
+								Description: `Format of the data output.`,
+							},
+							"destination_aws_datalake_update_output_format_wildcard_parquet_columnar_storage": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"compression_codec": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"UNCOMPRESSED",
+												"SNAPPY",
+												"GZIP",
+												"ZSTD",
+											),
+										},
+										Description: `The compression algorithm used to compress data.`,
+									},
+									"format_type": schema.StringAttribute{
+										Computed: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"Parquet",
@@ -319,14 +327,6 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 							),
 						},
 						Description: `The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes.`,
-					},
-					"destination_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"aws-datalake",
-							),
-						},
 					},
 				},
 			},

@@ -33,11 +33,11 @@ type DestinationKeenResource struct {
 
 // DestinationKeenResourceModel describes the resource data model.
 type DestinationKeenResourceModel struct {
-	Configuration   DestinationKeenUpdate `tfsdk:"configuration"`
-	DestinationID   types.String          `tfsdk:"destination_id"`
-	DestinationType types.String          `tfsdk:"destination_type"`
-	Name            types.String          `tfsdk:"name"`
-	WorkspaceID     types.String          `tfsdk:"workspace_id"`
+	Configuration   DestinationKeen `tfsdk:"configuration"`
+	DestinationID   types.String    `tfsdk:"destination_id"`
+	DestinationType types.String    `tfsdk:"destination_type"`
+	Name            types.String    `tfsdk:"name"`
+	WorkspaceID     types.String    `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationKeenResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -55,12 +55,6 @@ func (r *DestinationKeenResource) Schema(ctx context.Context, req resource.Schem
 					"api_key": schema.StringAttribute{
 						Required: true,
 					},
-					"infer_timestamp": schema.BoolAttribute{
-						Optional: true,
-					},
-					"project_id": schema.StringAttribute{
-						Required: true,
-					},
 					"destination_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -68,6 +62,12 @@ func (r *DestinationKeenResource) Schema(ctx context.Context, req resource.Schem
 								"keen",
 							),
 						},
+					},
+					"infer_timestamp": schema.BoolAttribute{
+						Optional: true,
+					},
+					"project_id": schema.StringAttribute{
+						Required: true,
 					},
 				},
 			},

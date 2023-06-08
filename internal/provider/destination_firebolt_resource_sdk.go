@@ -30,8 +30,8 @@ func (r *DestinationFireboltResourceModel) ToCreateSDKType() *shared.Destination
 	}
 	var loadingMethod *shared.DestinationFireboltLoadingMethod
 	var destinationFireboltLoadingMethodSQLInserts *shared.DestinationFireboltLoadingMethodSQLInserts
-	if r.Configuration.LoadingMethod.DestinationFireboltUpdateLoadingMethodSQLInserts != nil {
-		method := shared.DestinationFireboltLoadingMethodSQLInsertsMethod(r.Configuration.LoadingMethod.DestinationFireboltUpdateLoadingMethodSQLInserts.Method.ValueString())
+	if r.Configuration.LoadingMethod.DestinationFireboltLoadingMethodExternalTableViaS3 != nil {
+		method := shared.DestinationFireboltLoadingMethodSQLInsertsMethod(r.Configuration.LoadingMethod.DestinationFireboltLoadingMethodExternalTableViaS3.Method.ValueString())
 		destinationFireboltLoadingMethodSQLInserts = &shared.DestinationFireboltLoadingMethodSQLInserts{
 			Method: method,
 		}
@@ -42,18 +42,10 @@ func (r *DestinationFireboltResourceModel) ToCreateSDKType() *shared.Destination
 		}
 	}
 	var destinationFireboltLoadingMethodExternalTableViaS3 *shared.DestinationFireboltLoadingMethodExternalTableViaS3
-	if r.Configuration.LoadingMethod.DestinationFireboltUpdateLoadingMethodExternalTableViaS3 != nil {
-		awsKeyID := r.Configuration.LoadingMethod.DestinationFireboltUpdateLoadingMethodExternalTableViaS3.AwsKeyID.ValueString()
-		awsKeySecret := r.Configuration.LoadingMethod.DestinationFireboltUpdateLoadingMethodExternalTableViaS3.AwsKeySecret.ValueString()
-		method1 := shared.DestinationFireboltLoadingMethodExternalTableViaS3Method(r.Configuration.LoadingMethod.DestinationFireboltUpdateLoadingMethodExternalTableViaS3.Method.ValueString())
-		s3Bucket := r.Configuration.LoadingMethod.DestinationFireboltUpdateLoadingMethodExternalTableViaS3.S3Bucket.ValueString()
-		s3Region := r.Configuration.LoadingMethod.DestinationFireboltUpdateLoadingMethodExternalTableViaS3.S3Region.ValueString()
+	if r.Configuration.LoadingMethod.DestinationFireboltLoadingMethodSQLInserts != nil {
+		method1 := shared.DestinationFireboltLoadingMethodExternalTableViaS3Method(r.Configuration.LoadingMethod.DestinationFireboltLoadingMethodSQLInserts.Method.ValueString())
 		destinationFireboltLoadingMethodExternalTableViaS3 = &shared.DestinationFireboltLoadingMethodExternalTableViaS3{
-			AwsKeyID:     awsKeyID,
-			AwsKeySecret: awsKeySecret,
-			Method:       method1,
-			S3Bucket:     s3Bucket,
-			S3Region:     s3Region,
+			Method: method1,
 		}
 	}
 	if destinationFireboltLoadingMethodExternalTableViaS3 != nil {
@@ -105,8 +97,8 @@ func (r *DestinationFireboltResourceModel) ToUpdateSDKType() *shared.Destination
 	}
 	var loadingMethod *shared.DestinationFireboltUpdateLoadingMethod
 	var destinationFireboltUpdateLoadingMethodSQLInserts *shared.DestinationFireboltUpdateLoadingMethodSQLInserts
-	if r.Configuration.LoadingMethod.DestinationFireboltUpdateLoadingMethodSQLInserts != nil {
-		method := shared.DestinationFireboltUpdateLoadingMethodSQLInsertsMethod(r.Configuration.LoadingMethod.DestinationFireboltUpdateLoadingMethodSQLInserts.Method.ValueString())
+	if r.Configuration.LoadingMethod.DestinationFireboltLoadingMethodExternalTableViaS3 != nil {
+		method := shared.DestinationFireboltUpdateLoadingMethodSQLInsertsMethod(r.Configuration.LoadingMethod.DestinationFireboltLoadingMethodExternalTableViaS3.Method.ValueString())
 		destinationFireboltUpdateLoadingMethodSQLInserts = &shared.DestinationFireboltUpdateLoadingMethodSQLInserts{
 			Method: method,
 		}
@@ -117,18 +109,10 @@ func (r *DestinationFireboltResourceModel) ToUpdateSDKType() *shared.Destination
 		}
 	}
 	var destinationFireboltUpdateLoadingMethodExternalTableViaS3 *shared.DestinationFireboltUpdateLoadingMethodExternalTableViaS3
-	if r.Configuration.LoadingMethod.DestinationFireboltUpdateLoadingMethodExternalTableViaS3 != nil {
-		awsKeyID := r.Configuration.LoadingMethod.DestinationFireboltUpdateLoadingMethodExternalTableViaS3.AwsKeyID.ValueString()
-		awsKeySecret := r.Configuration.LoadingMethod.DestinationFireboltUpdateLoadingMethodExternalTableViaS3.AwsKeySecret.ValueString()
-		method1 := shared.DestinationFireboltUpdateLoadingMethodExternalTableViaS3Method(r.Configuration.LoadingMethod.DestinationFireboltUpdateLoadingMethodExternalTableViaS3.Method.ValueString())
-		s3Bucket := r.Configuration.LoadingMethod.DestinationFireboltUpdateLoadingMethodExternalTableViaS3.S3Bucket.ValueString()
-		s3Region := r.Configuration.LoadingMethod.DestinationFireboltUpdateLoadingMethodExternalTableViaS3.S3Region.ValueString()
+	if r.Configuration.LoadingMethod.DestinationFireboltLoadingMethodSQLInserts != nil {
+		method1 := shared.DestinationFireboltUpdateLoadingMethodExternalTableViaS3Method(r.Configuration.LoadingMethod.DestinationFireboltLoadingMethodSQLInserts.Method.ValueString())
 		destinationFireboltUpdateLoadingMethodExternalTableViaS3 = &shared.DestinationFireboltUpdateLoadingMethodExternalTableViaS3{
-			AwsKeyID:     awsKeyID,
-			AwsKeySecret: awsKeySecret,
-			Method:       method1,
-			S3Bucket:     s3Bucket,
-			S3Region:     s3Region,
+			Method: method1,
 		}
 	}
 	if destinationFireboltUpdateLoadingMethodExternalTableViaS3 != nil {

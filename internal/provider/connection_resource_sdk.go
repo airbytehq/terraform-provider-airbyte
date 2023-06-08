@@ -213,6 +213,9 @@ func (r *ConnectionResourceModel) ToDeleteSDKType() *shared.ConnectionCreateRequ
 }
 
 func (r *ConnectionResourceModel) RefreshFromCreateResponse(resp *shared.ConnectionResponse) {
+	if r.Configurations == nil {
+		r.Configurations = &StreamConfigurations{}
+	}
 	r.Configurations.Streams = nil
 	for _, streamsItem := range resp.Configurations.Streams {
 		var streams1 StreamConfiguration
@@ -221,7 +224,15 @@ func (r *ConnectionResourceModel) RefreshFromCreateResponse(resp *shared.Connect
 			streams1.CursorField = append(streams1.CursorField, types.StringValue(v))
 		}
 		streams1.Name = types.StringValue(streamsItem.Name)
-		// Not Implemented streamsItem.PrimaryKey, {"Output":false,"Extensions":{},"Example":null,"RefType":"","Scope":"","BaseName":"","Type":"array","Fields":[],"AssociatedTypes":[],"Enum":null,"AdditionalProperties":null,"Discriminator":null,"Name":"","Truncated":false,"Comments":null,"Input":false,"Format":"","ItemType":{"Format":"","Enum":null,"BaseName":"","Scope":"","Comments":null,"Output":false,"Extensions":{"Symbol":"PrimaryKey"},"Example":null,"Name":"","ItemType":{"Type":"string","Scope":"","Truncated":false,"Comments":null,"Extensions":{"Symbol":"CursorField"},"Name":"","AdditionalProperties":null,"Fields":[],"BaseName":"","Output":false,"Example":null,"Discriminator":null,"ItemType":null,"AssociatedTypes":[],"Enum":null,"RefType":"","Input":false,"Format":""},"Type":"array","Fields":[],"Truncated":false,"Input":false,"AdditionalProperties":null,"Discriminator":null,"AssociatedTypes":[],"RefType":""}}, true, , , streams1.PrimaryKey
+		streams1.PrimaryKey = nil
+		for _, primaryKeyItem := range streamsItem.PrimaryKey {
+			var primaryKey1 []types.String
+			primaryKey1 = nil
+			for _, v := range primaryKeyItem {
+				primaryKey1 = append(primaryKey1, types.StringValue(v))
+			}
+			streams1.PrimaryKey = append(streams1.PrimaryKey, primaryKey1)
+		}
 		if streamsItem.SyncMode != nil {
 			streams1.SyncMode = types.StringValue(string(*streamsItem.SyncMode))
 		} else {
@@ -253,12 +264,15 @@ func (r *ConnectionResourceModel) RefreshFromCreateResponse(resp *shared.Connect
 	} else {
 		r.Prefix = types.StringNull()
 	}
-	r.Schedule.ScheduleType = types.StringValue(string(resp.Schedule.ScheduleType))
+	if r.Schedule == nil {
+		r.Schedule = &ConnectionSchedule{}
+	}
 	if resp.Schedule.BasicTiming != nil {
 		r.Schedule.BasicTiming = types.StringValue(*resp.Schedule.BasicTiming)
 	} else {
 		r.Schedule.BasicTiming = types.StringNull()
 	}
+	r.Schedule.ScheduleType = types.StringValue(string(resp.Schedule.ScheduleType))
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.Status = types.StringValue(string(resp.Status))
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)

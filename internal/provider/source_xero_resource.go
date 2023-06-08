@@ -34,12 +34,12 @@ type SourceXeroResource struct {
 
 // SourceXeroResourceModel describes the resource data model.
 type SourceXeroResourceModel struct {
-	Configuration SourceXeroUpdate `tfsdk:"configuration"`
-	Name          types.String     `tfsdk:"name"`
-	SecretID      types.String     `tfsdk:"secret_id"`
-	SourceID      types.String     `tfsdk:"source_id"`
-	SourceType    types.String     `tfsdk:"source_type"`
-	WorkspaceID   types.String     `tfsdk:"workspace_id"`
+	Configuration SourceXero   `tfsdk:"configuration"`
+	Name          types.String `tfsdk:"name"`
+	SecretID      types.String `tfsdk:"secret_id"`
+	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
+	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
 func (r *SourceXeroResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -74,6 +74,14 @@ func (r *SourceXeroResource) Schema(ctx context.Context, req resource.SchemaRequ
 							},
 						},
 					},
+					"source_type": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"xero",
+							),
+						},
+					},
 					"start_date": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -82,14 +90,6 @@ func (r *SourceXeroResource) Schema(ctx context.Context, req resource.SchemaRequ
 					},
 					"tenant_id": schema.StringAttribute{
 						Required: true,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"xero",
-							),
-						},
 					},
 				},
 			},

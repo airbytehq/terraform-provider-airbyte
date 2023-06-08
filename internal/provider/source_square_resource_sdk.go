@@ -11,16 +11,10 @@ import (
 func (r *SourceSquareResourceModel) ToCreateSDKType() *shared.SourceSquareCreateRequest {
 	var credentials *shared.SourceSquareAuthentication
 	var sourceSquareAuthenticationOauthAuthentication *shared.SourceSquareAuthenticationOauthAuthentication
-	if r.Configuration.Credentials.SourceSquareUpdateAuthenticationOauthAuthentication != nil {
-		authType := shared.SourceSquareAuthenticationOauthAuthenticationAuthType(r.Configuration.Credentials.SourceSquareUpdateAuthenticationOauthAuthentication.AuthType.ValueString())
-		clientID := r.Configuration.Credentials.SourceSquareUpdateAuthenticationOauthAuthentication.ClientID.ValueString()
-		clientSecret := r.Configuration.Credentials.SourceSquareUpdateAuthenticationOauthAuthentication.ClientSecret.ValueString()
-		refreshToken := r.Configuration.Credentials.SourceSquareUpdateAuthenticationOauthAuthentication.RefreshToken.ValueString()
+	if r.Configuration.Credentials.SourceSquareAuthenticationAPIKey != nil {
+		authType := shared.SourceSquareAuthenticationOauthAuthenticationAuthType(r.Configuration.Credentials.SourceSquareAuthenticationAPIKey.AuthType.ValueString())
 		sourceSquareAuthenticationOauthAuthentication = &shared.SourceSquareAuthenticationOauthAuthentication{
-			AuthType:     authType,
-			ClientID:     clientID,
-			ClientSecret: clientSecret,
-			RefreshToken: refreshToken,
+			AuthType: authType,
 		}
 	}
 	if sourceSquareAuthenticationOauthAuthentication != nil {
@@ -29,11 +23,9 @@ func (r *SourceSquareResourceModel) ToCreateSDKType() *shared.SourceSquareCreate
 		}
 	}
 	var sourceSquareAuthenticationAPIKey *shared.SourceSquareAuthenticationAPIKey
-	if r.Configuration.Credentials.SourceSquareUpdateAuthenticationAPIKey != nil {
-		apiKey := r.Configuration.Credentials.SourceSquareUpdateAuthenticationAPIKey.APIKey.ValueString()
-		authType1 := shared.SourceSquareAuthenticationAPIKeyAuthType(r.Configuration.Credentials.SourceSquareUpdateAuthenticationAPIKey.AuthType.ValueString())
+	if r.Configuration.Credentials.SourceSquareAuthenticationOauthAuthentication != nil {
+		authType1 := shared.SourceSquareAuthenticationAPIKeyAuthType(r.Configuration.Credentials.SourceSquareAuthenticationOauthAuthentication.AuthType.ValueString())
 		sourceSquareAuthenticationAPIKey = &shared.SourceSquareAuthenticationAPIKey{
-			APIKey:   apiKey,
 			AuthType: authType1,
 		}
 	}
@@ -83,16 +75,10 @@ func (r *SourceSquareResourceModel) ToCreateSDKType() *shared.SourceSquareCreate
 func (r *SourceSquareResourceModel) ToUpdateSDKType() *shared.SourceSquarePutRequest {
 	var credentials *shared.SourceSquareUpdateAuthentication
 	var sourceSquareUpdateAuthenticationOauthAuthentication *shared.SourceSquareUpdateAuthenticationOauthAuthentication
-	if r.Configuration.Credentials.SourceSquareUpdateAuthenticationOauthAuthentication != nil {
-		authType := shared.SourceSquareUpdateAuthenticationOauthAuthenticationAuthType(r.Configuration.Credentials.SourceSquareUpdateAuthenticationOauthAuthentication.AuthType.ValueString())
-		clientID := r.Configuration.Credentials.SourceSquareUpdateAuthenticationOauthAuthentication.ClientID.ValueString()
-		clientSecret := r.Configuration.Credentials.SourceSquareUpdateAuthenticationOauthAuthentication.ClientSecret.ValueString()
-		refreshToken := r.Configuration.Credentials.SourceSquareUpdateAuthenticationOauthAuthentication.RefreshToken.ValueString()
+	if r.Configuration.Credentials.SourceSquareAuthenticationAPIKey != nil {
+		authType := shared.SourceSquareUpdateAuthenticationOauthAuthenticationAuthType(r.Configuration.Credentials.SourceSquareAuthenticationAPIKey.AuthType.ValueString())
 		sourceSquareUpdateAuthenticationOauthAuthentication = &shared.SourceSquareUpdateAuthenticationOauthAuthentication{
-			AuthType:     authType,
-			ClientID:     clientID,
-			ClientSecret: clientSecret,
-			RefreshToken: refreshToken,
+			AuthType: authType,
 		}
 	}
 	if sourceSquareUpdateAuthenticationOauthAuthentication != nil {
@@ -101,11 +87,9 @@ func (r *SourceSquareResourceModel) ToUpdateSDKType() *shared.SourceSquarePutReq
 		}
 	}
 	var sourceSquareUpdateAuthenticationAPIKey *shared.SourceSquareUpdateAuthenticationAPIKey
-	if r.Configuration.Credentials.SourceSquareUpdateAuthenticationAPIKey != nil {
-		apiKey := r.Configuration.Credentials.SourceSquareUpdateAuthenticationAPIKey.APIKey.ValueString()
-		authType1 := shared.SourceSquareUpdateAuthenticationAPIKeyAuthType(r.Configuration.Credentials.SourceSquareUpdateAuthenticationAPIKey.AuthType.ValueString())
+	if r.Configuration.Credentials.SourceSquareAuthenticationOauthAuthentication != nil {
+		authType1 := shared.SourceSquareUpdateAuthenticationAPIKeyAuthType(r.Configuration.Credentials.SourceSquareAuthenticationOauthAuthentication.AuthType.ValueString())
 		sourceSquareUpdateAuthenticationAPIKey = &shared.SourceSquareUpdateAuthenticationAPIKey{
-			APIKey:   apiKey,
 			AuthType: authType1,
 		}
 	}

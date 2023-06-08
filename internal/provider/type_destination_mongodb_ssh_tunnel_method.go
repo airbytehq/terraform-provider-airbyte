@@ -4,9 +4,9 @@ package provider
 
 type DestinationMongodbSSHTunnelMethod struct {
 	DestinationMongodbSSHTunnelMethodNoTunnel                     *DestinationClickhouseSSHTunnelMethodNoTunnel                     `tfsdk:"destination_mongodb_ssh_tunnel_method_no_tunnel"`
-	DestinationMongodbSSHTunnelMethodSSHKeyAuthentication         *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication         `tfsdk:"destination_mongodb_ssh_tunnel_method_ssh_key_authentication"`
 	DestinationMongodbSSHTunnelMethodPasswordAuthentication       *DestinationClickhouseSSHTunnelMethodPasswordAuthentication       `tfsdk:"destination_mongodb_ssh_tunnel_method_password_authentication"`
+	DestinationMongodbSSHTunnelMethodSSHKeyAuthentication         *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication         `tfsdk:"destination_mongodb_ssh_tunnel_method_ssh_key_authentication"`
 	DestinationMongodbUpdateSSHTunnelMethodNoTunnel               *DestinationClickhouseUpdateSSHTunnelMethodNoTunnel               `tfsdk:"destination_mongodb_update_ssh_tunnel_method_no_tunnel"`
-	DestinationMongodbUpdateSSHTunnelMethodSSHKeyAuthentication   *DestinationClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication   `tfsdk:"destination_mongodb_update_ssh_tunnel_method_ssh_key_authentication"`
 	DestinationMongodbUpdateSSHTunnelMethodPasswordAuthentication *DestinationClickhouseUpdateSSHTunnelMethodPasswordAuthentication `tfsdk:"destination_mongodb_update_ssh_tunnel_method_password_authentication"`
+	DestinationMongodbUpdateSSHTunnelMethodSSHKeyAuthentication   *DestinationClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication   `tfsdk:"destination_mongodb_update_ssh_tunnel_method_ssh_key_authentication"`
 }

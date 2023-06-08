@@ -33,12 +33,12 @@ type SourceNetsuiteResource struct {
 
 // SourceNetsuiteResourceModel describes the resource data model.
 type SourceNetsuiteResourceModel struct {
-	Configuration SourceNetsuiteUpdate `tfsdk:"configuration"`
-	Name          types.String         `tfsdk:"name"`
-	SecretID      types.String         `tfsdk:"secret_id"`
-	SourceID      types.String         `tfsdk:"source_id"`
-	SourceType    types.String         `tfsdk:"source_type"`
-	WorkspaceID   types.String         `tfsdk:"workspace_id"`
+	Configuration SourceNetsuite `tfsdk:"configuration"`
+	Name          types.String   `tfsdk:"name"`
+	SecretID      types.String   `tfsdk:"secret_id"`
+	SourceID      types.String   `tfsdk:"source_id"`
+	SourceType    types.String   `tfsdk:"source_type"`
+	WorkspaceID   types.String   `tfsdk:"workspace_id"`
 }
 
 func (r *SourceNetsuiteResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -66,6 +66,14 @@ func (r *SourceNetsuiteResource) Schema(ctx context.Context, req resource.Schema
 					"realm": schema.StringAttribute{
 						Required: true,
 					},
+					"source_type": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"netsuite",
+							),
+						},
+					},
 					"start_datetime": schema.StringAttribute{
 						Required: true,
 					},
@@ -77,14 +85,6 @@ func (r *SourceNetsuiteResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"window_in_days": schema.Int64Attribute{
 						Optional: true,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"netsuite",
-							),
-						},
 					},
 				},
 			},

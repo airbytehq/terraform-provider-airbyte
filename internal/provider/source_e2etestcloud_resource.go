@@ -34,12 +34,12 @@ type SourceE2eTestCloudResource struct {
 
 // SourceE2eTestCloudResourceModel describes the resource data model.
 type SourceE2eTestCloudResourceModel struct {
-	Configuration SourceE2eTestCloudUpdate `tfsdk:"configuration"`
-	Name          types.String             `tfsdk:"name"`
-	SecretID      types.String             `tfsdk:"secret_id"`
-	SourceID      types.String             `tfsdk:"source_id"`
-	SourceType    types.String             `tfsdk:"source_type"`
-	WorkspaceID   types.String             `tfsdk:"workspace_id"`
+	Configuration SourceE2eTestCloud `tfsdk:"configuration"`
+	Name          types.String       `tfsdk:"name"`
+	SecretID      types.String       `tfsdk:"secret_id"`
+	SourceID      types.String       `tfsdk:"source_id"`
+	SourceType    types.String       `tfsdk:"source_type"`
+	WorkspaceID   types.String       `tfsdk:"workspace_id"`
 }
 
 func (r *SourceE2eTestCloudResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -63,37 +63,14 @@ func (r *SourceE2eTestCloudResource) Schema(ctx context.Context, req resource.Sc
 					"mock_catalog": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
-							"source_e2e_test_cloud_update_mock_catalog_single_schema": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"stream_duplication": schema.Int64Attribute{
-										Computed: true,
-									},
-									"stream_name": schema.StringAttribute{
-										Computed: true,
-									},
-									"stream_schema": schema.StringAttribute{
-										Computed: true,
-									},
-									"type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"SINGLE_STREAM",
-											),
-										},
-									},
-								},
-								Description: `A catalog with one or multiple streams that share the same schema.`,
-							},
-							"source_e2e_test_cloud_update_mock_catalog_multi_schema": schema.SingleNestedAttribute{
-								Computed: true,
+							"source_e2e_test_cloud_mock_catalog_multi_schema": schema.SingleNestedAttribute{
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"stream_schemas": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"type": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"MULTI_STREAM",
@@ -126,14 +103,14 @@ func (r *SourceE2eTestCloudResource) Schema(ctx context.Context, req resource.Sc
 								},
 								Description: `A catalog with one or multiple streams that share the same schema.`,
 							},
-							"source_e2e_test_cloud_mock_catalog_multi_schema": schema.SingleNestedAttribute{
-								Optional: true,
+							"source_e2e_test_cloud_update_mock_catalog_multi_schema": schema.SingleNestedAttribute{
+								Computed: true,
 								Attributes: map[string]schema.Attribute{
 									"stream_schemas": schema.StringAttribute{
-										Required: true,
+										Computed: true,
 									},
 									"type": schema.StringAttribute{
-										Required: true,
+										Computed: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"MULTI_STREAM",
@@ -143,6 +120,29 @@ func (r *SourceE2eTestCloudResource) Schema(ctx context.Context, req resource.Sc
 								},
 								Description: `A catalog with multiple data streams, each with a different schema.`,
 							},
+							"source_e2e_test_cloud_update_mock_catalog_single_schema": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"stream_duplication": schema.Int64Attribute{
+										Computed: true,
+									},
+									"stream_name": schema.StringAttribute{
+										Computed: true,
+									},
+									"stream_schema": schema.StringAttribute{
+										Computed: true,
+									},
+									"type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"SINGLE_STREAM",
+											),
+										},
+									},
+								},
+								Description: `A catalog with one or multiple streams that share the same schema.`,
+							},
 						},
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
@@ -151,19 +151,19 @@ func (r *SourceE2eTestCloudResource) Schema(ctx context.Context, req resource.Sc
 					"seed": schema.Int64Attribute{
 						Optional: true,
 					},
-					"type": schema.StringAttribute{
-						Optional: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"CONTINUOUS_FEED",
-							),
-						},
-					},
 					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
 								"e2e-test-cloud",
+							),
+						},
+					},
+					"type": schema.StringAttribute{
+						Optional: true,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"CONTINUOUS_FEED",
 							),
 						},
 					},

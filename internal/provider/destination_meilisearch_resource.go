@@ -33,11 +33,11 @@ type DestinationMeilisearchResource struct {
 
 // DestinationMeilisearchResourceModel describes the resource data model.
 type DestinationMeilisearchResourceModel struct {
-	Configuration   DestinationMeilisearchUpdate `tfsdk:"configuration"`
-	DestinationID   types.String                 `tfsdk:"destination_id"`
-	DestinationType types.String                 `tfsdk:"destination_type"`
-	Name            types.String                 `tfsdk:"name"`
-	WorkspaceID     types.String                 `tfsdk:"workspace_id"`
+	Configuration   DestinationMeilisearch `tfsdk:"configuration"`
+	DestinationID   types.String           `tfsdk:"destination_id"`
+	DestinationType types.String           `tfsdk:"destination_type"`
+	Name            types.String           `tfsdk:"name"`
+	WorkspaceID     types.String           `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationMeilisearchResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -55,9 +55,6 @@ func (r *DestinationMeilisearchResource) Schema(ctx context.Context, req resourc
 					"api_key": schema.StringAttribute{
 						Optional: true,
 					},
-					"host": schema.StringAttribute{
-						Required: true,
-					},
 					"destination_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -65,6 +62,9 @@ func (r *DestinationMeilisearchResource) Schema(ctx context.Context, req resourc
 								"meilisearch",
 							),
 						},
+					},
+					"host": schema.StringAttribute{
+						Required: true,
 					},
 				},
 			},

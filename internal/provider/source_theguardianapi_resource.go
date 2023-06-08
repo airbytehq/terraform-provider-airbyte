@@ -33,12 +33,12 @@ type SourceTheGuardianAPIResource struct {
 
 // SourceTheGuardianAPIResourceModel describes the resource data model.
 type SourceTheGuardianAPIResourceModel struct {
-	Configuration SourceTheGuardianAPIUpdate `tfsdk:"configuration"`
-	Name          types.String               `tfsdk:"name"`
-	SecretID      types.String               `tfsdk:"secret_id"`
-	SourceID      types.String               `tfsdk:"source_id"`
-	SourceType    types.String               `tfsdk:"source_type"`
-	WorkspaceID   types.String               `tfsdk:"workspace_id"`
+	Configuration SourceTheGuardianAPI `tfsdk:"configuration"`
+	Name          types.String         `tfsdk:"name"`
+	SecretID      types.String         `tfsdk:"secret_id"`
+	SourceID      types.String         `tfsdk:"source_id"`
+	SourceType    types.String         `tfsdk:"source_type"`
+	WorkspaceID   types.String         `tfsdk:"workspace_id"`
 }
 
 func (r *SourceTheGuardianAPIResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -65,12 +65,6 @@ func (r *SourceTheGuardianAPIResource) Schema(ctx context.Context, req resource.
 					"section": schema.StringAttribute{
 						Optional: true,
 					},
-					"start_date": schema.StringAttribute{
-						Required: true,
-					},
-					"tag": schema.StringAttribute{
-						Optional: true,
-					},
 					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -78,6 +72,12 @@ func (r *SourceTheGuardianAPIResource) Schema(ctx context.Context, req resource.
 								"the-guardian-api",
 							),
 						},
+					},
+					"start_date": schema.StringAttribute{
+						Required: true,
+					},
+					"tag": schema.StringAttribute{
+						Optional: true,
 					},
 				},
 			},

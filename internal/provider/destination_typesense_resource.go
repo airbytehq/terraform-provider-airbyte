@@ -33,11 +33,11 @@ type DestinationTypesenseResource struct {
 
 // DestinationTypesenseResourceModel describes the resource data model.
 type DestinationTypesenseResourceModel struct {
-	Configuration   DestinationTypesenseUpdate `tfsdk:"configuration"`
-	DestinationID   types.String               `tfsdk:"destination_id"`
-	DestinationType types.String               `tfsdk:"destination_type"`
-	Name            types.String               `tfsdk:"name"`
-	WorkspaceID     types.String               `tfsdk:"workspace_id"`
+	Configuration   DestinationTypesense `tfsdk:"configuration"`
+	DestinationID   types.String         `tfsdk:"destination_id"`
+	DestinationType types.String         `tfsdk:"destination_type"`
+	Name            types.String         `tfsdk:"name"`
+	WorkspaceID     types.String         `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationTypesenseResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -58,6 +58,14 @@ func (r *DestinationTypesenseResource) Schema(ctx context.Context, req resource.
 					"batch_size": schema.StringAttribute{
 						Optional: true,
 					},
+					"destination_type": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"typesense",
+							),
+						},
+					},
 					"host": schema.StringAttribute{
 						Required: true,
 					},
@@ -66,14 +74,6 @@ func (r *DestinationTypesenseResource) Schema(ctx context.Context, req resource.
 					},
 					"protocol": schema.StringAttribute{
 						Optional: true,
-					},
-					"destination_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"typesense",
-							),
-						},
 					},
 				},
 			},

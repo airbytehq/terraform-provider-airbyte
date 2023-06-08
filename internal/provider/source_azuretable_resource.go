@@ -33,12 +33,12 @@ type SourceAzureTableResource struct {
 
 // SourceAzureTableResourceModel describes the resource data model.
 type SourceAzureTableResourceModel struct {
-	Configuration SourceAzureTableUpdate `tfsdk:"configuration"`
-	Name          types.String           `tfsdk:"name"`
-	SecretID      types.String           `tfsdk:"secret_id"`
-	SourceID      types.String           `tfsdk:"source_id"`
-	SourceType    types.String           `tfsdk:"source_type"`
-	WorkspaceID   types.String           `tfsdk:"workspace_id"`
+	Configuration SourceAzureTable `tfsdk:"configuration"`
+	Name          types.String     `tfsdk:"name"`
+	SecretID      types.String     `tfsdk:"secret_id"`
+	SourceID      types.String     `tfsdk:"source_id"`
+	SourceType    types.String     `tfsdk:"source_type"`
+	WorkspaceID   types.String     `tfsdk:"workspace_id"`
 }
 
 func (r *SourceAzureTableResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -53,6 +53,14 @@ func (r *SourceAzureTableResource) Schema(ctx context.Context, req resource.Sche
 			"configuration": schema.SingleNestedAttribute{
 				Required: true,
 				Attributes: map[string]schema.Attribute{
+					"source_type": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"azure-table",
+							),
+						},
+					},
 					"storage_access_key": schema.StringAttribute{
 						Required: true,
 					},
@@ -61,14 +69,6 @@ func (r *SourceAzureTableResource) Schema(ctx context.Context, req resource.Sche
 					},
 					"storage_endpoint_suffix": schema.StringAttribute{
 						Optional: true,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"azure-table",
-							),
-						},
 					},
 				},
 			},

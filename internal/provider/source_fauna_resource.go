@@ -34,12 +34,12 @@ type SourceFaunaResource struct {
 
 // SourceFaunaResourceModel describes the resource data model.
 type SourceFaunaResourceModel struct {
-	Configuration SourceFaunaUpdate `tfsdk:"configuration"`
-	Name          types.String      `tfsdk:"name"`
-	SecretID      types.String      `tfsdk:"secret_id"`
-	SourceID      types.String      `tfsdk:"source_id"`
-	SourceType    types.String      `tfsdk:"source_type"`
-	WorkspaceID   types.String      `tfsdk:"workspace_id"`
+	Configuration SourceFauna  `tfsdk:"configuration"`
+	Name          types.String `tfsdk:"name"`
+	SecretID      types.String `tfsdk:"secret_id"`
+	SourceID      types.String `tfsdk:"source_id"`
+	SourceType    types.String `tfsdk:"source_type"`
+	WorkspaceID   types.String `tfsdk:"workspace_id"`
 }
 
 func (r *SourceFaunaResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -60,43 +60,6 @@ func (r *SourceFaunaResource) Schema(ctx context.Context, req resource.SchemaReq
 							"deletions": schema.SingleNestedAttribute{
 								Required: true,
 								Attributes: map[string]schema.Attribute{
-									"source_fauna_update_collection_deletion_mode_disabled": schema.SingleNestedAttribute{
-										Computed: true,
-										Attributes: map[string]schema.Attribute{
-											"deletion_mode": schema.StringAttribute{
-												Computed: true,
-												Validators: []validator.String{
-													stringvalidator.OneOf(
-														"ignore",
-													),
-												},
-											},
-										},
-										MarkdownDescription: `<b>This only applies to incremental syncs.</b> <br>` + "\n" +
-											`Enabling deletion mode informs your destination of deleted documents.<br>` + "\n" +
-											`Disabled - Leave this feature disabled, and ignore deleted documents.<br>` + "\n" +
-											`Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted.`,
-									},
-									"source_fauna_update_collection_deletion_mode_enabled": schema.SingleNestedAttribute{
-										Computed: true,
-										Attributes: map[string]schema.Attribute{
-											"column": schema.StringAttribute{
-												Computed: true,
-											},
-											"deletion_mode": schema.StringAttribute{
-												Computed: true,
-												Validators: []validator.String{
-													stringvalidator.OneOf(
-														"deleted_field",
-													),
-												},
-											},
-										},
-										MarkdownDescription: `<b>This only applies to incremental syncs.</b> <br>` + "\n" +
-											`Enabling deletion mode informs your destination of deleted documents.<br>` + "\n" +
-											`Disabled - Leave this feature disabled, and ignore deleted documents.<br>` + "\n" +
-											`Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted.`,
-									},
 									"source_fauna_collection_deletion_mode_disabled": schema.SingleNestedAttribute{
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
@@ -122,6 +85,43 @@ func (r *SourceFaunaResource) Schema(ctx context.Context, req resource.SchemaReq
 											},
 											"deletion_mode": schema.StringAttribute{
 												Required: true,
+												Validators: []validator.String{
+													stringvalidator.OneOf(
+														"deleted_field",
+													),
+												},
+											},
+										},
+										MarkdownDescription: `<b>This only applies to incremental syncs.</b> <br>` + "\n" +
+											`Enabling deletion mode informs your destination of deleted documents.<br>` + "\n" +
+											`Disabled - Leave this feature disabled, and ignore deleted documents.<br>` + "\n" +
+											`Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted.`,
+									},
+									"source_fauna_update_collection_deletion_mode_disabled": schema.SingleNestedAttribute{
+										Computed: true,
+										Attributes: map[string]schema.Attribute{
+											"deletion_mode": schema.StringAttribute{
+												Computed: true,
+												Validators: []validator.String{
+													stringvalidator.OneOf(
+														"ignore",
+													),
+												},
+											},
+										},
+										MarkdownDescription: `<b>This only applies to incremental syncs.</b> <br>` + "\n" +
+											`Enabling deletion mode informs your destination of deleted documents.<br>` + "\n" +
+											`Disabled - Leave this feature disabled, and ignore deleted documents.<br>` + "\n" +
+											`Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted.`,
+									},
+									"source_fauna_update_collection_deletion_mode_enabled": schema.SingleNestedAttribute{
+										Computed: true,
+										Attributes: map[string]schema.Attribute{
+											"column": schema.StringAttribute{
+												Computed: true,
+											},
+											"deletion_mode": schema.StringAttribute{
+												Computed: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"deleted_field",

@@ -53,12 +53,6 @@ func (r *SourcePostmarkappResource) Schema(ctx context.Context, req resource.Sch
 			"configuration": schema.SingleNestedAttribute{
 				Required: true,
 				Attributes: map[string]schema.Attribute{
-					"x_postmark_account_token": schema.StringAttribute{
-						Required: true,
-					},
-					"x_postmark_server_token": schema.StringAttribute{
-						Required: true,
-					},
 					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -66,6 +60,12 @@ func (r *SourcePostmarkappResource) Schema(ctx context.Context, req resource.Sch
 								"postmarkapp",
 							),
 						},
+					},
+					"x_postmark_account_token": schema.StringAttribute{
+						Required: true,
+					},
+					"x_postmark_server_token": schema.StringAttribute{
+						Required: true,
 					},
 				},
 			},

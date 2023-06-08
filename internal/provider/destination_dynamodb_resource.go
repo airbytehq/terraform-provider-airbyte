@@ -33,11 +33,11 @@ type DestinationDynamodbResource struct {
 
 // DestinationDynamodbResourceModel describes the resource data model.
 type DestinationDynamodbResourceModel struct {
-	Configuration   DestinationDynamodbUpdate `tfsdk:"configuration"`
-	DestinationID   types.String              `tfsdk:"destination_id"`
-	DestinationType types.String              `tfsdk:"destination_type"`
-	Name            types.String              `tfsdk:"name"`
-	WorkspaceID     types.String              `tfsdk:"workspace_id"`
+	Configuration   DestinationDynamodb `tfsdk:"configuration"`
+	DestinationID   types.String        `tfsdk:"destination_id"`
+	DestinationType types.String        `tfsdk:"destination_type"`
+	Name            types.String        `tfsdk:"name"`
+	WorkspaceID     types.String        `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationDynamodbResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -54,6 +54,14 @@ func (r *DestinationDynamodbResource) Schema(ctx context.Context, req resource.S
 				Attributes: map[string]schema.Attribute{
 					"access_key_id": schema.StringAttribute{
 						Required: true,
+					},
+					"destination_type": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"dynamodb",
+							),
+						},
 					},
 					"dynamodb_endpoint": schema.StringAttribute{
 						Optional: true,
@@ -97,14 +105,6 @@ func (r *DestinationDynamodbResource) Schema(ctx context.Context, req resource.S
 					},
 					"secret_access_key": schema.StringAttribute{
 						Required: true,
-					},
-					"destination_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"dynamodb",
-							),
-						},
 					},
 				},
 			},

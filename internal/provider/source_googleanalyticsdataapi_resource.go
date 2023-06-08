@@ -34,12 +34,12 @@ type SourceGoogleAnalyticsDataAPIResource struct {
 
 // SourceGoogleAnalyticsDataAPIResourceModel describes the resource data model.
 type SourceGoogleAnalyticsDataAPIResourceModel struct {
-	Configuration SourceGoogleAnalyticsDataAPIUpdate `tfsdk:"configuration"`
-	Name          types.String                       `tfsdk:"name"`
-	SecretID      types.String                       `tfsdk:"secret_id"`
-	SourceID      types.String                       `tfsdk:"source_id"`
-	SourceType    types.String                       `tfsdk:"source_type"`
-	WorkspaceID   types.String                       `tfsdk:"workspace_id"`
+	Configuration SourceGoogleAnalyticsDataAPI `tfsdk:"configuration"`
+	Name          types.String                 `tfsdk:"name"`
+	SecretID      types.String                 `tfsdk:"secret_id"`
+	SourceID      types.String                 `tfsdk:"source_id"`
+	SourceType    types.String                 `tfsdk:"source_type"`
+	WorkspaceID   types.String                 `tfsdk:"workspace_id"`
 }
 
 func (r *SourceGoogleAnalyticsDataAPIResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -57,49 +57,6 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_google_analytics_data_api_update_credentials_authenticate_via_google_oauth_": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"access_token": schema.StringAttribute{
-										Computed: true,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Client",
-											),
-										},
-									},
-									"client_id": schema.StringAttribute{
-										Computed: true,
-									},
-									"client_secret": schema.StringAttribute{
-										Computed: true,
-									},
-									"refresh_token": schema.StringAttribute{
-										Computed: true,
-									},
-								},
-								Description: `Credentials for the service`,
-							},
-							"source_google_analytics_data_api_update_credentials_service_account_key_authentication": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Service",
-											),
-										},
-									},
-									"credentials_json": schema.StringAttribute{
-										Computed: true,
-									},
-								},
-								Description: `Credentials for the service`,
-							},
 							"source_google_analytics_data_api_credentials_authenticate_via_google_oauth_": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -143,6 +100,49 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 								},
 								Description: `Credentials for the service`,
 							},
+							"source_google_analytics_data_api_update_credentials_authenticate_via_google_oauth_": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"access_token": schema.StringAttribute{
+										Computed: true,
+									},
+									"auth_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Client",
+											),
+										},
+									},
+									"client_id": schema.StringAttribute{
+										Computed: true,
+									},
+									"client_secret": schema.StringAttribute{
+										Computed: true,
+									},
+									"refresh_token": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+								Description: `Credentials for the service`,
+							},
+							"source_google_analytics_data_api_update_credentials_service_account_key_authentication": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"auth_type": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Service",
+											),
+										},
+									},
+									"credentials_json": schema.StringAttribute{
+										Computed: true,
+									},
+								},
+								Description: `Credentials for the service`,
+							},
 						},
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
@@ -160,9 +160,6 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 					"property_id": schema.StringAttribute{
 						Required: true,
 					},
-					"window_in_days": schema.Int64Attribute{
-						Optional: true,
-					},
 					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -170,6 +167,9 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 								"google-analytics-data-api",
 							),
 						},
+					},
+					"window_in_days": schema.Int64Attribute{
+						Optional: true,
 					},
 				},
 			},

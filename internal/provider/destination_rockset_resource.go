@@ -33,11 +33,11 @@ type DestinationRocksetResource struct {
 
 // DestinationRocksetResourceModel describes the resource data model.
 type DestinationRocksetResourceModel struct {
-	Configuration   DestinationRocksetUpdate `tfsdk:"configuration"`
-	DestinationID   types.String             `tfsdk:"destination_id"`
-	DestinationType types.String             `tfsdk:"destination_type"`
-	Name            types.String             `tfsdk:"name"`
-	WorkspaceID     types.String             `tfsdk:"workspace_id"`
+	Configuration   DestinationRockset `tfsdk:"configuration"`
+	DestinationID   types.String       `tfsdk:"destination_id"`
+	DestinationType types.String       `tfsdk:"destination_type"`
+	Name            types.String       `tfsdk:"name"`
+	WorkspaceID     types.String       `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationRocksetResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -58,9 +58,6 @@ func (r *DestinationRocksetResource) Schema(ctx context.Context, req resource.Sc
 					"api_server": schema.StringAttribute{
 						Optional: true,
 					},
-					"workspace": schema.StringAttribute{
-						Required: true,
-					},
 					"destination_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -68,6 +65,9 @@ func (r *DestinationRocksetResource) Schema(ctx context.Context, req resource.Sc
 								"rockset",
 							),
 						},
+					},
+					"workspace": schema.StringAttribute{
+						Required: true,
 					},
 				},
 			},

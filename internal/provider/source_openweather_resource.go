@@ -33,12 +33,12 @@ type SourceOpenweatherResource struct {
 
 // SourceOpenweatherResourceModel describes the resource data model.
 type SourceOpenweatherResourceModel struct {
-	Configuration SourceOpenweatherUpdate `tfsdk:"configuration"`
-	Name          types.String            `tfsdk:"name"`
-	SecretID      types.String            `tfsdk:"secret_id"`
-	SourceID      types.String            `tfsdk:"source_id"`
-	SourceType    types.String            `tfsdk:"source_type"`
-	WorkspaceID   types.String            `tfsdk:"workspace_id"`
+	Configuration SourceOpenweather `tfsdk:"configuration"`
+	Name          types.String      `tfsdk:"name"`
+	SecretID      types.String      `tfsdk:"secret_id"`
+	SourceID      types.String      `tfsdk:"source_id"`
+	SourceType    types.String      `tfsdk:"source_type"`
+	WorkspaceID   types.String      `tfsdk:"workspace_id"`
 }
 
 func (r *SourceOpenweatherResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -119,6 +119,14 @@ func (r *SourceOpenweatherResource) Schema(ctx context.Context, req resource.Sch
 					"lon": schema.StringAttribute{
 						Required: true,
 					},
+					"source_type": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"openweather",
+							),
+						},
+					},
 					"units": schema.StringAttribute{
 						Optional: true,
 						Validators: []validator.String{
@@ -129,14 +137,6 @@ func (r *SourceOpenweatherResource) Schema(ctx context.Context, req resource.Sch
 							),
 						},
 						Description: `Units of measurement. standard, metric and imperial units are available. If you do not use the units parameter, standard units will be applied by default.`,
-					},
-					"source_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"openweather",
-							),
-						},
 					},
 				},
 			},

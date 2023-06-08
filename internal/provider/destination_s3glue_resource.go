@@ -34,11 +34,11 @@ type DestinationS3GlueResource struct {
 
 // DestinationS3GlueResourceModel describes the resource data model.
 type DestinationS3GlueResourceModel struct {
-	Configuration   DestinationS3GlueUpdate `tfsdk:"configuration"`
-	DestinationID   types.String            `tfsdk:"destination_id"`
-	DestinationType types.String            `tfsdk:"destination_type"`
-	Name            types.String            `tfsdk:"name"`
-	WorkspaceID     types.String            `tfsdk:"workspace_id"`
+	Configuration   DestinationS3Glue `tfsdk:"configuration"`
+	DestinationID   types.String      `tfsdk:"destination_id"`
+	DestinationType types.String      `tfsdk:"destination_type"`
+	Name            types.String      `tfsdk:"name"`
+	WorkspaceID     types.String      `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationS3GlueResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -56,72 +56,20 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 					"access_key_id": schema.StringAttribute{
 						Optional: true,
 					},
+					"destination_type": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"s3-glue",
+							),
+						},
+					},
 					"file_name_pattern": schema.StringAttribute{
 						Optional: true,
 					},
 					"format": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
-							"destination_s3_glue_update_output_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"compression": schema.SingleNestedAttribute{
-										Computed: true,
-										Attributes: map[string]schema.Attribute{
-											"destination_s3_glue_update_output_format_json_lines_newline_delimited_json_compression_no_compression": schema.SingleNestedAttribute{
-												Computed: true,
-												Attributes: map[string]schema.Attribute{
-													"compression_type": schema.StringAttribute{
-														Computed: true,
-														Validators: []validator.String{
-															stringvalidator.OneOf(
-																"No Compression",
-															),
-														},
-													},
-												},
-												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
-											},
-											"destination_s3_glue_update_output_format_json_lines_newline_delimited_json_compression_gzip": schema.SingleNestedAttribute{
-												Computed: true,
-												Attributes: map[string]schema.Attribute{
-													"compression_type": schema.StringAttribute{
-														Computed: true,
-														Validators: []validator.String{
-															stringvalidator.OneOf(
-																"GZIP",
-															),
-														},
-													},
-												},
-												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
-											},
-										},
-										Validators: []validator.Object{
-											validators.ExactlyOneChild(),
-										},
-									},
-									"flattening": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"No flattening",
-												"Root level flattening",
-											),
-										},
-										Description: `Whether the input json data should be normalized (flattened) in the output JSON Lines. Please refer to docs for details.`,
-									},
-									"format_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"JSONL",
-											),
-										},
-									},
-								},
-								Description: `Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details`,
-							},
 							"destination_s3_glue_output_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -173,6 +121,66 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 									},
 									"format_type": schema.StringAttribute{
 										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"JSONL",
+											),
+										},
+									},
+								},
+								Description: `Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details`,
+							},
+							"destination_s3_glue_update_output_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"compression": schema.SingleNestedAttribute{
+										Computed: true,
+										Attributes: map[string]schema.Attribute{
+											"destination_s3_glue_update_output_format_json_lines_newline_delimited_json_compression_no_compression": schema.SingleNestedAttribute{
+												Computed: true,
+												Attributes: map[string]schema.Attribute{
+													"compression_type": schema.StringAttribute{
+														Computed: true,
+														Validators: []validator.String{
+															stringvalidator.OneOf(
+																"No Compression",
+															),
+														},
+													},
+												},
+												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
+											},
+											"destination_s3_glue_update_output_format_json_lines_newline_delimited_json_compression_gzip": schema.SingleNestedAttribute{
+												Computed: true,
+												Attributes: map[string]schema.Attribute{
+													"compression_type": schema.StringAttribute{
+														Computed: true,
+														Validators: []validator.String{
+															stringvalidator.OneOf(
+																"GZIP",
+															),
+														},
+													},
+												},
+												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
+											},
+										},
+										Validators: []validator.Object{
+											validators.ExactlyOneChild(),
+										},
+									},
+									"flattening": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"No flattening",
+												"Root level flattening",
+											),
+										},
+										Description: `Whether the input json data should be normalized (flattened) in the output JSON Lines. Please refer to docs for details.`,
+									},
+									"format_type": schema.StringAttribute{
+										Computed: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"JSONL",
@@ -248,14 +256,6 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 					},
 					"secret_access_key": schema.StringAttribute{
 						Optional: true,
-					},
-					"destination_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"s3-glue",
-							),
-						},
 					},
 				},
 			},

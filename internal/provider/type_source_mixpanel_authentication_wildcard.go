@@ -3,8 +3,8 @@
 package provider
 
 type SourceMixpanelAuthenticationWildcard struct {
-	SourceMixpanelAuthenticationWildcardServiceAccount       *SourceMixpanelAuthenticationWildcardServiceAccount       `tfsdk:"source_mixpanel_authentication_wildcard_service_account"`
 	SourceMixpanelAuthenticationWildcardProjectSecret        *SourceMixpanelAuthenticationWildcardProjectSecret        `tfsdk:"source_mixpanel_authentication_wildcard_project_secret"`
-	SourceMixpanelUpdateAuthenticationWildcardServiceAccount *SourceMixpanelUpdateAuthenticationWildcardServiceAccount `tfsdk:"source_mixpanel_update_authentication_wildcard_service_account"`
+	SourceMixpanelAuthenticationWildcardServiceAccount       *SourceMixpanelAuthenticationWildcardServiceAccount       `tfsdk:"source_mixpanel_authentication_wildcard_service_account"`
 	SourceMixpanelUpdateAuthenticationWildcardProjectSecret  *SourceMixpanelUpdateAuthenticationWildcardProjectSecret  `tfsdk:"source_mixpanel_update_authentication_wildcard_project_secret"`
+	SourceMixpanelUpdateAuthenticationWildcardServiceAccount *SourceMixpanelUpdateAuthenticationWildcardServiceAccount `tfsdk:"source_mixpanel_update_authentication_wildcard_service_account"`
 }

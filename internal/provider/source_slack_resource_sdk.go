@@ -15,16 +15,10 @@ func (r *SourceSlackResourceModel) ToCreateSDKType() *shared.SourceSlackCreateRe
 	}
 	var credentials *shared.SourceSlackAuthenticationMechanism
 	var sourceSlackAuthenticationMechanismSignInViaSlackOAuth *shared.SourceSlackAuthenticationMechanismSignInViaSlackOAuth
-	if r.Configuration.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth != nil {
-		accessToken := r.Configuration.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth.AccessToken.ValueString()
-		clientID := r.Configuration.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth.ClientID.ValueString()
-		clientSecret := r.Configuration.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth.ClientSecret.ValueString()
-		optionTitle := shared.SourceSlackAuthenticationMechanismSignInViaSlackOAuthOptionTitle(r.Configuration.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth.OptionTitle.ValueString())
+	if r.Configuration.Credentials.SourceSlackAuthenticationMechanismAPIToken != nil {
+		optionTitle := shared.SourceSlackAuthenticationMechanismSignInViaSlackOAuthOptionTitle(r.Configuration.Credentials.SourceSlackAuthenticationMechanismAPIToken.OptionTitle.ValueString())
 		sourceSlackAuthenticationMechanismSignInViaSlackOAuth = &shared.SourceSlackAuthenticationMechanismSignInViaSlackOAuth{
-			AccessToken:  accessToken,
-			ClientID:     clientID,
-			ClientSecret: clientSecret,
-			OptionTitle:  optionTitle,
+			OptionTitle: optionTitle,
 		}
 	}
 	if sourceSlackAuthenticationMechanismSignInViaSlackOAuth != nil {
@@ -33,11 +27,9 @@ func (r *SourceSlackResourceModel) ToCreateSDKType() *shared.SourceSlackCreateRe
 		}
 	}
 	var sourceSlackAuthenticationMechanismAPIToken *shared.SourceSlackAuthenticationMechanismAPIToken
-	if r.Configuration.Credentials.SourceSlackAuthenticationMechanismAPIToken != nil {
-		apiToken := r.Configuration.Credentials.SourceSlackAuthenticationMechanismAPIToken.APIToken.ValueString()
-		optionTitle1 := shared.SourceSlackAuthenticationMechanismAPITokenOptionTitle(r.Configuration.Credentials.SourceSlackAuthenticationMechanismAPIToken.OptionTitle.ValueString())
+	if r.Configuration.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth != nil {
+		optionTitle1 := shared.SourceSlackAuthenticationMechanismAPITokenOptionTitle(r.Configuration.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth.OptionTitle.ValueString())
 		sourceSlackAuthenticationMechanismAPIToken = &shared.SourceSlackAuthenticationMechanismAPIToken{
-			APIToken:    apiToken,
 			OptionTitle: optionTitle1,
 		}
 	}
@@ -82,16 +74,10 @@ func (r *SourceSlackResourceModel) ToUpdateSDKType() *shared.SourceSlackPutReque
 	}
 	var credentials *shared.SourceSlackUpdateAuthenticationMechanism
 	var sourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth *shared.SourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth
-	if r.Configuration.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth != nil {
-		accessToken := r.Configuration.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth.AccessToken.ValueString()
-		clientID := r.Configuration.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth.ClientID.ValueString()
-		clientSecret := r.Configuration.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth.ClientSecret.ValueString()
-		optionTitle := shared.SourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuthOptionTitle(r.Configuration.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth.OptionTitle.ValueString())
+	if r.Configuration.Credentials.SourceSlackAuthenticationMechanismAPIToken != nil {
+		optionTitle := shared.SourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuthOptionTitle(r.Configuration.Credentials.SourceSlackAuthenticationMechanismAPIToken.OptionTitle.ValueString())
 		sourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth = &shared.SourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth{
-			AccessToken:  accessToken,
-			ClientID:     clientID,
-			ClientSecret: clientSecret,
-			OptionTitle:  optionTitle,
+			OptionTitle: optionTitle,
 		}
 	}
 	if sourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth != nil {
@@ -100,11 +86,9 @@ func (r *SourceSlackResourceModel) ToUpdateSDKType() *shared.SourceSlackPutReque
 		}
 	}
 	var sourceSlackUpdateAuthenticationMechanismAPIToken *shared.SourceSlackUpdateAuthenticationMechanismAPIToken
-	if r.Configuration.Credentials.SourceSlackAuthenticationMechanismAPIToken != nil {
-		apiToken := r.Configuration.Credentials.SourceSlackAuthenticationMechanismAPIToken.APIToken.ValueString()
-		optionTitle1 := shared.SourceSlackUpdateAuthenticationMechanismAPITokenOptionTitle(r.Configuration.Credentials.SourceSlackAuthenticationMechanismAPIToken.OptionTitle.ValueString())
+	if r.Configuration.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth != nil {
+		optionTitle1 := shared.SourceSlackUpdateAuthenticationMechanismAPITokenOptionTitle(r.Configuration.Credentials.SourceSlackAuthenticationMechanismSignInViaSlackOAuth.OptionTitle.ValueString())
 		sourceSlackUpdateAuthenticationMechanismAPIToken = &shared.SourceSlackUpdateAuthenticationMechanismAPIToken{
-			APIToken:    apiToken,
 			OptionTitle: optionTitle1,
 		}
 	}

@@ -57,6 +57,22 @@ func (r *SourceSalesloftResource) Schema(ctx context.Context, req resource.Schem
 					"credentials": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
+							"source_salesloft_credentials_authenticate_via_api_key": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"api_key": schema.StringAttribute{
+										Required: true,
+									},
+									"auth_type": schema.StringAttribute{
+										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"api_key",
+											),
+										},
+									},
+								},
+							},
 							"source_salesloft_credentials_authenticate_via_o_auth": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -88,14 +104,14 @@ func (r *SourceSalesloftResource) Schema(ctx context.Context, req resource.Schem
 									},
 								},
 							},
-							"source_salesloft_credentials_authenticate_via_api_key": schema.SingleNestedAttribute{
-								Optional: true,
+							"source_salesloft_update_credentials_authenticate_via_api_key": schema.SingleNestedAttribute{
+								Computed: true,
 								Attributes: map[string]schema.Attribute{
 									"api_key": schema.StringAttribute{
-										Required: true,
+										Computed: true,
 									},
 									"auth_type": schema.StringAttribute{
-										Required: true,
+										Computed: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"api_key",
@@ -131,22 +147,6 @@ func (r *SourceSalesloftResource) Schema(ctx context.Context, req resource.Schem
 										Computed: true,
 										Validators: []validator.String{
 											validators.IsRFC3339(),
-										},
-									},
-								},
-							},
-							"source_salesloft_update_credentials_authenticate_via_api_key": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"api_key": schema.StringAttribute{
-										Computed: true,
-									},
-									"auth_type": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"api_key",
-											),
 										},
 									},
 								},

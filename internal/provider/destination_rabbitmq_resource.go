@@ -33,11 +33,11 @@ type DestinationRabbitmqResource struct {
 
 // DestinationRabbitmqResourceModel describes the resource data model.
 type DestinationRabbitmqResourceModel struct {
-	Configuration   DestinationRabbitmqUpdate `tfsdk:"configuration"`
-	DestinationID   types.String              `tfsdk:"destination_id"`
-	DestinationType types.String              `tfsdk:"destination_type"`
-	Name            types.String              `tfsdk:"name"`
-	WorkspaceID     types.String              `tfsdk:"workspace_id"`
+	Configuration   DestinationRabbitmq `tfsdk:"configuration"`
+	DestinationID   types.String        `tfsdk:"destination_id"`
+	DestinationType types.String        `tfsdk:"destination_type"`
+	Name            types.String        `tfsdk:"name"`
+	WorkspaceID     types.String        `tfsdk:"workspace_id"`
 }
 
 func (r *DestinationRabbitmqResource) Metadata(ctx context.Context, req resource.MetadataRequest, resp *resource.MetadataResponse) {
@@ -52,6 +52,14 @@ func (r *DestinationRabbitmqResource) Schema(ctx context.Context, req resource.S
 			"configuration": schema.SingleNestedAttribute{
 				Required: true,
 				Attributes: map[string]schema.Attribute{
+					"destination_type": schema.StringAttribute{
+						Required: true,
+						Validators: []validator.String{
+							stringvalidator.OneOf(
+								"rabbitmq",
+							),
+						},
+					},
 					"exchange": schema.StringAttribute{
 						Optional: true,
 					},
@@ -75,14 +83,6 @@ func (r *DestinationRabbitmqResource) Schema(ctx context.Context, req resource.S
 					},
 					"virtual_host": schema.StringAttribute{
 						Optional: true,
-					},
-					"destination_type": schema.StringAttribute{
-						Required: true,
-						Validators: []validator.String{
-							stringvalidator.OneOf(
-								"rabbitmq",
-							),
-						},
 					},
 				},
 			},
