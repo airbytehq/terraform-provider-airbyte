@@ -55,12 +55,15 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"connection_data": schema.SingleNestedAttribute{
+						Computed: true,
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_oracle_connect_by_service_name": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"connection_type": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -75,9 +78,11 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 								Description: `Use service name`,
 							},
 							"source_oracle_connect_by_system_id_sid_": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"connection_type": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -93,9 +98,11 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 							},
 							"source_oracle_update_connect_by_service_name": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"connection_type": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"service_name",
@@ -103,16 +110,18 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 										},
 									},
 									"service_name": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 								Description: `Use service name`,
 							},
 							"source_oracle_update_connect_by_system_id_sid_": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"connection_type": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"sid",
@@ -120,7 +129,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 										},
 									},
 									"sid": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 								Description: `Use SID (Oracle System Identifier)`,
@@ -134,9 +143,11 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"source_oracle_encryption_native_network_encryption_nne_": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"encryption_algorithm": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -159,6 +170,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 								Description: `The native network encryption gives you the ability to encrypt database connections, without the configuration overhead of TCP/IP and SSL/TLS and without the need to open and listen on different ports.`,
 							},
 							"source_oracle_encryption_tls_encrypted_verify_certificate_": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"encryption_method": schema.StringAttribute{
@@ -177,9 +189,11 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 							},
 							"source_oracle_update_encryption_native_network_encryption_nne_": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"encryption_algorithm": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"AES256",
@@ -190,7 +204,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 										Description: `This parameter defines what encryption algorithm is used.`,
 									},
 									"encryption_method": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"client_nne",
@@ -202,9 +216,10 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 							},
 							"source_oracle_update_encryption_tls_encrypted_verify_certificate_": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"encryption_method": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"encrypted_verify_certificate",
@@ -212,7 +227,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 										},
 									},
 									"ssl_certificate": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 								Description: `Verify and use the certificate provided by the server.`,
@@ -226,15 +241,18 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 						Required: true,
 					},
 					"jdbc_url_params": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"password": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"port": schema.Int64Attribute{
 						Required: true,
 					},
 					"schemas": schema.ListAttribute{
+						Computed:    true,
 						Optional:    true,
 						ElementType: types.StringType,
 					},
@@ -247,9 +265,11 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 						},
 					},
 					"tunnel_method": schema.SingleNestedAttribute{
+						Computed: true,
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_oracle_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_method": schema.StringAttribute{
@@ -265,6 +285,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"source_oracle_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_host": schema.StringAttribute{
@@ -292,6 +313,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"source_oracle_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
@@ -320,9 +342,10 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 							},
 							"source_oracle_update_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_method": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"NO_TUNNEL",
@@ -335,12 +358,13 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 							},
 							"source_oracle_update_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_host": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"tunnel_method": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"SSH_PASSWORD_AUTH",
@@ -349,28 +373,29 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 										Description: `Connect through a jump server tunnel host using username and password authentication`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										Computed: true,
+										Required: true,
 									},
 									"tunnel_user": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"tunnel_user_password": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"source_oracle_update_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"tunnel_host": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"tunnel_method": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"SSH_KEY_AUTH",
@@ -379,10 +404,10 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 										Description: `Connect through a jump server tunnel host using username and ssh key`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										Computed: true,
+										Required: true,
 									},
 									"tunnel_user": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,

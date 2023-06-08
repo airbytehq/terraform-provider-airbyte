@@ -3,8 +3,8 @@
 package provider
 
 type SourceMssqlReplicationMethod struct {
-	SourceMssqlReplicationMethodLogicalReplicationCDC       *SourceMssqlReplicationMethodLogicalReplicationCDC       `tfsdk:"source_mssql_replication_method_logical_replication_cdc_"`
-	SourceMssqlReplicationMethodStandard                    *SourceMssqlReplicationMethodStandard                    `tfsdk:"source_mssql_replication_method_standard"`
-	SourceMssqlUpdateReplicationMethodLogicalReplicationCDC *SourceMssqlUpdateReplicationMethodLogicalReplicationCDC `tfsdk:"source_mssql_update_replication_method_logical_replication_cdc_"`
-	SourceMssqlUpdateReplicationMethodStandard              *SourceMssqlUpdateReplicationMethodStandard              `tfsdk:"source_mssql_update_replication_method_standard"`
+	SourceMssqlReplicationMethodLogicalReplicationCDC       *SourceMssqlReplicationMethodLogicalReplicationCDC `tfsdk:"source_mssql_replication_method_logical_replication_cdc_"`
+	SourceMssqlReplicationMethodStandard                    *SourceMssqlReplicationMethodStandard              `tfsdk:"source_mssql_replication_method_standard"`
+	SourceMssqlUpdateReplicationMethodLogicalReplicationCDC *SourceMssqlReplicationMethodLogicalReplicationCDC `tfsdk:"source_mssql_update_replication_method_logical_replication_cdc_"`
+	SourceMssqlUpdateReplicationMethodStandard              *SourceMssqlReplicationMethodStandard              `tfsdk:"source_mssql_update_replication_method_standard"`
 }

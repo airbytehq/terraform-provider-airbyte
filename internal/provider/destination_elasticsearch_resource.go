@@ -54,9 +54,11 @@ func (r *DestinationElasticsearchResource) Schema(ctx context.Context, req resou
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"authentication_method": schema.SingleNestedAttribute{
+						Computed: true,
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_elasticsearch_authentication_method_api_key_secret": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_key_id": schema.StringAttribute{
@@ -77,6 +79,7 @@ func (r *DestinationElasticsearchResource) Schema(ctx context.Context, req resou
 								Description: `Use a api key and secret combination to authenticate`,
 							},
 							"destination_elasticsearch_authentication_method_username_password": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
@@ -98,15 +101,16 @@ func (r *DestinationElasticsearchResource) Schema(ctx context.Context, req resou
 							},
 							"destination_elasticsearch_update_authentication_method_api_key_secret": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_key_id": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"api_key_secret": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"method": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"secret",
@@ -118,9 +122,10 @@ func (r *DestinationElasticsearchResource) Schema(ctx context.Context, req resou
 							},
 							"destination_elasticsearch_update_authentication_method_username_password": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"basic",
@@ -128,10 +133,10 @@ func (r *DestinationElasticsearchResource) Schema(ctx context.Context, req resou
 										},
 									},
 									"password": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"username": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 								Description: `Basic auth header with a username and password`,
@@ -142,6 +147,7 @@ func (r *DestinationElasticsearchResource) Schema(ctx context.Context, req resou
 						},
 					},
 					"ca_certificate": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"destination_type": schema.StringAttribute{
@@ -156,6 +162,7 @@ func (r *DestinationElasticsearchResource) Schema(ctx context.Context, req resou
 						Required: true,
 					},
 					"upsert": schema.BoolAttribute{
+						Computed: true,
 						Optional: true,
 					},
 				},

@@ -63,6 +63,7 @@ func (r *SourceSonarCloudResource) Schema(ctx context.Context, req resource.Sche
 						},
 					},
 					"end_date": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
@@ -80,6 +81,7 @@ func (r *SourceSonarCloudResource) Schema(ctx context.Context, req resource.Sche
 						},
 					},
 					"start_date": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),

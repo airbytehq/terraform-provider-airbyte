@@ -61,27 +61,33 @@ func (r *DestinationRabbitmqResource) Schema(ctx context.Context, req resource.S
 						},
 					},
 					"exchange": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"host": schema.StringAttribute{
 						Required: true,
 					},
 					"password": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"port": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"routing_key": schema.StringAttribute{
 						Required: true,
 					},
 					"ssl": schema.BoolAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"username": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"virtual_host": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 				},

@@ -51,9 +51,6 @@ Optional:
 
 - `source_zendesk_support_authentication_api_token` (Attributes) Zendesk service provides two authentication methods. Choose between: `OAuth2.0` or `API token`. (see [below for nested schema](#nestedatt--configuration--credentials--source_zendesk_support_authentication_api_token))
 - `source_zendesk_support_authentication_o_auth2_0` (Attributes) Zendesk service provides two authentication methods. Choose between: `OAuth2.0` or `API token`. (see [below for nested schema](#nestedatt--configuration--credentials--source_zendesk_support_authentication_o_auth2_0))
-
-Read-Only:
-
 - `source_zendesk_support_update_authentication_api_token` (Attributes) Zendesk service provides two authentication methods. Choose between: `OAuth2.0` or `API token`. (see [below for nested schema](#nestedatt--configuration--credentials--source_zendesk_support_update_authentication_api_token))
 - `source_zendesk_support_update_authentication_o_auth2_0` (Attributes) Zendesk service provides two authentication methods. Choose between: `OAuth2.0` or `API token`. (see [below for nested schema](#nestedatt--configuration--credentials--source_zendesk_support_update_authentication_o_auth2_0))
 
@@ -87,27 +84,27 @@ Optional:
 <a id="nestedatt--configuration--credentials--source_zendesk_support_update_authentication_api_token"></a>
 ### Nested Schema for `configuration.credentials.source_zendesk_support_update_authentication_api_token`
 
+Required:
+
+- `api_token` (String)
+- `email` (String)
+
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-
-Read-Only:
-
-- `api_token` (String)
 - `credentials` (String)
-- `email` (String)
 
 
 <a id="nestedatt--configuration--credentials--source_zendesk_support_update_authentication_o_auth2_0"></a>
 ### Nested Schema for `configuration.credentials.source_zendesk_support_update_authentication_o_auth2_0`
 
+Required:
+
+- `access_token` (String)
+
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-
-Read-Only:
-
-- `access_token` (String)
 - `credentials` (String)
 
 

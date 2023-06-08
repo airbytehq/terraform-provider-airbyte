@@ -68,6 +68,7 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 						Required: true,
 					},
 					"jdbc_url_params": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"password": schema.StringAttribute{
@@ -80,9 +81,11 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 						Required: true,
 					},
 					"tunnel_method": schema.SingleNestedAttribute{
+						Computed: true,
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_redshift_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_method": schema.StringAttribute{
@@ -98,6 +101,7 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"destination_redshift_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_host": schema.StringAttribute{
@@ -125,6 +129,7 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"destination_redshift_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
@@ -153,9 +158,10 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 							},
 							"destination_redshift_update_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_method": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"NO_TUNNEL",
@@ -168,12 +174,13 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 							},
 							"destination_redshift_update_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_host": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"tunnel_method": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"SSH_PASSWORD_AUTH",
@@ -182,28 +189,29 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 										Description: `Connect through a jump server tunnel host using username and password authentication`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										Computed: true,
+										Required: true,
 									},
 									"tunnel_user": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"tunnel_user_password": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"destination_redshift_update_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"tunnel_host": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"tunnel_method": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"SSH_KEY_AUTH",
@@ -212,10 +220,10 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 										Description: `Connect through a jump server tunnel host using username and ssh key`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										Computed: true,
+										Required: true,
 									},
 									"tunnel_user": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -226,18 +234,41 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 						},
 					},
 					"uploading_method": schema.SingleNestedAttribute{
+						Computed: true,
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_redshift_uploading_method_s3_staging": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_key_id": schema.StringAttribute{
 										Required: true,
 									},
 									"encryption": schema.SingleNestedAttribute{
+										Computed: true,
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
+											"destination_redshift_uploading_method_s3_staging_encryption_aes_cbc_envelope_encryption": schema.SingleNestedAttribute{
+												Computed: true,
+												Optional: true,
+												Attributes: map[string]schema.Attribute{
+													"encryption_type": schema.StringAttribute{
+														Required: true,
+														Validators: []validator.String{
+															stringvalidator.OneOf(
+																"aes_cbc_envelope",
+															),
+														},
+													},
+													"key_encrypting_key": schema.StringAttribute{
+														Computed: true,
+														Optional: true,
+													},
+												},
+												Description: `Staging data will be encrypted using AES-CBC envelope encryption.`,
+											},
 											"destination_redshift_uploading_method_s3_staging_encryption_no_encryption": schema.SingleNestedAttribute{
+												Computed: true,
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"encryption_type": schema.StringAttribute{
@@ -251,32 +282,17 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 												},
 												Description: `Staging data will be stored in plaintext.`,
 											},
-											"destination_redshift_uploading_method_s3_staging_encryption_aes_cbc_envelope_encryption": schema.SingleNestedAttribute{
-												Optional: true,
-												Attributes: map[string]schema.Attribute{
-													"encryption_type": schema.StringAttribute{
-														Required: true,
-														Validators: []validator.String{
-															stringvalidator.OneOf(
-																"aes_cbc_envelope",
-															),
-														},
-													},
-													"key_encrypting_key": schema.StringAttribute{
-														Optional: true,
-													},
-												},
-												Description: `Staging data will be encrypted using AES-CBC envelope encryption.`,
-											},
 										},
 										Validators: []validator.Object{
 											validators.ExactlyOneChild(),
 										},
 									},
 									"file_buffer_count": schema.Int64Attribute{
+										Computed: true,
 										Optional: true,
 									},
 									"file_name_pattern": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 									},
 									"method": schema.StringAttribute{
@@ -288,12 +304,14 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 										},
 									},
 									"purge_staging_data": schema.BoolAttribute{
+										Computed: true,
 										Optional: true,
 									},
 									"s3_bucket_name": schema.StringAttribute{
 										Required: true,
 									},
 									"s3_bucket_path": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 									},
 									"s3_bucket_region": schema.StringAttribute{
@@ -335,6 +353,7 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 								Description: `The method how the data will be uploaded to the database.`,
 							},
 							"destination_redshift_uploading_method_standard": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
@@ -350,18 +369,21 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 							},
 							"destination_redshift_update_uploading_method_s3_staging": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_key_id": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"encryption": schema.SingleNestedAttribute{
 										Computed: true,
+										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"destination_redshift_update_uploading_method_s3_staging_encryption_no_encryption": schema.SingleNestedAttribute{
 												Computed: true,
+												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"encryption_type": schema.StringAttribute{
-														Computed: true,
+														Required: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
 																"none",
@@ -373,9 +395,10 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 											},
 											"destination_redshift_update_uploading_method_s3_staging_encryption_aes_cbc_envelope_encryption": schema.SingleNestedAttribute{
 												Computed: true,
+												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"encryption_type": schema.StringAttribute{
-														Computed: true,
+														Required: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
 																"aes_cbc_envelope",
@@ -384,6 +407,7 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 													},
 													"key_encrypting_key": schema.StringAttribute{
 														Computed: true,
+														Optional: true,
 													},
 												},
 												Description: `Staging data will be encrypted using AES-CBC envelope encryption.`,
@@ -395,12 +419,14 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 									},
 									"file_buffer_count": schema.Int64Attribute{
 										Computed: true,
+										Optional: true,
 									},
 									"file_name_pattern": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 									},
 									"method": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"S3 Staging",
@@ -409,15 +435,17 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 									},
 									"purge_staging_data": schema.BoolAttribute{
 										Computed: true,
+										Optional: true,
 									},
 									"s3_bucket_name": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"s3_bucket_path": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 									},
 									"s3_bucket_region": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"",
@@ -449,16 +477,17 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 										Description: `The region of the S3 staging bucket to use if utilising a COPY strategy. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html#:~:text=In-,Region,-%2C%20choose%20the%20AWS">AWS docs</a> for details.`,
 									},
 									"secret_access_key": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 								Description: `The method how the data will be uploaded to the database.`,
 							},
 							"destination_redshift_update_uploading_method_standard": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"Standard",

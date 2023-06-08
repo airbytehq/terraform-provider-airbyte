@@ -61,6 +61,7 @@ func (r *SourceYandexMetricaResource) Schema(ctx context.Context, req resource.S
 						Required: true,
 					},
 					"end_date": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),

@@ -77,12 +77,15 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"source_file_secure_storage_provider_az_blob_azure_blob_storage": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"sas_token": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 									},
 									"shared_key": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 									},
 									"storage": schema.StringAttribute{
@@ -100,9 +103,11 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
 							},
 							"source_file_secure_storage_provider_gcs_google_cloud_storage": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"service_account_json": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 									},
 									"storage": schema.StringAttribute{
@@ -117,6 +122,7 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
 							},
 							"source_file_secure_storage_provider_https_public_web": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"storage": schema.StringAttribute{
@@ -128,18 +134,22 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 										},
 									},
 									"user_agent": schema.BoolAttribute{
+										Computed: true,
 										Optional: true,
 									},
 								},
 								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
 							},
 							"source_file_secure_storage_provider_s3_amazon_web_services": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"aws_access_key_id": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 									},
 									"aws_secret_access_key": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 									},
 									"storage": schema.StringAttribute{
@@ -154,15 +164,18 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
 							},
 							"source_file_secure_storage_provider_scp_secure_copy_protocol": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"host": schema.StringAttribute{
 										Required: true,
 									},
 									"password": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 									},
 									"port": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 									},
 									"storage": schema.StringAttribute{
@@ -180,15 +193,18 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
 							},
 							"source_file_secure_storage_provider_sftp_secure_file_transfer_protocol": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"host": schema.StringAttribute{
 										Required: true,
 									},
 									"password": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 									},
 									"port": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 									},
 									"storage": schema.StringAttribute{
@@ -206,15 +222,18 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
 							},
 							"source_file_secure_storage_provider_ssh_secure_shell": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"host": schema.StringAttribute{
 										Required: true,
 									},
 									"password": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 									},
 									"port": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 									},
 									"storage": schema.StringAttribute{
@@ -233,15 +252,18 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 							},
 							"source_file_secure_update_storage_provider_az_blob_azure_blob_storage": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"sas_token": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 									},
 									"shared_key": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 									},
 									"storage": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"AzBlob",
@@ -249,19 +271,21 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 										},
 									},
 									"storage_account": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
 							},
 							"source_file_secure_update_storage_provider_gcs_google_cloud_storage": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"service_account_json": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 									},
 									"storage": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"GCS",
@@ -273,9 +297,10 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 							},
 							"source_file_secure_update_storage_provider_https_public_web": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"storage": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"HTTPS",
@@ -284,21 +309,25 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 									},
 									"user_agent": schema.BoolAttribute{
 										Computed: true,
+										Optional: true,
 									},
 								},
 								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
 							},
 							"source_file_secure_update_storage_provider_s3_amazon_web_services": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"aws_access_key_id": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 									},
 									"aws_secret_access_key": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 									},
 									"storage": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"S3",
@@ -310,18 +339,21 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 							},
 							"source_file_secure_update_storage_provider_scp_secure_copy_protocol": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"host": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"password": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 									},
 									"port": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 									},
 									"storage": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"SCP",
@@ -329,25 +361,28 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 										},
 									},
 									"user": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
 							},
 							"source_file_secure_update_storage_provider_sftp_secure_file_transfer_protocol": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"host": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"password": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 									},
 									"port": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 									},
 									"storage": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"SFTP",
@@ -355,25 +390,28 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 										},
 									},
 									"user": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
 							},
 							"source_file_secure_update_storage_provider_ssh_secure_shell": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"host": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"password": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 									},
 									"port": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 									},
 									"storage": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"SSH",
@@ -381,7 +419,7 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 										},
 									},
 									"user": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
@@ -392,6 +430,7 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 						},
 					},
 					"reader_options": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{

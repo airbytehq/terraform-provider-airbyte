@@ -54,6 +54,7 @@ func (r *SourceAmazonAdsResource) Schema(ctx context.Context, req resource.Schem
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"auth_type": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -68,9 +69,11 @@ func (r *SourceAmazonAdsResource) Schema(ctx context.Context, req resource.Schem
 						Required: true,
 					},
 					"look_back_window": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"profiles": schema.ListAttribute{
+						Computed:    true,
 						Optional:    true,
 						ElementType: types.Int64Type,
 					},
@@ -78,6 +81,7 @@ func (r *SourceAmazonAdsResource) Schema(ctx context.Context, req resource.Schem
 						Required: true,
 					},
 					"region": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -89,6 +93,7 @@ func (r *SourceAmazonAdsResource) Schema(ctx context.Context, req resource.Schem
 						Description: `Region to pull data from (EU/NA/FE). See <a href="https://advertising.amazon.com/API/docs/en-us/info/api-overview#api-endpoints">docs</a> for more details.`,
 					},
 					"report_record_types": schema.ListAttribute{
+						Computed:    true,
 						Optional:    true,
 						ElementType: types.StringType,
 					},
@@ -101,9 +106,11 @@ func (r *SourceAmazonAdsResource) Schema(ctx context.Context, req resource.Schem
 						},
 					},
 					"start_date": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"state_filter": schema.ListAttribute{
+						Computed:    true,
 						Optional:    true,
 						ElementType: types.StringType,
 					},

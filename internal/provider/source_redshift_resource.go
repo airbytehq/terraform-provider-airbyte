@@ -60,6 +60,7 @@ func (r *SourceRedshiftResource) Schema(ctx context.Context, req resource.Schema
 						Required: true,
 					},
 					"jdbc_url_params": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"password": schema.StringAttribute{
@@ -69,6 +70,7 @@ func (r *SourceRedshiftResource) Schema(ctx context.Context, req resource.Schema
 						Required: true,
 					},
 					"schemas": schema.ListAttribute{
+						Computed:    true,
 						Optional:    true,
 						ElementType: types.StringType,
 					},

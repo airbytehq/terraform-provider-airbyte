@@ -50,9 +50,6 @@ Optional:
 
 - `source_shopify_shopify_authorization_method_api_password` (Attributes) API Password Auth (see [below for nested schema](#nestedatt--configuration--credentials--source_shopify_shopify_authorization_method_api_password))
 - `source_shopify_shopify_authorization_method_o_auth2_0` (Attributes) OAuth2.0 (see [below for nested schema](#nestedatt--configuration--credentials--source_shopify_shopify_authorization_method_o_auth2_0))
-
-Read-Only:
-
 - `source_shopify_update_shopify_authorization_method_api_password` (Attributes) API Password Auth (see [below for nested schema](#nestedatt--configuration--credentials--source_shopify_update_shopify_authorization_method_api_password))
 - `source_shopify_update_shopify_authorization_method_o_auth2_0` (Attributes) OAuth2.0 (see [below for nested schema](#nestedatt--configuration--credentials--source_shopify_update_shopify_authorization_method_o_auth2_0))
 
@@ -82,7 +79,7 @@ Optional:
 <a id="nestedatt--configuration--credentials--source_shopify_update_shopify_authorization_method_api_password"></a>
 ### Nested Schema for `configuration.credentials.source_shopify_update_shopify_authorization_method_api_password`
 
-Read-Only:
+Required:
 
 - `api_password` (String)
 - `auth_method` (String)
@@ -91,10 +88,13 @@ Read-Only:
 <a id="nestedatt--configuration--credentials--source_shopify_update_shopify_authorization_method_o_auth2_0"></a>
 ### Nested Schema for `configuration.credentials.source_shopify_update_shopify_authorization_method_o_auth2_0`
 
-Read-Only:
+Required:
+
+- `auth_method` (String)
+
+Optional:
 
 - `access_token` (String)
-- `auth_method` (String)
 - `client_id` (String)
 - `client_secret` (String)
 

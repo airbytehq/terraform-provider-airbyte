@@ -6,5 +6,5 @@ type SourcePostgresReplicationMethod struct {
 	SourcePostgresReplicationMethodLogicalReplicationCDC       *SourcePostgresReplicationMethodLogicalReplicationCDC       `tfsdk:"source_postgres_replication_method_logical_replication_cdc_"`
 	SourcePostgresReplicationMethodStandard                    *SourceAlloydbReplicationMethodStandard                     `tfsdk:"source_postgres_replication_method_standard"`
 	SourcePostgresUpdateReplicationMethodLogicalReplicationCDC *SourcePostgresUpdateReplicationMethodLogicalReplicationCDC `tfsdk:"source_postgres_update_replication_method_logical_replication_cdc_"`
-	SourcePostgresUpdateReplicationMethodStandard              *SourceAlloydbUpdateReplicationMethodStandard               `tfsdk:"source_postgres_update_replication_method_standard"`
+	SourcePostgresUpdateReplicationMethodStandard              *SourceAlloydbReplicationMethodStandard                     `tfsdk:"source_postgres_update_replication_method_standard"`
 }

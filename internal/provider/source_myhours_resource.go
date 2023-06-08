@@ -57,6 +57,7 @@ func (r *SourceMyHoursResource) Schema(ctx context.Context, req resource.SchemaR
 						Required: true,
 					},
 					"logs_batch_size": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"password": schema.StringAttribute{

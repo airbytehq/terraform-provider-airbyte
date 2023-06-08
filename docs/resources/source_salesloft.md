@@ -46,9 +46,6 @@ Optional:
 
 - `source_salesloft_credentials_authenticate_via_api_key` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_salesloft_credentials_authenticate_via_api_key))
 - `source_salesloft_credentials_authenticate_via_o_auth` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_salesloft_credentials_authenticate_via_o_auth))
-
-Read-Only:
-
 - `source_salesloft_update_credentials_authenticate_via_api_key` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_salesloft_update_credentials_authenticate_via_api_key))
 - `source_salesloft_update_credentials_authenticate_via_o_auth` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_salesloft_update_credentials_authenticate_via_o_auth))
 
@@ -77,7 +74,7 @@ Required:
 <a id="nestedatt--configuration--credentials--source_salesloft_update_credentials_authenticate_via_api_key"></a>
 ### Nested Schema for `configuration.credentials.source_salesloft_update_credentials_authenticate_via_api_key`
 
-Read-Only:
+Required:
 
 - `api_key` (String)
 - `auth_type` (String)
@@ -86,7 +83,7 @@ Read-Only:
 <a id="nestedatt--configuration--credentials--source_salesloft_update_credentials_authenticate_via_o_auth"></a>
 ### Nested Schema for `configuration.credentials.source_salesloft_update_credentials_authenticate_via_o_auth`
 
-Read-Only:
+Required:
 
 - `access_token` (String)
 - `auth_type` (String)

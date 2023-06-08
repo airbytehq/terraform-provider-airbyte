@@ -58,9 +58,11 @@ func (r *SourceExchangeRatesResource) Schema(ctx context.Context, req resource.S
 						Required: true,
 					},
 					"base": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"ignore_weekends": schema.BoolAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{

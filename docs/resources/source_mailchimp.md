@@ -49,9 +49,6 @@ Optional:
 
 - `source_mailchimp_authentication_api_key` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_mailchimp_authentication_api_key))
 - `source_mailchimp_authentication_o_auth2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_mailchimp_authentication_o_auth2_0))
-
-Read-Only:
-
 - `source_mailchimp_update_authentication_api_key` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_mailchimp_update_authentication_api_key))
 - `source_mailchimp_update_authentication_o_auth2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_mailchimp_update_authentication_o_auth2_0))
 
@@ -81,7 +78,7 @@ Optional:
 <a id="nestedatt--configuration--credentials--source_mailchimp_update_authentication_api_key"></a>
 ### Nested Schema for `configuration.credentials.source_mailchimp_update_authentication_api_key`
 
-Read-Only:
+Required:
 
 - `apikey` (String)
 - `auth_type` (String)
@@ -90,10 +87,13 @@ Read-Only:
 <a id="nestedatt--configuration--credentials--source_mailchimp_update_authentication_o_auth2_0"></a>
 ### Nested Schema for `configuration.credentials.source_mailchimp_update_authentication_o_auth2_0`
 
-Read-Only:
+Required:
 
 - `access_token` (String)
 - `auth_type` (String)
+
+Optional:
+
 - `client_id` (String)
 - `client_secret` (String)
 

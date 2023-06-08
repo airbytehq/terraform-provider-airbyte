@@ -53,6 +53,7 @@ func (r *DestinationFirestoreResource) Schema(ctx context.Context, req resource.
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"credentials_json": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"destination_type": schema.StringAttribute{

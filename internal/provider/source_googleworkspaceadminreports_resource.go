@@ -60,6 +60,7 @@ func (r *SourceGoogleWorkspaceAdminReportsResource) Schema(ctx context.Context, 
 						Required: true,
 					},
 					"lookback": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{

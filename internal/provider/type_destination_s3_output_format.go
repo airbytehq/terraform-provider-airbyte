@@ -10,5 +10,5 @@ type DestinationS3OutputFormat struct {
 	DestinationS3UpdateOutputFormatAvroApacheAvro                *DestinationS3UpdateOutputFormatAvroApacheAvro                `tfsdk:"destination_s3_update_output_format_avro_apache_avro"`
 	DestinationS3UpdateOutputFormatCSVCommaSeparatedValues       *DestinationS3UpdateOutputFormatCSVCommaSeparatedValues       `tfsdk:"destination_s3_update_output_format_csv_comma_separated_values"`
 	DestinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSON *DestinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSON `tfsdk:"destination_s3_update_output_format_json_lines_newline_delimited_json"`
-	DestinationS3UpdateOutputFormatParquetColumnarStorage        *DestinationS3UpdateOutputFormatParquetColumnarStorage        `tfsdk:"destination_s3_update_output_format_parquet_columnar_storage"`
+	DestinationS3UpdateOutputFormatParquetColumnarStorage        *DestinationS3OutputFormatParquetColumnarStorage              `tfsdk:"destination_s3_update_output_format_parquet_columnar_storage"`
 }

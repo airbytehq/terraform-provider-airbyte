@@ -9,6 +9,8 @@ import (
 
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -58,13 +60,16 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 
 		Attributes: map[string]schema.Attribute{
 			"configurations": schema.SingleNestedAttribute{
+				Computed: true,
 				Optional: true,
 				Attributes: map[string]schema.Attribute{
 					"streams": schema.ListNestedAttribute{
+						Computed: true,
 						Optional: true,
 						NestedObject: schema.NestedAttributeObject{
 							Attributes: map[string]schema.Attribute{
 								"cursor_field": schema.ListAttribute{
+									Computed:    true,
 									Optional:    true,
 									ElementType: types.StringType,
 								},
@@ -72,12 +77,14 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 									Required: true,
 								},
 								"primary_key": schema.ListAttribute{
+									Computed: true,
 									Optional: true,
 									ElementType: types.ListType{
 										ElemType: types.StringType,
 									},
 								},
 								"sync_mode": schema.StringAttribute{
+									Computed: true,
 									Optional: true,
 									Validators: []validator.String{
 										stringvalidator.OneOf(
@@ -98,6 +105,7 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Computed: true,
 			},
 			"data_residency": schema.StringAttribute{
+				Computed: true,
 				Optional: true,
 				Validators: []validator.String{
 					stringvalidator.OneOf(
@@ -108,12 +116,17 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 				},
 			},
 			"destination_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
 				Required: true,
 			},
 			"name": schema.StringAttribute{
+				Computed: true,
 				Optional: true,
 			},
 			"namespace_definition": schema.StringAttribute{
+				Computed: true,
 				Optional: true,
 				Validators: []validator.String{
 					stringvalidator.OneOf(
@@ -125,9 +138,11 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Description: `Define the location where the data will be stored in the destination`,
 			},
 			"namespace_format": schema.StringAttribute{
+				Computed: true,
 				Optional: true,
 			},
 			"non_breaking_schema_updates_behavior": schema.StringAttribute{
+				Computed: true,
 				Optional: true,
 				Validators: []validator.String{
 					stringvalidator.OneOf(
@@ -138,9 +153,11 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Description: `Set how Airbyte handles syncs when it detects a non-breaking schema change in the source`,
 			},
 			"prefix": schema.StringAttribute{
+				Computed: true,
 				Optional: true,
 			},
 			"schedule": schema.SingleNestedAttribute{
+				Computed: true,
 				Optional: true,
 				Attributes: map[string]schema.Attribute{
 					"basic_timing": schema.StringAttribute{
@@ -159,9 +176,13 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Description: `schedule for when the the connection should run, per the schedule type`,
 			},
 			"source_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					stringplanmodifier.RequiresReplace(),
+				},
 				Required: true,
 			},
 			"status": schema.StringAttribute{
+				Computed: true,
 				Optional: true,
 				Validators: []validator.String{
 					stringvalidator.OneOf(

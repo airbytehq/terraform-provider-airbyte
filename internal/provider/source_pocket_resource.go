@@ -60,6 +60,7 @@ func (r *SourcePocketResource) Schema(ctx context.Context, req resource.SchemaRe
 						Required: true,
 					},
 					"content_type": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -71,6 +72,7 @@ func (r *SourcePocketResource) Schema(ctx context.Context, req resource.SchemaRe
 						Description: `Select the content type of the items to retrieve.`,
 					},
 					"detail_type": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -81,18 +83,23 @@ func (r *SourcePocketResource) Schema(ctx context.Context, req resource.SchemaRe
 						Description: `Select the granularity of the information about each item.`,
 					},
 					"domain": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"favorite": schema.BoolAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"search": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"since": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"sort": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -113,6 +120,7 @@ func (r *SourcePocketResource) Schema(ctx context.Context, req resource.SchemaRe
 						},
 					},
 					"state": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -124,6 +132,7 @@ func (r *SourcePocketResource) Schema(ctx context.Context, req resource.SchemaRe
 						Description: `Select the state of the items to retrieve.`,
 					},
 					"tag": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 				},

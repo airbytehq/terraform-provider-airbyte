@@ -57,6 +57,7 @@ func (r *SourceTvmazeScheduleResource) Schema(ctx context.Context, req resource.
 						Required: true,
 					},
 					"end_date": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{
@@ -71,6 +72,7 @@ func (r *SourceTvmazeScheduleResource) Schema(ctx context.Context, req resource.
 						Required: true,
 					},
 					"web_schedule_country_code": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 				},

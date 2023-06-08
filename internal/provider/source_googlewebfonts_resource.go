@@ -54,15 +54,18 @@ func (r *SourceGoogleWebfontsResource) Schema(ctx context.Context, req resource.
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"alt": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"api_key": schema.StringAttribute{
 						Required: true,
 					},
 					"pretty_print": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"sort": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{

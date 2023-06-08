@@ -53,9 +53,6 @@ Optional:
 - `destination_redshift_ssh_tunnel_method_no_tunnel` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--destination_redshift_ssh_tunnel_method_no_tunnel))
 - `destination_redshift_ssh_tunnel_method_password_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--destination_redshift_ssh_tunnel_method_password_authentication))
 - `destination_redshift_ssh_tunnel_method_ssh_key_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--destination_redshift_ssh_tunnel_method_ssh_key_authentication))
-
-Read-Only:
-
 - `destination_redshift_update_ssh_tunnel_method_no_tunnel` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--destination_redshift_update_ssh_tunnel_method_no_tunnel))
 - `destination_redshift_update_ssh_tunnel_method_password_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--destination_redshift_update_ssh_tunnel_method_password_authentication))
 - `destination_redshift_update_ssh_tunnel_method_ssh_key_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--destination_redshift_update_ssh_tunnel_method_ssh_key_authentication))
@@ -95,7 +92,7 @@ Required:
 <a id="nestedatt--configuration--tunnel_method--destination_redshift_update_ssh_tunnel_method_no_tunnel"></a>
 ### Nested Schema for `configuration.tunnel_method.destination_redshift_update_ssh_tunnel_method_no_tunnel`
 
-Read-Only:
+Required:
 
 - `tunnel_method` (String) No ssh tunnel needed to connect to database
 
@@ -103,7 +100,7 @@ Read-Only:
 <a id="nestedatt--configuration--tunnel_method--destination_redshift_update_ssh_tunnel_method_password_authentication"></a>
 ### Nested Schema for `configuration.tunnel_method.destination_redshift_update_ssh_tunnel_method_password_authentication`
 
-Read-Only:
+Required:
 
 - `tunnel_host` (String)
 - `tunnel_method` (String) Connect through a jump server tunnel host using username and password authentication
@@ -115,7 +112,7 @@ Read-Only:
 <a id="nestedatt--configuration--tunnel_method--destination_redshift_update_ssh_tunnel_method_ssh_key_authentication"></a>
 ### Nested Schema for `configuration.tunnel_method.destination_redshift_update_ssh_tunnel_method_ssh_key_authentication`
 
-Read-Only:
+Required:
 
 - `ssh_key` (String)
 - `tunnel_host` (String)
@@ -130,13 +127,67 @@ Read-Only:
 
 Optional:
 
+- `destination_redshift_update_uploading_method_s3_staging` (Attributes) The method how the data will be uploaded to the database. (see [below for nested schema](#nestedatt--configuration--uploading_method--destination_redshift_update_uploading_method_s3_staging))
+- `destination_redshift_update_uploading_method_standard` (Attributes) The method how the data will be uploaded to the database. (see [below for nested schema](#nestedatt--configuration--uploading_method--destination_redshift_update_uploading_method_standard))
 - `destination_redshift_uploading_method_s3_staging` (Attributes) The method how the data will be uploaded to the database. (see [below for nested schema](#nestedatt--configuration--uploading_method--destination_redshift_uploading_method_s3_staging))
 - `destination_redshift_uploading_method_standard` (Attributes) The method how the data will be uploaded to the database. (see [below for nested schema](#nestedatt--configuration--uploading_method--destination_redshift_uploading_method_standard))
 
-Read-Only:
+<a id="nestedatt--configuration--uploading_method--destination_redshift_update_uploading_method_s3_staging"></a>
+### Nested Schema for `configuration.uploading_method.destination_redshift_update_uploading_method_s3_staging`
 
-- `destination_redshift_update_uploading_method_s3_staging` (Attributes) The method how the data will be uploaded to the database. (see [below for nested schema](#nestedatt--configuration--uploading_method--destination_redshift_update_uploading_method_s3_staging))
-- `destination_redshift_update_uploading_method_standard` (Attributes) The method how the data will be uploaded to the database. (see [below for nested schema](#nestedatt--configuration--uploading_method--destination_redshift_update_uploading_method_standard))
+Required:
+
+- `access_key_id` (String)
+- `method` (String)
+- `s3_bucket_name` (String)
+- `s3_bucket_region` (String) The region of the S3 staging bucket to use if utilising a COPY strategy. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html#:~:text=In-,Region,-%2C%20choose%20the%20AWS">AWS docs</a> for details.
+- `secret_access_key` (String)
+
+Optional:
+
+- `encryption` (Attributes) (see [below for nested schema](#nestedatt--configuration--uploading_method--destination_redshift_update_uploading_method_s3_staging--encryption))
+- `file_buffer_count` (Number)
+- `file_name_pattern` (String)
+- `purge_staging_data` (Boolean)
+- `s3_bucket_path` (String)
+
+<a id="nestedatt--configuration--uploading_method--destination_redshift_update_uploading_method_s3_staging--encryption"></a>
+### Nested Schema for `configuration.uploading_method.destination_redshift_update_uploading_method_s3_staging.s3_bucket_path`
+
+Optional:
+
+- `destination_redshift_update_uploading_method_s3_staging_encryption_aes_cbc_envelope_encryption` (Attributes) Staging data will be encrypted using AES-CBC envelope encryption. (see [below for nested schema](#nestedatt--configuration--uploading_method--destination_redshift_update_uploading_method_s3_staging--s3_bucket_path--destination_redshift_update_uploading_method_s3_staging_encryption_aes_cbc_envelope_encryption))
+- `destination_redshift_update_uploading_method_s3_staging_encryption_no_encryption` (Attributes) Staging data will be stored in plaintext. (see [below for nested schema](#nestedatt--configuration--uploading_method--destination_redshift_update_uploading_method_s3_staging--s3_bucket_path--destination_redshift_update_uploading_method_s3_staging_encryption_no_encryption))
+
+<a id="nestedatt--configuration--uploading_method--destination_redshift_update_uploading_method_s3_staging--s3_bucket_path--destination_redshift_update_uploading_method_s3_staging_encryption_aes_cbc_envelope_encryption"></a>
+### Nested Schema for `configuration.uploading_method.destination_redshift_update_uploading_method_s3_staging.s3_bucket_path.destination_redshift_update_uploading_method_s3_staging_encryption_aes_cbc_envelope_encryption`
+
+Required:
+
+- `encryption_type` (String)
+
+Optional:
+
+- `key_encrypting_key` (String)
+
+
+<a id="nestedatt--configuration--uploading_method--destination_redshift_update_uploading_method_s3_staging--s3_bucket_path--destination_redshift_update_uploading_method_s3_staging_encryption_no_encryption"></a>
+### Nested Schema for `configuration.uploading_method.destination_redshift_update_uploading_method_s3_staging.s3_bucket_path.destination_redshift_update_uploading_method_s3_staging_encryption_no_encryption`
+
+Required:
+
+- `encryption_type` (String)
+
+
+
+
+<a id="nestedatt--configuration--uploading_method--destination_redshift_update_uploading_method_standard"></a>
+### Nested Schema for `configuration.uploading_method.destination_redshift_update_uploading_method_standard`
+
+Required:
+
+- `method` (String)
+
 
 <a id="nestedatt--configuration--uploading_method--destination_redshift_uploading_method_s3_staging"></a>
 ### Nested Schema for `configuration.uploading_method.destination_redshift_uploading_method_s3_staging`
@@ -191,57 +242,6 @@ Required:
 ### Nested Schema for `configuration.uploading_method.destination_redshift_uploading_method_standard`
 
 Required:
-
-- `method` (String)
-
-
-<a id="nestedatt--configuration--uploading_method--destination_redshift_update_uploading_method_s3_staging"></a>
-### Nested Schema for `configuration.uploading_method.destination_redshift_update_uploading_method_s3_staging`
-
-Read-Only:
-
-- `access_key_id` (String)
-- `encryption` (Attributes) (see [below for nested schema](#nestedatt--configuration--uploading_method--destination_redshift_update_uploading_method_s3_staging--encryption))
-- `file_buffer_count` (Number)
-- `file_name_pattern` (String)
-- `method` (String)
-- `purge_staging_data` (Boolean)
-- `s3_bucket_name` (String)
-- `s3_bucket_path` (String)
-- `s3_bucket_region` (String) The region of the S3 staging bucket to use if utilising a COPY strategy. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html#:~:text=In-,Region,-%2C%20choose%20the%20AWS">AWS docs</a> for details.
-- `secret_access_key` (String)
-
-<a id="nestedatt--configuration--uploading_method--destination_redshift_update_uploading_method_s3_staging--encryption"></a>
-### Nested Schema for `configuration.uploading_method.destination_redshift_update_uploading_method_s3_staging.secret_access_key`
-
-Read-Only:
-
-- `destination_redshift_update_uploading_method_s3_staging_encryption_aes_cbc_envelope_encryption` (Attributes) Staging data will be encrypted using AES-CBC envelope encryption. (see [below for nested schema](#nestedatt--configuration--uploading_method--destination_redshift_update_uploading_method_s3_staging--secret_access_key--destination_redshift_update_uploading_method_s3_staging_encryption_aes_cbc_envelope_encryption))
-- `destination_redshift_update_uploading_method_s3_staging_encryption_no_encryption` (Attributes) Staging data will be stored in plaintext. (see [below for nested schema](#nestedatt--configuration--uploading_method--destination_redshift_update_uploading_method_s3_staging--secret_access_key--destination_redshift_update_uploading_method_s3_staging_encryption_no_encryption))
-
-<a id="nestedatt--configuration--uploading_method--destination_redshift_update_uploading_method_s3_staging--secret_access_key--destination_redshift_update_uploading_method_s3_staging_encryption_aes_cbc_envelope_encryption"></a>
-### Nested Schema for `configuration.uploading_method.destination_redshift_update_uploading_method_s3_staging.secret_access_key.destination_redshift_update_uploading_method_s3_staging_encryption_aes_cbc_envelope_encryption`
-
-Read-Only:
-
-- `encryption_type` (String)
-- `key_encrypting_key` (String)
-
-
-<a id="nestedatt--configuration--uploading_method--destination_redshift_update_uploading_method_s3_staging--secret_access_key--destination_redshift_update_uploading_method_s3_staging_encryption_no_encryption"></a>
-### Nested Schema for `configuration.uploading_method.destination_redshift_update_uploading_method_s3_staging.secret_access_key.destination_redshift_update_uploading_method_s3_staging_encryption_no_encryption`
-
-Read-Only:
-
-- `encryption_type` (String)
-
-
-
-
-<a id="nestedatt--configuration--uploading_method--destination_redshift_update_uploading_method_standard"></a>
-### Nested Schema for `configuration.uploading_method.destination_redshift_update_uploading_method_standard`
-
-Read-Only:
 
 - `method` (String)
 

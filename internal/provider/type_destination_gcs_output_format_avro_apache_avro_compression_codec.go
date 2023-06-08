@@ -3,10 +3,10 @@
 package provider
 
 type DestinationGcsOutputFormatAvroApacheAvroCompressionCodec struct {
-	DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompression *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompression `tfsdk:"destination_gcs_output_format_avro_apache_avro_compression_codec_no_compression"`
-	DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflate       *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflate       `tfsdk:"destination_gcs_output_format_avro_apache_avro_compression_codec_deflate"`
 	DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2         *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2         `tfsdk:"destination_gcs_output_format_avro_apache_avro_compression_codec_bzip2"`
+	DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflate       *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflate       `tfsdk:"destination_gcs_output_format_avro_apache_avro_compression_codec_deflate"`
+	DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompression *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompression `tfsdk:"destination_gcs_output_format_avro_apache_avro_compression_codec_no_compression"`
+	DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappy        *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappy        `tfsdk:"destination_gcs_output_format_avro_apache_avro_compression_codec_snappy"`
 	DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXz            *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXz            `tfsdk:"destination_gcs_output_format_avro_apache_avro_compression_codec_xz"`
 	DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandard     *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandard     `tfsdk:"destination_gcs_output_format_avro_apache_avro_compression_codec_zstandard"`
-	DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappy        *DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappy        `tfsdk:"destination_gcs_output_format_avro_apache_avro_compression_codec_snappy"`
 }

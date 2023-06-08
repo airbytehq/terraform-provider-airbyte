@@ -53,9 +53,6 @@ Optional:
 - `source_mongodb_mongo_db_instance_type_mongo_db_atlas` (Attributes) The MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default. (see [below for nested schema](#nestedatt--configuration--instance_type--source_mongodb_mongo_db_instance_type_mongo_db_atlas))
 - `source_mongodb_mongo_db_instance_type_replica_set` (Attributes) The MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default. (see [below for nested schema](#nestedatt--configuration--instance_type--source_mongodb_mongo_db_instance_type_replica_set))
 - `source_mongodb_mongo_db_instance_type_standalone_mongo_db_instance` (Attributes) The MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default. (see [below for nested schema](#nestedatt--configuration--instance_type--source_mongodb_mongo_db_instance_type_standalone_mongo_db_instance))
-
-Read-Only:
-
 - `source_mongodb_update_mongo_db_instance_type_mongo_db_atlas` (Attributes) The MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default. (see [below for nested schema](#nestedatt--configuration--instance_type--source_mongodb_update_mongo_db_instance_type_mongo_db_atlas))
 - `source_mongodb_update_mongo_db_instance_type_replica_set` (Attributes) The MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default. (see [below for nested schema](#nestedatt--configuration--instance_type--source_mongodb_update_mongo_db_instance_type_replica_set))
 - `source_mongodb_update_mongo_db_instance_type_standalone_mongo_db_instance` (Attributes) The MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default. (see [below for nested schema](#nestedatt--configuration--instance_type--source_mongodb_update_mongo_db_instance_type_standalone_mongo_db_instance))
@@ -95,7 +92,7 @@ Required:
 <a id="nestedatt--configuration--instance_type--source_mongodb_update_mongo_db_instance_type_mongo_db_atlas"></a>
 ### Nested Schema for `configuration.instance_type.source_mongodb_update_mongo_db_instance_type_mongo_db_atlas`
 
-Read-Only:
+Required:
 
 - `cluster_url` (String)
 - `instance` (String)
@@ -104,17 +101,20 @@ Read-Only:
 <a id="nestedatt--configuration--instance_type--source_mongodb_update_mongo_db_instance_type_replica_set"></a>
 ### Nested Schema for `configuration.instance_type.source_mongodb_update_mongo_db_instance_type_replica_set`
 
-Read-Only:
+Required:
 
 - `instance` (String)
-- `replica_set` (String)
 - `server_addresses` (String)
+
+Optional:
+
+- `replica_set` (String)
 
 
 <a id="nestedatt--configuration--instance_type--source_mongodb_update_mongo_db_instance_type_standalone_mongo_db_instance"></a>
 ### Nested Schema for `configuration.instance_type.source_mongodb_update_mongo_db_instance_type_standalone_mongo_db_instance`
 
-Read-Only:
+Required:
 
 - `host` (String)
 - `instance` (String)

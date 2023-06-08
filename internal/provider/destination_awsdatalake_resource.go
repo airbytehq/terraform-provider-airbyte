@@ -54,18 +54,21 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"aws_account_id": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"bucket_name": schema.StringAttribute{
 						Required: true,
 					},
 					"bucket_prefix": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"credentials": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_aws_datalake_authentication_mode_iam_role": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"credentials_title": schema.StringAttribute{
@@ -84,6 +87,7 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 								Description: `Choose How to Authenticate to AWS.`,
 							},
 							"destination_aws_datalake_authentication_mode_iam_user": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"aws_access_key_id": schema.StringAttribute{
@@ -106,9 +110,10 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 							},
 							"destination_aws_datalake_update_authentication_mode_iam_role": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"credentials_title": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"IAM Role",
@@ -117,22 +122,23 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 										Description: `Name of the credentials`,
 									},
 									"role_arn": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 								Description: `Choose How to Authenticate to AWS.`,
 							},
 							"destination_aws_datalake_update_authentication_mode_iam_user": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"aws_access_key_id": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"aws_secret_access_key": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"credentials_title": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"IAM User",
@@ -157,12 +163,15 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 						},
 					},
 					"format": schema.SingleNestedAttribute{
+						Computed: true,
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_aws_datalake_output_format_wildcard_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"compression_codec": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -184,9 +193,11 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 								Description: `Format of the data output.`,
 							},
 							"destination_aws_datalake_output_format_wildcard_parquet_columnar_storage": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"compression_codec": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -211,9 +222,11 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 							},
 							"destination_aws_datalake_update_output_format_wildcard_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"compression_codec": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"UNCOMPRESSED",
@@ -223,7 +236,7 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 										Description: `The compression algorithm used to compress data.`,
 									},
 									"format_type": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"JSONL",
@@ -235,9 +248,11 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 							},
 							"destination_aws_datalake_update_output_format_wildcard_parquet_columnar_storage": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"compression_codec": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"UNCOMPRESSED",
@@ -249,7 +264,7 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 										Description: `The compression algorithm used to compress data.`,
 									},
 									"format_type": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"Parquet",
@@ -265,21 +280,26 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 						},
 					},
 					"glue_catalog_float_as_decimal": schema.BoolAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"lakeformation_database_default_tag_key": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"lakeformation_database_default_tag_values": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"lakeformation_database_name": schema.StringAttribute{
 						Required: true,
 					},
 					"lakeformation_governed_tables": schema.BoolAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"partitioning": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(

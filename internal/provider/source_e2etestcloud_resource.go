@@ -58,12 +58,14 @@ func (r *SourceE2eTestCloudResource) Schema(ctx context.Context, req resource.Sc
 						Required: true,
 					},
 					"message_interval_ms": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"mock_catalog": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"source_e2e_test_cloud_mock_catalog_multi_schema": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"stream_schemas": schema.StringAttribute{
@@ -81,9 +83,11 @@ func (r *SourceE2eTestCloudResource) Schema(ctx context.Context, req resource.Sc
 								Description: `A catalog with multiple data streams, each with a different schema.`,
 							},
 							"source_e2e_test_cloud_mock_catalog_single_schema": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"stream_duplication": schema.Int64Attribute{
+										Computed: true,
 										Optional: true,
 									},
 									"stream_name": schema.StringAttribute{
@@ -105,12 +109,13 @@ func (r *SourceE2eTestCloudResource) Schema(ctx context.Context, req resource.Sc
 							},
 							"source_e2e_test_cloud_update_mock_catalog_multi_schema": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"stream_schemas": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"type": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"MULTI_STREAM",
@@ -122,18 +127,20 @@ func (r *SourceE2eTestCloudResource) Schema(ctx context.Context, req resource.Sc
 							},
 							"source_e2e_test_cloud_update_mock_catalog_single_schema": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"stream_duplication": schema.Int64Attribute{
 										Computed: true,
+										Optional: true,
 									},
 									"stream_name": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"stream_schema": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"type": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"SINGLE_STREAM",
@@ -149,6 +156,7 @@ func (r *SourceE2eTestCloudResource) Schema(ctx context.Context, req resource.Sc
 						},
 					},
 					"seed": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{
@@ -160,6 +168,7 @@ func (r *SourceE2eTestCloudResource) Schema(ctx context.Context, req resource.Sc
 						},
 					},
 					"type": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(

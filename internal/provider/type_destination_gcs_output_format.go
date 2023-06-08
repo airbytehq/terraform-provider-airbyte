@@ -10,5 +10,5 @@ type DestinationGcsOutputFormat struct {
 	DestinationGcsUpdateOutputFormatAvroApacheAvro                *DestinationGcsUpdateOutputFormatAvroApacheAvro                `tfsdk:"destination_gcs_update_output_format_avro_apache_avro"`
 	DestinationGcsUpdateOutputFormatCSVCommaSeparatedValues       *DestinationGcsUpdateOutputFormatCSVCommaSeparatedValues       `tfsdk:"destination_gcs_update_output_format_csv_comma_separated_values"`
 	DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON *DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON `tfsdk:"destination_gcs_update_output_format_json_lines_newline_delimited_json"`
-	DestinationGcsUpdateOutputFormatParquetColumnarStorage        *DestinationGcsUpdateOutputFormatParquetColumnarStorage        `tfsdk:"destination_gcs_update_output_format_parquet_columnar_storage"`
+	DestinationGcsUpdateOutputFormatParquetColumnarStorage        *DestinationGcsOutputFormatParquetColumnarStorage              `tfsdk:"destination_gcs_update_output_format_parquet_columnar_storage"`
 }

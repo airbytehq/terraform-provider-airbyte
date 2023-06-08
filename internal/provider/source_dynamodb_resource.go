@@ -57,9 +57,11 @@ func (r *SourceDynamodbResource) Schema(ctx context.Context, req resource.Schema
 						Required: true,
 					},
 					"endpoint": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"region": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -94,6 +96,7 @@ func (r *SourceDynamodbResource) Schema(ctx context.Context, req resource.Schema
 						Description: `The region of the Dynamodb database`,
 					},
 					"reserved_attribute_names": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"secret_access_key": schema.StringAttribute{

@@ -59,6 +59,7 @@ func (r *SourceSentryResource) Schema(ctx context.Context, req resource.SchemaRe
 						Required: true,
 					},
 					"discover_fields": schema.ListAttribute{
+						Computed:    true,
 						Optional:    true,
 						ElementType: types.StringType,
 						Validators: []validator.List{
@@ -66,6 +67,7 @@ func (r *SourceSentryResource) Schema(ctx context.Context, req resource.SchemaRe
 						},
 					},
 					"hostname": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"organization": schema.StringAttribute{

@@ -55,15 +55,19 @@ func (r *SourceAirtableResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"credentials": schema.SingleNestedAttribute{
+						Computed: true,
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_airtable_authentication_o_auth2_0": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 									},
 									"auth_method": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -81,6 +85,7 @@ func (r *SourceAirtableResource) Schema(ctx context.Context, req resource.Schema
 										Required: true,
 									},
 									"token_expiry_date": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											validators.IsRFC3339(),
@@ -89,12 +94,14 @@ func (r *SourceAirtableResource) Schema(ctx context.Context, req resource.Schema
 								},
 							},
 							"source_airtable_authentication_personal_access_token": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_key": schema.StringAttribute{
 										Required: true,
 									},
 									"auth_method": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -106,12 +113,15 @@ func (r *SourceAirtableResource) Schema(ctx context.Context, req resource.Schema
 							},
 							"source_airtable_update_authentication_o_auth2_0": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 									},
 									"auth_method": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"oauth2.0",
@@ -119,16 +129,17 @@ func (r *SourceAirtableResource) Schema(ctx context.Context, req resource.Schema
 										},
 									},
 									"client_id": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"client_secret": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"refresh_token": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"token_expiry_date": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											validators.IsRFC3339(),
 										},
@@ -137,12 +148,14 @@ func (r *SourceAirtableResource) Schema(ctx context.Context, req resource.Schema
 							},
 							"source_airtable_update_authentication_personal_access_token": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_key": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"auth_method": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"api_key",
@@ -157,6 +170,7 @@ func (r *SourceAirtableResource) Schema(ctx context.Context, req resource.Schema
 						},
 					},
 					"source_type": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(

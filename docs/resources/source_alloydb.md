@@ -57,9 +57,6 @@ Optional:
 
 - `source_alloydb_replication_method_logical_replication_cdc_` (Attributes) Logical replication uses the Postgres write-ahead log (WAL) to detect inserts, updates, and deletes. This needs to be configured on the source database itself. Only available on Postgres 10 and above. Read the <a href="https://docs.airbyte.com/integrations/sources/postgres">docs</a>. (see [below for nested schema](#nestedatt--configuration--replication_method--source_alloydb_replication_method_logical_replication_cdc_))
 - `source_alloydb_replication_method_standard` (Attributes) Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally. (see [below for nested schema](#nestedatt--configuration--replication_method--source_alloydb_replication_method_standard))
-
-Read-Only:
-
 - `source_alloydb_update_replication_method_logical_replication_cdc_` (Attributes) Logical replication uses the Postgres write-ahead log (WAL) to detect inserts, updates, and deletes. This needs to be configured on the source database itself. Only available on Postgres 10 and above. Read the <a href="https://docs.airbyte.com/integrations/sources/postgres">docs</a>. (see [below for nested schema](#nestedatt--configuration--replication_method--source_alloydb_update_replication_method_logical_replication_cdc_))
 - `source_alloydb_update_replication_method_standard` (Attributes) Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally. (see [below for nested schema](#nestedatt--configuration--replication_method--source_alloydb_update_replication_method_standard))
 
@@ -91,24 +88,24 @@ Required:
 <a id="nestedatt--configuration--replication_method--source_alloydb_update_replication_method_logical_replication_cdc_"></a>
 ### Nested Schema for `configuration.replication_method.source_alloydb_update_replication_method_logical_replication_cdc_`
 
+Required:
+
+- `method` (String)
+- `publication` (String)
+- `replication_slot` (String)
+
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-
-Read-Only:
-
 - `initial_waiting_seconds` (Number)
 - `lsn_commit_behaviour` (String) Determines when Airbtye should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.
-- `method` (String)
 - `plugin` (String) A logical decoding plugin installed on the PostgreSQL server.
-- `publication` (String)
-- `replication_slot` (String)
 
 
 <a id="nestedatt--configuration--replication_method--source_alloydb_update_replication_method_standard"></a>
 ### Nested Schema for `configuration.replication_method.source_alloydb_update_replication_method_standard`
 
-Read-Only:
+Required:
 
 - `method` (String)
 
@@ -125,9 +122,6 @@ Optional:
 - `source_alloydb_ssl_modes_require` (Attributes) Always require encryption. If the source database server does not support encryption, connection will fail. (see [below for nested schema](#nestedatt--configuration--ssl_mode--source_alloydb_ssl_modes_require))
 - `source_alloydb_ssl_modes_verify_ca` (Attributes) Always require encryption and verifies that the source database server has a valid SSL certificate. (see [below for nested schema](#nestedatt--configuration--ssl_mode--source_alloydb_ssl_modes_verify_ca))
 - `source_alloydb_ssl_modes_verify_full` (Attributes) This is the most secure mode. Always require encryption and verifies the identity of the source database server. (see [below for nested schema](#nestedatt--configuration--ssl_mode--source_alloydb_ssl_modes_verify_full))
-
-Read-Only:
-
 - `source_alloydb_update_ssl_modes_allow` (Attributes) Enables encryption only when required by the source database. (see [below for nested schema](#nestedatt--configuration--ssl_mode--source_alloydb_update_ssl_modes_allow))
 - `source_alloydb_update_ssl_modes_disable` (Attributes) Disables encryption of communication between Airbyte and source database. (see [below for nested schema](#nestedatt--configuration--ssl_mode--source_alloydb_update_ssl_modes_disable))
 - `source_alloydb_update_ssl_modes_prefer` (Attributes) Allows unencrypted connection only if the source database does not support encryption. (see [below for nested schema](#nestedatt--configuration--ssl_mode--source_alloydb_update_ssl_modes_prefer))
@@ -218,81 +212,81 @@ Optional:
 <a id="nestedatt--configuration--ssl_mode--source_alloydb_update_ssl_modes_allow"></a>
 ### Nested Schema for `configuration.ssl_mode.source_alloydb_update_ssl_modes_allow`
 
+Required:
+
+- `mode` (String)
+
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-
-Read-Only:
-
-- `mode` (String)
 
 
 <a id="nestedatt--configuration--ssl_mode--source_alloydb_update_ssl_modes_disable"></a>
 ### Nested Schema for `configuration.ssl_mode.source_alloydb_update_ssl_modes_disable`
 
+Required:
+
+- `mode` (String)
+
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-
-Read-Only:
-
-- `mode` (String)
 
 
 <a id="nestedatt--configuration--ssl_mode--source_alloydb_update_ssl_modes_prefer"></a>
 ### Nested Schema for `configuration.ssl_mode.source_alloydb_update_ssl_modes_prefer`
 
+Required:
+
+- `mode` (String)
+
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-
-Read-Only:
-
-- `mode` (String)
 
 
 <a id="nestedatt--configuration--ssl_mode--source_alloydb_update_ssl_modes_require"></a>
 ### Nested Schema for `configuration.ssl_mode.source_alloydb_update_ssl_modes_require`
 
+Required:
+
+- `mode` (String)
+
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-
-Read-Only:
-
-- `mode` (String)
 
 
 <a id="nestedatt--configuration--ssl_mode--source_alloydb_update_ssl_modes_verify_ca"></a>
 ### Nested Schema for `configuration.ssl_mode.source_alloydb_update_ssl_modes_verify_ca`
 
+Required:
+
+- `ca_certificate` (String)
+- `mode` (String)
+
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-
-Read-Only:
-
-- `ca_certificate` (String)
 - `client_certificate` (String)
 - `client_key` (String)
 - `client_key_password` (String)
-- `mode` (String)
 
 
 <a id="nestedatt--configuration--ssl_mode--source_alloydb_update_ssl_modes_verify_full"></a>
 ### Nested Schema for `configuration.ssl_mode.source_alloydb_update_ssl_modes_verify_full`
 
+Required:
+
+- `ca_certificate` (String)
+- `mode` (String)
+
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-
-Read-Only:
-
-- `ca_certificate` (String)
 - `client_certificate` (String)
 - `client_key` (String)
 - `client_key_password` (String)
-- `mode` (String)
 
 
 
@@ -304,9 +298,6 @@ Optional:
 - `source_alloydb_ssh_tunnel_method_no_tunnel` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--source_alloydb_ssh_tunnel_method_no_tunnel))
 - `source_alloydb_ssh_tunnel_method_password_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--source_alloydb_ssh_tunnel_method_password_authentication))
 - `source_alloydb_ssh_tunnel_method_ssh_key_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--source_alloydb_ssh_tunnel_method_ssh_key_authentication))
-
-Read-Only:
-
 - `source_alloydb_update_ssh_tunnel_method_no_tunnel` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--source_alloydb_update_ssh_tunnel_method_no_tunnel))
 - `source_alloydb_update_ssh_tunnel_method_password_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--source_alloydb_update_ssh_tunnel_method_password_authentication))
 - `source_alloydb_update_ssh_tunnel_method_ssh_key_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--source_alloydb_update_ssh_tunnel_method_ssh_key_authentication))
@@ -346,7 +337,7 @@ Required:
 <a id="nestedatt--configuration--tunnel_method--source_alloydb_update_ssh_tunnel_method_no_tunnel"></a>
 ### Nested Schema for `configuration.tunnel_method.source_alloydb_update_ssh_tunnel_method_no_tunnel`
 
-Read-Only:
+Required:
 
 - `tunnel_method` (String) No ssh tunnel needed to connect to database
 
@@ -354,7 +345,7 @@ Read-Only:
 <a id="nestedatt--configuration--tunnel_method--source_alloydb_update_ssh_tunnel_method_password_authentication"></a>
 ### Nested Schema for `configuration.tunnel_method.source_alloydb_update_ssh_tunnel_method_password_authentication`
 
-Read-Only:
+Required:
 
 - `tunnel_host` (String)
 - `tunnel_method` (String) Connect through a jump server tunnel host using username and password authentication
@@ -366,7 +357,7 @@ Read-Only:
 <a id="nestedatt--configuration--tunnel_method--source_alloydb_update_ssh_tunnel_method_ssh_key_authentication"></a>
 ### Nested Schema for `configuration.tunnel_method.source_alloydb_update_ssh_tunnel_method_ssh_key_authentication`
 
-Read-Only:
+Required:
 
 - `ssh_key` (String)
 - `tunnel_host` (String)

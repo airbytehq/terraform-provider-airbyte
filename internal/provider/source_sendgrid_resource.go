@@ -66,6 +66,7 @@ func (r *SourceSendgridResource) Schema(ctx context.Context, req resource.Schema
 						},
 					},
 					"start_time": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),

@@ -57,6 +57,7 @@ func (r *SourceAmplitudeResource) Schema(ctx context.Context, req resource.Schem
 						Required: true,
 					},
 					"data_region": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -67,6 +68,7 @@ func (r *SourceAmplitudeResource) Schema(ctx context.Context, req resource.Schem
 						Description: `Amplitude data region server`,
 					},
 					"request_time_range": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"secret_key": schema.StringAttribute{

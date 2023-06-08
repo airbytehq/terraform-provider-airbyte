@@ -55,12 +55,14 @@ func (r *SourceFaunaResource) Schema(ctx context.Context, req resource.SchemaReq
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"collection": schema.SingleNestedAttribute{
+						Computed: true,
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"deletions": schema.SingleNestedAttribute{
 								Required: true,
 								Attributes: map[string]schema.Attribute{
 									"source_fauna_collection_deletion_mode_disabled": schema.SingleNestedAttribute{
+										Computed: true,
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"deletion_mode": schema.StringAttribute{
@@ -78,6 +80,7 @@ func (r *SourceFaunaResource) Schema(ctx context.Context, req resource.SchemaReq
 											`Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted.`,
 									},
 									"source_fauna_collection_deletion_mode_enabled": schema.SingleNestedAttribute{
+										Computed: true,
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"column": schema.StringAttribute{
@@ -99,9 +102,10 @@ func (r *SourceFaunaResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"source_fauna_update_collection_deletion_mode_disabled": schema.SingleNestedAttribute{
 										Computed: true,
+										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"deletion_mode": schema.StringAttribute{
-												Computed: true,
+												Required: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"ignore",
@@ -116,12 +120,13 @@ func (r *SourceFaunaResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"source_fauna_update_collection_deletion_mode_enabled": schema.SingleNestedAttribute{
 										Computed: true,
+										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"column": schema.StringAttribute{
-												Computed: true,
+												Required: true,
 											},
 											"deletion_mode": schema.StringAttribute{
-												Computed: true,
+												Required: true,
 												Validators: []validator.String{
 													stringvalidator.OneOf(
 														"deleted_field",

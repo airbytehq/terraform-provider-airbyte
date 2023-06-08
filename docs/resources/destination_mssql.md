@@ -52,9 +52,6 @@ Optional:
 
 - `destination_mssql_ssl_method_encrypted_trust_server_certificate_` (Attributes) Use the certificate provided by the server without verification. (For testing purposes only!) (see [below for nested schema](#nestedatt--configuration--ssl_method--destination_mssql_ssl_method_encrypted_trust_server_certificate_))
 - `destination_mssql_ssl_method_encrypted_verify_certificate_` (Attributes) Verify and use the certificate provided by the server. (see [below for nested schema](#nestedatt--configuration--ssl_method--destination_mssql_ssl_method_encrypted_verify_certificate_))
-
-Read-Only:
-
 - `destination_mssql_update_ssl_method_encrypted_trust_server_certificate_` (Attributes) Use the certificate provided by the server without verification. (For testing purposes only!) (see [below for nested schema](#nestedatt--configuration--ssl_method--destination_mssql_update_ssl_method_encrypted_trust_server_certificate_))
 - `destination_mssql_update_ssl_method_encrypted_verify_certificate_` (Attributes) Verify and use the certificate provided by the server. (see [below for nested schema](#nestedatt--configuration--ssl_method--destination_mssql_update_ssl_method_encrypted_verify_certificate_))
 
@@ -81,7 +78,7 @@ Optional:
 <a id="nestedatt--configuration--ssl_method--destination_mssql_update_ssl_method_encrypted_trust_server_certificate_"></a>
 ### Nested Schema for `configuration.ssl_method.destination_mssql_update_ssl_method_encrypted_trust_server_certificate_`
 
-Read-Only:
+Required:
 
 - `ssl_method` (String)
 
@@ -89,10 +86,13 @@ Read-Only:
 <a id="nestedatt--configuration--ssl_method--destination_mssql_update_ssl_method_encrypted_verify_certificate_"></a>
 ### Nested Schema for `configuration.ssl_method.destination_mssql_update_ssl_method_encrypted_verify_certificate_`
 
-Read-Only:
+Required:
+
+- `ssl_method` (String)
+
+Optional:
 
 - `host_name_in_certificate` (String)
-- `ssl_method` (String)
 
 
 
@@ -104,9 +104,6 @@ Optional:
 - `destination_mssql_ssh_tunnel_method_no_tunnel` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--destination_mssql_ssh_tunnel_method_no_tunnel))
 - `destination_mssql_ssh_tunnel_method_password_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--destination_mssql_ssh_tunnel_method_password_authentication))
 - `destination_mssql_ssh_tunnel_method_ssh_key_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--destination_mssql_ssh_tunnel_method_ssh_key_authentication))
-
-Read-Only:
-
 - `destination_mssql_update_ssh_tunnel_method_no_tunnel` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--destination_mssql_update_ssh_tunnel_method_no_tunnel))
 - `destination_mssql_update_ssh_tunnel_method_password_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--destination_mssql_update_ssh_tunnel_method_password_authentication))
 - `destination_mssql_update_ssh_tunnel_method_ssh_key_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--destination_mssql_update_ssh_tunnel_method_ssh_key_authentication))
@@ -146,7 +143,7 @@ Required:
 <a id="nestedatt--configuration--tunnel_method--destination_mssql_update_ssh_tunnel_method_no_tunnel"></a>
 ### Nested Schema for `configuration.tunnel_method.destination_mssql_update_ssh_tunnel_method_no_tunnel`
 
-Read-Only:
+Required:
 
 - `tunnel_method` (String) No ssh tunnel needed to connect to database
 
@@ -154,7 +151,7 @@ Read-Only:
 <a id="nestedatt--configuration--tunnel_method--destination_mssql_update_ssh_tunnel_method_password_authentication"></a>
 ### Nested Schema for `configuration.tunnel_method.destination_mssql_update_ssh_tunnel_method_password_authentication`
 
-Read-Only:
+Required:
 
 - `tunnel_host` (String)
 - `tunnel_method` (String) Connect through a jump server tunnel host using username and password authentication
@@ -166,7 +163,7 @@ Read-Only:
 <a id="nestedatt--configuration--tunnel_method--destination_mssql_update_ssh_tunnel_method_ssh_key_authentication"></a>
 ### Nested Schema for `configuration.tunnel_method.destination_mssql_update_ssh_tunnel_method_ssh_key_authentication`
 
-Read-Only:
+Required:
 
 - `ssh_key` (String)
 - `tunnel_host` (String)

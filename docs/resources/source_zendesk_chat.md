@@ -50,9 +50,6 @@ Optional:
 
 - `source_zendesk_chat_authorization_method_access_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_zendesk_chat_authorization_method_access_token))
 - `source_zendesk_chat_authorization_method_o_auth2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_zendesk_chat_authorization_method_o_auth2_0))
-
-Read-Only:
-
 - `source_zendesk_chat_update_authorization_method_access_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_zendesk_chat_update_authorization_method_access_token))
 - `source_zendesk_chat_update_authorization_method_o_auth2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_zendesk_chat_update_authorization_method_o_auth2_0))
 
@@ -83,7 +80,7 @@ Optional:
 <a id="nestedatt--configuration--credentials--source_zendesk_chat_update_authorization_method_access_token"></a>
 ### Nested Schema for `configuration.credentials.source_zendesk_chat_update_authorization_method_access_token`
 
-Read-Only:
+Required:
 
 - `access_token` (String)
 - `credentials` (String)
@@ -92,12 +89,15 @@ Read-Only:
 <a id="nestedatt--configuration--credentials--source_zendesk_chat_update_authorization_method_o_auth2_0"></a>
 ### Nested Schema for `configuration.credentials.source_zendesk_chat_update_authorization_method_o_auth2_0`
 
-Read-Only:
+Required:
+
+- `credentials` (String)
+
+Optional:
 
 - `access_token` (String)
 - `client_id` (String)
 - `client_secret` (String)
-- `credentials` (String)
 - `refresh_token` (String)
 
 

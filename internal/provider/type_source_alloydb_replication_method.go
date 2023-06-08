@@ -6,5 +6,5 @@ type SourceAlloydbReplicationMethod struct {
 	SourceAlloydbReplicationMethodLogicalReplicationCDC       *SourceAlloydbReplicationMethodLogicalReplicationCDC       `tfsdk:"source_alloydb_replication_method_logical_replication_cdc_"`
 	SourceAlloydbReplicationMethodStandard                    *SourceAlloydbReplicationMethodStandard                    `tfsdk:"source_alloydb_replication_method_standard"`
 	SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC *SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC `tfsdk:"source_alloydb_update_replication_method_logical_replication_cdc_"`
-	SourceAlloydbUpdateReplicationMethodStandard              *SourceAlloydbUpdateReplicationMethodStandard              `tfsdk:"source_alloydb_update_replication_method_standard"`
+	SourceAlloydbUpdateReplicationMethodStandard              *SourceAlloydbReplicationMethodStandard                    `tfsdk:"source_alloydb_update_replication_method_standard"`
 }

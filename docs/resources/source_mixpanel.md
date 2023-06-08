@@ -53,9 +53,6 @@ Optional:
 
 - `source_mixpanel_authentication_wildcard_project_secret` (Attributes) Choose how to authenticate to Mixpanel (see [below for nested schema](#nestedatt--configuration--credentials--source_mixpanel_authentication_wildcard_project_secret))
 - `source_mixpanel_authentication_wildcard_service_account` (Attributes) Choose how to authenticate to Mixpanel (see [below for nested schema](#nestedatt--configuration--credentials--source_mixpanel_authentication_wildcard_service_account))
-
-Read-Only:
-
 - `source_mixpanel_update_authentication_wildcard_project_secret` (Attributes) Choose how to authenticate to Mixpanel (see [below for nested schema](#nestedatt--configuration--credentials--source_mixpanel_update_authentication_wildcard_project_secret))
 - `source_mixpanel_update_authentication_wildcard_service_account` (Attributes) Choose how to authenticate to Mixpanel (see [below for nested schema](#nestedatt--configuration--credentials--source_mixpanel_update_authentication_wildcard_service_account))
 
@@ -87,19 +84,25 @@ Optional:
 <a id="nestedatt--configuration--credentials--source_mixpanel_update_authentication_wildcard_project_secret"></a>
 ### Nested Schema for `configuration.credentials.source_mixpanel_update_authentication_wildcard_project_secret`
 
-Read-Only:
+Required:
 
 - `api_secret` (String)
+
+Optional:
+
 - `option_title` (String)
 
 
 <a id="nestedatt--configuration--credentials--source_mixpanel_update_authentication_wildcard_service_account"></a>
 ### Nested Schema for `configuration.credentials.source_mixpanel_update_authentication_wildcard_service_account`
 
-Read-Only:
+Required:
 
-- `option_title` (String)
 - `secret` (String)
 - `username` (String)
+
+Optional:
+
+- `option_title` (String)
 
 

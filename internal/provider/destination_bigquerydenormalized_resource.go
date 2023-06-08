@@ -54,15 +54,18 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"big_query_client_buffer_size_mb": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"credentials_json": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"dataset_id": schema.StringAttribute{
 						Required: true,
 					},
 					"dataset_location": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -119,15 +122,18 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 						},
 					},
 					"loading_method": schema.SingleNestedAttribute{
+						Computed: true,
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_bigquery_denormalized_loading_method_gcs_staging": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"credential": schema.SingleNestedAttribute{
 										Required: true,
 										Attributes: map[string]schema.Attribute{
 											"destination_bigquery_denormalized_loading_method_gcs_staging_credential_hmac_key": schema.SingleNestedAttribute{
+												Computed: true,
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"credential_type": schema.StringAttribute{
@@ -153,6 +159,7 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 										},
 									},
 									"file_buffer_count": schema.Int64Attribute{
+										Computed: true,
 										Optional: true,
 									},
 									"gcs_bucket_name": schema.StringAttribute{
@@ -162,6 +169,7 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 										Required: true,
 									},
 									"keep_files_in_gcs_bucket": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -183,6 +191,7 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 								Description: `Loading method used to send select the way data will be uploaded to BigQuery. <br/><b>Standard Inserts</b> - Direct uploading using SQL INSERT statements. This method is extremely inefficient and provided only for quick testing. In almost all cases, you should use staging. <br/><b>GCS Staging</b> - Writes large batches of records to a file, uploads the file to GCS, then uses <b>COPY INTO table</b> to upload the file. Recommended for most workloads for better speed and scalability. Read more about GCS Staging <a href="https://docs.airbyte.com/integrations/destinations/bigquery#gcs-staging">here</a>.`,
 							},
 							"destination_bigquery_denormalized_loading_method_standard_inserts": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
@@ -198,15 +207,17 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 							},
 							"destination_bigquery_denormalized_update_loading_method_gcs_staging": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"credential": schema.SingleNestedAttribute{
-										Computed: true,
+										Required: true,
 										Attributes: map[string]schema.Attribute{
 											"destination_bigquery_denormalized_update_loading_method_gcs_staging_credential_hmac_key": schema.SingleNestedAttribute{
 												Computed: true,
+												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"credential_type": schema.StringAttribute{
-														Computed: true,
+														Required: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
 																"HMAC_KEY",
@@ -214,10 +225,10 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 														},
 													},
 													"hmac_key_access_id": schema.StringAttribute{
-														Computed: true,
+														Required: true,
 													},
 													"hmac_key_secret": schema.StringAttribute{
-														Computed: true,
+														Required: true,
 													},
 												},
 												Description: `An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>.`,
@@ -229,15 +240,17 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 									},
 									"file_buffer_count": schema.Int64Attribute{
 										Computed: true,
+										Optional: true,
 									},
 									"gcs_bucket_name": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"gcs_bucket_path": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"keep_files_in_gcs_bucket": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"Delete all tmp files from GCS",
@@ -247,7 +260,7 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 										Description: `This upload method is supposed to temporary store records in GCS bucket. By this select you can chose if these records should be removed from GCS when migration has finished. The default "Delete all tmp files from GCS" value is used if not set explicitly.`,
 									},
 									"method": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"GCS Staging",
@@ -259,9 +272,10 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 							},
 							"destination_bigquery_denormalized_update_loading_method_standard_inserts": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"Standard",

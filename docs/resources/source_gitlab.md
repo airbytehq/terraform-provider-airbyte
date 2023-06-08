@@ -52,9 +52,6 @@ Optional:
 
 - `source_gitlab_authorization_method_o_auth2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_gitlab_authorization_method_o_auth2_0))
 - `source_gitlab_authorization_method_private_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_gitlab_authorization_method_private_token))
-
-Read-Only:
-
 - `source_gitlab_update_authorization_method_o_auth2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_gitlab_update_authorization_method_o_auth2_0))
 - `source_gitlab_update_authorization_method_private_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_gitlab_update_authorization_method_private_token))
 
@@ -89,22 +86,28 @@ Optional:
 <a id="nestedatt--configuration--credentials--source_gitlab_update_authorization_method_o_auth2_0"></a>
 ### Nested Schema for `configuration.credentials.source_gitlab_update_authorization_method_o_auth2_0`
 
-Read-Only:
+Required:
 
 - `access_token` (String)
-- `auth_type` (String)
 - `client_id` (String)
 - `client_secret` (String)
 - `refresh_token` (String)
 - `token_expiry_date` (String)
 
+Optional:
+
+- `auth_type` (String)
+
 
 <a id="nestedatt--configuration--credentials--source_gitlab_update_authorization_method_private_token"></a>
 ### Nested Schema for `configuration.credentials.source_gitlab_update_authorization_method_private_token`
 
-Read-Only:
+Required:
 
 - `access_token` (String)
+
+Optional:
+
 - `auth_type` (String)
 
 

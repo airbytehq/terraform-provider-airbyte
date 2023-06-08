@@ -55,9 +55,11 @@ func (r *SourceAsanaResource) Schema(ctx context.Context, req resource.SchemaReq
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"credentials": schema.SingleNestedAttribute{
+						Computed: true,
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_asana_authentication_mechanism_authenticate_via_asana_oauth_": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"client_id": schema.StringAttribute{
@@ -67,6 +69,7 @@ func (r *SourceAsanaResource) Schema(ctx context.Context, req resource.SchemaReq
 										Required: true,
 									},
 									"option_title": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -82,9 +85,11 @@ func (r *SourceAsanaResource) Schema(ctx context.Context, req resource.SchemaReq
 								Description: `Choose how to authenticate to Github`,
 							},
 							"source_asana_authentication_mechanism_authenticate_with_personal_access_token": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"option_title": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -101,15 +106,17 @@ func (r *SourceAsanaResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"source_asana_update_authentication_mechanism_authenticate_via_asana_oauth_": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"client_id": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"client_secret": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"option_title": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"OAuth Credentials",
@@ -118,16 +125,18 @@ func (r *SourceAsanaResource) Schema(ctx context.Context, req resource.SchemaReq
 										Description: `OAuth Credentials`,
 									},
 									"refresh_token": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 								Description: `Choose how to authenticate to Github`,
 							},
 							"source_asana_update_authentication_mechanism_authenticate_with_personal_access_token": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"option_title": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"PAT Credentials",
@@ -136,7 +145,7 @@ func (r *SourceAsanaResource) Schema(ctx context.Context, req resource.SchemaReq
 										Description: `PAT Credentials`,
 									},
 									"personal_access_token": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 								Description: `Choose how to authenticate to Github`,
@@ -147,6 +156,7 @@ func (r *SourceAsanaResource) Schema(ctx context.Context, req resource.SchemaReq
 						},
 					},
 					"source_type": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(

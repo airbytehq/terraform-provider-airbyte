@@ -59,12 +59,15 @@ func (r *SourceSurveySparrowResource) Schema(ctx context.Context, req resource.S
 						Required: true,
 					},
 					"region": schema.SingleNestedAttribute{
+						Computed: true,
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_survey_sparrow_base_url_eu_based_account": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"url_base": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -76,9 +79,11 @@ func (r *SourceSurveySparrowResource) Schema(ctx context.Context, req resource.S
 								Description: `Is your account location is EU based? If yes, the base url to retrieve data will be different.`,
 							},
 							"source_survey_sparrow_base_url_global_account": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"url_base": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -91,9 +96,11 @@ func (r *SourceSurveySparrowResource) Schema(ctx context.Context, req resource.S
 							},
 							"source_survey_sparrow_update_base_url_eu_based_account": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"url_base": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"https://eu-api.surveysparrow.com/v3",
@@ -105,9 +112,11 @@ func (r *SourceSurveySparrowResource) Schema(ctx context.Context, req resource.S
 							},
 							"source_survey_sparrow_update_base_url_global_account": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"url_base": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"https://api.surveysparrow.com/v3",
@@ -131,6 +140,7 @@ func (r *SourceSurveySparrowResource) Schema(ctx context.Context, req resource.S
 						},
 					},
 					"survey_id": schema.ListAttribute{
+						Computed:    true,
 						Optional:    true,
 						ElementType: types.StringType,
 						Validators: []validator.List{

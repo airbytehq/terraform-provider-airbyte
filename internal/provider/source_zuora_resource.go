@@ -98,6 +98,7 @@ func (r *SourceZuoraResource) Schema(ctx context.Context, req resource.SchemaReq
 						Description: `Please choose the right endpoint where your Tenant is located. More info by this <a href="https://www.zuora.com/developer/api-reference/#section/Introduction/Access-to-the-API">Link</a>`,
 					},
 					"window_in_days": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 				},

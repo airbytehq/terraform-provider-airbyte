@@ -57,6 +57,7 @@ func (r *SourceOpenweatherResource) Schema(ctx context.Context, req resource.Sch
 						Required: true,
 					},
 					"lang": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -128,6 +129,7 @@ func (r *SourceOpenweatherResource) Schema(ctx context.Context, req resource.Sch
 						},
 					},
 					"units": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(

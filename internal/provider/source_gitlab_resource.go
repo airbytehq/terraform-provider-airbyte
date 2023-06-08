@@ -61,12 +61,14 @@ func (r *SourceGitlabResource) Schema(ctx context.Context, req resource.SchemaRe
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"source_gitlab_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Required: true,
 									},
 									"auth_type": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -92,12 +94,14 @@ func (r *SourceGitlabResource) Schema(ctx context.Context, req resource.SchemaRe
 								},
 							},
 							"source_gitlab_authorization_method_private_token": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Required: true,
 									},
 									"auth_type": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -109,12 +113,14 @@ func (r *SourceGitlabResource) Schema(ctx context.Context, req resource.SchemaRe
 							},
 							"source_gitlab_update_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"auth_type": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"oauth2.0",
@@ -122,16 +128,16 @@ func (r *SourceGitlabResource) Schema(ctx context.Context, req resource.SchemaRe
 										},
 									},
 									"client_id": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"client_secret": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"refresh_token": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"token_expiry_date": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											validators.IsRFC3339(),
 										},
@@ -140,12 +146,14 @@ func (r *SourceGitlabResource) Schema(ctx context.Context, req resource.SchemaRe
 							},
 							"source_gitlab_update_authorization_method_private_token": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"auth_type": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"access_token",
@@ -160,9 +168,11 @@ func (r *SourceGitlabResource) Schema(ctx context.Context, req resource.SchemaRe
 						},
 					},
 					"groups": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"projects": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{

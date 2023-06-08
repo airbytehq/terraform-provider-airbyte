@@ -55,9 +55,11 @@ func (r *SourceSquareResource) Schema(ctx context.Context, req resource.SchemaRe
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"credentials": schema.SingleNestedAttribute{
+						Computed: true,
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_square_authentication_api_key": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_key": schema.StringAttribute{
@@ -75,6 +77,7 @@ func (r *SourceSquareResource) Schema(ctx context.Context, req resource.SchemaRe
 								Description: `Choose how to authenticate to Square.`,
 							},
 							"source_square_authentication_oauth_authentication": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
@@ -99,12 +102,13 @@ func (r *SourceSquareResource) Schema(ctx context.Context, req resource.SchemaRe
 							},
 							"source_square_update_authentication_api_key": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_key": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"auth_type": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"API Key",
@@ -116,9 +120,10 @@ func (r *SourceSquareResource) Schema(ctx context.Context, req resource.SchemaRe
 							},
 							"source_square_update_authentication_oauth_authentication": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"OAuth",
@@ -126,13 +131,13 @@ func (r *SourceSquareResource) Schema(ctx context.Context, req resource.SchemaRe
 										},
 									},
 									"client_id": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"client_secret": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"refresh_token": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 								Description: `Choose how to authenticate to Square.`,
@@ -143,6 +148,7 @@ func (r *SourceSquareResource) Schema(ctx context.Context, req resource.SchemaRe
 						},
 					},
 					"include_deleted_objects": schema.BoolAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"is_sandbox": schema.BoolAttribute{
@@ -157,6 +163,7 @@ func (r *SourceSquareResource) Schema(ctx context.Context, req resource.SchemaRe
 						},
 					},
 					"start_date": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),

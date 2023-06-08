@@ -47,9 +47,6 @@ Optional:
 
 - `destination_mongodb_authorization_type_login_password` (Attributes) Login/Password. (see [below for nested schema](#nestedatt--configuration--auth_type--destination_mongodb_authorization_type_login_password))
 - `destination_mongodb_authorization_type_none` (Attributes) None. (see [below for nested schema](#nestedatt--configuration--auth_type--destination_mongodb_authorization_type_none))
-
-Read-Only:
-
 - `destination_mongodb_update_authorization_type_login_password` (Attributes) Login/Password. (see [below for nested schema](#nestedatt--configuration--auth_type--destination_mongodb_update_authorization_type_login_password))
 - `destination_mongodb_update_authorization_type_none` (Attributes) None. (see [below for nested schema](#nestedatt--configuration--auth_type--destination_mongodb_update_authorization_type_none))
 
@@ -74,7 +71,7 @@ Required:
 <a id="nestedatt--configuration--auth_type--destination_mongodb_update_authorization_type_login_password"></a>
 ### Nested Schema for `configuration.auth_type.destination_mongodb_update_authorization_type_login_password`
 
-Read-Only:
+Required:
 
 - `authorization` (String)
 - `password` (String)
@@ -84,7 +81,7 @@ Read-Only:
 <a id="nestedatt--configuration--auth_type--destination_mongodb_update_authorization_type_none"></a>
 ### Nested Schema for `configuration.auth_type.destination_mongodb_update_authorization_type_none`
 
-Read-Only:
+Required:
 
 - `authorization` (String)
 
@@ -98,9 +95,6 @@ Optional:
 - `destination_mongodb_mongo_db_instance_type_mongo_db_atlas` (Attributes) MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default. (see [below for nested schema](#nestedatt--configuration--instance_type--destination_mongodb_mongo_db_instance_type_mongo_db_atlas))
 - `destination_mongodb_mongo_db_instance_type_replica_set` (Attributes) MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default. (see [below for nested schema](#nestedatt--configuration--instance_type--destination_mongodb_mongo_db_instance_type_replica_set))
 - `destination_mongodb_mongo_db_instance_type_standalone_mongo_db_instance` (Attributes) MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default. (see [below for nested schema](#nestedatt--configuration--instance_type--destination_mongodb_mongo_db_instance_type_standalone_mongo_db_instance))
-
-Read-Only:
-
 - `destination_mongodb_update_mongo_db_instance_type_mongo_db_atlas` (Attributes) MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default. (see [below for nested schema](#nestedatt--configuration--instance_type--destination_mongodb_update_mongo_db_instance_type_mongo_db_atlas))
 - `destination_mongodb_update_mongo_db_instance_type_replica_set` (Attributes) MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default. (see [below for nested schema](#nestedatt--configuration--instance_type--destination_mongodb_update_mongo_db_instance_type_replica_set))
 - `destination_mongodb_update_mongo_db_instance_type_standalone_mongo_db_instance` (Attributes) MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default. (see [below for nested schema](#nestedatt--configuration--instance_type--destination_mongodb_update_mongo_db_instance_type_standalone_mongo_db_instance))
@@ -140,7 +134,7 @@ Required:
 <a id="nestedatt--configuration--instance_type--destination_mongodb_update_mongo_db_instance_type_mongo_db_atlas"></a>
 ### Nested Schema for `configuration.instance_type.destination_mongodb_update_mongo_db_instance_type_mongo_db_atlas`
 
-Read-Only:
+Required:
 
 - `cluster_url` (String)
 - `instance` (String)
@@ -149,17 +143,20 @@ Read-Only:
 <a id="nestedatt--configuration--instance_type--destination_mongodb_update_mongo_db_instance_type_replica_set"></a>
 ### Nested Schema for `configuration.instance_type.destination_mongodb_update_mongo_db_instance_type_replica_set`
 
-Read-Only:
+Required:
 
 - `instance` (String)
-- `replica_set` (String)
 - `server_addresses` (String)
+
+Optional:
+
+- `replica_set` (String)
 
 
 <a id="nestedatt--configuration--instance_type--destination_mongodb_update_mongo_db_instance_type_standalone_mongo_db_instance"></a>
 ### Nested Schema for `configuration.instance_type.destination_mongodb_update_mongo_db_instance_type_standalone_mongo_db_instance`
 
-Read-Only:
+Required:
 
 - `host` (String)
 - `instance` (String)
@@ -175,9 +172,6 @@ Optional:
 - `destination_mongodb_ssh_tunnel_method_no_tunnel` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--destination_mongodb_ssh_tunnel_method_no_tunnel))
 - `destination_mongodb_ssh_tunnel_method_password_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--destination_mongodb_ssh_tunnel_method_password_authentication))
 - `destination_mongodb_ssh_tunnel_method_ssh_key_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--destination_mongodb_ssh_tunnel_method_ssh_key_authentication))
-
-Read-Only:
-
 - `destination_mongodb_update_ssh_tunnel_method_no_tunnel` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--destination_mongodb_update_ssh_tunnel_method_no_tunnel))
 - `destination_mongodb_update_ssh_tunnel_method_password_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--destination_mongodb_update_ssh_tunnel_method_password_authentication))
 - `destination_mongodb_update_ssh_tunnel_method_ssh_key_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--destination_mongodb_update_ssh_tunnel_method_ssh_key_authentication))
@@ -217,7 +211,7 @@ Required:
 <a id="nestedatt--configuration--tunnel_method--destination_mongodb_update_ssh_tunnel_method_no_tunnel"></a>
 ### Nested Schema for `configuration.tunnel_method.destination_mongodb_update_ssh_tunnel_method_no_tunnel`
 
-Read-Only:
+Required:
 
 - `tunnel_method` (String) No ssh tunnel needed to connect to database
 
@@ -225,7 +219,7 @@ Read-Only:
 <a id="nestedatt--configuration--tunnel_method--destination_mongodb_update_ssh_tunnel_method_password_authentication"></a>
 ### Nested Schema for `configuration.tunnel_method.destination_mongodb_update_ssh_tunnel_method_password_authentication`
 
-Read-Only:
+Required:
 
 - `tunnel_host` (String)
 - `tunnel_method` (String) Connect through a jump server tunnel host using username and password authentication
@@ -237,7 +231,7 @@ Read-Only:
 <a id="nestedatt--configuration--tunnel_method--destination_mongodb_update_ssh_tunnel_method_ssh_key_authentication"></a>
 ### Nested Schema for `configuration.tunnel_method.destination_mongodb_update_ssh_tunnel_method_ssh_key_authentication`
 
-Read-Only:
+Required:
 
 - `ssh_key` (String)
 - `tunnel_host` (String)

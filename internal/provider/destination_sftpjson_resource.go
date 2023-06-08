@@ -70,6 +70,7 @@ func (r *DestinationSftpJSONResource) Schema(ctx context.Context, req resource.S
 						Required: true,
 					},
 					"port": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"username": schema.StringAttribute{

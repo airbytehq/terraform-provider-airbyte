@@ -55,6 +55,7 @@ func (r *SourceMailgunResource) Schema(ctx context.Context, req resource.SchemaR
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"domain_region": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"private_key": schema.StringAttribute{
@@ -69,6 +70,7 @@ func (r *SourceMailgunResource) Schema(ctx context.Context, req resource.SchemaR
 						},
 					},
 					"start_date": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),

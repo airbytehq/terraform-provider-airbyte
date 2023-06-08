@@ -54,9 +54,6 @@ Optional:
 - `destination_snowflake_authorization_method_key_pair_authentication` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--destination_snowflake_authorization_method_key_pair_authentication))
 - `destination_snowflake_authorization_method_o_auth2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--destination_snowflake_authorization_method_o_auth2_0))
 - `destination_snowflake_authorization_method_username_and_password` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--destination_snowflake_authorization_method_username_and_password))
-
-Read-Only:
-
 - `destination_snowflake_update_authorization_method_key_pair_authentication` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--destination_snowflake_update_authorization_method_key_pair_authentication))
 - `destination_snowflake_update_authorization_method_o_auth2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--destination_snowflake_update_authorization_method_o_auth2_0))
 - `destination_snowflake_update_authorization_method_username_and_password` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--destination_snowflake_update_authorization_method_username_and_password))
@@ -104,32 +101,41 @@ Optional:
 <a id="nestedatt--configuration--credentials--destination_snowflake_update_authorization_method_key_pair_authentication"></a>
 ### Nested Schema for `configuration.credentials.destination_snowflake_update_authorization_method_key_pair_authentication`
 
-Read-Only:
+Required:
+
+- `private_key` (String)
+
+Optional:
 
 - `auth_type` (String)
-- `private_key` (String)
 - `private_key_password` (String)
 
 
 <a id="nestedatt--configuration--credentials--destination_snowflake_update_authorization_method_o_auth2_0"></a>
 ### Nested Schema for `configuration.credentials.destination_snowflake_update_authorization_method_o_auth2_0`
 
-Read-Only:
+Required:
 
 - `access_token` (String)
+- `refresh_token` (String)
+
+Optional:
+
 - `auth_type` (String)
 - `client_id` (String)
 - `client_secret` (String)
-- `refresh_token` (String)
 
 
 <a id="nestedatt--configuration--credentials--destination_snowflake_update_authorization_method_username_and_password"></a>
 ### Nested Schema for `configuration.credentials.destination_snowflake_update_authorization_method_username_and_password`
 
-Read-Only:
+Required:
+
+- `password` (String)
+
+Optional:
 
 - `auth_type` (String)
-- `password` (String)
 
 
 
@@ -142,9 +148,6 @@ Optional:
 - `destination_snowflake_data_staging_method_google_cloud_storage_staging` (Attributes) Recommended for large production workloads for better speed and scalability. (see [below for nested schema](#nestedatt--configuration--loading_method--destination_snowflake_data_staging_method_google_cloud_storage_staging))
 - `destination_snowflake_data_staging_method_recommended_internal_staging` (Attributes) Recommended for large production workloads for better speed and scalability. (see [below for nested schema](#nestedatt--configuration--loading_method--destination_snowflake_data_staging_method_recommended_internal_staging))
 - `destination_snowflake_data_staging_method_select_another_option` (Attributes) Select another option (see [below for nested schema](#nestedatt--configuration--loading_method--destination_snowflake_data_staging_method_select_another_option))
-
-Read-Only:
-
 - `destination_snowflake_update_data_staging_method_aws_s3_staging` (Attributes) Recommended for large production workloads for better speed and scalability. (see [below for nested schema](#nestedatt--configuration--loading_method--destination_snowflake_update_data_staging_method_aws_s3_staging))
 - `destination_snowflake_update_data_staging_method_google_cloud_storage_staging` (Attributes) Recommended for large production workloads for better speed and scalability. (see [below for nested schema](#nestedatt--configuration--loading_method--destination_snowflake_update_data_staging_method_google_cloud_storage_staging))
 - `destination_snowflake_update_data_staging_method_recommended_internal_staging` (Attributes) Recommended for large production workloads for better speed and scalability. (see [below for nested schema](#nestedatt--configuration--loading_method--destination_snowflake_update_data_staging_method_recommended_internal_staging))
@@ -227,38 +230,44 @@ Required:
 <a id="nestedatt--configuration--loading_method--destination_snowflake_update_data_staging_method_aws_s3_staging"></a>
 ### Nested Schema for `configuration.loading_method.destination_snowflake_update_data_staging_method_aws_s3_staging`
 
-Read-Only:
+Required:
 
 - `access_key_id` (String)
-- `encryption` (Attributes) (see [below for nested schema](#nestedatt--configuration--loading_method--destination_snowflake_update_data_staging_method_aws_s3_staging--encryption))
-- `file_name_pattern` (String)
 - `method` (String)
-- `purge_staging_data` (Boolean)
 - `s3_bucket_name` (String)
-- `s3_bucket_region` (String) Enter the region where your S3 bucket resides
 - `secret_access_key` (String)
 
+Optional:
+
+- `encryption` (Attributes) (see [below for nested schema](#nestedatt--configuration--loading_method--destination_snowflake_update_data_staging_method_aws_s3_staging--encryption))
+- `file_name_pattern` (String)
+- `purge_staging_data` (Boolean)
+- `s3_bucket_region` (String) Enter the region where your S3 bucket resides
+
 <a id="nestedatt--configuration--loading_method--destination_snowflake_update_data_staging_method_aws_s3_staging--encryption"></a>
-### Nested Schema for `configuration.loading_method.destination_snowflake_update_data_staging_method_aws_s3_staging.secret_access_key`
+### Nested Schema for `configuration.loading_method.destination_snowflake_update_data_staging_method_aws_s3_staging.s3_bucket_region`
 
-Read-Only:
+Optional:
 
-- `destination_snowflake_update_data_staging_method_aws_s3_staging_encryption_aes_cbc_envelope_encryption` (Attributes) Staging data will be encrypted using AES-CBC envelope encryption. (see [below for nested schema](#nestedatt--configuration--loading_method--destination_snowflake_update_data_staging_method_aws_s3_staging--secret_access_key--destination_snowflake_update_data_staging_method_aws_s3_staging_encryption_aes_cbc_envelope_encryption))
-- `destination_snowflake_update_data_staging_method_aws_s3_staging_encryption_no_encryption` (Attributes) Staging data will be stored in plaintext. (see [below for nested schema](#nestedatt--configuration--loading_method--destination_snowflake_update_data_staging_method_aws_s3_staging--secret_access_key--destination_snowflake_update_data_staging_method_aws_s3_staging_encryption_no_encryption))
+- `destination_snowflake_update_data_staging_method_aws_s3_staging_encryption_aes_cbc_envelope_encryption` (Attributes) Staging data will be encrypted using AES-CBC envelope encryption. (see [below for nested schema](#nestedatt--configuration--loading_method--destination_snowflake_update_data_staging_method_aws_s3_staging--s3_bucket_region--destination_snowflake_update_data_staging_method_aws_s3_staging_encryption_aes_cbc_envelope_encryption))
+- `destination_snowflake_update_data_staging_method_aws_s3_staging_encryption_no_encryption` (Attributes) Staging data will be stored in plaintext. (see [below for nested schema](#nestedatt--configuration--loading_method--destination_snowflake_update_data_staging_method_aws_s3_staging--s3_bucket_region--destination_snowflake_update_data_staging_method_aws_s3_staging_encryption_no_encryption))
 
-<a id="nestedatt--configuration--loading_method--destination_snowflake_update_data_staging_method_aws_s3_staging--secret_access_key--destination_snowflake_update_data_staging_method_aws_s3_staging_encryption_aes_cbc_envelope_encryption"></a>
-### Nested Schema for `configuration.loading_method.destination_snowflake_update_data_staging_method_aws_s3_staging.secret_access_key.destination_snowflake_update_data_staging_method_aws_s3_staging_encryption_aes_cbc_envelope_encryption`
+<a id="nestedatt--configuration--loading_method--destination_snowflake_update_data_staging_method_aws_s3_staging--s3_bucket_region--destination_snowflake_update_data_staging_method_aws_s3_staging_encryption_aes_cbc_envelope_encryption"></a>
+### Nested Schema for `configuration.loading_method.destination_snowflake_update_data_staging_method_aws_s3_staging.s3_bucket_region.destination_snowflake_update_data_staging_method_aws_s3_staging_encryption_aes_cbc_envelope_encryption`
 
-Read-Only:
+Required:
 
 - `encryption_type` (String)
+
+Optional:
+
 - `key_encrypting_key` (String)
 
 
-<a id="nestedatt--configuration--loading_method--destination_snowflake_update_data_staging_method_aws_s3_staging--secret_access_key--destination_snowflake_update_data_staging_method_aws_s3_staging_encryption_no_encryption"></a>
-### Nested Schema for `configuration.loading_method.destination_snowflake_update_data_staging_method_aws_s3_staging.secret_access_key.destination_snowflake_update_data_staging_method_aws_s3_staging_encryption_no_encryption`
+<a id="nestedatt--configuration--loading_method--destination_snowflake_update_data_staging_method_aws_s3_staging--s3_bucket_region--destination_snowflake_update_data_staging_method_aws_s3_staging_encryption_no_encryption"></a>
+### Nested Schema for `configuration.loading_method.destination_snowflake_update_data_staging_method_aws_s3_staging.s3_bucket_region.destination_snowflake_update_data_staging_method_aws_s3_staging_encryption_no_encryption`
 
-Read-Only:
+Required:
 
 - `encryption_type` (String)
 
@@ -268,7 +277,7 @@ Read-Only:
 <a id="nestedatt--configuration--loading_method--destination_snowflake_update_data_staging_method_google_cloud_storage_staging"></a>
 ### Nested Schema for `configuration.loading_method.destination_snowflake_update_data_staging_method_google_cloud_storage_staging`
 
-Read-Only:
+Required:
 
 - `bucket_name` (String)
 - `credentials_json` (String)
@@ -279,7 +288,7 @@ Read-Only:
 <a id="nestedatt--configuration--loading_method--destination_snowflake_update_data_staging_method_recommended_internal_staging"></a>
 ### Nested Schema for `configuration.loading_method.destination_snowflake_update_data_staging_method_recommended_internal_staging`
 
-Read-Only:
+Required:
 
 - `method` (String)
 
@@ -287,7 +296,7 @@ Read-Only:
 <a id="nestedatt--configuration--loading_method--destination_snowflake_update_data_staging_method_select_another_option"></a>
 ### Nested Schema for `configuration.loading_method.destination_snowflake_update_data_staging_method_select_another_option`
 
-Read-Only:
+Required:
 
 - `method` (String)
 

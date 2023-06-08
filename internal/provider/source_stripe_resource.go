@@ -61,9 +61,11 @@ func (r *SourceStripeResource) Schema(ctx context.Context, req resource.SchemaRe
 						Required: true,
 					},
 					"lookback_window_days": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"slice_range": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{

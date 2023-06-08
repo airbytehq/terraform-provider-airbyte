@@ -66,6 +66,7 @@ func (r *SourceCloseComResource) Schema(ctx context.Context, req resource.Schema
 						},
 					},
 					"start_date": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),

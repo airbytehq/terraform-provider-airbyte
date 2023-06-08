@@ -47,9 +47,6 @@ Optional:
 
 - `source_trustpilot_authorization_method_api_key` (Attributes) The API key authentication method gives you access to only the streams which are part of the Public API. When you want to get streams available via the Consumer API (e.g. the private reviews) you need to use authentication method OAuth 2.0. (see [below for nested schema](#nestedatt--configuration--credentials--source_trustpilot_authorization_method_api_key))
 - `source_trustpilot_authorization_method_o_auth_2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_trustpilot_authorization_method_o_auth_2_0))
-
-Read-Only:
-
 - `source_trustpilot_update_authorization_method_api_key` (Attributes) The API key authentication method gives you access to only the streams which are part of the Public API. When you want to get streams available via the Consumer API (e.g. the private reviews) you need to use authentication method OAuth 2.0. (see [below for nested schema](#nestedatt--configuration--credentials--source_trustpilot_update_authorization_method_api_key))
 - `source_trustpilot_update_authorization_method_o_auth_2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_trustpilot_update_authorization_method_o_auth_2_0))
 
@@ -84,22 +81,28 @@ Optional:
 <a id="nestedatt--configuration--credentials--source_trustpilot_update_authorization_method_api_key"></a>
 ### Nested Schema for `configuration.credentials.source_trustpilot_update_authorization_method_api_key`
 
-Read-Only:
+Required:
+
+- `client_id` (String)
+
+Optional:
 
 - `auth_type` (String)
-- `client_id` (String)
 
 
 <a id="nestedatt--configuration--credentials--source_trustpilot_update_authorization_method_o_auth_2_0"></a>
 ### Nested Schema for `configuration.credentials.source_trustpilot_update_authorization_method_o_auth_2_0`
 
-Read-Only:
+Required:
 
 - `access_token` (String)
-- `auth_type` (String)
 - `client_id` (String)
 - `client_secret` (String)
 - `refresh_token` (String)
 - `token_expiry_date` (String)
+
+Optional:
+
+- `auth_type` (String)
 
 

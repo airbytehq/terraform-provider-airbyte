@@ -57,6 +57,7 @@ func (r *SourceUsCensusResource) Schema(ctx context.Context, req resource.Schema
 						Required: true,
 					},
 					"query_params": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"query_path": schema.StringAttribute{

@@ -54,9 +54,6 @@ Optional:
 - `destination_s3_output_format_csv_comma_separated_values` (Attributes) Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details (see [below for nested schema](#nestedatt--configuration--format--destination_s3_output_format_csv_comma_separated_values))
 - `destination_s3_output_format_json_lines_newline_delimited_json` (Attributes) Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details (see [below for nested schema](#nestedatt--configuration--format--destination_s3_output_format_json_lines_newline_delimited_json))
 - `destination_s3_output_format_parquet_columnar_storage` (Attributes) Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details (see [below for nested schema](#nestedatt--configuration--format--destination_s3_output_format_parquet_columnar_storage))
-
-Read-Only:
-
 - `destination_s3_update_output_format_avro_apache_avro` (Attributes) Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details (see [below for nested schema](#nestedatt--configuration--format--destination_s3_update_output_format_avro_apache_avro))
 - `destination_s3_update_output_format_csv_comma_separated_values` (Attributes) Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details (see [below for nested schema](#nestedatt--configuration--format--destination_s3_update_output_format_csv_comma_separated_values))
 - `destination_s3_update_output_format_json_lines_newline_delimited_json` (Attributes) Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details (see [below for nested schema](#nestedatt--configuration--format--destination_s3_update_output_format_json_lines_newline_delimited_json))
@@ -235,7 +232,7 @@ Optional:
 <a id="nestedatt--configuration--format--destination_s3_update_output_format_avro_apache_avro"></a>
 ### Nested Schema for `configuration.format.destination_s3_update_output_format_avro_apache_avro`
 
-Read-Only:
+Required:
 
 - `compression_codec` (Attributes) (see [below for nested schema](#nestedatt--configuration--format--destination_s3_update_output_format_avro_apache_avro--compression_codec))
 - `format_type` (String)
@@ -243,7 +240,7 @@ Read-Only:
 <a id="nestedatt--configuration--format--destination_s3_update_output_format_avro_apache_avro--compression_codec"></a>
 ### Nested Schema for `configuration.format.destination_s3_update_output_format_avro_apache_avro.format_type`
 
-Read-Only:
+Optional:
 
 - `destination_s3_update_output_format_avro_apache_avro_compression_codec_bzip2` (Attributes) The compression algorithm used to compress data. Default to no compression. (see [below for nested schema](#nestedatt--configuration--format--destination_s3_update_output_format_avro_apache_avro--format_type--destination_s3_update_output_format_avro_apache_avro_compression_codec_bzip2))
 - `destination_s3_update_output_format_avro_apache_avro_compression_codec_deflate` (Attributes) The compression algorithm used to compress data. Default to no compression. (see [below for nested schema](#nestedatt--configuration--format--destination_s3_update_output_format_avro_apache_avro--format_type--destination_s3_update_output_format_avro_apache_avro_compression_codec_deflate))
@@ -255,7 +252,7 @@ Read-Only:
 <a id="nestedatt--configuration--format--destination_s3_update_output_format_avro_apache_avro--format_type--destination_s3_update_output_format_avro_apache_avro_compression_codec_bzip2"></a>
 ### Nested Schema for `configuration.format.destination_s3_update_output_format_avro_apache_avro.format_type.destination_s3_update_output_format_avro_apache_avro_compression_codec_bzip2`
 
-Read-Only:
+Required:
 
 - `codec` (String)
 
@@ -263,7 +260,7 @@ Read-Only:
 <a id="nestedatt--configuration--format--destination_s3_update_output_format_avro_apache_avro--format_type--destination_s3_update_output_format_avro_apache_avro_compression_codec_deflate"></a>
 ### Nested Schema for `configuration.format.destination_s3_update_output_format_avro_apache_avro.format_type.destination_s3_update_output_format_avro_apache_avro_compression_codec_deflate`
 
-Read-Only:
+Required:
 
 - `codec` (String)
 - `compression_level` (Number)
@@ -272,7 +269,7 @@ Read-Only:
 <a id="nestedatt--configuration--format--destination_s3_update_output_format_avro_apache_avro--format_type--destination_s3_update_output_format_avro_apache_avro_compression_codec_no_compression"></a>
 ### Nested Schema for `configuration.format.destination_s3_update_output_format_avro_apache_avro.format_type.destination_s3_update_output_format_avro_apache_avro_compression_codec_no_compression`
 
-Read-Only:
+Required:
 
 - `codec` (String)
 
@@ -280,7 +277,7 @@ Read-Only:
 <a id="nestedatt--configuration--format--destination_s3_update_output_format_avro_apache_avro--format_type--destination_s3_update_output_format_avro_apache_avro_compression_codec_snappy"></a>
 ### Nested Schema for `configuration.format.destination_s3_update_output_format_avro_apache_avro.format_type.destination_s3_update_output_format_avro_apache_avro_compression_codec_snappy`
 
-Read-Only:
+Required:
 
 - `codec` (String)
 
@@ -288,7 +285,7 @@ Read-Only:
 <a id="nestedatt--configuration--format--destination_s3_update_output_format_avro_apache_avro--format_type--destination_s3_update_output_format_avro_apache_avro_compression_codec_xz"></a>
 ### Nested Schema for `configuration.format.destination_s3_update_output_format_avro_apache_avro.format_type.destination_s3_update_output_format_avro_apache_avro_compression_codec_xz`
 
-Read-Only:
+Required:
 
 - `codec` (String)
 - `compression_level` (Number)
@@ -297,10 +294,13 @@ Read-Only:
 <a id="nestedatt--configuration--format--destination_s3_update_output_format_avro_apache_avro--format_type--destination_s3_update_output_format_avro_apache_avro_compression_codec_zstandard"></a>
 ### Nested Schema for `configuration.format.destination_s3_update_output_format_avro_apache_avro.format_type.destination_s3_update_output_format_avro_apache_avro_compression_codec_zstandard`
 
-Read-Only:
+Required:
 
 - `codec` (String)
 - `compression_level` (Number)
+
+Optional:
+
 - `include_checksum` (Boolean)
 
 
@@ -309,32 +309,35 @@ Read-Only:
 <a id="nestedatt--configuration--format--destination_s3_update_output_format_csv_comma_separated_values"></a>
 ### Nested Schema for `configuration.format.destination_s3_update_output_format_csv_comma_separated_values`
 
-Read-Only:
+Required:
 
-- `compression` (Attributes) (see [below for nested schema](#nestedatt--configuration--format--destination_s3_update_output_format_csv_comma_separated_values--compression))
 - `flattening` (String) Whether the input json data should be normalized (flattened) in the output CSV. Please refer to docs for details.
 - `format_type` (String)
 
+Optional:
+
+- `compression` (Attributes) (see [below for nested schema](#nestedatt--configuration--format--destination_s3_update_output_format_csv_comma_separated_values--compression))
+
 <a id="nestedatt--configuration--format--destination_s3_update_output_format_csv_comma_separated_values--compression"></a>
-### Nested Schema for `configuration.format.destination_s3_update_output_format_csv_comma_separated_values.format_type`
+### Nested Schema for `configuration.format.destination_s3_update_output_format_csv_comma_separated_values.compression`
 
-Read-Only:
+Optional:
 
-- `destination_s3_update_output_format_csv_comma_separated_values_compression_gzip` (Attributes) Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz"). (see [below for nested schema](#nestedatt--configuration--format--destination_s3_update_output_format_csv_comma_separated_values--format_type--destination_s3_update_output_format_csv_comma_separated_values_compression_gzip))
-- `destination_s3_update_output_format_csv_comma_separated_values_compression_no_compression` (Attributes) Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz"). (see [below for nested schema](#nestedatt--configuration--format--destination_s3_update_output_format_csv_comma_separated_values--format_type--destination_s3_update_output_format_csv_comma_separated_values_compression_no_compression))
+- `destination_s3_update_output_format_csv_comma_separated_values_compression_gzip` (Attributes) Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz"). (see [below for nested schema](#nestedatt--configuration--format--destination_s3_update_output_format_csv_comma_separated_values--compression--destination_s3_update_output_format_csv_comma_separated_values_compression_gzip))
+- `destination_s3_update_output_format_csv_comma_separated_values_compression_no_compression` (Attributes) Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz"). (see [below for nested schema](#nestedatt--configuration--format--destination_s3_update_output_format_csv_comma_separated_values--compression--destination_s3_update_output_format_csv_comma_separated_values_compression_no_compression))
 
-<a id="nestedatt--configuration--format--destination_s3_update_output_format_csv_comma_separated_values--format_type--destination_s3_update_output_format_csv_comma_separated_values_compression_gzip"></a>
-### Nested Schema for `configuration.format.destination_s3_update_output_format_csv_comma_separated_values.format_type.destination_s3_update_output_format_csv_comma_separated_values_compression_gzip`
+<a id="nestedatt--configuration--format--destination_s3_update_output_format_csv_comma_separated_values--compression--destination_s3_update_output_format_csv_comma_separated_values_compression_gzip"></a>
+### Nested Schema for `configuration.format.destination_s3_update_output_format_csv_comma_separated_values.compression.destination_s3_update_output_format_csv_comma_separated_values_compression_gzip`
 
-Read-Only:
+Optional:
 
 - `compression_type` (String)
 
 
-<a id="nestedatt--configuration--format--destination_s3_update_output_format_csv_comma_separated_values--format_type--destination_s3_update_output_format_csv_comma_separated_values_compression_no_compression"></a>
-### Nested Schema for `configuration.format.destination_s3_update_output_format_csv_comma_separated_values.format_type.destination_s3_update_output_format_csv_comma_separated_values_compression_no_compression`
+<a id="nestedatt--configuration--format--destination_s3_update_output_format_csv_comma_separated_values--compression--destination_s3_update_output_format_csv_comma_separated_values_compression_no_compression"></a>
+### Nested Schema for `configuration.format.destination_s3_update_output_format_csv_comma_separated_values.compression.destination_s3_update_output_format_csv_comma_separated_values_compression_no_compression`
 
-Read-Only:
+Optional:
 
 - `compression_type` (String)
 
@@ -344,32 +347,35 @@ Read-Only:
 <a id="nestedatt--configuration--format--destination_s3_update_output_format_json_lines_newline_delimited_json"></a>
 ### Nested Schema for `configuration.format.destination_s3_update_output_format_json_lines_newline_delimited_json`
 
-Read-Only:
+Required:
+
+- `format_type` (String)
+
+Optional:
 
 - `compression` (Attributes) (see [below for nested schema](#nestedatt--configuration--format--destination_s3_update_output_format_json_lines_newline_delimited_json--compression))
 - `flattening` (String) Whether the input json data should be normalized (flattened) in the output JSON Lines. Please refer to docs for details.
-- `format_type` (String)
 
 <a id="nestedatt--configuration--format--destination_s3_update_output_format_json_lines_newline_delimited_json--compression"></a>
-### Nested Schema for `configuration.format.destination_s3_update_output_format_json_lines_newline_delimited_json.format_type`
+### Nested Schema for `configuration.format.destination_s3_update_output_format_json_lines_newline_delimited_json.flattening`
 
-Read-Only:
+Optional:
 
-- `destination_s3_update_output_format_json_lines_newline_delimited_json_compression_gzip` (Attributes) Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz"). (see [below for nested schema](#nestedatt--configuration--format--destination_s3_update_output_format_json_lines_newline_delimited_json--format_type--destination_s3_update_output_format_json_lines_newline_delimited_json_compression_gzip))
-- `destination_s3_update_output_format_json_lines_newline_delimited_json_compression_no_compression` (Attributes) Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz"). (see [below for nested schema](#nestedatt--configuration--format--destination_s3_update_output_format_json_lines_newline_delimited_json--format_type--destination_s3_update_output_format_json_lines_newline_delimited_json_compression_no_compression))
+- `destination_s3_update_output_format_json_lines_newline_delimited_json_compression_gzip` (Attributes) Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz"). (see [below for nested schema](#nestedatt--configuration--format--destination_s3_update_output_format_json_lines_newline_delimited_json--flattening--destination_s3_update_output_format_json_lines_newline_delimited_json_compression_gzip))
+- `destination_s3_update_output_format_json_lines_newline_delimited_json_compression_no_compression` (Attributes) Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz"). (see [below for nested schema](#nestedatt--configuration--format--destination_s3_update_output_format_json_lines_newline_delimited_json--flattening--destination_s3_update_output_format_json_lines_newline_delimited_json_compression_no_compression))
 
-<a id="nestedatt--configuration--format--destination_s3_update_output_format_json_lines_newline_delimited_json--format_type--destination_s3_update_output_format_json_lines_newline_delimited_json_compression_gzip"></a>
-### Nested Schema for `configuration.format.destination_s3_update_output_format_json_lines_newline_delimited_json.format_type.destination_s3_update_output_format_json_lines_newline_delimited_json_compression_gzip`
+<a id="nestedatt--configuration--format--destination_s3_update_output_format_json_lines_newline_delimited_json--flattening--destination_s3_update_output_format_json_lines_newline_delimited_json_compression_gzip"></a>
+### Nested Schema for `configuration.format.destination_s3_update_output_format_json_lines_newline_delimited_json.flattening.destination_s3_update_output_format_json_lines_newline_delimited_json_compression_gzip`
 
-Read-Only:
+Optional:
 
 - `compression_type` (String)
 
 
-<a id="nestedatt--configuration--format--destination_s3_update_output_format_json_lines_newline_delimited_json--format_type--destination_s3_update_output_format_json_lines_newline_delimited_json_compression_no_compression"></a>
-### Nested Schema for `configuration.format.destination_s3_update_output_format_json_lines_newline_delimited_json.format_type.destination_s3_update_output_format_json_lines_newline_delimited_json_compression_no_compression`
+<a id="nestedatt--configuration--format--destination_s3_update_output_format_json_lines_newline_delimited_json--flattening--destination_s3_update_output_format_json_lines_newline_delimited_json_compression_no_compression"></a>
+### Nested Schema for `configuration.format.destination_s3_update_output_format_json_lines_newline_delimited_json.flattening.destination_s3_update_output_format_json_lines_newline_delimited_json_compression_no_compression`
 
-Read-Only:
+Optional:
 
 - `compression_type` (String)
 
@@ -379,13 +385,16 @@ Read-Only:
 <a id="nestedatt--configuration--format--destination_s3_update_output_format_parquet_columnar_storage"></a>
 ### Nested Schema for `configuration.format.destination_s3_update_output_format_parquet_columnar_storage`
 
-Read-Only:
+Required:
+
+- `format_type` (String)
+
+Optional:
 
 - `block_size_mb` (Number)
 - `compression_codec` (String) The compression algorithm used to compress data pages.
 - `dictionary_encoding` (Boolean)
 - `dictionary_page_size_kb` (Number)
-- `format_type` (String)
 - `max_padding_size_mb` (Number)
 - `page_size_kb` (Number)
 

@@ -52,9 +52,6 @@ Optional:
 
 - `source_slack_authentication_mechanism_api_token` (Attributes) Choose how to authenticate into Slack (see [below for nested schema](#nestedatt--configuration--credentials--source_slack_authentication_mechanism_api_token))
 - `source_slack_authentication_mechanism_sign_in_via_slack_o_auth_` (Attributes) Choose how to authenticate into Slack (see [below for nested schema](#nestedatt--configuration--credentials--source_slack_authentication_mechanism_sign_in_via_slack_o_auth_))
-
-Read-Only:
-
 - `source_slack_update_authentication_mechanism_api_token` (Attributes) Choose how to authenticate into Slack (see [below for nested schema](#nestedatt--configuration--credentials--source_slack_update_authentication_mechanism_api_token))
 - `source_slack_update_authentication_mechanism_sign_in_via_slack_o_auth_` (Attributes) Choose how to authenticate into Slack (see [below for nested schema](#nestedatt--configuration--credentials--source_slack_update_authentication_mechanism_sign_in_via_slack_o_auth_))
 
@@ -81,7 +78,7 @@ Required:
 <a id="nestedatt--configuration--credentials--source_slack_update_authentication_mechanism_api_token"></a>
 ### Nested Schema for `configuration.credentials.source_slack_update_authentication_mechanism_api_token`
 
-Read-Only:
+Required:
 
 - `api_token` (String)
 - `option_title` (String)
@@ -90,7 +87,7 @@ Read-Only:
 <a id="nestedatt--configuration--credentials--source_slack_update_authentication_mechanism_sign_in_via_slack_o_auth_"></a>
 ### Nested Schema for `configuration.credentials.source_slack_update_authentication_mechanism_sign_in_via_slack_o_auth_`
 
-Read-Only:
+Required:
 
 - `access_token` (String)
 - `client_id` (String)

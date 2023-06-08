@@ -45,9 +45,6 @@ Optional:
 
 - `source_retently_authentication_mechanism_authenticate_via_retently_o_auth_` (Attributes) Choose how to authenticate to Retently (see [below for nested schema](#nestedatt--configuration--credentials--source_retently_authentication_mechanism_authenticate_via_retently_o_auth_))
 - `source_retently_authentication_mechanism_authenticate_with_api_token` (Attributes) Choose how to authenticate to Retently (see [below for nested schema](#nestedatt--configuration--credentials--source_retently_authentication_mechanism_authenticate_with_api_token))
-
-Read-Only:
-
 - `source_retently_update_authentication_mechanism_authenticate_via_retently_o_auth_` (Attributes) Choose how to authenticate to Retently (see [below for nested schema](#nestedatt--configuration--credentials--source_retently_update_authentication_mechanism_authenticate_via_retently_o_auth_))
 - `source_retently_update_authentication_mechanism_authenticate_with_api_token` (Attributes) Choose how to authenticate to Retently (see [below for nested schema](#nestedatt--configuration--credentials--source_retently_update_authentication_mechanism_authenticate_with_api_token))
 
@@ -82,28 +79,28 @@ Optional:
 <a id="nestedatt--configuration--credentials--source_retently_update_authentication_mechanism_authenticate_via_retently_o_auth_"></a>
 ### Nested Schema for `configuration.credentials.source_retently_update_authentication_mechanism_authenticate_via_retently_o_auth_`
 
-Optional:
+Required:
 
-- `additional_properties` (String) Parsed as JSON.
-
-Read-Only:
-
-- `auth_type` (String)
 - `client_id` (String)
 - `client_secret` (String)
 - `refresh_token` (String)
+
+Optional:
+
+- `additional_properties` (String) Parsed as JSON.
+- `auth_type` (String)
 
 
 <a id="nestedatt--configuration--credentials--source_retently_update_authentication_mechanism_authenticate_with_api_token"></a>
 ### Nested Schema for `configuration.credentials.source_retently_update_authentication_mechanism_authenticate_with_api_token`
 
+Required:
+
+- `api_key` (String)
+
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-
-Read-Only:
-
-- `api_key` (String)
 - `auth_type` (String)
 
 

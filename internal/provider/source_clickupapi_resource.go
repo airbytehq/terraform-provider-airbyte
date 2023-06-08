@@ -57,12 +57,15 @@ func (r *SourceClickupAPIResource) Schema(ctx context.Context, req resource.Sche
 						Required: true,
 					},
 					"folder_id": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"include_closed_tasks": schema.BoolAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"list_id": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{
@@ -74,9 +77,11 @@ func (r *SourceClickupAPIResource) Schema(ctx context.Context, req resource.Sche
 						},
 					},
 					"space_id": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"team_id": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 				},

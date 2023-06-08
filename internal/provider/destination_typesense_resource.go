@@ -56,6 +56,7 @@ func (r *DestinationTypesenseResource) Schema(ctx context.Context, req resource.
 						Required: true,
 					},
 					"batch_size": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"destination_type": schema.StringAttribute{
@@ -70,9 +71,11 @@ func (r *DestinationTypesenseResource) Schema(ctx context.Context, req resource.
 						Required: true,
 					},
 					"port": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"protocol": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 				},

@@ -60,6 +60,7 @@ func (r *SourcePunkAPIResource) Schema(ctx context.Context, req resource.SchemaR
 						Required: true,
 					},
 					"id": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{

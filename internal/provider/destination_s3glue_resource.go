@@ -54,6 +54,7 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"access_key_id": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"destination_type": schema.StringAttribute{
@@ -65,39 +66,46 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 						},
 					},
 					"file_name_pattern": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"format": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_s3_glue_output_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"compression": schema.SingleNestedAttribute{
+										Computed: true,
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
-											"destination_s3_glue_output_format_json_lines_newline_delimited_json_compression_no_compression": schema.SingleNestedAttribute{
+											"destination_s3_glue_output_format_json_lines_newline_delimited_json_compression_gzip": schema.SingleNestedAttribute{
+												Computed: true,
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
+														Computed: true,
 														Optional: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
-																"No Compression",
+																"GZIP",
 															),
 														},
 													},
 												},
 												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
 											},
-											"destination_s3_glue_output_format_json_lines_newline_delimited_json_compression_gzip": schema.SingleNestedAttribute{
+											"destination_s3_glue_output_format_json_lines_newline_delimited_json_compression_no_compression": schema.SingleNestedAttribute{
+												Computed: true,
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
+														Computed: true,
 														Optional: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
-																"GZIP",
+																"No Compression",
 															),
 														},
 													},
@@ -110,6 +118,7 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 										},
 									},
 									"flattening": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -132,15 +141,19 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 							},
 							"destination_s3_glue_update_output_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"compression": schema.SingleNestedAttribute{
 										Computed: true,
+										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"destination_s3_glue_update_output_format_json_lines_newline_delimited_json_compression_no_compression": schema.SingleNestedAttribute{
 												Computed: true,
+												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
 														Computed: true,
+														Optional: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
 																"No Compression",
@@ -152,9 +165,11 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 											},
 											"destination_s3_glue_update_output_format_json_lines_newline_delimited_json_compression_gzip": schema.SingleNestedAttribute{
 												Computed: true,
+												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
 														Computed: true,
+														Optional: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
 																"GZIP",
@@ -171,6 +186,7 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 									},
 									"flattening": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"No flattening",
@@ -180,7 +196,7 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 										Description: `Whether the input json data should be normalized (flattened) in the output JSON Lines. Please refer to docs for details.`,
 									},
 									"format_type": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"JSONL",
@@ -249,12 +265,15 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 						Description: `The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes.`,
 					},
 					"s3_endpoint": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"s3_path_format": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"secret_access_key": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 				},

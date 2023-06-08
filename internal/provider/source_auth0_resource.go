@@ -61,6 +61,7 @@ func (r *SourceAuth0Resource) Schema(ctx context.Context, req resource.SchemaReq
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"source_auth0_authentication_method_o_auth2_access_token": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
@@ -77,6 +78,7 @@ func (r *SourceAuth0Resource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 							},
 							"source_auth0_authentication_method_o_auth2_confidential_application": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"audience": schema.StringAttribute{
@@ -100,12 +102,13 @@ func (r *SourceAuth0Resource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"source_auth0_update_authentication_method_o_auth2_access_token": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"auth_type": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"oauth2_access_token",
@@ -116,12 +119,13 @@ func (r *SourceAuth0Resource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"source_auth0_update_authentication_method_o_auth2_confidential_application": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"audience": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"auth_type": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"oauth2_confidential_application",
@@ -129,10 +133,10 @@ func (r *SourceAuth0Resource) Schema(ctx context.Context, req resource.SchemaReq
 										},
 									},
 									"client_id": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"client_secret": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 							},

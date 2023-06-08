@@ -55,6 +55,7 @@ func (r *SourcePolygonStockAPIResource) Schema(ctx context.Context, req resource
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"adjusted": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"api_key": schema.StringAttribute{
@@ -67,12 +68,14 @@ func (r *SourcePolygonStockAPIResource) Schema(ctx context.Context, req resource
 						},
 					},
 					"limit": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"multiplier": schema.Int64Attribute{
 						Required: true,
 					},
 					"sort": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{

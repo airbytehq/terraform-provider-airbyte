@@ -57,15 +57,19 @@ func (r *SourceFakerResource) Schema(ctx context.Context, req resource.SchemaReq
 						Required: true,
 					},
 					"parallelism": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"records_per_slice": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"records_per_sync": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"seed": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{

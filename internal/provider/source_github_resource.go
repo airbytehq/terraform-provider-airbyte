@@ -55,18 +55,22 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"branch": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"credentials": schema.SingleNestedAttribute{
+						Computed: true,
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_github_authentication_o_auth": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Required: true,
 									},
 									"option_title": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -78,9 +82,11 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 								Description: `Choose how to authenticate to GitHub`,
 							},
 							"source_github_authentication_personal_access_token": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"option_title": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -96,12 +102,14 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 							},
 							"source_github_update_authentication_o_auth": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"option_title": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"OAuth Credentials",
@@ -113,9 +121,11 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 							},
 							"source_github_update_authentication_personal_access_token": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"option_title": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"PAT Credentials",
@@ -123,7 +133,7 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 										},
 									},
 									"personal_access_token": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 								Description: `Choose how to authenticate to GitHub`,
@@ -137,6 +147,7 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 						Required: true,
 					},
 					"requests_per_hour": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{

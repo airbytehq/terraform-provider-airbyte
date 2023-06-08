@@ -58,6 +58,7 @@ func (r *SourceGoogleSheetsResource) Schema(ctx context.Context, req resource.Sc
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"source_google_sheets_authentication_authenticate_via_google_o_auth_": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
@@ -81,6 +82,7 @@ func (r *SourceGoogleSheetsResource) Schema(ctx context.Context, req resource.Sc
 								Description: `Credentials for connecting to the Google Sheets API`,
 							},
 							"source_google_sheets_authentication_service_account_key_authentication": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
@@ -99,9 +101,10 @@ func (r *SourceGoogleSheetsResource) Schema(ctx context.Context, req resource.Sc
 							},
 							"source_google_sheets_update_authentication_authenticate_via_google_o_auth_": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"Client",
@@ -109,22 +112,23 @@ func (r *SourceGoogleSheetsResource) Schema(ctx context.Context, req resource.Sc
 										},
 									},
 									"client_id": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"client_secret": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"refresh_token": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 								Description: `Credentials for connecting to the Google Sheets API`,
 							},
 							"source_google_sheets_update_authentication_service_account_key_authentication": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"Service",
@@ -132,7 +136,7 @@ func (r *SourceGoogleSheetsResource) Schema(ctx context.Context, req resource.Sc
 										},
 									},
 									"service_account_info": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 								Description: `Credentials for connecting to the Google Sheets API`,
@@ -143,6 +147,7 @@ func (r *SourceGoogleSheetsResource) Schema(ctx context.Context, req resource.Sc
 						},
 					},
 					"row_batch_size": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{

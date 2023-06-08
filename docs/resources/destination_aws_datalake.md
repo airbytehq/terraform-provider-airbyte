@@ -55,9 +55,6 @@ Optional:
 
 - `destination_aws_datalake_authentication_mode_iam_role` (Attributes) Choose How to Authenticate to AWS. (see [below for nested schema](#nestedatt--configuration--credentials--destination_aws_datalake_authentication_mode_iam_role))
 - `destination_aws_datalake_authentication_mode_iam_user` (Attributes) Choose How to Authenticate to AWS. (see [below for nested schema](#nestedatt--configuration--credentials--destination_aws_datalake_authentication_mode_iam_user))
-
-Read-Only:
-
 - `destination_aws_datalake_update_authentication_mode_iam_role` (Attributes) Choose How to Authenticate to AWS. (see [below for nested schema](#nestedatt--configuration--credentials--destination_aws_datalake_update_authentication_mode_iam_role))
 - `destination_aws_datalake_update_authentication_mode_iam_user` (Attributes) Choose How to Authenticate to AWS. (see [below for nested schema](#nestedatt--configuration--credentials--destination_aws_datalake_update_authentication_mode_iam_user))
 
@@ -83,7 +80,7 @@ Required:
 <a id="nestedatt--configuration--credentials--destination_aws_datalake_update_authentication_mode_iam_role"></a>
 ### Nested Schema for `configuration.credentials.destination_aws_datalake_update_authentication_mode_iam_role`
 
-Read-Only:
+Required:
 
 - `credentials_title` (String) Name of the credentials
 - `role_arn` (String)
@@ -92,7 +89,7 @@ Read-Only:
 <a id="nestedatt--configuration--credentials--destination_aws_datalake_update_authentication_mode_iam_user"></a>
 ### Nested Schema for `configuration.credentials.destination_aws_datalake_update_authentication_mode_iam_user`
 
-Read-Only:
+Required:
 
 - `aws_access_key_id` (String)
 - `aws_secret_access_key` (String)
@@ -107,9 +104,6 @@ Optional:
 
 - `destination_aws_datalake_output_format_wildcard_json_lines_newline_delimited_json` (Attributes) Format of the data output. (see [below for nested schema](#nestedatt--configuration--format--destination_aws_datalake_output_format_wildcard_json_lines_newline_delimited_json))
 - `destination_aws_datalake_output_format_wildcard_parquet_columnar_storage` (Attributes) Format of the data output. (see [below for nested schema](#nestedatt--configuration--format--destination_aws_datalake_output_format_wildcard_parquet_columnar_storage))
-
-Read-Only:
-
 - `destination_aws_datalake_update_output_format_wildcard_json_lines_newline_delimited_json` (Attributes) Format of the data output. (see [below for nested schema](#nestedatt--configuration--format--destination_aws_datalake_update_output_format_wildcard_json_lines_newline_delimited_json))
 - `destination_aws_datalake_update_output_format_wildcard_parquet_columnar_storage` (Attributes) Format of the data output. (see [below for nested schema](#nestedatt--configuration--format--destination_aws_datalake_update_output_format_wildcard_parquet_columnar_storage))
 
@@ -140,18 +134,24 @@ Optional:
 <a id="nestedatt--configuration--format--destination_aws_datalake_update_output_format_wildcard_json_lines_newline_delimited_json"></a>
 ### Nested Schema for `configuration.format.destination_aws_datalake_update_output_format_wildcard_json_lines_newline_delimited_json`
 
-Read-Only:
+Required:
+
+- `format_type` (String)
+
+Optional:
 
 - `compression_codec` (String) The compression algorithm used to compress data.
-- `format_type` (String)
 
 
 <a id="nestedatt--configuration--format--destination_aws_datalake_update_output_format_wildcard_parquet_columnar_storage"></a>
 ### Nested Schema for `configuration.format.destination_aws_datalake_update_output_format_wildcard_parquet_columnar_storage`
 
-Read-Only:
+Required:
+
+- `format_type` (String)
+
+Optional:
 
 - `compression_codec` (String) The compression algorithm used to compress data.
-- `format_type` (String)
 
 

@@ -3,8 +3,8 @@
 package provider
 
 type SourceGoogleSheetsAuthentication struct {
-	SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth            *SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth            `tfsdk:"source_google_sheets_authentication_authenticate_via_google_o_auth_"`
-	SourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication       *SourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication       `tfsdk:"source_google_sheets_authentication_service_account_key_authentication"`
-	SourceGoogleSheetsUpdateAuthenticationAuthenticateViaGoogleOAuth      *SourceGoogleSheetsUpdateAuthenticationAuthenticateViaGoogleOAuth      `tfsdk:"source_google_sheets_update_authentication_authenticate_via_google_o_auth_"`
-	SourceGoogleSheetsUpdateAuthenticationServiceAccountKeyAuthentication *SourceGoogleSheetsUpdateAuthenticationServiceAccountKeyAuthentication `tfsdk:"source_google_sheets_update_authentication_service_account_key_authentication"`
+	SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth            *SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth      `tfsdk:"source_google_sheets_authentication_authenticate_via_google_o_auth_"`
+	SourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication       *SourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication `tfsdk:"source_google_sheets_authentication_service_account_key_authentication"`
+	SourceGoogleSheetsUpdateAuthenticationAuthenticateViaGoogleOAuth      *SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth      `tfsdk:"source_google_sheets_update_authentication_authenticate_via_google_o_auth_"`
+	SourceGoogleSheetsUpdateAuthenticationServiceAccountKeyAuthentication *SourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication `tfsdk:"source_google_sheets_update_authentication_service_account_key_authentication"`
 }

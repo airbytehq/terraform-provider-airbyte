@@ -55,15 +55,18 @@ func (r *SourcePaypalTransactionResource) Schema(ctx context.Context, req resour
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"client_id": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"client_secret": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"is_sandbox": schema.BoolAttribute{
 						Required: true,
 					},
 					"refresh_token": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{

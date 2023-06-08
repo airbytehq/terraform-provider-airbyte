@@ -57,6 +57,7 @@ func (r *SourceDixaResource) Schema(ctx context.Context, req resource.SchemaRequ
 						Required: true,
 					},
 					"batch_size": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{

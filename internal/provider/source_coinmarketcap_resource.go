@@ -75,6 +75,7 @@ func (r *SourceCoinmarketcapResource) Schema(ctx context.Context, req resource.S
 						},
 					},
 					"symbols": schema.ListAttribute{
+						Computed:    true,
 						Optional:    true,
 						ElementType: types.StringType,
 					},

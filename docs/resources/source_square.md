@@ -51,9 +51,6 @@ Optional:
 
 - `source_square_authentication_api_key` (Attributes) Choose how to authenticate to Square. (see [below for nested schema](#nestedatt--configuration--credentials--source_square_authentication_api_key))
 - `source_square_authentication_oauth_authentication` (Attributes) Choose how to authenticate to Square. (see [below for nested schema](#nestedatt--configuration--credentials--source_square_authentication_oauth_authentication))
-
-Read-Only:
-
 - `source_square_update_authentication_api_key` (Attributes) Choose how to authenticate to Square. (see [below for nested schema](#nestedatt--configuration--credentials--source_square_update_authentication_api_key))
 - `source_square_update_authentication_oauth_authentication` (Attributes) Choose how to authenticate to Square. (see [below for nested schema](#nestedatt--configuration--credentials--source_square_update_authentication_oauth_authentication))
 
@@ -80,7 +77,7 @@ Required:
 <a id="nestedatt--configuration--credentials--source_square_update_authentication_api_key"></a>
 ### Nested Schema for `configuration.credentials.source_square_update_authentication_api_key`
 
-Read-Only:
+Required:
 
 - `api_key` (String)
 - `auth_type` (String)
@@ -89,7 +86,7 @@ Read-Only:
 <a id="nestedatt--configuration--credentials--source_square_update_authentication_oauth_authentication"></a>
 ### Nested Schema for `configuration.credentials.source_square_update_authentication_oauth_authentication`
 
-Read-Only:
+Required:
 
 - `auth_type` (String)
 - `client_id` (String)

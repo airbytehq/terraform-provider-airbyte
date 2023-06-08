@@ -46,9 +46,6 @@ Optional:
 
 - `source_hubspot_authentication_o_auth` (Attributes) Choose how to authenticate to HubSpot. (see [below for nested schema](#nestedatt--configuration--credentials--source_hubspot_authentication_o_auth))
 - `source_hubspot_authentication_private_app` (Attributes) Choose how to authenticate to HubSpot. (see [below for nested schema](#nestedatt--configuration--credentials--source_hubspot_authentication_private_app))
-
-Read-Only:
-
 - `source_hubspot_update_authentication_o_auth` (Attributes) Choose how to authenticate to HubSpot. (see [below for nested schema](#nestedatt--configuration--credentials--source_hubspot_update_authentication_o_auth))
 - `source_hubspot_update_authentication_private_app` (Attributes) Choose how to authenticate to HubSpot. (see [below for nested schema](#nestedatt--configuration--credentials--source_hubspot_update_authentication_private_app))
 
@@ -75,7 +72,7 @@ Required:
 <a id="nestedatt--configuration--credentials--source_hubspot_update_authentication_o_auth"></a>
 ### Nested Schema for `configuration.credentials.source_hubspot_update_authentication_o_auth`
 
-Read-Only:
+Required:
 
 - `client_id` (String)
 - `client_secret` (String)
@@ -86,7 +83,7 @@ Read-Only:
 <a id="nestedatt--configuration--credentials--source_hubspot_update_authentication_private_app"></a>
 ### Nested Schema for `configuration.credentials.source_hubspot_update_authentication_private_app`
 
-Read-Only:
+Required:
 
 - `access_token` (String)
 - `credentials_title` (String) Name of the credentials set

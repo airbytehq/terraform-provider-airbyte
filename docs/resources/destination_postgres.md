@@ -56,9 +56,6 @@ Optional:
 - `destination_postgres_ssl_modes_require` (Attributes) Require SSL mode. (see [below for nested schema](#nestedatt--configuration--ssl_mode--destination_postgres_ssl_modes_require))
 - `destination_postgres_ssl_modes_verify_ca` (Attributes) Verify-ca SSL mode. (see [below for nested schema](#nestedatt--configuration--ssl_mode--destination_postgres_ssl_modes_verify_ca))
 - `destination_postgres_ssl_modes_verify_full` (Attributes) Verify-full SSL mode. (see [below for nested schema](#nestedatt--configuration--ssl_mode--destination_postgres_ssl_modes_verify_full))
-
-Read-Only:
-
 - `destination_postgres_update_ssl_modes_allow` (Attributes) Allow SSL mode. (see [below for nested schema](#nestedatt--configuration--ssl_mode--destination_postgres_update_ssl_modes_allow))
 - `destination_postgres_update_ssl_modes_disable` (Attributes) Disable SSL. (see [below for nested schema](#nestedatt--configuration--ssl_mode--destination_postgres_update_ssl_modes_disable))
 - `destination_postgres_update_ssl_modes_prefer` (Attributes) Prefer SSL mode. (see [below for nested schema](#nestedatt--configuration--ssl_mode--destination_postgres_update_ssl_modes_prefer))
@@ -129,7 +126,7 @@ Optional:
 <a id="nestedatt--configuration--ssl_mode--destination_postgres_update_ssl_modes_allow"></a>
 ### Nested Schema for `configuration.ssl_mode.destination_postgres_update_ssl_modes_allow`
 
-Read-Only:
+Required:
 
 - `mode` (String)
 
@@ -137,7 +134,7 @@ Read-Only:
 <a id="nestedatt--configuration--ssl_mode--destination_postgres_update_ssl_modes_disable"></a>
 ### Nested Schema for `configuration.ssl_mode.destination_postgres_update_ssl_modes_disable`
 
-Read-Only:
+Required:
 
 - `mode` (String)
 
@@ -145,7 +142,7 @@ Read-Only:
 <a id="nestedatt--configuration--ssl_mode--destination_postgres_update_ssl_modes_prefer"></a>
 ### Nested Schema for `configuration.ssl_mode.destination_postgres_update_ssl_modes_prefer`
 
-Read-Only:
+Required:
 
 - `mode` (String)
 
@@ -153,7 +150,7 @@ Read-Only:
 <a id="nestedatt--configuration--ssl_mode--destination_postgres_update_ssl_modes_require"></a>
 ### Nested Schema for `configuration.ssl_mode.destination_postgres_update_ssl_modes_require`
 
-Read-Only:
+Required:
 
 - `mode` (String)
 
@@ -161,23 +158,29 @@ Read-Only:
 <a id="nestedatt--configuration--ssl_mode--destination_postgres_update_ssl_modes_verify_ca"></a>
 ### Nested Schema for `configuration.ssl_mode.destination_postgres_update_ssl_modes_verify_ca`
 
-Read-Only:
+Required:
 
 - `ca_certificate` (String)
-- `client_key_password` (String)
 - `mode` (String)
+
+Optional:
+
+- `client_key_password` (String)
 
 
 <a id="nestedatt--configuration--ssl_mode--destination_postgres_update_ssl_modes_verify_full"></a>
 ### Nested Schema for `configuration.ssl_mode.destination_postgres_update_ssl_modes_verify_full`
 
-Read-Only:
+Required:
 
 - `ca_certificate` (String)
 - `client_certificate` (String)
 - `client_key` (String)
-- `client_key_password` (String)
 - `mode` (String)
+
+Optional:
+
+- `client_key_password` (String)
 
 
 
@@ -189,9 +192,6 @@ Optional:
 - `destination_postgres_ssh_tunnel_method_no_tunnel` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--destination_postgres_ssh_tunnel_method_no_tunnel))
 - `destination_postgres_ssh_tunnel_method_password_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--destination_postgres_ssh_tunnel_method_password_authentication))
 - `destination_postgres_ssh_tunnel_method_ssh_key_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--destination_postgres_ssh_tunnel_method_ssh_key_authentication))
-
-Read-Only:
-
 - `destination_postgres_update_ssh_tunnel_method_no_tunnel` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--destination_postgres_update_ssh_tunnel_method_no_tunnel))
 - `destination_postgres_update_ssh_tunnel_method_password_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--destination_postgres_update_ssh_tunnel_method_password_authentication))
 - `destination_postgres_update_ssh_tunnel_method_ssh_key_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--destination_postgres_update_ssh_tunnel_method_ssh_key_authentication))
@@ -231,7 +231,7 @@ Required:
 <a id="nestedatt--configuration--tunnel_method--destination_postgres_update_ssh_tunnel_method_no_tunnel"></a>
 ### Nested Schema for `configuration.tunnel_method.destination_postgres_update_ssh_tunnel_method_no_tunnel`
 
-Read-Only:
+Required:
 
 - `tunnel_method` (String) No ssh tunnel needed to connect to database
 
@@ -239,7 +239,7 @@ Read-Only:
 <a id="nestedatt--configuration--tunnel_method--destination_postgres_update_ssh_tunnel_method_password_authentication"></a>
 ### Nested Schema for `configuration.tunnel_method.destination_postgres_update_ssh_tunnel_method_password_authentication`
 
-Read-Only:
+Required:
 
 - `tunnel_host` (String)
 - `tunnel_method` (String) Connect through a jump server tunnel host using username and password authentication
@@ -251,7 +251,7 @@ Read-Only:
 <a id="nestedatt--configuration--tunnel_method--destination_postgres_update_ssh_tunnel_method_ssh_key_authentication"></a>
 ### Nested Schema for `configuration.tunnel_method.destination_postgres_update_ssh_tunnel_method_ssh_key_authentication`
 
-Read-Only:
+Required:
 
 - `ssh_key` (String)
 - `tunnel_host` (String)

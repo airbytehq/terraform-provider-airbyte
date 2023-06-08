@@ -3,8 +3,8 @@
 package provider
 
 type SourceMssqlSSLMethod struct {
-	SourceMssqlSSLMethodEncryptedTrustServerCertificate       *DestinationMssqlSSLMethodEncryptedTrustServerCertificate       `tfsdk:"source_mssql_ssl_method_encrypted_trust_server_certificate_"`
-	SourceMssqlSSLMethodEncryptedVerifyCertificate            *DestinationMssqlSSLMethodEncryptedVerifyCertificate            `tfsdk:"source_mssql_ssl_method_encrypted_verify_certificate_"`
-	SourceMssqlUpdateSSLMethodEncryptedTrustServerCertificate *DestinationMssqlUpdateSSLMethodEncryptedTrustServerCertificate `tfsdk:"source_mssql_update_ssl_method_encrypted_trust_server_certificate_"`
-	SourceMssqlUpdateSSLMethodEncryptedVerifyCertificate      *DestinationMssqlUpdateSSLMethodEncryptedVerifyCertificate      `tfsdk:"source_mssql_update_ssl_method_encrypted_verify_certificate_"`
+	SourceMssqlSSLMethodEncryptedTrustServerCertificate       *DestinationMssqlSSLMethodEncryptedTrustServerCertificate `tfsdk:"source_mssql_ssl_method_encrypted_trust_server_certificate_"`
+	SourceMssqlSSLMethodEncryptedVerifyCertificate            *DestinationMssqlSSLMethodEncryptedVerifyCertificate      `tfsdk:"source_mssql_ssl_method_encrypted_verify_certificate_"`
+	SourceMssqlUpdateSSLMethodEncryptedTrustServerCertificate *DestinationMssqlSSLMethodEncryptedTrustServerCertificate `tfsdk:"source_mssql_update_ssl_method_encrypted_trust_server_certificate_"`
+	SourceMssqlUpdateSSLMethodEncryptedVerifyCertificate      *DestinationMssqlSSLMethodEncryptedVerifyCertificate      `tfsdk:"source_mssql_update_ssl_method_encrypted_verify_certificate_"`
 }

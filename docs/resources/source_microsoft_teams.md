@@ -49,9 +49,6 @@ Optional:
 
 - `source_microsoft_teams_authentication_mechanism_authenticate_via_microsoft` (Attributes) Choose how to authenticate to Microsoft (see [below for nested schema](#nestedatt--configuration--credentials--source_microsoft_teams_authentication_mechanism_authenticate_via_microsoft))
 - `source_microsoft_teams_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0_` (Attributes) Choose how to authenticate to Microsoft (see [below for nested schema](#nestedatt--configuration--credentials--source_microsoft_teams_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0_))
-
-Read-Only:
-
 - `source_microsoft_teams_update_authentication_mechanism_authenticate_via_microsoft` (Attributes) Choose how to authenticate to Microsoft (see [below for nested schema](#nestedatt--configuration--credentials--source_microsoft_teams_update_authentication_mechanism_authenticate_via_microsoft))
 - `source_microsoft_teams_update_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0_` (Attributes) Choose how to authenticate to Microsoft (see [below for nested schema](#nestedatt--configuration--credentials--source_microsoft_teams_update_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0_))
 
@@ -87,23 +84,29 @@ Optional:
 <a id="nestedatt--configuration--credentials--source_microsoft_teams_update_authentication_mechanism_authenticate_via_microsoft"></a>
 ### Nested Schema for `configuration.credentials.source_microsoft_teams_update_authentication_mechanism_authenticate_via_microsoft`
 
-Read-Only:
+Required:
 
-- `auth_type` (String)
 - `client_id` (String)
 - `client_secret` (String)
 - `tenant_id` (String)
+
+Optional:
+
+- `auth_type` (String)
 
 
 <a id="nestedatt--configuration--credentials--source_microsoft_teams_update_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0_"></a>
 ### Nested Schema for `configuration.credentials.source_microsoft_teams_update_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0_`
 
-Read-Only:
+Required:
 
-- `auth_type` (String)
 - `client_id` (String)
 - `client_secret` (String)
 - `refresh_token` (String)
 - `tenant_id` (String)
+
+Optional:
+
+- `auth_type` (String)
 
 

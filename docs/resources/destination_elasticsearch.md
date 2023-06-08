@@ -47,9 +47,6 @@ Optional:
 
 - `destination_elasticsearch_authentication_method_api_key_secret` (Attributes) Use a api key and secret combination to authenticate (see [below for nested schema](#nestedatt--configuration--authentication_method--destination_elasticsearch_authentication_method_api_key_secret))
 - `destination_elasticsearch_authentication_method_username_password` (Attributes) Basic auth header with a username and password (see [below for nested schema](#nestedatt--configuration--authentication_method--destination_elasticsearch_authentication_method_username_password))
-
-Read-Only:
-
 - `destination_elasticsearch_update_authentication_method_api_key_secret` (Attributes) Use a api key and secret combination to authenticate (see [below for nested schema](#nestedatt--configuration--authentication_method--destination_elasticsearch_update_authentication_method_api_key_secret))
 - `destination_elasticsearch_update_authentication_method_username_password` (Attributes) Basic auth header with a username and password (see [below for nested schema](#nestedatt--configuration--authentication_method--destination_elasticsearch_update_authentication_method_username_password))
 
@@ -76,7 +73,7 @@ Required:
 <a id="nestedatt--configuration--authentication_method--destination_elasticsearch_update_authentication_method_api_key_secret"></a>
 ### Nested Schema for `configuration.authentication_method.destination_elasticsearch_update_authentication_method_api_key_secret`
 
-Read-Only:
+Required:
 
 - `api_key_id` (String)
 - `api_key_secret` (String)
@@ -86,7 +83,7 @@ Read-Only:
 <a id="nestedatt--configuration--authentication_method--destination_elasticsearch_update_authentication_method_username_password"></a>
 ### Nested Schema for `configuration.authentication_method.destination_elasticsearch_update_authentication_method_username_password`
 
-Read-Only:
+Required:
 
 - `method` (String)
 - `password` (String)

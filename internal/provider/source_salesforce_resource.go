@@ -55,6 +55,7 @@ func (r *SourceSalesforceResource) Schema(ctx context.Context, req resource.Sche
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"auth_type": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -69,6 +70,7 @@ func (r *SourceSalesforceResource) Schema(ctx context.Context, req resource.Sche
 						Required: true,
 					},
 					"is_sandbox": schema.BoolAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"refresh_token": schema.StringAttribute{
@@ -83,12 +85,14 @@ func (r *SourceSalesforceResource) Schema(ctx context.Context, req resource.Sche
 						},
 					},
 					"start_date": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
 					},
 					"streams_criteria": schema.ListNestedAttribute{
+						Computed: true,
 						Optional: true,
 						NestedObject: schema.NestedAttributeObject{
 							Attributes: map[string]schema.Attribute{

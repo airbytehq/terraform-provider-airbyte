@@ -66,9 +66,6 @@ Enabled - Enables this feature. When a document is deleted, the connector export
 Enabling deletion mode informs your destination of deleted documents.<br>
 Disabled - Leave this feature disabled, and ignore deleted documents.<br>
 Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted. (see [below for nested schema](#nestedatt--configuration--collection--deletions--source_fauna_collection_deletion_mode_enabled))
-
-Read-Only:
-
 - `source_fauna_update_collection_deletion_mode_disabled` (Attributes) <b>This only applies to incremental syncs.</b> <br>
 Enabling deletion mode informs your destination of deleted documents.<br>
 Disabled - Leave this feature disabled, and ignore deleted documents.<br>
@@ -98,7 +95,7 @@ Required:
 <a id="nestedatt--configuration--collection--deletions--source_fauna_update_collection_deletion_mode_disabled"></a>
 ### Nested Schema for `configuration.collection.deletions.source_fauna_update_collection_deletion_mode_enabled`
 
-Read-Only:
+Required:
 
 - `deletion_mode` (String)
 
@@ -106,7 +103,7 @@ Read-Only:
 <a id="nestedatt--configuration--collection--deletions--source_fauna_update_collection_deletion_mode_enabled"></a>
 ### Nested Schema for `configuration.collection.deletions.source_fauna_update_collection_deletion_mode_enabled`
 
-Read-Only:
+Required:
 
 - `column` (String)
 - `deletion_mode` (String)

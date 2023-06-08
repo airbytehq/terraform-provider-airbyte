@@ -74,18 +74,22 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 						Required: true,
 					},
 					"password": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"port": schema.Int64Attribute{
 						Required: true,
 					},
 					"ssl": schema.BoolAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"ssl_mode": schema.SingleNestedAttribute{
+						Computed: true,
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_redis_ssl_modes_disable": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"mode": schema.StringAttribute{
@@ -100,6 +104,7 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 								Description: `Disable SSL.`,
 							},
 							"destination_redis_ssl_modes_verify_full": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ca_certificate": schema.StringAttribute{
@@ -112,6 +117,7 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 										Required: true,
 									},
 									"client_key_password": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 									},
 									"mode": schema.StringAttribute{
@@ -127,9 +133,10 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 							},
 							"destination_redis_update_ssl_modes_disable": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"mode": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"disable",
@@ -141,21 +148,23 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 							},
 							"destination_redis_update_ssl_modes_verify_full": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ca_certificate": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"client_certificate": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"client_key": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"client_key_password": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 									},
 									"mode": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"verify-full",
@@ -171,9 +180,11 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 						},
 					},
 					"tunnel_method": schema.SingleNestedAttribute{
+						Computed: true,
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_redis_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_method": schema.StringAttribute{
@@ -189,6 +200,7 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"destination_redis_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_host": schema.StringAttribute{
@@ -216,6 +228,7 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"destination_redis_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
@@ -244,9 +257,10 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 							},
 							"destination_redis_update_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_method": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"NO_TUNNEL",
@@ -259,12 +273,13 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 							},
 							"destination_redis_update_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_host": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"tunnel_method": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"SSH_PASSWORD_AUTH",
@@ -273,28 +288,29 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 										Description: `Connect through a jump server tunnel host using username and password authentication`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										Computed: true,
+										Required: true,
 									},
 									"tunnel_user": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"tunnel_user_password": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"destination_redis_update_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"tunnel_host": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"tunnel_method": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"SSH_KEY_AUTH",
@@ -303,10 +319,10 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 										Description: `Connect through a jump server tunnel host using username and ssh key`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										Computed: true,
+										Required: true,
 									},
 									"tunnel_user": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,

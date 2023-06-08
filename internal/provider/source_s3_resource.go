@@ -58,12 +58,15 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 						Required: true,
 					},
 					"format": schema.SingleNestedAttribute{
+						Computed: true,
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_s3_file_format_avro": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"filetype": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -75,30 +78,39 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 								Description: `This connector utilises <a href="https://fastavro.readthedocs.io/en/latest/" target="_blank">fastavro</a> for Avro parsing.`,
 							},
 							"source_s3_file_format_csv": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"additional_reader_options": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 									},
 									"advanced_options": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 									},
 									"block_size": schema.Int64Attribute{
+										Computed: true,
 										Optional: true,
 									},
 									"delimiter": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 									},
 									"double_quote": schema.BoolAttribute{
+										Computed: true,
 										Optional: true,
 									},
 									"encoding": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 									},
 									"escape_char": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 									},
 									"filetype": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -107,24 +119,30 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 										},
 									},
 									"infer_datatypes": schema.BoolAttribute{
+										Computed: true,
 										Optional: true,
 									},
 									"newlines_in_values": schema.BoolAttribute{
+										Computed: true,
 										Optional: true,
 									},
 									"quote_char": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 									},
 								},
 								Description: `This connector utilises <a href="https: // arrow.apache.org/docs/python/generated/pyarrow.csv.open_csv.html" target="_blank">PyArrow (Apache Arrow)</a> for CSV parsing.`,
 							},
 							"source_s3_file_format_jsonl": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"block_size": schema.Int64Attribute{
+										Computed: true,
 										Optional: true,
 									},
 									"filetype": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -133,9 +151,11 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 										},
 									},
 									"newlines_in_values": schema.BoolAttribute{
+										Computed: true,
 										Optional: true,
 									},
 									"unexpected_field_behavior": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -150,19 +170,24 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 								Description: `This connector uses <a href="https://arrow.apache.org/docs/python/json.html" target="_blank">PyArrow</a> for JSON Lines (jsonl) file parsing.`,
 							},
 							"source_s3_file_format_parquet": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"batch_size": schema.Int64Attribute{
+										Computed: true,
 										Optional: true,
 									},
 									"buffer_size": schema.Int64Attribute{
+										Computed: true,
 										Optional: true,
 									},
 									"columns": schema.ListAttribute{
+										Computed:    true,
 										Optional:    true,
 										ElementType: types.StringType,
 									},
 									"filetype": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -175,9 +200,11 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 							},
 							"source_s3_update_file_format_avro": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"filetype": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"avro",
@@ -189,30 +216,39 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 							},
 							"source_s3_update_file_format_csv": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"additional_reader_options": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 									},
 									"advanced_options": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 									},
 									"block_size": schema.Int64Attribute{
 										Computed: true,
+										Optional: true,
 									},
 									"delimiter": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 									},
 									"double_quote": schema.BoolAttribute{
 										Computed: true,
+										Optional: true,
 									},
 									"encoding": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 									},
 									"escape_char": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 									},
 									"filetype": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"csv",
@@ -221,24 +257,30 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 									},
 									"infer_datatypes": schema.BoolAttribute{
 										Computed: true,
+										Optional: true,
 									},
 									"newlines_in_values": schema.BoolAttribute{
 										Computed: true,
+										Optional: true,
 									},
 									"quote_char": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 									},
 								},
 								Description: `This connector utilises <a href="https: // arrow.apache.org/docs/python/generated/pyarrow.csv.open_csv.html" target="_blank">PyArrow (Apache Arrow)</a> for CSV parsing.`,
 							},
 							"source_s3_update_file_format_jsonl": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"block_size": schema.Int64Attribute{
 										Computed: true,
+										Optional: true,
 									},
 									"filetype": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"jsonl",
@@ -247,9 +289,11 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 									},
 									"newlines_in_values": schema.BoolAttribute{
 										Computed: true,
+										Optional: true,
 									},
 									"unexpected_field_behavior": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"ignore",
@@ -264,19 +308,24 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 							},
 							"source_s3_update_file_format_parquet": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"batch_size": schema.Int64Attribute{
 										Computed: true,
+										Optional: true,
 									},
 									"buffer_size": schema.Int64Attribute{
 										Computed: true,
+										Optional: true,
 									},
 									"columns": schema.ListAttribute{
 										Computed:    true,
+										Optional:    true,
 										ElementType: types.StringType,
 									},
 									"filetype": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"parquet",
@@ -298,21 +347,26 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"aws_access_key_id": schema.StringAttribute{
+								Computed: true,
 								Optional: true,
 							},
 							"aws_secret_access_key": schema.StringAttribute{
+								Computed: true,
 								Optional: true,
 							},
 							"bucket": schema.StringAttribute{
 								Required: true,
 							},
 							"endpoint": schema.StringAttribute{
+								Computed: true,
 								Optional: true,
 							},
 							"path_prefix": schema.StringAttribute{
+								Computed: true,
 								Optional: true,
 							},
 							"start_date": schema.StringAttribute{
+								Computed: true,
 								Optional: true,
 								Validators: []validator.String{
 									validators.IsRFC3339(),
@@ -322,6 +376,7 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 						Description: `Use this to load files from S3 or S3-compatible services`,
 					},
 					"schema": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{

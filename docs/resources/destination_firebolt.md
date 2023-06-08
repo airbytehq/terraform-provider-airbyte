@@ -50,9 +50,6 @@ Optional:
 
 - `destination_firebolt_loading_method_external_table_via_s3` (Attributes) Loading method used to select the way data will be uploaded to Firebolt (see [below for nested schema](#nestedatt--configuration--loading_method--destination_firebolt_loading_method_external_table_via_s3))
 - `destination_firebolt_loading_method_sql_inserts` (Attributes) Loading method used to select the way data will be uploaded to Firebolt (see [below for nested schema](#nestedatt--configuration--loading_method--destination_firebolt_loading_method_sql_inserts))
-
-Read-Only:
-
 - `destination_firebolt_update_loading_method_external_table_via_s3` (Attributes) Loading method used to select the way data will be uploaded to Firebolt (see [below for nested schema](#nestedatt--configuration--loading_method--destination_firebolt_update_loading_method_external_table_via_s3))
 - `destination_firebolt_update_loading_method_sql_inserts` (Attributes) Loading method used to select the way data will be uploaded to Firebolt (see [below for nested schema](#nestedatt--configuration--loading_method--destination_firebolt_update_loading_method_sql_inserts))
 
@@ -79,7 +76,7 @@ Required:
 <a id="nestedatt--configuration--loading_method--destination_firebolt_update_loading_method_external_table_via_s3"></a>
 ### Nested Schema for `configuration.loading_method.destination_firebolt_update_loading_method_external_table_via_s3`
 
-Read-Only:
+Required:
 
 - `aws_key_id` (String)
 - `aws_key_secret` (String)
@@ -91,7 +88,7 @@ Read-Only:
 <a id="nestedatt--configuration--loading_method--destination_firebolt_update_loading_method_sql_inserts"></a>
 ### Nested Schema for `configuration.loading_method.destination_firebolt_update_loading_method_sql_inserts`
 
-Read-Only:
+Required:
 
 - `method` (String)
 

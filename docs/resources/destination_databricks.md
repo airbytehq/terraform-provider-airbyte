@@ -53,9 +53,6 @@ Optional:
 - `destination_databricks_data_source_amazon_s3` (Attributes) Storage on which the delta lake is built. (see [below for nested schema](#nestedatt--configuration--data_source--destination_databricks_data_source_amazon_s3))
 - `destination_databricks_data_source_azure_blob_storage` (Attributes) Storage on which the delta lake is built. (see [below for nested schema](#nestedatt--configuration--data_source--destination_databricks_data_source_azure_blob_storage))
 - `destination_databricks_data_source_recommended_managed_tables` (Attributes) Storage on which the delta lake is built. (see [below for nested schema](#nestedatt--configuration--data_source--destination_databricks_data_source_recommended_managed_tables))
-
-Read-Only:
-
 - `destination_databricks_update_data_source_amazon_s3` (Attributes) Storage on which the delta lake is built. (see [below for nested schema](#nestedatt--configuration--data_source--destination_databricks_update_data_source_amazon_s3))
 - `destination_databricks_update_data_source_azure_blob_storage` (Attributes) Storage on which the delta lake is built. (see [below for nested schema](#nestedatt--configuration--data_source--destination_databricks_update_data_source_azure_blob_storage))
 - `destination_databricks_update_data_source_recommended_managed_tables` (Attributes) Storage on which the delta lake is built. (see [below for nested schema](#nestedatt--configuration--data_source--destination_databricks_update_data_source_recommended_managed_tables))
@@ -103,33 +100,39 @@ Required:
 <a id="nestedatt--configuration--data_source--destination_databricks_update_data_source_amazon_s3"></a>
 ### Nested Schema for `configuration.data_source.destination_databricks_update_data_source_amazon_s3`
 
-Read-Only:
+Required:
 
 - `data_source_type` (String)
-- `file_name_pattern` (String)
 - `s3_access_key_id` (String)
 - `s3_bucket_name` (String)
 - `s3_bucket_path` (String)
 - `s3_bucket_region` (String) The region of the S3 staging bucket to use if utilising a copy strategy.
 - `s3_secret_access_key` (String)
 
+Optional:
+
+- `file_name_pattern` (String)
+
 
 <a id="nestedatt--configuration--data_source--destination_databricks_update_data_source_azure_blob_storage"></a>
 ### Nested Schema for `configuration.data_source.destination_databricks_update_data_source_azure_blob_storage`
 
-Read-Only:
+Required:
 
 - `azure_blob_storage_account_name` (String)
 - `azure_blob_storage_container_name` (String)
-- `azure_blob_storage_endpoint_domain_name` (String)
 - `azure_blob_storage_sas_token` (String)
 - `data_source_type` (String)
+
+Optional:
+
+- `azure_blob_storage_endpoint_domain_name` (String)
 
 
 <a id="nestedatt--configuration--data_source--destination_databricks_update_data_source_recommended_managed_tables"></a>
 ### Nested Schema for `configuration.data_source.destination_databricks_update_data_source_recommended_managed_tables`
 
-Read-Only:
+Required:
 
 - `data_source_type` (String)
 

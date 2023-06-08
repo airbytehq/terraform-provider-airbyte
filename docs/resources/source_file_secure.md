@@ -57,9 +57,6 @@ Optional:
 - `source_file_secure_storage_provider_scp_secure_copy_protocol` (Attributes) The storage Provider or Location of the file(s) which should be replicated. (see [below for nested schema](#nestedatt--configuration--provider--source_file_secure_storage_provider_scp_secure_copy_protocol))
 - `source_file_secure_storage_provider_sftp_secure_file_transfer_protocol` (Attributes) The storage Provider or Location of the file(s) which should be replicated. (see [below for nested schema](#nestedatt--configuration--provider--source_file_secure_storage_provider_sftp_secure_file_transfer_protocol))
 - `source_file_secure_storage_provider_ssh_secure_shell` (Attributes) The storage Provider or Location of the file(s) which should be replicated. (see [below for nested schema](#nestedatt--configuration--provider--source_file_secure_storage_provider_ssh_secure_shell))
-
-Read-Only:
-
 - `source_file_secure_update_storage_provider_az_blob_azure_blob_storage` (Attributes) The storage Provider or Location of the file(s) which should be replicated. (see [below for nested schema](#nestedatt--configuration--provider--source_file_secure_update_storage_provider_az_blob_azure_blob_storage))
 - `source_file_secure_update_storage_provider_gcs_google_cloud_storage` (Attributes) The storage Provider or Location of the file(s) which should be replicated. (see [below for nested schema](#nestedatt--configuration--provider--source_file_secure_update_storage_provider_gcs_google_cloud_storage))
 - `source_file_secure_update_storage_provider_https_public_web` (Attributes) The storage Provider or Location of the file(s) which should be replicated. (see [below for nested schema](#nestedatt--configuration--provider--source_file_secure_update_storage_provider_https_public_web))
@@ -167,75 +164,96 @@ Optional:
 <a id="nestedatt--configuration--provider--source_file_secure_update_storage_provider_az_blob_azure_blob_storage"></a>
 ### Nested Schema for `configuration.provider.source_file_secure_update_storage_provider_az_blob_azure_blob_storage`
 
-Read-Only:
+Required:
+
+- `storage` (String)
+- `storage_account` (String)
+
+Optional:
 
 - `sas_token` (String)
 - `shared_key` (String)
-- `storage` (String)
-- `storage_account` (String)
 
 
 <a id="nestedatt--configuration--provider--source_file_secure_update_storage_provider_gcs_google_cloud_storage"></a>
 ### Nested Schema for `configuration.provider.source_file_secure_update_storage_provider_gcs_google_cloud_storage`
 
-Read-Only:
+Required:
+
+- `storage` (String)
+
+Optional:
 
 - `service_account_json` (String)
-- `storage` (String)
 
 
 <a id="nestedatt--configuration--provider--source_file_secure_update_storage_provider_https_public_web"></a>
 ### Nested Schema for `configuration.provider.source_file_secure_update_storage_provider_https_public_web`
 
-Read-Only:
+Required:
 
 - `storage` (String)
+
+Optional:
+
 - `user_agent` (Boolean)
 
 
 <a id="nestedatt--configuration--provider--source_file_secure_update_storage_provider_s3_amazon_web_services"></a>
 ### Nested Schema for `configuration.provider.source_file_secure_update_storage_provider_s3_amazon_web_services`
 
-Read-Only:
+Required:
+
+- `storage` (String)
+
+Optional:
 
 - `aws_access_key_id` (String)
 - `aws_secret_access_key` (String)
-- `storage` (String)
 
 
 <a id="nestedatt--configuration--provider--source_file_secure_update_storage_provider_scp_secure_copy_protocol"></a>
 ### Nested Schema for `configuration.provider.source_file_secure_update_storage_provider_scp_secure_copy_protocol`
 
-Read-Only:
+Required:
 
 - `host` (String)
-- `password` (String)
-- `port` (String)
 - `storage` (String)
 - `user` (String)
+
+Optional:
+
+- `password` (String)
+- `port` (String)
 
 
 <a id="nestedatt--configuration--provider--source_file_secure_update_storage_provider_sftp_secure_file_transfer_protocol"></a>
 ### Nested Schema for `configuration.provider.source_file_secure_update_storage_provider_sftp_secure_file_transfer_protocol`
 
-Read-Only:
+Required:
 
 - `host` (String)
-- `password` (String)
-- `port` (String)
 - `storage` (String)
 - `user` (String)
+
+Optional:
+
+- `password` (String)
+- `port` (String)
 
 
 <a id="nestedatt--configuration--provider--source_file_secure_update_storage_provider_ssh_secure_shell"></a>
 ### Nested Schema for `configuration.provider.source_file_secure_update_storage_provider_ssh_secure_shell`
 
-Read-Only:
+Required:
 
 - `host` (String)
-- `password` (String)
-- `port` (String)
 - `storage` (String)
 - `user` (String)
+
+Optional:
+
+- `password` (String)
+- `port` (String)
 
 

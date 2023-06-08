@@ -61,24 +61,30 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 						Required: true,
 					},
 					"jdbc_url_params": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"password": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"port": schema.Int64Attribute{
 						Required: true,
 					},
 					"replication_method": schema.SingleNestedAttribute{
+						Computed: true,
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_postgres_replication_method_logical_replication_cdc_": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"initial_waiting_seconds": schema.Int64Attribute{
+										Computed: true,
 										Optional: true,
 									},
 									"lsn_commit_behaviour": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -97,6 +103,7 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 										},
 									},
 									"plugin": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -109,6 +116,7 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 										Required: true,
 									},
 									"queue_size": schema.Int64Attribute{
+										Computed: true,
 										Optional: true,
 									},
 									"replication_slot": schema.StringAttribute{
@@ -125,6 +133,7 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 								Description: `Logical replication uses the Postgres write-ahead log (WAL) to detect inserts, updates, and deletes. This needs to be configured on the source database itself. Only available on Postgres 10 and above. Read the <a href="https://docs.airbyte.com/integrations/sources/postgres">docs</a>.`,
 							},
 							"source_postgres_replication_method_standard": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
@@ -140,12 +149,15 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 							},
 							"source_postgres_update_replication_method_logical_replication_cdc_": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"initial_waiting_seconds": schema.Int64Attribute{
 										Computed: true,
+										Optional: true,
 									},
 									"lsn_commit_behaviour": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"While reading Data",
@@ -155,7 +167,7 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 										Description: `Determines when Airbtye should flush the LSN of processed WAL logs in the source database. ` + "`" + `After loading Data in the destination` + "`" + ` is default. If ` + "`" + `While reading Data` + "`" + ` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.`,
 									},
 									"method": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"CDC",
@@ -164,6 +176,7 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 									},
 									"plugin": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"pgoutput",
@@ -172,13 +185,14 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 										Description: `A logical decoding plugin installed on the PostgreSQL server.`,
 									},
 									"publication": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"queue_size": schema.Int64Attribute{
 										Computed: true,
+										Optional: true,
 									},
 									"replication_slot": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
@@ -192,9 +206,10 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 							},
 							"source_postgres_update_replication_method_standard": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"Standard",
@@ -210,6 +225,7 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 						},
 					},
 					"schemas": schema.ListAttribute{
+						Computed:    true,
 						Optional:    true,
 						ElementType: types.StringType,
 					},
@@ -222,9 +238,11 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 						},
 					},
 					"ssl_mode": schema.SingleNestedAttribute{
+						Computed: true,
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_postgres_ssl_modes_allow": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"mode": schema.StringAttribute{
@@ -246,6 +264,7 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 								Description: `Enables encryption only when required by the source database.`,
 							},
 							"source_postgres_ssl_modes_disable": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"mode": schema.StringAttribute{
@@ -267,6 +286,7 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 								Description: `Disables encryption of communication between Airbyte and source database.`,
 							},
 							"source_postgres_ssl_modes_prefer": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"mode": schema.StringAttribute{
@@ -288,6 +308,7 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 								Description: `Allows unencrypted connection only if the source database does not support encryption.`,
 							},
 							"source_postgres_ssl_modes_require": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"mode": schema.StringAttribute{
@@ -309,18 +330,22 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 								Description: `Always require encryption. If the source database server does not support encryption, connection will fail.`,
 							},
 							"source_postgres_ssl_modes_verify_ca": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ca_certificate": schema.StringAttribute{
 										Required: true,
 									},
 									"client_certificate": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 									},
 									"client_key": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 									},
 									"client_key_password": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 									},
 									"mode": schema.StringAttribute{
@@ -342,18 +367,22 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 								Description: `Always require encryption and verifies that the source database server has a valid SSL certificate.`,
 							},
 							"source_postgres_ssl_modes_verify_full": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ca_certificate": schema.StringAttribute{
 										Required: true,
 									},
 									"client_certificate": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 									},
 									"client_key": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 									},
 									"client_key_password": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 									},
 									"mode": schema.StringAttribute{
@@ -376,9 +405,10 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 							},
 							"source_postgres_update_ssl_modes_allow": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"mode": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"allow",
@@ -397,9 +427,10 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 							},
 							"source_postgres_update_ssl_modes_disable": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"mode": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"disable",
@@ -418,9 +449,10 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 							},
 							"source_postgres_update_ssl_modes_prefer": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"mode": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"prefer",
@@ -439,9 +471,10 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 							},
 							"source_postgres_update_ssl_modes_require": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"mode": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"require",
@@ -460,21 +493,25 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 							},
 							"source_postgres_update_ssl_modes_verify_ca": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ca_certificate": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"client_certificate": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 									},
 									"client_key": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 									},
 									"client_key_password": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 									},
 									"mode": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"verify-ca",
@@ -493,21 +530,25 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 							},
 							"source_postgres_update_ssl_modes_verify_full": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ca_certificate": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"client_certificate": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 									},
 									"client_key": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 									},
 									"client_key_password": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 									},
 									"mode": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"verify-full",
@@ -530,9 +571,11 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 						},
 					},
 					"tunnel_method": schema.SingleNestedAttribute{
+						Computed: true,
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_postgres_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_method": schema.StringAttribute{
@@ -548,6 +591,7 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"source_postgres_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_host": schema.StringAttribute{
@@ -575,6 +619,7 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"source_postgres_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
@@ -603,9 +648,10 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 							},
 							"source_postgres_update_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_method": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"NO_TUNNEL",
@@ -618,12 +664,13 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 							},
 							"source_postgres_update_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_host": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"tunnel_method": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"SSH_PASSWORD_AUTH",
@@ -632,28 +679,29 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 										Description: `Connect through a jump server tunnel host using username and password authentication`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										Computed: true,
+										Required: true,
 									},
 									"tunnel_user": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"tunnel_user_password": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"source_postgres_update_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"tunnel_host": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"tunnel_method": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"SSH_KEY_AUTH",
@@ -662,10 +710,10 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 										Description: `Connect through a jump server tunnel host using username and ssh key`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										Computed: true,
+										Required: true,
 									},
 									"tunnel_user": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,

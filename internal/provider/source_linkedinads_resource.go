@@ -55,19 +55,23 @@ func (r *SourceLinkedinAdsResource) Schema(ctx context.Context, req resource.Sch
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"account_ids": schema.ListAttribute{
+						Computed:    true,
 						Optional:    true,
 						ElementType: types.Int64Type,
 					},
 					"credentials": schema.SingleNestedAttribute{
+						Computed: true,
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_linkedin_ads_authentication_access_token": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Required: true,
 									},
 									"auth_method": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -78,9 +82,11 @@ func (r *SourceLinkedinAdsResource) Schema(ctx context.Context, req resource.Sch
 								},
 							},
 							"source_linkedin_ads_authentication_o_auth2_0": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_method": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -101,12 +107,14 @@ func (r *SourceLinkedinAdsResource) Schema(ctx context.Context, req resource.Sch
 							},
 							"source_linkedin_ads_update_authentication_access_token": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"auth_method": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"access_token",
@@ -117,9 +125,11 @@ func (r *SourceLinkedinAdsResource) Schema(ctx context.Context, req resource.Sch
 							},
 							"source_linkedin_ads_update_authentication_o_auth2_0": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_method": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"oAuth2.0",
@@ -127,13 +137,13 @@ func (r *SourceLinkedinAdsResource) Schema(ctx context.Context, req resource.Sch
 										},
 									},
 									"client_id": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"client_secret": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"refresh_token": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 							},

@@ -65,6 +65,7 @@ func (r *DestinationDevNullResource) Schema(ctx context.Context, req resource.Sc
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_dev_null_test_destination_silent": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"test_destination_type": schema.StringAttribute{
@@ -80,9 +81,10 @@ func (r *DestinationDevNullResource) Schema(ctx context.Context, req resource.Sc
 							},
 							"destination_dev_null_update_test_destination_silent": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"test_destination_type": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"SILENT",

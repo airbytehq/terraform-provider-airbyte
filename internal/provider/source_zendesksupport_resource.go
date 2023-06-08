@@ -55,15 +55,18 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"credentials": schema.SingleNestedAttribute{
+						Computed: true,
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_zendesk_support_authentication_api_token": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_token": schema.StringAttribute{
 										Required: true,
 									},
 									"credentials": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -85,12 +88,14 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 								Description: `Zendesk service provides two authentication methods. Choose between: ` + "`" + `OAuth2.0` + "`" + ` or ` + "`" + `API token` + "`" + `.`,
 							},
 							"source_zendesk_support_authentication_o_auth2_0": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Required: true,
 									},
 									"credentials": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -110,12 +115,14 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 							},
 							"source_zendesk_support_update_authentication_api_token": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_token": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"credentials": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"api_token",
@@ -123,7 +130,7 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 										},
 									},
 									"email": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
@@ -137,12 +144,14 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 							},
 							"source_zendesk_support_update_authentication_o_auth2_0": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"credentials": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"oauth2.0",
@@ -165,6 +174,7 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 						},
 					},
 					"ignore_pagination": schema.BoolAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{

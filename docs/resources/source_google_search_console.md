@@ -53,9 +53,6 @@ Optional:
 
 - `source_google_search_console_authentication_type_o_auth` (Attributes) (see [below for nested schema](#nestedatt--configuration--authorization--source_google_search_console_authentication_type_o_auth))
 - `source_google_search_console_authentication_type_service_account_key_authentication` (Attributes) (see [below for nested schema](#nestedatt--configuration--authorization--source_google_search_console_authentication_type_service_account_key_authentication))
-
-Read-Only:
-
 - `source_google_search_console_update_authentication_type_o_auth` (Attributes) (see [below for nested schema](#nestedatt--configuration--authorization--source_google_search_console_update_authentication_type_o_auth))
 - `source_google_search_console_update_authentication_type_service_account_key_authentication` (Attributes) (see [below for nested schema](#nestedatt--configuration--authorization--source_google_search_console_update_authentication_type_service_account_key_authentication))
 
@@ -87,19 +84,22 @@ Required:
 <a id="nestedatt--configuration--authorization--source_google_search_console_update_authentication_type_o_auth"></a>
 ### Nested Schema for `configuration.authorization.source_google_search_console_update_authentication_type_o_auth`
 
-Read-Only:
+Required:
 
-- `access_token` (String)
 - `auth_type` (String)
 - `client_id` (String)
 - `client_secret` (String)
 - `refresh_token` (String)
 
+Optional:
+
+- `access_token` (String)
+
 
 <a id="nestedatt--configuration--authorization--source_google_search_console_update_authentication_type_service_account_key_authentication"></a>
 ### Nested Schema for `configuration.authorization.source_google_search_console_update_authentication_type_service_account_key_authentication`
 
-Read-Only:
+Required:
 
 - `auth_type` (String)
 - `email` (String)

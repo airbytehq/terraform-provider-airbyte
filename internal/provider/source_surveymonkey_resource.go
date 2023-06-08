@@ -55,6 +55,7 @@ func (r *SourceSurveymonkeyResource) Schema(ctx context.Context, req resource.Sc
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"credentials": schema.SingleNestedAttribute{
+						Computed: true,
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"access_token": schema.StringAttribute{
@@ -69,15 +70,18 @@ func (r *SourceSurveymonkeyResource) Schema(ctx context.Context, req resource.Sc
 								},
 							},
 							"client_id": schema.StringAttribute{
+								Computed: true,
 								Optional: true,
 							},
 							"client_secret": schema.StringAttribute{
+								Computed: true,
 								Optional: true,
 							},
 						},
 						Description: `The authorization method to use to retrieve data from SurveyMonkey`,
 					},
 					"origin": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -103,6 +107,7 @@ func (r *SourceSurveymonkeyResource) Schema(ctx context.Context, req resource.Sc
 						},
 					},
 					"survey_ids": schema.ListAttribute{
+						Computed:    true,
 						Optional:    true,
 						ElementType: types.StringType,
 					},

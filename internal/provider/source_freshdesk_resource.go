@@ -61,6 +61,7 @@ func (r *SourceFreshdeskResource) Schema(ctx context.Context, req resource.Schem
 						Required: true,
 					},
 					"requests_per_minute": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{
@@ -72,6 +73,7 @@ func (r *SourceFreshdeskResource) Schema(ctx context.Context, req resource.Schem
 						},
 					},
 					"start_date": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),

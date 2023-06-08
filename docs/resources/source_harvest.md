@@ -51,9 +51,6 @@ Optional:
 
 - `source_harvest_authentication_mechanism_authenticate_via_harvest_o_auth_` (Attributes) Choose how to authenticate to Harvest. (see [below for nested schema](#nestedatt--configuration--credentials--source_harvest_authentication_mechanism_authenticate_via_harvest_o_auth_))
 - `source_harvest_authentication_mechanism_authenticate_with_personal_access_token` (Attributes) Choose how to authenticate to Harvest. (see [below for nested schema](#nestedatt--configuration--credentials--source_harvest_authentication_mechanism_authenticate_with_personal_access_token))
-
-Read-Only:
-
 - `source_harvest_update_authentication_mechanism_authenticate_via_harvest_o_auth_` (Attributes) Choose how to authenticate to Harvest. (see [below for nested schema](#nestedatt--configuration--credentials--source_harvest_update_authentication_mechanism_authenticate_via_harvest_o_auth_))
 - `source_harvest_update_authentication_mechanism_authenticate_with_personal_access_token` (Attributes) Choose how to authenticate to Harvest. (see [below for nested schema](#nestedatt--configuration--credentials--source_harvest_update_authentication_mechanism_authenticate_with_personal_access_token))
 
@@ -88,28 +85,28 @@ Optional:
 <a id="nestedatt--configuration--credentials--source_harvest_update_authentication_mechanism_authenticate_via_harvest_o_auth_"></a>
 ### Nested Schema for `configuration.credentials.source_harvest_update_authentication_mechanism_authenticate_via_harvest_o_auth_`
 
-Optional:
+Required:
 
-- `additional_properties` (String) Parsed as JSON.
-
-Read-Only:
-
-- `auth_type` (String)
 - `client_id` (String)
 - `client_secret` (String)
 - `refresh_token` (String)
+
+Optional:
+
+- `additional_properties` (String) Parsed as JSON.
+- `auth_type` (String)
 
 
 <a id="nestedatt--configuration--credentials--source_harvest_update_authentication_mechanism_authenticate_with_personal_access_token"></a>
 ### Nested Schema for `configuration.credentials.source_harvest_update_authentication_mechanism_authenticate_with_personal_access_token`
 
+Required:
+
+- `api_token` (String)
+
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-
-Read-Only:
-
-- `api_token` (String)
 - `auth_type` (String)
 
 

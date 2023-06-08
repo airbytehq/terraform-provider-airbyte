@@ -110,6 +110,7 @@ func (r *SourceZohoCrmResource) Schema(ctx context.Context, req resource.SchemaR
 						},
 					},
 					"start_datetime": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),

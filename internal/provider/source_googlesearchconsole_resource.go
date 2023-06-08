@@ -58,9 +58,11 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"source_google_search_console_authentication_type_o_auth": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 									},
 									"auth_type": schema.StringAttribute{
@@ -83,6 +85,7 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 								},
 							},
 							"source_google_search_console_authentication_type_service_account_key_authentication": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
@@ -103,12 +106,14 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 							},
 							"source_google_search_console_update_authentication_type_o_auth": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 									},
 									"auth_type": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"Client",
@@ -116,21 +121,22 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 										},
 									},
 									"client_id": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"client_secret": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"refresh_token": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 							},
 							"source_google_search_console_update_authentication_type_service_account_key_authentication": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"Service",
@@ -138,10 +144,10 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 										},
 									},
 									"email": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"service_account_info": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 							},
@@ -151,9 +157,11 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 						},
 					},
 					"custom_reports": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"data_state": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -164,6 +172,7 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 						Description: `If "final" or if this parameter is omitted, the returned data will include only finalized data. Setting this parameter to "all" should not be used with Incremental Sync mode as it may cause data loss. If "all", data will include fresh data.`,
 					},
 					"end_date": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),

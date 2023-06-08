@@ -57,9 +57,11 @@ func (r *SourceRecurlyResource) Schema(ctx context.Context, req resource.SchemaR
 						Required: true,
 					},
 					"begin_time": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"end_time": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{

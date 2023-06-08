@@ -64,6 +64,7 @@ func (r *SourceSenseforceResource) Schema(ctx context.Context, req resource.Sche
 						Required: true,
 					},
 					"slice_range": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{

@@ -55,24 +55,29 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"attribution_window": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"credentials": schema.SingleNestedAttribute{
+						Computed: true,
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_tiktok_marketing_authentication_method_o_auth2_0": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Required: true,
 									},
 									"advertiser_id": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 									},
 									"app_id": schema.StringAttribute{
 										Required: true,
 									},
 									"auth_type": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -87,6 +92,7 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 								Description: `Authentication method`,
 							},
 							"source_tiktok_marketing_authentication_method_sandbox_access_token": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
@@ -96,6 +102,7 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 										Required: true,
 									},
 									"auth_type": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -108,18 +115,21 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 							},
 							"source_tiktok_marketing_update_authentication_method_o_auth2_0": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"advertiser_id": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 									},
 									"app_id": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"auth_type": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"oauth2.0",
@@ -127,22 +137,24 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 										},
 									},
 									"secret": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 								Description: `Authentication method`,
 							},
 							"source_tiktok_marketing_update_authentication_method_sandbox_access_token": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"advertiser_id": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"auth_type": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"sandbox_access_token",
@@ -158,12 +170,14 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 						},
 					},
 					"end_date": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
 					},
 					"source_type": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -172,6 +186,7 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 						},
 					},
 					"start_date": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),

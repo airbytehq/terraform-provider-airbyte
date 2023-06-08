@@ -65,6 +65,7 @@ func (r *SourcePypiResource) Schema(ctx context.Context, req resource.SchemaRequ
 						},
 					},
 					"version": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 				},

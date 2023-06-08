@@ -61,21 +61,26 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 						Required: true,
 					},
 					"jdbc_url_params": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"password": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"port": schema.Int64Attribute{
 						Required: true,
 					},
 					"replication_method": schema.SingleNestedAttribute{
+						Computed: true,
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_mssql_replication_method_logical_replication_cdc_": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"data_to_sync": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -86,6 +91,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 										Description: `What data should be synced under the CDC. "Existing and New" will read existing data as a snapshot, and sync new changes through CDC. "New Changes Only" will skip the initial snapshot, and only sync new changes through CDC.`,
 									},
 									"initial_waiting_seconds": schema.Int64Attribute{
+										Computed: true,
 										Optional: true,
 									},
 									"method": schema.StringAttribute{
@@ -97,6 +103,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 										},
 									},
 									"snapshot_isolation": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -110,6 +117,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								Description: `CDC uses {TBC} to detect inserts, updates, and deletes. This needs to be configured on the source database itself.`,
 							},
 							"source_mssql_replication_method_standard": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
@@ -125,9 +133,11 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"source_mssql_update_replication_method_logical_replication_cdc_": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"data_to_sync": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"Existing and New",
@@ -138,9 +148,10 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"initial_waiting_seconds": schema.Int64Attribute{
 										Computed: true,
+										Optional: true,
 									},
 									"method": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"CDC",
@@ -149,6 +160,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"snapshot_isolation": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"Snapshot",
@@ -162,9 +174,10 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"source_mssql_update_replication_method_standard": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"STANDARD",
@@ -180,6 +193,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 						},
 					},
 					"schemas": schema.ListAttribute{
+						Computed:    true,
 						Optional:    true,
 						ElementType: types.StringType,
 					},
@@ -192,9 +206,11 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 						},
 					},
 					"ssl_method": schema.SingleNestedAttribute{
+						Computed: true,
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_mssql_ssl_method_encrypted_trust_server_certificate_": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssl_method": schema.StringAttribute{
@@ -209,9 +225,11 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								Description: `Use the certificate provided by the server without verification. (For testing purposes only!)`,
 							},
 							"source_mssql_ssl_method_encrypted_verify_certificate_": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"host_name_in_certificate": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 									},
 									"ssl_method": schema.StringAttribute{
@@ -227,9 +245,10 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"source_mssql_update_ssl_method_encrypted_trust_server_certificate_": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssl_method": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"encrypted_trust_server_certificate",
@@ -241,12 +260,14 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"source_mssql_update_ssl_method_encrypted_verify_certificate_": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"host_name_in_certificate": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 									},
 									"ssl_method": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"encrypted_verify_certificate",
@@ -262,9 +283,11 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 						},
 					},
 					"tunnel_method": schema.SingleNestedAttribute{
+						Computed: true,
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_mssql_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_method": schema.StringAttribute{
@@ -280,6 +303,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"source_mssql_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_host": schema.StringAttribute{
@@ -307,6 +331,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"source_mssql_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
@@ -335,9 +360,10 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"source_mssql_update_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_method": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"NO_TUNNEL",
@@ -350,12 +376,13 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"source_mssql_update_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_host": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"tunnel_method": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"SSH_PASSWORD_AUTH",
@@ -364,28 +391,29 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 										Description: `Connect through a jump server tunnel host using username and password authentication`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										Computed: true,
+										Required: true,
 									},
 									"tunnel_user": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"tunnel_user_password": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"source_mssql_update_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"tunnel_host": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"tunnel_method": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"SSH_KEY_AUTH",
@@ -394,10 +422,10 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 										Description: `Connect through a jump server tunnel host using username and ssh key`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										Computed: true,
+										Required: true,
 									},
 									"tunnel_user": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,

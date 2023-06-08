@@ -60,6 +60,7 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_databricks_data_source_recommended_managed_tables": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"data_source_type": schema.StringAttribute{
@@ -74,6 +75,7 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 								Description: `Storage on which the delta lake is built.`,
 							},
 							"destination_databricks_data_source_amazon_s3": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"data_source_type": schema.StringAttribute{
@@ -85,6 +87,7 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 										},
 									},
 									"file_name_pattern": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 									},
 									"s3_access_key_id": schema.StringAttribute{
@@ -137,6 +140,7 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 								Description: `Storage on which the delta lake is built.`,
 							},
 							"destination_databricks_data_source_azure_blob_storage": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"azure_blob_storage_account_name": schema.StringAttribute{
@@ -146,6 +150,7 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 										Required: true,
 									},
 									"azure_blob_storage_endpoint_domain_name": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 									},
 									"azure_blob_storage_sas_token": schema.StringAttribute{
@@ -164,9 +169,10 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 							},
 							"destination_databricks_update_data_source_recommended_managed_tables": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"data_source_type": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"MANAGED_TABLES_STORAGE",
@@ -178,9 +184,10 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 							},
 							"destination_databricks_update_data_source_amazon_s3": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"data_source_type": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"S3_STORAGE",
@@ -189,18 +196,19 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 									},
 									"file_name_pattern": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 									},
 									"s3_access_key_id": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"s3_bucket_name": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"s3_bucket_path": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"s3_bucket_region": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"",
@@ -234,28 +242,30 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 										Description: `The region of the S3 staging bucket to use if utilising a copy strategy.`,
 									},
 									"s3_secret_access_key": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 								Description: `Storage on which the delta lake is built.`,
 							},
 							"destination_databricks_update_data_source_azure_blob_storage": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"azure_blob_storage_account_name": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"azure_blob_storage_container_name": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"azure_blob_storage_endpoint_domain_name": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 									},
 									"azure_blob_storage_sas_token": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"data_source_type": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"AZURE_BLOB_STORAGE",
@@ -271,6 +281,7 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 						},
 					},
 					"database": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"databricks_http_path": schema.StringAttribute{
@@ -280,6 +291,7 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 						Required: true,
 					},
 					"databricks_port": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"databricks_server_hostname": schema.StringAttribute{
@@ -294,9 +306,11 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 						},
 					},
 					"purge_staging_data": schema.BoolAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"schema": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 				},

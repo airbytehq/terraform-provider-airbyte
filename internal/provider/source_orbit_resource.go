@@ -65,6 +65,7 @@ func (r *SourceOrbitResource) Schema(ctx context.Context, req resource.SchemaReq
 						},
 					},
 					"start_date": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"workspace": schema.StringAttribute{

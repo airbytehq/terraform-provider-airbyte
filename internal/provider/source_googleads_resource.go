@@ -55,12 +55,14 @@ func (r *SourceGoogleAdsResource) Schema(ctx context.Context, req resource.Schem
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"conversion_window_days": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"credentials": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"access_token": schema.StringAttribute{
+								Computed: true,
 								Optional: true,
 							},
 							"client_id": schema.StringAttribute{
@@ -78,6 +80,7 @@ func (r *SourceGoogleAdsResource) Schema(ctx context.Context, req resource.Schem
 						},
 					},
 					"custom_queries": schema.ListNestedAttribute{
+						Computed: true,
 						Optional: true,
 						NestedObject: schema.NestedAttributeObject{
 							Attributes: map[string]schema.Attribute{
@@ -94,12 +97,14 @@ func (r *SourceGoogleAdsResource) Schema(ctx context.Context, req resource.Schem
 						Required: true,
 					},
 					"end_date": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
 					},
 					"login_customer_id": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{

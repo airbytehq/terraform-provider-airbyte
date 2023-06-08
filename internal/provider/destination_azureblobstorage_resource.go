@@ -60,15 +60,19 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 						Required: true,
 					},
 					"azure_blob_storage_container_name": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"azure_blob_storage_endpoint_domain_name": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"azure_blob_storage_output_buffer_size": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"azure_blob_storage_spill_size": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"destination_type": schema.StringAttribute{
@@ -83,6 +87,7 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_azure_blob_storage_output_format_csv_comma_separated_values": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"flattening": schema.StringAttribute{
@@ -107,6 +112,7 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 								Description: `Output data format`,
 							},
 							"destination_azure_blob_storage_output_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"format_type": schema.StringAttribute{
@@ -122,9 +128,10 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 							},
 							"destination_azure_blob_storage_update_output_format_csv_comma_separated_values": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"flattening": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"No flattening",
@@ -134,7 +141,7 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 										Description: `Whether the input json data should be normalized (flattened) in the output CSV. Please refer to docs for details.`,
 									},
 									"format_type": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"CSV",
@@ -146,9 +153,10 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 							},
 							"destination_azure_blob_storage_update_output_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"format_type": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"JSONL",

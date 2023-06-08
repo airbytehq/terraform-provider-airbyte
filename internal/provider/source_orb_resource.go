@@ -57,13 +57,16 @@ func (r *SourceOrbResource) Schema(ctx context.Context, req resource.SchemaReque
 						Required: true,
 					},
 					"lookback_window_days": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"numeric_event_properties_keys": schema.ListAttribute{
+						Computed:    true,
 						Optional:    true,
 						ElementType: types.StringType,
 					},
 					"plan_id": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{
@@ -78,10 +81,12 @@ func (r *SourceOrbResource) Schema(ctx context.Context, req resource.SchemaReque
 						Required: true,
 					},
 					"string_event_properties_keys": schema.ListAttribute{
+						Computed:    true,
 						Optional:    true,
 						ElementType: types.StringType,
 					},
 					"subscription_usage_grouping_key": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 				},

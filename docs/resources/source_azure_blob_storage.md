@@ -53,9 +53,6 @@ Optional:
 Optional:
 
 - `source_azure_blob_storage_input_format_json_lines_newline_delimited_json` (Attributes) Input data format (see [below for nested schema](#nestedatt--configuration--format--source_azure_blob_storage_input_format_json_lines_newline_delimited_json))
-
-Read-Only:
-
 - `source_azure_blob_storage_update_input_format_json_lines_newline_delimited_json` (Attributes) Input data format (see [below for nested schema](#nestedatt--configuration--format--source_azure_blob_storage_update_input_format_json_lines_newline_delimited_json))
 
 <a id="nestedatt--configuration--format--source_azure_blob_storage_input_format_json_lines_newline_delimited_json"></a>
@@ -69,7 +66,7 @@ Required:
 <a id="nestedatt--configuration--format--source_azure_blob_storage_update_input_format_json_lines_newline_delimited_json"></a>
 ### Nested Schema for `configuration.format.source_azure_blob_storage_update_input_format_json_lines_newline_delimited_json`
 
-Read-Only:
+Required:
 
 - `format_type` (String)
 

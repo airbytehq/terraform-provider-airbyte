@@ -58,6 +58,7 @@ func (r *SourcePosthogResource) Schema(ctx context.Context, req resource.SchemaR
 						Required: true,
 					},
 					"base_url": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{

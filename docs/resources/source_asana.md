@@ -45,9 +45,6 @@ Optional:
 
 - `source_asana_authentication_mechanism_authenticate_via_asana_oauth_` (Attributes) Choose how to authenticate to Github (see [below for nested schema](#nestedatt--configuration--credentials--source_asana_authentication_mechanism_authenticate_via_asana_oauth_))
 - `source_asana_authentication_mechanism_authenticate_with_personal_access_token` (Attributes) Choose how to authenticate to Github (see [below for nested schema](#nestedatt--configuration--credentials--source_asana_authentication_mechanism_authenticate_with_personal_access_token))
-
-Read-Only:
-
 - `source_asana_update_authentication_mechanism_authenticate_via_asana_oauth_` (Attributes) Choose how to authenticate to Github (see [below for nested schema](#nestedatt--configuration--credentials--source_asana_update_authentication_mechanism_authenticate_via_asana_oauth_))
 - `source_asana_update_authentication_mechanism_authenticate_with_personal_access_token` (Attributes) Choose how to authenticate to Github (see [below for nested schema](#nestedatt--configuration--credentials--source_asana_update_authentication_mechanism_authenticate_with_personal_access_token))
 
@@ -80,20 +77,26 @@ Optional:
 <a id="nestedatt--configuration--credentials--source_asana_update_authentication_mechanism_authenticate_via_asana_oauth_"></a>
 ### Nested Schema for `configuration.credentials.source_asana_update_authentication_mechanism_authenticate_via_asana_oauth_`
 
-Read-Only:
+Required:
 
 - `client_id` (String)
 - `client_secret` (String)
-- `option_title` (String) OAuth Credentials
 - `refresh_token` (String)
+
+Optional:
+
+- `option_title` (String) OAuth Credentials
 
 
 <a id="nestedatt--configuration--credentials--source_asana_update_authentication_mechanism_authenticate_with_personal_access_token"></a>
 ### Nested Schema for `configuration.credentials.source_asana_update_authentication_mechanism_authenticate_with_personal_access_token`
 
-Read-Only:
+Required:
+
+- `personal_access_token` (String)
+
+Optional:
 
 - `option_title` (String) PAT Credentials
-- `personal_access_token` (String)
 
 

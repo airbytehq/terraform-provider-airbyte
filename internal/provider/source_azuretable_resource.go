@@ -68,6 +68,7 @@ func (r *SourceAzureTableResource) Schema(ctx context.Context, req resource.Sche
 						Required: true,
 					},
 					"storage_endpoint_suffix": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 				},

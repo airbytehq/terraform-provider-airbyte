@@ -3,10 +3,10 @@
 package provider
 
 type DestinationDatabricksDataSource struct {
-	DestinationDatabricksDataSourceRecommendedManagedTables       *DestinationDatabricksDataSourceRecommendedManagedTables       `tfsdk:"destination_databricks_data_source_recommended_managed_tables"`
-	DestinationDatabricksDataSourceAmazonS3                       *DestinationDatabricksDataSourceAmazonS3                       `tfsdk:"destination_databricks_data_source_amazon_s3"`
-	DestinationDatabricksDataSourceAzureBlobStorage               *DestinationDatabricksDataSourceAzureBlobStorage               `tfsdk:"destination_databricks_data_source_azure_blob_storage"`
-	DestinationDatabricksUpdateDataSourceRecommendedManagedTables *DestinationDatabricksUpdateDataSourceRecommendedManagedTables `tfsdk:"destination_databricks_update_data_source_recommended_managed_tables"`
-	DestinationDatabricksUpdateDataSourceAmazonS3                 *DestinationDatabricksUpdateDataSourceAmazonS3                 `tfsdk:"destination_databricks_update_data_source_amazon_s3"`
-	DestinationDatabricksUpdateDataSourceAzureBlobStorage         *DestinationDatabricksUpdateDataSourceAzureBlobStorage         `tfsdk:"destination_databricks_update_data_source_azure_blob_storage"`
+	DestinationDatabricksDataSourceRecommendedManagedTables       *DestinationDatabricksDataSourceRecommendedManagedTables `tfsdk:"destination_databricks_data_source_recommended_managed_tables"`
+	DestinationDatabricksDataSourceAmazonS3                       *DestinationDatabricksDataSourceAmazonS3                 `tfsdk:"destination_databricks_data_source_amazon_s3"`
+	DestinationDatabricksDataSourceAzureBlobStorage               *DestinationDatabricksDataSourceAzureBlobStorage         `tfsdk:"destination_databricks_data_source_azure_blob_storage"`
+	DestinationDatabricksUpdateDataSourceRecommendedManagedTables *DestinationDatabricksDataSourceRecommendedManagedTables `tfsdk:"destination_databricks_update_data_source_recommended_managed_tables"`
+	DestinationDatabricksUpdateDataSourceAmazonS3                 *DestinationDatabricksUpdateDataSourceAmazonS3           `tfsdk:"destination_databricks_update_data_source_amazon_s3"`
+	DestinationDatabricksUpdateDataSourceAzureBlobStorage         *DestinationDatabricksDataSourceAzureBlobStorage         `tfsdk:"destination_databricks_update_data_source_azure_blob_storage"`
 }

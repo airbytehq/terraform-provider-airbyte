@@ -58,6 +58,7 @@ func (r *SourceSalesloftResource) Schema(ctx context.Context, req resource.Schem
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"source_salesloft_credentials_authenticate_via_api_key": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_key": schema.StringAttribute{
@@ -74,6 +75,7 @@ func (r *SourceSalesloftResource) Schema(ctx context.Context, req resource.Schem
 								},
 							},
 							"source_salesloft_credentials_authenticate_via_o_auth": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
@@ -106,12 +108,13 @@ func (r *SourceSalesloftResource) Schema(ctx context.Context, req resource.Schem
 							},
 							"source_salesloft_update_credentials_authenticate_via_api_key": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_key": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"auth_type": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"api_key",
@@ -122,12 +125,13 @@ func (r *SourceSalesloftResource) Schema(ctx context.Context, req resource.Schem
 							},
 							"source_salesloft_update_credentials_authenticate_via_o_auth": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"auth_type": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"oauth2.0",
@@ -135,16 +139,16 @@ func (r *SourceSalesloftResource) Schema(ctx context.Context, req resource.Schem
 										},
 									},
 									"client_id": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"client_secret": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"refresh_token": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"token_expiry_date": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											validators.IsRFC3339(),
 										},

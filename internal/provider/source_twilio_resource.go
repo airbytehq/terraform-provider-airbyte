@@ -61,6 +61,7 @@ func (r *SourceTwilioResource) Schema(ctx context.Context, req resource.SchemaRe
 						Required: true,
 					},
 					"lookback_window": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{

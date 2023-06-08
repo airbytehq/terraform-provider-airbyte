@@ -6,5 +6,5 @@ type DestinationBigqueryDenormalizedLoadingMethod struct {
 	DestinationBigqueryDenormalizedLoadingMethodGCSStaging            *DestinationBigqueryDenormalizedLoadingMethodGCSStaging       `tfsdk:"destination_bigquery_denormalized_loading_method_gcs_staging"`
 	DestinationBigqueryDenormalizedLoadingMethodStandardInserts       *DestinationBigqueryLoadingMethodStandardInserts              `tfsdk:"destination_bigquery_denormalized_loading_method_standard_inserts"`
 	DestinationBigqueryDenormalizedUpdateLoadingMethodGCSStaging      *DestinationBigqueryDenormalizedUpdateLoadingMethodGCSStaging `tfsdk:"destination_bigquery_denormalized_update_loading_method_gcs_staging"`
-	DestinationBigqueryDenormalizedUpdateLoadingMethodStandardInserts *DestinationBigqueryUpdateLoadingMethodStandardInserts        `tfsdk:"destination_bigquery_denormalized_update_loading_method_standard_inserts"`
+	DestinationBigqueryDenormalizedUpdateLoadingMethodStandardInserts *DestinationBigqueryLoadingMethodStandardInserts              `tfsdk:"destination_bigquery_denormalized_update_loading_method_standard_inserts"`
 }

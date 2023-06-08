@@ -61,21 +61,25 @@ func (r *SourceAzureBlobStorageResource) Schema(ctx context.Context, req resourc
 						Required: true,
 					},
 					"azure_blob_storage_blobs_prefix": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"azure_blob_storage_container_name": schema.StringAttribute{
 						Required: true,
 					},
 					"azure_blob_storage_endpoint": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"azure_blob_storage_schema_inference_limit": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"format": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"source_azure_blob_storage_input_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"format_type": schema.StringAttribute{
@@ -91,9 +95,10 @@ func (r *SourceAzureBlobStorageResource) Schema(ctx context.Context, req resourc
 							},
 							"source_azure_blob_storage_update_input_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"format_type": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"JSONL",

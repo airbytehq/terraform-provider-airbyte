@@ -3,10 +3,10 @@
 package provider
 
 type SourceAlloydbSSHTunnelMethod struct {
-	SourceAlloydbSSHTunnelMethodNoTunnel                     *DestinationClickhouseSSHTunnelMethodNoTunnel                     `tfsdk:"source_alloydb_ssh_tunnel_method_no_tunnel"`
-	SourceAlloydbSSHTunnelMethodPasswordAuthentication       *DestinationClickhouseSSHTunnelMethodPasswordAuthentication       `tfsdk:"source_alloydb_ssh_tunnel_method_password_authentication"`
-	SourceAlloydbSSHTunnelMethodSSHKeyAuthentication         *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication         `tfsdk:"source_alloydb_ssh_tunnel_method_ssh_key_authentication"`
-	SourceAlloydbUpdateSSHTunnelMethodNoTunnel               *DestinationClickhouseUpdateSSHTunnelMethodNoTunnel               `tfsdk:"source_alloydb_update_ssh_tunnel_method_no_tunnel"`
-	SourceAlloydbUpdateSSHTunnelMethodPasswordAuthentication *DestinationClickhouseUpdateSSHTunnelMethodPasswordAuthentication `tfsdk:"source_alloydb_update_ssh_tunnel_method_password_authentication"`
-	SourceAlloydbUpdateSSHTunnelMethodSSHKeyAuthentication   *DestinationClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication   `tfsdk:"source_alloydb_update_ssh_tunnel_method_ssh_key_authentication"`
+	SourceAlloydbSSHTunnelMethodNoTunnel                     *DestinationClickhouseSSHTunnelMethodNoTunnel               `tfsdk:"source_alloydb_ssh_tunnel_method_no_tunnel"`
+	SourceAlloydbSSHTunnelMethodPasswordAuthentication       *DestinationClickhouseSSHTunnelMethodPasswordAuthentication `tfsdk:"source_alloydb_ssh_tunnel_method_password_authentication"`
+	SourceAlloydbSSHTunnelMethodSSHKeyAuthentication         *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication   `tfsdk:"source_alloydb_ssh_tunnel_method_ssh_key_authentication"`
+	SourceAlloydbUpdateSSHTunnelMethodNoTunnel               *DestinationClickhouseSSHTunnelMethodNoTunnel               `tfsdk:"source_alloydb_update_ssh_tunnel_method_no_tunnel"`
+	SourceAlloydbUpdateSSHTunnelMethodPasswordAuthentication *DestinationClickhouseSSHTunnelMethodPasswordAuthentication `tfsdk:"source_alloydb_update_ssh_tunnel_method_password_authentication"`
+	SourceAlloydbUpdateSSHTunnelMethodSSHKeyAuthentication   *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication   `tfsdk:"source_alloydb_update_ssh_tunnel_method_ssh_key_authentication"`
 }

@@ -55,9 +55,11 @@ func (r *SourceSftpResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"credentials": schema.SingleNestedAttribute{
+						Computed: true,
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_sftp_authentication_wildcard_password_authentication": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_method": schema.StringAttribute{
@@ -76,6 +78,7 @@ func (r *SourceSftpResource) Schema(ctx context.Context, req resource.SchemaRequ
 								Description: `The server authentication method`,
 							},
 							"source_sftp_authentication_wildcard_ssh_key_authentication": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_method": schema.StringAttribute{
@@ -95,9 +98,10 @@ func (r *SourceSftpResource) Schema(ctx context.Context, req resource.SchemaRequ
 							},
 							"source_sftp_update_authentication_wildcard_password_authentication": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_method": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"SSH_PASSWORD_AUTH",
@@ -106,16 +110,17 @@ func (r *SourceSftpResource) Schema(ctx context.Context, req resource.SchemaRequ
 										Description: `Connect through password authentication`,
 									},
 									"auth_user_password": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 								Description: `The server authentication method`,
 							},
 							"source_sftp_update_authentication_wildcard_ssh_key_authentication": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_method": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"SSH_KEY_AUTH",
@@ -124,7 +129,7 @@ func (r *SourceSftpResource) Schema(ctx context.Context, req resource.SchemaRequ
 										Description: `Connect through ssh key`,
 									},
 									"auth_ssh_key": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 								Description: `The server authentication method`,
@@ -135,12 +140,15 @@ func (r *SourceSftpResource) Schema(ctx context.Context, req resource.SchemaRequ
 						},
 					},
 					"file_pattern": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"file_types": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"folder_path": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"host": schema.StringAttribute{

@@ -54,9 +54,6 @@ Optional:
 - `source_clickhouse_ssh_tunnel_method_no_tunnel` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--source_clickhouse_ssh_tunnel_method_no_tunnel))
 - `source_clickhouse_ssh_tunnel_method_password_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--source_clickhouse_ssh_tunnel_method_password_authentication))
 - `source_clickhouse_ssh_tunnel_method_ssh_key_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--source_clickhouse_ssh_tunnel_method_ssh_key_authentication))
-
-Read-Only:
-
 - `source_clickhouse_update_ssh_tunnel_method_no_tunnel` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--source_clickhouse_update_ssh_tunnel_method_no_tunnel))
 - `source_clickhouse_update_ssh_tunnel_method_password_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--source_clickhouse_update_ssh_tunnel_method_password_authentication))
 - `source_clickhouse_update_ssh_tunnel_method_ssh_key_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--source_clickhouse_update_ssh_tunnel_method_ssh_key_authentication))
@@ -96,7 +93,7 @@ Required:
 <a id="nestedatt--configuration--tunnel_method--source_clickhouse_update_ssh_tunnel_method_no_tunnel"></a>
 ### Nested Schema for `configuration.tunnel_method.source_clickhouse_update_ssh_tunnel_method_no_tunnel`
 
-Read-Only:
+Required:
 
 - `tunnel_method` (String) No ssh tunnel needed to connect to database
 
@@ -104,7 +101,7 @@ Read-Only:
 <a id="nestedatt--configuration--tunnel_method--source_clickhouse_update_ssh_tunnel_method_password_authentication"></a>
 ### Nested Schema for `configuration.tunnel_method.source_clickhouse_update_ssh_tunnel_method_password_authentication`
 
-Read-Only:
+Required:
 
 - `tunnel_host` (String)
 - `tunnel_method` (String) Connect through a jump server tunnel host using username and password authentication
@@ -116,7 +113,7 @@ Read-Only:
 <a id="nestedatt--configuration--tunnel_method--source_clickhouse_update_ssh_tunnel_method_ssh_key_authentication"></a>
 ### Nested Schema for `configuration.tunnel_method.source_clickhouse_update_ssh_tunnel_method_ssh_key_authentication`
 
-Read-Only:
+Required:
 
 - `ssh_key` (String)
 - `tunnel_host` (String)

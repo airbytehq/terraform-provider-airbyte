@@ -55,9 +55,11 @@ func (r *SourceOktaResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"credentials": schema.SingleNestedAttribute{
+						Computed: true,
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_okta_authorization_method_api_token": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_token": schema.StringAttribute{
@@ -74,6 +76,7 @@ func (r *SourceOktaResource) Schema(ctx context.Context, req resource.SchemaRequ
 								},
 							},
 							"source_okta_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
@@ -97,12 +100,13 @@ func (r *SourceOktaResource) Schema(ctx context.Context, req resource.SchemaRequ
 							},
 							"source_okta_update_authorization_method_api_token": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_token": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"auth_type": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"api_token",
@@ -113,9 +117,10 @@ func (r *SourceOktaResource) Schema(ctx context.Context, req resource.SchemaRequ
 							},
 							"source_okta_update_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"oauth2.0",
@@ -123,13 +128,13 @@ func (r *SourceOktaResource) Schema(ctx context.Context, req resource.SchemaRequ
 										},
 									},
 									"client_id": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"client_secret": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"refresh_token": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 							},
@@ -139,6 +144,7 @@ func (r *SourceOktaResource) Schema(ctx context.Context, req resource.SchemaRequ
 						},
 					},
 					"domain": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{
@@ -150,6 +156,7 @@ func (r *SourceOktaResource) Schema(ctx context.Context, req resource.SchemaRequ
 						},
 					},
 					"start_date": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 				},

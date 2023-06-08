@@ -64,16 +64,20 @@ func (r *SourceJiraResource) Schema(ctx context.Context, req resource.SchemaRequ
 						Required: true,
 					},
 					"enable_experimental_streams": schema.BoolAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"expand_issue_changelog": schema.BoolAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"projects": schema.ListAttribute{
+						Computed:    true,
 						Optional:    true,
 						ElementType: types.StringType,
 					},
 					"render_fields": schema.BoolAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{
@@ -85,6 +89,7 @@ func (r *SourceJiraResource) Schema(ctx context.Context, req resource.SchemaRequ
 						},
 					},
 					"start_date": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),

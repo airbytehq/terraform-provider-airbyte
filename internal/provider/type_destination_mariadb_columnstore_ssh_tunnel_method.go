@@ -3,10 +3,10 @@
 package provider
 
 type DestinationMariadbColumnstoreSSHTunnelMethod struct {
-	DestinationMariadbColumnstoreSSHTunnelMethodNoTunnel                     *DestinationClickhouseSSHTunnelMethodNoTunnel                     `tfsdk:"destination_mariadb_columnstore_ssh_tunnel_method_no_tunnel"`
-	DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication       *DestinationClickhouseSSHTunnelMethodPasswordAuthentication       `tfsdk:"destination_mariadb_columnstore_ssh_tunnel_method_password_authentication"`
-	DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthentication         *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication         `tfsdk:"destination_mariadb_columnstore_ssh_tunnel_method_ssh_key_authentication"`
-	DestinationMariadbColumnstoreUpdateSSHTunnelMethodNoTunnel               *DestinationClickhouseUpdateSSHTunnelMethodNoTunnel               `tfsdk:"destination_mariadb_columnstore_update_ssh_tunnel_method_no_tunnel"`
-	DestinationMariadbColumnstoreUpdateSSHTunnelMethodPasswordAuthentication *DestinationClickhouseUpdateSSHTunnelMethodPasswordAuthentication `tfsdk:"destination_mariadb_columnstore_update_ssh_tunnel_method_password_authentication"`
-	DestinationMariadbColumnstoreUpdateSSHTunnelMethodSSHKeyAuthentication   *DestinationClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication   `tfsdk:"destination_mariadb_columnstore_update_ssh_tunnel_method_ssh_key_authentication"`
+	DestinationMariadbColumnstoreSSHTunnelMethodNoTunnel                     *DestinationClickhouseSSHTunnelMethodNoTunnel               `tfsdk:"destination_mariadb_columnstore_ssh_tunnel_method_no_tunnel"`
+	DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication       *DestinationClickhouseSSHTunnelMethodPasswordAuthentication `tfsdk:"destination_mariadb_columnstore_ssh_tunnel_method_password_authentication"`
+	DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthentication         *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication   `tfsdk:"destination_mariadb_columnstore_ssh_tunnel_method_ssh_key_authentication"`
+	DestinationMariadbColumnstoreUpdateSSHTunnelMethodNoTunnel               *DestinationClickhouseSSHTunnelMethodNoTunnel               `tfsdk:"destination_mariadb_columnstore_update_ssh_tunnel_method_no_tunnel"`
+	DestinationMariadbColumnstoreUpdateSSHTunnelMethodPasswordAuthentication *DestinationClickhouseSSHTunnelMethodPasswordAuthentication `tfsdk:"destination_mariadb_columnstore_update_ssh_tunnel_method_password_authentication"`
+	DestinationMariadbColumnstoreUpdateSSHTunnelMethodSSHKeyAuthentication   *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication   `tfsdk:"destination_mariadb_columnstore_update_ssh_tunnel_method_ssh_key_authentication"`
 }

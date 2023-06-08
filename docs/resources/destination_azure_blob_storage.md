@@ -50,9 +50,6 @@ Optional:
 
 - `destination_azure_blob_storage_output_format_csv_comma_separated_values` (Attributes) Output data format (see [below for nested schema](#nestedatt--configuration--format--destination_azure_blob_storage_output_format_csv_comma_separated_values))
 - `destination_azure_blob_storage_output_format_json_lines_newline_delimited_json` (Attributes) Output data format (see [below for nested schema](#nestedatt--configuration--format--destination_azure_blob_storage_output_format_json_lines_newline_delimited_json))
-
-Read-Only:
-
 - `destination_azure_blob_storage_update_output_format_csv_comma_separated_values` (Attributes) Output data format (see [below for nested schema](#nestedatt--configuration--format--destination_azure_blob_storage_update_output_format_csv_comma_separated_values))
 - `destination_azure_blob_storage_update_output_format_json_lines_newline_delimited_json` (Attributes) Output data format (see [below for nested schema](#nestedatt--configuration--format--destination_azure_blob_storage_update_output_format_json_lines_newline_delimited_json))
 
@@ -76,7 +73,7 @@ Required:
 <a id="nestedatt--configuration--format--destination_azure_blob_storage_update_output_format_csv_comma_separated_values"></a>
 ### Nested Schema for `configuration.format.destination_azure_blob_storage_update_output_format_csv_comma_separated_values`
 
-Read-Only:
+Required:
 
 - `flattening` (String) Whether the input json data should be normalized (flattened) in the output CSV. Please refer to docs for details.
 - `format_type` (String)
@@ -85,7 +82,7 @@ Read-Only:
 <a id="nestedatt--configuration--format--destination_azure_blob_storage_update_output_format_json_lines_newline_delimited_json"></a>
 ### Nested Schema for `configuration.format.destination_azure_blob_storage_update_output_format_json_lines_newline_delimited_json`
 
-Read-Only:
+Required:
 
 - `format_type` (String)
 

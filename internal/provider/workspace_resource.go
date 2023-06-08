@@ -8,7 +8,6 @@ import (
 	"fmt"
 
 	"airbyte/internal/sdk/pkg/models/operations"
-	"airbyte/internal/sdk/pkg/models/shared"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
@@ -161,28 +160,7 @@ func (r *WorkspaceResource) Update(ctx context.Context, req resource.UpdateReque
 		return
 	}
 
-	name := data.Name.ValueString()
-	workspaceUpdateRequest := shared.WorkspaceUpdateRequest{
-		Name: name,
-	}
-	workspaceID := data.WorkspaceID.ValueString()
-	request := operations.UpdateWorkspaceRequest{
-		WorkspaceUpdateRequest: workspaceUpdateRequest,
-		WorkspaceID:            workspaceID,
-	}
-	res, err := r.client.Workspaces.UpdateWorkspace(ctx, request)
-	if err != nil {
-		resp.Diagnostics.AddError("failure to invoke API", err.Error())
-		return
-	}
-	if res == nil {
-		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
-		return
-	}
-	if res.StatusCode != 200 {
-		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
-		return
-	}
+	// Not Implemented; all attributes marked as RequiresReplace
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

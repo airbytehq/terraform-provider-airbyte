@@ -54,15 +54,18 @@ func (r *SourceFireboltResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"account": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"database": schema.StringAttribute{
 						Required: true,
 					},
 					"engine": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"host": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"password": schema.StringAttribute{

@@ -56,9 +56,6 @@ Optional:
 
 - `source_mysql_replication_method_logical_replication_cdc_` (Attributes) CDC uses the Binlog to detect inserts, updates, and deletes. This needs to be configured on the source database itself. (see [below for nested schema](#nestedatt--configuration--replication_method--source_mysql_replication_method_logical_replication_cdc_))
 - `source_mysql_replication_method_standard` (Attributes) Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally. (see [below for nested schema](#nestedatt--configuration--replication_method--source_mysql_replication_method_standard))
-
-Read-Only:
-
 - `source_mysql_update_replication_method_logical_replication_cdc_` (Attributes) CDC uses the Binlog to detect inserts, updates, and deletes. This needs to be configured on the source database itself. (see [below for nested schema](#nestedatt--configuration--replication_method--source_mysql_update_replication_method_logical_replication_cdc_))
 - `source_mysql_update_replication_method_standard` (Attributes) Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally. (see [below for nested schema](#nestedatt--configuration--replication_method--source_mysql_update_replication_method_standard))
 
@@ -86,17 +83,20 @@ Required:
 <a id="nestedatt--configuration--replication_method--source_mysql_update_replication_method_logical_replication_cdc_"></a>
 ### Nested Schema for `configuration.replication_method.source_mysql_update_replication_method_logical_replication_cdc_`
 
-Read-Only:
+Required:
+
+- `method` (String)
+
+Optional:
 
 - `initial_waiting_seconds` (Number)
-- `method` (String)
 - `server_time_zone` (String)
 
 
 <a id="nestedatt--configuration--replication_method--source_mysql_update_replication_method_standard"></a>
 ### Nested Schema for `configuration.replication_method.source_mysql_update_replication_method_standard`
 
-Read-Only:
+Required:
 
 - `method` (String)
 
@@ -111,9 +111,6 @@ Optional:
 - `source_mysql_ssl_modes_required` (Attributes) Always connect with SSL. If the MySQL server doesn’t support SSL, the connection will not be established. Certificate Authority (CA) and Hostname are not verified. (see [below for nested schema](#nestedatt--configuration--ssl_mode--source_mysql_ssl_modes_required))
 - `source_mysql_ssl_modes_verify_ca` (Attributes) Always connect with SSL. Verifies CA, but allows connection even if Hostname does not match. (see [below for nested schema](#nestedatt--configuration--ssl_mode--source_mysql_ssl_modes_verify_ca))
 - `source_mysql_ssl_modes_verify_identity` (Attributes) Always connect with SSL. Verify both CA and Hostname. (see [below for nested schema](#nestedatt--configuration--ssl_mode--source_mysql_ssl_modes_verify_identity))
-
-Read-Only:
-
 - `source_mysql_update_ssl_modes_preferred` (Attributes) Automatically attempt SSL connection. If the MySQL server does not support SSL, continue with a regular connection. (see [below for nested schema](#nestedatt--configuration--ssl_mode--source_mysql_update_ssl_modes_preferred))
 - `source_mysql_update_ssl_modes_required` (Attributes) Always connect with SSL. If the MySQL server doesn’t support SSL, the connection will not be established. Certificate Authority (CA) and Hostname are not verified. (see [below for nested schema](#nestedatt--configuration--ssl_mode--source_mysql_update_ssl_modes_required))
 - `source_mysql_update_ssl_modes_verify_ca` (Attributes) Always connect with SSL. Verifies CA, but allows connection even if Hostname does not match. (see [below for nested schema](#nestedatt--configuration--ssl_mode--source_mysql_update_ssl_modes_verify_ca))
@@ -168,7 +165,7 @@ Optional:
 <a id="nestedatt--configuration--ssl_mode--source_mysql_update_ssl_modes_preferred"></a>
 ### Nested Schema for `configuration.ssl_mode.source_mysql_update_ssl_modes_preferred`
 
-Read-Only:
+Required:
 
 - `mode` (String)
 
@@ -176,7 +173,7 @@ Read-Only:
 <a id="nestedatt--configuration--ssl_mode--source_mysql_update_ssl_modes_required"></a>
 ### Nested Schema for `configuration.ssl_mode.source_mysql_update_ssl_modes_required`
 
-Read-Only:
+Required:
 
 - `mode` (String)
 
@@ -184,25 +181,31 @@ Read-Only:
 <a id="nestedatt--configuration--ssl_mode--source_mysql_update_ssl_modes_verify_ca"></a>
 ### Nested Schema for `configuration.ssl_mode.source_mysql_update_ssl_modes_verify_ca`
 
-Read-Only:
+Required:
 
 - `ca_certificate` (String)
+- `mode` (String)
+
+Optional:
+
 - `client_certificate` (String)
 - `client_key` (String)
 - `client_key_password` (String)
-- `mode` (String)
 
 
 <a id="nestedatt--configuration--ssl_mode--source_mysql_update_ssl_modes_verify_identity"></a>
 ### Nested Schema for `configuration.ssl_mode.source_mysql_update_ssl_modes_verify_identity`
 
-Read-Only:
+Required:
 
 - `ca_certificate` (String)
+- `mode` (String)
+
+Optional:
+
 - `client_certificate` (String)
 - `client_key` (String)
 - `client_key_password` (String)
-- `mode` (String)
 
 
 
@@ -214,9 +217,6 @@ Optional:
 - `source_mysql_ssh_tunnel_method_no_tunnel` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--source_mysql_ssh_tunnel_method_no_tunnel))
 - `source_mysql_ssh_tunnel_method_password_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--source_mysql_ssh_tunnel_method_password_authentication))
 - `source_mysql_ssh_tunnel_method_ssh_key_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--source_mysql_ssh_tunnel_method_ssh_key_authentication))
-
-Read-Only:
-
 - `source_mysql_update_ssh_tunnel_method_no_tunnel` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--source_mysql_update_ssh_tunnel_method_no_tunnel))
 - `source_mysql_update_ssh_tunnel_method_password_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--source_mysql_update_ssh_tunnel_method_password_authentication))
 - `source_mysql_update_ssh_tunnel_method_ssh_key_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--source_mysql_update_ssh_tunnel_method_ssh_key_authentication))
@@ -256,7 +256,7 @@ Required:
 <a id="nestedatt--configuration--tunnel_method--source_mysql_update_ssh_tunnel_method_no_tunnel"></a>
 ### Nested Schema for `configuration.tunnel_method.source_mysql_update_ssh_tunnel_method_no_tunnel`
 
-Read-Only:
+Required:
 
 - `tunnel_method` (String) No ssh tunnel needed to connect to database
 
@@ -264,7 +264,7 @@ Read-Only:
 <a id="nestedatt--configuration--tunnel_method--source_mysql_update_ssh_tunnel_method_password_authentication"></a>
 ### Nested Schema for `configuration.tunnel_method.source_mysql_update_ssh_tunnel_method_password_authentication`
 
-Read-Only:
+Required:
 
 - `tunnel_host` (String)
 - `tunnel_method` (String) Connect through a jump server tunnel host using username and password authentication
@@ -276,7 +276,7 @@ Read-Only:
 <a id="nestedatt--configuration--tunnel_method--source_mysql_update_ssh_tunnel_method_ssh_key_authentication"></a>
 ### Nested Schema for `configuration.tunnel_method.source_mysql_update_ssh_tunnel_method_ssh_key_authentication`
 
-Read-Only:
+Required:
 
 - `ssh_key` (String)
 - `tunnel_host` (String)

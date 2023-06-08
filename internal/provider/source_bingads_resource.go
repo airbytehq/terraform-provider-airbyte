@@ -55,6 +55,7 @@ func (r *SourceBingAdsResource) Schema(ctx context.Context, req resource.SchemaR
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"auth_method": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -66,12 +67,14 @@ func (r *SourceBingAdsResource) Schema(ctx context.Context, req resource.SchemaR
 						Required: true,
 					},
 					"client_secret": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"developer_token": schema.StringAttribute{
 						Required: true,
 					},
 					"lookback_window": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"refresh_token": schema.StringAttribute{
@@ -92,6 +95,7 @@ func (r *SourceBingAdsResource) Schema(ctx context.Context, req resource.SchemaR
 						},
 					},
 					"tenant_id": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 				},

@@ -61,6 +61,7 @@ func (r *SourceSnapchatMarketingResource) Schema(ctx context.Context, req resour
 						Required: true,
 					},
 					"end_date": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
@@ -78,6 +79,7 @@ func (r *SourceSnapchatMarketingResource) Schema(ctx context.Context, req resour
 						},
 					},
 					"start_date": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),

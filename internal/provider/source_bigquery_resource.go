@@ -57,6 +57,7 @@ func (r *SourceBigqueryResource) Schema(ctx context.Context, req resource.Schema
 						Required: true,
 					},
 					"dataset_id": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"project_id": schema.StringAttribute{

@@ -61,6 +61,7 @@ func (r *SourceFreshcallerResource) Schema(ctx context.Context, req resource.Sch
 						Required: true,
 					},
 					"requests_per_minute": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{
@@ -78,6 +79,7 @@ func (r *SourceFreshcallerResource) Schema(ctx context.Context, req resource.Sch
 						},
 					},
 					"sync_lag_minutes": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 				},

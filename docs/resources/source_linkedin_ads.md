@@ -50,9 +50,6 @@ Optional:
 
 - `source_linkedin_ads_authentication_access_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_linkedin_ads_authentication_access_token))
 - `source_linkedin_ads_authentication_o_auth2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_linkedin_ads_authentication_o_auth2_0))
-
-Read-Only:
-
 - `source_linkedin_ads_update_authentication_access_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_linkedin_ads_update_authentication_access_token))
 - `source_linkedin_ads_update_authentication_o_auth2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_linkedin_ads_update_authentication_o_auth2_0))
 
@@ -85,20 +82,26 @@ Optional:
 <a id="nestedatt--configuration--credentials--source_linkedin_ads_update_authentication_access_token"></a>
 ### Nested Schema for `configuration.credentials.source_linkedin_ads_update_authentication_access_token`
 
-Read-Only:
+Required:
 
 - `access_token` (String)
+
+Optional:
+
 - `auth_method` (String)
 
 
 <a id="nestedatt--configuration--credentials--source_linkedin_ads_update_authentication_o_auth2_0"></a>
 ### Nested Schema for `configuration.credentials.source_linkedin_ads_update_authentication_o_auth2_0`
 
-Read-Only:
+Required:
 
-- `auth_method` (String)
 - `client_id` (String)
 - `client_secret` (String)
 - `refresh_token` (String)
+
+Optional:
+
+- `auth_method` (String)
 
 

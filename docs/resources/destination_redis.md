@@ -51,9 +51,6 @@ Optional:
 
 - `destination_redis_ssl_modes_disable` (Attributes) Disable SSL. (see [below for nested schema](#nestedatt--configuration--ssl_mode--destination_redis_ssl_modes_disable))
 - `destination_redis_ssl_modes_verify_full` (Attributes) Verify-full SSL mode. (see [below for nested schema](#nestedatt--configuration--ssl_mode--destination_redis_ssl_modes_verify_full))
-
-Read-Only:
-
 - `destination_redis_update_ssl_modes_disable` (Attributes) Disable SSL. (see [below for nested schema](#nestedatt--configuration--ssl_mode--destination_redis_update_ssl_modes_disable))
 - `destination_redis_update_ssl_modes_verify_full` (Attributes) Verify-full SSL mode. (see [below for nested schema](#nestedatt--configuration--ssl_mode--destination_redis_update_ssl_modes_verify_full))
 
@@ -83,7 +80,7 @@ Optional:
 <a id="nestedatt--configuration--ssl_mode--destination_redis_update_ssl_modes_disable"></a>
 ### Nested Schema for `configuration.ssl_mode.destination_redis_update_ssl_modes_disable`
 
-Read-Only:
+Required:
 
 - `mode` (String)
 
@@ -91,13 +88,16 @@ Read-Only:
 <a id="nestedatt--configuration--ssl_mode--destination_redis_update_ssl_modes_verify_full"></a>
 ### Nested Schema for `configuration.ssl_mode.destination_redis_update_ssl_modes_verify_full`
 
-Read-Only:
+Required:
 
 - `ca_certificate` (String)
 - `client_certificate` (String)
 - `client_key` (String)
-- `client_key_password` (String)
 - `mode` (String)
+
+Optional:
+
+- `client_key_password` (String)
 
 
 
@@ -109,9 +109,6 @@ Optional:
 - `destination_redis_ssh_tunnel_method_no_tunnel` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--destination_redis_ssh_tunnel_method_no_tunnel))
 - `destination_redis_ssh_tunnel_method_password_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--destination_redis_ssh_tunnel_method_password_authentication))
 - `destination_redis_ssh_tunnel_method_ssh_key_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--destination_redis_ssh_tunnel_method_ssh_key_authentication))
-
-Read-Only:
-
 - `destination_redis_update_ssh_tunnel_method_no_tunnel` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--destination_redis_update_ssh_tunnel_method_no_tunnel))
 - `destination_redis_update_ssh_tunnel_method_password_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--destination_redis_update_ssh_tunnel_method_password_authentication))
 - `destination_redis_update_ssh_tunnel_method_ssh_key_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--destination_redis_update_ssh_tunnel_method_ssh_key_authentication))
@@ -151,7 +148,7 @@ Required:
 <a id="nestedatt--configuration--tunnel_method--destination_redis_update_ssh_tunnel_method_no_tunnel"></a>
 ### Nested Schema for `configuration.tunnel_method.destination_redis_update_ssh_tunnel_method_no_tunnel`
 
-Read-Only:
+Required:
 
 - `tunnel_method` (String) No ssh tunnel needed to connect to database
 
@@ -159,7 +156,7 @@ Read-Only:
 <a id="nestedatt--configuration--tunnel_method--destination_redis_update_ssh_tunnel_method_password_authentication"></a>
 ### Nested Schema for `configuration.tunnel_method.destination_redis_update_ssh_tunnel_method_password_authentication`
 
-Read-Only:
+Required:
 
 - `tunnel_host` (String)
 - `tunnel_method` (String) Connect through a jump server tunnel host using username and password authentication
@@ -171,7 +168,7 @@ Read-Only:
 <a id="nestedatt--configuration--tunnel_method--destination_redis_update_ssh_tunnel_method_ssh_key_authentication"></a>
 ### Nested Schema for `configuration.tunnel_method.destination_redis_update_ssh_tunnel_method_ssh_key_authentication`
 
-Read-Only:
+Required:
 
 - `ssh_key` (String)
 - `tunnel_host` (String)

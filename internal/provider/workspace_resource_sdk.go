@@ -15,11 +15,6 @@ func (r *WorkspaceResourceModel) ToCreateSDKType() *shared.WorkspaceCreateReques
 	return &out
 }
 
-func (r *WorkspaceResourceModel) ToUpdateSDKType() *shared.WorkspaceCreateRequest {
-	out := r.ToCreateSDKType()
-	return out
-}
-
 func (r *WorkspaceResourceModel) ToDeleteSDKType() *shared.WorkspaceCreateRequest {
 	out := r.ToCreateSDKType()
 	return out

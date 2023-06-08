@@ -40,9 +40,6 @@ Required:
 Optional:
 
 - `destination_dev_null_test_destination_silent` (Attributes) The type of destination to be used (see [below for nested schema](#nestedatt--configuration--test_destination--destination_dev_null_test_destination_silent))
-
-Read-Only:
-
 - `destination_dev_null_update_test_destination_silent` (Attributes) The type of destination to be used (see [below for nested schema](#nestedatt--configuration--test_destination--destination_dev_null_update_test_destination_silent))
 
 <a id="nestedatt--configuration--test_destination--destination_dev_null_test_destination_silent"></a>
@@ -56,7 +53,7 @@ Required:
 <a id="nestedatt--configuration--test_destination--destination_dev_null_update_test_destination_silent"></a>
 ### Nested Schema for `configuration.test_destination.destination_dev_null_update_test_destination_silent`
 
-Read-Only:
+Required:
 
 - `test_destination_type` (String)
 

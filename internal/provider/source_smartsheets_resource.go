@@ -58,12 +58,14 @@ func (r *SourceSmartsheetsResource) Schema(ctx context.Context, req resource.Sch
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"source_smartsheets_authorization_method_api_access_token": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Required: true,
 									},
 									"auth_type": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -74,12 +76,14 @@ func (r *SourceSmartsheetsResource) Schema(ctx context.Context, req resource.Sch
 								},
 							},
 							"source_smartsheets_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Required: true,
 									},
 									"auth_type": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -106,12 +110,14 @@ func (r *SourceSmartsheetsResource) Schema(ctx context.Context, req resource.Sch
 							},
 							"source_smartsheets_update_authorization_method_api_access_token": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"auth_type": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"access_token",
@@ -122,12 +128,14 @@ func (r *SourceSmartsheetsResource) Schema(ctx context.Context, req resource.Sch
 							},
 							"source_smartsheets_update_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"auth_type": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"oauth2.0",
@@ -135,16 +143,16 @@ func (r *SourceSmartsheetsResource) Schema(ctx context.Context, req resource.Sch
 										},
 									},
 									"client_id": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"client_secret": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"refresh_token": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"token_expiry_date": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											validators.IsRFC3339(),
 										},
@@ -168,6 +176,7 @@ func (r *SourceSmartsheetsResource) Schema(ctx context.Context, req resource.Sch
 						Required: true,
 					},
 					"start_datetime": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),

@@ -57,9 +57,11 @@ func (r *SourceMetabaseResource) Schema(ctx context.Context, req resource.Schema
 						Required: true,
 					},
 					"password": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"session_token": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{
@@ -71,6 +73,7 @@ func (r *SourceMetabaseResource) Schema(ctx context.Context, req resource.Schema
 						},
 					},
 					"username": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 				},

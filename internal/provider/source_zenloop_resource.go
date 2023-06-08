@@ -57,6 +57,7 @@ func (r *SourceZenloopResource) Schema(ctx context.Context, req resource.SchemaR
 						Required: true,
 					},
 					"date_from": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{
@@ -68,9 +69,11 @@ func (r *SourceZenloopResource) Schema(ctx context.Context, req resource.SchemaR
 						},
 					},
 					"survey_group_id": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"survey_id": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 				},

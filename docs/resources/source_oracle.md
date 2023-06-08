@@ -56,9 +56,6 @@ Optional:
 
 - `source_oracle_encryption_native_network_encryption_nne_` (Attributes) The native network encryption gives you the ability to encrypt database connections, without the configuration overhead of TCP/IP and SSL/TLS and without the need to open and listen on different ports. (see [below for nested schema](#nestedatt--configuration--encryption--source_oracle_encryption_native_network_encryption_nne_))
 - `source_oracle_encryption_tls_encrypted_verify_certificate_` (Attributes) Verify and use the certificate provided by the server. (see [below for nested schema](#nestedatt--configuration--encryption--source_oracle_encryption_tls_encrypted_verify_certificate_))
-
-Read-Only:
-
 - `source_oracle_update_encryption_native_network_encryption_nne_` (Attributes) The native network encryption gives you the ability to encrypt database connections, without the configuration overhead of TCP/IP and SSL/TLS and without the need to open and listen on different ports. (see [below for nested schema](#nestedatt--configuration--encryption--source_oracle_update_encryption_native_network_encryption_nne_))
 - `source_oracle_update_encryption_tls_encrypted_verify_certificate_` (Attributes) Verify and use the certificate provided by the server. (see [below for nested schema](#nestedatt--configuration--encryption--source_oracle_update_encryption_tls_encrypted_verify_certificate_))
 
@@ -86,16 +83,19 @@ Required:
 <a id="nestedatt--configuration--encryption--source_oracle_update_encryption_native_network_encryption_nne_"></a>
 ### Nested Schema for `configuration.encryption.source_oracle_update_encryption_native_network_encryption_nne_`
 
-Read-Only:
+Required:
+
+- `encryption_method` (String)
+
+Optional:
 
 - `encryption_algorithm` (String) This parameter defines what encryption algorithm is used.
-- `encryption_method` (String)
 
 
 <a id="nestedatt--configuration--encryption--source_oracle_update_encryption_tls_encrypted_verify_certificate_"></a>
 ### Nested Schema for `configuration.encryption.source_oracle_update_encryption_tls_encrypted_verify_certificate_`
 
-Read-Only:
+Required:
 
 - `encryption_method` (String)
 - `ssl_certificate` (String)
@@ -109,9 +109,6 @@ Optional:
 
 - `source_oracle_connect_by_service_name` (Attributes) Use service name (see [below for nested schema](#nestedatt--configuration--connection_data--source_oracle_connect_by_service_name))
 - `source_oracle_connect_by_system_id_sid_` (Attributes) Use SID (Oracle System Identifier) (see [below for nested schema](#nestedatt--configuration--connection_data--source_oracle_connect_by_system_id_sid_))
-
-Read-Only:
-
 - `source_oracle_update_connect_by_service_name` (Attributes) Use service name (see [below for nested schema](#nestedatt--configuration--connection_data--source_oracle_update_connect_by_service_name))
 - `source_oracle_update_connect_by_system_id_sid_` (Attributes) Use SID (Oracle System Identifier) (see [below for nested schema](#nestedatt--configuration--connection_data--source_oracle_update_connect_by_system_id_sid_))
 
@@ -142,19 +139,25 @@ Optional:
 <a id="nestedatt--configuration--connection_data--source_oracle_update_connect_by_service_name"></a>
 ### Nested Schema for `configuration.connection_data.source_oracle_update_connect_by_service_name`
 
-Read-Only:
+Required:
+
+- `service_name` (String)
+
+Optional:
 
 - `connection_type` (String)
-- `service_name` (String)
 
 
 <a id="nestedatt--configuration--connection_data--source_oracle_update_connect_by_system_id_sid_"></a>
 ### Nested Schema for `configuration.connection_data.source_oracle_update_connect_by_system_id_sid_`
 
-Read-Only:
+Required:
+
+- `sid` (String)
+
+Optional:
 
 - `connection_type` (String)
-- `sid` (String)
 
 
 
@@ -166,9 +169,6 @@ Optional:
 - `source_oracle_ssh_tunnel_method_no_tunnel` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--source_oracle_ssh_tunnel_method_no_tunnel))
 - `source_oracle_ssh_tunnel_method_password_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--source_oracle_ssh_tunnel_method_password_authentication))
 - `source_oracle_ssh_tunnel_method_ssh_key_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--source_oracle_ssh_tunnel_method_ssh_key_authentication))
-
-Read-Only:
-
 - `source_oracle_update_ssh_tunnel_method_no_tunnel` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--source_oracle_update_ssh_tunnel_method_no_tunnel))
 - `source_oracle_update_ssh_tunnel_method_password_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--source_oracle_update_ssh_tunnel_method_password_authentication))
 - `source_oracle_update_ssh_tunnel_method_ssh_key_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--source_oracle_update_ssh_tunnel_method_ssh_key_authentication))
@@ -208,7 +208,7 @@ Required:
 <a id="nestedatt--configuration--tunnel_method--source_oracle_update_ssh_tunnel_method_no_tunnel"></a>
 ### Nested Schema for `configuration.tunnel_method.source_oracle_update_ssh_tunnel_method_no_tunnel`
 
-Read-Only:
+Required:
 
 - `tunnel_method` (String) No ssh tunnel needed to connect to database
 
@@ -216,7 +216,7 @@ Read-Only:
 <a id="nestedatt--configuration--tunnel_method--source_oracle_update_ssh_tunnel_method_password_authentication"></a>
 ### Nested Schema for `configuration.tunnel_method.source_oracle_update_ssh_tunnel_method_password_authentication`
 
-Read-Only:
+Required:
 
 - `tunnel_host` (String)
 - `tunnel_method` (String) Connect through a jump server tunnel host using username and password authentication
@@ -228,7 +228,7 @@ Read-Only:
 <a id="nestedatt--configuration--tunnel_method--source_oracle_update_ssh_tunnel_method_ssh_key_authentication"></a>
 ### Nested Schema for `configuration.tunnel_method.source_oracle_update_ssh_tunnel_method_ssh_key_authentication`
 
-Read-Only:
+Required:
 
 - `ssh_key` (String)
 - `tunnel_host` (String)

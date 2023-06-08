@@ -59,6 +59,7 @@ func (r *SourceNytimesResource) Schema(ctx context.Context, req resource.SchemaR
 						Required: true,
 					},
 					"end_date": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
@@ -78,6 +79,7 @@ func (r *SourceNytimesResource) Schema(ctx context.Context, req resource.SchemaR
 						Description: `Period of time (in days)`,
 					},
 					"share_type": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(

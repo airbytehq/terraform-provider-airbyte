@@ -57,9 +57,6 @@ Optional:
 
 - `source_mssql_replication_method_logical_replication_cdc_` (Attributes) CDC uses {TBC} to detect inserts, updates, and deletes. This needs to be configured on the source database itself. (see [below for nested schema](#nestedatt--configuration--replication_method--source_mssql_replication_method_logical_replication_cdc_))
 - `source_mssql_replication_method_standard` (Attributes) Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally. (see [below for nested schema](#nestedatt--configuration--replication_method--source_mssql_replication_method_standard))
-
-Read-Only:
-
 - `source_mssql_update_replication_method_logical_replication_cdc_` (Attributes) CDC uses {TBC} to detect inserts, updates, and deletes. This needs to be configured on the source database itself. (see [below for nested schema](#nestedatt--configuration--replication_method--source_mssql_update_replication_method_logical_replication_cdc_))
 - `source_mssql_update_replication_method_standard` (Attributes) Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally. (see [below for nested schema](#nestedatt--configuration--replication_method--source_mssql_update_replication_method_standard))
 
@@ -88,18 +85,21 @@ Required:
 <a id="nestedatt--configuration--replication_method--source_mssql_update_replication_method_logical_replication_cdc_"></a>
 ### Nested Schema for `configuration.replication_method.source_mssql_update_replication_method_logical_replication_cdc_`
 
-Read-Only:
+Required:
+
+- `method` (String)
+
+Optional:
 
 - `data_to_sync` (String) What data should be synced under the CDC. "Existing and New" will read existing data as a snapshot, and sync new changes through CDC. "New Changes Only" will skip the initial snapshot, and only sync new changes through CDC.
 - `initial_waiting_seconds` (Number)
-- `method` (String)
 - `snapshot_isolation` (String) Existing data in the database are synced through an initial snapshot. This parameter controls the isolation level that will be used during the initial snapshotting. If you choose the "Snapshot" level, you must enable the <a href="https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/snapshot-isolation-in-sql-server">snapshot isolation mode</a> on the database.
 
 
 <a id="nestedatt--configuration--replication_method--source_mssql_update_replication_method_standard"></a>
 ### Nested Schema for `configuration.replication_method.source_mssql_update_replication_method_standard`
 
-Read-Only:
+Required:
 
 - `method` (String)
 
@@ -112,9 +112,6 @@ Optional:
 
 - `source_mssql_ssl_method_encrypted_trust_server_certificate_` (Attributes) Use the certificate provided by the server without verification. (For testing purposes only!) (see [below for nested schema](#nestedatt--configuration--ssl_method--source_mssql_ssl_method_encrypted_trust_server_certificate_))
 - `source_mssql_ssl_method_encrypted_verify_certificate_` (Attributes) Verify and use the certificate provided by the server. (see [below for nested schema](#nestedatt--configuration--ssl_method--source_mssql_ssl_method_encrypted_verify_certificate_))
-
-Read-Only:
-
 - `source_mssql_update_ssl_method_encrypted_trust_server_certificate_` (Attributes) Use the certificate provided by the server without verification. (For testing purposes only!) (see [below for nested schema](#nestedatt--configuration--ssl_method--source_mssql_update_ssl_method_encrypted_trust_server_certificate_))
 - `source_mssql_update_ssl_method_encrypted_verify_certificate_` (Attributes) Verify and use the certificate provided by the server. (see [below for nested schema](#nestedatt--configuration--ssl_method--source_mssql_update_ssl_method_encrypted_verify_certificate_))
 
@@ -141,7 +138,7 @@ Optional:
 <a id="nestedatt--configuration--ssl_method--source_mssql_update_ssl_method_encrypted_trust_server_certificate_"></a>
 ### Nested Schema for `configuration.ssl_method.source_mssql_update_ssl_method_encrypted_trust_server_certificate_`
 
-Read-Only:
+Required:
 
 - `ssl_method` (String)
 
@@ -149,10 +146,13 @@ Read-Only:
 <a id="nestedatt--configuration--ssl_method--source_mssql_update_ssl_method_encrypted_verify_certificate_"></a>
 ### Nested Schema for `configuration.ssl_method.source_mssql_update_ssl_method_encrypted_verify_certificate_`
 
-Read-Only:
+Required:
+
+- `ssl_method` (String)
+
+Optional:
 
 - `host_name_in_certificate` (String)
-- `ssl_method` (String)
 
 
 
@@ -164,9 +164,6 @@ Optional:
 - `source_mssql_ssh_tunnel_method_no_tunnel` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--source_mssql_ssh_tunnel_method_no_tunnel))
 - `source_mssql_ssh_tunnel_method_password_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--source_mssql_ssh_tunnel_method_password_authentication))
 - `source_mssql_ssh_tunnel_method_ssh_key_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--source_mssql_ssh_tunnel_method_ssh_key_authentication))
-
-Read-Only:
-
 - `source_mssql_update_ssh_tunnel_method_no_tunnel` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--source_mssql_update_ssh_tunnel_method_no_tunnel))
 - `source_mssql_update_ssh_tunnel_method_password_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--source_mssql_update_ssh_tunnel_method_password_authentication))
 - `source_mssql_update_ssh_tunnel_method_ssh_key_authentication` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method--source_mssql_update_ssh_tunnel_method_ssh_key_authentication))
@@ -206,7 +203,7 @@ Required:
 <a id="nestedatt--configuration--tunnel_method--source_mssql_update_ssh_tunnel_method_no_tunnel"></a>
 ### Nested Schema for `configuration.tunnel_method.source_mssql_update_ssh_tunnel_method_no_tunnel`
 
-Read-Only:
+Required:
 
 - `tunnel_method` (String) No ssh tunnel needed to connect to database
 
@@ -214,7 +211,7 @@ Read-Only:
 <a id="nestedatt--configuration--tunnel_method--source_mssql_update_ssh_tunnel_method_password_authentication"></a>
 ### Nested Schema for `configuration.tunnel_method.source_mssql_update_ssh_tunnel_method_password_authentication`
 
-Read-Only:
+Required:
 
 - `tunnel_host` (String)
 - `tunnel_method` (String) Connect through a jump server tunnel host using username and password authentication
@@ -226,7 +223,7 @@ Read-Only:
 <a id="nestedatt--configuration--tunnel_method--source_mssql_update_ssh_tunnel_method_ssh_key_authentication"></a>
 ### Nested Schema for `configuration.tunnel_method.source_mssql_update_ssh_tunnel_method_ssh_key_authentication`
 
-Read-Only:
+Required:
 
 - `ssh_key` (String)
 - `tunnel_host` (String)

@@ -54,12 +54,15 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"credentials": schema.SingleNestedAttribute{
+						Computed: true,
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_snowflake_authorization_method_key_pair_authentication": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -71,17 +74,20 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 										Required: true,
 									},
 									"private_key_password": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 									},
 								},
 							},
 							"destination_snowflake_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Required: true,
 									},
 									"auth_type": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -90,9 +96,11 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 										},
 									},
 									"client_id": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 									},
 									"client_secret": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 									},
 									"refresh_token": schema.StringAttribute{
@@ -101,9 +109,11 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 								},
 							},
 							"destination_snowflake_authorization_method_username_and_password": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -118,9 +128,11 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 							},
 							"destination_snowflake_update_authorization_method_key_pair_authentication": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"Key Pair Authentication",
@@ -128,21 +140,24 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 										},
 									},
 									"private_key": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"private_key_password": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 									},
 								},
 							},
 							"destination_snowflake_update_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"auth_type": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"OAuth2.0",
@@ -151,20 +166,24 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 									},
 									"client_id": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 									},
 									"client_secret": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 									},
 									"refresh_token": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 							},
 							"destination_snowflake_update_authorization_method_username_and_password": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"Username and Password",
@@ -172,7 +191,7 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 										},
 									},
 									"password": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 							},
@@ -193,18 +212,22 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 						},
 					},
 					"file_buffer_count": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"host": schema.StringAttribute{
 						Required: true,
 					},
 					"jdbc_url_params": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"loading_method": schema.SingleNestedAttribute{
+						Computed: true,
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_snowflake_data_staging_method_recommended_internal_staging": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
@@ -219,15 +242,37 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 								Description: `Recommended for large production workloads for better speed and scalability.`,
 							},
 							"destination_snowflake_data_staging_method_aws_s3_staging": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_key_id": schema.StringAttribute{
 										Required: true,
 									},
 									"encryption": schema.SingleNestedAttribute{
+										Computed: true,
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
+											"destination_snowflake_data_staging_method_aws_s3_staging_encryption_aes_cbc_envelope_encryption": schema.SingleNestedAttribute{
+												Computed: true,
+												Optional: true,
+												Attributes: map[string]schema.Attribute{
+													"encryption_type": schema.StringAttribute{
+														Required: true,
+														Validators: []validator.String{
+															stringvalidator.OneOf(
+																"aes_cbc_envelope",
+															),
+														},
+													},
+													"key_encrypting_key": schema.StringAttribute{
+														Computed: true,
+														Optional: true,
+													},
+												},
+												Description: `Staging data will be encrypted using AES-CBC envelope encryption.`,
+											},
 											"destination_snowflake_data_staging_method_aws_s3_staging_encryption_no_encryption": schema.SingleNestedAttribute{
+												Computed: true,
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"encryption_type": schema.StringAttribute{
@@ -241,29 +286,13 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 												},
 												Description: `Staging data will be stored in plaintext.`,
 											},
-											"destination_snowflake_data_staging_method_aws_s3_staging_encryption_aes_cbc_envelope_encryption": schema.SingleNestedAttribute{
-												Optional: true,
-												Attributes: map[string]schema.Attribute{
-													"encryption_type": schema.StringAttribute{
-														Required: true,
-														Validators: []validator.String{
-															stringvalidator.OneOf(
-																"aes_cbc_envelope",
-															),
-														},
-													},
-													"key_encrypting_key": schema.StringAttribute{
-														Optional: true,
-													},
-												},
-												Description: `Staging data will be encrypted using AES-CBC envelope encryption.`,
-											},
 										},
 										Validators: []validator.Object{
 											validators.ExactlyOneChild(),
 										},
 									},
 									"file_name_pattern": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 									},
 									"method": schema.StringAttribute{
@@ -275,12 +304,14 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 										},
 									},
 									"purge_staging_data": schema.BoolAttribute{
+										Computed: true,
 										Optional: true,
 									},
 									"s3_bucket_name": schema.StringAttribute{
 										Required: true,
 									},
 									"s3_bucket_region": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -319,6 +350,7 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 								Description: `Recommended for large production workloads for better speed and scalability.`,
 							},
 							"destination_snowflake_data_staging_method_google_cloud_storage_staging": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"bucket_name": schema.StringAttribute{
@@ -342,6 +374,7 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 								Description: `Recommended for large production workloads for better speed and scalability.`,
 							},
 							"destination_snowflake_data_staging_method_select_another_option": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
@@ -357,9 +390,10 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 							},
 							"destination_snowflake_update_data_staging_method_recommended_internal_staging": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"Internal Staging",
@@ -371,18 +405,21 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 							},
 							"destination_snowflake_update_data_staging_method_aws_s3_staging": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_key_id": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"encryption": schema.SingleNestedAttribute{
 										Computed: true,
+										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"destination_snowflake_update_data_staging_method_aws_s3_staging_encryption_no_encryption": schema.SingleNestedAttribute{
 												Computed: true,
+												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"encryption_type": schema.StringAttribute{
-														Computed: true,
+														Required: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
 																"none",
@@ -394,9 +431,10 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 											},
 											"destination_snowflake_update_data_staging_method_aws_s3_staging_encryption_aes_cbc_envelope_encryption": schema.SingleNestedAttribute{
 												Computed: true,
+												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"encryption_type": schema.StringAttribute{
-														Computed: true,
+														Required: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
 																"aes_cbc_envelope",
@@ -405,6 +443,7 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 													},
 													"key_encrypting_key": schema.StringAttribute{
 														Computed: true,
+														Optional: true,
 													},
 												},
 												Description: `Staging data will be encrypted using AES-CBC envelope encryption.`,
@@ -416,9 +455,10 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 									},
 									"file_name_pattern": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 									},
 									"method": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"S3 Staging",
@@ -427,12 +467,14 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 									},
 									"purge_staging_data": schema.BoolAttribute{
 										Computed: true,
+										Optional: true,
 									},
 									"s3_bucket_name": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"s3_bucket_region": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"",
@@ -464,22 +506,23 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 										Description: `Enter the region where your S3 bucket resides`,
 									},
 									"secret_access_key": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 								Description: `Recommended for large production workloads for better speed and scalability.`,
 							},
 							"destination_snowflake_update_data_staging_method_google_cloud_storage_staging": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"bucket_name": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"credentials_json": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"method": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"GCS Staging",
@@ -487,16 +530,17 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 										},
 									},
 									"project_id": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 								Description: `Recommended for large production workloads for better speed and scalability.`,
 							},
 							"destination_snowflake_update_data_staging_method_select_another_option": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"Standard",

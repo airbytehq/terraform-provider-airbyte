@@ -57,12 +57,15 @@ func (r *SourceTheGuardianAPIResource) Schema(ctx context.Context, req resource.
 						Required: true,
 					},
 					"end_date": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"query": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"section": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{
@@ -77,6 +80,7 @@ func (r *SourceTheGuardianAPIResource) Schema(ctx context.Context, req resource.
 						Required: true,
 					},
 					"tag": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 				},

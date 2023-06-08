@@ -54,9 +54,6 @@ Optional:
 
 - `source_snowflake_authorization_method_o_auth2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_snowflake_authorization_method_o_auth2_0))
 - `source_snowflake_authorization_method_username_and_password` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_snowflake_authorization_method_username_and_password))
-
-Read-Only:
-
 - `source_snowflake_update_authorization_method_o_auth2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_snowflake_update_authorization_method_o_auth2_0))
 - `source_snowflake_update_authorization_method_username_and_password` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_snowflake_update_authorization_method_username_and_password))
 
@@ -88,19 +85,22 @@ Required:
 <a id="nestedatt--configuration--credentials--source_snowflake_update_authorization_method_o_auth2_0"></a>
 ### Nested Schema for `configuration.credentials.source_snowflake_update_authorization_method_o_auth2_0`
 
-Read-Only:
+Required:
 
-- `access_token` (String)
 - `auth_type` (String)
 - `client_id` (String)
 - `client_secret` (String)
+
+Optional:
+
+- `access_token` (String)
 - `refresh_token` (String)
 
 
 <a id="nestedatt--configuration--credentials--source_snowflake_update_authorization_method_username_and_password"></a>
 ### Nested Schema for `configuration.credentials.source_snowflake_update_authorization_method_username_and_password`
 
-Read-Only:
+Required:
 
 - `auth_type` (String)
 - `password` (String)

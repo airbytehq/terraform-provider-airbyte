@@ -52,9 +52,6 @@ Optional:
 
 - `source_github_authentication_o_auth` (Attributes) Choose how to authenticate to GitHub (see [below for nested schema](#nestedatt--configuration--credentials--source_github_authentication_o_auth))
 - `source_github_authentication_personal_access_token` (Attributes) Choose how to authenticate to GitHub (see [below for nested schema](#nestedatt--configuration--credentials--source_github_authentication_personal_access_token))
-
-Read-Only:
-
 - `source_github_update_authentication_o_auth` (Attributes) Choose how to authenticate to GitHub (see [below for nested schema](#nestedatt--configuration--credentials--source_github_update_authentication_o_auth))
 - `source_github_update_authentication_personal_access_token` (Attributes) Choose how to authenticate to GitHub (see [below for nested schema](#nestedatt--configuration--credentials--source_github_update_authentication_personal_access_token))
 
@@ -85,18 +82,24 @@ Optional:
 <a id="nestedatt--configuration--credentials--source_github_update_authentication_o_auth"></a>
 ### Nested Schema for `configuration.credentials.source_github_update_authentication_o_auth`
 
-Read-Only:
+Required:
 
 - `access_token` (String)
+
+Optional:
+
 - `option_title` (String)
 
 
 <a id="nestedatt--configuration--credentials--source_github_update_authentication_personal_access_token"></a>
 ### Nested Schema for `configuration.credentials.source_github_update_authentication_personal_access_token`
 
-Read-Only:
+Required:
+
+- `personal_access_token` (String)
+
+Optional:
 
 - `option_title` (String)
-- `personal_access_token` (String)
 
 

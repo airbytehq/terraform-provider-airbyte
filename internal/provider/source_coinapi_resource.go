@@ -57,6 +57,7 @@ func (r *SourceCoinAPIResource) Schema(ctx context.Context, req resource.SchemaR
 						Required: true,
 					},
 					"end_date": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"environment": schema.StringAttribute{
@@ -71,6 +72,7 @@ func (r *SourceCoinAPIResource) Schema(ctx context.Context, req resource.SchemaR
 							``,
 					},
 					"limit": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"period": schema.StringAttribute{

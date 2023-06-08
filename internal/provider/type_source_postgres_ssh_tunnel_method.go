@@ -3,10 +3,10 @@
 package provider
 
 type SourcePostgresSSHTunnelMethod struct {
-	SourcePostgresSSHTunnelMethodNoTunnel                     *DestinationClickhouseSSHTunnelMethodNoTunnel                     `tfsdk:"source_postgres_ssh_tunnel_method_no_tunnel"`
-	SourcePostgresSSHTunnelMethodPasswordAuthentication       *DestinationClickhouseSSHTunnelMethodPasswordAuthentication       `tfsdk:"source_postgres_ssh_tunnel_method_password_authentication"`
-	SourcePostgresSSHTunnelMethodSSHKeyAuthentication         *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication         `tfsdk:"source_postgres_ssh_tunnel_method_ssh_key_authentication"`
-	SourcePostgresUpdateSSHTunnelMethodNoTunnel               *DestinationClickhouseUpdateSSHTunnelMethodNoTunnel               `tfsdk:"source_postgres_update_ssh_tunnel_method_no_tunnel"`
-	SourcePostgresUpdateSSHTunnelMethodPasswordAuthentication *DestinationClickhouseUpdateSSHTunnelMethodPasswordAuthentication `tfsdk:"source_postgres_update_ssh_tunnel_method_password_authentication"`
-	SourcePostgresUpdateSSHTunnelMethodSSHKeyAuthentication   *DestinationClickhouseUpdateSSHTunnelMethodSSHKeyAuthentication   `tfsdk:"source_postgres_update_ssh_tunnel_method_ssh_key_authentication"`
+	SourcePostgresSSHTunnelMethodNoTunnel                     *DestinationClickhouseSSHTunnelMethodNoTunnel               `tfsdk:"source_postgres_ssh_tunnel_method_no_tunnel"`
+	SourcePostgresSSHTunnelMethodPasswordAuthentication       *DestinationClickhouseSSHTunnelMethodPasswordAuthentication `tfsdk:"source_postgres_ssh_tunnel_method_password_authentication"`
+	SourcePostgresSSHTunnelMethodSSHKeyAuthentication         *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication   `tfsdk:"source_postgres_ssh_tunnel_method_ssh_key_authentication"`
+	SourcePostgresUpdateSSHTunnelMethodNoTunnel               *DestinationClickhouseSSHTunnelMethodNoTunnel               `tfsdk:"source_postgres_update_ssh_tunnel_method_no_tunnel"`
+	SourcePostgresUpdateSSHTunnelMethodPasswordAuthentication *DestinationClickhouseSSHTunnelMethodPasswordAuthentication `tfsdk:"source_postgres_update_ssh_tunnel_method_password_authentication"`
+	SourcePostgresUpdateSSHTunnelMethodSSHKeyAuthentication   *DestinationClickhouseSSHTunnelMethodSSHKeyAuthentication   `tfsdk:"source_postgres_update_ssh_tunnel_method_ssh_key_authentication"`
 }

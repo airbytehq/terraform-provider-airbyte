@@ -50,9 +50,6 @@ Optional:
 
 - `source_zendesk_sunshine_authorization_method_api_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_zendesk_sunshine_authorization_method_api_token))
 - `source_zendesk_sunshine_authorization_method_o_auth2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_zendesk_sunshine_authorization_method_o_auth2_0))
-
-Read-Only:
-
 - `source_zendesk_sunshine_update_authorization_method_api_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_zendesk_sunshine_update_authorization_method_api_token))
 - `source_zendesk_sunshine_update_authorization_method_o_auth2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_zendesk_sunshine_update_authorization_method_o_auth2_0))
 
@@ -80,7 +77,7 @@ Required:
 <a id="nestedatt--configuration--credentials--source_zendesk_sunshine_update_authorization_method_api_token"></a>
 ### Nested Schema for `configuration.credentials.source_zendesk_sunshine_update_authorization_method_api_token`
 
-Read-Only:
+Required:
 
 - `api_token` (String)
 - `auth_method` (String)
@@ -90,7 +87,7 @@ Read-Only:
 <a id="nestedatt--configuration--credentials--source_zendesk_sunshine_update_authorization_method_o_auth2_0"></a>
 ### Nested Schema for `configuration.credentials.source_zendesk_sunshine_update_authorization_method_o_auth2_0`
 
-Read-Only:
+Required:
 
 - `access_token` (String)
 - `auth_method` (String)

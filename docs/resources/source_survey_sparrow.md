@@ -50,9 +50,6 @@ Optional:
 
 - `source_survey_sparrow_base_url_eu_based_account` (Attributes) Is your account location is EU based? If yes, the base url to retrieve data will be different. (see [below for nested schema](#nestedatt--configuration--region--source_survey_sparrow_base_url_eu_based_account))
 - `source_survey_sparrow_base_url_global_account` (Attributes) Is your account location is EU based? If yes, the base url to retrieve data will be different. (see [below for nested schema](#nestedatt--configuration--region--source_survey_sparrow_base_url_global_account))
-
-Read-Only:
-
 - `source_survey_sparrow_update_base_url_eu_based_account` (Attributes) Is your account location is EU based? If yes, the base url to retrieve data will be different. (see [below for nested schema](#nestedatt--configuration--region--source_survey_sparrow_update_base_url_eu_based_account))
 - `source_survey_sparrow_update_base_url_global_account` (Attributes) Is your account location is EU based? If yes, the base url to retrieve data will be different. (see [below for nested schema](#nestedatt--configuration--region--source_survey_sparrow_update_base_url_global_account))
 
@@ -75,7 +72,7 @@ Optional:
 <a id="nestedatt--configuration--region--source_survey_sparrow_update_base_url_eu_based_account"></a>
 ### Nested Schema for `configuration.region.source_survey_sparrow_update_base_url_eu_based_account`
 
-Read-Only:
+Optional:
 
 - `url_base` (String)
 
@@ -83,7 +80,7 @@ Read-Only:
 <a id="nestedatt--configuration--region--source_survey_sparrow_update_base_url_global_account"></a>
 ### Nested Schema for `configuration.region.source_survey_sparrow_update_base_url_global_account`
 
-Read-Only:
+Optional:
 
 - `url_base` (String)
 

@@ -55,18 +55,22 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"attribution_window": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"credentials": schema.SingleNestedAttribute{
+						Computed: true,
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_mixpanel_authentication_wildcard_project_secret": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_secret": schema.StringAttribute{
 										Required: true,
 									},
 									"option_title": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -78,9 +82,11 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 								Description: `Choose how to authenticate to Mixpanel`,
 							},
 							"source_mixpanel_authentication_wildcard_service_account": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"option_title": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -99,12 +105,14 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 							},
 							"source_mixpanel_update_authentication_wildcard_project_secret": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_secret": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"option_title": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"Project Secret",
@@ -116,9 +124,11 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 							},
 							"source_mixpanel_update_authentication_wildcard_service_account": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"option_title": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"Service Account",
@@ -126,10 +136,10 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 										},
 									},
 									"secret": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"username": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 								Description: `Choose how to authenticate to Mixpanel`,
@@ -140,21 +150,26 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 						},
 					},
 					"date_window_size": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"end_date": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
 					},
 					"project_id": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"project_timezone": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"region": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -165,9 +180,11 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 						Description: `The region of mixpanel domain instance either US or EU.`,
 					},
 					"select_properties_by_default": schema.BoolAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -176,6 +193,7 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 						},
 					},
 					"start_date": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),

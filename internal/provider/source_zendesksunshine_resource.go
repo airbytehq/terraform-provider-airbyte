@@ -55,9 +55,11 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"credentials": schema.SingleNestedAttribute{
+						Computed: true,
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_zendesk_sunshine_authorization_method_api_token": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_token": schema.StringAttribute{
@@ -77,6 +79,7 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 								},
 							},
 							"source_zendesk_sunshine_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
@@ -100,12 +103,13 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 							},
 							"source_zendesk_sunshine_update_authorization_method_api_token": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_token": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"auth_method": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"api_token",
@@ -113,18 +117,19 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 										},
 									},
 									"email": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 							},
 							"source_zendesk_sunshine_update_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"auth_method": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"oauth2.0",
@@ -132,10 +137,10 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 										},
 									},
 									"client_id": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"client_secret": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 							},

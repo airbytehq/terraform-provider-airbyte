@@ -53,9 +53,6 @@ Optional:
 Optional:
 
 - `destination_s3_glue_output_format_json_lines_newline_delimited_json` (Attributes) Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details (see [below for nested schema](#nestedatt--configuration--format--destination_s3_glue_output_format_json_lines_newline_delimited_json))
-
-Read-Only:
-
 - `destination_s3_glue_update_output_format_json_lines_newline_delimited_json` (Attributes) Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details (see [below for nested schema](#nestedatt--configuration--format--destination_s3_glue_update_output_format_json_lines_newline_delimited_json))
 
 <a id="nestedatt--configuration--format--destination_s3_glue_output_format_json_lines_newline_delimited_json"></a>
@@ -99,32 +96,35 @@ Optional:
 <a id="nestedatt--configuration--format--destination_s3_glue_update_output_format_json_lines_newline_delimited_json"></a>
 ### Nested Schema for `configuration.format.destination_s3_glue_update_output_format_json_lines_newline_delimited_json`
 
-Read-Only:
+Required:
+
+- `format_type` (String)
+
+Optional:
 
 - `compression` (Attributes) (see [below for nested schema](#nestedatt--configuration--format--destination_s3_glue_update_output_format_json_lines_newline_delimited_json--compression))
 - `flattening` (String) Whether the input json data should be normalized (flattened) in the output JSON Lines. Please refer to docs for details.
-- `format_type` (String)
 
 <a id="nestedatt--configuration--format--destination_s3_glue_update_output_format_json_lines_newline_delimited_json--compression"></a>
-### Nested Schema for `configuration.format.destination_s3_glue_update_output_format_json_lines_newline_delimited_json.format_type`
+### Nested Schema for `configuration.format.destination_s3_glue_update_output_format_json_lines_newline_delimited_json.flattening`
 
-Read-Only:
+Optional:
 
-- `destination_s3_glue_update_output_format_json_lines_newline_delimited_json_compression_gzip` (Attributes) Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz"). (see [below for nested schema](#nestedatt--configuration--format--destination_s3_glue_update_output_format_json_lines_newline_delimited_json--format_type--destination_s3_glue_update_output_format_json_lines_newline_delimited_json_compression_gzip))
-- `destination_s3_glue_update_output_format_json_lines_newline_delimited_json_compression_no_compression` (Attributes) Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz"). (see [below for nested schema](#nestedatt--configuration--format--destination_s3_glue_update_output_format_json_lines_newline_delimited_json--format_type--destination_s3_glue_update_output_format_json_lines_newline_delimited_json_compression_no_compression))
+- `destination_s3_glue_update_output_format_json_lines_newline_delimited_json_compression_gzip` (Attributes) Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz"). (see [below for nested schema](#nestedatt--configuration--format--destination_s3_glue_update_output_format_json_lines_newline_delimited_json--flattening--destination_s3_glue_update_output_format_json_lines_newline_delimited_json_compression_gzip))
+- `destination_s3_glue_update_output_format_json_lines_newline_delimited_json_compression_no_compression` (Attributes) Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz"). (see [below for nested schema](#nestedatt--configuration--format--destination_s3_glue_update_output_format_json_lines_newline_delimited_json--flattening--destination_s3_glue_update_output_format_json_lines_newline_delimited_json_compression_no_compression))
 
-<a id="nestedatt--configuration--format--destination_s3_glue_update_output_format_json_lines_newline_delimited_json--format_type--destination_s3_glue_update_output_format_json_lines_newline_delimited_json_compression_gzip"></a>
-### Nested Schema for `configuration.format.destination_s3_glue_update_output_format_json_lines_newline_delimited_json.format_type.destination_s3_glue_update_output_format_json_lines_newline_delimited_json_compression_gzip`
+<a id="nestedatt--configuration--format--destination_s3_glue_update_output_format_json_lines_newline_delimited_json--flattening--destination_s3_glue_update_output_format_json_lines_newline_delimited_json_compression_gzip"></a>
+### Nested Schema for `configuration.format.destination_s3_glue_update_output_format_json_lines_newline_delimited_json.flattening.destination_s3_glue_update_output_format_json_lines_newline_delimited_json_compression_gzip`
 
-Read-Only:
+Optional:
 
 - `compression_type` (String)
 
 
-<a id="nestedatt--configuration--format--destination_s3_glue_update_output_format_json_lines_newline_delimited_json--format_type--destination_s3_glue_update_output_format_json_lines_newline_delimited_json_compression_no_compression"></a>
-### Nested Schema for `configuration.format.destination_s3_glue_update_output_format_json_lines_newline_delimited_json.format_type.destination_s3_glue_update_output_format_json_lines_newline_delimited_json_compression_no_compression`
+<a id="nestedatt--configuration--format--destination_s3_glue_update_output_format_json_lines_newline_delimited_json--flattening--destination_s3_glue_update_output_format_json_lines_newline_delimited_json_compression_no_compression"></a>
+### Nested Schema for `configuration.format.destination_s3_glue_update_output_format_json_lines_newline_delimited_json.flattening.destination_s3_glue_update_output_format_json_lines_newline_delimited_json_compression_no_compression`
 
-Read-Only:
+Optional:
 
 - `compression_type` (String)
 

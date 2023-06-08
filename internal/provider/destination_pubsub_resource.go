@@ -53,15 +53,18 @@ func (r *DestinationPubsubResource) Schema(ctx context.Context, req resource.Sch
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"batching_delay_threshold": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"batching_element_count_threshold": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"batching_enabled": schema.BoolAttribute{
 						Required: true,
 					},
 					"batching_request_bytes_threshold": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"credentials_json": schema.StringAttribute{

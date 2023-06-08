@@ -57,18 +57,22 @@ func (r *SourcePexelsAPIResource) Schema(ctx context.Context, req resource.Schem
 						Required: true,
 					},
 					"color": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"locale": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"orientation": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"query": schema.StringAttribute{
 						Required: true,
 					},
 					"size": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{

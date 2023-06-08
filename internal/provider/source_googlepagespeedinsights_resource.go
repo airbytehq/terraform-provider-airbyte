@@ -54,6 +54,7 @@ func (r *SourceGooglePagespeedInsightsResource) Schema(ctx context.Context, req 
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"api_key": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"categories": schema.ListAttribute{

@@ -55,12 +55,15 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"credentials": schema.SingleNestedAttribute{
+						Computed: true,
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_retently_authentication_mechanism_authenticate_via_retently_o_auth_": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -88,12 +91,14 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 								Description: `Choose how to authenticate to Retently`,
 							},
 							"source_retently_authentication_mechanism_authenticate_with_api_token": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_key": schema.StringAttribute{
 										Required: true,
 									},
 									"auth_type": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -113,9 +118,11 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 							},
 							"source_retently_update_authentication_mechanism_authenticate_via_retently_o_auth_": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"Client",
@@ -123,13 +130,13 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 										},
 									},
 									"client_id": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"client_secret": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"refresh_token": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
@@ -143,12 +150,14 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 							},
 							"source_retently_update_authentication_mechanism_authenticate_with_api_token": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_key": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"auth_type": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"Token",
@@ -171,6 +180,7 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 						},
 					},
 					"source_type": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(

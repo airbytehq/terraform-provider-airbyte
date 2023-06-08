@@ -52,9 +52,6 @@ Optional:
 
 - `source_e2e_test_cloud_mock_catalog_multi_schema` (Attributes) A catalog with multiple data streams, each with a different schema. (see [below for nested schema](#nestedatt--configuration--mock_catalog--source_e2e_test_cloud_mock_catalog_multi_schema))
 - `source_e2e_test_cloud_mock_catalog_single_schema` (Attributes) A catalog with one or multiple streams that share the same schema. (see [below for nested schema](#nestedatt--configuration--mock_catalog--source_e2e_test_cloud_mock_catalog_single_schema))
-
-Read-Only:
-
 - `source_e2e_test_cloud_update_mock_catalog_multi_schema` (Attributes) A catalog with multiple data streams, each with a different schema. (see [below for nested schema](#nestedatt--configuration--mock_catalog--source_e2e_test_cloud_update_mock_catalog_multi_schema))
 - `source_e2e_test_cloud_update_mock_catalog_single_schema` (Attributes) A catalog with one or multiple streams that share the same schema. (see [below for nested schema](#nestedatt--configuration--mock_catalog--source_e2e_test_cloud_update_mock_catalog_single_schema))
 
@@ -84,7 +81,7 @@ Optional:
 <a id="nestedatt--configuration--mock_catalog--source_e2e_test_cloud_update_mock_catalog_multi_schema"></a>
 ### Nested Schema for `configuration.mock_catalog.source_e2e_test_cloud_update_mock_catalog_multi_schema`
 
-Read-Only:
+Required:
 
 - `stream_schemas` (String)
 - `type` (String)
@@ -93,11 +90,14 @@ Read-Only:
 <a id="nestedatt--configuration--mock_catalog--source_e2e_test_cloud_update_mock_catalog_single_schema"></a>
 ### Nested Schema for `configuration.mock_catalog.source_e2e_test_cloud_update_mock_catalog_single_schema`
 
-Read-Only:
+Required:
 
-- `stream_duplication` (Number)
 - `stream_name` (String)
 - `stream_schema` (String)
 - `type` (String)
+
+Optional:
+
+- `stream_duplication` (Number)
 
 

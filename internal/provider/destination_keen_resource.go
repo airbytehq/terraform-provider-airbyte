@@ -64,6 +64,7 @@ func (r *DestinationKeenResource) Schema(ctx context.Context, req resource.Schem
 						},
 					},
 					"infer_timestamp": schema.BoolAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"project_id": schema.StringAttribute{

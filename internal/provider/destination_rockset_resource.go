@@ -56,6 +56,7 @@ func (r *DestinationRocksetResource) Schema(ctx context.Context, req resource.Sc
 						Required: true,
 					},
 					"api_server": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"destination_type": schema.StringAttribute{

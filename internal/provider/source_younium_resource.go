@@ -60,6 +60,7 @@ func (r *SourceYouniumResource) Schema(ctx context.Context, req resource.SchemaR
 						Required: true,
 					},
 					"playground": schema.BoolAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{

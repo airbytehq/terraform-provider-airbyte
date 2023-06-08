@@ -58,6 +58,7 @@ func (r *SourceHubspotResource) Schema(ctx context.Context, req resource.SchemaR
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"source_hubspot_authentication_o_auth": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"client_id": schema.StringAttribute{
@@ -82,6 +83,7 @@ func (r *SourceHubspotResource) Schema(ctx context.Context, req resource.SchemaR
 								Description: `Choose how to authenticate to HubSpot.`,
 							},
 							"source_hubspot_authentication_private_app": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
@@ -101,15 +103,16 @@ func (r *SourceHubspotResource) Schema(ctx context.Context, req resource.SchemaR
 							},
 							"source_hubspot_update_authentication_o_auth": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"client_id": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"client_secret": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"credentials_title": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"OAuth Credentials",
@@ -118,19 +121,20 @@ func (r *SourceHubspotResource) Schema(ctx context.Context, req resource.SchemaR
 										Description: `Name of the credentials`,
 									},
 									"refresh_token": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 								Description: `Choose how to authenticate to HubSpot.`,
 							},
 							"source_hubspot_update_authentication_private_app": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"credentials_title": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"Private App Credentials",

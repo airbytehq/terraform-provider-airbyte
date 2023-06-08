@@ -58,6 +58,7 @@ func (r *SourceStravaResource) Schema(ctx context.Context, req resource.SchemaRe
 						Required: true,
 					},
 					"auth_type": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(

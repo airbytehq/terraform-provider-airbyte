@@ -45,9 +45,6 @@ Optional:
 
 - `source_airtable_authentication_o_auth2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_airtable_authentication_o_auth2_0))
 - `source_airtable_authentication_personal_access_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_airtable_authentication_personal_access_token))
-
-Read-Only:
-
 - `source_airtable_update_authentication_o_auth2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_airtable_update_authentication_o_auth2_0))
 - `source_airtable_update_authentication_personal_access_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_airtable_update_authentication_personal_access_token))
 
@@ -82,22 +79,28 @@ Optional:
 <a id="nestedatt--configuration--credentials--source_airtable_update_authentication_o_auth2_0"></a>
 ### Nested Schema for `configuration.credentials.source_airtable_update_authentication_o_auth2_0`
 
-Read-Only:
+Required:
 
-- `access_token` (String)
-- `auth_method` (String)
 - `client_id` (String)
 - `client_secret` (String)
 - `refresh_token` (String)
+
+Optional:
+
+- `access_token` (String)
+- `auth_method` (String)
 - `token_expiry_date` (String)
 
 
 <a id="nestedatt--configuration--credentials--source_airtable_update_authentication_personal_access_token"></a>
 ### Nested Schema for `configuration.credentials.source_airtable_update_authentication_personal_access_token`
 
-Read-Only:
+Required:
 
 - `api_key` (String)
+
+Optional:
+
 - `auth_method` (String)
 
 

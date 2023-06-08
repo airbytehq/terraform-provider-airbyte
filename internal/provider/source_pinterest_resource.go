@@ -55,9 +55,11 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"credentials": schema.SingleNestedAttribute{
+						Computed: true,
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_pinterest_authorization_method_access_token": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
@@ -74,6 +76,7 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 								},
 							},
 							"source_pinterest_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
+								Computed: true,
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_method": schema.StringAttribute{
@@ -85,9 +88,11 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 										},
 									},
 									"client_id": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 									},
 									"client_secret": schema.StringAttribute{
+										Computed: true,
 										Optional: true,
 									},
 									"refresh_token": schema.StringAttribute{
@@ -97,12 +102,13 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 							},
 							"source_pinterest_update_authorization_method_access_token": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 									"auth_method": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"access_token",
@@ -113,9 +119,10 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 							},
 							"source_pinterest_update_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
 								Computed: true,
+								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_method": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
 												"oauth2.0",
@@ -124,12 +131,14 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 									},
 									"client_id": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 									},
 									"client_secret": schema.StringAttribute{
 										Computed: true,
+										Optional: true,
 									},
 									"refresh_token": schema.StringAttribute{
-										Computed: true,
+										Required: true,
 									},
 								},
 							},
@@ -153,6 +162,7 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 						},
 					},
 					"status": schema.ListAttribute{
+						Computed:    true,
 						Optional:    true,
 						ElementType: types.StringType,
 					},

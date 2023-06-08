@@ -65,6 +65,7 @@ func (r *SourceOnesignalResource) Schema(ctx context.Context, req resource.Schem
 									Required: true,
 								},
 								"app_name": schema.StringAttribute{
+									Computed: true,
 									Optional: true,
 								},
 							},

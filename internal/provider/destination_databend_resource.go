@@ -67,12 +67,15 @@ func (r *DestinationDatabendResource) Schema(ctx context.Context, req resource.S
 						Required: true,
 					},
 					"password": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"port": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"table": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"username": schema.StringAttribute{

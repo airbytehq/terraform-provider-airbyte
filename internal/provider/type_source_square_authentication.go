@@ -3,8 +3,8 @@
 package provider
 
 type SourceSquareAuthentication struct {
-	SourceSquareAuthenticationAPIKey                    *SourceSquareAuthenticationAPIKey                    `tfsdk:"source_square_authentication_api_key"`
-	SourceSquareAuthenticationOauthAuthentication       *SourceSquareAuthenticationOauthAuthentication       `tfsdk:"source_square_authentication_oauth_authentication"`
-	SourceSquareUpdateAuthenticationAPIKey              *SourceSquareUpdateAuthenticationAPIKey              `tfsdk:"source_square_update_authentication_api_key"`
-	SourceSquareUpdateAuthenticationOauthAuthentication *SourceSquareUpdateAuthenticationOauthAuthentication `tfsdk:"source_square_update_authentication_oauth_authentication"`
+	SourceSquareAuthenticationAPIKey                    *SourceSquareAuthenticationAPIKey              `tfsdk:"source_square_authentication_api_key"`
+	SourceSquareAuthenticationOauthAuthentication       *SourceSquareAuthenticationOauthAuthentication `tfsdk:"source_square_authentication_oauth_authentication"`
+	SourceSquareUpdateAuthenticationAPIKey              *SourceSquareAuthenticationAPIKey              `tfsdk:"source_square_update_authentication_api_key"`
+	SourceSquareUpdateAuthenticationOauthAuthentication *SourceSquareAuthenticationOauthAuthentication `tfsdk:"source_square_update_authentication_oauth_authentication"`
 }

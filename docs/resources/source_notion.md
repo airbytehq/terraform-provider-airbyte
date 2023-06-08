@@ -49,9 +49,6 @@ Optional:
 
 - `source_notion_authenticate_using_access_token` (Attributes) Pick an authentication method. (see [below for nested schema](#nestedatt--configuration--credentials--source_notion_authenticate_using_access_token))
 - `source_notion_authenticate_using_o_auth2_0` (Attributes) Pick an authentication method. (see [below for nested schema](#nestedatt--configuration--credentials--source_notion_authenticate_using_o_auth2_0))
-
-Read-Only:
-
 - `source_notion_update_authenticate_using_access_token` (Attributes) Pick an authentication method. (see [below for nested schema](#nestedatt--configuration--credentials--source_notion_update_authenticate_using_access_token))
 - `source_notion_update_authenticate_using_o_auth2_0` (Attributes) Pick an authentication method. (see [below for nested schema](#nestedatt--configuration--credentials--source_notion_update_authenticate_using_o_auth2_0))
 
@@ -78,7 +75,7 @@ Required:
 <a id="nestedatt--configuration--credentials--source_notion_update_authenticate_using_access_token"></a>
 ### Nested Schema for `configuration.credentials.source_notion_update_authenticate_using_access_token`
 
-Read-Only:
+Required:
 
 - `auth_type` (String)
 - `token` (String)
@@ -87,7 +84,7 @@ Read-Only:
 <a id="nestedatt--configuration--credentials--source_notion_update_authenticate_using_o_auth2_0"></a>
 ### Nested Schema for `configuration.credentials.source_notion_update_authenticate_using_o_auth2_0`
 
-Read-Only:
+Required:
 
 - `access_token` (String)
 - `auth_type` (String)

@@ -70,9 +70,6 @@ Optional:
 - `source_s3_file_format_csv` (Attributes) This connector utilises <a href="https: // arrow.apache.org/docs/python/generated/pyarrow.csv.open_csv.html" target="_blank">PyArrow (Apache Arrow)</a> for CSV parsing. (see [below for nested schema](#nestedatt--configuration--format--source_s3_file_format_csv))
 - `source_s3_file_format_jsonl` (Attributes) This connector uses <a href="https://arrow.apache.org/docs/python/json.html" target="_blank">PyArrow</a> for JSON Lines (jsonl) file parsing. (see [below for nested schema](#nestedatt--configuration--format--source_s3_file_format_jsonl))
 - `source_s3_file_format_parquet` (Attributes) This connector utilises <a href="https://arrow.apache.org/docs/python/generated/pyarrow.parquet.ParquetFile.html" target="_blank">PyArrow (Apache Arrow)</a> for Parquet parsing. (see [below for nested schema](#nestedatt--configuration--format--source_s3_file_format_parquet))
-
-Read-Only:
-
 - `source_s3_update_file_format_avro` (Attributes) This connector utilises <a href="https://fastavro.readthedocs.io/en/latest/" target="_blank">fastavro</a> for Avro parsing. (see [below for nested schema](#nestedatt--configuration--format--source_s3_update_file_format_avro))
 - `source_s3_update_file_format_csv` (Attributes) This connector utilises <a href="https: // arrow.apache.org/docs/python/generated/pyarrow.csv.open_csv.html" target="_blank">PyArrow (Apache Arrow)</a> for CSV parsing. (see [below for nested schema](#nestedatt--configuration--format--source_s3_update_file_format_csv))
 - `source_s3_update_file_format_jsonl` (Attributes) This connector uses <a href="https://arrow.apache.org/docs/python/json.html" target="_blank">PyArrow</a> for JSON Lines (jsonl) file parsing. (see [below for nested schema](#nestedatt--configuration--format--source_s3_update_file_format_jsonl))
@@ -129,7 +126,7 @@ Optional:
 <a id="nestedatt--configuration--format--source_s3_update_file_format_avro"></a>
 ### Nested Schema for `configuration.format.source_s3_update_file_format_avro`
 
-Read-Only:
+Optional:
 
 - `filetype` (String)
 
@@ -137,7 +134,7 @@ Read-Only:
 <a id="nestedatt--configuration--format--source_s3_update_file_format_csv"></a>
 ### Nested Schema for `configuration.format.source_s3_update_file_format_csv`
 
-Read-Only:
+Optional:
 
 - `additional_reader_options` (String)
 - `advanced_options` (String)
@@ -155,7 +152,7 @@ Read-Only:
 <a id="nestedatt--configuration--format--source_s3_update_file_format_jsonl"></a>
 ### Nested Schema for `configuration.format.source_s3_update_file_format_jsonl`
 
-Read-Only:
+Optional:
 
 - `block_size` (Number)
 - `filetype` (String)
@@ -166,7 +163,7 @@ Read-Only:
 <a id="nestedatt--configuration--format--source_s3_update_file_format_parquet"></a>
 ### Nested Schema for `configuration.format.source_s3_update_file_format_parquet`
 
-Read-Only:
+Optional:
 
 - `batch_size` (Number)
 - `buffer_size` (Number)

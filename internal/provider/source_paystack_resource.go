@@ -55,6 +55,7 @@ func (r *SourcePaystackResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"lookback_window_days": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"secret_key": schema.StringAttribute{

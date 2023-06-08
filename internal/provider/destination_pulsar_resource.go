@@ -95,9 +95,11 @@ func (r *DestinationPulsarResource) Schema(ctx context.Context, req resource.Sch
 						Required: true,
 					},
 					"producer_name": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"producer_sync": schema.BoolAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"send_timeout_ms": schema.Int64Attribute{
@@ -113,6 +115,7 @@ func (r *DestinationPulsarResource) Schema(ctx context.Context, req resource.Sch
 						Required: true,
 					},
 					"topic_test": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"topic_type": schema.StringAttribute{

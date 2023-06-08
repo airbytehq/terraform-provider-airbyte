@@ -48,9 +48,6 @@ Optional:
 
 - `source_tiktok_marketing_authentication_method_o_auth2_0` (Attributes) Authentication method (see [below for nested schema](#nestedatt--configuration--credentials--source_tiktok_marketing_authentication_method_o_auth2_0))
 - `source_tiktok_marketing_authentication_method_sandbox_access_token` (Attributes) Authentication method (see [below for nested schema](#nestedatt--configuration--credentials--source_tiktok_marketing_authentication_method_sandbox_access_token))
-
-Read-Only:
-
 - `source_tiktok_marketing_update_authentication_method_o_auth2_0` (Attributes) Authentication method (see [below for nested schema](#nestedatt--configuration--credentials--source_tiktok_marketing_update_authentication_method_o_auth2_0))
 - `source_tiktok_marketing_update_authentication_method_sandbox_access_token` (Attributes) Authentication method (see [below for nested schema](#nestedatt--configuration--credentials--source_tiktok_marketing_update_authentication_method_sandbox_access_token))
 
@@ -85,22 +82,28 @@ Optional:
 <a id="nestedatt--configuration--credentials--source_tiktok_marketing_update_authentication_method_o_auth2_0"></a>
 ### Nested Schema for `configuration.credentials.source_tiktok_marketing_update_authentication_method_o_auth2_0`
 
-Read-Only:
+Required:
 
 - `access_token` (String)
-- `advertiser_id` (String)
 - `app_id` (String)
-- `auth_type` (String)
 - `secret` (String)
+
+Optional:
+
+- `advertiser_id` (String)
+- `auth_type` (String)
 
 
 <a id="nestedatt--configuration--credentials--source_tiktok_marketing_update_authentication_method_sandbox_access_token"></a>
 ### Nested Schema for `configuration.credentials.source_tiktok_marketing_update_authentication_method_sandbox_access_token`
 
-Read-Only:
+Required:
 
 - `access_token` (String)
 - `advertiser_id` (String)
+
+Optional:
+
 - `auth_type` (String)
 
 

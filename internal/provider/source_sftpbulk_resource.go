@@ -55,12 +55,15 @@ func (r *SourceSftpBulkResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"file_most_recent": schema.BoolAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"file_pattern": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"file_type": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -77,15 +80,18 @@ func (r *SourceSftpBulkResource) Schema(ctx context.Context, req resource.Schema
 						Required: true,
 					},
 					"password": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"port": schema.Int64Attribute{
 						Required: true,
 					},
 					"private_key": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"separator": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{

@@ -54,6 +54,7 @@ func (r *SourceMailjetSmsResource) Schema(ctx context.Context, req resource.Sche
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"end_date": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{
@@ -65,6 +66,7 @@ func (r *SourceMailjetSmsResource) Schema(ctx context.Context, req resource.Sche
 						},
 					},
 					"start_date": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"token": schema.StringAttribute{

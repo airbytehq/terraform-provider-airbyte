@@ -57,9 +57,11 @@ func (r *SourceBambooHrResource) Schema(ctx context.Context, req resource.Schema
 						Required: true,
 					},
 					"custom_reports_fields": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"custom_reports_include_default_fields": schema.BoolAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{

@@ -3,8 +3,8 @@
 package provider
 
 type DestinationMongodbAuthorizationType struct {
-	DestinationMongodbAuthorizationTypeLoginPassword       *DestinationMongodbAuthorizationTypeLoginPassword       `tfsdk:"destination_mongodb_authorization_type_login_password"`
-	DestinationMongodbAuthorizationTypeNone                *DestinationMongodbAuthorizationTypeNone                `tfsdk:"destination_mongodb_authorization_type_none"`
-	DestinationMongodbUpdateAuthorizationTypeLoginPassword *DestinationMongodbUpdateAuthorizationTypeLoginPassword `tfsdk:"destination_mongodb_update_authorization_type_login_password"`
-	DestinationMongodbUpdateAuthorizationTypeNone          *DestinationMongodbUpdateAuthorizationTypeNone          `tfsdk:"destination_mongodb_update_authorization_type_none"`
+	DestinationMongodbAuthorizationTypeLoginPassword       *DestinationMongodbAuthorizationTypeLoginPassword `tfsdk:"destination_mongodb_authorization_type_login_password"`
+	DestinationMongodbAuthorizationTypeNone                *DestinationMongodbAuthorizationTypeNone          `tfsdk:"destination_mongodb_authorization_type_none"`
+	DestinationMongodbUpdateAuthorizationTypeLoginPassword *DestinationMongodbAuthorizationTypeLoginPassword `tfsdk:"destination_mongodb_update_authorization_type_login_password"`
+	DestinationMongodbUpdateAuthorizationTypeNone          *DestinationMongodbAuthorizationTypeNone          `tfsdk:"destination_mongodb_update_authorization_type_none"`
 }

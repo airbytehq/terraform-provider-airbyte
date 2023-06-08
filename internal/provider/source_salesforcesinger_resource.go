@@ -70,12 +70,15 @@ func (r *SourceSalesforceSingerResource) Schema(ctx context.Context, req resourc
 						Required: true,
 					},
 					"is_sandbox": schema.BoolAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"quota_percent_per_run": schema.NumberAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"quota_percent_total": schema.NumberAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"refresh_token": schema.StringAttribute{

@@ -46,9 +46,6 @@ Optional:
 
 - `source_auth0_authentication_method_o_auth2_access_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_auth0_authentication_method_o_auth2_access_token))
 - `source_auth0_authentication_method_o_auth2_confidential_application` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_auth0_authentication_method_o_auth2_confidential_application))
-
-Read-Only:
-
 - `source_auth0_update_authentication_method_o_auth2_access_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_auth0_update_authentication_method_o_auth2_access_token))
 - `source_auth0_update_authentication_method_o_auth2_confidential_application` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_auth0_update_authentication_method_o_auth2_confidential_application))
 
@@ -75,7 +72,7 @@ Required:
 <a id="nestedatt--configuration--credentials--source_auth0_update_authentication_method_o_auth2_access_token"></a>
 ### Nested Schema for `configuration.credentials.source_auth0_update_authentication_method_o_auth2_access_token`
 
-Read-Only:
+Required:
 
 - `access_token` (String)
 - `auth_type` (String)
@@ -84,7 +81,7 @@ Read-Only:
 <a id="nestedatt--configuration--credentials--source_auth0_update_authentication_method_o_auth2_confidential_application"></a>
 ### Nested Schema for `configuration.credentials.source_auth0_update_authentication_method_o_auth2_confidential_application`
 
-Read-Only:
+Required:
 
 - `audience` (String)
 - `auth_type` (String)

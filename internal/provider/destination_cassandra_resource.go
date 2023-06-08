@@ -56,6 +56,7 @@ func (r *DestinationCassandraResource) Schema(ctx context.Context, req resource.
 						Required: true,
 					},
 					"datacenter": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"destination_type": schema.StringAttribute{
@@ -76,6 +77,7 @@ func (r *DestinationCassandraResource) Schema(ctx context.Context, req resource.
 						Required: true,
 					},
 					"replication": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 					"username": schema.StringAttribute{

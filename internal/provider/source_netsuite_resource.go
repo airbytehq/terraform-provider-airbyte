@@ -60,6 +60,7 @@ func (r *SourceNetsuiteResource) Schema(ctx context.Context, req resource.Schema
 						Required: true,
 					},
 					"object_types": schema.ListAttribute{
+						Computed:    true,
 						Optional:    true,
 						ElementType: types.StringType,
 					},
@@ -84,6 +85,7 @@ func (r *SourceNetsuiteResource) Schema(ctx context.Context, req resource.Schema
 						Required: true,
 					},
 					"window_in_days": schema.Int64Attribute{
+						Computed: true,
 						Optional: true,
 					},
 				},

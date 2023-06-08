@@ -54,9 +54,6 @@ Optional:
 
 - `source_sftp_authentication_wildcard_password_authentication` (Attributes) The server authentication method (see [below for nested schema](#nestedatt--configuration--credentials--source_sftp_authentication_wildcard_password_authentication))
 - `source_sftp_authentication_wildcard_ssh_key_authentication` (Attributes) The server authentication method (see [below for nested schema](#nestedatt--configuration--credentials--source_sftp_authentication_wildcard_ssh_key_authentication))
-
-Read-Only:
-
 - `source_sftp_update_authentication_wildcard_password_authentication` (Attributes) The server authentication method (see [below for nested schema](#nestedatt--configuration--credentials--source_sftp_update_authentication_wildcard_password_authentication))
 - `source_sftp_update_authentication_wildcard_ssh_key_authentication` (Attributes) The server authentication method (see [below for nested schema](#nestedatt--configuration--credentials--source_sftp_update_authentication_wildcard_ssh_key_authentication))
 
@@ -81,7 +78,7 @@ Required:
 <a id="nestedatt--configuration--credentials--source_sftp_update_authentication_wildcard_password_authentication"></a>
 ### Nested Schema for `configuration.credentials.source_sftp_update_authentication_wildcard_password_authentication`
 
-Read-Only:
+Required:
 
 - `auth_method` (String) Connect through password authentication
 - `auth_user_password` (String)
@@ -90,7 +87,7 @@ Read-Only:
 <a id="nestedatt--configuration--credentials--source_sftp_update_authentication_wildcard_ssh_key_authentication"></a>
 ### Nested Schema for `configuration.credentials.source_sftp_update_authentication_wildcard_ssh_key_authentication`
 
-Read-Only:
+Required:
 
 - `auth_method` (String) Connect through ssh key
 - `auth_ssh_key` (String)

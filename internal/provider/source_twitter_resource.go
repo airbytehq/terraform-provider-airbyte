@@ -58,6 +58,7 @@ func (r *SourceTwitterResource) Schema(ctx context.Context, req resource.SchemaR
 						Required: true,
 					},
 					"end_date": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
@@ -75,6 +76,7 @@ func (r *SourceTwitterResource) Schema(ctx context.Context, req resource.SchemaR
 						},
 					},
 					"start_date": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),

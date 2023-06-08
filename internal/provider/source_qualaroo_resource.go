@@ -68,6 +68,7 @@ func (r *SourceQualarooResource) Schema(ctx context.Context, req resource.Schema
 						Required: true,
 					},
 					"survey_ids": schema.ListAttribute{
+						Computed:    true,
 						Optional:    true,
 						ElementType: types.StringType,
 					},

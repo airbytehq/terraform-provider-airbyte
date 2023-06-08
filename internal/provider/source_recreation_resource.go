@@ -57,6 +57,7 @@ func (r *SourceRecreationResource) Schema(ctx context.Context, req resource.Sche
 						Required: true,
 					},
 					"query_campsites": schema.StringAttribute{
+						Computed: true,
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{
