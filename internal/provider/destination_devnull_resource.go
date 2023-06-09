@@ -7,9 +7,12 @@ import (
 	"context"
 	"fmt"
 
+	speakeasy_objectplanmodifier "airbyte/internal/planmodifiers/objectplanmodifier"
+	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -66,6 +69,9 @@ func (r *DestinationDevNullResource) Schema(ctx context.Context, req resource.Sc
 						Attributes: map[string]schema.Attribute{
 							"destination_dev_null_test_destination_silent": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"test_destination_type": schema.StringAttribute{
@@ -81,6 +87,9 @@ func (r *DestinationDevNullResource) Schema(ctx context.Context, req resource.Sc
 							},
 							"destination_dev_null_update_test_destination_silent": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"test_destination_type": schema.StringAttribute{
@@ -103,9 +112,15 @@ func (r *DestinationDevNullResource) Schema(ctx context.Context, req resource.Sc
 			},
 			"destination_id": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"destination_type": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"name": schema.StringAttribute{
 				Required: true,

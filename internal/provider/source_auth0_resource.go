@@ -7,9 +7,12 @@ import (
 	"context"
 	"fmt"
 
+	speakeasy_objectplanmodifier "airbyte/internal/planmodifiers/objectplanmodifier"
+	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -62,6 +65,9 @@ func (r *SourceAuth0Resource) Schema(ctx context.Context, req resource.SchemaReq
 						Attributes: map[string]schema.Attribute{
 							"source_auth0_authentication_method_o_auth2_access_token": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
@@ -79,6 +85,9 @@ func (r *SourceAuth0Resource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"source_auth0_authentication_method_o_auth2_confidential_application": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"audience": schema.StringAttribute{
@@ -102,6 +111,9 @@ func (r *SourceAuth0Resource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"source_auth0_update_authentication_method_o_auth2_access_token": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
@@ -119,6 +131,9 @@ func (r *SourceAuth0Resource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"source_auth0_update_authentication_method_o_auth2_confidential_application": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"audience": schema.StringAttribute{
@@ -163,9 +178,15 @@ func (r *SourceAuth0Resource) Schema(ctx context.Context, req resource.SchemaReq
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"source_type": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"workspace_id": schema.StringAttribute{
 				Required: true,

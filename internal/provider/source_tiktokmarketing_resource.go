@@ -7,9 +7,13 @@ import (
 	"context"
 	"fmt"
 
+	speakeasy_int64planmodifier "airbyte/internal/planmodifiers/int64planmodifier"
+	speakeasy_objectplanmodifier "airbyte/internal/planmodifiers/objectplanmodifier"
+	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -56,14 +60,23 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 				Attributes: map[string]schema.Attribute{
 					"attribution_window": schema.Int64Attribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Int64{
+							speakeasy_int64planmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"credentials": schema.SingleNestedAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.TrustRead(),
+						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_tiktok_marketing_authentication_method_o_auth2_0": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
@@ -71,6 +84,9 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 									},
 									"advertiser_id": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"app_id": schema.StringAttribute{
@@ -78,6 +94,9 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 									},
 									"auth_type": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -93,6 +112,9 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 							},
 							"source_tiktok_marketing_authentication_method_sandbox_access_token": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
@@ -103,6 +125,9 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 									},
 									"auth_type": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -115,6 +140,9 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 							},
 							"source_tiktok_marketing_update_authentication_method_o_auth2_0": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
@@ -122,6 +150,9 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 									},
 									"advertiser_id": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"app_id": schema.StringAttribute{
@@ -129,6 +160,9 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 									},
 									"auth_type": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -144,6 +178,9 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 							},
 							"source_tiktok_marketing_update_authentication_method_sandbox_access_token": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
@@ -154,6 +191,9 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 									},
 									"auth_type": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -171,6 +211,9 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 					},
 					"end_date": schema.StringAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.TrustRead(),
+						},
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
@@ -178,6 +221,9 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 					},
 					"source_type": schema.StringAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.TrustRead(),
+						},
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -187,6 +233,9 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.TrustRead(),
+						},
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
@@ -202,9 +251,15 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"source_type": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"workspace_id": schema.StringAttribute{
 				Required: true,

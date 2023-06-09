@@ -7,9 +7,13 @@ import (
 	"context"
 	"fmt"
 
+	speakeasy_boolplanmodifier "airbyte/internal/planmodifiers/boolplanmodifier"
+	speakeasy_listplanmodifier "airbyte/internal/planmodifiers/listplanmodifier"
+	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -65,19 +69,31 @@ func (r *SourceJiraResource) Schema(ctx context.Context, req resource.SchemaRequ
 					},
 					"enable_experimental_streams": schema.BoolAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Bool{
+							speakeasy_boolplanmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"expand_issue_changelog": schema.BoolAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Bool{
+							speakeasy_boolplanmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"projects": schema.ListAttribute{
-						Computed:    true,
+						Computed: true,
+						PlanModifiers: []planmodifier.List{
+							speakeasy_listplanmodifier.TrustRead(),
+						},
 						Optional:    true,
 						ElementType: types.StringType,
 					},
 					"render_fields": schema.BoolAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Bool{
+							speakeasy_boolplanmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{
@@ -90,6 +106,9 @@ func (r *SourceJiraResource) Schema(ctx context.Context, req resource.SchemaRequ
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.TrustRead(),
+						},
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
@@ -105,9 +124,15 @@ func (r *SourceJiraResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"source_type": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"workspace_id": schema.StringAttribute{
 				Required: true,

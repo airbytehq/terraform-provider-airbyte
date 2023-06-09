@@ -4,7 +4,7 @@ package provider
 
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
-type SourceSalesforceStreamsCriteria struct {
+type SourceSalesforceUpdateStreamsCriteria struct {
 	Criteria types.String `tfsdk:"criteria"`
 	Value    types.String `tfsdk:"value"`
 }

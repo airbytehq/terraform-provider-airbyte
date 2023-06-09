@@ -7,9 +7,12 @@ import (
 	"context"
 	"fmt"
 
+	speakeasy_objectplanmodifier "airbyte/internal/planmodifiers/objectplanmodifier"
+	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -56,6 +59,9 @@ func (r *SourceFaunaResource) Schema(ctx context.Context, req resource.SchemaReq
 				Attributes: map[string]schema.Attribute{
 					"collection": schema.SingleNestedAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.TrustRead(),
+						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"deletions": schema.SingleNestedAttribute{
@@ -63,6 +69,9 @@ func (r *SourceFaunaResource) Schema(ctx context.Context, req resource.SchemaReq
 								Attributes: map[string]schema.Attribute{
 									"source_fauna_collection_deletion_mode_disabled": schema.SingleNestedAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.Object{
+											speakeasy_objectplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"deletion_mode": schema.StringAttribute{
@@ -81,6 +90,9 @@ func (r *SourceFaunaResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"source_fauna_collection_deletion_mode_enabled": schema.SingleNestedAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.Object{
+											speakeasy_objectplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"column": schema.StringAttribute{
@@ -102,6 +114,9 @@ func (r *SourceFaunaResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"source_fauna_update_collection_deletion_mode_disabled": schema.SingleNestedAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.Object{
+											speakeasy_objectplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"deletion_mode": schema.StringAttribute{
@@ -120,6 +135,9 @@ func (r *SourceFaunaResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"source_fauna_update_collection_deletion_mode_enabled": schema.SingleNestedAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.Object{
+											speakeasy_objectplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"column": schema.StringAttribute{
@@ -180,9 +198,15 @@ func (r *SourceFaunaResource) Schema(ctx context.Context, req resource.SchemaReq
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"source_type": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"workspace_id": schema.StringAttribute{
 				Required: true,

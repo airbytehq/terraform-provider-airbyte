@@ -7,9 +7,14 @@ import (
 	"context"
 	"fmt"
 
+	speakeasy_boolplanmodifier "airbyte/internal/planmodifiers/boolplanmodifier"
+	speakeasy_int64planmodifier "airbyte/internal/planmodifiers/int64planmodifier"
+	speakeasy_listplanmodifier "airbyte/internal/planmodifiers/listplanmodifier"
+	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -62,41 +67,65 @@ func (r *SourceFacebookMarketingResource) Schema(ctx context.Context, req resour
 					},
 					"action_breakdowns_allow_empty": schema.BoolAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Bool{
+							speakeasy_boolplanmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"custom_insights": schema.ListNestedAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.List{
+							speakeasy_listplanmodifier.TrustRead(),
+						},
 						Optional: true,
 						NestedObject: schema.NestedAttributeObject{
 							Attributes: map[string]schema.Attribute{
 								"action_breakdowns": schema.ListAttribute{
-									Computed:    true,
+									Computed: true,
+									PlanModifiers: []planmodifier.List{
+										speakeasy_listplanmodifier.TrustRead(),
+									},
 									Optional:    true,
 									ElementType: types.StringType,
 								},
 								"breakdowns": schema.ListAttribute{
-									Computed:    true,
+									Computed: true,
+									PlanModifiers: []planmodifier.List{
+										speakeasy_listplanmodifier.TrustRead(),
+									},
 									Optional:    true,
 									ElementType: types.StringType,
 								},
 								"end_date": schema.StringAttribute{
 									Computed: true,
+									PlanModifiers: []planmodifier.String{
+										speakeasy_stringplanmodifier.TrustRead(),
+									},
 									Optional: true,
 									Validators: []validator.String{
 										validators.IsRFC3339(),
 									},
 								},
 								"fields": schema.ListAttribute{
-									Computed:    true,
+									Computed: true,
+									PlanModifiers: []planmodifier.List{
+										speakeasy_listplanmodifier.TrustRead(),
+									},
 									Optional:    true,
 									ElementType: types.StringType,
 								},
 								"insights_lookback_window": schema.Int64Attribute{
 									Computed: true,
+									PlanModifiers: []planmodifier.Int64{
+										speakeasy_int64planmodifier.TrustRead(),
+									},
 									Optional: true,
 								},
 								"level": schema.StringAttribute{
 									Computed: true,
+									PlanModifiers: []planmodifier.String{
+										speakeasy_stringplanmodifier.TrustRead(),
+									},
 									Optional: true,
 									Validators: []validator.String{
 										stringvalidator.OneOf(
@@ -113,6 +142,9 @@ func (r *SourceFacebookMarketingResource) Schema(ctx context.Context, req resour
 								},
 								"start_date": schema.StringAttribute{
 									Computed: true,
+									PlanModifiers: []planmodifier.String{
+										speakeasy_stringplanmodifier.TrustRead(),
+									},
 									Optional: true,
 									Validators: []validator.String{
 										validators.IsRFC3339(),
@@ -120,6 +152,9 @@ func (r *SourceFacebookMarketingResource) Schema(ctx context.Context, req resour
 								},
 								"time_increment": schema.Int64Attribute{
 									Computed: true,
+									PlanModifiers: []planmodifier.Int64{
+										speakeasy_int64planmodifier.TrustRead(),
+									},
 									Optional: true,
 								},
 							},
@@ -127,6 +162,9 @@ func (r *SourceFacebookMarketingResource) Schema(ctx context.Context, req resour
 					},
 					"end_date": schema.StringAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.TrustRead(),
+						},
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
@@ -134,22 +172,37 @@ func (r *SourceFacebookMarketingResource) Schema(ctx context.Context, req resour
 					},
 					"fetch_thumbnail_images": schema.BoolAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Bool{
+							speakeasy_boolplanmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"include_deleted": schema.BoolAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Bool{
+							speakeasy_boolplanmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"insights_lookback_window": schema.Int64Attribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Int64{
+							speakeasy_int64planmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"max_batch_size": schema.Int64Attribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Int64{
+							speakeasy_int64planmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"page_size": schema.Int64Attribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Int64{
+							speakeasy_int64planmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{
@@ -176,9 +229,15 @@ func (r *SourceFacebookMarketingResource) Schema(ctx context.Context, req resour
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"source_type": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"workspace_id": schema.StringAttribute{
 				Required: true,

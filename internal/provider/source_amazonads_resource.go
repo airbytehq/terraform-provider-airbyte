@@ -7,8 +7,12 @@ import (
 	"context"
 	"fmt"
 
+	speakeasy_int64planmodifier "airbyte/internal/planmodifiers/int64planmodifier"
+	speakeasy_listplanmodifier "airbyte/internal/planmodifiers/listplanmodifier"
+	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -55,6 +59,9 @@ func (r *SourceAmazonAdsResource) Schema(ctx context.Context, req resource.Schem
 				Attributes: map[string]schema.Attribute{
 					"auth_type": schema.StringAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.TrustRead(),
+						},
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -70,10 +77,16 @@ func (r *SourceAmazonAdsResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"look_back_window": schema.Int64Attribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Int64{
+							speakeasy_int64planmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"profiles": schema.ListAttribute{
-						Computed:    true,
+						Computed: true,
+						PlanModifiers: []planmodifier.List{
+							speakeasy_listplanmodifier.TrustRead(),
+						},
 						Optional:    true,
 						ElementType: types.Int64Type,
 					},
@@ -82,6 +95,9 @@ func (r *SourceAmazonAdsResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"region": schema.StringAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.TrustRead(),
+						},
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -93,7 +109,10 @@ func (r *SourceAmazonAdsResource) Schema(ctx context.Context, req resource.Schem
 						Description: `Region to pull data from (EU/NA/FE). See <a href="https://advertising.amazon.com/API/docs/en-us/info/api-overview#api-endpoints">docs</a> for more details.`,
 					},
 					"report_record_types": schema.ListAttribute{
-						Computed:    true,
+						Computed: true,
+						PlanModifiers: []planmodifier.List{
+							speakeasy_listplanmodifier.TrustRead(),
+						},
 						Optional:    true,
 						ElementType: types.StringType,
 					},
@@ -107,10 +126,16 @@ func (r *SourceAmazonAdsResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"state_filter": schema.ListAttribute{
-						Computed:    true,
+						Computed: true,
+						PlanModifiers: []planmodifier.List{
+							speakeasy_listplanmodifier.TrustRead(),
+						},
 						Optional:    true,
 						ElementType: types.StringType,
 					},
@@ -124,9 +149,15 @@ func (r *SourceAmazonAdsResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"source_type": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"workspace_id": schema.StringAttribute{
 				Required: true,

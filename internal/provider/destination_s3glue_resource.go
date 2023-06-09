@@ -7,9 +7,12 @@ import (
 	"context"
 	"fmt"
 
+	speakeasy_objectplanmodifier "airbyte/internal/planmodifiers/objectplanmodifier"
+	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -55,6 +58,9 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 				Attributes: map[string]schema.Attribute{
 					"access_key_id": schema.StringAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"destination_type": schema.StringAttribute{
@@ -67,6 +73,9 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 					},
 					"file_name_pattern": schema.StringAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"format": schema.SingleNestedAttribute{
@@ -74,18 +83,30 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 						Attributes: map[string]schema.Attribute{
 							"destination_s3_glue_output_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"compression": schema.SingleNestedAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.Object{
+											speakeasy_objectplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"destination_s3_glue_output_format_json_lines_newline_delimited_json_compression_gzip": schema.SingleNestedAttribute{
 												Computed: true,
+												PlanModifiers: []planmodifier.Object{
+													speakeasy_objectplanmodifier.TrustRead(),
+												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
 														Computed: true,
+														PlanModifiers: []planmodifier.String{
+															speakeasy_stringplanmodifier.TrustRead(),
+														},
 														Optional: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -98,10 +119,16 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 											},
 											"destination_s3_glue_output_format_json_lines_newline_delimited_json_compression_no_compression": schema.SingleNestedAttribute{
 												Computed: true,
+												PlanModifiers: []planmodifier.Object{
+													speakeasy_objectplanmodifier.TrustRead(),
+												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
 														Computed: true,
+														PlanModifiers: []planmodifier.String{
+															speakeasy_stringplanmodifier.TrustRead(),
+														},
 														Optional: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -119,6 +146,9 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 									},
 									"flattening": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -141,18 +171,30 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 							},
 							"destination_s3_glue_update_output_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"compression": schema.SingleNestedAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.Object{
+											speakeasy_objectplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"destination_s3_glue_update_output_format_json_lines_newline_delimited_json_compression_no_compression": schema.SingleNestedAttribute{
 												Computed: true,
+												PlanModifiers: []planmodifier.Object{
+													speakeasy_objectplanmodifier.TrustRead(),
+												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
 														Computed: true,
+														PlanModifiers: []planmodifier.String{
+															speakeasy_stringplanmodifier.TrustRead(),
+														},
 														Optional: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -165,10 +207,16 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 											},
 											"destination_s3_glue_update_output_format_json_lines_newline_delimited_json_compression_gzip": schema.SingleNestedAttribute{
 												Computed: true,
+												PlanModifiers: []planmodifier.Object{
+													speakeasy_objectplanmodifier.TrustRead(),
+												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
 														Computed: true,
+														PlanModifiers: []planmodifier.String{
+															speakeasy_stringplanmodifier.TrustRead(),
+														},
 														Optional: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -186,6 +234,9 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 									},
 									"flattening": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -266,23 +317,38 @@ func (r *DestinationS3GlueResource) Schema(ctx context.Context, req resource.Sch
 					},
 					"s3_endpoint": schema.StringAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"s3_path_format": schema.StringAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"secret_access_key": schema.StringAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 				},
 			},
 			"destination_id": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"destination_type": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"name": schema.StringAttribute{
 				Required: true,

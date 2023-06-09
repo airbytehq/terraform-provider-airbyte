@@ -7,9 +7,14 @@ import (
 	"context"
 	"fmt"
 
+	speakeasy_int64planmodifier "airbyte/internal/planmodifiers/int64planmodifier"
+	speakeasy_listplanmodifier "airbyte/internal/planmodifiers/listplanmodifier"
+	speakeasy_objectplanmodifier "airbyte/internal/planmodifiers/objectplanmodifier"
+	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -62,10 +67,16 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"jdbc_url_params": schema.StringAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"password": schema.StringAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"port": schema.Int64Attribute{
@@ -73,18 +84,30 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"replication_method": schema.SingleNestedAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.TrustRead(),
+						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_postgres_replication_method_logical_replication_cdc_": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"initial_waiting_seconds": schema.Int64Attribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.Int64{
+											speakeasy_int64planmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"lsn_commit_behaviour": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -104,6 +127,9 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 									},
 									"plugin": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -117,6 +143,9 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 									},
 									"queue_size": schema.Int64Attribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.Int64{
+											speakeasy_int64planmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"replication_slot": schema.StringAttribute{
@@ -134,6 +163,9 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 							},
 							"source_postgres_replication_method_standard": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
@@ -149,14 +181,23 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 							},
 							"source_postgres_update_replication_method_logical_replication_cdc_": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"initial_waiting_seconds": schema.Int64Attribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.Int64{
+											speakeasy_int64planmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"lsn_commit_behaviour": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -176,6 +217,9 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 									},
 									"plugin": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -189,6 +233,9 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 									},
 									"queue_size": schema.Int64Attribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.Int64{
+											speakeasy_int64planmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"replication_slot": schema.StringAttribute{
@@ -206,6 +253,9 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 							},
 							"source_postgres_update_replication_method_standard": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
@@ -225,7 +275,10 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 						},
 					},
 					"schemas": schema.ListAttribute{
-						Computed:    true,
+						Computed: true,
+						PlanModifiers: []planmodifier.List{
+							speakeasy_listplanmodifier.TrustRead(),
+						},
 						Optional:    true,
 						ElementType: types.StringType,
 					},
@@ -239,10 +292,16 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"ssl_mode": schema.SingleNestedAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.TrustRead(),
+						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_postgres_ssl_modes_allow": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"mode": schema.StringAttribute{
@@ -265,6 +324,9 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 							},
 							"source_postgres_ssl_modes_disable": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"mode": schema.StringAttribute{
@@ -287,6 +349,9 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 							},
 							"source_postgres_ssl_modes_prefer": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"mode": schema.StringAttribute{
@@ -309,6 +374,9 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 							},
 							"source_postgres_ssl_modes_require": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"mode": schema.StringAttribute{
@@ -331,6 +399,9 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 							},
 							"source_postgres_ssl_modes_verify_ca": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ca_certificate": schema.StringAttribute{
@@ -338,14 +409,23 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 									},
 									"client_certificate": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"client_key": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"client_key_password": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"mode": schema.StringAttribute{
@@ -368,6 +448,9 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 							},
 							"source_postgres_ssl_modes_verify_full": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ca_certificate": schema.StringAttribute{
@@ -375,14 +458,23 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 									},
 									"client_certificate": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"client_key": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"client_key_password": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"mode": schema.StringAttribute{
@@ -405,6 +497,9 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 							},
 							"source_postgres_update_ssl_modes_allow": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"mode": schema.StringAttribute{
@@ -427,6 +522,9 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 							},
 							"source_postgres_update_ssl_modes_disable": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"mode": schema.StringAttribute{
@@ -449,6 +547,9 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 							},
 							"source_postgres_update_ssl_modes_prefer": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"mode": schema.StringAttribute{
@@ -471,6 +572,9 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 							},
 							"source_postgres_update_ssl_modes_require": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"mode": schema.StringAttribute{
@@ -493,6 +597,9 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 							},
 							"source_postgres_update_ssl_modes_verify_ca": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ca_certificate": schema.StringAttribute{
@@ -500,14 +607,23 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 									},
 									"client_certificate": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"client_key": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"client_key_password": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"mode": schema.StringAttribute{
@@ -530,6 +646,9 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 							},
 							"source_postgres_update_ssl_modes_verify_full": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ca_certificate": schema.StringAttribute{
@@ -537,14 +656,23 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 									},
 									"client_certificate": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"client_key": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"client_key_password": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"mode": schema.StringAttribute{
@@ -572,10 +700,16 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 					},
 					"tunnel_method": schema.SingleNestedAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.TrustRead(),
+						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_postgres_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_method": schema.StringAttribute{
@@ -592,6 +726,9 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 							},
 							"source_postgres_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_host": schema.StringAttribute{
@@ -620,6 +757,9 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 							},
 							"source_postgres_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
@@ -648,6 +788,9 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 							},
 							"source_postgres_update_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_method": schema.StringAttribute{
@@ -664,6 +807,9 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 							},
 							"source_postgres_update_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_host": schema.StringAttribute{
@@ -692,6 +838,9 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 							},
 							"source_postgres_update_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
@@ -736,9 +885,15 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"source_type": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"workspace_id": schema.StringAttribute{
 				Required: true,

@@ -7,9 +7,13 @@ import (
 	"context"
 	"fmt"
 
+	speakeasy_listplanmodifier "airbyte/internal/planmodifiers/listplanmodifier"
+	speakeasy_objectplanmodifier "airbyte/internal/planmodifiers/objectplanmodifier"
+	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -55,16 +59,25 @@ func (r *SourceLinkedinAdsResource) Schema(ctx context.Context, req resource.Sch
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"account_ids": schema.ListAttribute{
-						Computed:    true,
+						Computed: true,
+						PlanModifiers: []planmodifier.List{
+							speakeasy_listplanmodifier.TrustRead(),
+						},
 						Optional:    true,
 						ElementType: types.Int64Type,
 					},
 					"credentials": schema.SingleNestedAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.TrustRead(),
+						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_linkedin_ads_authentication_access_token": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
@@ -72,6 +85,9 @@ func (r *SourceLinkedinAdsResource) Schema(ctx context.Context, req resource.Sch
 									},
 									"auth_method": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -83,10 +99,16 @@ func (r *SourceLinkedinAdsResource) Schema(ctx context.Context, req resource.Sch
 							},
 							"source_linkedin_ads_authentication_o_auth2_0": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_method": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -107,6 +129,9 @@ func (r *SourceLinkedinAdsResource) Schema(ctx context.Context, req resource.Sch
 							},
 							"source_linkedin_ads_update_authentication_access_token": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
@@ -114,6 +139,9 @@ func (r *SourceLinkedinAdsResource) Schema(ctx context.Context, req resource.Sch
 									},
 									"auth_method": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -125,10 +153,16 @@ func (r *SourceLinkedinAdsResource) Schema(ctx context.Context, req resource.Sch
 							},
 							"source_linkedin_ads_update_authentication_o_auth2_0": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_method": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -176,9 +210,15 @@ func (r *SourceLinkedinAdsResource) Schema(ctx context.Context, req resource.Sch
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"source_type": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"workspace_id": schema.StringAttribute{
 				Required: true,

@@ -7,9 +7,12 @@ import (
 	"context"
 	"fmt"
 
+	speakeasy_int64planmodifier "airbyte/internal/planmodifiers/int64planmodifier"
+	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -56,6 +59,9 @@ func (r *SourceBingAdsResource) Schema(ctx context.Context, req resource.SchemaR
 				Attributes: map[string]schema.Attribute{
 					"auth_method": schema.StringAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.TrustRead(),
+						},
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -68,6 +74,9 @@ func (r *SourceBingAdsResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"client_secret": schema.StringAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"developer_token": schema.StringAttribute{
@@ -75,6 +84,9 @@ func (r *SourceBingAdsResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"lookback_window": schema.Int64Attribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Int64{
+							speakeasy_int64planmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"refresh_token": schema.StringAttribute{
@@ -96,6 +108,9 @@ func (r *SourceBingAdsResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"tenant_id": schema.StringAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 				},
@@ -108,9 +123,15 @@ func (r *SourceBingAdsResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"source_type": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"workspace_id": schema.StringAttribute{
 				Required: true,

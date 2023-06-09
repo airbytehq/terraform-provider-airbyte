@@ -7,9 +7,13 @@ import (
 	"context"
 	"fmt"
 
+	speakeasy_boolplanmodifier "airbyte/internal/planmodifiers/boolplanmodifier"
+	speakeasy_objectplanmodifier "airbyte/internal/planmodifiers/objectplanmodifier"
+	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -56,10 +60,16 @@ func (r *SourceSquareResource) Schema(ctx context.Context, req resource.SchemaRe
 				Attributes: map[string]schema.Attribute{
 					"credentials": schema.SingleNestedAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.TrustRead(),
+						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_square_authentication_api_key": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_key": schema.StringAttribute{
@@ -78,6 +88,9 @@ func (r *SourceSquareResource) Schema(ctx context.Context, req resource.SchemaRe
 							},
 							"source_square_authentication_oauth_authentication": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
@@ -102,6 +115,9 @@ func (r *SourceSquareResource) Schema(ctx context.Context, req resource.SchemaRe
 							},
 							"source_square_update_authentication_api_key": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_key": schema.StringAttribute{
@@ -120,6 +136,9 @@ func (r *SourceSquareResource) Schema(ctx context.Context, req resource.SchemaRe
 							},
 							"source_square_update_authentication_oauth_authentication": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
@@ -149,6 +168,9 @@ func (r *SourceSquareResource) Schema(ctx context.Context, req resource.SchemaRe
 					},
 					"include_deleted_objects": schema.BoolAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Bool{
+							speakeasy_boolplanmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"is_sandbox": schema.BoolAttribute{
@@ -164,6 +186,9 @@ func (r *SourceSquareResource) Schema(ctx context.Context, req resource.SchemaRe
 					},
 					"start_date": schema.StringAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.TrustRead(),
+						},
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
@@ -179,9 +204,15 @@ func (r *SourceSquareResource) Schema(ctx context.Context, req resource.SchemaRe
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"source_type": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"workspace_id": schema.StringAttribute{
 				Required: true,

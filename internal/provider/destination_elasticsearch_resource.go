@@ -7,9 +7,13 @@ import (
 	"context"
 	"fmt"
 
+	speakeasy_boolplanmodifier "airbyte/internal/planmodifiers/boolplanmodifier"
+	speakeasy_objectplanmodifier "airbyte/internal/planmodifiers/objectplanmodifier"
+	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -55,10 +59,16 @@ func (r *DestinationElasticsearchResource) Schema(ctx context.Context, req resou
 				Attributes: map[string]schema.Attribute{
 					"authentication_method": schema.SingleNestedAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.TrustRead(),
+						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_elasticsearch_authentication_method_api_key_secret": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_key_id": schema.StringAttribute{
@@ -80,6 +90,9 @@ func (r *DestinationElasticsearchResource) Schema(ctx context.Context, req resou
 							},
 							"destination_elasticsearch_authentication_method_username_password": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
@@ -101,6 +114,9 @@ func (r *DestinationElasticsearchResource) Schema(ctx context.Context, req resou
 							},
 							"destination_elasticsearch_update_authentication_method_api_key_secret": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_key_id": schema.StringAttribute{
@@ -122,6 +138,9 @@ func (r *DestinationElasticsearchResource) Schema(ctx context.Context, req resou
 							},
 							"destination_elasticsearch_update_authentication_method_username_password": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
@@ -148,6 +167,9 @@ func (r *DestinationElasticsearchResource) Schema(ctx context.Context, req resou
 					},
 					"ca_certificate": schema.StringAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"destination_type": schema.StringAttribute{
@@ -163,15 +185,24 @@ func (r *DestinationElasticsearchResource) Schema(ctx context.Context, req resou
 					},
 					"upsert": schema.BoolAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Bool{
+							speakeasy_boolplanmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 				},
 			},
 			"destination_id": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"destination_type": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"name": schema.StringAttribute{
 				Required: true,

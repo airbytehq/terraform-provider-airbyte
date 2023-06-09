@@ -7,9 +7,12 @@ import (
 	"context"
 	"fmt"
 
+	speakeasy_objectplanmodifier "airbyte/internal/planmodifiers/objectplanmodifier"
+	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -59,14 +62,23 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"credentials": schema.SingleNestedAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.TrustRead(),
+						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_harvest_authentication_mechanism_authenticate_via_harvest_o_auth_": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -95,6 +107,9 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 							},
 							"source_harvest_authentication_mechanism_authenticate_with_personal_access_token": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_token": schema.StringAttribute{
@@ -102,6 +117,9 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 									},
 									"auth_type": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -121,10 +139,16 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 							},
 							"source_harvest_update_authentication_mechanism_authenticate_via_harvest_o_auth_": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -153,6 +177,9 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 							},
 							"source_harvest_update_authentication_mechanism_authenticate_with_personal_access_token": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_token": schema.StringAttribute{
@@ -160,6 +187,9 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 									},
 									"auth_type": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -184,6 +214,9 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 					},
 					"replication_end_date": schema.StringAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.TrustRead(),
+						},
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
@@ -213,9 +246,15 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"source_type": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"workspace_id": schema.StringAttribute{
 				Required: true,

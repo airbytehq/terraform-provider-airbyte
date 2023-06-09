@@ -7,8 +7,11 @@ import (
 	"context"
 	"fmt"
 
+	speakeasy_int64planmodifier "airbyte/internal/planmodifiers/int64planmodifier"
+	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -55,10 +58,16 @@ func (r *SourceAmazonSqsResource) Schema(ctx context.Context, req resource.Schem
 				Attributes: map[string]schema.Attribute{
 					"access_key": schema.StringAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"attributes_to_return": schema.StringAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"delete_messages": schema.BoolAttribute{
@@ -66,10 +75,16 @@ func (r *SourceAmazonSqsResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"max_batch_size": schema.Int64Attribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Int64{
+							speakeasy_int64planmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"max_wait_time": schema.Int64Attribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Int64{
+							speakeasy_int64planmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"queue_url": schema.StringAttribute{
@@ -110,6 +125,9 @@ func (r *SourceAmazonSqsResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"secret_key": schema.StringAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{
@@ -122,6 +140,9 @@ func (r *SourceAmazonSqsResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"visibility_timeout": schema.Int64Attribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Int64{
+							speakeasy_int64planmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 				},
@@ -134,9 +155,15 @@ func (r *SourceAmazonSqsResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"source_type": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"workspace_id": schema.StringAttribute{
 				Required: true,

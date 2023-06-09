@@ -7,9 +7,14 @@ import (
 	"context"
 	"fmt"
 
+	speakeasy_boolplanmodifier "airbyte/internal/planmodifiers/boolplanmodifier"
+	speakeasy_int64planmodifier "airbyte/internal/planmodifiers/int64planmodifier"
+	speakeasy_objectplanmodifier "airbyte/internal/planmodifiers/objectplanmodifier"
+	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -69,6 +74,9 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 					},
 					"jdbc_url_params": schema.StringAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"password": schema.StringAttribute{
@@ -82,10 +90,16 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 					},
 					"tunnel_method": schema.SingleNestedAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.TrustRead(),
+						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_redshift_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_method": schema.StringAttribute{
@@ -102,6 +116,9 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 							},
 							"destination_redshift_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_host": schema.StringAttribute{
@@ -130,6 +147,9 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 							},
 							"destination_redshift_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
@@ -158,6 +178,9 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 							},
 							"destination_redshift_update_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_method": schema.StringAttribute{
@@ -174,6 +197,9 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 							},
 							"destination_redshift_update_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_host": schema.StringAttribute{
@@ -202,6 +228,9 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 							},
 							"destination_redshift_update_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
@@ -235,10 +264,16 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 					},
 					"uploading_method": schema.SingleNestedAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.TrustRead(),
+						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_redshift_uploading_method_s3_staging": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_key_id": schema.StringAttribute{
@@ -246,10 +281,16 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 									},
 									"encryption": schema.SingleNestedAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.Object{
+											speakeasy_objectplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"destination_redshift_uploading_method_s3_staging_encryption_aes_cbc_envelope_encryption": schema.SingleNestedAttribute{
 												Computed: true,
+												PlanModifiers: []planmodifier.Object{
+													speakeasy_objectplanmodifier.TrustRead(),
+												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"encryption_type": schema.StringAttribute{
@@ -262,6 +303,9 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 													},
 													"key_encrypting_key": schema.StringAttribute{
 														Computed: true,
+														PlanModifiers: []planmodifier.String{
+															speakeasy_stringplanmodifier.TrustRead(),
+														},
 														Optional: true,
 													},
 												},
@@ -269,6 +313,9 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 											},
 											"destination_redshift_uploading_method_s3_staging_encryption_no_encryption": schema.SingleNestedAttribute{
 												Computed: true,
+												PlanModifiers: []planmodifier.Object{
+													speakeasy_objectplanmodifier.TrustRead(),
+												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"encryption_type": schema.StringAttribute{
@@ -289,10 +336,16 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 									},
 									"file_buffer_count": schema.Int64Attribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.Int64{
+											speakeasy_int64planmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"file_name_pattern": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"method": schema.StringAttribute{
@@ -305,6 +358,9 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 									},
 									"purge_staging_data": schema.BoolAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.Bool{
+											speakeasy_boolplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"s3_bucket_name": schema.StringAttribute{
@@ -312,6 +368,9 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 									},
 									"s3_bucket_path": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"s3_bucket_region": schema.StringAttribute{
@@ -354,6 +413,9 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 							},
 							"destination_redshift_uploading_method_standard": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
@@ -369,6 +431,9 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 							},
 							"destination_redshift_update_uploading_method_s3_staging": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_key_id": schema.StringAttribute{
@@ -376,10 +441,16 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 									},
 									"encryption": schema.SingleNestedAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.Object{
+											speakeasy_objectplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"destination_redshift_update_uploading_method_s3_staging_encryption_no_encryption": schema.SingleNestedAttribute{
 												Computed: true,
+												PlanModifiers: []planmodifier.Object{
+													speakeasy_objectplanmodifier.TrustRead(),
+												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"encryption_type": schema.StringAttribute{
@@ -395,6 +466,9 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 											},
 											"destination_redshift_update_uploading_method_s3_staging_encryption_aes_cbc_envelope_encryption": schema.SingleNestedAttribute{
 												Computed: true,
+												PlanModifiers: []planmodifier.Object{
+													speakeasy_objectplanmodifier.TrustRead(),
+												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"encryption_type": schema.StringAttribute{
@@ -407,6 +481,9 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 													},
 													"key_encrypting_key": schema.StringAttribute{
 														Computed: true,
+														PlanModifiers: []planmodifier.String{
+															speakeasy_stringplanmodifier.TrustRead(),
+														},
 														Optional: true,
 													},
 												},
@@ -419,10 +496,16 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 									},
 									"file_buffer_count": schema.Int64Attribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.Int64{
+											speakeasy_int64planmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"file_name_pattern": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"method": schema.StringAttribute{
@@ -435,6 +518,9 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 									},
 									"purge_staging_data": schema.BoolAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.Bool{
+											speakeasy_boolplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"s3_bucket_name": schema.StringAttribute{
@@ -442,6 +528,9 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 									},
 									"s3_bucket_path": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"s3_bucket_region": schema.StringAttribute{
@@ -484,6 +573,9 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 							},
 							"destination_redshift_update_uploading_method_standard": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
@@ -509,9 +601,15 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 			},
 			"destination_id": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"destination_type": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"name": schema.StringAttribute{
 				Required: true,

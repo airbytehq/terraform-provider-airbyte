@@ -45,7 +45,7 @@ resource "airbyte_source_pokeapi" "kido" {
 }
 
 resource "airbyte_destination_google_sheets" "output" {
-  name         = "speakeasy_output"
+  name         = "test_new_output"
   workspace_id = airbyte_workspace.my_workspace.workspace_id
   configuration = {
     source_type = "googlesheets"

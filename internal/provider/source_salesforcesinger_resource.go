@@ -7,8 +7,12 @@ import (
 	"context"
 	"fmt"
 
+	speakeasy_boolplanmodifier "airbyte/internal/planmodifiers/boolplanmodifier"
+	speakeasy_numberplanmodifier "airbyte/internal/planmodifiers/numberplanmodifier"
+	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -71,14 +75,23 @@ func (r *SourceSalesforceSingerResource) Schema(ctx context.Context, req resourc
 					},
 					"is_sandbox": schema.BoolAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Bool{
+							speakeasy_boolplanmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"quota_percent_per_run": schema.NumberAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Number{
+							speakeasy_numberplanmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"quota_percent_total": schema.NumberAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Number{
+							speakeasy_numberplanmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"refresh_token": schema.StringAttribute{
@@ -105,9 +118,15 @@ func (r *SourceSalesforceSingerResource) Schema(ctx context.Context, req resourc
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"source_type": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"workspace_id": schema.StringAttribute{
 				Required: true,

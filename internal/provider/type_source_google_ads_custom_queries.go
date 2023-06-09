@@ -4,7 +4,7 @@ package provider
 
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
-type SourceGoogleAdsUpdateCustomQueries struct {
+type SourceGoogleAdsCustomQueries struct {
 	Query     types.String `tfsdk:"query"`
 	TableName types.String `tfsdk:"table_name"`
 }

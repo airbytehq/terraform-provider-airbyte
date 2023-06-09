@@ -4,7 +4,7 @@ package provider
 
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
-type SourceOnesignalApplications struct {
+type SourceOnesignalUpdateApplications struct {
 	AppAPIKey types.String `tfsdk:"app_api_key"`
 	AppID     types.String `tfsdk:"app_id"`
 	AppName   types.String `tfsdk:"app_name"`

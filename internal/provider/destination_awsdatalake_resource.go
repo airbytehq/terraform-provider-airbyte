@@ -7,9 +7,13 @@ import (
 	"context"
 	"fmt"
 
+	speakeasy_boolplanmodifier "airbyte/internal/planmodifiers/boolplanmodifier"
+	speakeasy_objectplanmodifier "airbyte/internal/planmodifiers/objectplanmodifier"
+	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -55,6 +59,9 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 				Attributes: map[string]schema.Attribute{
 					"aws_account_id": schema.StringAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"bucket_name": schema.StringAttribute{
@@ -62,6 +69,9 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 					},
 					"bucket_prefix": schema.StringAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"credentials": schema.SingleNestedAttribute{
@@ -69,6 +79,9 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 						Attributes: map[string]schema.Attribute{
 							"destination_aws_datalake_authentication_mode_iam_role": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"credentials_title": schema.StringAttribute{
@@ -88,6 +101,9 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 							},
 							"destination_aws_datalake_authentication_mode_iam_user": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"aws_access_key_id": schema.StringAttribute{
@@ -110,6 +126,9 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 							},
 							"destination_aws_datalake_update_authentication_mode_iam_role": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"credentials_title": schema.StringAttribute{
@@ -129,6 +148,9 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 							},
 							"destination_aws_datalake_update_authentication_mode_iam_user": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"aws_access_key_id": schema.StringAttribute{
@@ -164,14 +186,23 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 					},
 					"format": schema.SingleNestedAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.TrustRead(),
+						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_aws_datalake_output_format_wildcard_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"compression_codec": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -194,10 +225,16 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 							},
 							"destination_aws_datalake_output_format_wildcard_parquet_columnar_storage": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"compression_codec": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -222,10 +259,16 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 							},
 							"destination_aws_datalake_update_output_format_wildcard_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"compression_codec": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -248,10 +291,16 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 							},
 							"destination_aws_datalake_update_output_format_wildcard_parquet_columnar_storage": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"compression_codec": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -281,14 +330,23 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 					},
 					"glue_catalog_float_as_decimal": schema.BoolAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Bool{
+							speakeasy_boolplanmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"lakeformation_database_default_tag_key": schema.StringAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"lakeformation_database_default_tag_values": schema.StringAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"lakeformation_database_name": schema.StringAttribute{
@@ -296,10 +354,16 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 					},
 					"lakeformation_governed_tables": schema.BoolAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Bool{
+							speakeasy_boolplanmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"partitioning": schema.StringAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.TrustRead(),
+						},
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -352,9 +416,15 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 			},
 			"destination_id": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"destination_type": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"name": schema.StringAttribute{
 				Required: true,

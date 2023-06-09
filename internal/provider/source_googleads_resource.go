@@ -7,9 +7,13 @@ import (
 	"context"
 	"fmt"
 
+	speakeasy_int64planmodifier "airbyte/internal/planmodifiers/int64planmodifier"
+	speakeasy_listplanmodifier "airbyte/internal/planmodifiers/listplanmodifier"
+	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -56,6 +60,9 @@ func (r *SourceGoogleAdsResource) Schema(ctx context.Context, req resource.Schem
 				Attributes: map[string]schema.Attribute{
 					"conversion_window_days": schema.Int64Attribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Int64{
+							speakeasy_int64planmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"credentials": schema.SingleNestedAttribute{
@@ -63,6 +70,9 @@ func (r *SourceGoogleAdsResource) Schema(ctx context.Context, req resource.Schem
 						Attributes: map[string]schema.Attribute{
 							"access_token": schema.StringAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.TrustRead(),
+								},
 								Optional: true,
 							},
 							"client_id": schema.StringAttribute{
@@ -81,6 +91,9 @@ func (r *SourceGoogleAdsResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"custom_queries": schema.ListNestedAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.List{
+							speakeasy_listplanmodifier.TrustRead(),
+						},
 						Optional: true,
 						NestedObject: schema.NestedAttributeObject{
 							Attributes: map[string]schema.Attribute{
@@ -98,6 +111,9 @@ func (r *SourceGoogleAdsResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"end_date": schema.StringAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.TrustRead(),
+						},
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
@@ -105,6 +121,9 @@ func (r *SourceGoogleAdsResource) Schema(ctx context.Context, req resource.Schem
 					},
 					"login_customer_id": schema.StringAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{
@@ -131,9 +150,15 @@ func (r *SourceGoogleAdsResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"source_type": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"workspace_id": schema.StringAttribute{
 				Required: true,

@@ -7,9 +7,13 @@ import (
 	"context"
 	"fmt"
 
+	speakeasy_boolplanmodifier "airbyte/internal/planmodifiers/boolplanmodifier"
+	speakeasy_objectplanmodifier "airbyte/internal/planmodifiers/objectplanmodifier"
+	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -56,10 +60,16 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 				Attributes: map[string]schema.Attribute{
 					"credentials": schema.SingleNestedAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.TrustRead(),
+						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_zendesk_support_authentication_api_token": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_token": schema.StringAttribute{
@@ -67,6 +77,9 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 									},
 									"credentials": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -89,6 +102,9 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 							},
 							"source_zendesk_support_authentication_o_auth2_0": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
@@ -96,6 +112,9 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 									},
 									"credentials": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -115,6 +134,9 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 							},
 							"source_zendesk_support_update_authentication_api_token": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_token": schema.StringAttribute{
@@ -122,6 +144,9 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 									},
 									"credentials": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -144,6 +169,9 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 							},
 							"source_zendesk_support_update_authentication_o_auth2_0": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
@@ -151,6 +179,9 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 									},
 									"credentials": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -175,6 +206,9 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 					},
 					"ignore_pagination": schema.BoolAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Bool{
+							speakeasy_boolplanmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{
@@ -204,9 +238,15 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"source_type": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"workspace_id": schema.StringAttribute{
 				Required: true,

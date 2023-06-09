@@ -7,9 +7,13 @@ import (
 	"context"
 	"fmt"
 
+	speakeasy_int64planmodifier "airbyte/internal/planmodifiers/int64planmodifier"
+	speakeasy_objectplanmodifier "airbyte/internal/planmodifiers/objectplanmodifier"
+	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -62,10 +66,16 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 					},
 					"jdbc_url_params": schema.StringAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"password": schema.StringAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"port": schema.Int64Attribute{
@@ -76,10 +86,16 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 						Attributes: map[string]schema.Attribute{
 							"source_mysql_replication_method_logical_replication_cdc_": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"initial_waiting_seconds": schema.Int64Attribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.Int64{
+											speakeasy_int64planmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"method": schema.StringAttribute{
@@ -92,6 +108,9 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"server_time_zone": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 								},
@@ -99,6 +118,9 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"source_mysql_replication_method_standard": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
@@ -114,10 +136,16 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"source_mysql_update_replication_method_logical_replication_cdc_": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"initial_waiting_seconds": schema.Int64Attribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.Int64{
+											speakeasy_int64planmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"method": schema.StringAttribute{
@@ -130,6 +158,9 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"server_time_zone": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 								},
@@ -137,6 +168,9 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"source_mysql_update_replication_method_standard": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
@@ -165,10 +199,16 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 					},
 					"ssl_mode": schema.SingleNestedAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.TrustRead(),
+						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_mysql_ssl_modes_preferred": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"mode": schema.StringAttribute{
@@ -184,6 +224,9 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"source_mysql_ssl_modes_required": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"mode": schema.StringAttribute{
@@ -199,6 +242,9 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"source_mysql_ssl_modes_verify_ca": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ca_certificate": schema.StringAttribute{
@@ -206,14 +252,23 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"client_certificate": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"client_key": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"client_key_password": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"mode": schema.StringAttribute{
@@ -229,6 +284,9 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"source_mysql_ssl_modes_verify_identity": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ca_certificate": schema.StringAttribute{
@@ -236,14 +294,23 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"client_certificate": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"client_key": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"client_key_password": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"mode": schema.StringAttribute{
@@ -259,6 +326,9 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"source_mysql_update_ssl_modes_preferred": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"mode": schema.StringAttribute{
@@ -274,6 +344,9 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"source_mysql_update_ssl_modes_required": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"mode": schema.StringAttribute{
@@ -289,6 +362,9 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"source_mysql_update_ssl_modes_verify_ca": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ca_certificate": schema.StringAttribute{
@@ -296,14 +372,23 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"client_certificate": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"client_key": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"client_key_password": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"mode": schema.StringAttribute{
@@ -319,6 +404,9 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"source_mysql_update_ssl_modes_verify_identity": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ca_certificate": schema.StringAttribute{
@@ -326,14 +414,23 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 									},
 									"client_certificate": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"client_key": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"client_key_password": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"mode": schema.StringAttribute{
@@ -354,10 +451,16 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 					},
 					"tunnel_method": schema.SingleNestedAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.TrustRead(),
+						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_mysql_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_method": schema.StringAttribute{
@@ -374,6 +477,9 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"source_mysql_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_host": schema.StringAttribute{
@@ -402,6 +508,9 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"source_mysql_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
@@ -430,6 +539,9 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"source_mysql_update_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_method": schema.StringAttribute{
@@ -446,6 +558,9 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"source_mysql_update_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_host": schema.StringAttribute{
@@ -474,6 +589,9 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 							},
 							"source_mysql_update_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
@@ -518,9 +636,15 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"source_type": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"workspace_id": schema.StringAttribute{
 				Required: true,

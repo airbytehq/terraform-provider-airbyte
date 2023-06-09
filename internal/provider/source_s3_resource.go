@@ -7,9 +7,15 @@ import (
 	"context"
 	"fmt"
 
+	speakeasy_boolplanmodifier "airbyte/internal/planmodifiers/boolplanmodifier"
+	speakeasy_int64planmodifier "airbyte/internal/planmodifiers/int64planmodifier"
+	speakeasy_listplanmodifier "airbyte/internal/planmodifiers/listplanmodifier"
+	speakeasy_objectplanmodifier "airbyte/internal/planmodifiers/objectplanmodifier"
+	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -59,14 +65,23 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 					},
 					"format": schema.SingleNestedAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.TrustRead(),
+						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_s3_file_format_avro": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"filetype": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -79,38 +94,65 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 							},
 							"source_s3_file_format_csv": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"additional_reader_options": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"advanced_options": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"block_size": schema.Int64Attribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.Int64{
+											speakeasy_int64planmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"delimiter": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"double_quote": schema.BoolAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.Bool{
+											speakeasy_boolplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"encoding": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"escape_char": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"filetype": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -120,14 +162,23 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 									},
 									"infer_datatypes": schema.BoolAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.Bool{
+											speakeasy_boolplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"newlines_in_values": schema.BoolAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.Bool{
+											speakeasy_boolplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"quote_char": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 								},
@@ -135,14 +186,23 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 							},
 							"source_s3_file_format_jsonl": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"block_size": schema.Int64Attribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.Int64{
+											speakeasy_int64planmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"filetype": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -152,10 +212,16 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 									},
 									"newlines_in_values": schema.BoolAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.Bool{
+											speakeasy_boolplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"unexpected_field_behavior": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -171,23 +237,38 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 							},
 							"source_s3_file_format_parquet": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"batch_size": schema.Int64Attribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.Int64{
+											speakeasy_int64planmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"buffer_size": schema.Int64Attribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.Int64{
+											speakeasy_int64planmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"columns": schema.ListAttribute{
-										Computed:    true,
+										Computed: true,
+										PlanModifiers: []planmodifier.List{
+											speakeasy_listplanmodifier.TrustRead(),
+										},
 										Optional:    true,
 										ElementType: types.StringType,
 									},
 									"filetype": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -200,10 +281,16 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 							},
 							"source_s3_update_file_format_avro": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"filetype": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -216,38 +303,65 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 							},
 							"source_s3_update_file_format_csv": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"additional_reader_options": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"advanced_options": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"block_size": schema.Int64Attribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.Int64{
+											speakeasy_int64planmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"delimiter": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"double_quote": schema.BoolAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.Bool{
+											speakeasy_boolplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"encoding": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"escape_char": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"filetype": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -257,14 +371,23 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 									},
 									"infer_datatypes": schema.BoolAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.Bool{
+											speakeasy_boolplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"newlines_in_values": schema.BoolAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.Bool{
+											speakeasy_boolplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"quote_char": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 								},
@@ -272,14 +395,23 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 							},
 							"source_s3_update_file_format_jsonl": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"block_size": schema.Int64Attribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.Int64{
+											speakeasy_int64planmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"filetype": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -289,10 +421,16 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 									},
 									"newlines_in_values": schema.BoolAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.Bool{
+											speakeasy_boolplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"unexpected_field_behavior": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -308,23 +446,38 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 							},
 							"source_s3_update_file_format_parquet": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"batch_size": schema.Int64Attribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.Int64{
+											speakeasy_int64planmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"buffer_size": schema.Int64Attribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.Int64{
+											speakeasy_int64planmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"columns": schema.ListAttribute{
-										Computed:    true,
+										Computed: true,
+										PlanModifiers: []planmodifier.List{
+											speakeasy_listplanmodifier.TrustRead(),
+										},
 										Optional:    true,
 										ElementType: types.StringType,
 									},
 									"filetype": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -348,10 +501,16 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 						Attributes: map[string]schema.Attribute{
 							"aws_access_key_id": schema.StringAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.TrustRead(),
+								},
 								Optional: true,
 							},
 							"aws_secret_access_key": schema.StringAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.TrustRead(),
+								},
 								Optional: true,
 							},
 							"bucket": schema.StringAttribute{
@@ -359,14 +518,23 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 							},
 							"endpoint": schema.StringAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.TrustRead(),
+								},
 								Optional: true,
 							},
 							"path_prefix": schema.StringAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.TrustRead(),
+								},
 								Optional: true,
 							},
 							"start_date": schema.StringAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.String{
+									speakeasy_stringplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Validators: []validator.String{
 									validators.IsRFC3339(),
@@ -377,6 +545,9 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 					},
 					"schema": schema.StringAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{
@@ -397,9 +568,15 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"source_type": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"workspace_id": schema.StringAttribute{
 				Required: true,

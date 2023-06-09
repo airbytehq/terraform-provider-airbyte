@@ -7,9 +7,13 @@ import (
 	"context"
 	"fmt"
 
+	speakeasy_int64planmodifier "airbyte/internal/planmodifiers/int64planmodifier"
+	speakeasy_objectplanmodifier "airbyte/internal/planmodifiers/objectplanmodifier"
+	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -62,6 +66,9 @@ func (r *SourceAzureBlobStorageResource) Schema(ctx context.Context, req resourc
 					},
 					"azure_blob_storage_blobs_prefix": schema.StringAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"azure_blob_storage_container_name": schema.StringAttribute{
@@ -69,10 +76,16 @@ func (r *SourceAzureBlobStorageResource) Schema(ctx context.Context, req resourc
 					},
 					"azure_blob_storage_endpoint": schema.StringAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"azure_blob_storage_schema_inference_limit": schema.Int64Attribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Int64{
+							speakeasy_int64planmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"format": schema.SingleNestedAttribute{
@@ -80,6 +93,9 @@ func (r *SourceAzureBlobStorageResource) Schema(ctx context.Context, req resourc
 						Attributes: map[string]schema.Attribute{
 							"source_azure_blob_storage_input_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"format_type": schema.StringAttribute{
@@ -95,6 +111,9 @@ func (r *SourceAzureBlobStorageResource) Schema(ctx context.Context, req resourc
 							},
 							"source_azure_blob_storage_update_input_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"format_type": schema.StringAttribute{
@@ -131,9 +150,15 @@ func (r *SourceAzureBlobStorageResource) Schema(ctx context.Context, req resourc
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"source_type": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"workspace_id": schema.StringAttribute{
 				Required: true,

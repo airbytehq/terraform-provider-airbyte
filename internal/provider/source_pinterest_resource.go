@@ -7,9 +7,13 @@ import (
 	"context"
 	"fmt"
 
+	speakeasy_listplanmodifier "airbyte/internal/planmodifiers/listplanmodifier"
+	speakeasy_objectplanmodifier "airbyte/internal/planmodifiers/objectplanmodifier"
+	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -56,10 +60,16 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 				Attributes: map[string]schema.Attribute{
 					"credentials": schema.SingleNestedAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.TrustRead(),
+						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_pinterest_authorization_method_access_token": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
@@ -77,6 +87,9 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 							},
 							"source_pinterest_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_method": schema.StringAttribute{
@@ -89,10 +102,16 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 									},
 									"client_id": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"client_secret": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"refresh_token": schema.StringAttribute{
@@ -102,6 +121,9 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 							},
 							"source_pinterest_update_authorization_method_access_token": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
@@ -119,6 +141,9 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 							},
 							"source_pinterest_update_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_method": schema.StringAttribute{
@@ -131,10 +156,16 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 									},
 									"client_id": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"client_secret": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"refresh_token": schema.StringAttribute{
@@ -162,7 +193,10 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 						},
 					},
 					"status": schema.ListAttribute{
-						Computed:    true,
+						Computed: true,
+						PlanModifiers: []planmodifier.List{
+							speakeasy_listplanmodifier.TrustRead(),
+						},
 						Optional:    true,
 						ElementType: types.StringType,
 					},
@@ -176,9 +210,15 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"source_type": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"workspace_id": schema.StringAttribute{
 				Required: true,

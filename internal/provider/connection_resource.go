@@ -7,6 +7,9 @@ import (
 	"context"
 	"fmt"
 
+	speakeasy_listplanmodifier "airbyte/internal/planmodifiers/listplanmodifier"
+	speakeasy_objectplanmodifier "airbyte/internal/planmodifiers/objectplanmodifier"
+	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
@@ -61,15 +64,24 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 		Attributes: map[string]schema.Attribute{
 			"configurations": schema.SingleNestedAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.Object{
+					speakeasy_objectplanmodifier.TrustRead(),
+				},
 				Optional: true,
 				Attributes: map[string]schema.Attribute{
 					"streams": schema.ListNestedAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.List{
+							speakeasy_listplanmodifier.TrustRead(),
+						},
 						Optional: true,
 						NestedObject: schema.NestedAttributeObject{
 							Attributes: map[string]schema.Attribute{
 								"cursor_field": schema.ListAttribute{
-									Computed:    true,
+									Computed: true,
+									PlanModifiers: []planmodifier.List{
+										speakeasy_listplanmodifier.TrustRead(),
+									},
 									Optional:    true,
 									ElementType: types.StringType,
 								},
@@ -78,6 +90,9 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 								},
 								"primary_key": schema.ListAttribute{
 									Computed: true,
+									PlanModifiers: []planmodifier.List{
+										speakeasy_listplanmodifier.TrustRead(),
+									},
 									Optional: true,
 									ElementType: types.ListType{
 										ElemType: types.StringType,
@@ -85,6 +100,9 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 								},
 								"sync_mode": schema.StringAttribute{
 									Computed: true,
+									PlanModifiers: []planmodifier.String{
+										speakeasy_stringplanmodifier.TrustRead(),
+									},
 									Optional: true,
 									Validators: []validator.String{
 										stringvalidator.OneOf(
@@ -103,9 +121,15 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"connection_id": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"data_residency": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 				Optional: true,
 				Validators: []validator.String{
 					stringvalidator.OneOf(
@@ -123,10 +147,16 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 				Optional: true,
 			},
 			"namespace_definition": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 				Optional: true,
 				Validators: []validator.String{
 					stringvalidator.OneOf(
@@ -139,10 +169,16 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"namespace_format": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 				Optional: true,
 			},
 			"non_breaking_schema_updates_behavior": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 				Optional: true,
 				Validators: []validator.String{
 					stringvalidator.OneOf(
@@ -154,14 +190,23 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"prefix": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 				Optional: true,
 			},
 			"schedule": schema.SingleNestedAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.Object{
+					speakeasy_objectplanmodifier.TrustRead(),
+				},
 				Optional: true,
 				Attributes: map[string]schema.Attribute{
 					"basic_timing": schema.StringAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.TrustRead(),
+						},
 					},
 					"schedule_type": schema.StringAttribute{
 						Required: true,
@@ -183,6 +228,9 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"status": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 				Optional: true,
 				Validators: []validator.String{
 					stringvalidator.OneOf(
@@ -194,6 +242,9 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 		},
 	}

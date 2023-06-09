@@ -7,9 +7,13 @@ import (
 	"context"
 	"fmt"
 
+	speakeasy_int64planmodifier "airbyte/internal/planmodifiers/int64planmodifier"
+	speakeasy_objectplanmodifier "airbyte/internal/planmodifiers/objectplanmodifier"
+	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
 	"github.com/hashicorp/terraform-plugin-framework/path"
@@ -55,10 +59,16 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 				Attributes: map[string]schema.Attribute{
 					"big_query_client_buffer_size_mb": schema.Int64Attribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Int64{
+							speakeasy_int64planmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"credentials_json": schema.StringAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.TrustRead(),
+						},
 						Optional: true,
 					},
 					"dataset_id": schema.StringAttribute{
@@ -66,6 +76,9 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 					},
 					"dataset_location": schema.StringAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.TrustRead(),
+						},
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -123,10 +136,16 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 					},
 					"loading_method": schema.SingleNestedAttribute{
 						Computed: true,
+						PlanModifiers: []planmodifier.Object{
+							speakeasy_objectplanmodifier.TrustRead(),
+						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_bigquery_denormalized_loading_method_gcs_staging": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"credential": schema.SingleNestedAttribute{
@@ -134,6 +153,9 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 										Attributes: map[string]schema.Attribute{
 											"destination_bigquery_denormalized_loading_method_gcs_staging_credential_hmac_key": schema.SingleNestedAttribute{
 												Computed: true,
+												PlanModifiers: []planmodifier.Object{
+													speakeasy_objectplanmodifier.TrustRead(),
+												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"credential_type": schema.StringAttribute{
@@ -160,6 +182,9 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 									},
 									"file_buffer_count": schema.Int64Attribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.Int64{
+											speakeasy_int64planmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"gcs_bucket_name": schema.StringAttribute{
@@ -170,6 +195,9 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 									},
 									"keep_files_in_gcs_bucket": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -192,6 +220,9 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 							},
 							"destination_bigquery_denormalized_loading_method_standard_inserts": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
@@ -207,6 +238,9 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 							},
 							"destination_bigquery_denormalized_update_loading_method_gcs_staging": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"credential": schema.SingleNestedAttribute{
@@ -214,6 +248,9 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 										Attributes: map[string]schema.Attribute{
 											"destination_bigquery_denormalized_update_loading_method_gcs_staging_credential_hmac_key": schema.SingleNestedAttribute{
 												Computed: true,
+												PlanModifiers: []planmodifier.Object{
+													speakeasy_objectplanmodifier.TrustRead(),
+												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"credential_type": schema.StringAttribute{
@@ -240,6 +277,9 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 									},
 									"file_buffer_count": schema.Int64Attribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.Int64{
+											speakeasy_int64planmodifier.TrustRead(),
+										},
 										Optional: true,
 									},
 									"gcs_bucket_name": schema.StringAttribute{
@@ -250,6 +290,9 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 									},
 									"keep_files_in_gcs_bucket": schema.StringAttribute{
 										Computed: true,
+										PlanModifiers: []planmodifier.String{
+											speakeasy_stringplanmodifier.TrustRead(),
+										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -272,6 +315,9 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 							},
 							"destination_bigquery_denormalized_update_loading_method_standard_inserts": schema.SingleNestedAttribute{
 								Computed: true,
+								PlanModifiers: []planmodifier.Object{
+									speakeasy_objectplanmodifier.TrustRead(),
+								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
@@ -297,9 +343,15 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 			},
 			"destination_id": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"destination_type": schema.StringAttribute{
 				Computed: true,
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.TrustRead(),
+				},
 			},
 			"name": schema.StringAttribute{
 				Required: true,
