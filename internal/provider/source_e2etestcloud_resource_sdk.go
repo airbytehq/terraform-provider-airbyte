@@ -78,6 +78,11 @@ func (r *SourceE2eTestCloudResourceModel) ToCreateSDKType() *shared.SourceE2eTes
 	return &out
 }
 
+func (r *SourceE2eTestCloudResourceModel) ToGetSDKType() *shared.SourceE2eTestCloudCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceE2eTestCloudResourceModel) ToUpdateSDKType() *shared.SourceE2eTestCloudPutRequest {
 	maxMessages := r.Configuration.MaxMessages.ValueInt64()
 	messageIntervalMs := new(int64)
@@ -145,9 +150,13 @@ func (r *SourceE2eTestCloudResourceModel) ToDeleteSDKType() *shared.SourceE2eTes
 	return out
 }
 
-func (r *SourceE2eTestCloudResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceE2eTestCloudResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceE2eTestCloudResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

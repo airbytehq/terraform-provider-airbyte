@@ -47,6 +47,11 @@ func (r *SourceBambooHrResourceModel) ToCreateSDKType() *shared.SourceBambooHrCr
 	return &out
 }
 
+func (r *SourceBambooHrResourceModel) ToGetSDKType() *shared.SourceBambooHrCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceBambooHrResourceModel) ToUpdateSDKType() *shared.SourceBambooHrPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	customReportsFields := new(string)
@@ -83,9 +88,13 @@ func (r *SourceBambooHrResourceModel) ToDeleteSDKType() *shared.SourceBambooHrCr
 	return out
 }
 
-func (r *SourceBambooHrResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceBambooHrResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceBambooHrResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

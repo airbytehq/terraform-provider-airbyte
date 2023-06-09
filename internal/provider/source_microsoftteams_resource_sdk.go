@@ -79,6 +79,11 @@ func (r *SourceMicrosoftTeamsResourceModel) ToCreateSDKType() *shared.SourceMicr
 	return &out
 }
 
+func (r *SourceMicrosoftTeamsResourceModel) ToGetSDKType() *shared.SourceMicrosoftTeamsCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceMicrosoftTeamsResourceModel) ToUpdateSDKType() *shared.SourceMicrosoftTeamsPutRequest {
 	var credentials *shared.SourceMicrosoftTeamsUpdateAuthenticationMechanism
 	var sourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftOAuth20 *shared.SourceMicrosoftTeamsUpdateAuthenticationMechanismAuthenticateViaMicrosoftOAuth20
@@ -147,9 +152,13 @@ func (r *SourceMicrosoftTeamsResourceModel) ToDeleteSDKType() *shared.SourceMicr
 	return out
 }
 
-func (r *SourceMicrosoftTeamsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceMicrosoftTeamsResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceMicrosoftTeamsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

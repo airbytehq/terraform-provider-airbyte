@@ -48,6 +48,11 @@ func (r *SourceSpacexAPIResourceModel) ToCreateSDKType() *shared.SourceSpacexAPI
 	return &out
 }
 
+func (r *SourceSpacexAPIResourceModel) ToGetSDKType() *shared.SourceSpacexAPICreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceSpacexAPIResourceModel) ToUpdateSDKType() *shared.SourceSpacexAPIPutRequest {
 	id := new(string)
 	if !r.Configuration.ID.IsUnknown() && !r.Configuration.ID.IsNull() {
@@ -80,9 +85,13 @@ func (r *SourceSpacexAPIResourceModel) ToDeleteSDKType() *shared.SourceSpacexAPI
 	return out
 }
 
-func (r *SourceSpacexAPIResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceSpacexAPIResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceSpacexAPIResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

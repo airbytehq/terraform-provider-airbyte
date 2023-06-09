@@ -98,6 +98,11 @@ func (r *SourceGoogleAnalyticsV4ResourceModel) ToCreateSDKType() *shared.SourceG
 	return &out
 }
 
+func (r *SourceGoogleAnalyticsV4ResourceModel) ToGetSDKType() *shared.SourceGoogleAnalyticsV4CreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceGoogleAnalyticsV4ResourceModel) ToUpdateSDKType() *shared.SourceGoogleAnalyticsV4PutRequest {
 	var credentials *shared.SourceGoogleAnalyticsV4UpdateCredentials
 	var sourceGoogleAnalyticsV4UpdateCredentialsAuthenticateViaGoogleOauth *shared.SourceGoogleAnalyticsV4UpdateCredentialsAuthenticateViaGoogleOauth
@@ -185,9 +190,13 @@ func (r *SourceGoogleAnalyticsV4ResourceModel) ToDeleteSDKType() *shared.SourceG
 	return out
 }
 
-func (r *SourceGoogleAnalyticsV4ResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceGoogleAnalyticsV4ResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceGoogleAnalyticsV4ResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

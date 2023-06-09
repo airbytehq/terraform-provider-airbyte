@@ -124,6 +124,11 @@ func (r *DestinationS3GlueResourceModel) ToCreateSDKType() *shared.DestinationS3
 	return &out
 }
 
+func (r *DestinationS3GlueResourceModel) ToGetSDKType() *shared.DestinationS3GlueCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *DestinationS3GlueResourceModel) ToUpdateSDKType() *shared.DestinationS3GluePutRequest {
 	accessKeyID := new(string)
 	if !r.Configuration.AccessKeyID.IsUnknown() && !r.Configuration.AccessKeyID.IsNull() {
@@ -244,9 +249,13 @@ func (r *DestinationS3GlueResourceModel) ToDeleteSDKType() *shared.DestinationS3
 	return out
 }
 
-func (r *DestinationS3GlueResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationS3GlueResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
 	r.DestinationID = types.StringValue(resp.DestinationID)
 	r.DestinationType = types.StringValue(resp.DestinationType)
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *DestinationS3GlueResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.RefreshFromGetResponse(resp)
 }

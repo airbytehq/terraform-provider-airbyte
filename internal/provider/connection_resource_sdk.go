@@ -109,6 +109,11 @@ func (r *ConnectionResourceModel) ToCreateSDKType() *shared.ConnectionCreateRequ
 	return &out
 }
 
+func (r *ConnectionResourceModel) ToGetSDKType() *shared.ConnectionCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *ConnectionResourceModel) ToUpdateSDKType() *shared.ConnectionPatchRequest {
 	var configurations *shared.StreamConfigurations
 	if r.Configurations != nil {
@@ -212,7 +217,7 @@ func (r *ConnectionResourceModel) ToDeleteSDKType() *shared.ConnectionCreateRequ
 	return out
 }
 
-func (r *ConnectionResourceModel) RefreshFromCreateResponse(resp *shared.ConnectionResponse) {
+func (r *ConnectionResourceModel) RefreshFromGetResponse(resp *shared.ConnectionResponse) {
 	if r.Configurations == nil {
 		r.Configurations = &StreamConfigurations{}
 	}
@@ -278,6 +283,10 @@ func (r *ConnectionResourceModel) RefreshFromCreateResponse(resp *shared.Connect
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
 }
 
+func (r *ConnectionResourceModel) RefreshFromCreateResponse(resp *shared.ConnectionResponse) {
+	r.RefreshFromGetResponse(resp)
+}
+
 func (r *ConnectionResourceModel) RefreshFromUpdateResponse(resp *shared.ConnectionResponse) {
-	r.RefreshFromCreateResponse(resp)
+	r.RefreshFromGetResponse(resp)
 }

@@ -34,6 +34,11 @@ func (r *SourceRechargeResourceModel) ToCreateSDKType() *shared.SourceRechargeCr
 	return &out
 }
 
+func (r *SourceRechargeResourceModel) ToGetSDKType() *shared.SourceRechargeCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceRechargeResourceModel) ToUpdateSDKType() *shared.SourceRechargePutRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -56,9 +61,13 @@ func (r *SourceRechargeResourceModel) ToDeleteSDKType() *shared.SourceRechargeCr
 	return out
 }
 
-func (r *SourceRechargeResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceRechargeResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceRechargeResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

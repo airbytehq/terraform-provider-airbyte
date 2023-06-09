@@ -50,6 +50,11 @@ func (r *SourceSentryResourceModel) ToCreateSDKType() *shared.SourceSentryCreate
 	return &out
 }
 
+func (r *SourceSentryResourceModel) ToGetSDKType() *shared.SourceSentryCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceSentryResourceModel) ToUpdateSDKType() *shared.SourceSentryPutRequest {
 	authToken := r.Configuration.AuthToken.ValueString()
 	discoverFields := make([]interface{}, 0)
@@ -88,9 +93,13 @@ func (r *SourceSentryResourceModel) ToDeleteSDKType() *shared.SourceSentryCreate
 	return out
 }
 
-func (r *SourceSentryResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceSentryResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceSentryResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

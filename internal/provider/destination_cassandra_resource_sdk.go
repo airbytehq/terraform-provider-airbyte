@@ -46,6 +46,11 @@ func (r *DestinationCassandraResourceModel) ToCreateSDKType() *shared.Destinatio
 	return &out
 }
 
+func (r *DestinationCassandraResourceModel) ToGetSDKType() *shared.DestinationCassandraCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *DestinationCassandraResourceModel) ToUpdateSDKType() *shared.DestinationCassandraPutRequest {
 	address := r.Configuration.Address.ValueString()
 	datacenter := new(string)
@@ -88,9 +93,13 @@ func (r *DestinationCassandraResourceModel) ToDeleteSDKType() *shared.Destinatio
 	return out
 }
 
-func (r *DestinationCassandraResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationCassandraResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
 	r.DestinationID = types.StringValue(resp.DestinationID)
 	r.DestinationType = types.StringValue(resp.DestinationType)
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *DestinationCassandraResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.RefreshFromGetResponse(resp)
 }

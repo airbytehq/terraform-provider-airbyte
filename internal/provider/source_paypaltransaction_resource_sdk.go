@@ -55,6 +55,11 @@ func (r *SourcePaypalTransactionResourceModel) ToCreateSDKType() *shared.SourceP
 	return &out
 }
 
+func (r *SourcePaypalTransactionResourceModel) ToGetSDKType() *shared.SourcePaypalTransactionCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourcePaypalTransactionResourceModel) ToUpdateSDKType() *shared.SourcePaypalTransactionPutRequest {
 	clientID := new(string)
 	if !r.Configuration.ClientID.IsUnknown() && !r.Configuration.ClientID.IsNull() {
@@ -98,9 +103,13 @@ func (r *SourcePaypalTransactionResourceModel) ToDeleteSDKType() *shared.SourceP
 	return out
 }
 
-func (r *SourcePaypalTransactionResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourcePaypalTransactionResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourcePaypalTransactionResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

@@ -61,6 +61,11 @@ func (r *SourcePexelsAPIResourceModel) ToCreateSDKType() *shared.SourcePexelsAPI
 	return &out
 }
 
+func (r *SourcePexelsAPIResourceModel) ToGetSDKType() *shared.SourcePexelsAPICreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourcePexelsAPIResourceModel) ToUpdateSDKType() *shared.SourcePexelsAPIPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	color := new(string)
@@ -111,9 +116,13 @@ func (r *SourcePexelsAPIResourceModel) ToDeleteSDKType() *shared.SourcePexelsAPI
 	return out
 }
 
-func (r *SourcePexelsAPIResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourcePexelsAPIResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourcePexelsAPIResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

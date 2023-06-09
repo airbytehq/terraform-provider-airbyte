@@ -40,6 +40,11 @@ func (r *SourceAzureTableResourceModel) ToCreateSDKType() *shared.SourceAzureTab
 	return &out
 }
 
+func (r *SourceAzureTableResourceModel) ToGetSDKType() *shared.SourceAzureTableCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceAzureTableResourceModel) ToUpdateSDKType() *shared.SourceAzureTablePutRequest {
 	storageAccessKey := r.Configuration.StorageAccessKey.ValueString()
 	storageAccountName := r.Configuration.StorageAccountName.ValueString()
@@ -69,9 +74,13 @@ func (r *SourceAzureTableResourceModel) ToDeleteSDKType() *shared.SourceAzureTab
 	return out
 }
 
-func (r *SourceAzureTableResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceAzureTableResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceAzureTableResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

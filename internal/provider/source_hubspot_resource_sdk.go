@@ -66,6 +66,11 @@ func (r *SourceHubspotResourceModel) ToCreateSDKType() *shared.SourceHubspotCrea
 	return &out
 }
 
+func (r *SourceHubspotResourceModel) ToGetSDKType() *shared.SourceHubspotCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceHubspotResourceModel) ToUpdateSDKType() *shared.SourceHubspotPutRequest {
 	var credentials shared.SourceHubspotUpdateAuthentication
 	var sourceHubspotUpdateAuthenticationOAuth *shared.SourceHubspotUpdateAuthenticationOAuth
@@ -120,9 +125,13 @@ func (r *SourceHubspotResourceModel) ToDeleteSDKType() *shared.SourceHubspotCrea
 	return out
 }
 
-func (r *SourceHubspotResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceHubspotResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceHubspotResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

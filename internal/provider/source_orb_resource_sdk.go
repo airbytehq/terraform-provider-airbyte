@@ -64,6 +64,11 @@ func (r *SourceOrbResourceModel) ToCreateSDKType() *shared.SourceOrbCreateReques
 	return &out
 }
 
+func (r *SourceOrbResourceModel) ToGetSDKType() *shared.SourceOrbCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceOrbResourceModel) ToUpdateSDKType() *shared.SourceOrbPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	lookbackWindowDays := new(int64)
@@ -117,9 +122,13 @@ func (r *SourceOrbResourceModel) ToDeleteSDKType() *shared.SourceOrbCreateReques
 	return out
 }
 
-func (r *SourceOrbResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceOrbResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceOrbResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

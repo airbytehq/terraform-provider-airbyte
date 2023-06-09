@@ -60,6 +60,11 @@ func (r *SourceSalesforceSingerResourceModel) ToCreateSDKType() *shared.SourceSa
 	return &out
 }
 
+func (r *SourceSalesforceSingerResourceModel) ToGetSDKType() *shared.SourceSalesforceSingerCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceSalesforceSingerResourceModel) ToUpdateSDKType() *shared.SourceSalesforceSingerPutRequest {
 	apiType := shared.SourceSalesforceSingerUpdateAPIType(r.Configuration.APIType.ValueString())
 	clientID := r.Configuration.ClientID.ValueString()
@@ -109,9 +114,13 @@ func (r *SourceSalesforceSingerResourceModel) ToDeleteSDKType() *shared.SourceSa
 	return out
 }
 
-func (r *SourceSalesforceSingerResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceSalesforceSingerResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceSalesforceSingerResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

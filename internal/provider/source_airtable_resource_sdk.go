@@ -93,6 +93,11 @@ func (r *SourceAirtableResourceModel) ToCreateSDKType() *shared.SourceAirtableCr
 	return &out
 }
 
+func (r *SourceAirtableResourceModel) ToGetSDKType() *shared.SourceAirtableCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceAirtableResourceModel) ToUpdateSDKType() *shared.SourceAirtablePutRequest {
 	var credentials *shared.SourceAirtableUpdateAuthentication
 	var sourceAirtableUpdateAuthenticationOAuth20 *shared.SourceAirtableUpdateAuthenticationOAuth20
@@ -169,9 +174,13 @@ func (r *SourceAirtableResourceModel) ToDeleteSDKType() *shared.SourceAirtableCr
 	return out
 }
 
-func (r *SourceAirtableResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceAirtableResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceAirtableResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

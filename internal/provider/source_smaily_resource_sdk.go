@@ -35,6 +35,11 @@ func (r *SourceSmailyResourceModel) ToCreateSDKType() *shared.SourceSmailyCreate
 	return &out
 }
 
+func (r *SourceSmailyResourceModel) ToGetSDKType() *shared.SourceSmailyCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceSmailyResourceModel) ToUpdateSDKType() *shared.SourceSmailyPutRequest {
 	apiPassword := r.Configuration.APIPassword.ValueString()
 	apiSubdomain := r.Configuration.APISubdomain.ValueString()
@@ -59,9 +64,13 @@ func (r *SourceSmailyResourceModel) ToDeleteSDKType() *shared.SourceSmailyCreate
 	return out
 }
 
-func (r *SourceSmailyResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceSmailyResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceSmailyResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

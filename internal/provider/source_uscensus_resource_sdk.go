@@ -40,6 +40,11 @@ func (r *SourceUsCensusResourceModel) ToCreateSDKType() *shared.SourceUsCensusCr
 	return &out
 }
 
+func (r *SourceUsCensusResourceModel) ToGetSDKType() *shared.SourceUsCensusCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceUsCensusResourceModel) ToUpdateSDKType() *shared.SourceUsCensusPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	queryParams := new(string)
@@ -69,9 +74,13 @@ func (r *SourceUsCensusResourceModel) ToDeleteSDKType() *shared.SourceUsCensusCr
 	return out
 }
 
-func (r *SourceUsCensusResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceUsCensusResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceUsCensusResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

@@ -44,6 +44,11 @@ func (r *SourceYoutubeAnalyticsResourceModel) ToCreateSDKType() *shared.SourceYo
 	return &out
 }
 
+func (r *SourceYoutubeAnalyticsResourceModel) ToGetSDKType() *shared.SourceYoutubeAnalyticsCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceYoutubeAnalyticsResourceModel) ToUpdateSDKType() *shared.SourceYoutubeAnalyticsPutRequest {
 	clientID := r.Configuration.Credentials.ClientID.ValueString()
 	clientSecret := r.Configuration.Credentials.ClientSecret.ValueString()
@@ -76,9 +81,13 @@ func (r *SourceYoutubeAnalyticsResourceModel) ToDeleteSDKType() *shared.SourceYo
 	return out
 }
 
-func (r *SourceYoutubeAnalyticsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceYoutubeAnalyticsResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceYoutubeAnalyticsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

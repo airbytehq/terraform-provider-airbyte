@@ -169,7 +169,28 @@ func (r *SourcePypiResource) Read(ctx context.Context, req resource.ReadRequest,
 		return
 	}
 
-	// Not Implemented; we rely entirely on CREATE API request response
+	sourceID := data.SourceID.ValueString()
+	request := operations.GetSourcePypiRequest{
+		SourceID: sourceID,
+	}
+	res, err := r.client.Sources.GetSourcePypi(ctx, request)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		return
+	}
+	if res == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
+		return
+	}
+	if res.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
+		return
+	}
+	if res.SourceResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+		return
+	}
+	data.RefreshFromGetResponse(res.SourceResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)
@@ -201,6 +222,28 @@ func (r *SourcePypiResource) Update(ctx context.Context, req resource.UpdateRequ
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}
+	sourceId1 := data.SourceID.ValueString()
+	getRequest := operations.GetSourcePypiRequest{
+		SourceID: sourceId1,
+	}
+	getResponse, err := r.client.Sources.GetSourcePypi(ctx, getRequest)
+	if err != nil {
+		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		return
+	}
+	if getResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", getResponse))
+		return
+	}
+	if getResponse.StatusCode != 200 {
+		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", getResponse.StatusCode), debugResponse(getResponse.RawResponse))
+		return
+	}
+	if getResponse.SourceResponse == nil {
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+		return
+	}
+	data.RefreshFromGetResponse(getResponse.SourceResponse)
 
 	// Save updated data into Terraform state
 	resp.Diagnostics.Append(resp.State.Set(ctx, &data)...)

@@ -126,6 +126,11 @@ func (r *DestinationDatabricksResourceModel) ToCreateSDKType() *shared.Destinati
 	return &out
 }
 
+func (r *DestinationDatabricksResourceModel) ToGetSDKType() *shared.DestinationDatabricksCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *DestinationDatabricksResourceModel) ToUpdateSDKType() *shared.DestinationDatabricksPutRequest {
 	acceptTerms := r.Configuration.AcceptTerms.ValueBool()
 	var dataSource shared.DestinationDatabricksUpdateDataSource
@@ -248,9 +253,13 @@ func (r *DestinationDatabricksResourceModel) ToDeleteSDKType() *shared.Destinati
 	return out
 }
 
-func (r *DestinationDatabricksResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationDatabricksResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
 	r.DestinationID = types.StringValue(resp.DestinationID)
 	r.DestinationType = types.StringValue(resp.DestinationType)
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *DestinationDatabricksResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.RefreshFromGetResponse(resp)
 }

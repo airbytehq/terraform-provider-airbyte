@@ -33,6 +33,11 @@ func (r *SourceKustomerSingerResourceModel) ToCreateSDKType() *shared.SourceKust
 	return &out
 }
 
+func (r *SourceKustomerSingerResourceModel) ToGetSDKType() *shared.SourceKustomerSingerCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceKustomerSingerResourceModel) ToUpdateSDKType() *shared.SourceKustomerSingerPutRequest {
 	apiToken := r.Configuration.APIToken.ValueString()
 	startDate := r.Configuration.StartDate.ValueString()
@@ -55,9 +60,13 @@ func (r *SourceKustomerSingerResourceModel) ToDeleteSDKType() *shared.SourceKust
 	return out
 }
 
-func (r *SourceKustomerSingerResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceKustomerSingerResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceKustomerSingerResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

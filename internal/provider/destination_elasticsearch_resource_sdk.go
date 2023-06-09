@@ -72,6 +72,11 @@ func (r *DestinationElasticsearchResourceModel) ToCreateSDKType() *shared.Destin
 	return &out
 }
 
+func (r *DestinationElasticsearchResourceModel) ToGetSDKType() *shared.DestinationElasticsearchCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *DestinationElasticsearchResourceModel) ToUpdateSDKType() *shared.DestinationElasticsearchPutRequest {
 	var authenticationMethod *shared.DestinationElasticsearchUpdateAuthenticationMethod
 	var destinationElasticsearchUpdateAuthenticationMethodAPIKeySecret *shared.DestinationElasticsearchUpdateAuthenticationMethodAPIKeySecret
@@ -140,9 +145,13 @@ func (r *DestinationElasticsearchResourceModel) ToDeleteSDKType() *shared.Destin
 	return out
 }
 
-func (r *DestinationElasticsearchResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationElasticsearchResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
 	r.DestinationID = types.StringValue(resp.DestinationID)
 	r.DestinationType = types.StringValue(resp.DestinationType)
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *DestinationElasticsearchResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.RefreshFromGetResponse(resp)
 }

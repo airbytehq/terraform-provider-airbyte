@@ -101,6 +101,11 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToCreateSDKType() *shared.Sourc
 	return &out
 }
 
+func (r *SourceGoogleSearchConsoleResourceModel) ToGetSDKType() *shared.SourceGoogleSearchConsoleCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceGoogleSearchConsoleResourceModel) ToUpdateSDKType() *shared.SourceGoogleSearchConsolePutRequest {
 	var authorization shared.SourceGoogleSearchConsoleUpdateAuthenticationType
 	var sourceGoogleSearchConsoleUpdateAuthenticationTypeOAuth *shared.SourceGoogleSearchConsoleUpdateAuthenticationTypeOAuth
@@ -190,9 +195,13 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToDeleteSDKType() *shared.Sourc
 	return out
 }
 
-func (r *SourceGoogleSearchConsoleResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceGoogleSearchConsoleResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceGoogleSearchConsoleResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

@@ -49,6 +49,11 @@ func (r *DestinationDatabendResourceModel) ToCreateSDKType() *shared.Destination
 	return &out
 }
 
+func (r *DestinationDatabendResourceModel) ToGetSDKType() *shared.DestinationDatabendCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *DestinationDatabendResourceModel) ToUpdateSDKType() *shared.DestinationDatabendPutRequest {
 	database := r.Configuration.Database.ValueString()
 	host := r.Configuration.Host.ValueString()
@@ -94,9 +99,13 @@ func (r *DestinationDatabendResourceModel) ToDeleteSDKType() *shared.Destination
 	return out
 }
 
-func (r *DestinationDatabendResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationDatabendResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
 	r.DestinationID = types.StringValue(resp.DestinationID)
 	r.DestinationType = types.StringValue(resp.DestinationType)
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *DestinationDatabendResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.RefreshFromGetResponse(resp)
 }

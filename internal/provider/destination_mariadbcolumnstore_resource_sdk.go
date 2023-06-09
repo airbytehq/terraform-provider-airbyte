@@ -94,6 +94,11 @@ func (r *DestinationMariadbColumnstoreResourceModel) ToCreateSDKType() *shared.D
 	return &out
 }
 
+func (r *DestinationMariadbColumnstoreResourceModel) ToGetSDKType() *shared.DestinationMariadbColumnstoreCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *DestinationMariadbColumnstoreResourceModel) ToUpdateSDKType() *shared.DestinationMariadbColumnstorePutRequest {
 	database := r.Configuration.Database.ValueString()
 	host := r.Configuration.Host.ValueString()
@@ -184,9 +189,13 @@ func (r *DestinationMariadbColumnstoreResourceModel) ToDeleteSDKType() *shared.D
 	return out
 }
 
-func (r *DestinationMariadbColumnstoreResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationMariadbColumnstoreResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
 	r.DestinationID = types.StringValue(resp.DestinationID)
 	r.DestinationType = types.StringValue(resp.DestinationType)
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *DestinationMariadbColumnstoreResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.RefreshFromGetResponse(resp)
 }

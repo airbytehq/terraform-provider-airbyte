@@ -38,6 +38,11 @@ func (r *SourceCoinmarketcapResourceModel) ToCreateSDKType() *shared.SourceCoinm
 	return &out
 }
 
+func (r *SourceCoinmarketcapResourceModel) ToGetSDKType() *shared.SourceCoinmarketcapCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceCoinmarketcapResourceModel) ToUpdateSDKType() *shared.SourceCoinmarketcapPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	dataType := shared.SourceCoinmarketcapUpdateDataType(r.Configuration.DataType.ValueString())
@@ -65,9 +70,13 @@ func (r *SourceCoinmarketcapResourceModel) ToDeleteSDKType() *shared.SourceCoinm
 	return out
 }
 
-func (r *SourceCoinmarketcapResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceCoinmarketcapResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceCoinmarketcapResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

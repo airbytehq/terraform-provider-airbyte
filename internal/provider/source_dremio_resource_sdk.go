@@ -33,6 +33,11 @@ func (r *SourceDremioResourceModel) ToCreateSDKType() *shared.SourceDremioCreate
 	return &out
 }
 
+func (r *SourceDremioResourceModel) ToGetSDKType() *shared.SourceDremioCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceDremioResourceModel) ToUpdateSDKType() *shared.SourceDremioPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	baseURL := r.Configuration.BaseURL.ValueString()
@@ -55,9 +60,13 @@ func (r *SourceDremioResourceModel) ToDeleteSDKType() *shared.SourceDremioCreate
 	return out
 }
 
-func (r *SourceDremioResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceDremioResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceDremioResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

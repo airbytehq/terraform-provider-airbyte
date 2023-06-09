@@ -84,6 +84,11 @@ func (r *SourceSftpBulkResourceModel) ToCreateSDKType() *shared.SourceSftpBulkCr
 	return &out
 }
 
+func (r *SourceSftpBulkResourceModel) ToGetSDKType() *shared.SourceSftpBulkCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceSftpBulkResourceModel) ToUpdateSDKType() *shared.SourceSftpBulkPutRequest {
 	fileMostRecent := new(bool)
 	if !r.Configuration.FileMostRecent.IsUnknown() && !r.Configuration.FileMostRecent.IsNull() {
@@ -156,9 +161,13 @@ func (r *SourceSftpBulkResourceModel) ToDeleteSDKType() *shared.SourceSftpBulkCr
 	return out
 }
 
-func (r *SourceSftpBulkResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceSftpBulkResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceSftpBulkResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

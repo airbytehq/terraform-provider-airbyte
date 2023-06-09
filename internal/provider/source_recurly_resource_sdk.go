@@ -45,6 +45,11 @@ func (r *SourceRecurlyResourceModel) ToCreateSDKType() *shared.SourceRecurlyCrea
 	return &out
 }
 
+func (r *SourceRecurlyResourceModel) ToGetSDKType() *shared.SourceRecurlyCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceRecurlyResourceModel) ToUpdateSDKType() *shared.SourceRecurlyPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	beginTime := new(string)
@@ -79,9 +84,13 @@ func (r *SourceRecurlyResourceModel) ToDeleteSDKType() *shared.SourceRecurlyCrea
 	return out
 }
 
-func (r *SourceRecurlyResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceRecurlyResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceRecurlyResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

@@ -37,6 +37,11 @@ func (r *DestinationSftpJSONResourceModel) ToCreateSDKType() *shared.Destination
 	return &out
 }
 
+func (r *DestinationSftpJSONResourceModel) ToGetSDKType() *shared.DestinationSftpJSONCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *DestinationSftpJSONResourceModel) ToUpdateSDKType() *shared.DestinationSftpJSONPutRequest {
 	destinationPath := r.Configuration.DestinationPath.ValueString()
 	host := r.Configuration.Host.ValueString()
@@ -70,9 +75,13 @@ func (r *DestinationSftpJSONResourceModel) ToDeleteSDKType() *shared.Destination
 	return out
 }
 
-func (r *DestinationSftpJSONResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationSftpJSONResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
 	r.DestinationID = types.StringValue(resp.DestinationID)
 	r.DestinationType = types.StringValue(resp.DestinationType)
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *DestinationSftpJSONResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.RefreshFromGetResponse(resp)
 }

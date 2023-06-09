@@ -61,6 +61,11 @@ func (r *DestinationAmazonSqsResourceModel) ToCreateSDKType() *shared.Destinatio
 	return &out
 }
 
+func (r *DestinationAmazonSqsResourceModel) ToGetSDKType() *shared.DestinationAmazonSqsCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *DestinationAmazonSqsResourceModel) ToUpdateSDKType() *shared.DestinationAmazonSqsPutRequest {
 	accessKey := new(string)
 	if !r.Configuration.AccessKey.IsUnknown() && !r.Configuration.AccessKey.IsNull() {
@@ -118,9 +123,13 @@ func (r *DestinationAmazonSqsResourceModel) ToDeleteSDKType() *shared.Destinatio
 	return out
 }
 
-func (r *DestinationAmazonSqsResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationAmazonSqsResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
 	r.DestinationID = types.StringValue(resp.DestinationID)
 	r.DestinationType = types.StringValue(resp.DestinationType)
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *DestinationAmazonSqsResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.RefreshFromGetResponse(resp)
 }

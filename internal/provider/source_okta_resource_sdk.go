@@ -69,6 +69,11 @@ func (r *SourceOktaResourceModel) ToCreateSDKType() *shared.SourceOktaCreateRequ
 	return &out
 }
 
+func (r *SourceOktaResourceModel) ToGetSDKType() *shared.SourceOktaCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceOktaResourceModel) ToUpdateSDKType() *shared.SourceOktaPutRequest {
 	var credentials *shared.SourceOktaUpdateAuthorizationMethod
 	var sourceOktaUpdateAuthorizationMethodOAuth20 *shared.SourceOktaUpdateAuthorizationMethodOAuth20
@@ -127,9 +132,13 @@ func (r *SourceOktaResourceModel) ToDeleteSDKType() *shared.SourceOktaCreateRequ
 	return out
 }
 
-func (r *SourceOktaResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceOktaResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceOktaResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

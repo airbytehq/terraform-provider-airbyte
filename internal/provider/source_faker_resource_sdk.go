@@ -59,6 +59,11 @@ func (r *SourceFakerResourceModel) ToCreateSDKType() *shared.SourceFakerCreateRe
 	return &out
 }
 
+func (r *SourceFakerResourceModel) ToGetSDKType() *shared.SourceFakerCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceFakerResourceModel) ToUpdateSDKType() *shared.SourceFakerPutRequest {
 	count := r.Configuration.Count.ValueInt64()
 	parallelism := new(int64)
@@ -107,9 +112,13 @@ func (r *SourceFakerResourceModel) ToDeleteSDKType() *shared.SourceFakerCreateRe
 	return out
 }
 
-func (r *SourceFakerResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceFakerResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceFakerResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

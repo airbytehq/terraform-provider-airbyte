@@ -143,6 +143,11 @@ func (r *SourceFacebookMarketingResourceModel) ToCreateSDKType() *shared.SourceF
 	return &out
 }
 
+func (r *SourceFacebookMarketingResourceModel) ToGetSDKType() *shared.SourceFacebookMarketingCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceFacebookMarketingResourceModel) ToUpdateSDKType() *shared.SourceFacebookMarketingPutRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
 	accountID := r.Configuration.AccountID.ValueString()
@@ -274,9 +279,13 @@ func (r *SourceFacebookMarketingResourceModel) ToDeleteSDKType() *shared.SourceF
 	return out
 }
 
-func (r *SourceFacebookMarketingResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceFacebookMarketingResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceFacebookMarketingResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

@@ -68,6 +68,11 @@ func (r *DestinationRabbitmqResourceModel) ToCreateSDKType() *shared.Destination
 	return &out
 }
 
+func (r *DestinationRabbitmqResourceModel) ToGetSDKType() *shared.DestinationRabbitmqCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *DestinationRabbitmqResourceModel) ToUpdateSDKType() *shared.DestinationRabbitmqPutRequest {
 	exchange := new(string)
 	if !r.Configuration.Exchange.IsUnknown() && !r.Configuration.Exchange.IsNull() {
@@ -132,9 +137,13 @@ func (r *DestinationRabbitmqResourceModel) ToDeleteSDKType() *shared.Destination
 	return out
 }
 
-func (r *DestinationRabbitmqResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationRabbitmqResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
 	r.DestinationID = types.StringValue(resp.DestinationID)
 	r.DestinationType = types.StringValue(resp.DestinationType)
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *DestinationRabbitmqResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.RefreshFromGetResponse(resp)
 }

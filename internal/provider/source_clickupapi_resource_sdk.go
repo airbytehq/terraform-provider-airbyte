@@ -66,6 +66,11 @@ func (r *SourceClickupAPIResourceModel) ToCreateSDKType() *shared.SourceClickupA
 	return &out
 }
 
+func (r *SourceClickupAPIResourceModel) ToGetSDKType() *shared.SourceClickupAPICreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceClickupAPIResourceModel) ToUpdateSDKType() *shared.SourceClickupAPIPutRequest {
 	apiToken := r.Configuration.APIToken.ValueString()
 	folderID := new(string)
@@ -121,9 +126,13 @@ func (r *SourceClickupAPIResourceModel) ToDeleteSDKType() *shared.SourceClickupA
 	return out
 }
 
-func (r *SourceClickupAPIResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceClickupAPIResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceClickupAPIResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

@@ -43,6 +43,11 @@ func (r *SourceYandexMetricaResourceModel) ToCreateSDKType() *shared.SourceYande
 	return &out
 }
 
+func (r *SourceYandexMetricaResourceModel) ToGetSDKType() *shared.SourceYandexMetricaCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceYandexMetricaResourceModel) ToUpdateSDKType() *shared.SourceYandexMetricaPutRequest {
 	authToken := r.Configuration.AuthToken.ValueString()
 	counterID := r.Configuration.CounterID.ValueString()
@@ -74,9 +79,13 @@ func (r *SourceYandexMetricaResourceModel) ToDeleteSDKType() *shared.SourceYande
 	return out
 }
 
-func (r *SourceYandexMetricaResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceYandexMetricaResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceYandexMetricaResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

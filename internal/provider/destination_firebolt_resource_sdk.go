@@ -75,6 +75,11 @@ func (r *DestinationFireboltResourceModel) ToCreateSDKType() *shared.Destination
 	return &out
 }
 
+func (r *DestinationFireboltResourceModel) ToGetSDKType() *shared.DestinationFireboltCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *DestinationFireboltResourceModel) ToUpdateSDKType() *shared.DestinationFireboltPutRequest {
 	account := new(string)
 	if !r.Configuration.Account.IsUnknown() && !r.Configuration.Account.IsNull() {
@@ -146,9 +151,13 @@ func (r *DestinationFireboltResourceModel) ToDeleteSDKType() *shared.Destination
 	return out
 }
 
-func (r *DestinationFireboltResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationFireboltResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
 	r.DestinationID = types.StringValue(resp.DestinationID)
 	r.DestinationType = types.StringValue(resp.DestinationType)
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *DestinationFireboltResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.RefreshFromGetResponse(resp)
 }

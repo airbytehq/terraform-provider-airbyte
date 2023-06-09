@@ -153,6 +153,11 @@ func (r *DestinationSnowflakeResourceModel) ToCreateSDKType() *shared.Destinatio
 	return &out
 }
 
+func (r *DestinationSnowflakeResourceModel) ToGetSDKType() *shared.DestinationSnowflakeCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *DestinationSnowflakeResourceModel) ToUpdateSDKType() *shared.DestinationSnowflakePutRequest {
 	var credentials *shared.DestinationSnowflakeUpdateAuthorizationMethod
 	var destinationSnowflakeUpdateAuthorizationMethodOAuth20 *shared.DestinationSnowflakeUpdateAuthorizationMethodOAuth20
@@ -302,9 +307,13 @@ func (r *DestinationSnowflakeResourceModel) ToDeleteSDKType() *shared.Destinatio
 	return out
 }
 
-func (r *DestinationSnowflakeResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationSnowflakeResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
 	r.DestinationID = types.StringValue(resp.DestinationID)
 	r.DestinationType = types.StringValue(resp.DestinationType)
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *DestinationSnowflakeResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.RefreshFromGetResponse(resp)
 }

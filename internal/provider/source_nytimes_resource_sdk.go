@@ -50,6 +50,11 @@ func (r *SourceNytimesResourceModel) ToCreateSDKType() *shared.SourceNytimesCrea
 	return &out
 }
 
+func (r *SourceNytimesResourceModel) ToGetSDKType() *shared.SourceNytimesCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceNytimesResourceModel) ToUpdateSDKType() *shared.SourceNytimesPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	endDate := new(customTypes.Date)
@@ -88,9 +93,13 @@ func (r *SourceNytimesResourceModel) ToDeleteSDKType() *shared.SourceNytimesCrea
 	return out
 }
 
-func (r *SourceNytimesResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceNytimesResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceNytimesResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

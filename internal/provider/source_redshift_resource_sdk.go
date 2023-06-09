@@ -51,6 +51,11 @@ func (r *SourceRedshiftResourceModel) ToCreateSDKType() *shared.SourceRedshiftCr
 	return &out
 }
 
+func (r *SourceRedshiftResourceModel) ToGetSDKType() *shared.SourceRedshiftCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceRedshiftResourceModel) ToUpdateSDKType() *shared.SourceRedshiftPutRequest {
 	database := r.Configuration.Database.ValueString()
 	host := r.Configuration.Host.ValueString()
@@ -91,9 +96,13 @@ func (r *SourceRedshiftResourceModel) ToDeleteSDKType() *shared.SourceRedshiftCr
 	return out
 }
 
-func (r *SourceRedshiftResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceRedshiftResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceRedshiftResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

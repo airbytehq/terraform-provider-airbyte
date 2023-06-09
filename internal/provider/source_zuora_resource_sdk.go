@@ -46,6 +46,11 @@ func (r *SourceZuoraResourceModel) ToCreateSDKType() *shared.SourceZuoraCreateRe
 	return &out
 }
 
+func (r *SourceZuoraResourceModel) ToGetSDKType() *shared.SourceZuoraCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceZuoraResourceModel) ToUpdateSDKType() *shared.SourceZuoraPutRequest {
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
@@ -81,9 +86,13 @@ func (r *SourceZuoraResourceModel) ToDeleteSDKType() *shared.SourceZuoraCreateRe
 	return out
 }
 
-func (r *SourceZuoraResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceZuoraResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceZuoraResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

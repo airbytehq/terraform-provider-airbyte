@@ -39,6 +39,11 @@ func (r *SourceTypeformResourceModel) ToCreateSDKType() *shared.SourceTypeformCr
 	return &out
 }
 
+func (r *SourceTypeformResourceModel) ToGetSDKType() *shared.SourceTypeformCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceTypeformResourceModel) ToUpdateSDKType() *shared.SourceTypeformPutRequest {
 	formIds := make([]string, 0)
 	for _, formIdsItem := range r.Configuration.FormIds {
@@ -66,9 +71,13 @@ func (r *SourceTypeformResourceModel) ToDeleteSDKType() *shared.SourceTypeformCr
 	return out
 }
 
-func (r *SourceTypeformResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceTypeformResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceTypeformResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

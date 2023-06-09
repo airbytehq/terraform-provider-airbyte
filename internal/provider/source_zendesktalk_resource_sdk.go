@@ -87,6 +87,11 @@ func (r *SourceZendeskTalkResourceModel) ToCreateSDKType() *shared.SourceZendesk
 	return &out
 }
 
+func (r *SourceZendeskTalkResourceModel) ToGetSDKType() *shared.SourceZendeskTalkCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceZendeskTalkResourceModel) ToUpdateSDKType() *shared.SourceZendeskTalkPutRequest {
 	var credentials *shared.SourceZendeskTalkUpdateAuthentication
 	var sourceZendeskTalkUpdateAuthenticationAPIToken *shared.SourceZendeskTalkUpdateAuthenticationAPIToken
@@ -161,9 +166,13 @@ func (r *SourceZendeskTalkResourceModel) ToDeleteSDKType() *shared.SourceZendesk
 	return out
 }
 
-func (r *SourceZendeskTalkResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceZendeskTalkResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceZendeskTalkResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

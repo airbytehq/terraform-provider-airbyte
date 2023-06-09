@@ -33,6 +33,11 @@ func (r *DestinationRocksetResourceModel) ToCreateSDKType() *shared.DestinationR
 	return &out
 }
 
+func (r *DestinationRocksetResourceModel) ToGetSDKType() *shared.DestinationRocksetCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *DestinationRocksetResourceModel) ToUpdateSDKType() *shared.DestinationRocksetPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	apiServer := new(string)
@@ -62,9 +67,13 @@ func (r *DestinationRocksetResourceModel) ToDeleteSDKType() *shared.DestinationR
 	return out
 }
 
-func (r *DestinationRocksetResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationRocksetResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
 	r.DestinationID = types.StringValue(resp.DestinationID)
 	r.DestinationType = types.StringValue(resp.DestinationType)
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *DestinationRocksetResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.RefreshFromGetResponse(resp)
 }

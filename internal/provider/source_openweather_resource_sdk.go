@@ -49,6 +49,11 @@ func (r *SourceOpenweatherResourceModel) ToCreateSDKType() *shared.SourceOpenwea
 	return &out
 }
 
+func (r *SourceOpenweatherResourceModel) ToGetSDKType() *shared.SourceOpenweatherCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceOpenweatherResourceModel) ToUpdateSDKType() *shared.SourceOpenweatherPutRequest {
 	appid := r.Configuration.Appid.ValueString()
 	lang := new(shared.SourceOpenweatherUpdateLanguage)
@@ -87,9 +92,13 @@ func (r *SourceOpenweatherResourceModel) ToDeleteSDKType() *shared.SourceOpenwea
 	return out
 }
 
-func (r *SourceOpenweatherResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceOpenweatherResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceOpenweatherResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

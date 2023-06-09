@@ -31,6 +31,11 @@ func (r *SourceLemlistResourceModel) ToCreateSDKType() *shared.SourceLemlistCrea
 	return &out
 }
 
+func (r *SourceLemlistResourceModel) ToGetSDKType() *shared.SourceLemlistCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceLemlistResourceModel) ToUpdateSDKType() *shared.SourceLemlistPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	configuration := shared.SourceLemlistUpdate{
@@ -51,9 +56,13 @@ func (r *SourceLemlistResourceModel) ToDeleteSDKType() *shared.SourceLemlistCrea
 	return out
 }
 
-func (r *SourceLemlistResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceLemlistResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceLemlistResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

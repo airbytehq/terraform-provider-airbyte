@@ -34,6 +34,11 @@ func (r *SourceKlaviyoResourceModel) ToCreateSDKType() *shared.SourceKlaviyoCrea
 	return &out
 }
 
+func (r *SourceKlaviyoResourceModel) ToGetSDKType() *shared.SourceKlaviyoCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceKlaviyoResourceModel) ToUpdateSDKType() *shared.SourceKlaviyoPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -56,9 +61,13 @@ func (r *SourceKlaviyoResourceModel) ToDeleteSDKType() *shared.SourceKlaviyoCrea
 	return out
 }
 
-func (r *SourceKlaviyoResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceKlaviyoResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceKlaviyoResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

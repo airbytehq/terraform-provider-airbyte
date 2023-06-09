@@ -78,6 +78,11 @@ func (r *SourceAmazonAdsResourceModel) ToCreateSDKType() *shared.SourceAmazonAds
 	return &out
 }
 
+func (r *SourceAmazonAdsResourceModel) ToGetSDKType() *shared.SourceAmazonAdsCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceAmazonAdsResourceModel) ToUpdateSDKType() *shared.SourceAmazonAdsPutRequest {
 	authType := new(shared.SourceAmazonAdsUpdateAuthType)
 	if !r.Configuration.AuthType.IsUnknown() && !r.Configuration.AuthType.IsNull() {
@@ -145,9 +150,13 @@ func (r *SourceAmazonAdsResourceModel) ToDeleteSDKType() *shared.SourceAmazonAds
 	return out
 }
 
-func (r *SourceAmazonAdsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceAmazonAdsResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceAmazonAdsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

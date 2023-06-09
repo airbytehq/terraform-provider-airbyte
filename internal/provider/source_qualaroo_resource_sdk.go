@@ -40,6 +40,11 @@ func (r *SourceQualarooResourceModel) ToCreateSDKType() *shared.SourceQualarooCr
 	return &out
 }
 
+func (r *SourceQualarooResourceModel) ToGetSDKType() *shared.SourceQualarooCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceQualarooResourceModel) ToUpdateSDKType() *shared.SourceQualarooPutRequest {
 	key := r.Configuration.Key.ValueString()
 	startDate := r.Configuration.StartDate.ValueString()
@@ -69,9 +74,13 @@ func (r *SourceQualarooResourceModel) ToDeleteSDKType() *shared.SourceQualarooCr
 	return out
 }
 
-func (r *SourceQualarooResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceQualarooResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceQualarooResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

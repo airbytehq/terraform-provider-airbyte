@@ -53,6 +53,11 @@ func (r *SourceNetsuiteResourceModel) ToCreateSDKType() *shared.SourceNetsuiteCr
 	return &out
 }
 
+func (r *SourceNetsuiteResourceModel) ToGetSDKType() *shared.SourceNetsuiteCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceNetsuiteResourceModel) ToUpdateSDKType() *shared.SourceNetsuitePutRequest {
 	consumerKey := r.Configuration.ConsumerKey.ValueString()
 	consumerSecret := r.Configuration.ConsumerSecret.ValueString()
@@ -95,9 +100,13 @@ func (r *SourceNetsuiteResourceModel) ToDeleteSDKType() *shared.SourceNetsuiteCr
 	return out
 }
 
-func (r *SourceNetsuiteResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceNetsuiteResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceNetsuiteResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

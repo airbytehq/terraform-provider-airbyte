@@ -127,6 +127,11 @@ func (r *SourceMixpanelResourceModel) ToCreateSDKType() *shared.SourceMixpanelCr
 	return &out
 }
 
+func (r *SourceMixpanelResourceModel) ToGetSDKType() *shared.SourceMixpanelCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceMixpanelResourceModel) ToUpdateSDKType() *shared.SourceMixpanelPutRequest {
 	attributionWindow := new(int64)
 	if !r.Configuration.AttributionWindow.IsUnknown() && !r.Configuration.AttributionWindow.IsNull() {
@@ -237,9 +242,13 @@ func (r *SourceMixpanelResourceModel) ToDeleteSDKType() *shared.SourceMixpanelCr
 	return out
 }
 
-func (r *SourceMixpanelResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceMixpanelResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceMixpanelResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

@@ -56,6 +56,11 @@ func (r *SourceSonarCloudResourceModel) ToCreateSDKType() *shared.SourceSonarClo
 	return &out
 }
 
+func (r *SourceSonarCloudResourceModel) ToGetSDKType() *shared.SourceSonarCloudCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceSonarCloudResourceModel) ToUpdateSDKType() *shared.SourceSonarCloudPutRequest {
 	componentKeys := make([]interface{}, 0)
 	for _, componentKeysItem := range r.Configuration.ComponentKeys {
@@ -99,9 +104,13 @@ func (r *SourceSonarCloudResourceModel) ToDeleteSDKType() *shared.SourceSonarClo
 	return out
 }
 
-func (r *SourceSonarCloudResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceSonarCloudResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceSonarCloudResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

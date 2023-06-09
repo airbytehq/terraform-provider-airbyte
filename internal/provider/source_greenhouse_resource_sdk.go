@@ -31,6 +31,11 @@ func (r *SourceGreenhouseResourceModel) ToCreateSDKType() *shared.SourceGreenhou
 	return &out
 }
 
+func (r *SourceGreenhouseResourceModel) ToGetSDKType() *shared.SourceGreenhouseCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceGreenhouseResourceModel) ToUpdateSDKType() *shared.SourceGreenhousePutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	configuration := shared.SourceGreenhouseUpdate{
@@ -51,9 +56,13 @@ func (r *SourceGreenhouseResourceModel) ToDeleteSDKType() *shared.SourceGreenhou
 	return out
 }
 
-func (r *SourceGreenhouseResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceGreenhouseResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceGreenhouseResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

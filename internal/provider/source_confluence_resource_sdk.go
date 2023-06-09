@@ -35,6 +35,11 @@ func (r *SourceConfluenceResourceModel) ToCreateSDKType() *shared.SourceConfluen
 	return &out
 }
 
+func (r *SourceConfluenceResourceModel) ToGetSDKType() *shared.SourceConfluenceCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceConfluenceResourceModel) ToUpdateSDKType() *shared.SourceConfluencePutRequest {
 	apiToken := r.Configuration.APIToken.ValueString()
 	domainName := r.Configuration.DomainName.ValueString()
@@ -59,9 +64,13 @@ func (r *SourceConfluenceResourceModel) ToDeleteSDKType() *shared.SourceConfluen
 	return out
 }
 
-func (r *SourceConfluenceResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceConfluenceResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceConfluenceResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

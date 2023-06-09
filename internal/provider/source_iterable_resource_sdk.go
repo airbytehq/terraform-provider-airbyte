@@ -34,6 +34,11 @@ func (r *SourceIterableResourceModel) ToCreateSDKType() *shared.SourceIterableCr
 	return &out
 }
 
+func (r *SourceIterableResourceModel) ToGetSDKType() *shared.SourceIterableCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceIterableResourceModel) ToUpdateSDKType() *shared.SourceIterablePutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -56,9 +61,13 @@ func (r *SourceIterableResourceModel) ToDeleteSDKType() *shared.SourceIterableCr
 	return out
 }
 
-func (r *SourceIterableResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceIterableResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceIterableResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

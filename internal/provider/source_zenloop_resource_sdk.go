@@ -52,6 +52,11 @@ func (r *SourceZenloopResourceModel) ToCreateSDKType() *shared.SourceZenloopCrea
 	return &out
 }
 
+func (r *SourceZenloopResourceModel) ToGetSDKType() *shared.SourceZenloopCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceZenloopResourceModel) ToUpdateSDKType() *shared.SourceZenloopPutRequest {
 	apiToken := r.Configuration.APIToken.ValueString()
 	dateFrom := new(string)
@@ -93,9 +98,13 @@ func (r *SourceZenloopResourceModel) ToDeleteSDKType() *shared.SourceZenloopCrea
 	return out
 }
 
-func (r *SourceZenloopResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceZenloopResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceZenloopResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

@@ -29,6 +29,11 @@ func (r *SourcePublicApisResourceModel) ToCreateSDKType() *shared.SourcePublicAp
 	return &out
 }
 
+func (r *SourcePublicApisResourceModel) ToGetSDKType() *shared.SourcePublicApisCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourcePublicApisResourceModel) ToUpdateSDKType() *shared.SourcePublicApisPutRequest {
 	configuration := shared.SourcePublicApisUpdate{}
 	name := r.Name.ValueString()
@@ -46,9 +51,13 @@ func (r *SourcePublicApisResourceModel) ToDeleteSDKType() *shared.SourcePublicAp
 	return out
 }
 
-func (r *SourcePublicApisResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourcePublicApisResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourcePublicApisResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

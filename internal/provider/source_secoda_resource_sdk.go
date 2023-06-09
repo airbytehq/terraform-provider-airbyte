@@ -31,6 +31,11 @@ func (r *SourceSecodaResourceModel) ToCreateSDKType() *shared.SourceSecodaCreate
 	return &out
 }
 
+func (r *SourceSecodaResourceModel) ToGetSDKType() *shared.SourceSecodaCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceSecodaResourceModel) ToUpdateSDKType() *shared.SourceSecodaPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	configuration := shared.SourceSecodaUpdate{
@@ -51,9 +56,13 @@ func (r *SourceSecodaResourceModel) ToDeleteSDKType() *shared.SourceSecodaCreate
 	return out
 }
 
-func (r *SourceSecodaResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceSecodaResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceSecodaResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

@@ -35,6 +35,11 @@ func (r *SourceRailzResourceModel) ToCreateSDKType() *shared.SourceRailzCreateRe
 	return &out
 }
 
+func (r *SourceRailzResourceModel) ToGetSDKType() *shared.SourceRailzCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceRailzResourceModel) ToUpdateSDKType() *shared.SourceRailzPutRequest {
 	clientID := r.Configuration.ClientID.ValueString()
 	secretKey := r.Configuration.SecretKey.ValueString()
@@ -59,9 +64,13 @@ func (r *SourceRailzResourceModel) ToDeleteSDKType() *shared.SourceRailzCreateRe
 	return out
 }
 
-func (r *SourceRailzResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceRailzResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceRailzResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

@@ -52,6 +52,11 @@ func (r *SourceMetabaseResourceModel) ToCreateSDKType() *shared.SourceMetabaseCr
 	return &out
 }
 
+func (r *SourceMetabaseResourceModel) ToGetSDKType() *shared.SourceMetabaseCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceMetabaseResourceModel) ToUpdateSDKType() *shared.SourceMetabasePutRequest {
 	instanceAPIURL := r.Configuration.InstanceAPIURL.ValueString()
 	password := new(string)
@@ -93,9 +98,13 @@ func (r *SourceMetabaseResourceModel) ToDeleteSDKType() *shared.SourceMetabaseCr
 	return out
 }
 
-func (r *SourceMetabaseResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceMetabaseResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceMetabaseResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

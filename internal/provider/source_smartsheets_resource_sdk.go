@@ -79,6 +79,11 @@ func (r *SourceSmartsheetsResourceModel) ToCreateSDKType() *shared.SourceSmartsh
 	return &out
 }
 
+func (r *SourceSmartsheetsResourceModel) ToGetSDKType() *shared.SourceSmartsheetsCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceSmartsheetsResourceModel) ToUpdateSDKType() *shared.SourceSmartsheetsPutRequest {
 	var credentials shared.SourceSmartsheetsUpdateAuthorizationMethod
 	var sourceSmartsheetsUpdateAuthorizationMethodOAuth20 *shared.SourceSmartsheetsUpdateAuthorizationMethodOAuth20
@@ -146,9 +151,13 @@ func (r *SourceSmartsheetsResourceModel) ToDeleteSDKType() *shared.SourceSmartsh
 	return out
 }
 
-func (r *SourceSmartsheetsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceSmartsheetsResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceSmartsheetsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

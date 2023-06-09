@@ -67,6 +67,11 @@ func (r *SourceSlackResourceModel) ToCreateSDKType() *shared.SourceSlackCreateRe
 	return &out
 }
 
+func (r *SourceSlackResourceModel) ToGetSDKType() *shared.SourceSlackCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceSlackResourceModel) ToUpdateSDKType() *shared.SourceSlackPutRequest {
 	channelFilter := make([]string, 0)
 	for _, channelFilterItem := range r.Configuration.ChannelFilter {
@@ -122,9 +127,13 @@ func (r *SourceSlackResourceModel) ToDeleteSDKType() *shared.SourceSlackCreateRe
 	return out
 }
 
-func (r *SourceSlackResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceSlackResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceSlackResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

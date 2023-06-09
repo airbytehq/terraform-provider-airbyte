@@ -314,6 +314,11 @@ func (r *DestinationS3ResourceModel) ToCreateSDKType() *shared.DestinationS3Crea
 	return &out
 }
 
+func (r *DestinationS3ResourceModel) ToGetSDKType() *shared.DestinationS3CreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *DestinationS3ResourceModel) ToUpdateSDKType() *shared.DestinationS3PutRequest {
 	accessKeyID := new(string)
 	if !r.Configuration.AccessKeyID.IsUnknown() && !r.Configuration.AccessKeyID.IsNull() {
@@ -624,9 +629,13 @@ func (r *DestinationS3ResourceModel) ToDeleteSDKType() *shared.DestinationS3Crea
 	return out
 }
 
-func (r *DestinationS3ResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationS3ResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
 	r.DestinationID = types.StringValue(resp.DestinationID)
 	r.DestinationType = types.StringValue(resp.DestinationType)
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *DestinationS3ResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.RefreshFromGetResponse(resp)
 }

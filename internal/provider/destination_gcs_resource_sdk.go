@@ -310,6 +310,11 @@ func (r *DestinationGcsResourceModel) ToCreateSDKType() *shared.DestinationGcsCr
 	return &out
 }
 
+func (r *DestinationGcsResourceModel) ToGetSDKType() *shared.DestinationGcsCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *DestinationGcsResourceModel) ToUpdateSDKType() *shared.DestinationGcsPutRequest {
 	var credential shared.DestinationGcsUpdateAuthentication
 	var destinationGcsUpdateAuthenticationHMACKey *shared.DestinationGcsUpdateAuthenticationHMACKey
@@ -616,9 +621,13 @@ func (r *DestinationGcsResourceModel) ToDeleteSDKType() *shared.DestinationGcsCr
 	return out
 }
 
-func (r *DestinationGcsResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationGcsResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
 	r.DestinationID = types.StringValue(resp.DestinationID)
 	r.DestinationType = types.StringValue(resp.DestinationType)
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *DestinationGcsResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.RefreshFromGetResponse(resp)
 }

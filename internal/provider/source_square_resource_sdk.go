@@ -72,6 +72,11 @@ func (r *SourceSquareResourceModel) ToCreateSDKType() *shared.SourceSquareCreate
 	return &out
 }
 
+func (r *SourceSquareResourceModel) ToGetSDKType() *shared.SourceSquareCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceSquareResourceModel) ToUpdateSDKType() *shared.SourceSquarePutRequest {
 	var credentials *shared.SourceSquareUpdateAuthentication
 	var sourceSquareUpdateAuthenticationOauthAuthentication *shared.SourceSquareUpdateAuthenticationOauthAuthentication
@@ -132,9 +137,13 @@ func (r *SourceSquareResourceModel) ToDeleteSDKType() *shared.SourceSquareCreate
 	return out
 }
 
-func (r *SourceSquareResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceSquareResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceSquareResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

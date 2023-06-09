@@ -51,6 +51,11 @@ func (r *SourceGooglePagespeedInsightsResourceModel) ToCreateSDKType() *shared.S
 	return &out
 }
 
+func (r *SourceGooglePagespeedInsightsResourceModel) ToGetSDKType() *shared.SourceGooglePagespeedInsightsCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceGooglePagespeedInsightsResourceModel) ToUpdateSDKType() *shared.SourceGooglePagespeedInsightsPutRequest {
 	apiKey := new(string)
 	if !r.Configuration.APIKey.IsUnknown() && !r.Configuration.APIKey.IsNull() {
@@ -91,9 +96,13 @@ func (r *SourceGooglePagespeedInsightsResourceModel) ToDeleteSDKType() *shared.S
 	return out
 }
 
-func (r *SourceGooglePagespeedInsightsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceGooglePagespeedInsightsResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceGooglePagespeedInsightsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

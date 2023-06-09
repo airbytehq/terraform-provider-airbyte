@@ -37,6 +37,11 @@ func (r *DestinationDynamodbResourceModel) ToCreateSDKType() *shared.Destination
 	return &out
 }
 
+func (r *DestinationDynamodbResourceModel) ToGetSDKType() *shared.DestinationDynamodbCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *DestinationDynamodbResourceModel) ToUpdateSDKType() *shared.DestinationDynamodbPutRequest {
 	accessKeyID := r.Configuration.AccessKeyID.ValueString()
 	dynamodbEndpoint := new(string)
@@ -70,9 +75,13 @@ func (r *DestinationDynamodbResourceModel) ToDeleteSDKType() *shared.Destination
 	return out
 }
 
-func (r *DestinationDynamodbResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationDynamodbResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
 	r.DestinationID = types.StringValue(resp.DestinationID)
 	r.DestinationType = types.StringValue(resp.DestinationType)
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *DestinationDynamodbResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.RefreshFromGetResponse(resp)
 }

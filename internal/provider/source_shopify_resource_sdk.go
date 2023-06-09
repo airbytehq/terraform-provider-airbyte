@@ -83,6 +83,11 @@ func (r *SourceShopifyResourceModel) ToCreateSDKType() *shared.SourceShopifyCrea
 	return &out
 }
 
+func (r *SourceShopifyResourceModel) ToGetSDKType() *shared.SourceShopifyCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceShopifyResourceModel) ToUpdateSDKType() *shared.SourceShopifyPutRequest {
 	var credentials *shared.SourceShopifyUpdateShopifyAuthorizationMethod
 	var sourceShopifyUpdateShopifyAuthorizationMethodAPIPassword *shared.SourceShopifyUpdateShopifyAuthorizationMethodAPIPassword
@@ -154,9 +159,13 @@ func (r *SourceShopifyResourceModel) ToDeleteSDKType() *shared.SourceShopifyCrea
 	return out
 }
 
-func (r *SourceShopifyResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceShopifyResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceShopifyResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

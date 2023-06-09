@@ -73,6 +73,11 @@ func (r *SourceLinkedinAdsResourceModel) ToCreateSDKType() *shared.SourceLinkedi
 	return &out
 }
 
+func (r *SourceLinkedinAdsResourceModel) ToGetSDKType() *shared.SourceLinkedinAdsCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceLinkedinAdsResourceModel) ToUpdateSDKType() *shared.SourceLinkedinAdsPutRequest {
 	accountIds := make([]int64, 0)
 	for _, accountIdsItem := range r.Configuration.AccountIds {
@@ -134,9 +139,13 @@ func (r *SourceLinkedinAdsResourceModel) ToDeleteSDKType() *shared.SourceLinkedi
 	return out
 }
 
-func (r *SourceLinkedinAdsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceLinkedinAdsResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceLinkedinAdsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

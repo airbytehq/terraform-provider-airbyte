@@ -41,6 +41,11 @@ func (r *SourcePosthogResourceModel) ToCreateSDKType() *shared.SourcePosthogCrea
 	return &out
 }
 
+func (r *SourcePosthogResourceModel) ToGetSDKType() *shared.SourcePosthogCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourcePosthogResourceModel) ToUpdateSDKType() *shared.SourcePosthogPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	baseURL := new(string)
@@ -70,9 +75,13 @@ func (r *SourcePosthogResourceModel) ToDeleteSDKType() *shared.SourcePosthogCrea
 	return out
 }
 
-func (r *SourcePosthogResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourcePosthogResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourcePosthogResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

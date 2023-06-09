@@ -35,6 +35,11 @@ func (r *SourceGcsResourceModel) ToCreateSDKType() *shared.SourceGcsCreateReques
 	return &out
 }
 
+func (r *SourceGcsResourceModel) ToGetSDKType() *shared.SourceGcsCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceGcsResourceModel) ToUpdateSDKType() *shared.SourceGcsPutRequest {
 	gcsBucket := r.Configuration.GcsBucket.ValueString()
 	gcsPath := r.Configuration.GcsPath.ValueString()
@@ -59,9 +64,13 @@ func (r *SourceGcsResourceModel) ToDeleteSDKType() *shared.SourceGcsCreateReques
 	return out
 }
 
-func (r *SourceGcsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceGcsResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceGcsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

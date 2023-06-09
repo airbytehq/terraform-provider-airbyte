@@ -43,6 +43,11 @@ func (r *SourceTwilioResourceModel) ToCreateSDKType() *shared.SourceTwilioCreate
 	return &out
 }
 
+func (r *SourceTwilioResourceModel) ToGetSDKType() *shared.SourceTwilioCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceTwilioResourceModel) ToUpdateSDKType() *shared.SourceTwilioPutRequest {
 	accountSid := r.Configuration.AccountSid.ValueString()
 	authToken := r.Configuration.AuthToken.ValueString()
@@ -74,9 +79,13 @@ func (r *SourceTwilioResourceModel) ToDeleteSDKType() *shared.SourceTwilioCreate
 	return out
 }
 
-func (r *SourceTwilioResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceTwilioResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceTwilioResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

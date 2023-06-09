@@ -58,6 +58,11 @@ func (r *SourceNotionResourceModel) ToCreateSDKType() *shared.SourceNotionCreate
 	return &out
 }
 
+func (r *SourceNotionResourceModel) ToGetSDKType() *shared.SourceNotionCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceNotionResourceModel) ToUpdateSDKType() *shared.SourceNotionPutRequest {
 	var credentials *shared.SourceNotionUpdateAuthenticateUsing
 	var sourceNotionUpdateAuthenticateUsingOAuth20 *shared.SourceNotionUpdateAuthenticateUsingOAuth20
@@ -104,9 +109,13 @@ func (r *SourceNotionResourceModel) ToDeleteSDKType() *shared.SourceNotionCreate
 	return out
 }
 
-func (r *SourceNotionResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceNotionResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceNotionResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

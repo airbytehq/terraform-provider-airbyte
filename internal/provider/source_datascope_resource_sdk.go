@@ -33,6 +33,11 @@ func (r *SourceDatascopeResourceModel) ToCreateSDKType() *shared.SourceDatascope
 	return &out
 }
 
+func (r *SourceDatascopeResourceModel) ToGetSDKType() *shared.SourceDatascopeCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceDatascopeResourceModel) ToUpdateSDKType() *shared.SourceDatascopePutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	startDate := r.Configuration.StartDate.ValueString()
@@ -55,9 +60,13 @@ func (r *SourceDatascopeResourceModel) ToDeleteSDKType() *shared.SourceDatascope
 	return out
 }
 
-func (r *SourceDatascopeResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceDatascopeResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceDatascopeResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

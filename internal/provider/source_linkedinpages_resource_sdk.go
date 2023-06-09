@@ -67,6 +67,11 @@ func (r *SourceLinkedinPagesResourceModel) ToCreateSDKType() *shared.SourceLinke
 	return &out
 }
 
+func (r *SourceLinkedinPagesResourceModel) ToGetSDKType() *shared.SourceLinkedinPagesCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceLinkedinPagesResourceModel) ToUpdateSDKType() *shared.SourceLinkedinPagesPutRequest {
 	var credentials *shared.SourceLinkedinPagesUpdateAuthentication
 	var sourceLinkedinPagesUpdateAuthenticationOAuth20 *shared.SourceLinkedinPagesUpdateAuthenticationOAuth20
@@ -123,9 +128,13 @@ func (r *SourceLinkedinPagesResourceModel) ToDeleteSDKType() *shared.SourceLinke
 	return out
 }
 
-func (r *SourceLinkedinPagesResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceLinkedinPagesResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceLinkedinPagesResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

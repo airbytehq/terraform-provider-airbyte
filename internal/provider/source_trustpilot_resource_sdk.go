@@ -76,6 +76,11 @@ func (r *SourceTrustpilotResourceModel) ToCreateSDKType() *shared.SourceTrustpil
 	return &out
 }
 
+func (r *SourceTrustpilotResourceModel) ToGetSDKType() *shared.SourceTrustpilotCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceTrustpilotResourceModel) ToUpdateSDKType() *shared.SourceTrustpilotPutRequest {
 	businessUnits := make([]string, 0)
 	for _, businessUnitsItem := range r.Configuration.BusinessUnits {
@@ -141,9 +146,13 @@ func (r *SourceTrustpilotResourceModel) ToDeleteSDKType() *shared.SourceTrustpil
 	return out
 }
 
-func (r *SourceTrustpilotResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceTrustpilotResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceTrustpilotResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

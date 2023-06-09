@@ -31,6 +31,11 @@ func (r *SourceTempoResourceModel) ToCreateSDKType() *shared.SourceTempoCreateRe
 	return &out
 }
 
+func (r *SourceTempoResourceModel) ToGetSDKType() *shared.SourceTempoCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceTempoResourceModel) ToUpdateSDKType() *shared.SourceTempoPutRequest {
 	apiToken := r.Configuration.APIToken.ValueString()
 	configuration := shared.SourceTempoUpdate{
@@ -51,9 +56,13 @@ func (r *SourceTempoResourceModel) ToDeleteSDKType() *shared.SourceTempoCreateRe
 	return out
 }
 
-func (r *SourceTempoResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceTempoResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceTempoResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

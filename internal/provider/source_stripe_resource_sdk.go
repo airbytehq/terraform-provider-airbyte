@@ -50,6 +50,11 @@ func (r *SourceStripeResourceModel) ToCreateSDKType() *shared.SourceStripeCreate
 	return &out
 }
 
+func (r *SourceStripeResourceModel) ToGetSDKType() *shared.SourceStripeCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceStripeResourceModel) ToUpdateSDKType() *shared.SourceStripePutRequest {
 	accountID := r.Configuration.AccountID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
@@ -88,9 +93,13 @@ func (r *SourceStripeResourceModel) ToDeleteSDKType() *shared.SourceStripeCreate
 	return out
 }
 
-func (r *SourceStripeResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceStripeResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceStripeResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

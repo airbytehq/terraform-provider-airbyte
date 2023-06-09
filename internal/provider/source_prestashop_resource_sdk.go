@@ -36,6 +36,11 @@ func (r *SourcePrestashopResourceModel) ToCreateSDKType() *shared.SourcePrestash
 	return &out
 }
 
+func (r *SourcePrestashopResourceModel) ToGetSDKType() *shared.SourcePrestashopCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourcePrestashopResourceModel) ToUpdateSDKType() *shared.SourcePrestashopPutRequest {
 	accessKey := r.Configuration.AccessKey.ValueString()
 	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
@@ -60,9 +65,13 @@ func (r *SourcePrestashopResourceModel) ToDeleteSDKType() *shared.SourcePrestash
 	return out
 }
 
-func (r *SourcePrestashopResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourcePrestashopResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourcePrestashopResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

@@ -59,6 +59,11 @@ func (r *SourceZendeskSunshineResourceModel) ToCreateSDKType() *shared.SourceZen
 	return &out
 }
 
+func (r *SourceZendeskSunshineResourceModel) ToGetSDKType() *shared.SourceZendeskSunshineCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceZendeskSunshineResourceModel) ToUpdateSDKType() *shared.SourceZendeskSunshinePutRequest {
 	var credentials *shared.SourceZendeskSunshineUpdateAuthorizationMethod
 	var sourceZendeskSunshineUpdateAuthorizationMethodOAuth20 *shared.SourceZendeskSunshineUpdateAuthorizationMethodOAuth20
@@ -107,9 +112,13 @@ func (r *SourceZendeskSunshineResourceModel) ToDeleteSDKType() *shared.SourceZen
 	return out
 }
 
-func (r *SourceZendeskSunshineResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceZendeskSunshineResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceZendeskSunshineResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

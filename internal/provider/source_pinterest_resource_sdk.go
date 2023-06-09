@@ -63,6 +63,11 @@ func (r *SourcePinterestResourceModel) ToCreateSDKType() *shared.SourcePinterest
 	return &out
 }
 
+func (r *SourcePinterestResourceModel) ToGetSDKType() *shared.SourcePinterestCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourcePinterestResourceModel) ToUpdateSDKType() *shared.SourcePinterestPutRequest {
 	var credentials *shared.SourcePinterestUpdateAuthorizationMethod
 	var sourcePinterestUpdateAuthorizationMethodOAuth20 *shared.SourcePinterestUpdateAuthorizationMethodOAuth20
@@ -114,9 +119,13 @@ func (r *SourcePinterestResourceModel) ToDeleteSDKType() *shared.SourcePinterest
 	return out
 }
 
-func (r *SourcePinterestResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourcePinterestResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourcePinterestResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

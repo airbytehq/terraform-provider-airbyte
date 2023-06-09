@@ -33,6 +33,11 @@ func (r *SourceGridlyResourceModel) ToCreateSDKType() *shared.SourceGridlyCreate
 	return &out
 }
 
+func (r *SourceGridlyResourceModel) ToGetSDKType() *shared.SourceGridlyCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceGridlyResourceModel) ToUpdateSDKType() *shared.SourceGridlyPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	gridID := r.Configuration.GridID.ValueString()
@@ -55,9 +60,13 @@ func (r *SourceGridlyResourceModel) ToDeleteSDKType() *shared.SourceGridlyCreate
 	return out
 }
 
-func (r *SourceGridlyResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceGridlyResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceGridlyResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

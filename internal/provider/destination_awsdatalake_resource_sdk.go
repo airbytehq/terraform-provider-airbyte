@@ -149,6 +149,11 @@ func (r *DestinationAwsDatalakeResourceModel) ToCreateSDKType() *shared.Destinat
 	return &out
 }
 
+func (r *DestinationAwsDatalakeResourceModel) ToGetSDKType() *shared.DestinationAwsDatalakeCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *DestinationAwsDatalakeResourceModel) ToUpdateSDKType() *shared.DestinationAwsDatalakePutRequest {
 	awsAccountID := new(string)
 	if !r.Configuration.AwsAccountID.IsUnknown() && !r.Configuration.AwsAccountID.IsNull() {
@@ -294,9 +299,13 @@ func (r *DestinationAwsDatalakeResourceModel) ToDeleteSDKType() *shared.Destinat
 	return out
 }
 
-func (r *DestinationAwsDatalakeResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationAwsDatalakeResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
 	r.DestinationID = types.StringValue(resp.DestinationID)
 	r.DestinationType = types.StringValue(resp.DestinationType)
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *DestinationAwsDatalakeResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.RefreshFromGetResponse(resp)
 }

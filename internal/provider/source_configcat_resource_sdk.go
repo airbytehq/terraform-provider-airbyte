@@ -33,6 +33,11 @@ func (r *SourceConfigcatResourceModel) ToCreateSDKType() *shared.SourceConfigcat
 	return &out
 }
 
+func (r *SourceConfigcatResourceModel) ToGetSDKType() *shared.SourceConfigcatCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceConfigcatResourceModel) ToUpdateSDKType() *shared.SourceConfigcatPutRequest {
 	password := r.Configuration.Password.ValueString()
 	username := r.Configuration.Username.ValueString()
@@ -55,9 +60,13 @@ func (r *SourceConfigcatResourceModel) ToDeleteSDKType() *shared.SourceConfigcat
 	return out
 }
 
-func (r *SourceConfigcatResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceConfigcatResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceConfigcatResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

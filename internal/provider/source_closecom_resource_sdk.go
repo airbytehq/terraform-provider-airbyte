@@ -39,6 +39,11 @@ func (r *SourceCloseComResourceModel) ToCreateSDKType() *shared.SourceCloseComCr
 	return &out
 }
 
+func (r *SourceCloseComResourceModel) ToGetSDKType() *shared.SourceCloseComCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceCloseComResourceModel) ToUpdateSDKType() *shared.SourceCloseComPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	startDate := new(time.Time)
@@ -66,9 +71,13 @@ func (r *SourceCloseComResourceModel) ToDeleteSDKType() *shared.SourceCloseComCr
 	return out
 }
 
-func (r *SourceCloseComResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceCloseComResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceCloseComResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

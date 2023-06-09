@@ -465,7 +465,7 @@ internal/provider/type_source_s3_file_format_parquet.go
 internal/provider/type_source_s3_file_format.go
 internal/provider/type_source_s3_s3_amazon_web_services.go
 internal/provider/type_source_s3.go
-internal/provider/type_source_salesforce_update_streams_criteria.go
+internal/provider/type_source_salesforce_streams_criteria.go
 internal/provider/type_source_salesforce.go
 internal/provider/type_source_salesforce_singer.go
 internal/provider/type_source_salesloft_credentials_authenticate_via_api_key.go
@@ -2545,8 +2545,8 @@ internal/sdk/pkg/models/shared/workspacecreaterequest.go
 internal/sdk/pkg/models/shared/workspacesresponse.go
 internal/sdk/pkg/models/shared/workspaceupdaterequest.go
 internal/sdk/pkg/models/shared/security.go
-internal/sdk/pkg/models/shared/connectionresponseroottypeforconnectionresponse.go
 internal/sdk/pkg/models/shared/workspaceresponseroottypeforworkspaceresponse.go
+internal/sdk/pkg/models/shared/connectionresponseroottypeforconnectionresponse.go
 USAGE.md
 internal/provider/provider.go
 internal/provider/connection_resource.go

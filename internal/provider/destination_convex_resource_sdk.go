@@ -26,6 +26,11 @@ func (r *DestinationConvexResourceModel) ToCreateSDKType() *shared.DestinationCo
 	return &out
 }
 
+func (r *DestinationConvexResourceModel) ToGetSDKType() *shared.DestinationConvexCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *DestinationConvexResourceModel) ToUpdateSDKType() *shared.DestinationConvexPutRequest {
 	accessKey := r.Configuration.AccessKey.ValueString()
 	deploymentURL := r.Configuration.DeploymentURL.ValueString()
@@ -48,9 +53,13 @@ func (r *DestinationConvexResourceModel) ToDeleteSDKType() *shared.DestinationCo
 	return out
 }
 
-func (r *DestinationConvexResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationConvexResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
 	r.DestinationID = types.StringValue(resp.DestinationID)
 	r.DestinationType = types.StringValue(resp.DestinationType)
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *DestinationConvexResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.RefreshFromGetResponse(resp)
 }

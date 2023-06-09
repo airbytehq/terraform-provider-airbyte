@@ -179,6 +179,11 @@ func (r *SourceOracleResourceModel) ToCreateSDKType() *shared.SourceOracleCreate
 	return &out
 }
 
+func (r *SourceOracleResourceModel) ToGetSDKType() *shared.SourceOracleCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceOracleResourceModel) ToUpdateSDKType() *shared.SourceOraclePutRequest {
 	var connectionData *shared.SourceOracleUpdateConnectBy
 	var sourceOracleUpdateConnectByServiceName *shared.SourceOracleUpdateConnectByServiceName
@@ -347,9 +352,13 @@ func (r *SourceOracleResourceModel) ToDeleteSDKType() *shared.SourceOracleCreate
 	return out
 }
 
-func (r *SourceOracleResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceOracleResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceOracleResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

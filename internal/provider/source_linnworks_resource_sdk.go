@@ -38,6 +38,11 @@ func (r *SourceLinnworksResourceModel) ToCreateSDKType() *shared.SourceLinnworks
 	return &out
 }
 
+func (r *SourceLinnworksResourceModel) ToGetSDKType() *shared.SourceLinnworksCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceLinnworksResourceModel) ToUpdateSDKType() *shared.SourceLinnworksPutRequest {
 	applicationID := r.Configuration.ApplicationID.ValueString()
 	applicationSecret := r.Configuration.ApplicationSecret.ValueString()
@@ -64,9 +69,13 @@ func (r *SourceLinnworksResourceModel) ToDeleteSDKType() *shared.SourceLinnworks
 	return out
 }
 
-func (r *SourceLinnworksResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceLinnworksResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceLinnworksResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

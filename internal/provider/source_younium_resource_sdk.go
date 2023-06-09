@@ -42,6 +42,11 @@ func (r *SourceYouniumResourceModel) ToCreateSDKType() *shared.SourceYouniumCrea
 	return &out
 }
 
+func (r *SourceYouniumResourceModel) ToGetSDKType() *shared.SourceYouniumCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceYouniumResourceModel) ToUpdateSDKType() *shared.SourceYouniumPutRequest {
 	legalEntity := r.Configuration.LegalEntity.ValueString()
 	password := r.Configuration.Password.ValueString()
@@ -73,9 +78,13 @@ func (r *SourceYouniumResourceModel) ToDeleteSDKType() *shared.SourceYouniumCrea
 	return out
 }
 
-func (r *SourceYouniumResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceYouniumResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceYouniumResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

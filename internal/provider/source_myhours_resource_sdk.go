@@ -42,6 +42,11 @@ func (r *SourceMyHoursResourceModel) ToCreateSDKType() *shared.SourceMyHoursCrea
 	return &out
 }
 
+func (r *SourceMyHoursResourceModel) ToGetSDKType() *shared.SourceMyHoursCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceMyHoursResourceModel) ToUpdateSDKType() *shared.SourceMyHoursPutRequest {
 	email := r.Configuration.Email.ValueString()
 	logsBatchSize := new(int64)
@@ -73,9 +78,13 @@ func (r *SourceMyHoursResourceModel) ToDeleteSDKType() *shared.SourceMyHoursCrea
 	return out
 }
 
-func (r *SourceMyHoursResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceMyHoursResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceMyHoursResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

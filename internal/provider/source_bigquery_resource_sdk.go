@@ -40,6 +40,11 @@ func (r *SourceBigqueryResourceModel) ToCreateSDKType() *shared.SourceBigqueryCr
 	return &out
 }
 
+func (r *SourceBigqueryResourceModel) ToGetSDKType() *shared.SourceBigqueryCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceBigqueryResourceModel) ToUpdateSDKType() *shared.SourceBigqueryPutRequest {
 	credentialsJSON := r.Configuration.CredentialsJSON.ValueString()
 	datasetID := new(string)
@@ -69,9 +74,13 @@ func (r *SourceBigqueryResourceModel) ToDeleteSDKType() *shared.SourceBigqueryCr
 	return out
 }
 
-func (r *SourceBigqueryResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceBigqueryResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceBigqueryResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

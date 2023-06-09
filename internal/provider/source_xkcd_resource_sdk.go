@@ -34,6 +34,11 @@ func (r *SourceXkcdResourceModel) ToCreateSDKType() *shared.SourceXkcdCreateRequ
 	return &out
 }
 
+func (r *SourceXkcdResourceModel) ToGetSDKType() *shared.SourceXkcdCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceXkcdResourceModel) ToUpdateSDKType() *shared.SourceXkcdPutRequest {
 	configuration := shared.SourceXkcdUpdate{}
 	name := r.Name.ValueString()
@@ -51,9 +56,13 @@ func (r *SourceXkcdResourceModel) ToDeleteSDKType() *shared.SourceXkcdCreateRequ
 	return out
 }
 
-func (r *SourceXkcdResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceXkcdResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceXkcdResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

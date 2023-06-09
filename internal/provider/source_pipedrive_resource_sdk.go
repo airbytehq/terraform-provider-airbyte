@@ -42,6 +42,11 @@ func (r *SourcePipedriveResourceModel) ToCreateSDKType() *shared.SourcePipedrive
 	return &out
 }
 
+func (r *SourcePipedriveResourceModel) ToGetSDKType() *shared.SourcePipedriveCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourcePipedriveResourceModel) ToUpdateSDKType() *shared.SourcePipedrivePutRequest {
 	var authorization *shared.SourcePipedriveUpdateAPIKeyAuthentication
 	if r.Configuration.Authorization != nil {
@@ -72,9 +77,13 @@ func (r *SourcePipedriveResourceModel) ToDeleteSDKType() *shared.SourcePipedrive
 	return out
 }
 
-func (r *SourcePipedriveResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourcePipedriveResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourcePipedriveResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

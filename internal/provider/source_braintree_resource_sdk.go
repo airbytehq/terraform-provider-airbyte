@@ -45,6 +45,11 @@ func (r *SourceBraintreeResourceModel) ToCreateSDKType() *shared.SourceBraintree
 	return &out
 }
 
+func (r *SourceBraintreeResourceModel) ToGetSDKType() *shared.SourceBraintreeCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceBraintreeResourceModel) ToUpdateSDKType() *shared.SourceBraintreePutRequest {
 	environment := shared.SourceBraintreeUpdateEnvironment(r.Configuration.Environment.ValueString())
 	merchantID := r.Configuration.MerchantID.ValueString()
@@ -78,9 +83,13 @@ func (r *SourceBraintreeResourceModel) ToDeleteSDKType() *shared.SourceBraintree
 	return out
 }
 
-func (r *SourceBraintreeResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceBraintreeResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceBraintreeResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

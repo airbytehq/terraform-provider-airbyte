@@ -94,6 +94,11 @@ func (r *DestinationMysqlResourceModel) ToCreateSDKType() *shared.DestinationMys
 	return &out
 }
 
+func (r *DestinationMysqlResourceModel) ToGetSDKType() *shared.DestinationMysqlCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *DestinationMysqlResourceModel) ToUpdateSDKType() *shared.DestinationMysqlPutRequest {
 	database := r.Configuration.Database.ValueString()
 	host := r.Configuration.Host.ValueString()
@@ -184,9 +189,13 @@ func (r *DestinationMysqlResourceModel) ToDeleteSDKType() *shared.DestinationMys
 	return out
 }
 
-func (r *DestinationMysqlResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationMysqlResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
 	r.DestinationID = types.StringValue(resp.DestinationID)
 	r.DestinationType = types.StringValue(resp.DestinationType)
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *DestinationMysqlResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.RefreshFromGetResponse(resp)
 }

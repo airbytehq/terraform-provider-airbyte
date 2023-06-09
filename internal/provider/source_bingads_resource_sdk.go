@@ -66,6 +66,11 @@ func (r *SourceBingAdsResourceModel) ToCreateSDKType() *shared.SourceBingAdsCrea
 	return &out
 }
 
+func (r *SourceBingAdsResourceModel) ToGetSDKType() *shared.SourceBingAdsCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceBingAdsResourceModel) ToUpdateSDKType() *shared.SourceBingAdsPutRequest {
 	authMethod := new(shared.SourceBingAdsUpdateAuthMethod)
 	if !r.Configuration.AuthMethod.IsUnknown() && !r.Configuration.AuthMethod.IsNull() {
@@ -120,9 +125,13 @@ func (r *SourceBingAdsResourceModel) ToDeleteSDKType() *shared.SourceBingAdsCrea
 	return out
 }
 
-func (r *SourceBingAdsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceBingAdsResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceBingAdsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

@@ -31,6 +31,11 @@ func (r *SourcePendoResourceModel) ToCreateSDKType() *shared.SourcePendoCreateRe
 	return &out
 }
 
+func (r *SourcePendoResourceModel) ToGetSDKType() *shared.SourcePendoCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourcePendoResourceModel) ToUpdateSDKType() *shared.SourcePendoPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	configuration := shared.SourcePendoUpdate{
@@ -51,9 +56,13 @@ func (r *SourcePendoResourceModel) ToDeleteSDKType() *shared.SourcePendoCreateRe
 	return out
 }
 
-func (r *SourcePendoResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourcePendoResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourcePendoResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

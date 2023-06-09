@@ -50,6 +50,11 @@ func (r *SourceSnapchatMarketingResourceModel) ToCreateSDKType() *shared.SourceS
 	return &out
 }
 
+func (r *SourceSnapchatMarketingResourceModel) ToGetSDKType() *shared.SourceSnapchatMarketingCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceSnapchatMarketingResourceModel) ToUpdateSDKType() *shared.SourceSnapchatMarketingPutRequest {
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
@@ -88,9 +93,13 @@ func (r *SourceSnapchatMarketingResourceModel) ToDeleteSDKType() *shared.SourceS
 	return out
 }
 
-func (r *SourceSnapchatMarketingResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceSnapchatMarketingResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceSnapchatMarketingResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

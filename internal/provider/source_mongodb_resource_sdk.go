@@ -99,6 +99,11 @@ func (r *SourceMongodbResourceModel) ToCreateSDKType() *shared.SourceMongodbCrea
 	return &out
 }
 
+func (r *SourceMongodbResourceModel) ToGetSDKType() *shared.SourceMongodbCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceMongodbResourceModel) ToUpdateSDKType() *shared.SourceMongodbPutRequest {
 	authSource := new(string)
 	if !r.Configuration.AuthSource.IsUnknown() && !r.Configuration.AuthSource.IsNull() {
@@ -187,9 +192,13 @@ func (r *SourceMongodbResourceModel) ToDeleteSDKType() *shared.SourceMongodbCrea
 	return out
 }
 
-func (r *SourceMongodbResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceMongodbResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceMongodbResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

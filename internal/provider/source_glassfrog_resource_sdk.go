@@ -31,6 +31,11 @@ func (r *SourceGlassfrogResourceModel) ToCreateSDKType() *shared.SourceGlassfrog
 	return &out
 }
 
+func (r *SourceGlassfrogResourceModel) ToGetSDKType() *shared.SourceGlassfrogCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceGlassfrogResourceModel) ToUpdateSDKType() *shared.SourceGlassfrogPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	configuration := shared.SourceGlassfrogUpdate{
@@ -51,9 +56,13 @@ func (r *SourceGlassfrogResourceModel) ToDeleteSDKType() *shared.SourceGlassfrog
 	return out
 }
 
-func (r *SourceGlassfrogResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceGlassfrogResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceGlassfrogResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

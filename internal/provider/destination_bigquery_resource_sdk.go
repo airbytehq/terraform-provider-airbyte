@@ -75,6 +75,11 @@ func (r *DestinationBigqueryResourceModel) ToCreateSDKType() *shared.Destination
 	return &out
 }
 
+func (r *DestinationBigqueryResourceModel) ToGetSDKType() *shared.DestinationBigqueryCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *DestinationBigqueryResourceModel) ToUpdateSDKType() *shared.DestinationBigqueryPutRequest {
 	bigQueryClientBufferSizeMb := new(int64)
 	if !r.Configuration.BigQueryClientBufferSizeMb.IsUnknown() && !r.Configuration.BigQueryClientBufferSizeMb.IsNull() {
@@ -146,9 +151,13 @@ func (r *DestinationBigqueryResourceModel) ToDeleteSDKType() *shared.Destination
 	return out
 }
 
-func (r *DestinationBigqueryResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationBigqueryResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
 	r.DestinationID = types.StringValue(resp.DestinationID)
 	r.DestinationType = types.StringValue(resp.DestinationType)
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *DestinationBigqueryResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.RefreshFromGetResponse(resp)
 }

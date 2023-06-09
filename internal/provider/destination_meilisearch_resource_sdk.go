@@ -31,6 +31,11 @@ func (r *DestinationMeilisearchResourceModel) ToCreateSDKType() *shared.Destinat
 	return &out
 }
 
+func (r *DestinationMeilisearchResourceModel) ToGetSDKType() *shared.DestinationMeilisearchCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *DestinationMeilisearchResourceModel) ToUpdateSDKType() *shared.DestinationMeilisearchPutRequest {
 	apiKey := new(string)
 	if !r.Configuration.APIKey.IsUnknown() && !r.Configuration.APIKey.IsNull() {
@@ -58,9 +63,13 @@ func (r *DestinationMeilisearchResourceModel) ToDeleteSDKType() *shared.Destinat
 	return out
 }
 
-func (r *DestinationMeilisearchResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationMeilisearchResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
 	r.DestinationID = types.StringValue(resp.DestinationID)
 	r.DestinationType = types.StringValue(resp.DestinationType)
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *DestinationMeilisearchResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.RefreshFromGetResponse(resp)
 }

@@ -165,6 +165,11 @@ func (r *SourceMssqlResourceModel) ToCreateSDKType() *shared.SourceMssqlCreateRe
 	return &out
 }
 
+func (r *SourceMssqlResourceModel) ToGetSDKType() *shared.SourceMssqlCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceMssqlResourceModel) ToUpdateSDKType() *shared.SourceMssqlPutRequest {
 	database := r.Configuration.Database.ValueString()
 	host := r.Configuration.Host.ValueString()
@@ -319,9 +324,13 @@ func (r *SourceMssqlResourceModel) ToDeleteSDKType() *shared.SourceMssqlCreateRe
 	return out
 }
 
-func (r *SourceMssqlResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceMssqlResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceMssqlResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

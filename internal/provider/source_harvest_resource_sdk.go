@@ -96,6 +96,11 @@ func (r *SourceHarvestResourceModel) ToCreateSDKType() *shared.SourceHarvestCrea
 	return &out
 }
 
+func (r *SourceHarvestResourceModel) ToGetSDKType() *shared.SourceHarvestCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceHarvestResourceModel) ToUpdateSDKType() *shared.SourceHarvestPutRequest {
 	accountID := r.Configuration.AccountID.ValueString()
 	var credentials *shared.SourceHarvestUpdateAuthenticationMechanism
@@ -179,9 +184,13 @@ func (r *SourceHarvestResourceModel) ToDeleteSDKType() *shared.SourceHarvestCrea
 	return out
 }
 
-func (r *SourceHarvestResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceHarvestResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceHarvestResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

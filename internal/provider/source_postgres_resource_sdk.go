@@ -283,6 +283,11 @@ func (r *SourcePostgresResourceModel) ToCreateSDKType() *shared.SourcePostgresCr
 	return &out
 }
 
+func (r *SourcePostgresResourceModel) ToGetSDKType() *shared.SourcePostgresCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourcePostgresResourceModel) ToUpdateSDKType() *shared.SourcePostgresPutRequest {
 	database := r.Configuration.Database.ValueString()
 	host := r.Configuration.Host.ValueString()
@@ -554,9 +559,13 @@ func (r *SourcePostgresResourceModel) ToDeleteSDKType() *shared.SourcePostgresCr
 	return out
 }
 
-func (r *SourcePostgresResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourcePostgresResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourcePostgresResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

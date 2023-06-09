@@ -31,6 +31,11 @@ func (r *DestinationFirestoreResourceModel) ToCreateSDKType() *shared.Destinatio
 	return &out
 }
 
+func (r *DestinationFirestoreResourceModel) ToGetSDKType() *shared.DestinationFirestoreCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *DestinationFirestoreResourceModel) ToUpdateSDKType() *shared.DestinationFirestorePutRequest {
 	credentialsJSON := new(string)
 	if !r.Configuration.CredentialsJSON.IsUnknown() && !r.Configuration.CredentialsJSON.IsNull() {
@@ -58,9 +63,13 @@ func (r *DestinationFirestoreResourceModel) ToDeleteSDKType() *shared.Destinatio
 	return out
 }
 
-func (r *DestinationFirestoreResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationFirestoreResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
 	r.DestinationID = types.StringValue(resp.DestinationID)
 	r.DestinationType = types.StringValue(resp.DestinationType)
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *DestinationFirestoreResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.RefreshFromGetResponse(resp)
 }

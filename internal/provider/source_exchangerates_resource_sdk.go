@@ -48,6 +48,11 @@ func (r *SourceExchangeRatesResourceModel) ToCreateSDKType() *shared.SourceExcha
 	return &out
 }
 
+func (r *SourceExchangeRatesResourceModel) ToGetSDKType() *shared.SourceExchangeRatesCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceExchangeRatesResourceModel) ToUpdateSDKType() *shared.SourceExchangeRatesPutRequest {
 	accessKey := r.Configuration.AccessKey.ValueString()
 	base := new(string)
@@ -84,9 +89,13 @@ func (r *SourceExchangeRatesResourceModel) ToDeleteSDKType() *shared.SourceExcha
 	return out
 }
 
-func (r *SourceExchangeRatesResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceExchangeRatesResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceExchangeRatesResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

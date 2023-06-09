@@ -36,6 +36,11 @@ func (r *DestinationDevNullResourceModel) ToCreateSDKType() *shared.DestinationD
 	return &out
 }
 
+func (r *DestinationDevNullResourceModel) ToGetSDKType() *shared.DestinationDevNullCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *DestinationDevNullResourceModel) ToUpdateSDKType() *shared.DestinationDevNullPutRequest {
 	var testDestination shared.DestinationDevNullUpdateTestDestination
 	var destinationDevNullUpdateTestDestinationSilent *shared.DestinationDevNullUpdateTestDestinationSilent
@@ -68,9 +73,13 @@ func (r *DestinationDevNullResourceModel) ToDeleteSDKType() *shared.DestinationD
 	return out
 }
 
-func (r *DestinationDevNullResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationDevNullResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
 	r.DestinationID = types.StringValue(resp.DestinationID)
 	r.DestinationType = types.StringValue(resp.DestinationType)
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *DestinationDevNullResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.RefreshFromGetResponse(resp)
 }

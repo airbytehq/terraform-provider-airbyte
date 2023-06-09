@@ -86,6 +86,11 @@ func (r *SourceSftpResourceModel) ToCreateSDKType() *shared.SourceSftpCreateRequ
 	return &out
 }
 
+func (r *SourceSftpResourceModel) ToGetSDKType() *shared.SourceSftpCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceSftpResourceModel) ToUpdateSDKType() *shared.SourceSftpPutRequest {
 	var credentials *shared.SourceSftpUpdateAuthenticationWildcard
 	var sourceSftpUpdateAuthenticationWildcardPasswordAuthentication *shared.SourceSftpUpdateAuthenticationWildcardPasswordAuthentication
@@ -161,9 +166,13 @@ func (r *SourceSftpResourceModel) ToDeleteSDKType() *shared.SourceSftpCreateRequ
 	return out
 }
 
-func (r *SourceSftpResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceSftpResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceSftpResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

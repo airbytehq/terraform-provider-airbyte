@@ -55,6 +55,11 @@ func (r *SourceMondayResourceModel) ToCreateSDKType() *shared.SourceMondayCreate
 	return &out
 }
 
+func (r *SourceMondayResourceModel) ToGetSDKType() *shared.SourceMondayCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceMondayResourceModel) ToUpdateSDKType() *shared.SourceMondayPutRequest {
 	var credentials *shared.SourceMondayUpdateAuthorizationMethod
 	var sourceMondayUpdateAuthorizationMethodOAuth20 *shared.SourceMondayUpdateAuthorizationMethodOAuth20
@@ -99,9 +104,13 @@ func (r *SourceMondayResourceModel) ToDeleteSDKType() *shared.SourceMondayCreate
 	return out
 }
 
-func (r *SourceMondayResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceMondayResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceMondayResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

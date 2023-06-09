@@ -147,6 +147,11 @@ func (r *DestinationMongodbResourceModel) ToCreateSDKType() *shared.DestinationM
 	return &out
 }
 
+func (r *DestinationMongodbResourceModel) ToGetSDKType() *shared.DestinationMongodbCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *DestinationMongodbResourceModel) ToUpdateSDKType() *shared.DestinationMongodbPutRequest {
 	var authType shared.DestinationMongodbUpdateAuthorizationType
 	var destinationMongodbUpdateAuthorizationTypeNone *shared.DestinationMongodbUpdateAuthorizationTypeNone
@@ -290,9 +295,13 @@ func (r *DestinationMongodbResourceModel) ToDeleteSDKType() *shared.DestinationM
 	return out
 }
 
-func (r *DestinationMongodbResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationMongodbResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
 	r.DestinationID = types.StringValue(resp.DestinationID)
 	r.DestinationType = types.StringValue(resp.DestinationType)
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *DestinationMongodbResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.RefreshFromGetResponse(resp)
 }

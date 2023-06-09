@@ -34,6 +34,11 @@ func (r *SourceInstagramResourceModel) ToCreateSDKType() *shared.SourceInstagram
 	return &out
 }
 
+func (r *SourceInstagramResourceModel) ToGetSDKType() *shared.SourceInstagramCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceInstagramResourceModel) ToUpdateSDKType() *shared.SourceInstagramPutRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
@@ -56,9 +61,13 @@ func (r *SourceInstagramResourceModel) ToDeleteSDKType() *shared.SourceInstagram
 	return out
 }
 
-func (r *SourceInstagramResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceInstagramResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceInstagramResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

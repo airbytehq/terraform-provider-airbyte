@@ -53,6 +53,11 @@ func (r *SourceOnesignalResourceModel) ToCreateSDKType() *shared.SourceOnesignal
 	return &out
 }
 
+func (r *SourceOnesignalResourceModel) ToGetSDKType() *shared.SourceOnesignalCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceOnesignalResourceModel) ToUpdateSDKType() *shared.SourceOnesignalPutRequest {
 	applications := make([]shared.SourceOnesignalUpdateApplications, 0)
 	for _, applicationsItem := range r.Configuration.Applications {
@@ -94,9 +99,13 @@ func (r *SourceOnesignalResourceModel) ToDeleteSDKType() *shared.SourceOnesignal
 	return out
 }
 
-func (r *SourceOnesignalResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceOnesignalResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceOnesignalResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

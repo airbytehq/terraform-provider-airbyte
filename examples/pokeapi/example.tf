@@ -63,5 +63,13 @@ resource "airbyte_connection" "test_connection" {
   name           = "pokeapi_to_google_sheets"
   source_id      = airbyte_source_pokeapi.kido.source_id
   destination_id = airbyte_destination_google_sheets.output.destination_id
-  status         = "inactive"
+  configurations = {
+    streams = [
+      {
+        name      = "pokemon"
+        sync_mode = "full_refresh_overwrite"
+      }
+    ]
+  }
+  status = "inactive"
 }

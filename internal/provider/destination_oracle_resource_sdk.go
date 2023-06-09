@@ -101,6 +101,11 @@ func (r *DestinationOracleResourceModel) ToCreateSDKType() *shared.DestinationOr
 	return &out
 }
 
+func (r *DestinationOracleResourceModel) ToGetSDKType() *shared.DestinationOracleCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *DestinationOracleResourceModel) ToUpdateSDKType() *shared.DestinationOraclePutRequest {
 	host := r.Configuration.Host.ValueString()
 	jdbcURLParams := new(string)
@@ -198,9 +203,13 @@ func (r *DestinationOracleResourceModel) ToDeleteSDKType() *shared.DestinationOr
 	return out
 }
 
-func (r *DestinationOracleResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationOracleResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
 	r.DestinationID = types.StringValue(resp.DestinationID)
 	r.DestinationType = types.StringValue(resp.DestinationType)
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *DestinationOracleResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.RefreshFromGetResponse(resp)
 }

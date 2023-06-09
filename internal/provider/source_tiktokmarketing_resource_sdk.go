@@ -109,6 +109,11 @@ func (r *SourceTiktokMarketingResourceModel) ToCreateSDKType() *shared.SourceTik
 	return &out
 }
 
+func (r *SourceTiktokMarketingResourceModel) ToGetSDKType() *shared.SourceTiktokMarketingCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceTiktokMarketingResourceModel) ToUpdateSDKType() *shared.SourceTiktokMarketingPutRequest {
 	attributionWindow := new(int64)
 	if !r.Configuration.AttributionWindow.IsUnknown() && !r.Configuration.AttributionWindow.IsNull() {
@@ -201,9 +206,13 @@ func (r *SourceTiktokMarketingResourceModel) ToDeleteSDKType() *shared.SourceTik
 	return out
 }
 
-func (r *SourceTiktokMarketingResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceTiktokMarketingResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceTiktokMarketingResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

@@ -37,6 +37,11 @@ func (r *SourceKlarnaResourceModel) ToCreateSDKType() *shared.SourceKlarnaCreate
 	return &out
 }
 
+func (r *SourceKlarnaResourceModel) ToGetSDKType() *shared.SourceKlarnaCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceKlarnaResourceModel) ToUpdateSDKType() *shared.SourceKlarnaPutRequest {
 	password := r.Configuration.Password.ValueString()
 	playground := r.Configuration.Playground.ValueBool()
@@ -63,9 +68,13 @@ func (r *SourceKlarnaResourceModel) ToDeleteSDKType() *shared.SourceKlarnaCreate
 	return out
 }
 
-func (r *SourceKlarnaResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceKlarnaResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceKlarnaResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

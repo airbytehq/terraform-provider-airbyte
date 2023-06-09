@@ -96,6 +96,11 @@ func (r *SourcePocketResourceModel) ToCreateSDKType() *shared.SourcePocketCreate
 	return &out
 }
 
+func (r *SourcePocketResourceModel) ToGetSDKType() *shared.SourcePocketCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourcePocketResourceModel) ToUpdateSDKType() *shared.SourcePocketPutRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
 	consumerKey := r.Configuration.ConsumerKey.ValueString()
@@ -181,9 +186,13 @@ func (r *SourcePocketResourceModel) ToDeleteSDKType() *shared.SourcePocketCreate
 	return out
 }
 
-func (r *SourcePocketResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourcePocketResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourcePocketResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

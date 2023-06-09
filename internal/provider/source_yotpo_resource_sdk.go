@@ -38,6 +38,11 @@ func (r *SourceYotpoResourceModel) ToCreateSDKType() *shared.SourceYotpoCreateRe
 	return &out
 }
 
+func (r *SourceYotpoResourceModel) ToGetSDKType() *shared.SourceYotpoCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceYotpoResourceModel) ToUpdateSDKType() *shared.SourceYotpoPutRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
 	appKey := r.Configuration.AppKey.ValueString()
@@ -64,9 +69,13 @@ func (r *SourceYotpoResourceModel) ToDeleteSDKType() *shared.SourceYotpoCreateRe
 	return out
 }
 
-func (r *SourceYotpoResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceYotpoResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceYotpoResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

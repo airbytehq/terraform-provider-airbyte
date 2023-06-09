@@ -31,6 +31,11 @@ func (r *SourceVantageResourceModel) ToCreateSDKType() *shared.SourceVantageCrea
 	return &out
 }
 
+func (r *SourceVantageResourceModel) ToGetSDKType() *shared.SourceVantageCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceVantageResourceModel) ToUpdateSDKType() *shared.SourceVantagePutRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
 	configuration := shared.SourceVantageUpdate{
@@ -51,9 +56,13 @@ func (r *SourceVantageResourceModel) ToDeleteSDKType() *shared.SourceVantageCrea
 	return out
 }
 
-func (r *SourceVantageResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceVantageResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceVantageResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

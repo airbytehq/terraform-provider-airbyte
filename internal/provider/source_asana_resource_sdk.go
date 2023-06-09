@@ -78,6 +78,11 @@ func (r *SourceAsanaResourceModel) ToCreateSDKType() *shared.SourceAsanaCreateRe
 	return &out
 }
 
+func (r *SourceAsanaResourceModel) ToGetSDKType() *shared.SourceAsanaCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceAsanaResourceModel) ToUpdateSDKType() *shared.SourceAsanaPutRequest {
 	var credentials *shared.SourceAsanaUpdateAuthenticationMechanism
 	var sourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauth *shared.SourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauth
@@ -140,9 +145,13 @@ func (r *SourceAsanaResourceModel) ToDeleteSDKType() *shared.SourceAsanaCreateRe
 	return out
 }
 
-func (r *SourceAsanaResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceAsanaResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceAsanaResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

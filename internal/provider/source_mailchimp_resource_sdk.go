@@ -62,6 +62,11 @@ func (r *SourceMailchimpResourceModel) ToCreateSDKType() *shared.SourceMailchimp
 	return &out
 }
 
+func (r *SourceMailchimpResourceModel) ToGetSDKType() *shared.SourceMailchimpCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceMailchimpResourceModel) ToUpdateSDKType() *shared.SourceMailchimpPutRequest {
 	campaignID := new(string)
 	if !r.Configuration.CampaignID.IsUnknown() && !r.Configuration.CampaignID.IsNull() {
@@ -113,9 +118,13 @@ func (r *SourceMailchimpResourceModel) ToDeleteSDKType() *shared.SourceMailchimp
 	return out
 }
 
-func (r *SourceMailchimpResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceMailchimpResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceMailchimpResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

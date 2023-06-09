@@ -33,6 +33,11 @@ func (r *SourceLokaliseResourceModel) ToCreateSDKType() *shared.SourceLokaliseCr
 	return &out
 }
 
+func (r *SourceLokaliseResourceModel) ToGetSDKType() *shared.SourceLokaliseCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceLokaliseResourceModel) ToUpdateSDKType() *shared.SourceLokalisePutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	projectID := r.Configuration.ProjectID.ValueString()
@@ -55,9 +60,13 @@ func (r *SourceLokaliseResourceModel) ToDeleteSDKType() *shared.SourceLokaliseCr
 	return out
 }
 
-func (r *SourceLokaliseResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceLokaliseResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceLokaliseResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

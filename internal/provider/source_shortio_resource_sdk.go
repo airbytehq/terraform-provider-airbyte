@@ -35,6 +35,11 @@ func (r *SourceShortioResourceModel) ToCreateSDKType() *shared.SourceShortioCrea
 	return &out
 }
 
+func (r *SourceShortioResourceModel) ToGetSDKType() *shared.SourceShortioCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceShortioResourceModel) ToUpdateSDKType() *shared.SourceShortioPutRequest {
 	domainID := r.Configuration.DomainID.ValueString()
 	secretKey := r.Configuration.SecretKey.ValueString()
@@ -59,9 +64,13 @@ func (r *SourceShortioResourceModel) ToDeleteSDKType() *shared.SourceShortioCrea
 	return out
 }
 
-func (r *SourceShortioResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceShortioResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceShortioResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

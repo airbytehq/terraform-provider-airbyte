@@ -151,6 +151,11 @@ func (r *SourceS3ResourceModel) ToCreateSDKType() *shared.SourceS3CreateRequest 
 	return &out
 }
 
+func (r *SourceS3ResourceModel) ToGetSDKType() *shared.SourceS3CreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceS3ResourceModel) ToUpdateSDKType() *shared.SourceS3PutRequest {
 	dataset := r.Configuration.Dataset.ValueString()
 	var format *shared.SourceS3UpdateFileFormat
@@ -290,9 +295,13 @@ func (r *SourceS3ResourceModel) ToDeleteSDKType() *shared.SourceS3CreateRequest 
 	return out
 }
 
-func (r *SourceS3ResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceS3ResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceS3ResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

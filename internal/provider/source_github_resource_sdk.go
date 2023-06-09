@@ -88,6 +88,11 @@ func (r *SourceGithubResourceModel) ToCreateSDKType() *shared.SourceGithubCreate
 	return &out
 }
 
+func (r *SourceGithubResourceModel) ToGetSDKType() *shared.SourceGithubCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceGithubResourceModel) ToUpdateSDKType() *shared.SourceGithubPutRequest {
 	branch := new(string)
 	if !r.Configuration.Branch.IsUnknown() && !r.Configuration.Branch.IsNull() {
@@ -164,9 +169,13 @@ func (r *SourceGithubResourceModel) ToDeleteSDKType() *shared.SourceGithubCreate
 	return out
 }
 
-func (r *SourceGithubResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceGithubResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceGithubResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

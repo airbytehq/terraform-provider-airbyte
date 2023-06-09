@@ -39,6 +39,11 @@ func (r *DestinationScyllaResourceModel) ToCreateSDKType() *shared.DestinationSc
 	return &out
 }
 
+func (r *DestinationScyllaResourceModel) ToGetSDKType() *shared.DestinationScyllaCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *DestinationScyllaResourceModel) ToUpdateSDKType() *shared.DestinationScyllaPutRequest {
 	address := r.Configuration.Address.ValueString()
 	keyspace := r.Configuration.Keyspace.ValueString()
@@ -74,9 +79,13 @@ func (r *DestinationScyllaResourceModel) ToDeleteSDKType() *shared.DestinationSc
 	return out
 }
 
-func (r *DestinationScyllaResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationScyllaResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
 	r.DestinationID = types.StringValue(resp.DestinationID)
 	r.DestinationType = types.StringValue(resp.DestinationType)
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *DestinationScyllaResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.RefreshFromGetResponse(resp)
 }

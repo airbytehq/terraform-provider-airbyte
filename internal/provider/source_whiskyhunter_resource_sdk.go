@@ -34,6 +34,11 @@ func (r *SourceWhiskyHunterResourceModel) ToCreateSDKType() *shared.SourceWhisky
 	return &out
 }
 
+func (r *SourceWhiskyHunterResourceModel) ToGetSDKType() *shared.SourceWhiskyHunterCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceWhiskyHunterResourceModel) ToUpdateSDKType() *shared.SourceWhiskyHunterPutRequest {
 	configuration := shared.SourceWhiskyHunterUpdate{}
 	name := r.Name.ValueString()
@@ -51,9 +56,13 @@ func (r *SourceWhiskyHunterResourceModel) ToDeleteSDKType() *shared.SourceWhisky
 	return out
 }
 
-func (r *SourceWhiskyHunterResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceWhiskyHunterResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceWhiskyHunterResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

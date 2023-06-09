@@ -39,6 +39,11 @@ func (r *SourceOutreachResourceModel) ToCreateSDKType() *shared.SourceOutreachCr
 	return &out
 }
 
+func (r *SourceOutreachResourceModel) ToGetSDKType() *shared.SourceOutreachCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceOutreachResourceModel) ToUpdateSDKType() *shared.SourceOutreachPutRequest {
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
@@ -67,9 +72,13 @@ func (r *SourceOutreachResourceModel) ToDeleteSDKType() *shared.SourceOutreachCr
 	return out
 }
 
-func (r *SourceOutreachResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceOutreachResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceOutreachResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

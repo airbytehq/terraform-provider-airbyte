@@ -45,6 +45,11 @@ func (r *SourceSenseforceResourceModel) ToCreateSDKType() *shared.SourceSensefor
 	return &out
 }
 
+func (r *SourceSenseforceResourceModel) ToGetSDKType() *shared.SourceSenseforceCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceSenseforceResourceModel) ToUpdateSDKType() *shared.SourceSenseforcePutRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
 	backendURL := r.Configuration.BackendURL.ValueString()
@@ -78,9 +83,13 @@ func (r *SourceSenseforceResourceModel) ToDeleteSDKType() *shared.SourceSensefor
 	return out
 }
 
-func (r *SourceSenseforceResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceSenseforceResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceSenseforceResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

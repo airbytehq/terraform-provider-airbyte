@@ -67,6 +67,11 @@ func (r *SourceSalesforceResourceModel) ToCreateSDKType() *shared.SourceSalesfor
 	return &out
 }
 
+func (r *SourceSalesforceResourceModel) ToGetSDKType() *shared.SourceSalesforceCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceSalesforceResourceModel) ToUpdateSDKType() *shared.SourceSalesforcePutRequest {
 	authType := new(shared.SourceSalesforceUpdateAuthType)
 	if !r.Configuration.AuthType.IsUnknown() && !r.Configuration.AuthType.IsNull() {
@@ -122,9 +127,13 @@ func (r *SourceSalesforceResourceModel) ToDeleteSDKType() *shared.SourceSalesfor
 	return out
 }
 
-func (r *SourceSalesforceResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceSalesforceResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceSalesforceResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

@@ -47,6 +47,11 @@ func (r *SourceXeroResourceModel) ToCreateSDKType() *shared.SourceXeroCreateRequ
 	return &out
 }
 
+func (r *SourceXeroResourceModel) ToGetSDKType() *shared.SourceXeroCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceXeroResourceModel) ToUpdateSDKType() *shared.SourceXeroPutRequest {
 	accessToken := r.Configuration.Authentication.AccessToken.ValueString()
 	clientID := r.Configuration.Authentication.ClientID.ValueString()
@@ -82,9 +87,13 @@ func (r *SourceXeroResourceModel) ToDeleteSDKType() *shared.SourceXeroCreateRequ
 	return out
 }
 
-func (r *SourceXeroResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceXeroResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceXeroResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

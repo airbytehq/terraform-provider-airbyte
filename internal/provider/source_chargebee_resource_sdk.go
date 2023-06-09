@@ -38,6 +38,11 @@ func (r *SourceChargebeeResourceModel) ToCreateSDKType() *shared.SourceChargebee
 	return &out
 }
 
+func (r *SourceChargebeeResourceModel) ToGetSDKType() *shared.SourceChargebeeCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceChargebeeResourceModel) ToUpdateSDKType() *shared.SourceChargebeePutRequest {
 	productCatalog := shared.SourceChargebeeUpdateProductCatalog(r.Configuration.ProductCatalog.ValueString())
 	site := r.Configuration.Site.ValueString()
@@ -64,9 +69,13 @@ func (r *SourceChargebeeResourceModel) ToDeleteSDKType() *shared.SourceChargebee
 	return out
 }
 
-func (r *SourceChargebeeResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceChargebeeResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceChargebeeResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

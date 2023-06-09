@@ -47,6 +47,11 @@ func (r *DestinationTypesenseResourceModel) ToCreateSDKType() *shared.Destinatio
 	return &out
 }
 
+func (r *DestinationTypesenseResourceModel) ToGetSDKType() *shared.DestinationTypesenseCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *DestinationTypesenseResourceModel) ToUpdateSDKType() *shared.DestinationTypesensePutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	batchSize := new(string)
@@ -90,9 +95,13 @@ func (r *DestinationTypesenseResourceModel) ToDeleteSDKType() *shared.Destinatio
 	return out
 }
 
-func (r *DestinationTypesenseResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationTypesenseResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
 	r.DestinationID = types.StringValue(resp.DestinationID)
 	r.DestinationType = types.StringValue(resp.DestinationType)
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *DestinationTypesenseResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.RefreshFromGetResponse(resp)
 }

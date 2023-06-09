@@ -53,6 +53,11 @@ func (r *SourceCoinAPIResourceModel) ToCreateSDKType() *shared.SourceCoinAPICrea
 	return &out
 }
 
+func (r *SourceCoinAPIResourceModel) ToGetSDKType() *shared.SourceCoinAPICreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceCoinAPIResourceModel) ToUpdateSDKType() *shared.SourceCoinAPIPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	endDate := new(string)
@@ -95,9 +100,13 @@ func (r *SourceCoinAPIResourceModel) ToDeleteSDKType() *shared.SourceCoinAPICrea
 	return out
 }
 
-func (r *SourceCoinAPIResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceCoinAPIResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceCoinAPIResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

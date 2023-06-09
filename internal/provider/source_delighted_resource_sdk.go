@@ -34,6 +34,11 @@ func (r *SourceDelightedResourceModel) ToCreateSDKType() *shared.SourceDelighted
 	return &out
 }
 
+func (r *SourceDelightedResourceModel) ToGetSDKType() *shared.SourceDelightedCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceDelightedResourceModel) ToUpdateSDKType() *shared.SourceDelightedPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	since, _ := time.Parse(time.RFC3339Nano, r.Configuration.Since.ValueString())
@@ -56,9 +61,13 @@ func (r *SourceDelightedResourceModel) ToDeleteSDKType() *shared.SourceDelighted
 	return out
 }
 
-func (r *SourceDelightedResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceDelightedResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceDelightedResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

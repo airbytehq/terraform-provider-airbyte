@@ -31,6 +31,11 @@ func (r *SourceInstatusResourceModel) ToCreateSDKType() *shared.SourceInstatusCr
 	return &out
 }
 
+func (r *SourceInstatusResourceModel) ToGetSDKType() *shared.SourceInstatusCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceInstatusResourceModel) ToUpdateSDKType() *shared.SourceInstatusPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	configuration := shared.SourceInstatusUpdate{
@@ -51,9 +56,13 @@ func (r *SourceInstatusResourceModel) ToDeleteSDKType() *shared.SourceInstatusCr
 	return out
 }
 
-func (r *SourceInstatusResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceInstatusResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceInstatusResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

@@ -83,6 +83,11 @@ func (r *SourceGoogleAdsResourceModel) ToCreateSDKType() *shared.SourceGoogleAds
 	return &out
 }
 
+func (r *SourceGoogleAdsResourceModel) ToGetSDKType() *shared.SourceGoogleAdsCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceGoogleAdsResourceModel) ToUpdateSDKType() *shared.SourceGoogleAdsPutRequest {
 	conversionWindowDays := new(int64)
 	if !r.Configuration.ConversionWindowDays.IsUnknown() && !r.Configuration.ConversionWindowDays.IsNull() {
@@ -154,9 +159,13 @@ func (r *SourceGoogleAdsResourceModel) ToDeleteSDKType() *shared.SourceGoogleAds
 	return out
 }
 
-func (r *SourceGoogleAdsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceGoogleAdsResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceGoogleAdsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

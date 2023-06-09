@@ -31,6 +31,11 @@ func (r *SourceOmnisendResourceModel) ToCreateSDKType() *shared.SourceOmnisendCr
 	return &out
 }
 
+func (r *SourceOmnisendResourceModel) ToGetSDKType() *shared.SourceOmnisendCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceOmnisendResourceModel) ToUpdateSDKType() *shared.SourceOmnisendPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	configuration := shared.SourceOmnisendUpdate{
@@ -51,9 +56,13 @@ func (r *SourceOmnisendResourceModel) ToDeleteSDKType() *shared.SourceOmnisendCr
 	return out
 }
 
-func (r *SourceOmnisendResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceOmnisendResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceOmnisendResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

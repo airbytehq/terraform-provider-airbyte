@@ -63,6 +63,11 @@ func (r *SourcePolygonStockAPIResourceModel) ToCreateSDKType() *shared.SourcePol
 	return &out
 }
 
+func (r *SourcePolygonStockAPIResourceModel) ToGetSDKType() *shared.SourcePolygonStockAPICreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourcePolygonStockAPIResourceModel) ToUpdateSDKType() *shared.SourcePolygonStockAPIPutRequest {
 	adjusted := new(string)
 	if !r.Configuration.Adjusted.IsUnknown() && !r.Configuration.Adjusted.IsNull() {
@@ -114,9 +119,13 @@ func (r *SourcePolygonStockAPIResourceModel) ToDeleteSDKType() *shared.SourcePol
 	return out
 }
 
-func (r *SourcePolygonStockAPIResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourcePolygonStockAPIResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourcePolygonStockAPIResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

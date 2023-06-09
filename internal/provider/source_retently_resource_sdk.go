@@ -89,6 +89,11 @@ func (r *SourceRetentlyResourceModel) ToCreateSDKType() *shared.SourceRetentlyCr
 	return &out
 }
 
+func (r *SourceRetentlyResourceModel) ToGetSDKType() *shared.SourceRetentlyCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceRetentlyResourceModel) ToUpdateSDKType() *shared.SourceRetentlyPutRequest {
 	var credentials *shared.SourceRetentlyUpdateAuthenticationMechanism
 	var sourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth *shared.SourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth
@@ -161,9 +166,13 @@ func (r *SourceRetentlyResourceModel) ToDeleteSDKType() *shared.SourceRetentlyCr
 	return out
 }
 
-func (r *SourceRetentlyResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceRetentlyResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceRetentlyResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

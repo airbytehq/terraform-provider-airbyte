@@ -40,6 +40,11 @@ func (r *SourceOrbitResourceModel) ToCreateSDKType() *shared.SourceOrbitCreateRe
 	return &out
 }
 
+func (r *SourceOrbitResourceModel) ToGetSDKType() *shared.SourceOrbitCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceOrbitResourceModel) ToUpdateSDKType() *shared.SourceOrbitPutRequest {
 	apiToken := r.Configuration.APIToken.ValueString()
 	startDate := new(string)
@@ -69,9 +74,13 @@ func (r *SourceOrbitResourceModel) ToDeleteSDKType() *shared.SourceOrbitCreateRe
 	return out
 }
 
-func (r *SourceOrbitResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceOrbitResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceOrbitResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

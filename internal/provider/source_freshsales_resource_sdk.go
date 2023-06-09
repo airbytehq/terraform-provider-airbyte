@@ -33,6 +33,11 @@ func (r *SourceFreshsalesResourceModel) ToCreateSDKType() *shared.SourceFreshsal
 	return &out
 }
 
+func (r *SourceFreshsalesResourceModel) ToGetSDKType() *shared.SourceFreshsalesCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceFreshsalesResourceModel) ToUpdateSDKType() *shared.SourceFreshsalesPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	domainName := r.Configuration.DomainName.ValueString()
@@ -55,9 +60,13 @@ func (r *SourceFreshsalesResourceModel) ToDeleteSDKType() *shared.SourceFreshsal
 	return out
 }
 
-func (r *SourceFreshsalesResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceFreshsalesResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceFreshsalesResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

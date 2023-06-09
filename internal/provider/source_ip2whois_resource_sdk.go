@@ -48,6 +48,11 @@ func (r *SourceIp2whoisResourceModel) ToCreateSDKType() *shared.SourceIp2whoisCr
 	return &out
 }
 
+func (r *SourceIp2whoisResourceModel) ToGetSDKType() *shared.SourceIp2whoisCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceIp2whoisResourceModel) ToUpdateSDKType() *shared.SourceIp2whoisPutRequest {
 	apiKey := new(string)
 	if !r.Configuration.APIKey.IsUnknown() && !r.Configuration.APIKey.IsNull() {
@@ -80,9 +85,13 @@ func (r *SourceIp2whoisResourceModel) ToDeleteSDKType() *shared.SourceIp2whoisCr
 	return out
 }
 
-func (r *SourceIp2whoisResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceIp2whoisResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceIp2whoisResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

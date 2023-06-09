@@ -36,6 +36,11 @@ func (r *SourceAircallResourceModel) ToCreateSDKType() *shared.SourceAircallCrea
 	return &out
 }
 
+func (r *SourceAircallResourceModel) ToGetSDKType() *shared.SourceAircallCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceAircallResourceModel) ToUpdateSDKType() *shared.SourceAircallPutRequest {
 	apiID := r.Configuration.APIID.ValueString()
 	apiToken := r.Configuration.APIToken.ValueString()
@@ -60,9 +65,13 @@ func (r *SourceAircallResourceModel) ToDeleteSDKType() *shared.SourceAircallCrea
 	return out
 }
 
-func (r *SourceAircallResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceAircallResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceAircallResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

@@ -49,6 +49,11 @@ func (r *SourceZohoCrmResourceModel) ToCreateSDKType() *shared.SourceZohoCrmCrea
 	return &out
 }
 
+func (r *SourceZohoCrmResourceModel) ToGetSDKType() *shared.SourceZohoCrmCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceZohoCrmResourceModel) ToUpdateSDKType() *shared.SourceZohoCrmPutRequest {
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
@@ -86,9 +91,13 @@ func (r *SourceZohoCrmResourceModel) ToDeleteSDKType() *shared.SourceZohoCrmCrea
 	return out
 }
 
-func (r *SourceZohoCrmResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceZohoCrmResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceZohoCrmResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

@@ -189,6 +189,11 @@ func (r *SourceFileSecureResourceModel) ToCreateSDKType() *shared.SourceFileSecu
 	return &out
 }
 
+func (r *SourceFileSecureResourceModel) ToGetSDKType() *shared.SourceFileSecureCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceFileSecureResourceModel) ToUpdateSDKType() *shared.SourceFileSecurePutRequest {
 	datasetName := r.Configuration.DatasetName.ValueString()
 	format := shared.SourceFileSecureUpdateFileFormat(r.Configuration.Format.ValueString())
@@ -367,9 +372,13 @@ func (r *SourceFileSecureResourceModel) ToDeleteSDKType() *shared.SourceFileSecu
 	return out
 }
 
-func (r *SourceFileSecureResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceFileSecureResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceFileSecureResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

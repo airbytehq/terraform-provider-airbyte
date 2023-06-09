@@ -73,6 +73,11 @@ func (r *SourceFaunaResourceModel) ToCreateSDKType() *shared.SourceFaunaCreateRe
 	return &out
 }
 
+func (r *SourceFaunaResourceModel) ToGetSDKType() *shared.SourceFaunaCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceFaunaResourceModel) ToUpdateSDKType() *shared.SourceFaunaPutRequest {
 	var collection *shared.SourceFaunaUpdateCollection
 	if r.Configuration.Collection != nil {
@@ -135,9 +140,13 @@ func (r *SourceFaunaResourceModel) ToDeleteSDKType() *shared.SourceFaunaCreateRe
 	return out
 }
 
-func (r *SourceFaunaResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceFaunaResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceFaunaResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

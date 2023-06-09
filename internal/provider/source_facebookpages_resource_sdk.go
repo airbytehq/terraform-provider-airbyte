@@ -33,6 +33,11 @@ func (r *SourceFacebookPagesResourceModel) ToCreateSDKType() *shared.SourceFaceb
 	return &out
 }
 
+func (r *SourceFacebookPagesResourceModel) ToGetSDKType() *shared.SourceFacebookPagesCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceFacebookPagesResourceModel) ToUpdateSDKType() *shared.SourceFacebookPagesPutRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
 	pageID := r.Configuration.PageID.ValueString()
@@ -55,9 +60,13 @@ func (r *SourceFacebookPagesResourceModel) ToDeleteSDKType() *shared.SourceFaceb
 	return out
 }
 
-func (r *SourceFacebookPagesResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceFacebookPagesResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceFacebookPagesResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

@@ -40,6 +40,11 @@ func (r *SourceGoogleWorkspaceAdminReportsResourceModel) ToCreateSDKType() *shar
 	return &out
 }
 
+func (r *SourceGoogleWorkspaceAdminReportsResourceModel) ToGetSDKType() *shared.SourceGoogleWorkspaceAdminReportsCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceGoogleWorkspaceAdminReportsResourceModel) ToUpdateSDKType() *shared.SourceGoogleWorkspaceAdminReportsPutRequest {
 	credentialsJSON := r.Configuration.CredentialsJSON.ValueString()
 	email := r.Configuration.Email.ValueString()
@@ -69,9 +74,13 @@ func (r *SourceGoogleWorkspaceAdminReportsResourceModel) ToDeleteSDKType() *shar
 	return out
 }
 
-func (r *SourceGoogleWorkspaceAdminReportsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceGoogleWorkspaceAdminReportsResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceGoogleWorkspaceAdminReportsResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

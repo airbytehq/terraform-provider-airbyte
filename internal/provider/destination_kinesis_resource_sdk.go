@@ -34,6 +34,11 @@ func (r *DestinationKinesisResourceModel) ToCreateSDKType() *shared.DestinationK
 	return &out
 }
 
+func (r *DestinationKinesisResourceModel) ToGetSDKType() *shared.DestinationKinesisCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *DestinationKinesisResourceModel) ToUpdateSDKType() *shared.DestinationKinesisPutRequest {
 	accessKey := r.Configuration.AccessKey.ValueString()
 	bufferSize := r.Configuration.BufferSize.ValueInt64()
@@ -64,9 +69,13 @@ func (r *DestinationKinesisResourceModel) ToDeleteSDKType() *shared.DestinationK
 	return out
 }
 
-func (r *DestinationKinesisResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationKinesisResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
 	r.DestinationID = types.StringValue(resp.DestinationID)
 	r.DestinationType = types.StringValue(resp.DestinationType)
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *DestinationKinesisResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.RefreshFromGetResponse(resp)
 }

@@ -133,6 +133,11 @@ func (r *DestinationRedisResourceModel) ToCreateSDKType() *shared.DestinationRed
 	return &out
 }
 
+func (r *DestinationRedisResourceModel) ToGetSDKType() *shared.DestinationRedisCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *DestinationRedisResourceModel) ToUpdateSDKType() *shared.DestinationRedisPutRequest {
 	cacheType := shared.DestinationRedisUpdateCacheType(r.Configuration.CacheType.ValueString())
 	host := r.Configuration.Host.ValueString()
@@ -262,9 +267,13 @@ func (r *DestinationRedisResourceModel) ToDeleteSDKType() *shared.DestinationRed
 	return out
 }
 
-func (r *DestinationRedisResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationRedisResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
 	r.DestinationID = types.StringValue(resp.DestinationID)
 	r.DestinationType = types.StringValue(resp.DestinationType)
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *DestinationRedisResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.RefreshFromGetResponse(resp)
 }

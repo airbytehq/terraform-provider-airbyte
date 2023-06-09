@@ -94,6 +94,11 @@ func (r *SourceClickhouseResourceModel) ToCreateSDKType() *shared.SourceClickhou
 	return &out
 }
 
+func (r *SourceClickhouseResourceModel) ToGetSDKType() *shared.SourceClickhouseCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceClickhouseResourceModel) ToUpdateSDKType() *shared.SourceClickhousePutRequest {
 	database := r.Configuration.Database.ValueString()
 	host := r.Configuration.Host.ValueString()
@@ -177,9 +182,13 @@ func (r *SourceClickhouseResourceModel) ToDeleteSDKType() *shared.SourceClickhou
 	return out
 }
 
-func (r *SourceClickhouseResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceClickhouseResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceClickhouseResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

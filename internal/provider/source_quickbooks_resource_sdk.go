@@ -65,6 +65,11 @@ func (r *SourceQuickbooksResourceModel) ToCreateSDKType() *shared.SourceQuickboo
 	return &out
 }
 
+func (r *SourceQuickbooksResourceModel) ToGetSDKType() *shared.SourceQuickbooksCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceQuickbooksResourceModel) ToUpdateSDKType() *shared.SourceQuickbooksPutRequest {
 	var credentials shared.SourceQuickbooksUpdateAuthorizationMethod
 	var sourceQuickbooksUpdateAuthorizationMethodOAuth20 *shared.SourceQuickbooksUpdateAuthorizationMethodOAuth20
@@ -118,9 +123,13 @@ func (r *SourceQuickbooksResourceModel) ToDeleteSDKType() *shared.SourceQuickboo
 	return out
 }
 
-func (r *SourceQuickbooksResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceQuickbooksResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceQuickbooksResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

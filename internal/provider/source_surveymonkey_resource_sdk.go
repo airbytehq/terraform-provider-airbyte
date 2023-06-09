@@ -68,6 +68,11 @@ func (r *SourceSurveymonkeyResourceModel) ToCreateSDKType() *shared.SourceSurvey
 	return &out
 }
 
+func (r *SourceSurveymonkeyResourceModel) ToGetSDKType() *shared.SourceSurveymonkeyCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceSurveymonkeyResourceModel) ToUpdateSDKType() *shared.SourceSurveymonkeyPutRequest {
 	var credentials *shared.SourceSurveymonkeyUpdateSurveyMonkeyAuthorizationMethod
 	if r.Configuration.Credentials != nil {
@@ -124,9 +129,13 @@ func (r *SourceSurveymonkeyResourceModel) ToDeleteSDKType() *shared.SourceSurvey
 	return out
 }
 
-func (r *SourceSurveymonkeyResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceSurveymonkeyResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceSurveymonkeyResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

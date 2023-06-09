@@ -38,6 +38,11 @@ func (r *SourceWoocommerceResourceModel) ToCreateSDKType() *shared.SourceWoocomm
 	return &out
 }
 
+func (r *SourceWoocommerceResourceModel) ToGetSDKType() *shared.SourceWoocommerceCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceWoocommerceResourceModel) ToUpdateSDKType() *shared.SourceWoocommercePutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	apiSecret := r.Configuration.APISecret.ValueString()
@@ -64,9 +69,13 @@ func (r *SourceWoocommerceResourceModel) ToDeleteSDKType() *shared.SourceWoocomm
 	return out
 }
 
-func (r *SourceWoocommerceResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceWoocommerceResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceWoocommerceResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

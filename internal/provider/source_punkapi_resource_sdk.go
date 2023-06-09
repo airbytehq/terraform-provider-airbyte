@@ -40,6 +40,11 @@ func (r *SourcePunkAPIResourceModel) ToCreateSDKType() *shared.SourcePunkAPICrea
 	return &out
 }
 
+func (r *SourcePunkAPIResourceModel) ToGetSDKType() *shared.SourcePunkAPICreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourcePunkAPIResourceModel) ToUpdateSDKType() *shared.SourcePunkAPIPutRequest {
 	brewedAfter := r.Configuration.BrewedAfter.ValueString()
 	brewedBefore := r.Configuration.BrewedBefore.ValueString()
@@ -69,9 +74,13 @@ func (r *SourcePunkAPIResourceModel) ToDeleteSDKType() *shared.SourcePunkAPICrea
 	return out
 }
 
-func (r *SourcePunkAPIResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourcePunkAPIResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourcePunkAPIResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

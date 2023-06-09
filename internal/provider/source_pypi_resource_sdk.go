@@ -38,6 +38,11 @@ func (r *SourcePypiResourceModel) ToCreateSDKType() *shared.SourcePypiCreateRequ
 	return &out
 }
 
+func (r *SourcePypiResourceModel) ToGetSDKType() *shared.SourcePypiCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourcePypiResourceModel) ToUpdateSDKType() *shared.SourcePypiPutRequest {
 	projectName := r.Configuration.ProjectName.ValueString()
 	version := new(string)
@@ -65,9 +70,13 @@ func (r *SourcePypiResourceModel) ToDeleteSDKType() *shared.SourcePypiCreateRequ
 	return out
 }
 
-func (r *SourcePypiResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourcePypiResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourcePypiResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

@@ -283,6 +283,11 @@ func (r *SourceAlloydbResourceModel) ToCreateSDKType() *shared.SourceAlloydbCrea
 	return &out
 }
 
+func (r *SourceAlloydbResourceModel) ToGetSDKType() *shared.SourceAlloydbCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceAlloydbResourceModel) ToUpdateSDKType() *shared.SourceAlloydbPutRequest {
 	database := r.Configuration.Database.ValueString()
 	host := r.Configuration.Host.ValueString()
@@ -554,9 +559,13 @@ func (r *SourceAlloydbResourceModel) ToDeleteSDKType() *shared.SourceAlloydbCrea
 	return out
 }
 
-func (r *SourceAlloydbResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceAlloydbResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceAlloydbResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

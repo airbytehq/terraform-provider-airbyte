@@ -71,6 +71,11 @@ func (r *DestinationPulsarResourceModel) ToCreateSDKType() *shared.DestinationPu
 	return &out
 }
 
+func (r *DestinationPulsarResourceModel) ToGetSDKType() *shared.DestinationPulsarCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *DestinationPulsarResourceModel) ToUpdateSDKType() *shared.DestinationPulsarPutRequest {
 	batchingEnabled := r.Configuration.BatchingEnabled.ValueBool()
 	batchingMaxMessages := r.Configuration.BatchingMaxMessages.ValueInt64()
@@ -138,9 +143,13 @@ func (r *DestinationPulsarResourceModel) ToDeleteSDKType() *shared.DestinationPu
 	return out
 }
 
-func (r *DestinationPulsarResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationPulsarResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
 	r.DestinationID = types.StringValue(resp.DestinationID)
 	r.DestinationType = types.StringValue(resp.DestinationType)
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *DestinationPulsarResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.RefreshFromGetResponse(resp)
 }

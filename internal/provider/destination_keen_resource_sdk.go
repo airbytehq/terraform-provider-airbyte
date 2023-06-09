@@ -33,6 +33,11 @@ func (r *DestinationKeenResourceModel) ToCreateSDKType() *shared.DestinationKeen
 	return &out
 }
 
+func (r *DestinationKeenResourceModel) ToGetSDKType() *shared.DestinationKeenCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *DestinationKeenResourceModel) ToUpdateSDKType() *shared.DestinationKeenPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	inferTimestamp := new(bool)
@@ -62,9 +67,13 @@ func (r *DestinationKeenResourceModel) ToDeleteSDKType() *shared.DestinationKeen
 	return out
 }
 
-func (r *DestinationKeenResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+func (r *DestinationKeenResourceModel) RefreshFromGetResponse(resp *shared.DestinationResponse) {
 	r.DestinationID = types.StringValue(resp.DestinationID)
 	r.DestinationType = types.StringValue(resp.DestinationType)
 	r.Name = types.StringValue(resp.Name)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *DestinationKeenResourceModel) RefreshFromCreateResponse(resp *shared.DestinationResponse) {
+	r.RefreshFromGetResponse(resp)
 }

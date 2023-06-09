@@ -119,7 +119,12 @@ func Struct(ctx context.Context, typ attr.Type, object tftypes.Value, target ref
 	// values in the object
 	// Fork start
 	//result := reflect.New(target.Type()).Elem()
-	result := target
+	var result reflect.Value
+	if target.CanSet() {
+		result = target
+	} else {
+		result = reflect.New(target.Type()).Elem()
+	}
 	// Fork End
 	for field, structFieldPos := range targetFields {
 		attrType, ok := attrTypes[field]

@@ -96,6 +96,11 @@ func (r *SourceGitlabResourceModel) ToCreateSDKType() *shared.SourceGitlabCreate
 	return &out
 }
 
+func (r *SourceGitlabResourceModel) ToGetSDKType() *shared.SourceGitlabCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceGitlabResourceModel) ToUpdateSDKType() *shared.SourceGitlabPutRequest {
 	apiURL := r.Configuration.APIURL.ValueString()
 	var credentials shared.SourceGitlabUpdateAuthorizationMethod
@@ -180,9 +185,13 @@ func (r *SourceGitlabResourceModel) ToDeleteSDKType() *shared.SourceGitlabCreate
 	return out
 }
 
-func (r *SourceGitlabResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceGitlabResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceGitlabResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }

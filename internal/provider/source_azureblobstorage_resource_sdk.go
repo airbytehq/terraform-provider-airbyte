@@ -70,6 +70,11 @@ func (r *SourceAzureBlobStorageResourceModel) ToCreateSDKType() *shared.SourceAz
 	return &out
 }
 
+func (r *SourceAzureBlobStorageResourceModel) ToGetSDKType() *shared.SourceAzureBlobStorageCreateRequest {
+	out := r.ToCreateSDKType()
+	return out
+}
+
 func (r *SourceAzureBlobStorageResourceModel) ToUpdateSDKType() *shared.SourceAzureBlobStoragePutRequest {
 	azureBlobStorageAccountKey := r.Configuration.AzureBlobStorageAccountKey.ValueString()
 	azureBlobStorageAccountName := r.Configuration.AzureBlobStorageAccountName.ValueString()
@@ -129,9 +134,13 @@ func (r *SourceAzureBlobStorageResourceModel) ToDeleteSDKType() *shared.SourceAz
 	return out
 }
 
-func (r *SourceAzureBlobStorageResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+func (r *SourceAzureBlobStorageResourceModel) RefreshFromGetResponse(resp *shared.SourceResponse) {
 	r.Name = types.StringValue(resp.Name)
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.SourceType = types.StringValue(resp.SourceType)
 	r.WorkspaceID = types.StringValue(resp.WorkspaceID)
+}
+
+func (r *SourceAzureBlobStorageResourceModel) RefreshFromCreateResponse(resp *shared.SourceResponse) {
+	r.RefreshFromGetResponse(resp)
 }
