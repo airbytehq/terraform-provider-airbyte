@@ -3,6 +3,7 @@
 package float64planmodifier
 
 import (
+	"airbyte/internal/planmodifiers/utils"
 	"context"
 
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
@@ -27,7 +28,7 @@ func (m trustRead) MarkdownDescription(_ context.Context) string {
 }
 
 // PlanModifyFloat64 implements the plan modification logic.
-func (m trustRead) PlanModifyFloat64(_ context.Context, req planmodifier.Float64Request, resp *planmodifier.Float64Response) {
+func (m trustRead) PlanModifyFloat64(ctx context.Context, req planmodifier.Float64Request, resp *planmodifier.Float64Response) {
 	// Do nothing if there is a known planned value.
 	if !req.PlanValue.IsUnknown() {
 		return
@@ -35,6 +36,10 @@ func (m trustRead) PlanModifyFloat64(_ context.Context, req planmodifier.Float64
 
 	// Do nothing if there is an unknown configuration value
 	if req.ConfigValue.IsUnknown() {
+		return
+	}
+
+	if utils.IsAllStateUnknown(ctx, req.State) {
 		return
 	}
 

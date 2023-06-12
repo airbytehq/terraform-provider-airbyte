@@ -3,6 +3,7 @@
 package boolplanmodifier
 
 import (
+	"airbyte/internal/planmodifiers/utils"
 	"context"
 
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
@@ -27,7 +28,7 @@ func (m trustRead) MarkdownDescription(_ context.Context) string {
 }
 
 // PlanModifyBool implements the plan modification logic.
-func (m trustRead) PlanModifyBool(_ context.Context, req planmodifier.BoolRequest, resp *planmodifier.BoolResponse) {
+func (m trustRead) PlanModifyBool(ctx context.Context, req planmodifier.BoolRequest, resp *planmodifier.BoolResponse) {
 	// Do nothing if there is a known planned value.
 	if !req.PlanValue.IsUnknown() {
 		return
@@ -35,6 +36,10 @@ func (m trustRead) PlanModifyBool(_ context.Context, req planmodifier.BoolReques
 
 	// Do nothing if there is an unknown configuration value
 	if req.ConfigValue.IsUnknown() {
+		return
+	}
+
+	if utils.IsAllStateUnknown(ctx, req.State) {
 		return
 	}
 

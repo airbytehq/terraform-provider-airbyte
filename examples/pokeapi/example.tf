@@ -39,7 +39,7 @@ resource "airbyte_source_pokeapi" "kido" {
   name         = "bulbasaur"
   workspace_id = airbyte_workspace.my_workspace.workspace_id
   configuration = {
-    pokemon_name = "bulbasaur"
+    pokemon_name = "pikachu"
     source_type  = "pokeapi"
   }
 }

@@ -3,6 +3,7 @@
 package stringplanmodifier
 
 import (
+	"airbyte/internal/planmodifiers/utils"
 	"context"
 
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
@@ -26,6 +27,7 @@ func (m trustRead) MarkdownDescription(_ context.Context) string {
 	return "Once set, the value of this attribute in state will not change."
 }
 
+
 // PlanModifyString implements the plan modification logic.
 func (m trustRead) PlanModifyString(ctx context.Context, req planmodifier.StringRequest, resp *planmodifier.StringResponse) {
 	// Do nothing if there is a known planned value.
@@ -35,6 +37,10 @@ func (m trustRead) PlanModifyString(ctx context.Context, req planmodifier.String
 
 	// Do nothing if there is an unknown configuration value
 	if req.ConfigValue.IsUnknown() {
+		return
+	}
+
+	if utils.IsAllStateUnknown(ctx, req.State) {
 		return
 	}
 

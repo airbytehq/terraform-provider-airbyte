@@ -3,6 +3,7 @@
 package setplanmodifier
 
 import (
+	"airbyte/internal/planmodifiers/utils"
 	"context"
 
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
@@ -27,7 +28,7 @@ func (m trustRead) MarkdownDescription(_ context.Context) string {
 }
 
 // PlanModifySet implements the plan modification logic.
-func (m trustRead) PlanModifySet(_ context.Context, req planmodifier.SetRequest, resp *planmodifier.SetResponse) {
+func (m trustRead) PlanModifySet(ctx context.Context, req planmodifier.SetRequest, resp *planmodifier.SetResponse) {
 	// Do nothing if there is a known planned value.
 	if !req.PlanValue.IsUnknown() {
 		return
@@ -35,6 +36,10 @@ func (m trustRead) PlanModifySet(_ context.Context, req planmodifier.SetRequest,
 
 	// Do nothing if there is an unknown configuration value
 	if req.ConfigValue.IsUnknown() {
+		return
+	}
+
+	if utils.IsAllStateUnknown(ctx, req.State) {
 		return
 	}
 

@@ -3,6 +3,7 @@
 package numberplanmodifier
 
 import (
+	"airbyte/internal/planmodifiers/utils"
 	"context"
 
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
@@ -27,7 +28,7 @@ func (m trustRead) MarkdownDescription(_ context.Context) string {
 }
 
 // PlanModifyNumber implements the plan modification logic.
-func (m trustRead) PlanModifyNumber(_ context.Context, req planmodifier.NumberRequest, resp *planmodifier.NumberResponse) {
+func (m trustRead) PlanModifyNumber(ctx context.Context, req planmodifier.NumberRequest, resp *planmodifier.NumberResponse) {
 	// Do nothing if there is a known planned value.
 	if !req.PlanValue.IsUnknown() {
 		return
@@ -37,6 +38,11 @@ func (m trustRead) PlanModifyNumber(_ context.Context, req planmodifier.NumberRe
 	if req.ConfigValue.IsUnknown() {
 		return
 	}
+
+	if utils.IsAllStateUnknown(ctx, req.State) {
+		return
+	}
+
 
 	resp.PlanValue = req.StateValue
 }

@@ -3,6 +3,7 @@
 package listplanmodifier
 
 import (
+	"airbyte/internal/planmodifiers/utils"
 	"context"
 
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
@@ -27,7 +28,7 @@ func (m trustRead) MarkdownDescription(_ context.Context) string {
 }
 
 // PlanModifyList implements the plan modification logic.
-func (m trustRead) PlanModifyList(_ context.Context, req planmodifier.ListRequest, resp *planmodifier.ListResponse) {
+func (m trustRead) PlanModifyList(ctx context.Context, req planmodifier.ListRequest, resp *planmodifier.ListResponse) {
 	// Do nothing if there is a known planned value.
 	if !req.PlanValue.IsUnknown() {
 		return
@@ -38,5 +39,10 @@ func (m trustRead) PlanModifyList(_ context.Context, req planmodifier.ListReques
 		return
 	}
 
+	if utils.IsAllStateUnknown(ctx, req.State) {
+		return
+	}
+
 	resp.PlanValue = req.StateValue
 }
+
