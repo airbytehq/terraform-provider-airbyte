@@ -7,17 +7,14 @@ import (
 	"context"
 	"fmt"
 
-	speakeasy_int64planmodifier "airbyte/internal/planmodifiers/int64planmodifier"
-	speakeasy_listplanmodifier "airbyte/internal/planmodifiers/listplanmodifier"
-	speakeasy_objectplanmodifier "airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
-	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -66,41 +63,21 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 						Required: true,
 					},
 					"jdbc_url_params": schema.StringAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.String{
-							speakeasy_stringplanmodifier.TrustRead(),
-						},
 						Optional: true,
 					},
 					"password": schema.StringAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.String{
-							speakeasy_stringplanmodifier.TrustRead(),
-						},
 						Optional: true,
 					},
 					"port": schema.Int64Attribute{
 						Required: true,
 					},
 					"replication_method": schema.SingleNestedAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							speakeasy_objectplanmodifier.TrustRead(),
-						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_mssql_replication_method_logical_replication_cdc_": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"data_to_sync": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -111,10 +88,6 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 										Description: `What data should be synced under the CDC. "Existing and New" will read existing data as a snapshot, and sync new changes through CDC. "New Changes Only" will skip the initial snapshot, and only sync new changes through CDC.`,
 									},
 									"initial_waiting_seconds": schema.Int64Attribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.Int64{
-											speakeasy_int64planmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 									"method": schema.StringAttribute{
@@ -126,10 +99,6 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 										},
 									},
 									"snapshot_isolation": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -143,10 +112,6 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								Description: `CDC uses {TBC} to detect inserts, updates, and deletes. This needs to be configured on the source database itself.`,
 							},
 							"source_mssql_replication_method_standard": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
@@ -161,17 +126,9 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								Description: `Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
 							},
 							"source_mssql_update_replication_method_logical_replication_cdc_": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"data_to_sync": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -182,10 +139,6 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 										Description: `What data should be synced under the CDC. "Existing and New" will read existing data as a snapshot, and sync new changes through CDC. "New Changes Only" will skip the initial snapshot, and only sync new changes through CDC.`,
 									},
 									"initial_waiting_seconds": schema.Int64Attribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.Int64{
-											speakeasy_int64planmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 									"method": schema.StringAttribute{
@@ -197,10 +150,6 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 										},
 									},
 									"snapshot_isolation": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -214,10 +163,6 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								Description: `CDC uses {TBC} to detect inserts, updates, and deletes. This needs to be configured on the source database itself.`,
 							},
 							"source_mssql_update_replication_method_standard": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
@@ -237,10 +182,6 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 						},
 					},
 					"schemas": schema.ListAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.List{
-							speakeasy_listplanmodifier.TrustRead(),
-						},
 						Optional:    true,
 						ElementType: types.StringType,
 					},
@@ -253,17 +194,9 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 						},
 					},
 					"ssl_method": schema.SingleNestedAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							speakeasy_objectplanmodifier.TrustRead(),
-						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_mssql_ssl_method_encrypted_trust_server_certificate_": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssl_method": schema.StringAttribute{
@@ -278,17 +211,9 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								Description: `Use the certificate provided by the server without verification. (For testing purposes only!)`,
 							},
 							"source_mssql_ssl_method_encrypted_verify_certificate_": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"host_name_in_certificate": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 									"ssl_method": schema.StringAttribute{
@@ -303,10 +228,6 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								Description: `Verify and use the certificate provided by the server.`,
 							},
 							"source_mssql_update_ssl_method_encrypted_trust_server_certificate_": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssl_method": schema.StringAttribute{
@@ -321,17 +242,9 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								Description: `Use the certificate provided by the server without verification. (For testing purposes only!)`,
 							},
 							"source_mssql_update_ssl_method_encrypted_verify_certificate_": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"host_name_in_certificate": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 									"ssl_method": schema.StringAttribute{
@@ -351,17 +264,9 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 						},
 					},
 					"tunnel_method": schema.SingleNestedAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							speakeasy_objectplanmodifier.TrustRead(),
-						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_mssql_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_method": schema.StringAttribute{
@@ -377,10 +282,6 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"source_mssql_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_host": schema.StringAttribute{
@@ -408,10 +309,6 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"source_mssql_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
@@ -439,10 +336,6 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"source_mssql_update_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_method": schema.StringAttribute{
@@ -458,10 +351,6 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"source_mssql_update_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_host": schema.StringAttribute{
@@ -489,10 +378,6 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"source_mssql_update_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
@@ -753,5 +638,5 @@ func (r *SourceMssqlResource) Delete(ctx context.Context, req resource.DeleteReq
 }
 
 func (r *SourceMssqlResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+	resource.ImportStatePassthroughID(ctx, path.Root("source_id"), req, resp)
 }

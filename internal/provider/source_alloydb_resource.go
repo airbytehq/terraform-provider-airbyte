@@ -7,17 +7,14 @@ import (
 	"context"
 	"fmt"
 
-	speakeasy_int64planmodifier "airbyte/internal/planmodifiers/int64planmodifier"
-	speakeasy_listplanmodifier "airbyte/internal/planmodifiers/listplanmodifier"
-	speakeasy_objectplanmodifier "airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
-	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -66,48 +63,24 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 						Required: true,
 					},
 					"jdbc_url_params": schema.StringAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.String{
-							speakeasy_stringplanmodifier.TrustRead(),
-						},
 						Optional: true,
 					},
 					"password": schema.StringAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.String{
-							speakeasy_stringplanmodifier.TrustRead(),
-						},
 						Optional: true,
 					},
 					"port": schema.Int64Attribute{
 						Required: true,
 					},
 					"replication_method": schema.SingleNestedAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							speakeasy_objectplanmodifier.TrustRead(),
-						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_alloydb_replication_method_logical_replication_cdc_": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"initial_waiting_seconds": schema.Int64Attribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.Int64{
-											speakeasy_int64planmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 									"lsn_commit_behaviour": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -126,10 +99,6 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 										},
 									},
 									"plugin": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -155,10 +124,6 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 								Description: `Logical replication uses the Postgres write-ahead log (WAL) to detect inserts, updates, and deletes. This needs to be configured on the source database itself. Only available on Postgres 10 and above. Read the <a href="https://docs.airbyte.com/integrations/sources/postgres">docs</a>.`,
 							},
 							"source_alloydb_replication_method_standard": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
@@ -173,24 +138,12 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 								Description: `Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
 							},
 							"source_alloydb_update_replication_method_logical_replication_cdc_": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"initial_waiting_seconds": schema.Int64Attribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.Int64{
-											speakeasy_int64planmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 									"lsn_commit_behaviour": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -209,10 +162,6 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 										},
 									},
 									"plugin": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -238,10 +187,6 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 								Description: `Logical replication uses the Postgres write-ahead log (WAL) to detect inserts, updates, and deletes. This needs to be configured on the source database itself. Only available on Postgres 10 and above. Read the <a href="https://docs.airbyte.com/integrations/sources/postgres">docs</a>.`,
 							},
 							"source_alloydb_update_replication_method_standard": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
@@ -261,10 +206,6 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 						},
 					},
 					"schemas": schema.ListAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.List{
-							speakeasy_listplanmodifier.TrustRead(),
-						},
 						Optional:    true,
 						ElementType: types.StringType,
 					},
@@ -277,17 +218,9 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 						},
 					},
 					"ssl_mode": schema.SingleNestedAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							speakeasy_objectplanmodifier.TrustRead(),
-						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_alloydb_ssl_modes_allow": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"mode": schema.StringAttribute{
@@ -309,10 +242,6 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 								Description: `Enables encryption only when required by the source database.`,
 							},
 							"source_alloydb_ssl_modes_disable": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"mode": schema.StringAttribute{
@@ -334,10 +263,6 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 								Description: `Disables encryption of communication between Airbyte and source database.`,
 							},
 							"source_alloydb_ssl_modes_prefer": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"mode": schema.StringAttribute{
@@ -359,10 +284,6 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 								Description: `Allows unencrypted connection only if the source database does not support encryption.`,
 							},
 							"source_alloydb_ssl_modes_require": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"mode": schema.StringAttribute{
@@ -384,34 +305,18 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 								Description: `Always require encryption. If the source database server does not support encryption, connection will fail.`,
 							},
 							"source_alloydb_ssl_modes_verify_ca": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ca_certificate": schema.StringAttribute{
 										Required: true,
 									},
 									"client_certificate": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 									"client_key": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 									"client_key_password": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 									"mode": schema.StringAttribute{
@@ -433,34 +338,18 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 								Description: `Always require encryption and verifies that the source database server has a valid SSL certificate.`,
 							},
 							"source_alloydb_ssl_modes_verify_full": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ca_certificate": schema.StringAttribute{
 										Required: true,
 									},
 									"client_certificate": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 									"client_key": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 									"client_key_password": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 									"mode": schema.StringAttribute{
@@ -482,10 +371,6 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 								Description: `This is the most secure mode. Always require encryption and verifies the identity of the source database server.`,
 							},
 							"source_alloydb_update_ssl_modes_allow": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"mode": schema.StringAttribute{
@@ -507,10 +392,6 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 								Description: `Enables encryption only when required by the source database.`,
 							},
 							"source_alloydb_update_ssl_modes_disable": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"mode": schema.StringAttribute{
@@ -532,10 +413,6 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 								Description: `Disables encryption of communication between Airbyte and source database.`,
 							},
 							"source_alloydb_update_ssl_modes_prefer": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"mode": schema.StringAttribute{
@@ -557,10 +434,6 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 								Description: `Allows unencrypted connection only if the source database does not support encryption.`,
 							},
 							"source_alloydb_update_ssl_modes_require": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"mode": schema.StringAttribute{
@@ -582,34 +455,18 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 								Description: `Always require encryption. If the source database server does not support encryption, connection will fail.`,
 							},
 							"source_alloydb_update_ssl_modes_verify_ca": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ca_certificate": schema.StringAttribute{
 										Required: true,
 									},
 									"client_certificate": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 									"client_key": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 									"client_key_password": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 									"mode": schema.StringAttribute{
@@ -631,34 +488,18 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 								Description: `Always require encryption and verifies that the source database server has a valid SSL certificate.`,
 							},
 							"source_alloydb_update_ssl_modes_verify_full": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ca_certificate": schema.StringAttribute{
 										Required: true,
 									},
 									"client_certificate": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 									"client_key": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 									"client_key_password": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 									"mode": schema.StringAttribute{
@@ -685,17 +526,9 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 						},
 					},
 					"tunnel_method": schema.SingleNestedAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							speakeasy_objectplanmodifier.TrustRead(),
-						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_alloydb_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_method": schema.StringAttribute{
@@ -711,10 +544,6 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"source_alloydb_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_host": schema.StringAttribute{
@@ -742,10 +571,6 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"source_alloydb_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
@@ -773,10 +598,6 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"source_alloydb_update_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_method": schema.StringAttribute{
@@ -792,10 +613,6 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"source_alloydb_update_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_host": schema.StringAttribute{
@@ -823,10 +640,6 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"source_alloydb_update_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
@@ -1087,5 +900,5 @@ func (r *SourceAlloydbResource) Delete(ctx context.Context, req resource.DeleteR
 }
 
 func (r *SourceAlloydbResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+	resource.ImportStatePassthroughID(ctx, path.Root("source_id"), req, resp)
 }

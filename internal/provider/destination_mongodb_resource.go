@@ -7,15 +7,14 @@ import (
 	"context"
 	"fmt"
 
-	speakeasy_objectplanmodifier "airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
-	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -60,10 +59,6 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_mongodb_authorization_type_login_password": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"authorization": schema.StringAttribute{
@@ -84,10 +79,6 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 								Description: `Login/Password.`,
 							},
 							"destination_mongodb_authorization_type_none": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"authorization": schema.StringAttribute{
@@ -102,10 +93,6 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 								Description: `None.`,
 							},
 							"destination_mongodb_update_authorization_type_login_password": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"authorization": schema.StringAttribute{
@@ -126,10 +113,6 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 								Description: `Login/Password.`,
 							},
 							"destination_mongodb_update_authorization_type_none": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"authorization": schema.StringAttribute{
@@ -160,17 +143,9 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 						},
 					},
 					"instance_type": schema.SingleNestedAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							speakeasy_objectplanmodifier.TrustRead(),
-						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_mongodb_mongo_db_instance_type_mongo_db_atlas": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"cluster_url": schema.StringAttribute{
@@ -188,10 +163,6 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 								Description: `MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.`,
 							},
 							"destination_mongodb_mongo_db_instance_type_replica_set": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"instance": schema.StringAttribute{
@@ -203,10 +174,6 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 										},
 									},
 									"replica_set": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 									"server_addresses": schema.StringAttribute{
@@ -216,10 +183,6 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 								Description: `MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.`,
 							},
 							"destination_mongodb_mongo_db_instance_type_standalone_mongo_db_instance": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"host": schema.StringAttribute{
@@ -240,10 +203,6 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 								Description: `MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.`,
 							},
 							"destination_mongodb_update_mongo_db_instance_type_mongo_db_atlas": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"cluster_url": schema.StringAttribute{
@@ -261,10 +220,6 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 								Description: `MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.`,
 							},
 							"destination_mongodb_update_mongo_db_instance_type_replica_set": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"instance": schema.StringAttribute{
@@ -276,10 +231,6 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 										},
 									},
 									"replica_set": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 									"server_addresses": schema.StringAttribute{
@@ -289,10 +240,6 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 								Description: `MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.`,
 							},
 							"destination_mongodb_update_mongo_db_instance_type_standalone_mongo_db_instance": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"host": schema.StringAttribute{
@@ -318,17 +265,9 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 						},
 					},
 					"tunnel_method": schema.SingleNestedAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							speakeasy_objectplanmodifier.TrustRead(),
-						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_mongodb_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_method": schema.StringAttribute{
@@ -344,10 +283,6 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"destination_mongodb_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_host": schema.StringAttribute{
@@ -375,10 +310,6 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"destination_mongodb_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
@@ -406,10 +337,6 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"destination_mongodb_update_ssh_tunnel_method_no_tunnel": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_method": schema.StringAttribute{
@@ -425,10 +352,6 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"destination_mongodb_update_ssh_tunnel_method_password_authentication": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_host": schema.StringAttribute{
@@ -456,10 +379,6 @@ func (r *DestinationMongodbResource) Schema(ctx context.Context, req resource.Sc
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 							},
 							"destination_mongodb_update_ssh_tunnel_method_ssh_key_authentication": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
@@ -714,5 +633,5 @@ func (r *DestinationMongodbResource) Delete(ctx context.Context, req resource.De
 }
 
 func (r *DestinationMongodbResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+	resource.ImportStatePassthroughID(ctx, path.Root("destination_id"), req, resp)
 }

@@ -7,14 +7,13 @@ import (
 	"context"
 	"fmt"
 
-	speakeasy_boolplanmodifier "airbyte/internal/planmodifiers/boolplanmodifier"
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
-	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -60,17 +59,9 @@ func (r *SourceBambooHrResource) Schema(ctx context.Context, req resource.Schema
 						Required: true,
 					},
 					"custom_reports_fields": schema.StringAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.String{
-							speakeasy_stringplanmodifier.TrustRead(),
-						},
 						Optional: true,
 					},
 					"custom_reports_include_default_fields": schema.BoolAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.Bool{
-							speakeasy_boolplanmodifier.TrustRead(),
-						},
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{
@@ -310,5 +301,5 @@ func (r *SourceBambooHrResource) Delete(ctx context.Context, req resource.Delete
 }
 
 func (r *SourceBambooHrResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+	resource.ImportStatePassthroughID(ctx, path.Root("source_id"), req, resp)
 }

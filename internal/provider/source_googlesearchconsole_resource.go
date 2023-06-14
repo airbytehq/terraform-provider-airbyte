@@ -7,15 +7,14 @@ import (
 	"context"
 	"fmt"
 
-	speakeasy_objectplanmodifier "airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
-	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -61,17 +60,9 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"source_google_search_console_authentication_type_o_auth": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 									"auth_type": schema.StringAttribute{
@@ -94,10 +85,6 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 								},
 							},
 							"source_google_search_console_authentication_type_service_account_key_authentication": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
@@ -117,17 +104,9 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 								},
 							},
 							"source_google_search_console_update_authentication_type_o_auth": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 									"auth_type": schema.StringAttribute{
@@ -150,10 +129,6 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 								},
 							},
 							"source_google_search_console_update_authentication_type_service_account_key_authentication": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
@@ -178,17 +153,9 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 						},
 					},
 					"custom_reports": schema.StringAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.String{
-							speakeasy_stringplanmodifier.TrustRead(),
-						},
 						Optional: true,
 					},
 					"data_state": schema.StringAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.String{
-							speakeasy_stringplanmodifier.TrustRead(),
-						},
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -199,10 +166,6 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 						Description: `If "final" or if this parameter is omitted, the returned data will include only finalized data. Setting this parameter to "all" should not be used with Incremental Sync mode as it may cause data loss. If "all", data will include fresh data.`,
 					},
 					"end_date": schema.StringAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.String{
-							speakeasy_stringplanmodifier.TrustRead(),
-						},
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
@@ -452,5 +415,5 @@ func (r *SourceGoogleSearchConsoleResource) Delete(ctx context.Context, req reso
 }
 
 func (r *SourceGoogleSearchConsoleResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+	resource.ImportStatePassthroughID(ctx, path.Root("source_id"), req, resp)
 }

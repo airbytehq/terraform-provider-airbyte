@@ -7,16 +7,14 @@ import (
 	"context"
 	"fmt"
 
-	speakeasy_listplanmodifier "airbyte/internal/planmodifiers/listplanmodifier"
-	speakeasy_objectplanmodifier "airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
-	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -59,25 +57,13 @@ func (r *SourceSlackResource) Schema(ctx context.Context, req resource.SchemaReq
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"channel_filter": schema.ListAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.List{
-							speakeasy_listplanmodifier.TrustRead(),
-						},
 						Optional:    true,
 						ElementType: types.StringType,
 					},
 					"credentials": schema.SingleNestedAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							speakeasy_objectplanmodifier.TrustRead(),
-						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_slack_authentication_mechanism_api_token": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_token": schema.StringAttribute{
@@ -95,10 +81,6 @@ func (r *SourceSlackResource) Schema(ctx context.Context, req resource.SchemaReq
 								Description: `Choose how to authenticate into Slack`,
 							},
 							"source_slack_authentication_mechanism_sign_in_via_slack_o_auth_": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
@@ -122,10 +104,6 @@ func (r *SourceSlackResource) Schema(ctx context.Context, req resource.SchemaReq
 								Description: `Choose how to authenticate into Slack`,
 							},
 							"source_slack_update_authentication_mechanism_api_token": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_token": schema.StringAttribute{
@@ -143,10 +121,6 @@ func (r *SourceSlackResource) Schema(ctx context.Context, req resource.SchemaReq
 								Description: `Choose how to authenticate into Slack`,
 							},
 							"source_slack_update_authentication_mechanism_sign_in_via_slack_o_auth_": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
@@ -420,5 +394,5 @@ func (r *SourceSlackResource) Delete(ctx context.Context, req resource.DeleteReq
 }
 
 func (r *SourceSlackResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+	resource.ImportStatePassthroughID(ctx, path.Root("source_id"), req, resp)
 }

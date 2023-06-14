@@ -7,17 +7,14 @@ import (
 	"context"
 	"fmt"
 
-	speakeasy_boolplanmodifier "airbyte/internal/planmodifiers/boolplanmodifier"
-	speakeasy_int64planmodifier "airbyte/internal/planmodifiers/int64planmodifier"
-	speakeasy_objectplanmodifier "airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
-	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -60,34 +57,18 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"attribution_window": schema.Int64Attribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.Int64{
-							speakeasy_int64planmodifier.TrustRead(),
-						},
 						Optional: true,
 					},
 					"credentials": schema.SingleNestedAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							speakeasy_objectplanmodifier.TrustRead(),
-						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"source_mixpanel_authentication_wildcard_project_secret": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_secret": schema.StringAttribute{
 										Required: true,
 									},
 									"option_title": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -99,17 +80,9 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 								Description: `Choose how to authenticate to Mixpanel`,
 							},
 							"source_mixpanel_authentication_wildcard_service_account": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"option_title": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -127,20 +100,12 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 								Description: `Choose how to authenticate to Mixpanel`,
 							},
 							"source_mixpanel_update_authentication_wildcard_project_secret": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_secret": schema.StringAttribute{
 										Required: true,
 									},
 									"option_title": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -152,17 +117,9 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 								Description: `Choose how to authenticate to Mixpanel`,
 							},
 							"source_mixpanel_update_authentication_wildcard_service_account": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"option_title": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -185,41 +142,21 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 						},
 					},
 					"date_window_size": schema.Int64Attribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.Int64{
-							speakeasy_int64planmodifier.TrustRead(),
-						},
 						Optional: true,
 					},
 					"end_date": schema.StringAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.String{
-							speakeasy_stringplanmodifier.TrustRead(),
-						},
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
 					},
 					"project_id": schema.Int64Attribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.Int64{
-							speakeasy_int64planmodifier.TrustRead(),
-						},
 						Optional: true,
 					},
 					"project_timezone": schema.StringAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.String{
-							speakeasy_stringplanmodifier.TrustRead(),
-						},
 						Optional: true,
 					},
 					"region": schema.StringAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.String{
-							speakeasy_stringplanmodifier.TrustRead(),
-						},
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -230,17 +167,9 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 						Description: `The region of mixpanel domain instance either US or EU.`,
 					},
 					"select_properties_by_default": schema.BoolAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.Bool{
-							speakeasy_boolplanmodifier.TrustRead(),
-						},
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.String{
-							speakeasy_stringplanmodifier.TrustRead(),
-						},
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -249,10 +178,6 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 						},
 					},
 					"start_date": schema.StringAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.String{
-							speakeasy_stringplanmodifier.TrustRead(),
-						},
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
@@ -484,5 +409,5 @@ func (r *SourceMixpanelResource) Delete(ctx context.Context, req resource.Delete
 }
 
 func (r *SourceMixpanelResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+	resource.ImportStatePassthroughID(ctx, path.Root("source_id"), req, resp)
 }

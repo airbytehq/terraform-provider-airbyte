@@ -7,15 +7,14 @@ import (
 	"context"
 	"fmt"
 
-	speakeasy_objectplanmodifier "airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
-	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -61,10 +60,6 @@ func (r *SourceHubspotResource) Schema(ctx context.Context, req resource.SchemaR
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"source_hubspot_authentication_o_auth": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"client_id": schema.StringAttribute{
@@ -89,10 +84,6 @@ func (r *SourceHubspotResource) Schema(ctx context.Context, req resource.SchemaR
 								Description: `Choose how to authenticate to HubSpot.`,
 							},
 							"source_hubspot_authentication_private_app": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
@@ -111,10 +102,6 @@ func (r *SourceHubspotResource) Schema(ctx context.Context, req resource.SchemaR
 								Description: `Choose how to authenticate to HubSpot.`,
 							},
 							"source_hubspot_update_authentication_o_auth": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"client_id": schema.StringAttribute{
@@ -139,10 +126,6 @@ func (r *SourceHubspotResource) Schema(ctx context.Context, req resource.SchemaR
 								Description: `Choose how to authenticate to HubSpot.`,
 							},
 							"source_hubspot_update_authentication_private_app": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
@@ -405,5 +388,5 @@ func (r *SourceHubspotResource) Delete(ctx context.Context, req resource.DeleteR
 }
 
 func (r *SourceHubspotResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+	resource.ImportStatePassthroughID(ctx, path.Root("source_id"), req, resp)
 }

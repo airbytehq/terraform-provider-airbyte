@@ -7,14 +7,13 @@ import (
 	"context"
 	"fmt"
 
-	speakeasy_int64planmodifier "airbyte/internal/planmodifiers/int64planmodifier"
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
-	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -56,27 +55,15 @@ func (r *DestinationPubsubResource) Schema(ctx context.Context, req resource.Sch
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"batching_delay_threshold": schema.Int64Attribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.Int64{
-							speakeasy_int64planmodifier.TrustRead(),
-						},
 						Optional: true,
 					},
 					"batching_element_count_threshold": schema.Int64Attribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.Int64{
-							speakeasy_int64planmodifier.TrustRead(),
-						},
 						Optional: true,
 					},
 					"batching_enabled": schema.BoolAttribute{
 						Required: true,
 					},
 					"batching_request_bytes_threshold": schema.Int64Attribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.Int64{
-							speakeasy_int64planmodifier.TrustRead(),
-						},
 						Optional: true,
 					},
 					"credentials_json": schema.StringAttribute{
@@ -322,5 +309,5 @@ func (r *DestinationPubsubResource) Delete(ctx context.Context, req resource.Del
 }
 
 func (r *DestinationPubsubResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+	resource.ImportStatePassthroughID(ctx, path.Root("destination_id"), req, resp)
 }

@@ -7,15 +7,14 @@ import (
 	"context"
 	"fmt"
 
-	speakeasy_objectplanmodifier "airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
-	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -68,10 +67,6 @@ func (r *DestinationDevNullResource) Schema(ctx context.Context, req resource.Sc
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_dev_null_test_destination_silent": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"test_destination_type": schema.StringAttribute{
@@ -86,10 +81,6 @@ func (r *DestinationDevNullResource) Schema(ctx context.Context, req resource.Sc
 								Description: `The type of destination to be used`,
 							},
 							"destination_dev_null_update_test_destination_silent": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"test_destination_type": schema.StringAttribute{
@@ -331,5 +322,5 @@ func (r *DestinationDevNullResource) Delete(ctx context.Context, req resource.De
 }
 
 func (r *DestinationDevNullResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+	resource.ImportStatePassthroughID(ctx, path.Root("destination_id"), req, resp)
 }

@@ -7,14 +7,13 @@ import (
 	"context"
 	"fmt"
 
-	speakeasy_boolplanmodifier "airbyte/internal/planmodifiers/boolplanmodifier"
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
-	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -67,10 +66,6 @@ func (r *DestinationKeenResource) Schema(ctx context.Context, req resource.Schem
 						},
 					},
 					"infer_timestamp": schema.BoolAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.Bool{
-							speakeasy_boolplanmodifier.TrustRead(),
-						},
 						Optional: true,
 					},
 					"project_id": schema.StringAttribute{
@@ -299,5 +294,5 @@ func (r *DestinationKeenResource) Delete(ctx context.Context, req resource.Delet
 }
 
 func (r *DestinationKeenResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+	resource.ImportStatePassthroughID(ctx, path.Root("destination_id"), req, resp)
 }

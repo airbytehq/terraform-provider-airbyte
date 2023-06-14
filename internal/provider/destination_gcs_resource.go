@@ -7,17 +7,14 @@ import (
 	"context"
 	"fmt"
 
-	speakeasy_boolplanmodifier "airbyte/internal/planmodifiers/boolplanmodifier"
-	speakeasy_int64planmodifier "airbyte/internal/planmodifiers/int64planmodifier"
-	speakeasy_objectplanmodifier "airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
-	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -62,10 +59,6 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_gcs_authentication_hmac_key": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"credential_type": schema.StringAttribute{
@@ -86,10 +79,6 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 								Description: `An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>.`,
 							},
 							"destination_gcs_update_authentication_hmac_key": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"credential_type": schema.StringAttribute{
@@ -126,20 +115,12 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_gcs_output_format_avro_apache_avro": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"compression_codec": schema.SingleNestedAttribute{
 										Required: true,
 										Attributes: map[string]schema.Attribute{
 											"destination_gcs_output_format_avro_apache_avro_compression_codec_bzip2": schema.SingleNestedAttribute{
-												Computed: true,
-												PlanModifiers: []planmodifier.Object{
-													speakeasy_objectplanmodifier.TrustRead(),
-												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
@@ -154,10 +135,6 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
 											"destination_gcs_output_format_avro_apache_avro_compression_codec_deflate": schema.SingleNestedAttribute{
-												Computed: true,
-												PlanModifiers: []planmodifier.Object{
-													speakeasy_objectplanmodifier.TrustRead(),
-												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
@@ -169,20 +146,12 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 														},
 													},
 													"compression_level": schema.Int64Attribute{
-														Computed: true,
-														PlanModifiers: []planmodifier.Int64{
-															speakeasy_int64planmodifier.TrustRead(),
-														},
 														Optional: true,
 													},
 												},
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
 											"destination_gcs_output_format_avro_apache_avro_compression_codec_no_compression": schema.SingleNestedAttribute{
-												Computed: true,
-												PlanModifiers: []planmodifier.Object{
-													speakeasy_objectplanmodifier.TrustRead(),
-												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
@@ -197,10 +166,6 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
 											"destination_gcs_output_format_avro_apache_avro_compression_codec_snappy": schema.SingleNestedAttribute{
-												Computed: true,
-												PlanModifiers: []planmodifier.Object{
-													speakeasy_objectplanmodifier.TrustRead(),
-												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
@@ -215,10 +180,6 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
 											"destination_gcs_output_format_avro_apache_avro_compression_codec_xz": schema.SingleNestedAttribute{
-												Computed: true,
-												PlanModifiers: []planmodifier.Object{
-													speakeasy_objectplanmodifier.TrustRead(),
-												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
@@ -230,20 +191,12 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 														},
 													},
 													"compression_level": schema.Int64Attribute{
-														Computed: true,
-														PlanModifiers: []planmodifier.Int64{
-															speakeasy_int64planmodifier.TrustRead(),
-														},
 														Optional: true,
 													},
 												},
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
 											"destination_gcs_output_format_avro_apache_avro_compression_codec_zstandard": schema.SingleNestedAttribute{
-												Computed: true,
-												PlanModifiers: []planmodifier.Object{
-													speakeasy_objectplanmodifier.TrustRead(),
-												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
@@ -255,17 +208,9 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 														},
 													},
 													"compression_level": schema.Int64Attribute{
-														Computed: true,
-														PlanModifiers: []planmodifier.Int64{
-															speakeasy_int64planmodifier.TrustRead(),
-														},
 														Optional: true,
 													},
 													"include_checksum": schema.BoolAttribute{
-														Computed: true,
-														PlanModifiers: []planmodifier.Bool{
-															speakeasy_boolplanmodifier.TrustRead(),
-														},
 														Optional: true,
 													},
 												},
@@ -288,31 +233,15 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 								Description: `Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.`,
 							},
 							"destination_gcs_output_format_csv_comma_separated_values": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"compression": schema.SingleNestedAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											speakeasy_objectplanmodifier.TrustRead(),
-										},
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"destination_gcs_output_format_csv_comma_separated_values_compression_gzip": schema.SingleNestedAttribute{
-												Computed: true,
-												PlanModifiers: []planmodifier.Object{
-													speakeasy_objectplanmodifier.TrustRead(),
-												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
-														Computed: true,
-														PlanModifiers: []planmodifier.String{
-															speakeasy_stringplanmodifier.TrustRead(),
-														},
 														Optional: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -324,17 +253,9 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").`,
 											},
 											"destination_gcs_output_format_csv_comma_separated_values_compression_no_compression": schema.SingleNestedAttribute{
-												Computed: true,
-												PlanModifiers: []planmodifier.Object{
-													speakeasy_objectplanmodifier.TrustRead(),
-												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
-														Computed: true,
-														PlanModifiers: []planmodifier.String{
-															speakeasy_stringplanmodifier.TrustRead(),
-														},
 														Optional: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -351,10 +272,6 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 										},
 									},
 									"flattening": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -376,31 +293,15 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 								Description: `Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.`,
 							},
 							"destination_gcs_output_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"compression": schema.SingleNestedAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											speakeasy_objectplanmodifier.TrustRead(),
-										},
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"destination_gcs_output_format_json_lines_newline_delimited_json_compression_gzip": schema.SingleNestedAttribute{
-												Computed: true,
-												PlanModifiers: []planmodifier.Object{
-													speakeasy_objectplanmodifier.TrustRead(),
-												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
-														Computed: true,
-														PlanModifiers: []planmodifier.String{
-															speakeasy_stringplanmodifier.TrustRead(),
-														},
 														Optional: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -412,17 +313,9 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
 											},
 											"destination_gcs_output_format_json_lines_newline_delimited_json_compression_no_compression": schema.SingleNestedAttribute{
-												Computed: true,
-												PlanModifiers: []planmodifier.Object{
-													speakeasy_objectplanmodifier.TrustRead(),
-												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
-														Computed: true,
-														PlanModifiers: []planmodifier.String{
-															speakeasy_stringplanmodifier.TrustRead(),
-														},
 														Optional: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -450,24 +343,12 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 								Description: `Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.`,
 							},
 							"destination_gcs_output_format_parquet_columnar_storage": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"block_size_mb": schema.Int64Attribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.Int64{
-											speakeasy_int64planmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 									"compression_codec": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -483,17 +364,9 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 										Description: `The compression algorithm used to compress data pages.`,
 									},
 									"dictionary_encoding": schema.BoolAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.Bool{
-											speakeasy_boolplanmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 									"dictionary_page_size_kb": schema.Int64Attribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.Int64{
-											speakeasy_int64planmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 									"format_type": schema.StringAttribute{
@@ -505,37 +378,21 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 										},
 									},
 									"max_padding_size_mb": schema.Int64Attribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.Int64{
-											speakeasy_int64planmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 									"page_size_kb": schema.Int64Attribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.Int64{
-											speakeasy_int64planmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 								},
 								Description: `Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.`,
 							},
 							"destination_gcs_update_output_format_avro_apache_avro": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"compression_codec": schema.SingleNestedAttribute{
 										Required: true,
 										Attributes: map[string]schema.Attribute{
 											"destination_gcs_update_output_format_avro_apache_avro_compression_codec_no_compression": schema.SingleNestedAttribute{
-												Computed: true,
-												PlanModifiers: []planmodifier.Object{
-													speakeasy_objectplanmodifier.TrustRead(),
-												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
@@ -550,10 +407,6 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
 											"destination_gcs_update_output_format_avro_apache_avro_compression_codec_deflate": schema.SingleNestedAttribute{
-												Computed: true,
-												PlanModifiers: []planmodifier.Object{
-													speakeasy_objectplanmodifier.TrustRead(),
-												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
@@ -565,20 +418,12 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 														},
 													},
 													"compression_level": schema.Int64Attribute{
-														Computed: true,
-														PlanModifiers: []planmodifier.Int64{
-															speakeasy_int64planmodifier.TrustRead(),
-														},
 														Optional: true,
 													},
 												},
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
 											"destination_gcs_update_output_format_avro_apache_avro_compression_codec_bzip2": schema.SingleNestedAttribute{
-												Computed: true,
-												PlanModifiers: []planmodifier.Object{
-													speakeasy_objectplanmodifier.TrustRead(),
-												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
@@ -593,10 +438,6 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
 											"destination_gcs_update_output_format_avro_apache_avro_compression_codec_xz": schema.SingleNestedAttribute{
-												Computed: true,
-												PlanModifiers: []planmodifier.Object{
-													speakeasy_objectplanmodifier.TrustRead(),
-												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
@@ -608,20 +449,12 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 														},
 													},
 													"compression_level": schema.Int64Attribute{
-														Computed: true,
-														PlanModifiers: []planmodifier.Int64{
-															speakeasy_int64planmodifier.TrustRead(),
-														},
 														Optional: true,
 													},
 												},
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
 											"destination_gcs_update_output_format_avro_apache_avro_compression_codec_zstandard": schema.SingleNestedAttribute{
-												Computed: true,
-												PlanModifiers: []planmodifier.Object{
-													speakeasy_objectplanmodifier.TrustRead(),
-												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
@@ -633,27 +466,15 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 														},
 													},
 													"compression_level": schema.Int64Attribute{
-														Computed: true,
-														PlanModifiers: []planmodifier.Int64{
-															speakeasy_int64planmodifier.TrustRead(),
-														},
 														Optional: true,
 													},
 													"include_checksum": schema.BoolAttribute{
-														Computed: true,
-														PlanModifiers: []planmodifier.Bool{
-															speakeasy_boolplanmodifier.TrustRead(),
-														},
 														Optional: true,
 													},
 												},
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
 											},
 											"destination_gcs_update_output_format_avro_apache_avro_compression_codec_snappy": schema.SingleNestedAttribute{
-												Computed: true,
-												PlanModifiers: []planmodifier.Object{
-													speakeasy_objectplanmodifier.TrustRead(),
-												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"codec": schema.StringAttribute{
@@ -684,31 +505,15 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 								Description: `Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.`,
 							},
 							"destination_gcs_update_output_format_csv_comma_separated_values": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"compression": schema.SingleNestedAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											speakeasy_objectplanmodifier.TrustRead(),
-										},
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"destination_gcs_update_output_format_csv_comma_separated_values_compression_no_compression": schema.SingleNestedAttribute{
-												Computed: true,
-												PlanModifiers: []planmodifier.Object{
-													speakeasy_objectplanmodifier.TrustRead(),
-												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
-														Computed: true,
-														PlanModifiers: []planmodifier.String{
-															speakeasy_stringplanmodifier.TrustRead(),
-														},
 														Optional: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -720,17 +525,9 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").`,
 											},
 											"destination_gcs_update_output_format_csv_comma_separated_values_compression_gzip": schema.SingleNestedAttribute{
-												Computed: true,
-												PlanModifiers: []planmodifier.Object{
-													speakeasy_objectplanmodifier.TrustRead(),
-												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
-														Computed: true,
-														PlanModifiers: []planmodifier.String{
-															speakeasy_stringplanmodifier.TrustRead(),
-														},
 														Optional: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -747,10 +544,6 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 										},
 									},
 									"flattening": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -772,31 +565,15 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 								Description: `Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.`,
 							},
 							"destination_gcs_update_output_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"compression": schema.SingleNestedAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											speakeasy_objectplanmodifier.TrustRead(),
-										},
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"destination_gcs_update_output_format_json_lines_newline_delimited_json_compression_no_compression": schema.SingleNestedAttribute{
-												Computed: true,
-												PlanModifiers: []planmodifier.Object{
-													speakeasy_objectplanmodifier.TrustRead(),
-												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
-														Computed: true,
-														PlanModifiers: []planmodifier.String{
-															speakeasy_stringplanmodifier.TrustRead(),
-														},
 														Optional: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -808,17 +585,9 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
 											},
 											"destination_gcs_update_output_format_json_lines_newline_delimited_json_compression_gzip": schema.SingleNestedAttribute{
-												Computed: true,
-												PlanModifiers: []planmodifier.Object{
-													speakeasy_objectplanmodifier.TrustRead(),
-												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"compression_type": schema.StringAttribute{
-														Computed: true,
-														PlanModifiers: []planmodifier.String{
-															speakeasy_stringplanmodifier.TrustRead(),
-														},
 														Optional: true,
 														Validators: []validator.String{
 															stringvalidator.OneOf(
@@ -846,24 +615,12 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 								Description: `Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.`,
 							},
 							"destination_gcs_update_output_format_parquet_columnar_storage": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"block_size_mb": schema.Int64Attribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.Int64{
-											speakeasy_int64planmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 									"compression_codec": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -879,17 +636,9 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 										Description: `The compression algorithm used to compress data pages.`,
 									},
 									"dictionary_encoding": schema.BoolAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.Bool{
-											speakeasy_boolplanmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 									"dictionary_page_size_kb": schema.Int64Attribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.Int64{
-											speakeasy_int64planmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 									"format_type": schema.StringAttribute{
@@ -901,17 +650,9 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 										},
 									},
 									"max_padding_size_mb": schema.Int64Attribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.Int64{
-											speakeasy_int64planmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 									"page_size_kb": schema.Int64Attribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.Int64{
-											speakeasy_int64planmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 								},
@@ -929,10 +670,6 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 						Required: true,
 					},
 					"gcs_bucket_region": schema.StringAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.String{
-							speakeasy_stringplanmodifier.TrustRead(),
-						},
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -1198,5 +935,5 @@ func (r *DestinationGcsResource) Delete(ctx context.Context, req resource.Delete
 }
 
 func (r *DestinationGcsResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+	resource.ImportStatePassthroughID(ctx, path.Root("destination_id"), req, resp)
 }

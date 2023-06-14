@@ -7,16 +7,14 @@ import (
 	"context"
 	"fmt"
 
-	speakeasy_listplanmodifier "airbyte/internal/planmodifiers/listplanmodifier"
-	speakeasy_objectplanmodifier "airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
-	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -59,10 +57,6 @@ func (r *SourceSurveymonkeyResource) Schema(ctx context.Context, req resource.Sc
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"credentials": schema.SingleNestedAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							speakeasy_objectplanmodifier.TrustRead(),
-						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"access_token": schema.StringAttribute{
@@ -77,27 +71,15 @@ func (r *SourceSurveymonkeyResource) Schema(ctx context.Context, req resource.Sc
 								},
 							},
 							"client_id": schema.StringAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									speakeasy_stringplanmodifier.TrustRead(),
-								},
 								Optional: true,
 							},
 							"client_secret": schema.StringAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.String{
-									speakeasy_stringplanmodifier.TrustRead(),
-								},
 								Optional: true,
 							},
 						},
 						Description: `The authorization method to use to retrieve data from SurveyMonkey`,
 					},
 					"origin": schema.StringAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.String{
-							speakeasy_stringplanmodifier.TrustRead(),
-						},
 						Optional: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -123,10 +105,6 @@ func (r *SourceSurveymonkeyResource) Schema(ctx context.Context, req resource.Sc
 						},
 					},
 					"survey_ids": schema.ListAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.List{
-							speakeasy_listplanmodifier.TrustRead(),
-						},
 						Optional:    true,
 						ElementType: types.StringType,
 					},
@@ -356,5 +334,5 @@ func (r *SourceSurveymonkeyResource) Delete(ctx context.Context, req resource.De
 }
 
 func (r *SourceSurveymonkeyResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+	resource.ImportStatePassthroughID(ctx, path.Root("source_id"), req, resp)
 }

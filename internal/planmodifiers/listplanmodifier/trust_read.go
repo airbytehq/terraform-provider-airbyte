@@ -45,4 +45,3 @@ func (m trustRead) PlanModifyList(ctx context.Context, req planmodifier.ListRequ
 
 	resp.PlanValue = req.StateValue
 }
-

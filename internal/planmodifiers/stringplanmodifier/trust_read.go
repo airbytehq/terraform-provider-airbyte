@@ -27,7 +27,6 @@ func (m trustRead) MarkdownDescription(_ context.Context) string {
 	return "Once set, the value of this attribute in state will not change."
 }
 
-
 // PlanModifyString implements the plan modification logic.
 func (m trustRead) PlanModifyString(ctx context.Context, req planmodifier.StringRequest, resp *planmodifier.StringResponse) {
 	// Do nothing if there is a known planned value.

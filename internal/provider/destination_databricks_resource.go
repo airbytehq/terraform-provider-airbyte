@@ -7,16 +7,14 @@ import (
 	"context"
 	"fmt"
 
-	speakeasy_boolplanmodifier "airbyte/internal/planmodifiers/boolplanmodifier"
-	speakeasy_objectplanmodifier "airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
-	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -64,10 +62,6 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_databricks_data_source_recommended_managed_tables": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"data_source_type": schema.StringAttribute{
@@ -82,10 +76,6 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 								Description: `Storage on which the delta lake is built.`,
 							},
 							"destination_databricks_data_source_amazon_s3": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"data_source_type": schema.StringAttribute{
@@ -97,10 +87,6 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 										},
 									},
 									"file_name_pattern": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 									"s3_access_key_id": schema.StringAttribute{
@@ -153,10 +139,6 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 								Description: `Storage on which the delta lake is built.`,
 							},
 							"destination_databricks_data_source_azure_blob_storage": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"azure_blob_storage_account_name": schema.StringAttribute{
@@ -166,10 +148,6 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 										Required: true,
 									},
 									"azure_blob_storage_endpoint_domain_name": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 									"azure_blob_storage_sas_token": schema.StringAttribute{
@@ -187,10 +165,6 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 								Description: `Storage on which the delta lake is built.`,
 							},
 							"destination_databricks_update_data_source_recommended_managed_tables": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"data_source_type": schema.StringAttribute{
@@ -205,10 +179,6 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 								Description: `Storage on which the delta lake is built.`,
 							},
 							"destination_databricks_update_data_source_amazon_s3": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"data_source_type": schema.StringAttribute{
@@ -220,10 +190,6 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 										},
 									},
 									"file_name_pattern": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 									"s3_access_key_id": schema.StringAttribute{
@@ -276,10 +242,6 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 								Description: `Storage on which the delta lake is built.`,
 							},
 							"destination_databricks_update_data_source_azure_blob_storage": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"azure_blob_storage_account_name": schema.StringAttribute{
@@ -289,10 +251,6 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 										Required: true,
 									},
 									"azure_blob_storage_endpoint_domain_name": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 									"azure_blob_storage_sas_token": schema.StringAttribute{
@@ -315,10 +273,6 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 						},
 					},
 					"database": schema.StringAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.String{
-							speakeasy_stringplanmodifier.TrustRead(),
-						},
 						Optional: true,
 					},
 					"databricks_http_path": schema.StringAttribute{
@@ -328,10 +282,6 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 						Required: true,
 					},
 					"databricks_port": schema.StringAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.String{
-							speakeasy_stringplanmodifier.TrustRead(),
-						},
 						Optional: true,
 					},
 					"databricks_server_hostname": schema.StringAttribute{
@@ -346,17 +296,9 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 						},
 					},
 					"purge_staging_data": schema.BoolAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.Bool{
-							speakeasy_boolplanmodifier.TrustRead(),
-						},
 						Optional: true,
 					},
 					"schema": schema.StringAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.String{
-							speakeasy_stringplanmodifier.TrustRead(),
-						},
 						Optional: true,
 					},
 				},
@@ -582,5 +524,5 @@ func (r *DestinationDatabricksResource) Delete(ctx context.Context, req resource
 }
 
 func (r *DestinationDatabricksResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+	resource.ImportStatePassthroughID(ctx, path.Root("destination_id"), req, resp)
 }

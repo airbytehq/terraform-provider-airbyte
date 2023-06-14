@@ -7,17 +7,14 @@ import (
 	"context"
 	"fmt"
 
-	speakeasy_boolplanmodifier "airbyte/internal/planmodifiers/boolplanmodifier"
-	speakeasy_int64planmodifier "airbyte/internal/planmodifiers/int64planmodifier"
-	speakeasy_objectplanmodifier "airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
-	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -59,24 +56,12 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"credentials": schema.SingleNestedAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							speakeasy_objectplanmodifier.TrustRead(),
-						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_snowflake_authorization_method_key_pair_authentication": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -88,29 +73,17 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 										Required: true,
 									},
 									"private_key_password": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 								},
 							},
 							"destination_snowflake_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Required: true,
 									},
 									"auth_type": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -119,17 +92,9 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 										},
 									},
 									"client_id": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 									"client_secret": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 									"refresh_token": schema.StringAttribute{
@@ -138,17 +103,9 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 								},
 							},
 							"destination_snowflake_authorization_method_username_and_password": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -162,17 +119,9 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 								},
 							},
 							"destination_snowflake_update_authorization_method_key_pair_authentication": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -184,29 +133,17 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 										Required: true,
 									},
 									"private_key_password": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 								},
 							},
 							"destination_snowflake_update_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Required: true,
 									},
 									"auth_type": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -215,17 +152,9 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 										},
 									},
 									"client_id": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 									"client_secret": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 									"refresh_token": schema.StringAttribute{
@@ -234,17 +163,9 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 								},
 							},
 							"destination_snowflake_update_authorization_method_username_and_password": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -274,34 +195,18 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 						},
 					},
 					"file_buffer_count": schema.Int64Attribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.Int64{
-							speakeasy_int64planmodifier.TrustRead(),
-						},
 						Optional: true,
 					},
 					"host": schema.StringAttribute{
 						Required: true,
 					},
 					"jdbc_url_params": schema.StringAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.String{
-							speakeasy_stringplanmodifier.TrustRead(),
-						},
 						Optional: true,
 					},
 					"loading_method": schema.SingleNestedAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.Object{
-							speakeasy_objectplanmodifier.TrustRead(),
-						},
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_snowflake_data_staging_method_recommended_internal_staging": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
@@ -316,27 +221,15 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 								Description: `Recommended for large production workloads for better speed and scalability.`,
 							},
 							"destination_snowflake_data_staging_method_aws_s3_staging": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_key_id": schema.StringAttribute{
 										Required: true,
 									},
 									"encryption": schema.SingleNestedAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											speakeasy_objectplanmodifier.TrustRead(),
-										},
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"destination_snowflake_data_staging_method_aws_s3_staging_encryption_aes_cbc_envelope_encryption": schema.SingleNestedAttribute{
-												Computed: true,
-												PlanModifiers: []planmodifier.Object{
-													speakeasy_objectplanmodifier.TrustRead(),
-												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"encryption_type": schema.StringAttribute{
@@ -348,20 +241,12 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 														},
 													},
 													"key_encrypting_key": schema.StringAttribute{
-														Computed: true,
-														PlanModifiers: []planmodifier.String{
-															speakeasy_stringplanmodifier.TrustRead(),
-														},
 														Optional: true,
 													},
 												},
 												Description: `Staging data will be encrypted using AES-CBC envelope encryption.`,
 											},
 											"destination_snowflake_data_staging_method_aws_s3_staging_encryption_no_encryption": schema.SingleNestedAttribute{
-												Computed: true,
-												PlanModifiers: []planmodifier.Object{
-													speakeasy_objectplanmodifier.TrustRead(),
-												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"encryption_type": schema.StringAttribute{
@@ -381,10 +266,6 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 										},
 									},
 									"file_name_pattern": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 									"method": schema.StringAttribute{
@@ -396,20 +277,12 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 										},
 									},
 									"purge_staging_data": schema.BoolAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.Bool{
-											speakeasy_boolplanmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 									"s3_bucket_name": schema.StringAttribute{
 										Required: true,
 									},
 									"s3_bucket_region": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -448,10 +321,6 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 								Description: `Recommended for large production workloads for better speed and scalability.`,
 							},
 							"destination_snowflake_data_staging_method_google_cloud_storage_staging": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"bucket_name": schema.StringAttribute{
@@ -475,10 +344,6 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 								Description: `Recommended for large production workloads for better speed and scalability.`,
 							},
 							"destination_snowflake_data_staging_method_select_another_option": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
@@ -493,10 +358,6 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 								Description: `Select another option`,
 							},
 							"destination_snowflake_update_data_staging_method_recommended_internal_staging": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
@@ -511,27 +372,15 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 								Description: `Recommended for large production workloads for better speed and scalability.`,
 							},
 							"destination_snowflake_update_data_staging_method_aws_s3_staging": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_key_id": schema.StringAttribute{
 										Required: true,
 									},
 									"encryption": schema.SingleNestedAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.Object{
-											speakeasy_objectplanmodifier.TrustRead(),
-										},
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"destination_snowflake_update_data_staging_method_aws_s3_staging_encryption_no_encryption": schema.SingleNestedAttribute{
-												Computed: true,
-												PlanModifiers: []planmodifier.Object{
-													speakeasy_objectplanmodifier.TrustRead(),
-												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"encryption_type": schema.StringAttribute{
@@ -546,10 +395,6 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 												Description: `Staging data will be stored in plaintext.`,
 											},
 											"destination_snowflake_update_data_staging_method_aws_s3_staging_encryption_aes_cbc_envelope_encryption": schema.SingleNestedAttribute{
-												Computed: true,
-												PlanModifiers: []planmodifier.Object{
-													speakeasy_objectplanmodifier.TrustRead(),
-												},
 												Optional: true,
 												Attributes: map[string]schema.Attribute{
 													"encryption_type": schema.StringAttribute{
@@ -561,10 +406,6 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 														},
 													},
 													"key_encrypting_key": schema.StringAttribute{
-														Computed: true,
-														PlanModifiers: []planmodifier.String{
-															speakeasy_stringplanmodifier.TrustRead(),
-														},
 														Optional: true,
 													},
 												},
@@ -576,10 +417,6 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 										},
 									},
 									"file_name_pattern": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 									"method": schema.StringAttribute{
@@ -591,20 +428,12 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 										},
 									},
 									"purge_staging_data": schema.BoolAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.Bool{
-											speakeasy_boolplanmodifier.TrustRead(),
-										},
 										Optional: true,
 									},
 									"s3_bucket_name": schema.StringAttribute{
 										Required: true,
 									},
 									"s3_bucket_region": schema.StringAttribute{
-										Computed: true,
-										PlanModifiers: []planmodifier.String{
-											speakeasy_stringplanmodifier.TrustRead(),
-										},
 										Optional: true,
 										Validators: []validator.String{
 											stringvalidator.OneOf(
@@ -643,10 +472,6 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 								Description: `Recommended for large production workloads for better speed and scalability.`,
 							},
 							"destination_snowflake_update_data_staging_method_google_cloud_storage_staging": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"bucket_name": schema.StringAttribute{
@@ -670,10 +495,6 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 								Description: `Recommended for large production workloads for better speed and scalability.`,
 							},
 							"destination_snowflake_update_data_staging_method_select_another_option": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
@@ -927,5 +748,5 @@ func (r *DestinationSnowflakeResource) Delete(ctx context.Context, req resource.
 }
 
 func (r *DestinationSnowflakeResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+	resource.ImportStatePassthroughID(ctx, path.Root("destination_id"), req, resp)
 }

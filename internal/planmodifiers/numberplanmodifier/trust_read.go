@@ -43,6 +43,5 @@ func (m trustRead) PlanModifyNumber(ctx context.Context, req planmodifier.Number
 		return
 	}
 
-
 	resp.PlanValue = req.StateValue
 }

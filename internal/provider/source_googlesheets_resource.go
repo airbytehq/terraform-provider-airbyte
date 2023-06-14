@@ -7,16 +7,14 @@ import (
 	"context"
 	"fmt"
 
-	speakeasy_int64planmodifier "airbyte/internal/planmodifiers/int64planmodifier"
-	speakeasy_objectplanmodifier "airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
-	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -62,10 +60,6 @@ func (r *SourceGoogleSheetsResource) Schema(ctx context.Context, req resource.Sc
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"source_google_sheets_authentication_authenticate_via_google_o_auth_": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
@@ -89,10 +83,6 @@ func (r *SourceGoogleSheetsResource) Schema(ctx context.Context, req resource.Sc
 								Description: `Credentials for connecting to the Google Sheets API`,
 							},
 							"source_google_sheets_authentication_service_account_key_authentication": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
@@ -110,10 +100,6 @@ func (r *SourceGoogleSheetsResource) Schema(ctx context.Context, req resource.Sc
 								Description: `Credentials for connecting to the Google Sheets API`,
 							},
 							"source_google_sheets_update_authentication_authenticate_via_google_o_auth_": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
@@ -137,10 +123,6 @@ func (r *SourceGoogleSheetsResource) Schema(ctx context.Context, req resource.Sc
 								Description: `Credentials for connecting to the Google Sheets API`,
 							},
 							"source_google_sheets_update_authentication_service_account_key_authentication": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
@@ -163,10 +145,6 @@ func (r *SourceGoogleSheetsResource) Schema(ctx context.Context, req resource.Sc
 						},
 					},
 					"row_batch_size": schema.Int64Attribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.Int64{
-							speakeasy_int64planmodifier.TrustRead(),
-						},
 						Optional: true,
 					},
 					"source_type": schema.StringAttribute{
@@ -406,5 +384,5 @@ func (r *SourceGoogleSheetsResource) Delete(ctx context.Context, req resource.De
 }
 
 func (r *SourceGoogleSheetsResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+	resource.ImportStatePassthroughID(ctx, path.Root("source_id"), req, resp)
 }

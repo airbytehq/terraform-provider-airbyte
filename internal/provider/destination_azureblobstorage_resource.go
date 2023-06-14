@@ -7,16 +7,14 @@ import (
 	"context"
 	"fmt"
 
-	speakeasy_int64planmodifier "airbyte/internal/planmodifiers/int64planmodifier"
-	speakeasy_objectplanmodifier "airbyte/internal/planmodifiers/objectplanmodifier"
 	speakeasy_stringplanmodifier "airbyte/internal/planmodifiers/stringplanmodifier"
 	"airbyte/internal/sdk/pkg/models/operations"
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
+	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 
-	"github.com/hashicorp/terraform-plugin-framework/path"
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
@@ -64,31 +62,15 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 						Required: true,
 					},
 					"azure_blob_storage_container_name": schema.StringAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.String{
-							speakeasy_stringplanmodifier.TrustRead(),
-						},
 						Optional: true,
 					},
 					"azure_blob_storage_endpoint_domain_name": schema.StringAttribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.String{
-							speakeasy_stringplanmodifier.TrustRead(),
-						},
 						Optional: true,
 					},
 					"azure_blob_storage_output_buffer_size": schema.Int64Attribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.Int64{
-							speakeasy_int64planmodifier.TrustRead(),
-						},
 						Optional: true,
 					},
 					"azure_blob_storage_spill_size": schema.Int64Attribute{
-						Computed: true,
-						PlanModifiers: []planmodifier.Int64{
-							speakeasy_int64planmodifier.TrustRead(),
-						},
 						Optional: true,
 					},
 					"destination_type": schema.StringAttribute{
@@ -103,10 +85,6 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"destination_azure_blob_storage_output_format_csv_comma_separated_values": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"flattening": schema.StringAttribute{
@@ -131,10 +109,6 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 								Description: `Output data format`,
 							},
 							"destination_azure_blob_storage_output_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"format_type": schema.StringAttribute{
@@ -149,10 +123,6 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 								Description: `Output data format`,
 							},
 							"destination_azure_blob_storage_update_output_format_csv_comma_separated_values": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"flattening": schema.StringAttribute{
@@ -177,10 +147,6 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 								Description: `Output data format`,
 							},
 							"destination_azure_blob_storage_update_output_format_json_lines_newline_delimited_json": schema.SingleNestedAttribute{
-								Computed: true,
-								PlanModifiers: []planmodifier.Object{
-									speakeasy_objectplanmodifier.TrustRead(),
-								},
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"format_type": schema.StringAttribute{
@@ -422,5 +388,5 @@ func (r *DestinationAzureBlobStorageResource) Delete(ctx context.Context, req re
 }
 
 func (r *DestinationAzureBlobStorageResource) ImportState(ctx context.Context, req resource.ImportStateRequest, resp *resource.ImportStateResponse) {
-	resource.ImportStatePassthroughID(ctx, path.Root("id"), req, resp)
+	resource.ImportStatePassthroughID(ctx, path.Root("destination_id"), req, resp)
 }

@@ -389,7 +389,7 @@ internal/provider/type_source_okta_authorization_method_o_auth20.go
 internal/provider/type_source_okta_authorization_method.go
 internal/provider/type_source_okta.go
 internal/provider/type_source_omnisend.go
-internal/provider/type_source_onesignal_update_applications.go
+internal/provider/type_source_onesignal_applications.go
 internal/provider/type_source_onesignal.go
 internal/provider/type_source_openweather.go
 internal/provider/type_source_oracle_connect_by_service_name.go
@@ -573,7 +573,6 @@ internal/provider/type_source_zuora.go
 examples/README.md
 go.mod
 go.sum
-internal/.DS_Store
 internal/planmodifiers/boolplanmodifier/trust_read.go
 internal/planmodifiers/float64planmodifier/trust_read.go
 internal/planmodifiers/int64planmodifier/trust_read.go
@@ -583,6 +582,7 @@ internal/planmodifiers/numberplanmodifier/trust_read.go
 internal/planmodifiers/objectplanmodifier/trust_read.go
 internal/planmodifiers/setplanmodifier/trust_read.go
 internal/planmodifiers/stringplanmodifier/trust_read.go
+internal/planmodifiers/utils/state_check.go
 internal/provider/reflect/diags.go
 internal/provider/reflect/doc.go
 internal/provider/reflect/generic_attr_value.go
