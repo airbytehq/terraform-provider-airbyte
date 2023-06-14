@@ -120,7 +120,7 @@ func WithSecurity(security shared.Security) SDKOption {
 func New(opts ...SDKOption) *SDK {
 	sdk := &SDK{
 		sdkConfiguration: sdkConfiguration{
-			Language:          "go",
+			Language:          "terraform",
 			OpenAPIDocVersion: "1.0.0",
 			SDKVersion:        "0.0.1",
 			GenVersion:        "internal",
