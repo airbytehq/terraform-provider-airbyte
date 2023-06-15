@@ -74,7 +74,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 					"replication_method": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
-							"source_mysql_replication_method_logical_replication_cdc_": schema.SingleNestedAttribute{
+							"source_mysql_replication_method_logical_replication_cdc": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"initial_waiting_seconds": schema.Int64Attribute{
@@ -108,7 +108,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 								Description: `Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
 							},
-							"source_mysql_update_replication_method_logical_replication_cdc_": schema.SingleNestedAttribute{
+							"source_mysql_update_replication_method_logical_replication_cdc": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"initial_waiting_seconds": schema.Int64Attribute{

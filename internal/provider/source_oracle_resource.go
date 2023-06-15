@@ -76,7 +76,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 								},
 								Description: `Use service name`,
 							},
-							"source_oracle_connect_by_system_id_sid_": schema.SingleNestedAttribute{
+							"source_oracle_connect_by_system_id_sid": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"connection_type": schema.StringAttribute{
@@ -110,7 +110,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 								},
 								Description: `Use service name`,
 							},
-							"source_oracle_update_connect_by_system_id_sid_": schema.SingleNestedAttribute{
+							"source_oracle_update_connect_by_system_id_sid": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"connection_type": schema.StringAttribute{
@@ -135,7 +135,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 					"encryption": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
-							"source_oracle_encryption_native_network_encryption_nne_": schema.SingleNestedAttribute{
+							"source_oracle_encryption_native_network_encryption_nne": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"encryption_algorithm": schema.StringAttribute{
@@ -160,7 +160,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 								},
 								Description: `The native network encryption gives you the ability to encrypt database connections, without the configuration overhead of TCP/IP and SSL/TLS and without the need to open and listen on different ports.`,
 							},
-							"source_oracle_encryption_tls_encrypted_verify_certificate_": schema.SingleNestedAttribute{
+							"source_oracle_encryption_tls_encrypted_verify_certificate": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"encryption_method": schema.StringAttribute{
@@ -177,7 +177,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 								},
 								Description: `Verify and use the certificate provided by the server.`,
 							},
-							"source_oracle_update_encryption_native_network_encryption_nne_": schema.SingleNestedAttribute{
+							"source_oracle_update_encryption_native_network_encryption_nne": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"encryption_algorithm": schema.StringAttribute{
@@ -202,7 +202,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 								},
 								Description: `The native network encryption gives you the ability to encrypt database connections, without the configuration overhead of TCP/IP and SSL/TLS and without the need to open and listen on different ports.`,
 							},
-							"source_oracle_update_encryption_tls_encrypted_verify_certificate_": schema.SingleNestedAttribute{
+							"source_oracle_update_encryption_tls_encrypted_verify_certificate": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"encryption_method": schema.StringAttribute{

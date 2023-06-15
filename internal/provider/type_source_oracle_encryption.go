@@ -3,8 +3,8 @@
 package provider
 
 type SourceOracleEncryption struct {
-	SourceOracleEncryptionNativeNetworkEncryptionNNE          *SourceOracleEncryptionNativeNetworkEncryptionNNE    `tfsdk:"source_oracle_encryption_native_network_encryption_nne_"`
-	SourceOracleEncryptionTLSEncryptedVerifyCertificate       *SourceOracleEncryptionTLSEncryptedVerifyCertificate `tfsdk:"source_oracle_encryption_tls_encrypted_verify_certificate_"`
-	SourceOracleUpdateEncryptionNativeNetworkEncryptionNNE    *SourceOracleEncryptionNativeNetworkEncryptionNNE    `tfsdk:"source_oracle_update_encryption_native_network_encryption_nne_"`
-	SourceOracleUpdateEncryptionTLSEncryptedVerifyCertificate *SourceOracleEncryptionTLSEncryptedVerifyCertificate `tfsdk:"source_oracle_update_encryption_tls_encrypted_verify_certificate_"`
+	SourceOracleEncryptionNativeNetworkEncryptionNNE          *SourceOracleEncryptionNativeNetworkEncryptionNNE    `tfsdk:"source_oracle_encryption_native_network_encryption_nne"`
+	SourceOracleEncryptionTLSEncryptedVerifyCertificate       *SourceOracleEncryptionTLSEncryptedVerifyCertificate `tfsdk:"source_oracle_encryption_tls_encrypted_verify_certificate"`
+	SourceOracleUpdateEncryptionNativeNetworkEncryptionNNE    *SourceOracleEncryptionNativeNetworkEncryptionNNE    `tfsdk:"source_oracle_update_encryption_native_network_encryption_nne"`
+	SourceOracleUpdateEncryptionTLSEncryptedVerifyCertificate *SourceOracleEncryptionTLSEncryptedVerifyCertificate `tfsdk:"source_oracle_update_encryption_tls_encrypted_verify_certificate"`
 }

@@ -3,8 +3,8 @@
 package provider
 
 type SourceAsanaAuthenticationMechanism struct {
-	SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth                 *SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth           `tfsdk:"source_asana_authentication_mechanism_authenticate_via_asana_oauth_"`
+	SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth                 *SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth           `tfsdk:"source_asana_authentication_mechanism_authenticate_via_asana_oauth"`
 	SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken       *SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken `tfsdk:"source_asana_authentication_mechanism_authenticate_with_personal_access_token"`
-	SourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauth           *SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth           `tfsdk:"source_asana_update_authentication_mechanism_authenticate_via_asana_oauth_"`
+	SourceAsanaUpdateAuthenticationMechanismAuthenticateViaAsanaOauth           *SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth           `tfsdk:"source_asana_update_authentication_mechanism_authenticate_via_asana_oauth"`
 	SourceAsanaUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken *SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken `tfsdk:"source_asana_update_authentication_mechanism_authenticate_with_personal_access_token"`
 }

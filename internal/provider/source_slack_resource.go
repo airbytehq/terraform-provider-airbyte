@@ -80,7 +80,7 @@ func (r *SourceSlackResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 								Description: `Choose how to authenticate into Slack`,
 							},
-							"source_slack_authentication_mechanism_sign_in_via_slack_o_auth_": schema.SingleNestedAttribute{
+							"source_slack_authentication_mechanism_sign_in_via_slack_o_auth": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
@@ -120,7 +120,7 @@ func (r *SourceSlackResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 								Description: `Choose how to authenticate into Slack`,
 							},
-							"source_slack_update_authentication_mechanism_sign_in_via_slack_o_auth_": schema.SingleNestedAttribute{
+							"source_slack_update_authentication_mechanism_sign_in_via_slack_o_auth": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{

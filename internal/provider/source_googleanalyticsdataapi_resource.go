@@ -59,7 +59,7 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_google_analytics_data_api_credentials_authenticate_via_google_oauth_": schema.SingleNestedAttribute{
+							"source_google_analytics_data_api_credentials_authenticate_via_google_oauth": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
@@ -102,7 +102,7 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 								},
 								Description: `Credentials for the service`,
 							},
-							"source_google_analytics_data_api_update_credentials_authenticate_via_google_oauth_": schema.SingleNestedAttribute{
+							"source_google_analytics_data_api_update_credentials_authenticate_via_google_oauth": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{

@@ -54,13 +54,13 @@ Optional:
 
 Optional:
 
-- `source_oracle_encryption_native_network_encryption_nne_` (Attributes) The native network encryption gives you the ability to encrypt database connections, without the configuration overhead of TCP/IP and SSL/TLS and without the need to open and listen on different ports. (see [below for nested schema](#nestedatt--configuration--encryption--source_oracle_encryption_native_network_encryption_nne_))
-- `source_oracle_encryption_tls_encrypted_verify_certificate_` (Attributes) Verify and use the certificate provided by the server. (see [below for nested schema](#nestedatt--configuration--encryption--source_oracle_encryption_tls_encrypted_verify_certificate_))
-- `source_oracle_update_encryption_native_network_encryption_nne_` (Attributes) The native network encryption gives you the ability to encrypt database connections, without the configuration overhead of TCP/IP and SSL/TLS and without the need to open and listen on different ports. (see [below for nested schema](#nestedatt--configuration--encryption--source_oracle_update_encryption_native_network_encryption_nne_))
-- `source_oracle_update_encryption_tls_encrypted_verify_certificate_` (Attributes) Verify and use the certificate provided by the server. (see [below for nested schema](#nestedatt--configuration--encryption--source_oracle_update_encryption_tls_encrypted_verify_certificate_))
+- `source_oracle_encryption_native_network_encryption_nne` (Attributes) The native network encryption gives you the ability to encrypt database connections, without the configuration overhead of TCP/IP and SSL/TLS and without the need to open and listen on different ports. (see [below for nested schema](#nestedatt--configuration--encryption--source_oracle_encryption_native_network_encryption_nne))
+- `source_oracle_encryption_tls_encrypted_verify_certificate` (Attributes) Verify and use the certificate provided by the server. (see [below for nested schema](#nestedatt--configuration--encryption--source_oracle_encryption_tls_encrypted_verify_certificate))
+- `source_oracle_update_encryption_native_network_encryption_nne` (Attributes) The native network encryption gives you the ability to encrypt database connections, without the configuration overhead of TCP/IP and SSL/TLS and without the need to open and listen on different ports. (see [below for nested schema](#nestedatt--configuration--encryption--source_oracle_update_encryption_native_network_encryption_nne))
+- `source_oracle_update_encryption_tls_encrypted_verify_certificate` (Attributes) Verify and use the certificate provided by the server. (see [below for nested schema](#nestedatt--configuration--encryption--source_oracle_update_encryption_tls_encrypted_verify_certificate))
 
-<a id="nestedatt--configuration--encryption--source_oracle_encryption_native_network_encryption_nne_"></a>
-### Nested Schema for `configuration.encryption.source_oracle_encryption_native_network_encryption_nne_`
+<a id="nestedatt--configuration--encryption--source_oracle_encryption_native_network_encryption_nne"></a>
+### Nested Schema for `configuration.encryption.source_oracle_encryption_native_network_encryption_nne`
 
 Required:
 
@@ -71,8 +71,8 @@ Optional:
 - `encryption_algorithm` (String) This parameter defines what encryption algorithm is used.
 
 
-<a id="nestedatt--configuration--encryption--source_oracle_encryption_tls_encrypted_verify_certificate_"></a>
-### Nested Schema for `configuration.encryption.source_oracle_encryption_tls_encrypted_verify_certificate_`
+<a id="nestedatt--configuration--encryption--source_oracle_encryption_tls_encrypted_verify_certificate"></a>
+### Nested Schema for `configuration.encryption.source_oracle_encryption_tls_encrypted_verify_certificate`
 
 Required:
 
@@ -80,8 +80,8 @@ Required:
 - `ssl_certificate` (String)
 
 
-<a id="nestedatt--configuration--encryption--source_oracle_update_encryption_native_network_encryption_nne_"></a>
-### Nested Schema for `configuration.encryption.source_oracle_update_encryption_native_network_encryption_nne_`
+<a id="nestedatt--configuration--encryption--source_oracle_update_encryption_native_network_encryption_nne"></a>
+### Nested Schema for `configuration.encryption.source_oracle_update_encryption_native_network_encryption_nne`
 
 Required:
 
@@ -92,8 +92,8 @@ Optional:
 - `encryption_algorithm` (String) This parameter defines what encryption algorithm is used.
 
 
-<a id="nestedatt--configuration--encryption--source_oracle_update_encryption_tls_encrypted_verify_certificate_"></a>
-### Nested Schema for `configuration.encryption.source_oracle_update_encryption_tls_encrypted_verify_certificate_`
+<a id="nestedatt--configuration--encryption--source_oracle_update_encryption_tls_encrypted_verify_certificate"></a>
+### Nested Schema for `configuration.encryption.source_oracle_update_encryption_tls_encrypted_verify_certificate`
 
 Required:
 
@@ -108,9 +108,9 @@ Required:
 Optional:
 
 - `source_oracle_connect_by_service_name` (Attributes) Use service name (see [below for nested schema](#nestedatt--configuration--connection_data--source_oracle_connect_by_service_name))
-- `source_oracle_connect_by_system_id_sid_` (Attributes) Use SID (Oracle System Identifier) (see [below for nested schema](#nestedatt--configuration--connection_data--source_oracle_connect_by_system_id_sid_))
+- `source_oracle_connect_by_system_id_sid` (Attributes) Use SID (Oracle System Identifier) (see [below for nested schema](#nestedatt--configuration--connection_data--source_oracle_connect_by_system_id_sid))
 - `source_oracle_update_connect_by_service_name` (Attributes) Use service name (see [below for nested schema](#nestedatt--configuration--connection_data--source_oracle_update_connect_by_service_name))
-- `source_oracle_update_connect_by_system_id_sid_` (Attributes) Use SID (Oracle System Identifier) (see [below for nested schema](#nestedatt--configuration--connection_data--source_oracle_update_connect_by_system_id_sid_))
+- `source_oracle_update_connect_by_system_id_sid` (Attributes) Use SID (Oracle System Identifier) (see [below for nested schema](#nestedatt--configuration--connection_data--source_oracle_update_connect_by_system_id_sid))
 
 <a id="nestedatt--configuration--connection_data--source_oracle_connect_by_service_name"></a>
 ### Nested Schema for `configuration.connection_data.source_oracle_connect_by_service_name`
@@ -124,8 +124,8 @@ Optional:
 - `connection_type` (String)
 
 
-<a id="nestedatt--configuration--connection_data--source_oracle_connect_by_system_id_sid_"></a>
-### Nested Schema for `configuration.connection_data.source_oracle_connect_by_system_id_sid_`
+<a id="nestedatt--configuration--connection_data--source_oracle_connect_by_system_id_sid"></a>
+### Nested Schema for `configuration.connection_data.source_oracle_connect_by_system_id_sid`
 
 Required:
 
@@ -148,8 +148,8 @@ Optional:
 - `connection_type` (String)
 
 
-<a id="nestedatt--configuration--connection_data--source_oracle_update_connect_by_system_id_sid_"></a>
-### Nested Schema for `configuration.connection_data.source_oracle_update_connect_by_system_id_sid_`
+<a id="nestedatt--configuration--connection_data--source_oracle_update_connect_by_system_id_sid"></a>
+### Nested Schema for `configuration.connection_data.source_oracle_update_connect_by_system_id_sid`
 
 Required:
 

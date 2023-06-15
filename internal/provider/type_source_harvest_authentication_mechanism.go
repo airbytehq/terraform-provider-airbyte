@@ -3,8 +3,8 @@
 package provider
 
 type SourceHarvestAuthenticationMechanism struct {
-	SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth               *SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth               `tfsdk:"source_harvest_authentication_mechanism_authenticate_via_harvest_o_auth_"`
+	SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth               *SourceHarvestAuthenticationMechanismAuthenticateViaHarvestOAuth               `tfsdk:"source_harvest_authentication_mechanism_authenticate_via_harvest_o_auth"`
 	SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken       *SourceHarvestAuthenticationMechanismAuthenticateWithPersonalAccessToken       `tfsdk:"source_harvest_authentication_mechanism_authenticate_with_personal_access_token"`
-	SourceHarvestUpdateAuthenticationMechanismAuthenticateViaHarvestOAuth         *SourceHarvestUpdateAuthenticationMechanismAuthenticateViaHarvestOAuth         `tfsdk:"source_harvest_update_authentication_mechanism_authenticate_via_harvest_o_auth_"`
+	SourceHarvestUpdateAuthenticationMechanismAuthenticateViaHarvestOAuth         *SourceHarvestUpdateAuthenticationMechanismAuthenticateViaHarvestOAuth         `tfsdk:"source_harvest_update_authentication_mechanism_authenticate_via_harvest_o_auth"`
 	SourceHarvestUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken *SourceHarvestUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken `tfsdk:"source_harvest_update_authentication_mechanism_authenticate_with_personal_access_token"`
 }

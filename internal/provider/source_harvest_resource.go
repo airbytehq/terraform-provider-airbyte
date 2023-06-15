@@ -62,7 +62,7 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_harvest_authentication_mechanism_authenticate_via_harvest_o_auth_": schema.SingleNestedAttribute{
+							"source_harvest_authentication_mechanism_authenticate_via_harvest_o_auth": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
@@ -116,7 +116,7 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 								},
 								Description: `Choose how to authenticate to Harvest.`,
 							},
-							"source_harvest_update_authentication_mechanism_authenticate_via_harvest_o_auth_": schema.SingleNestedAttribute{
+							"source_harvest_update_authentication_mechanism_authenticate_via_harvest_o_auth": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{

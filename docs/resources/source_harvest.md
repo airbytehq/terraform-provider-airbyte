@@ -49,13 +49,13 @@ Optional:
 
 Optional:
 
-- `source_harvest_authentication_mechanism_authenticate_via_harvest_o_auth_` (Attributes) Choose how to authenticate to Harvest. (see [below for nested schema](#nestedatt--configuration--credentials--source_harvest_authentication_mechanism_authenticate_via_harvest_o_auth_))
+- `source_harvest_authentication_mechanism_authenticate_via_harvest_o_auth` (Attributes) Choose how to authenticate to Harvest. (see [below for nested schema](#nestedatt--configuration--credentials--source_harvest_authentication_mechanism_authenticate_via_harvest_o_auth))
 - `source_harvest_authentication_mechanism_authenticate_with_personal_access_token` (Attributes) Choose how to authenticate to Harvest. (see [below for nested schema](#nestedatt--configuration--credentials--source_harvest_authentication_mechanism_authenticate_with_personal_access_token))
-- `source_harvest_update_authentication_mechanism_authenticate_via_harvest_o_auth_` (Attributes) Choose how to authenticate to Harvest. (see [below for nested schema](#nestedatt--configuration--credentials--source_harvest_update_authentication_mechanism_authenticate_via_harvest_o_auth_))
+- `source_harvest_update_authentication_mechanism_authenticate_via_harvest_o_auth` (Attributes) Choose how to authenticate to Harvest. (see [below for nested schema](#nestedatt--configuration--credentials--source_harvest_update_authentication_mechanism_authenticate_via_harvest_o_auth))
 - `source_harvest_update_authentication_mechanism_authenticate_with_personal_access_token` (Attributes) Choose how to authenticate to Harvest. (see [below for nested schema](#nestedatt--configuration--credentials--source_harvest_update_authentication_mechanism_authenticate_with_personal_access_token))
 
-<a id="nestedatt--configuration--credentials--source_harvest_authentication_mechanism_authenticate_via_harvest_o_auth_"></a>
-### Nested Schema for `configuration.credentials.source_harvest_authentication_mechanism_authenticate_via_harvest_o_auth_`
+<a id="nestedatt--configuration--credentials--source_harvest_authentication_mechanism_authenticate_via_harvest_o_auth"></a>
+### Nested Schema for `configuration.credentials.source_harvest_authentication_mechanism_authenticate_via_harvest_o_auth`
 
 Required:
 
@@ -82,8 +82,8 @@ Optional:
 - `auth_type` (String)
 
 
-<a id="nestedatt--configuration--credentials--source_harvest_update_authentication_mechanism_authenticate_via_harvest_o_auth_"></a>
-### Nested Schema for `configuration.credentials.source_harvest_update_authentication_mechanism_authenticate_via_harvest_o_auth_`
+<a id="nestedatt--configuration--credentials--source_harvest_update_authentication_mechanism_authenticate_via_harvest_o_auth"></a>
+### Nested Schema for `configuration.credentials.source_harvest_update_authentication_mechanism_authenticate_via_harvest_o_auth`
 
 Required:
 

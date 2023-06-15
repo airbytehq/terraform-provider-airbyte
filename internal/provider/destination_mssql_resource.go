@@ -84,7 +84,7 @@ func (r *DestinationMssqlResource) Schema(ctx context.Context, req resource.Sche
 					"ssl_method": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"destination_mssql_ssl_method_encrypted_trust_server_certificate_": schema.SingleNestedAttribute{
+							"destination_mssql_ssl_method_encrypted_trust_server_certificate": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssl_method": schema.StringAttribute{
@@ -98,7 +98,7 @@ func (r *DestinationMssqlResource) Schema(ctx context.Context, req resource.Sche
 								},
 								Description: `Use the certificate provided by the server without verification. (For testing purposes only!)`,
 							},
-							"destination_mssql_ssl_method_encrypted_verify_certificate_": schema.SingleNestedAttribute{
+							"destination_mssql_ssl_method_encrypted_verify_certificate": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"host_name_in_certificate": schema.StringAttribute{
@@ -115,7 +115,7 @@ func (r *DestinationMssqlResource) Schema(ctx context.Context, req resource.Sche
 								},
 								Description: `Verify and use the certificate provided by the server.`,
 							},
-							"destination_mssql_update_ssl_method_encrypted_trust_server_certificate_": schema.SingleNestedAttribute{
+							"destination_mssql_update_ssl_method_encrypted_trust_server_certificate": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssl_method": schema.StringAttribute{
@@ -129,7 +129,7 @@ func (r *DestinationMssqlResource) Schema(ctx context.Context, req resource.Sche
 								},
 								Description: `Use the certificate provided by the server without verification. (For testing purposes only!)`,
 							},
-							"destination_mssql_update_ssl_method_encrypted_verify_certificate_": schema.SingleNestedAttribute{
+							"destination_mssql_update_ssl_method_encrypted_verify_certificate": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"host_name_in_certificate": schema.StringAttribute{

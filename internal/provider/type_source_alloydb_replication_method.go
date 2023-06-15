@@ -3,8 +3,8 @@
 package provider
 
 type SourceAlloydbReplicationMethod struct {
-	SourceAlloydbReplicationMethodLogicalReplicationCDC       *SourceAlloydbReplicationMethodLogicalReplicationCDC       `tfsdk:"source_alloydb_replication_method_logical_replication_cdc_"`
+	SourceAlloydbReplicationMethodLogicalReplicationCDC       *SourceAlloydbReplicationMethodLogicalReplicationCDC       `tfsdk:"source_alloydb_replication_method_logical_replication_cdc"`
 	SourceAlloydbReplicationMethodStandard                    *SourceAlloydbReplicationMethodStandard                    `tfsdk:"source_alloydb_replication_method_standard"`
-	SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC *SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC `tfsdk:"source_alloydb_update_replication_method_logical_replication_cdc_"`
+	SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC *SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC `tfsdk:"source_alloydb_update_replication_method_logical_replication_cdc"`
 	SourceAlloydbUpdateReplicationMethodStandard              *SourceAlloydbReplicationMethodStandard                    `tfsdk:"source_alloydb_update_replication_method_standard"`
 }

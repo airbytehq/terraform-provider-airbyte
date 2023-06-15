@@ -50,13 +50,13 @@ Optional:
 
 Optional:
 
-- `source_google_analytics_v4_credentials_authenticate_via_google_oauth_` (Attributes) Credentials for the service (see [below for nested schema](#nestedatt--configuration--credentials--source_google_analytics_v4_credentials_authenticate_via_google_oauth_))
+- `source_google_analytics_v4_credentials_authenticate_via_google_oauth` (Attributes) Credentials for the service (see [below for nested schema](#nestedatt--configuration--credentials--source_google_analytics_v4_credentials_authenticate_via_google_oauth))
 - `source_google_analytics_v4_credentials_service_account_key_authentication` (Attributes) Credentials for the service (see [below for nested schema](#nestedatt--configuration--credentials--source_google_analytics_v4_credentials_service_account_key_authentication))
-- `source_google_analytics_v4_update_credentials_authenticate_via_google_oauth_` (Attributes) Credentials for the service (see [below for nested schema](#nestedatt--configuration--credentials--source_google_analytics_v4_update_credentials_authenticate_via_google_oauth_))
+- `source_google_analytics_v4_update_credentials_authenticate_via_google_oauth` (Attributes) Credentials for the service (see [below for nested schema](#nestedatt--configuration--credentials--source_google_analytics_v4_update_credentials_authenticate_via_google_oauth))
 - `source_google_analytics_v4_update_credentials_service_account_key_authentication` (Attributes) Credentials for the service (see [below for nested schema](#nestedatt--configuration--credentials--source_google_analytics_v4_update_credentials_service_account_key_authentication))
 
-<a id="nestedatt--configuration--credentials--source_google_analytics_v4_credentials_authenticate_via_google_oauth_"></a>
-### Nested Schema for `configuration.credentials.source_google_analytics_v4_credentials_authenticate_via_google_oauth_`
+<a id="nestedatt--configuration--credentials--source_google_analytics_v4_credentials_authenticate_via_google_oauth"></a>
+### Nested Schema for `configuration.credentials.source_google_analytics_v4_credentials_authenticate_via_google_oauth`
 
 Required:
 
@@ -82,8 +82,8 @@ Optional:
 - `auth_type` (String)
 
 
-<a id="nestedatt--configuration--credentials--source_google_analytics_v4_update_credentials_authenticate_via_google_oauth_"></a>
-### Nested Schema for `configuration.credentials.source_google_analytics_v4_update_credentials_authenticate_via_google_oauth_`
+<a id="nestedatt--configuration--credentials--source_google_analytics_v4_update_credentials_authenticate_via_google_oauth"></a>
+### Nested Schema for `configuration.credentials.source_google_analytics_v4_update_credentials_authenticate_via_google_oauth`
 
 Required:
 

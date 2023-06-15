@@ -74,7 +74,7 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 					"replication_method": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_alloydb_replication_method_logical_replication_cdc_": schema.SingleNestedAttribute{
+							"source_alloydb_replication_method_logical_replication_cdc": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"initial_waiting_seconds": schema.Int64Attribute{
@@ -137,7 +137,7 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 								},
 								Description: `Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
 							},
-							"source_alloydb_update_replication_method_logical_replication_cdc_": schema.SingleNestedAttribute{
+							"source_alloydb_update_replication_method_logical_replication_cdc": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"initial_waiting_seconds": schema.Int64Attribute{

@@ -43,13 +43,13 @@ Optional:
 
 Optional:
 
-- `source_retently_authentication_mechanism_authenticate_via_retently_o_auth_` (Attributes) Choose how to authenticate to Retently (see [below for nested schema](#nestedatt--configuration--credentials--source_retently_authentication_mechanism_authenticate_via_retently_o_auth_))
+- `source_retently_authentication_mechanism_authenticate_via_retently_o_auth` (Attributes) Choose how to authenticate to Retently (see [below for nested schema](#nestedatt--configuration--credentials--source_retently_authentication_mechanism_authenticate_via_retently_o_auth))
 - `source_retently_authentication_mechanism_authenticate_with_api_token` (Attributes) Choose how to authenticate to Retently (see [below for nested schema](#nestedatt--configuration--credentials--source_retently_authentication_mechanism_authenticate_with_api_token))
-- `source_retently_update_authentication_mechanism_authenticate_via_retently_o_auth_` (Attributes) Choose how to authenticate to Retently (see [below for nested schema](#nestedatt--configuration--credentials--source_retently_update_authentication_mechanism_authenticate_via_retently_o_auth_))
+- `source_retently_update_authentication_mechanism_authenticate_via_retently_o_auth` (Attributes) Choose how to authenticate to Retently (see [below for nested schema](#nestedatt--configuration--credentials--source_retently_update_authentication_mechanism_authenticate_via_retently_o_auth))
 - `source_retently_update_authentication_mechanism_authenticate_with_api_token` (Attributes) Choose how to authenticate to Retently (see [below for nested schema](#nestedatt--configuration--credentials--source_retently_update_authentication_mechanism_authenticate_with_api_token))
 
-<a id="nestedatt--configuration--credentials--source_retently_authentication_mechanism_authenticate_via_retently_o_auth_"></a>
-### Nested Schema for `configuration.credentials.source_retently_authentication_mechanism_authenticate_via_retently_o_auth_`
+<a id="nestedatt--configuration--credentials--source_retently_authentication_mechanism_authenticate_via_retently_o_auth"></a>
+### Nested Schema for `configuration.credentials.source_retently_authentication_mechanism_authenticate_via_retently_o_auth`
 
 Required:
 
@@ -76,8 +76,8 @@ Optional:
 - `auth_type` (String)
 
 
-<a id="nestedatt--configuration--credentials--source_retently_update_authentication_mechanism_authenticate_via_retently_o_auth_"></a>
-### Nested Schema for `configuration.credentials.source_retently_update_authentication_mechanism_authenticate_via_retently_o_auth_`
+<a id="nestedatt--configuration--credentials--source_retently_update_authentication_mechanism_authenticate_via_retently_o_auth"></a>
+### Nested Schema for `configuration.credentials.source_retently_update_authentication_mechanism_authenticate_via_retently_o_auth`
 
 Required:
 

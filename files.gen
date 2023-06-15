@@ -389,7 +389,7 @@ internal/provider/type_source_okta_authorization_method_o_auth20.go
 internal/provider/type_source_okta_authorization_method.go
 internal/provider/type_source_okta.go
 internal/provider/type_source_omnisend.go
-internal/provider/type_source_onesignal_applications.go
+internal/provider/type_source_onesignal_update_applications.go
 internal/provider/type_source_onesignal.go
 internal/provider/type_source_openweather.go
 internal/provider/type_source_oracle_connect_by_service_name.go
@@ -465,7 +465,7 @@ internal/provider/type_source_s3_file_format_parquet.go
 internal/provider/type_source_s3_file_format.go
 internal/provider/type_source_s3_s3_amazon_web_services.go
 internal/provider/type_source_s3.go
-internal/provider/type_source_salesforce_update_streams_criteria.go
+internal/provider/type_source_salesforce_streams_criteria.go
 internal/provider/type_source_salesforce.go
 internal/provider/type_source_salesforce_singer.go
 internal/provider/type_source_salesloft_credentials_authenticate_via_api_key.go
@@ -568,7 +568,6 @@ internal/provider/type_source_zenloop.go
 internal/provider/type_source_zoho_crm.go
 internal/provider/type_source_zoom.go
 internal/provider/type_source_zuora.go
-.DS_Store
 .gitignore
 examples/README.md
 go.mod

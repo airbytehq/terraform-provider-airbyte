@@ -59,7 +59,7 @@ func (r *SourceAsanaResource) Schema(ctx context.Context, req resource.SchemaReq
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_asana_authentication_mechanism_authenticate_via_asana_oauth_": schema.SingleNestedAttribute{
+							"source_asana_authentication_mechanism_authenticate_via_asana_oauth": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"client_id": schema.StringAttribute{
@@ -101,7 +101,7 @@ func (r *SourceAsanaResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 								Description: `Choose how to authenticate to Github`,
 							},
-							"source_asana_update_authentication_mechanism_authenticate_via_asana_oauth_": schema.SingleNestedAttribute{
+							"source_asana_update_authentication_mechanism_authenticate_via_asana_oauth": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"client_id": schema.StringAttribute{

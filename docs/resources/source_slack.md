@@ -51,9 +51,9 @@ Optional:
 Optional:
 
 - `source_slack_authentication_mechanism_api_token` (Attributes) Choose how to authenticate into Slack (see [below for nested schema](#nestedatt--configuration--credentials--source_slack_authentication_mechanism_api_token))
-- `source_slack_authentication_mechanism_sign_in_via_slack_o_auth_` (Attributes) Choose how to authenticate into Slack (see [below for nested schema](#nestedatt--configuration--credentials--source_slack_authentication_mechanism_sign_in_via_slack_o_auth_))
+- `source_slack_authentication_mechanism_sign_in_via_slack_o_auth` (Attributes) Choose how to authenticate into Slack (see [below for nested schema](#nestedatt--configuration--credentials--source_slack_authentication_mechanism_sign_in_via_slack_o_auth))
 - `source_slack_update_authentication_mechanism_api_token` (Attributes) Choose how to authenticate into Slack (see [below for nested schema](#nestedatt--configuration--credentials--source_slack_update_authentication_mechanism_api_token))
-- `source_slack_update_authentication_mechanism_sign_in_via_slack_o_auth_` (Attributes) Choose how to authenticate into Slack (see [below for nested schema](#nestedatt--configuration--credentials--source_slack_update_authentication_mechanism_sign_in_via_slack_o_auth_))
+- `source_slack_update_authentication_mechanism_sign_in_via_slack_o_auth` (Attributes) Choose how to authenticate into Slack (see [below for nested schema](#nestedatt--configuration--credentials--source_slack_update_authentication_mechanism_sign_in_via_slack_o_auth))
 
 <a id="nestedatt--configuration--credentials--source_slack_authentication_mechanism_api_token"></a>
 ### Nested Schema for `configuration.credentials.source_slack_authentication_mechanism_api_token`
@@ -64,8 +64,8 @@ Required:
 - `option_title` (String)
 
 
-<a id="nestedatt--configuration--credentials--source_slack_authentication_mechanism_sign_in_via_slack_o_auth_"></a>
-### Nested Schema for `configuration.credentials.source_slack_authentication_mechanism_sign_in_via_slack_o_auth_`
+<a id="nestedatt--configuration--credentials--source_slack_authentication_mechanism_sign_in_via_slack_o_auth"></a>
+### Nested Schema for `configuration.credentials.source_slack_authentication_mechanism_sign_in_via_slack_o_auth`
 
 Required:
 
@@ -84,8 +84,8 @@ Required:
 - `option_title` (String)
 
 
-<a id="nestedatt--configuration--credentials--source_slack_update_authentication_mechanism_sign_in_via_slack_o_auth_"></a>
-### Nested Schema for `configuration.credentials.source_slack_update_authentication_mechanism_sign_in_via_slack_o_auth_`
+<a id="nestedatt--configuration--credentials--source_slack_update_authentication_mechanism_sign_in_via_slack_o_auth"></a>
+### Nested Schema for `configuration.credentials.source_slack_update_authentication_mechanism_sign_in_via_slack_o_auth`
 
 Required:
 

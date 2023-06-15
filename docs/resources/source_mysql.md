@@ -54,13 +54,13 @@ Optional:
 
 Optional:
 
-- `source_mysql_replication_method_logical_replication_cdc_` (Attributes) CDC uses the Binlog to detect inserts, updates, and deletes. This needs to be configured on the source database itself. (see [below for nested schema](#nestedatt--configuration--replication_method--source_mysql_replication_method_logical_replication_cdc_))
+- `source_mysql_replication_method_logical_replication_cdc` (Attributes) CDC uses the Binlog to detect inserts, updates, and deletes. This needs to be configured on the source database itself. (see [below for nested schema](#nestedatt--configuration--replication_method--source_mysql_replication_method_logical_replication_cdc))
 - `source_mysql_replication_method_standard` (Attributes) Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally. (see [below for nested schema](#nestedatt--configuration--replication_method--source_mysql_replication_method_standard))
-- `source_mysql_update_replication_method_logical_replication_cdc_` (Attributes) CDC uses the Binlog to detect inserts, updates, and deletes. This needs to be configured on the source database itself. (see [below for nested schema](#nestedatt--configuration--replication_method--source_mysql_update_replication_method_logical_replication_cdc_))
+- `source_mysql_update_replication_method_logical_replication_cdc` (Attributes) CDC uses the Binlog to detect inserts, updates, and deletes. This needs to be configured on the source database itself. (see [below for nested schema](#nestedatt--configuration--replication_method--source_mysql_update_replication_method_logical_replication_cdc))
 - `source_mysql_update_replication_method_standard` (Attributes) Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally. (see [below for nested schema](#nestedatt--configuration--replication_method--source_mysql_update_replication_method_standard))
 
-<a id="nestedatt--configuration--replication_method--source_mysql_replication_method_logical_replication_cdc_"></a>
-### Nested Schema for `configuration.replication_method.source_mysql_replication_method_logical_replication_cdc_`
+<a id="nestedatt--configuration--replication_method--source_mysql_replication_method_logical_replication_cdc"></a>
+### Nested Schema for `configuration.replication_method.source_mysql_replication_method_logical_replication_cdc`
 
 Required:
 
@@ -80,8 +80,8 @@ Required:
 - `method` (String)
 
 
-<a id="nestedatt--configuration--replication_method--source_mysql_update_replication_method_logical_replication_cdc_"></a>
-### Nested Schema for `configuration.replication_method.source_mysql_update_replication_method_logical_replication_cdc_`
+<a id="nestedatt--configuration--replication_method--source_mysql_update_replication_method_logical_replication_cdc"></a>
+### Nested Schema for `configuration.replication_method.source_mysql_update_replication_method_logical_replication_cdc`
 
 Required:
 

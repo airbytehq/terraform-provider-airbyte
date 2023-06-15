@@ -74,7 +74,7 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 					"replication_method": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_postgres_replication_method_logical_replication_cdc_": schema.SingleNestedAttribute{
+							"source_postgres_replication_method_logical_replication_cdc": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"initial_waiting_seconds": schema.Int64Attribute{
@@ -140,7 +140,7 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 								},
 								Description: `Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
 							},
-							"source_postgres_update_replication_method_logical_replication_cdc_": schema.SingleNestedAttribute{
+							"source_postgres_update_replication_method_logical_replication_cdc": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"initial_waiting_seconds": schema.Int64Attribute{

@@ -55,13 +55,13 @@ Optional:
 
 Optional:
 
-- `source_mssql_replication_method_logical_replication_cdc_` (Attributes) CDC uses {TBC} to detect inserts, updates, and deletes. This needs to be configured on the source database itself. (see [below for nested schema](#nestedatt--configuration--replication_method--source_mssql_replication_method_logical_replication_cdc_))
+- `source_mssql_replication_method_logical_replication_cdc` (Attributes) CDC uses {TBC} to detect inserts, updates, and deletes. This needs to be configured on the source database itself. (see [below for nested schema](#nestedatt--configuration--replication_method--source_mssql_replication_method_logical_replication_cdc))
 - `source_mssql_replication_method_standard` (Attributes) Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally. (see [below for nested schema](#nestedatt--configuration--replication_method--source_mssql_replication_method_standard))
-- `source_mssql_update_replication_method_logical_replication_cdc_` (Attributes) CDC uses {TBC} to detect inserts, updates, and deletes. This needs to be configured on the source database itself. (see [below for nested schema](#nestedatt--configuration--replication_method--source_mssql_update_replication_method_logical_replication_cdc_))
+- `source_mssql_update_replication_method_logical_replication_cdc` (Attributes) CDC uses {TBC} to detect inserts, updates, and deletes. This needs to be configured on the source database itself. (see [below for nested schema](#nestedatt--configuration--replication_method--source_mssql_update_replication_method_logical_replication_cdc))
 - `source_mssql_update_replication_method_standard` (Attributes) Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally. (see [below for nested schema](#nestedatt--configuration--replication_method--source_mssql_update_replication_method_standard))
 
-<a id="nestedatt--configuration--replication_method--source_mssql_replication_method_logical_replication_cdc_"></a>
-### Nested Schema for `configuration.replication_method.source_mssql_replication_method_logical_replication_cdc_`
+<a id="nestedatt--configuration--replication_method--source_mssql_replication_method_logical_replication_cdc"></a>
+### Nested Schema for `configuration.replication_method.source_mssql_replication_method_logical_replication_cdc`
 
 Required:
 
@@ -82,8 +82,8 @@ Required:
 - `method` (String)
 
 
-<a id="nestedatt--configuration--replication_method--source_mssql_update_replication_method_logical_replication_cdc_"></a>
-### Nested Schema for `configuration.replication_method.source_mssql_update_replication_method_logical_replication_cdc_`
+<a id="nestedatt--configuration--replication_method--source_mssql_update_replication_method_logical_replication_cdc"></a>
+### Nested Schema for `configuration.replication_method.source_mssql_update_replication_method_logical_replication_cdc`
 
 Required:
 
@@ -110,21 +110,21 @@ Required:
 
 Optional:
 
-- `source_mssql_ssl_method_encrypted_trust_server_certificate_` (Attributes) Use the certificate provided by the server without verification. (For testing purposes only!) (see [below for nested schema](#nestedatt--configuration--ssl_method--source_mssql_ssl_method_encrypted_trust_server_certificate_))
-- `source_mssql_ssl_method_encrypted_verify_certificate_` (Attributes) Verify and use the certificate provided by the server. (see [below for nested schema](#nestedatt--configuration--ssl_method--source_mssql_ssl_method_encrypted_verify_certificate_))
-- `source_mssql_update_ssl_method_encrypted_trust_server_certificate_` (Attributes) Use the certificate provided by the server without verification. (For testing purposes only!) (see [below for nested schema](#nestedatt--configuration--ssl_method--source_mssql_update_ssl_method_encrypted_trust_server_certificate_))
-- `source_mssql_update_ssl_method_encrypted_verify_certificate_` (Attributes) Verify and use the certificate provided by the server. (see [below for nested schema](#nestedatt--configuration--ssl_method--source_mssql_update_ssl_method_encrypted_verify_certificate_))
+- `source_mssql_ssl_method_encrypted_trust_server_certificate` (Attributes) Use the certificate provided by the server without verification. (For testing purposes only!) (see [below for nested schema](#nestedatt--configuration--ssl_method--source_mssql_ssl_method_encrypted_trust_server_certificate))
+- `source_mssql_ssl_method_encrypted_verify_certificate` (Attributes) Verify and use the certificate provided by the server. (see [below for nested schema](#nestedatt--configuration--ssl_method--source_mssql_ssl_method_encrypted_verify_certificate))
+- `source_mssql_update_ssl_method_encrypted_trust_server_certificate` (Attributes) Use the certificate provided by the server without verification. (For testing purposes only!) (see [below for nested schema](#nestedatt--configuration--ssl_method--source_mssql_update_ssl_method_encrypted_trust_server_certificate))
+- `source_mssql_update_ssl_method_encrypted_verify_certificate` (Attributes) Verify and use the certificate provided by the server. (see [below for nested schema](#nestedatt--configuration--ssl_method--source_mssql_update_ssl_method_encrypted_verify_certificate))
 
-<a id="nestedatt--configuration--ssl_method--source_mssql_ssl_method_encrypted_trust_server_certificate_"></a>
-### Nested Schema for `configuration.ssl_method.source_mssql_ssl_method_encrypted_trust_server_certificate_`
+<a id="nestedatt--configuration--ssl_method--source_mssql_ssl_method_encrypted_trust_server_certificate"></a>
+### Nested Schema for `configuration.ssl_method.source_mssql_ssl_method_encrypted_trust_server_certificate`
 
 Required:
 
 - `ssl_method` (String)
 
 
-<a id="nestedatt--configuration--ssl_method--source_mssql_ssl_method_encrypted_verify_certificate_"></a>
-### Nested Schema for `configuration.ssl_method.source_mssql_ssl_method_encrypted_verify_certificate_`
+<a id="nestedatt--configuration--ssl_method--source_mssql_ssl_method_encrypted_verify_certificate"></a>
+### Nested Schema for `configuration.ssl_method.source_mssql_ssl_method_encrypted_verify_certificate`
 
 Required:
 
@@ -135,16 +135,16 @@ Optional:
 - `host_name_in_certificate` (String)
 
 
-<a id="nestedatt--configuration--ssl_method--source_mssql_update_ssl_method_encrypted_trust_server_certificate_"></a>
-### Nested Schema for `configuration.ssl_method.source_mssql_update_ssl_method_encrypted_trust_server_certificate_`
+<a id="nestedatt--configuration--ssl_method--source_mssql_update_ssl_method_encrypted_trust_server_certificate"></a>
+### Nested Schema for `configuration.ssl_method.source_mssql_update_ssl_method_encrypted_trust_server_certificate`
 
 Required:
 
 - `ssl_method` (String)
 
 
-<a id="nestedatt--configuration--ssl_method--source_mssql_update_ssl_method_encrypted_verify_certificate_"></a>
-### Nested Schema for `configuration.ssl_method.source_mssql_update_ssl_method_encrypted_verify_certificate_`
+<a id="nestedatt--configuration--ssl_method--source_mssql_update_ssl_method_encrypted_verify_certificate"></a>
+### Nested Schema for `configuration.ssl_method.source_mssql_update_ssl_method_encrypted_verify_certificate`
 
 Required:
 

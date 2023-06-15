@@ -74,7 +74,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 					"replication_method": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_mssql_replication_method_logical_replication_cdc_": schema.SingleNestedAttribute{
+							"source_mssql_replication_method_logical_replication_cdc": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"data_to_sync": schema.StringAttribute{
@@ -125,7 +125,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 								Description: `Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
 							},
-							"source_mssql_update_replication_method_logical_replication_cdc_": schema.SingleNestedAttribute{
+							"source_mssql_update_replication_method_logical_replication_cdc": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"data_to_sync": schema.StringAttribute{
@@ -196,7 +196,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 					"ssl_method": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_mssql_ssl_method_encrypted_trust_server_certificate_": schema.SingleNestedAttribute{
+							"source_mssql_ssl_method_encrypted_trust_server_certificate": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssl_method": schema.StringAttribute{
@@ -210,7 +210,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 								Description: `Use the certificate provided by the server without verification. (For testing purposes only!)`,
 							},
-							"source_mssql_ssl_method_encrypted_verify_certificate_": schema.SingleNestedAttribute{
+							"source_mssql_ssl_method_encrypted_verify_certificate": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"host_name_in_certificate": schema.StringAttribute{
@@ -227,7 +227,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 								Description: `Verify and use the certificate provided by the server.`,
 							},
-							"source_mssql_update_ssl_method_encrypted_trust_server_certificate_": schema.SingleNestedAttribute{
+							"source_mssql_update_ssl_method_encrypted_trust_server_certificate": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssl_method": schema.StringAttribute{
@@ -241,7 +241,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								},
 								Description: `Use the certificate provided by the server without verification. (For testing purposes only!)`,
 							},
-							"source_mssql_update_ssl_method_encrypted_verify_certificate_": schema.SingleNestedAttribute{
+							"source_mssql_update_ssl_method_encrypted_verify_certificate": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"host_name_in_certificate": schema.StringAttribute{

@@ -48,9 +48,9 @@ Optional:
 Optional:
 
 - `source_microsoft_teams_authentication_mechanism_authenticate_via_microsoft` (Attributes) Choose how to authenticate to Microsoft (see [below for nested schema](#nestedatt--configuration--credentials--source_microsoft_teams_authentication_mechanism_authenticate_via_microsoft))
-- `source_microsoft_teams_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0_` (Attributes) Choose how to authenticate to Microsoft (see [below for nested schema](#nestedatt--configuration--credentials--source_microsoft_teams_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0_))
+- `source_microsoft_teams_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0` (Attributes) Choose how to authenticate to Microsoft (see [below for nested schema](#nestedatt--configuration--credentials--source_microsoft_teams_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0))
 - `source_microsoft_teams_update_authentication_mechanism_authenticate_via_microsoft` (Attributes) Choose how to authenticate to Microsoft (see [below for nested schema](#nestedatt--configuration--credentials--source_microsoft_teams_update_authentication_mechanism_authenticate_via_microsoft))
-- `source_microsoft_teams_update_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0_` (Attributes) Choose how to authenticate to Microsoft (see [below for nested schema](#nestedatt--configuration--credentials--source_microsoft_teams_update_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0_))
+- `source_microsoft_teams_update_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0` (Attributes) Choose how to authenticate to Microsoft (see [below for nested schema](#nestedatt--configuration--credentials--source_microsoft_teams_update_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0))
 
 <a id="nestedatt--configuration--credentials--source_microsoft_teams_authentication_mechanism_authenticate_via_microsoft"></a>
 ### Nested Schema for `configuration.credentials.source_microsoft_teams_authentication_mechanism_authenticate_via_microsoft`
@@ -66,8 +66,8 @@ Optional:
 - `auth_type` (String)
 
 
-<a id="nestedatt--configuration--credentials--source_microsoft_teams_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0_"></a>
-### Nested Schema for `configuration.credentials.source_microsoft_teams_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0_`
+<a id="nestedatt--configuration--credentials--source_microsoft_teams_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0"></a>
+### Nested Schema for `configuration.credentials.source_microsoft_teams_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0`
 
 Required:
 
@@ -95,8 +95,8 @@ Optional:
 - `auth_type` (String)
 
 
-<a id="nestedatt--configuration--credentials--source_microsoft_teams_update_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0_"></a>
-### Nested Schema for `configuration.credentials.source_microsoft_teams_update_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0_`
+<a id="nestedatt--configuration--credentials--source_microsoft_teams_update_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0"></a>
+### Nested Schema for `configuration.credentials.source_microsoft_teams_update_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0`
 
 Required:
 

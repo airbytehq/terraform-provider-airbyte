@@ -50,21 +50,21 @@ Optional:
 
 Optional:
 
-- `destination_mssql_ssl_method_encrypted_trust_server_certificate_` (Attributes) Use the certificate provided by the server without verification. (For testing purposes only!) (see [below for nested schema](#nestedatt--configuration--ssl_method--destination_mssql_ssl_method_encrypted_trust_server_certificate_))
-- `destination_mssql_ssl_method_encrypted_verify_certificate_` (Attributes) Verify and use the certificate provided by the server. (see [below for nested schema](#nestedatt--configuration--ssl_method--destination_mssql_ssl_method_encrypted_verify_certificate_))
-- `destination_mssql_update_ssl_method_encrypted_trust_server_certificate_` (Attributes) Use the certificate provided by the server without verification. (For testing purposes only!) (see [below for nested schema](#nestedatt--configuration--ssl_method--destination_mssql_update_ssl_method_encrypted_trust_server_certificate_))
-- `destination_mssql_update_ssl_method_encrypted_verify_certificate_` (Attributes) Verify and use the certificate provided by the server. (see [below for nested schema](#nestedatt--configuration--ssl_method--destination_mssql_update_ssl_method_encrypted_verify_certificate_))
+- `destination_mssql_ssl_method_encrypted_trust_server_certificate` (Attributes) Use the certificate provided by the server without verification. (For testing purposes only!) (see [below for nested schema](#nestedatt--configuration--ssl_method--destination_mssql_ssl_method_encrypted_trust_server_certificate))
+- `destination_mssql_ssl_method_encrypted_verify_certificate` (Attributes) Verify and use the certificate provided by the server. (see [below for nested schema](#nestedatt--configuration--ssl_method--destination_mssql_ssl_method_encrypted_verify_certificate))
+- `destination_mssql_update_ssl_method_encrypted_trust_server_certificate` (Attributes) Use the certificate provided by the server without verification. (For testing purposes only!) (see [below for nested schema](#nestedatt--configuration--ssl_method--destination_mssql_update_ssl_method_encrypted_trust_server_certificate))
+- `destination_mssql_update_ssl_method_encrypted_verify_certificate` (Attributes) Verify and use the certificate provided by the server. (see [below for nested schema](#nestedatt--configuration--ssl_method--destination_mssql_update_ssl_method_encrypted_verify_certificate))
 
-<a id="nestedatt--configuration--ssl_method--destination_mssql_ssl_method_encrypted_trust_server_certificate_"></a>
-### Nested Schema for `configuration.ssl_method.destination_mssql_ssl_method_encrypted_trust_server_certificate_`
+<a id="nestedatt--configuration--ssl_method--destination_mssql_ssl_method_encrypted_trust_server_certificate"></a>
+### Nested Schema for `configuration.ssl_method.destination_mssql_ssl_method_encrypted_trust_server_certificate`
 
 Required:
 
 - `ssl_method` (String)
 
 
-<a id="nestedatt--configuration--ssl_method--destination_mssql_ssl_method_encrypted_verify_certificate_"></a>
-### Nested Schema for `configuration.ssl_method.destination_mssql_ssl_method_encrypted_verify_certificate_`
+<a id="nestedatt--configuration--ssl_method--destination_mssql_ssl_method_encrypted_verify_certificate"></a>
+### Nested Schema for `configuration.ssl_method.destination_mssql_ssl_method_encrypted_verify_certificate`
 
 Required:
 
@@ -75,16 +75,16 @@ Optional:
 - `host_name_in_certificate` (String)
 
 
-<a id="nestedatt--configuration--ssl_method--destination_mssql_update_ssl_method_encrypted_trust_server_certificate_"></a>
-### Nested Schema for `configuration.ssl_method.destination_mssql_update_ssl_method_encrypted_trust_server_certificate_`
+<a id="nestedatt--configuration--ssl_method--destination_mssql_update_ssl_method_encrypted_trust_server_certificate"></a>
+### Nested Schema for `configuration.ssl_method.destination_mssql_update_ssl_method_encrypted_trust_server_certificate`
 
 Required:
 
 - `ssl_method` (String)
 
 
-<a id="nestedatt--configuration--ssl_method--destination_mssql_update_ssl_method_encrypted_verify_certificate_"></a>
-### Nested Schema for `configuration.ssl_method.destination_mssql_update_ssl_method_encrypted_verify_certificate_`
+<a id="nestedatt--configuration--ssl_method--destination_mssql_update_ssl_method_encrypted_verify_certificate"></a>
+### Nested Schema for `configuration.ssl_method.destination_mssql_update_ssl_method_encrypted_verify_certificate`
 
 Required:
 

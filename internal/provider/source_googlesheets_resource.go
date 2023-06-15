@@ -59,7 +59,7 @@ func (r *SourceGoogleSheetsResource) Schema(ctx context.Context, req resource.Sc
 					"credentials": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
-							"source_google_sheets_authentication_authenticate_via_google_o_auth_": schema.SingleNestedAttribute{
+							"source_google_sheets_authentication_authenticate_via_google_o_auth": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
@@ -99,7 +99,7 @@ func (r *SourceGoogleSheetsResource) Schema(ctx context.Context, req resource.Sc
 								},
 								Description: `Credentials for connecting to the Google Sheets API`,
 							},
-							"source_google_sheets_update_authentication_authenticate_via_google_o_auth_": schema.SingleNestedAttribute{
+							"source_google_sheets_update_authentication_authenticate_via_google_o_auth": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{

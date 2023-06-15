@@ -43,13 +43,13 @@ Optional:
 
 Optional:
 
-- `source_asana_authentication_mechanism_authenticate_via_asana_oauth_` (Attributes) Choose how to authenticate to Github (see [below for nested schema](#nestedatt--configuration--credentials--source_asana_authentication_mechanism_authenticate_via_asana_oauth_))
+- `source_asana_authentication_mechanism_authenticate_via_asana_oauth` (Attributes) Choose how to authenticate to Github (see [below for nested schema](#nestedatt--configuration--credentials--source_asana_authentication_mechanism_authenticate_via_asana_oauth))
 - `source_asana_authentication_mechanism_authenticate_with_personal_access_token` (Attributes) Choose how to authenticate to Github (see [below for nested schema](#nestedatt--configuration--credentials--source_asana_authentication_mechanism_authenticate_with_personal_access_token))
-- `source_asana_update_authentication_mechanism_authenticate_via_asana_oauth_` (Attributes) Choose how to authenticate to Github (see [below for nested schema](#nestedatt--configuration--credentials--source_asana_update_authentication_mechanism_authenticate_via_asana_oauth_))
+- `source_asana_update_authentication_mechanism_authenticate_via_asana_oauth` (Attributes) Choose how to authenticate to Github (see [below for nested schema](#nestedatt--configuration--credentials--source_asana_update_authentication_mechanism_authenticate_via_asana_oauth))
 - `source_asana_update_authentication_mechanism_authenticate_with_personal_access_token` (Attributes) Choose how to authenticate to Github (see [below for nested schema](#nestedatt--configuration--credentials--source_asana_update_authentication_mechanism_authenticate_with_personal_access_token))
 
-<a id="nestedatt--configuration--credentials--source_asana_authentication_mechanism_authenticate_via_asana_oauth_"></a>
-### Nested Schema for `configuration.credentials.source_asana_authentication_mechanism_authenticate_via_asana_oauth_`
+<a id="nestedatt--configuration--credentials--source_asana_authentication_mechanism_authenticate_via_asana_oauth"></a>
+### Nested Schema for `configuration.credentials.source_asana_authentication_mechanism_authenticate_via_asana_oauth`
 
 Required:
 
@@ -74,8 +74,8 @@ Optional:
 - `option_title` (String) PAT Credentials
 
 
-<a id="nestedatt--configuration--credentials--source_asana_update_authentication_mechanism_authenticate_via_asana_oauth_"></a>
-### Nested Schema for `configuration.credentials.source_asana_update_authentication_mechanism_authenticate_via_asana_oauth_`
+<a id="nestedatt--configuration--credentials--source_asana_update_authentication_mechanism_authenticate_via_asana_oauth"></a>
+### Nested Schema for `configuration.credentials.source_asana_update_authentication_mechanism_authenticate_via_asana_oauth`
 
 Required:
 

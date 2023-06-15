@@ -48,13 +48,13 @@ Optional:
 
 Optional:
 
-- `source_google_sheets_authentication_authenticate_via_google_o_auth_` (Attributes) Credentials for connecting to the Google Sheets API (see [below for nested schema](#nestedatt--configuration--credentials--source_google_sheets_authentication_authenticate_via_google_o_auth_))
+- `source_google_sheets_authentication_authenticate_via_google_o_auth` (Attributes) Credentials for connecting to the Google Sheets API (see [below for nested schema](#nestedatt--configuration--credentials--source_google_sheets_authentication_authenticate_via_google_o_auth))
 - `source_google_sheets_authentication_service_account_key_authentication` (Attributes) Credentials for connecting to the Google Sheets API (see [below for nested schema](#nestedatt--configuration--credentials--source_google_sheets_authentication_service_account_key_authentication))
-- `source_google_sheets_update_authentication_authenticate_via_google_o_auth_` (Attributes) Credentials for connecting to the Google Sheets API (see [below for nested schema](#nestedatt--configuration--credentials--source_google_sheets_update_authentication_authenticate_via_google_o_auth_))
+- `source_google_sheets_update_authentication_authenticate_via_google_o_auth` (Attributes) Credentials for connecting to the Google Sheets API (see [below for nested schema](#nestedatt--configuration--credentials--source_google_sheets_update_authentication_authenticate_via_google_o_auth))
 - `source_google_sheets_update_authentication_service_account_key_authentication` (Attributes) Credentials for connecting to the Google Sheets API (see [below for nested schema](#nestedatt--configuration--credentials--source_google_sheets_update_authentication_service_account_key_authentication))
 
-<a id="nestedatt--configuration--credentials--source_google_sheets_authentication_authenticate_via_google_o_auth_"></a>
-### Nested Schema for `configuration.credentials.source_google_sheets_authentication_authenticate_via_google_o_auth_`
+<a id="nestedatt--configuration--credentials--source_google_sheets_authentication_authenticate_via_google_o_auth"></a>
+### Nested Schema for `configuration.credentials.source_google_sheets_authentication_authenticate_via_google_o_auth`
 
 Required:
 
@@ -73,8 +73,8 @@ Required:
 - `service_account_info` (String)
 
 
-<a id="nestedatt--configuration--credentials--source_google_sheets_update_authentication_authenticate_via_google_o_auth_"></a>
-### Nested Schema for `configuration.credentials.source_google_sheets_update_authentication_authenticate_via_google_o_auth_`
+<a id="nestedatt--configuration--credentials--source_google_sheets_update_authentication_authenticate_via_google_o_auth"></a>
+### Nested Schema for `configuration.credentials.source_google_sheets_update_authentication_authenticate_via_google_o_auth`
 
 Required:
 

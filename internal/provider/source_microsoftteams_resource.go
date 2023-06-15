@@ -82,7 +82,7 @@ func (r *SourceMicrosoftTeamsResource) Schema(ctx context.Context, req resource.
 								},
 								Description: `Choose how to authenticate to Microsoft`,
 							},
-							"source_microsoft_teams_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0_": schema.SingleNestedAttribute{
+							"source_microsoft_teams_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{
@@ -131,7 +131,7 @@ func (r *SourceMicrosoftTeamsResource) Schema(ctx context.Context, req resource.
 								},
 								Description: `Choose how to authenticate to Microsoft`,
 							},
-							"source_microsoft_teams_update_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0_": schema.SingleNestedAttribute{
+							"source_microsoft_teams_update_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"auth_type": schema.StringAttribute{

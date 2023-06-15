@@ -3,8 +3,8 @@
 package provider
 
 type SourceGoogleAnalyticsV4Credentials struct {
-	SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth            *SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth      `tfsdk:"source_google_analytics_v4_credentials_authenticate_via_google_oauth_"`
+	SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth            *SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth      `tfsdk:"source_google_analytics_v4_credentials_authenticate_via_google_oauth"`
 	SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthentication       *SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication `tfsdk:"source_google_analytics_v4_credentials_service_account_key_authentication"`
-	SourceGoogleAnalyticsV4UpdateCredentialsAuthenticateViaGoogleOauth      *SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth      `tfsdk:"source_google_analytics_v4_update_credentials_authenticate_via_google_oauth_"`
+	SourceGoogleAnalyticsV4UpdateCredentialsAuthenticateViaGoogleOauth      *SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth      `tfsdk:"source_google_analytics_v4_update_credentials_authenticate_via_google_oauth"`
 	SourceGoogleAnalyticsV4UpdateCredentialsServiceAccountKeyAuthentication *SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication `tfsdk:"source_google_analytics_v4_update_credentials_service_account_key_authentication"`
 }
