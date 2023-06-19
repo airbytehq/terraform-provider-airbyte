@@ -9,11 +9,6 @@
   <a href="https://github.com/airbytehq/airbyte-api-java-sdk/releases"><img src="https://img.shields.io/github/v/release/airbytehq/airbyte-api-java-sdk?sort=semver&style=for-the-badge" /></a>
 </div>
 
-## Notice of Alpha Status
-
-This is a Alpha release of the airbyte Terraform Provider.
-
-It is under active development and you may experience breaking changes. Please pin to a version if trialing in production.
 
 ## Authentication
 
@@ -22,11 +17,6 @@ Developers will need to create an API Key within your [Developer Portal](https:/
 The Developer Portal UI can also be used to help build your integration by showing information about network requests in the Requests tab. API usage information is also available to you in the Usage tab.
 
 <!-- Start SDK Installation -->
-## Notice of Alpha Status
-
-This is a Alpha release of the airbyte Terraform Provider.
-
-It is under active development and you may experience breaking changes. Please pin to a version if trialing in production.
 
 ## SDK Installation
 
@@ -92,6 +82,6 @@ Your `<PATH>` may vary depending on how your Go environment variables are config
 ### Contributions
 
 While we value open-source contributions to this SDK, this library is generated programmatically.
-Feel free to open a PR or a Github issue as a proof of concept and we'll do our best to include it in a future release !
+Feel free to open a PR or a Github issue as a proof of concept and we'll do our best to include it in a future release!
 
 ### Provider Created by [Speakeasy](https://docs.speakeasyapi.dev/docs/using-speakeasy/client-sdks)
