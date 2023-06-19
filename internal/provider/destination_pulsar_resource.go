@@ -135,19 +135,25 @@ func (r *DestinationPulsarResource) Schema(ctx context.Context, req resource.Sch
 			"destination_id": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.TrustRead(),
+					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
 			},
 			"destination_type": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.TrustRead(),
+					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
 			},
 			"name": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.SuppressDiff(),
+				},
 				Required: true,
 			},
 			"workspace_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.SuppressDiff(),
+				},
 				Required: true,
 			},
 		},

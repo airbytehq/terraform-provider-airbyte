@@ -52,7 +52,7 @@ func (r *WorkspaceResource) Schema(ctx context.Context, req resource.SchemaReque
 			"data_residency": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.TrustRead(),
+					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
 				Validators: []validator.String{
 					stringvalidator.OneOf(
@@ -63,12 +63,15 @@ func (r *WorkspaceResource) Schema(ctx context.Context, req resource.SchemaReque
 				},
 			},
 			"name": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.SuppressDiff(),
+				},
 				Required: true,
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.TrustRead(),
+					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
 			},
 		},

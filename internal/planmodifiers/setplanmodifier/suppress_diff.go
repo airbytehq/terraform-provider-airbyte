@@ -9,26 +9,26 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 )
 
-// TrustRead returns a plan modifier that propagates a state value into the planned value, when it is Known, and the Plan Value is Unknown
-func TrustRead() planmodifier.Set {
-	return trustRead{}
+// SuppressDiff returns a plan modifier that propagates a state value into the planned value, when it is Known, and the Plan Value is Unknown
+func SuppressDiff() planmodifier.Set {
+	return suppressDiff{}
 }
 
-// trustRead implements the plan modifier.
-type trustRead struct{}
+// suppressDiff implements the plan modifier.
+type suppressDiff struct{}
 
 // Description returns a human-readable description of the plan modifier.
-func (m trustRead) Description(_ context.Context) string {
+func (m suppressDiff) Description(_ context.Context) string {
 	return "Once set, the value of this attribute in state will not change."
 }
 
 // MarkdownDescription returns a markdown description of the plan modifier.
-func (m trustRead) MarkdownDescription(_ context.Context) string {
+func (m suppressDiff) MarkdownDescription(_ context.Context) string {
 	return "Once set, the value of this attribute in state will not change."
 }
 
 // PlanModifySet implements the plan modification logic.
-func (m trustRead) PlanModifySet(ctx context.Context, req planmodifier.SetRequest, resp *planmodifier.SetResponse) {
+func (m suppressDiff) PlanModifySet(ctx context.Context, req planmodifier.SetRequest, resp *planmodifier.SetResponse) {
 	// Do nothing if there is a known planned value.
 	if !req.PlanValue.IsUnknown() {
 		return

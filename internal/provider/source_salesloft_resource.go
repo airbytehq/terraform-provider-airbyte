@@ -175,6 +175,9 @@ func (r *SourceSalesloftResource) Schema(ctx context.Context, req resource.Schem
 				},
 			},
 			"name": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.SuppressDiff(),
+				},
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
@@ -183,16 +186,19 @@ func (r *SourceSalesloftResource) Schema(ctx context.Context, req resource.Schem
 			"source_id": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.TrustRead(),
+					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
 			},
 			"source_type": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.TrustRead(),
+					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
 			},
 			"workspace_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.SuppressDiff(),
+				},
 				Required: true,
 			},
 		},

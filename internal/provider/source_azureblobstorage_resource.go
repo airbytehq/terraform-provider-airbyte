@@ -121,6 +121,9 @@ func (r *SourceAzureBlobStorageResource) Schema(ctx context.Context, req resourc
 				},
 			},
 			"name": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.SuppressDiff(),
+				},
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
@@ -129,16 +132,19 @@ func (r *SourceAzureBlobStorageResource) Schema(ctx context.Context, req resourc
 			"source_id": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.TrustRead(),
+					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
 			},
 			"source_type": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.TrustRead(),
+					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
 			},
 			"workspace_id": schema.StringAttribute{
+				PlanModifiers: []planmodifier.String{
+					speakeasy_stringplanmodifier.SuppressDiff(),
+				},
 				Required: true,
 			},
 		},
