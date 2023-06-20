@@ -65,14 +65,14 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 			"configurations": schema.SingleNestedAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.Object{
-					speakeasy_objectplanmodifier.TrustRead(),
+					speakeasy_objectplanmodifier.SuppressDiff(),
 				},
 				Optional: true,
 				Attributes: map[string]schema.Attribute{
 					"streams": schema.ListNestedAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.List{
-							speakeasy_listplanmodifier.TrustRead(),
+							speakeasy_listplanmodifier.SuppressDiff(),
 						},
 						Optional: true,
 						NestedObject: schema.NestedAttributeObject{
@@ -80,18 +80,21 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 								"cursor_field": schema.ListAttribute{
 									Computed: true,
 									PlanModifiers: []planmodifier.List{
-										speakeasy_listplanmodifier.TrustRead(),
+										speakeasy_listplanmodifier.SuppressDiff(),
 									},
 									Optional:    true,
 									ElementType: types.StringType,
 								},
 								"name": schema.StringAttribute{
+									PlanModifiers: []planmodifier.String{
+										speakeasy_stringplanmodifier.SuppressDiff(),
+									},
 									Required: true,
 								},
 								"primary_key": schema.ListAttribute{
 									Computed: true,
 									PlanModifiers: []planmodifier.List{
-										speakeasy_listplanmodifier.TrustRead(),
+										speakeasy_listplanmodifier.SuppressDiff(),
 									},
 									Optional: true,
 									ElementType: types.ListType{
@@ -101,7 +104,7 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 								"sync_mode": schema.StringAttribute{
 									Computed: true,
 									PlanModifiers: []planmodifier.String{
-										speakeasy_stringplanmodifier.TrustRead(),
+										speakeasy_stringplanmodifier.SuppressDiff(),
 									},
 									Optional: true,
 									Validators: []validator.String{
@@ -122,13 +125,13 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 			"connection_id": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.TrustRead(),
+					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
 			},
 			"data_residency": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.TrustRead(),
+					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
 				Optional: true,
 				Validators: []validator.String{
@@ -142,20 +145,21 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 			"destination_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
+					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
 				Required: true,
 			},
 			"name": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.TrustRead(),
+					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
 				Optional: true,
 			},
 			"namespace_definition": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.TrustRead(),
+					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
 				Optional: true,
 				Validators: []validator.String{
@@ -170,14 +174,14 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 			"namespace_format": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.TrustRead(),
+					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
 				Optional: true,
 			},
 			"non_breaking_schema_updates_behavior": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.TrustRead(),
+					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
 				Optional: true,
 				Validators: []validator.String{
@@ -191,24 +195,27 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 			"prefix": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.TrustRead(),
+					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
 				Optional: true,
 			},
 			"schedule": schema.SingleNestedAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.Object{
-					speakeasy_objectplanmodifier.TrustRead(),
+					speakeasy_objectplanmodifier.SuppressDiff(),
 				},
 				Optional: true,
 				Attributes: map[string]schema.Attribute{
 					"basic_timing": schema.StringAttribute{
 						Computed: true,
 						PlanModifiers: []planmodifier.String{
-							speakeasy_stringplanmodifier.TrustRead(),
+							speakeasy_stringplanmodifier.SuppressDiff(),
 						},
 					},
 					"schedule_type": schema.StringAttribute{
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.SuppressDiff(),
+						},
 						Required: true,
 						Validators: []validator.String{
 							stringvalidator.OneOf(
@@ -223,13 +230,14 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 			"source_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
 					stringplanmodifier.RequiresReplace(),
+					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
 				Required: true,
 			},
 			"status": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.TrustRead(),
+					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
 				Optional: true,
 				Validators: []validator.String{
@@ -243,7 +251,7 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 			"workspace_id": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
-					speakeasy_stringplanmodifier.TrustRead(),
+					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
 			},
 		},

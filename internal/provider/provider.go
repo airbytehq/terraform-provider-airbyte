@@ -35,6 +35,7 @@ func (p *AirbyteProvider) Metadata(ctx context.Context, req provider.MetadataReq
 
 func (p *AirbyteProvider) Schema(ctx context.Context, req provider.SchemaRequest, resp *provider.SchemaResponse) {
 	resp.Schema = schema.Schema{
+		Description: "Programatically control Airbyte Cloud.",
 		Attributes: map[string]schema.Attribute{
 			"bearer_auth": schema.StringAttribute{
 				Optional:  true,

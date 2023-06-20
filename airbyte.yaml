@@ -21171,6 +21171,7 @@ components:
       description: "The values required to configure the destination."
     ConnectionCreateRequest:
       x-speakeasy-entity: Connection
+      x-speakeasy-param-suppress-computed-diff: true
       required:
       - "sourceId"
       - "destinationId"
@@ -21211,6 +21212,7 @@ components:
           $ref: "#/components/schemas/ConnectionStatusEnum"
     ConnectionPatchRequest:
       x-speakeasy-entity: Connection
+      x-speakeasy-param-suppress-computed-diff: true
       type: "object"
       properties:
         name:
@@ -21376,6 +21378,7 @@ components:
         host: "test.snowflake.com"
     ConnectionResponse:
       x-speakeasy-entity: Connection
+      x-speakeasy-param-suppress-computed-diff: true
       title: "Root Type for ConnectionResponse"
       description: "Provides details of a single connection."
       type: "object"
@@ -21602,8 +21605,10 @@ components:
           description: "Name of the workspace"
           type: "string"
       x-speakeasy-entity: Workspace
+      x-speakeasy-param-suppress-computed-diff: true
     WorkspaceUpdateRequest:
       x-speakeasy-entity: Workspace
+      x-speakeasy-param-suppress-computed-diff: true
       required:
       - "name"
       type: "object"
@@ -21613,6 +21618,7 @@ components:
           type: "string"
     WorkspaceResponse:
       x-speakeasy-entity: Workspace
+      x-speakeasy-param-suppress-computed-diff: true
       title: "Root Type for WorkspaceResponse"
       description: "Provides details of a single workspace."
       type: "object"
@@ -56970,6 +56976,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Aircall
+      x-speakeasy-param-suppress-computed-diff: true
     SourceAirtableCreateRequest:
       required:
         - "name"
@@ -56990,6 +56997,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Airtable
+      x-speakeasy-param-suppress-computed-diff: true
     SourceAlloydbCreateRequest:
       required:
         - "name"
@@ -57010,6 +57018,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Alloydb
+      x-speakeasy-param-suppress-computed-diff: true
     SourceAmazonAdsCreateRequest:
       required:
         - "name"
@@ -57030,6 +57039,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_AmazonAds
+      x-speakeasy-param-suppress-computed-diff: true
     SourceAmazonSqsCreateRequest:
       required:
         - "name"
@@ -57050,6 +57060,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_AmazonSqs
+      x-speakeasy-param-suppress-computed-diff: true
     SourceAmplitudeCreateRequest:
       required:
         - "name"
@@ -57070,6 +57081,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Amplitude
+      x-speakeasy-param-suppress-computed-diff: true
     SourceApifyDatasetCreateRequest:
       required:
         - "name"
@@ -57090,6 +57102,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_ApifyDataset
+      x-speakeasy-param-suppress-computed-diff: true
     SourceAsanaCreateRequest:
       required:
         - "name"
@@ -57110,6 +57123,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Asana
+      x-speakeasy-param-suppress-computed-diff: true
     SourceAuth0CreateRequest:
       required:
         - "name"
@@ -57130,6 +57144,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Auth0
+      x-speakeasy-param-suppress-computed-diff: true
     SourceAwsCloudtrailCreateRequest:
       required:
         - "name"
@@ -57150,6 +57165,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_AwsCloudtrail
+      x-speakeasy-param-suppress-computed-diff: true
     SourceAzureBlobStorageCreateRequest:
       required:
         - "name"
@@ -57170,6 +57186,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_AzureBlobStorage
+      x-speakeasy-param-suppress-computed-diff: true
     SourceAzureTableCreateRequest:
       required:
         - "name"
@@ -57190,6 +57207,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_AzureTable
+      x-speakeasy-param-suppress-computed-diff: true
     SourceBambooHrCreateRequest:
       required:
         - "name"
@@ -57210,6 +57228,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_BambooHr
+      x-speakeasy-param-suppress-computed-diff: true
     SourceBigcommerceCreateRequest:
       required:
         - "name"
@@ -57230,6 +57249,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Bigcommerce
+      x-speakeasy-param-suppress-computed-diff: true
     SourceBigqueryCreateRequest:
       required:
         - "name"
@@ -57250,6 +57270,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Bigquery
+      x-speakeasy-param-suppress-computed-diff: true
     SourceBingAdsCreateRequest:
       required:
         - "name"
@@ -57270,6 +57291,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_BingAds
+      x-speakeasy-param-suppress-computed-diff: true
     SourceBraintreeCreateRequest:
       required:
         - "name"
@@ -57290,6 +57312,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Braintree
+      x-speakeasy-param-suppress-computed-diff: true
     SourceBrazeCreateRequest:
       required:
         - "name"
@@ -57310,6 +57333,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Braze
+      x-speakeasy-param-suppress-computed-diff: true
     SourceChargebeeCreateRequest:
       required:
         - "name"
@@ -57330,6 +57354,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Chargebee
+      x-speakeasy-param-suppress-computed-diff: true
     SourceChartmogulCreateRequest:
       required:
         - "name"
@@ -57350,6 +57375,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Chartmogul
+      x-speakeasy-param-suppress-computed-diff: true
     SourceClickhouseCreateRequest:
       required:
         - "name"
@@ -57370,6 +57396,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Clickhouse
+      x-speakeasy-param-suppress-computed-diff: true
     SourceClickupApiCreateRequest:
       required:
         - "name"
@@ -57390,6 +57417,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_ClickupApi
+      x-speakeasy-param-suppress-computed-diff: true
     SourceCloseComCreateRequest:
       required:
         - "name"
@@ -57410,6 +57438,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_CloseCom
+      x-speakeasy-param-suppress-computed-diff: true
     SourceCodaCreateRequest:
       required:
         - "name"
@@ -57430,6 +57459,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Coda
+      x-speakeasy-param-suppress-computed-diff: true
     SourceCoinApiCreateRequest:
       required:
         - "name"
@@ -57450,6 +57480,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_CoinApi
+      x-speakeasy-param-suppress-computed-diff: true
     SourceCoinmarketcapCreateRequest:
       required:
         - "name"
@@ -57470,6 +57501,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Coinmarketcap
+      x-speakeasy-param-suppress-computed-diff: true
     SourceConfigcatCreateRequest:
       required:
         - "name"
@@ -57490,6 +57522,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Configcat
+      x-speakeasy-param-suppress-computed-diff: true
     SourceConfluenceCreateRequest:
       required:
         - "name"
@@ -57510,6 +57543,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Confluence
+      x-speakeasy-param-suppress-computed-diff: true
     SourceDatascopeCreateRequest:
       required:
         - "name"
@@ -57530,6 +57564,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Datascope
+      x-speakeasy-param-suppress-computed-diff: true
     SourceDelightedCreateRequest:
       required:
         - "name"
@@ -57550,6 +57585,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Delighted
+      x-speakeasy-param-suppress-computed-diff: true
     SourceDixaCreateRequest:
       required:
         - "name"
@@ -57570,6 +57606,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Dixa
+      x-speakeasy-param-suppress-computed-diff: true
     SourceDockerhubCreateRequest:
       required:
         - "name"
@@ -57590,6 +57627,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Dockerhub
+      x-speakeasy-param-suppress-computed-diff: true
     SourceDremioCreateRequest:
       required:
         - "name"
@@ -57610,6 +57648,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Dremio
+      x-speakeasy-param-suppress-computed-diff: true
     SourceDynamodbCreateRequest:
       required:
         - "name"
@@ -57630,6 +57669,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Dynamodb
+      x-speakeasy-param-suppress-computed-diff: true
     SourceE2eTestCloudCreateRequest:
       required:
         - "name"
@@ -57650,6 +57690,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_E2eTestCloud
+      x-speakeasy-param-suppress-computed-diff: true
     SourceEmailoctopusCreateRequest:
       required:
         - "name"
@@ -57670,6 +57711,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Emailoctopus
+      x-speakeasy-param-suppress-computed-diff: true
     SourceExchangeRatesCreateRequest:
       required:
         - "name"
@@ -57690,6 +57732,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_ExchangeRates
+      x-speakeasy-param-suppress-computed-diff: true
     SourceFacebookMarketingCreateRequest:
       required:
         - "name"
@@ -57710,6 +57753,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_FacebookMarketing
+      x-speakeasy-param-suppress-computed-diff: true
     SourceFacebookPagesCreateRequest:
       required:
         - "name"
@@ -57730,6 +57774,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_FacebookPages
+      x-speakeasy-param-suppress-computed-diff: true
     SourceFakerCreateRequest:
       required:
         - "name"
@@ -57750,6 +57795,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Faker
+      x-speakeasy-param-suppress-computed-diff: true
     SourceFaunaCreateRequest:
       required:
         - "name"
@@ -57770,6 +57816,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Fauna
+      x-speakeasy-param-suppress-computed-diff: true
     SourceFileSecureCreateRequest:
       required:
         - "name"
@@ -57790,6 +57837,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_FileSecure
+      x-speakeasy-param-suppress-computed-diff: true
     SourceFireboltCreateRequest:
       required:
         - "name"
@@ -57810,6 +57858,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Firebolt
+      x-speakeasy-param-suppress-computed-diff: true
     SourceFreshcallerCreateRequest:
       required:
         - "name"
@@ -57830,6 +57879,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Freshcaller
+      x-speakeasy-param-suppress-computed-diff: true
     SourceFreshdeskCreateRequest:
       required:
         - "name"
@@ -57850,6 +57900,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Freshdesk
+      x-speakeasy-param-suppress-computed-diff: true
     SourceFreshsalesCreateRequest:
       required:
         - "name"
@@ -57870,6 +57921,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Freshsales
+      x-speakeasy-param-suppress-computed-diff: true
     SourceFreshserviceCreateRequest:
       required:
         - "name"
@@ -57890,6 +57942,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Freshservice
+      x-speakeasy-param-suppress-computed-diff: true
     SourceGcsCreateRequest:
       required:
         - "name"
@@ -57910,6 +57963,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Gcs
+      x-speakeasy-param-suppress-computed-diff: true
     SourceGetlagoCreateRequest:
       required:
         - "name"
@@ -57930,6 +57984,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Getlago
+      x-speakeasy-param-suppress-computed-diff: true
     SourceGithubCreateRequest:
       required:
         - "name"
@@ -57950,6 +58005,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Github
+      x-speakeasy-param-suppress-computed-diff: true
     SourceGitlabCreateRequest:
       required:
         - "name"
@@ -57970,6 +58026,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Gitlab
+      x-speakeasy-param-suppress-computed-diff: true
     SourceGlassfrogCreateRequest:
       required:
         - "name"
@@ -57990,6 +58047,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Glassfrog
+      x-speakeasy-param-suppress-computed-diff: true
     SourceGnewsCreateRequest:
       required:
         - "name"
@@ -58010,6 +58068,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Gnews
+      x-speakeasy-param-suppress-computed-diff: true
     SourceGoogleAdsCreateRequest:
       required:
         - "name"
@@ -58030,6 +58089,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_GoogleAds
+      x-speakeasy-param-suppress-computed-diff: true
     SourceGoogleAnalyticsDataApiCreateRequest:
       required:
         - "name"
@@ -58050,6 +58110,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_GoogleAnalyticsDataApi
+      x-speakeasy-param-suppress-computed-diff: true
     SourceGoogleAnalyticsV4CreateRequest:
       required:
         - "name"
@@ -58070,6 +58131,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_GoogleAnalyticsV4
+      x-speakeasy-param-suppress-computed-diff: true
     SourceGoogleDirectoryCreateRequest:
       required:
         - "name"
@@ -58090,6 +58152,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_GoogleDirectory
+      x-speakeasy-param-suppress-computed-diff: true
     SourceGooglePagespeedInsightsCreateRequest:
       required:
         - "name"
@@ -58110,6 +58173,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_GooglePagespeedInsights
+      x-speakeasy-param-suppress-computed-diff: true
     SourceGoogleSearchConsoleCreateRequest:
       required:
         - "name"
@@ -58130,6 +58194,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_GoogleSearchConsole
+      x-speakeasy-param-suppress-computed-diff: true
     SourceGoogleSheetsCreateRequest:
       required:
         - "name"
@@ -58150,6 +58215,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_GoogleSheets
+      x-speakeasy-param-suppress-computed-diff: true
     SourceGoogleWebfontsCreateRequest:
       required:
         - "name"
@@ -58170,6 +58236,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_GoogleWebfonts
+      x-speakeasy-param-suppress-computed-diff: true
     SourceGoogleWorkspaceAdminReportsCreateRequest:
       required:
         - "name"
@@ -58190,6 +58257,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_GoogleWorkspaceAdminReports
+      x-speakeasy-param-suppress-computed-diff: true
     SourceGreenhouseCreateRequest:
       required:
         - "name"
@@ -58210,6 +58278,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Greenhouse
+      x-speakeasy-param-suppress-computed-diff: true
     SourceGridlyCreateRequest:
       required:
         - "name"
@@ -58230,6 +58299,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Gridly
+      x-speakeasy-param-suppress-computed-diff: true
     SourceHarvestCreateRequest:
       required:
         - "name"
@@ -58250,6 +58320,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Harvest
+      x-speakeasy-param-suppress-computed-diff: true
     SourceHubplannerCreateRequest:
       required:
         - "name"
@@ -58270,6 +58341,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Hubplanner
+      x-speakeasy-param-suppress-computed-diff: true
     SourceHubspotCreateRequest:
       required:
         - "name"
@@ -58290,6 +58362,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Hubspot
+      x-speakeasy-param-suppress-computed-diff: true
     SourceInsightlyCreateRequest:
       required:
         - "name"
@@ -58310,6 +58383,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Insightly
+      x-speakeasy-param-suppress-computed-diff: true
     SourceInstagramCreateRequest:
       required:
         - "name"
@@ -58330,6 +58404,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Instagram
+      x-speakeasy-param-suppress-computed-diff: true
     SourceInstatusCreateRequest:
       required:
         - "name"
@@ -58350,6 +58425,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Instatus
+      x-speakeasy-param-suppress-computed-diff: true
     SourceIntercomCreateRequest:
       required:
         - "name"
@@ -58370,6 +58446,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Intercom
+      x-speakeasy-param-suppress-computed-diff: true
     SourceIp2whoisCreateRequest:
       required:
         - "name"
@@ -58390,6 +58467,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Ip2whois
+      x-speakeasy-param-suppress-computed-diff: true
     SourceIterableCreateRequest:
       required:
         - "name"
@@ -58410,6 +58488,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Iterable
+      x-speakeasy-param-suppress-computed-diff: true
     SourceJiraCreateRequest:
       required:
         - "name"
@@ -58430,6 +58509,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Jira
+      x-speakeasy-param-suppress-computed-diff: true
     SourceK6CloudCreateRequest:
       required:
         - "name"
@@ -58450,6 +58530,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_K6Cloud
+      x-speakeasy-param-suppress-computed-diff: true
     SourceKlarnaCreateRequest:
       required:
         - "name"
@@ -58470,6 +58551,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Klarna
+      x-speakeasy-param-suppress-computed-diff: true
     SourceKlaviyoCreateRequest:
       required:
         - "name"
@@ -58490,6 +58572,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Klaviyo
+      x-speakeasy-param-suppress-computed-diff: true
     SourceKustomerSingerCreateRequest:
       required:
         - "name"
@@ -58510,6 +58593,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_KustomerSinger
+      x-speakeasy-param-suppress-computed-diff: true
     SourceLaunchdarklyCreateRequest:
       required:
         - "name"
@@ -58530,6 +58614,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Launchdarkly
+      x-speakeasy-param-suppress-computed-diff: true
     SourceLemlistCreateRequest:
       required:
         - "name"
@@ -58550,6 +58635,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Lemlist
+      x-speakeasy-param-suppress-computed-diff: true
     SourceLinkedinAdsCreateRequest:
       required:
         - "name"
@@ -58570,6 +58656,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_LinkedinAds
+      x-speakeasy-param-suppress-computed-diff: true
     SourceLinkedinPagesCreateRequest:
       required:
         - "name"
@@ -58590,6 +58677,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_LinkedinPages
+      x-speakeasy-param-suppress-computed-diff: true
     SourceLinnworksCreateRequest:
       required:
         - "name"
@@ -58610,6 +58698,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Linnworks
+      x-speakeasy-param-suppress-computed-diff: true
     SourceLokaliseCreateRequest:
       required:
         - "name"
@@ -58630,6 +58719,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Lokalise
+      x-speakeasy-param-suppress-computed-diff: true
     SourceMailchimpCreateRequest:
       required:
         - "name"
@@ -58650,6 +58740,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Mailchimp
+      x-speakeasy-param-suppress-computed-diff: true
     SourceMailgunCreateRequest:
       required:
         - "name"
@@ -58670,6 +58761,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Mailgun
+      x-speakeasy-param-suppress-computed-diff: true
     SourceMailjetSmsCreateRequest:
       required:
         - "name"
@@ -58690,6 +58782,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_MailjetSms
+      x-speakeasy-param-suppress-computed-diff: true
     SourceMarketoCreateRequest:
       required:
         - "name"
@@ -58710,6 +58803,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Marketo
+      x-speakeasy-param-suppress-computed-diff: true
     SourceMetabaseCreateRequest:
       required:
         - "name"
@@ -58730,6 +58824,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Metabase
+      x-speakeasy-param-suppress-computed-diff: true
     SourceMicrosoftTeamsCreateRequest:
       required:
         - "name"
@@ -58750,6 +58845,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_MicrosoftTeams
+      x-speakeasy-param-suppress-computed-diff: true
     SourceMixpanelCreateRequest:
       required:
         - "name"
@@ -58770,6 +58866,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Mixpanel
+      x-speakeasy-param-suppress-computed-diff: true
     SourceMondayCreateRequest:
       required:
         - "name"
@@ -58790,6 +58887,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Monday
+      x-speakeasy-param-suppress-computed-diff: true
     SourceMongodbCreateRequest:
       required:
         - "name"
@@ -58810,6 +58908,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Mongodb
+      x-speakeasy-param-suppress-computed-diff: true
     SourceMssqlCreateRequest:
       required:
         - "name"
@@ -58830,6 +58929,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Mssql
+      x-speakeasy-param-suppress-computed-diff: true
     SourceMyHoursCreateRequest:
       required:
         - "name"
@@ -58850,6 +58950,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_MyHours
+      x-speakeasy-param-suppress-computed-diff: true
     SourceMysqlCreateRequest:
       required:
         - "name"
@@ -58870,6 +58971,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Mysql
+      x-speakeasy-param-suppress-computed-diff: true
     SourceNetsuiteCreateRequest:
       required:
         - "name"
@@ -58890,6 +58992,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Netsuite
+      x-speakeasy-param-suppress-computed-diff: true
     SourceNotionCreateRequest:
       required:
         - "name"
@@ -58910,6 +59013,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Notion
+      x-speakeasy-param-suppress-computed-diff: true
     SourceNytimesCreateRequest:
       required:
         - "name"
@@ -58930,6 +59034,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Nytimes
+      x-speakeasy-param-suppress-computed-diff: true
     SourceOktaCreateRequest:
       required:
         - "name"
@@ -58950,6 +59055,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Okta
+      x-speakeasy-param-suppress-computed-diff: true
     SourceOmnisendCreateRequest:
       required:
         - "name"
@@ -58970,6 +59076,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Omnisend
+      x-speakeasy-param-suppress-computed-diff: true
     SourceOnesignalCreateRequest:
       required:
         - "name"
@@ -58990,6 +59097,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Onesignal
+      x-speakeasy-param-suppress-computed-diff: true
     SourceOpenweatherCreateRequest:
       required:
         - "name"
@@ -59010,6 +59118,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Openweather
+      x-speakeasy-param-suppress-computed-diff: true
     SourceOracleCreateRequest:
       required:
         - "name"
@@ -59030,6 +59139,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Oracle
+      x-speakeasy-param-suppress-computed-diff: true
     SourceOrbCreateRequest:
       required:
         - "name"
@@ -59050,6 +59160,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Orb
+      x-speakeasy-param-suppress-computed-diff: true
     SourceOrbitCreateRequest:
       required:
         - "name"
@@ -59070,6 +59181,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Orbit
+      x-speakeasy-param-suppress-computed-diff: true
     SourceOutreachCreateRequest:
       required:
         - "name"
@@ -59090,6 +59202,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Outreach
+      x-speakeasy-param-suppress-computed-diff: true
     SourcePaypalTransactionCreateRequest:
       required:
         - "name"
@@ -59110,6 +59223,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_PaypalTransaction
+      x-speakeasy-param-suppress-computed-diff: true
     SourcePaystackCreateRequest:
       required:
         - "name"
@@ -59130,6 +59244,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Paystack
+      x-speakeasy-param-suppress-computed-diff: true
     SourcePendoCreateRequest:
       required:
         - "name"
@@ -59150,6 +59265,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Pendo
+      x-speakeasy-param-suppress-computed-diff: true
     SourcePersistiqCreateRequest:
       required:
         - "name"
@@ -59170,6 +59286,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Persistiq
+      x-speakeasy-param-suppress-computed-diff: true
     SourcePexelsApiCreateRequest:
       required:
         - "name"
@@ -59190,6 +59307,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_PexelsApi
+      x-speakeasy-param-suppress-computed-diff: true
     SourcePinterestCreateRequest:
       required:
         - "name"
@@ -59210,6 +59328,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Pinterest
+      x-speakeasy-param-suppress-computed-diff: true
     SourcePipedriveCreateRequest:
       required:
         - "name"
@@ -59230,6 +59349,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Pipedrive
+      x-speakeasy-param-suppress-computed-diff: true
     SourcePocketCreateRequest:
       required:
         - "name"
@@ -59250,6 +59370,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Pocket
+      x-speakeasy-param-suppress-computed-diff: true
     SourcePokeapiCreateRequest:
       required:
         - "name"
@@ -59270,6 +59391,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Pokeapi
+      x-speakeasy-param-suppress-computed-diff: true
     SourcePolygonStockApiCreateRequest:
       required:
         - "name"
@@ -59290,6 +59412,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_PolygonStockApi
+      x-speakeasy-param-suppress-computed-diff: true
     SourcePostgresCreateRequest:
       required:
         - "name"
@@ -59310,6 +59433,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Postgres
+      x-speakeasy-param-suppress-computed-diff: true
     SourcePosthogCreateRequest:
       required:
         - "name"
@@ -59330,6 +59454,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Posthog
+      x-speakeasy-param-suppress-computed-diff: true
     SourcePostmarkappCreateRequest:
       required:
         - "name"
@@ -59350,6 +59475,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Postmarkapp
+      x-speakeasy-param-suppress-computed-diff: true
     SourcePrestashopCreateRequest:
       required:
         - "name"
@@ -59370,6 +59496,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Prestashop
+      x-speakeasy-param-suppress-computed-diff: true
     SourcePublicApisCreateRequest:
       required:
         - "name"
@@ -59390,6 +59517,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_PublicApis
+      x-speakeasy-param-suppress-computed-diff: true
     SourcePunkApiCreateRequest:
       required:
         - "name"
@@ -59410,6 +59538,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_PunkApi
+      x-speakeasy-param-suppress-computed-diff: true
     SourcePypiCreateRequest:
       required:
         - "name"
@@ -59430,6 +59559,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Pypi
+      x-speakeasy-param-suppress-computed-diff: true
     SourceQualarooCreateRequest:
       required:
         - "name"
@@ -59450,6 +59580,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Qualaroo
+      x-speakeasy-param-suppress-computed-diff: true
     SourceQuickbooksCreateRequest:
       required:
         - "name"
@@ -59470,6 +59601,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Quickbooks
+      x-speakeasy-param-suppress-computed-diff: true
     SourceRailzCreateRequest:
       required:
         - "name"
@@ -59490,6 +59622,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Railz
+      x-speakeasy-param-suppress-computed-diff: true
     SourceRechargeCreateRequest:
       required:
         - "name"
@@ -59510,6 +59643,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Recharge
+      x-speakeasy-param-suppress-computed-diff: true
     SourceRecreationCreateRequest:
       required:
         - "name"
@@ -59530,6 +59664,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Recreation
+      x-speakeasy-param-suppress-computed-diff: true
     SourceRecruiteeCreateRequest:
       required:
         - "name"
@@ -59550,6 +59685,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Recruitee
+      x-speakeasy-param-suppress-computed-diff: true
     SourceRecurlyCreateRequest:
       required:
         - "name"
@@ -59570,6 +59706,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Recurly
+      x-speakeasy-param-suppress-computed-diff: true
     SourceRedshiftCreateRequest:
       required:
         - "name"
@@ -59590,6 +59727,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Redshift
+      x-speakeasy-param-suppress-computed-diff: true
     SourceRetentlyCreateRequest:
       required:
         - "name"
@@ -59610,6 +59748,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Retently
+      x-speakeasy-param-suppress-computed-diff: true
     SourceRkiCovidCreateRequest:
       required:
         - "name"
@@ -59630,6 +59769,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_RkiCovid
+      x-speakeasy-param-suppress-computed-diff: true
     SourceRssCreateRequest:
       required:
         - "name"
@@ -59650,6 +59790,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Rss
+      x-speakeasy-param-suppress-computed-diff: true
     SourceS3CreateRequest:
       required:
         - "name"
@@ -59670,6 +59811,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_S3
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSalesforceCreateRequest:
       required:
         - "name"
@@ -59690,6 +59832,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Salesforce
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSalesforceSingerCreateRequest:
       required:
         - "name"
@@ -59710,6 +59853,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_SalesforceSinger
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSalesloftCreateRequest:
       required:
         - "name"
@@ -59730,6 +59874,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Salesloft
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSapFieldglassCreateRequest:
       required:
         - "name"
@@ -59750,6 +59895,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_SapFieldglass
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSecodaCreateRequest:
       required:
         - "name"
@@ -59770,6 +59916,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Secoda
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSendgridCreateRequest:
       required:
         - "name"
@@ -59790,6 +59937,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Sendgrid
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSendinblueCreateRequest:
       required:
         - "name"
@@ -59810,6 +59958,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Sendinblue
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSenseforceCreateRequest:
       required:
         - "name"
@@ -59830,6 +59979,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Senseforce
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSentryCreateRequest:
       required:
         - "name"
@@ -59850,6 +60000,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Sentry
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSftpCreateRequest:
       required:
         - "name"
@@ -59870,6 +60021,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Sftp
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSftpBulkCreateRequest:
       required:
         - "name"
@@ -59890,6 +60042,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_SftpBulk
+      x-speakeasy-param-suppress-computed-diff: true
     SourceShopifyCreateRequest:
       required:
         - "name"
@@ -59910,6 +60063,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Shopify
+      x-speakeasy-param-suppress-computed-diff: true
     SourceShortioCreateRequest:
       required:
         - "name"
@@ -59930,6 +60084,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Shortio
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSlackCreateRequest:
       required:
         - "name"
@@ -59950,6 +60105,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Slack
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSmailyCreateRequest:
       required:
         - "name"
@@ -59970,6 +60126,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Smaily
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSmartengageCreateRequest:
       required:
         - "name"
@@ -59990,6 +60147,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Smartengage
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSmartsheetsCreateRequest:
       required:
         - "name"
@@ -60010,6 +60168,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Smartsheets
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSnapchatMarketingCreateRequest:
       required:
         - "name"
@@ -60030,6 +60189,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_SnapchatMarketing
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSnowflakeCreateRequest:
       required:
         - "name"
@@ -60050,6 +60210,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Snowflake
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSonarCloudCreateRequest:
       required:
         - "name"
@@ -60070,6 +60231,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_SonarCloud
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSpacexApiCreateRequest:
       required:
         - "name"
@@ -60090,6 +60252,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_SpacexApi
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSquareCreateRequest:
       required:
         - "name"
@@ -60110,6 +60273,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Square
+      x-speakeasy-param-suppress-computed-diff: true
     SourceStravaCreateRequest:
       required:
         - "name"
@@ -60130,6 +60294,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Strava
+      x-speakeasy-param-suppress-computed-diff: true
     SourceStripeCreateRequest:
       required:
         - "name"
@@ -60150,6 +60315,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Stripe
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSurveySparrowCreateRequest:
       required:
         - "name"
@@ -60170,6 +60336,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_SurveySparrow
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSurveymonkeyCreateRequest:
       required:
         - "name"
@@ -60190,6 +60357,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Surveymonkey
+      x-speakeasy-param-suppress-computed-diff: true
     SourceTempoCreateRequest:
       required:
         - "name"
@@ -60210,6 +60378,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Tempo
+      x-speakeasy-param-suppress-computed-diff: true
     SourceTheGuardianApiCreateRequest:
       required:
         - "name"
@@ -60230,6 +60399,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_TheGuardianApi
+      x-speakeasy-param-suppress-computed-diff: true
     SourceTiktokMarketingCreateRequest:
       required:
         - "name"
@@ -60250,6 +60420,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_TiktokMarketing
+      x-speakeasy-param-suppress-computed-diff: true
     SourceTodoistCreateRequest:
       required:
         - "name"
@@ -60270,6 +60441,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Todoist
+      x-speakeasy-param-suppress-computed-diff: true
     SourceTrelloCreateRequest:
       required:
         - "name"
@@ -60290,6 +60462,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Trello
+      x-speakeasy-param-suppress-computed-diff: true
     SourceTrustpilotCreateRequest:
       required:
         - "name"
@@ -60310,6 +60483,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Trustpilot
+      x-speakeasy-param-suppress-computed-diff: true
     SourceTvmazeScheduleCreateRequest:
       required:
         - "name"
@@ -60330,6 +60504,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_TvmazeSchedule
+      x-speakeasy-param-suppress-computed-diff: true
     SourceTwilioCreateRequest:
       required:
         - "name"
@@ -60350,6 +60525,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Twilio
+      x-speakeasy-param-suppress-computed-diff: true
     SourceTwilioTaskrouterCreateRequest:
       required:
         - "name"
@@ -60370,6 +60546,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_TwilioTaskrouter
+      x-speakeasy-param-suppress-computed-diff: true
     SourceTwitterCreateRequest:
       required:
         - "name"
@@ -60390,6 +60567,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Twitter
+      x-speakeasy-param-suppress-computed-diff: true
     SourceTypeformCreateRequest:
       required:
         - "name"
@@ -60410,6 +60588,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Typeform
+      x-speakeasy-param-suppress-computed-diff: true
     SourceUsCensusCreateRequest:
       required:
         - "name"
@@ -60430,6 +60609,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_UsCensus
+      x-speakeasy-param-suppress-computed-diff: true
     SourceVantageCreateRequest:
       required:
         - "name"
@@ -60450,6 +60630,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Vantage
+      x-speakeasy-param-suppress-computed-diff: true
     SourceWebflowCreateRequest:
       required:
         - "name"
@@ -60470,6 +60651,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Webflow
+      x-speakeasy-param-suppress-computed-diff: true
     SourceWhiskyHunterCreateRequest:
       required:
         - "name"
@@ -60490,6 +60672,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_WhiskyHunter
+      x-speakeasy-param-suppress-computed-diff: true
     SourceWikipediaPageviewsCreateRequest:
       required:
         - "name"
@@ -60510,6 +60693,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_WikipediaPageviews
+      x-speakeasy-param-suppress-computed-diff: true
     SourceWoocommerceCreateRequest:
       required:
         - "name"
@@ -60530,6 +60714,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Woocommerce
+      x-speakeasy-param-suppress-computed-diff: true
     SourceXeroCreateRequest:
       required:
         - "name"
@@ -60550,6 +60735,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Xero
+      x-speakeasy-param-suppress-computed-diff: true
     SourceXkcdCreateRequest:
       required:
         - "name"
@@ -60570,6 +60756,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Xkcd
+      x-speakeasy-param-suppress-computed-diff: true
     SourceYandexMetricaCreateRequest:
       required:
         - "name"
@@ -60590,6 +60777,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_YandexMetrica
+      x-speakeasy-param-suppress-computed-diff: true
     SourceYotpoCreateRequest:
       required:
         - "name"
@@ -60610,6 +60798,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Yotpo
+      x-speakeasy-param-suppress-computed-diff: true
     SourceYouniumCreateRequest:
       required:
         - "name"
@@ -60630,6 +60819,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Younium
+      x-speakeasy-param-suppress-computed-diff: true
     SourceYoutubeAnalyticsCreateRequest:
       required:
         - "name"
@@ -60650,6 +60840,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_YoutubeAnalytics
+      x-speakeasy-param-suppress-computed-diff: true
     SourceZendeskChatCreateRequest:
       required:
         - "name"
@@ -60670,6 +60861,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_ZendeskChat
+      x-speakeasy-param-suppress-computed-diff: true
     SourceZendeskSunshineCreateRequest:
       required:
         - "name"
@@ -60690,6 +60882,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_ZendeskSunshine
+      x-speakeasy-param-suppress-computed-diff: true
     SourceZendeskSupportCreateRequest:
       required:
         - "name"
@@ -60710,6 +60903,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_ZendeskSupport
+      x-speakeasy-param-suppress-computed-diff: true
     SourceZendeskTalkCreateRequest:
       required:
         - "name"
@@ -60730,6 +60924,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_ZendeskTalk
+      x-speakeasy-param-suppress-computed-diff: true
     SourceZenloopCreateRequest:
       required:
         - "name"
@@ -60750,6 +60945,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Zenloop
+      x-speakeasy-param-suppress-computed-diff: true
     SourceZohoCrmCreateRequest:
       required:
         - "name"
@@ -60770,6 +60966,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_ZohoCrm
+      x-speakeasy-param-suppress-computed-diff: true
     SourceZoomCreateRequest:
       required:
         - "name"
@@ -60790,6 +60987,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Zoom
+      x-speakeasy-param-suppress-computed-diff: true
     SourceZuoraCreateRequest:
       required:
         - "name"
@@ -60810,6 +61008,7 @@ components:
             \ flow."
           type: "string"
       x-speakeasy-entity: Source_Zuora
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationAmazonSqsCreateRequest:
       required:
         - "name"
@@ -60825,6 +61024,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-amazon-sqs"
       x-speakeasy-entity: Destination_AmazonSqs
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationAwsDatalakeCreateRequest:
       required:
         - "name"
@@ -60840,6 +61040,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-aws-datalake"
       x-speakeasy-entity: Destination_AwsDatalake
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationAzureBlobStorageCreateRequest:
       required:
         - "name"
@@ -60855,6 +61056,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-azure-blob-storage"
       x-speakeasy-entity: Destination_AzureBlobStorage
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationBigqueryCreateRequest:
       required:
         - "name"
@@ -60870,6 +61072,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-bigquery"
       x-speakeasy-entity: Destination_Bigquery
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationBigqueryDenormalizedCreateRequest:
       required:
         - "name"
@@ -60885,6 +61088,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-bigquery-denormalized"
       x-speakeasy-entity: Destination_BigqueryDenormalized
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationCassandraCreateRequest:
       required:
         - "name"
@@ -60900,6 +61104,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-cassandra"
       x-speakeasy-entity: Destination_Cassandra
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationClickhouseCreateRequest:
       required:
         - "name"
@@ -60915,6 +61120,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-clickhouse"
       x-speakeasy-entity: Destination_Clickhouse
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationConvexCreateRequest:
       required:
         - "name"
@@ -60930,6 +61136,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-convex"
       x-speakeasy-entity: Destination_Convex
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationCumulioCreateRequest:
       required:
         - "name"
@@ -60945,6 +61152,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-cumulio"
       x-speakeasy-entity: Destination_Cumulio
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationDatabendCreateRequest:
       required:
         - "name"
@@ -60960,6 +61168,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-databend"
       x-speakeasy-entity: Destination_Databend
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationDatabricksCreateRequest:
       required:
         - "name"
@@ -60975,6 +61184,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-databricks"
       x-speakeasy-entity: Destination_Databricks
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationDevNullCreateRequest:
       required:
         - "name"
@@ -60990,6 +61200,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-dev-null"
       x-speakeasy-entity: Destination_DevNull
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationDynamodbCreateRequest:
       required:
         - "name"
@@ -61005,6 +61216,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-dynamodb"
       x-speakeasy-entity: Destination_Dynamodb
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationElasticsearchCreateRequest:
       required:
         - "name"
@@ -61020,6 +61232,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-elasticsearch"
       x-speakeasy-entity: Destination_Elasticsearch
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationFireboltCreateRequest:
       required:
         - "name"
@@ -61035,6 +61248,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-firebolt"
       x-speakeasy-entity: Destination_Firebolt
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationFirestoreCreateRequest:
       required:
         - "name"
@@ -61050,6 +61264,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-firestore"
       x-speakeasy-entity: Destination_Firestore
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationGcsCreateRequest:
       required:
         - "name"
@@ -61065,6 +61280,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-gcs"
       x-speakeasy-entity: Destination_Gcs
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationGoogleSheetsCreateRequest:
       required:
         - "name"
@@ -61080,6 +61296,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-google-sheets"
       x-speakeasy-entity: Destination_GoogleSheets
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationKeenCreateRequest:
       required:
         - "name"
@@ -61095,6 +61312,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-keen"
       x-speakeasy-entity: Destination_Keen
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationKinesisCreateRequest:
       required:
         - "name"
@@ -61110,6 +61328,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-kinesis"
       x-speakeasy-entity: Destination_Kinesis
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationMariadbColumnstoreCreateRequest:
       required:
         - "name"
@@ -61125,6 +61344,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-mariadb-columnstore"
       x-speakeasy-entity: Destination_MariadbColumnstore
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationMeilisearchCreateRequest:
       required:
         - "name"
@@ -61140,6 +61360,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-meilisearch"
       x-speakeasy-entity: Destination_Meilisearch
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationMongodbCreateRequest:
       required:
         - "name"
@@ -61155,6 +61376,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-mongodb"
       x-speakeasy-entity: Destination_Mongodb
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationMssqlCreateRequest:
       required:
         - "name"
@@ -61170,6 +61392,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-mssql"
       x-speakeasy-entity: Destination_Mssql
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationMysqlCreateRequest:
       required:
         - "name"
@@ -61185,6 +61408,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-mysql"
       x-speakeasy-entity: Destination_Mysql
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationOracleCreateRequest:
       required:
         - "name"
@@ -61200,6 +61424,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-oracle"
       x-speakeasy-entity: Destination_Oracle
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationPostgresCreateRequest:
       required:
         - "name"
@@ -61215,6 +61440,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-postgres"
       x-speakeasy-entity: Destination_Postgres
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationPubsubCreateRequest:
       required:
         - "name"
@@ -61230,6 +61456,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-pubsub"
       x-speakeasy-entity: Destination_Pubsub
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationPulsarCreateRequest:
       required:
         - "name"
@@ -61245,6 +61472,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-pulsar"
       x-speakeasy-entity: Destination_Pulsar
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationRabbitmqCreateRequest:
       required:
         - "name"
@@ -61260,6 +61488,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-rabbitmq"
       x-speakeasy-entity: Destination_Rabbitmq
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationRedisCreateRequest:
       required:
         - "name"
@@ -61275,6 +61504,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-redis"
       x-speakeasy-entity: Destination_Redis
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationRedshiftCreateRequest:
       required:
         - "name"
@@ -61290,6 +61520,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-redshift"
       x-speakeasy-entity: Destination_Redshift
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationRocksetCreateRequest:
       required:
         - "name"
@@ -61305,6 +61536,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-rockset"
       x-speakeasy-entity: Destination_Rockset
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationS3CreateRequest:
       required:
         - "name"
@@ -61320,6 +61552,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-s3"
       x-speakeasy-entity: Destination_S3
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationS3GlueCreateRequest:
       required:
         - "name"
@@ -61335,6 +61568,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-s3-glue"
       x-speakeasy-entity: Destination_S3Glue
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationScyllaCreateRequest:
       required:
         - "name"
@@ -61350,6 +61584,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-scylla"
       x-speakeasy-entity: Destination_Scylla
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationSftpJsonCreateRequest:
       required:
         - "name"
@@ -61365,6 +61600,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-sftp-json"
       x-speakeasy-entity: Destination_SftpJson
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationSnowflakeCreateRequest:
       required:
         - "name"
@@ -61380,6 +61616,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-snowflake"
       x-speakeasy-entity: Destination_Snowflake
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationTypesenseCreateRequest:
       required:
         - "name"
@@ -61395,6 +61632,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-typesense"
       x-speakeasy-entity: Destination_Typesense
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationVerticaCreateRequest:
       required:
         - "name"
@@ -61410,6 +61648,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-vertica"
       x-speakeasy-entity: Destination_Vertica
+      x-speakeasy-param-suppress-computed-diff: true
     SourceAircallPutRequest:
       required:
         - "name"
@@ -61425,6 +61664,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-aircall-update"
       x-speakeasy-entity: Source_Aircall
+      x-speakeasy-param-suppress-computed-diff: true
     SourceAirtablePutRequest:
       required:
         - "name"
@@ -61440,6 +61680,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-airtable-update"
       x-speakeasy-entity: Source_Airtable
+      x-speakeasy-param-suppress-computed-diff: true
     SourceAlloydbPutRequest:
       required:
         - "name"
@@ -61455,6 +61696,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-alloydb-update"
       x-speakeasy-entity: Source_Alloydb
+      x-speakeasy-param-suppress-computed-diff: true
     SourceAmazonAdsPutRequest:
       required:
         - "name"
@@ -61470,6 +61712,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-amazon-ads-update"
       x-speakeasy-entity: Source_AmazonAds
+      x-speakeasy-param-suppress-computed-diff: true
     SourceAmazonSqsPutRequest:
       required:
         - "name"
@@ -61485,6 +61728,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-amazon-sqs-update"
       x-speakeasy-entity: Source_AmazonSqs
+      x-speakeasy-param-suppress-computed-diff: true
     SourceAmplitudePutRequest:
       required:
         - "name"
@@ -61500,6 +61744,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-amplitude-update"
       x-speakeasy-entity: Source_Amplitude
+      x-speakeasy-param-suppress-computed-diff: true
     SourceApifyDatasetPutRequest:
       required:
         - "name"
@@ -61515,6 +61760,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-apify-dataset-update"
       x-speakeasy-entity: Source_ApifyDataset
+      x-speakeasy-param-suppress-computed-diff: true
     SourceAsanaPutRequest:
       required:
         - "name"
@@ -61530,6 +61776,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-asana-update"
       x-speakeasy-entity: Source_Asana
+      x-speakeasy-param-suppress-computed-diff: true
     SourceAuth0PutRequest:
       required:
         - "name"
@@ -61545,6 +61792,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-auth0-update"
       x-speakeasy-entity: Source_Auth0
+      x-speakeasy-param-suppress-computed-diff: true
     SourceAwsCloudtrailPutRequest:
       required:
         - "name"
@@ -61560,6 +61808,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-aws-cloudtrail-update"
       x-speakeasy-entity: Source_AwsCloudtrail
+      x-speakeasy-param-suppress-computed-diff: true
     SourceAzureBlobStoragePutRequest:
       required:
         - "name"
@@ -61575,6 +61824,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-azure-blob-storage-update"
       x-speakeasy-entity: Source_AzureBlobStorage
+      x-speakeasy-param-suppress-computed-diff: true
     SourceAzureTablePutRequest:
       required:
         - "name"
@@ -61590,6 +61840,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-azure-table-update"
       x-speakeasy-entity: Source_AzureTable
+      x-speakeasy-param-suppress-computed-diff: true
     SourceBambooHrPutRequest:
       required:
         - "name"
@@ -61605,6 +61856,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-bamboo-hr-update"
       x-speakeasy-entity: Source_BambooHr
+      x-speakeasy-param-suppress-computed-diff: true
     SourceBigcommercePutRequest:
       required:
         - "name"
@@ -61620,6 +61872,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-bigcommerce-update"
       x-speakeasy-entity: Source_Bigcommerce
+      x-speakeasy-param-suppress-computed-diff: true
     SourceBigqueryPutRequest:
       required:
         - "name"
@@ -61635,6 +61888,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-bigquery-update"
       x-speakeasy-entity: Source_Bigquery
+      x-speakeasy-param-suppress-computed-diff: true
     SourceBingAdsPutRequest:
       required:
         - "name"
@@ -61650,6 +61904,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-bing-ads-update"
       x-speakeasy-entity: Source_BingAds
+      x-speakeasy-param-suppress-computed-diff: true
     SourceBraintreePutRequest:
       required:
         - "name"
@@ -61665,6 +61920,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-braintree-update"
       x-speakeasy-entity: Source_Braintree
+      x-speakeasy-param-suppress-computed-diff: true
     SourceBrazePutRequest:
       required:
         - "name"
@@ -61680,6 +61936,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-braze-update"
       x-speakeasy-entity: Source_Braze
+      x-speakeasy-param-suppress-computed-diff: true
     SourceChargebeePutRequest:
       required:
         - "name"
@@ -61695,6 +61952,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-chargebee-update"
       x-speakeasy-entity: Source_Chargebee
+      x-speakeasy-param-suppress-computed-diff: true
     SourceChartmogulPutRequest:
       required:
         - "name"
@@ -61710,6 +61968,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-chartmogul-update"
       x-speakeasy-entity: Source_Chartmogul
+      x-speakeasy-param-suppress-computed-diff: true
     SourceClickhousePutRequest:
       required:
         - "name"
@@ -61725,6 +61984,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-clickhouse-update"
       x-speakeasy-entity: Source_Clickhouse
+      x-speakeasy-param-suppress-computed-diff: true
     SourceClickupApiPutRequest:
       required:
         - "name"
@@ -61740,6 +62000,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-clickup-api-update"
       x-speakeasy-entity: Source_ClickupApi
+      x-speakeasy-param-suppress-computed-diff: true
     SourceCloseComPutRequest:
       required:
         - "name"
@@ -61755,6 +62016,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-close-com-update"
       x-speakeasy-entity: Source_CloseCom
+      x-speakeasy-param-suppress-computed-diff: true
     SourceCodaPutRequest:
       required:
         - "name"
@@ -61770,6 +62032,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-coda-update"
       x-speakeasy-entity: Source_Coda
+      x-speakeasy-param-suppress-computed-diff: true
     SourceCoinApiPutRequest:
       required:
         - "name"
@@ -61785,6 +62048,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-coin-api-update"
       x-speakeasy-entity: Source_CoinApi
+      x-speakeasy-param-suppress-computed-diff: true
     SourceCoinmarketcapPutRequest:
       required:
         - "name"
@@ -61800,6 +62064,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-coinmarketcap-update"
       x-speakeasy-entity: Source_Coinmarketcap
+      x-speakeasy-param-suppress-computed-diff: true
     SourceConfigcatPutRequest:
       required:
         - "name"
@@ -61815,6 +62080,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-configcat-update"
       x-speakeasy-entity: Source_Configcat
+      x-speakeasy-param-suppress-computed-diff: true
     SourceConfluencePutRequest:
       required:
         - "name"
@@ -61830,6 +62096,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-confluence-update"
       x-speakeasy-entity: Source_Confluence
+      x-speakeasy-param-suppress-computed-diff: true
     SourceDatascopePutRequest:
       required:
         - "name"
@@ -61845,6 +62112,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-datascope-update"
       x-speakeasy-entity: Source_Datascope
+      x-speakeasy-param-suppress-computed-diff: true
     SourceDelightedPutRequest:
       required:
         - "name"
@@ -61860,6 +62128,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-delighted-update"
       x-speakeasy-entity: Source_Delighted
+      x-speakeasy-param-suppress-computed-diff: true
     SourceDixaPutRequest:
       required:
         - "name"
@@ -61875,6 +62144,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-dixa-update"
       x-speakeasy-entity: Source_Dixa
+      x-speakeasy-param-suppress-computed-diff: true
     SourceDockerhubPutRequest:
       required:
         - "name"
@@ -61890,6 +62160,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-dockerhub-update"
       x-speakeasy-entity: Source_Dockerhub
+      x-speakeasy-param-suppress-computed-diff: true
     SourceDremioPutRequest:
       required:
         - "name"
@@ -61905,6 +62176,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-dremio-update"
       x-speakeasy-entity: Source_Dremio
+      x-speakeasy-param-suppress-computed-diff: true
     SourceDynamodbPutRequest:
       required:
         - "name"
@@ -61920,6 +62192,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-dynamodb-update"
       x-speakeasy-entity: Source_Dynamodb
+      x-speakeasy-param-suppress-computed-diff: true
     SourceE2eTestCloudPutRequest:
       required:
         - "name"
@@ -61935,6 +62208,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-e2e-test-cloud-update"
       x-speakeasy-entity: Source_E2eTestCloud
+      x-speakeasy-param-suppress-computed-diff: true
     SourceEmailoctopusPutRequest:
       required:
         - "name"
@@ -61950,6 +62224,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-emailoctopus-update"
       x-speakeasy-entity: Source_Emailoctopus
+      x-speakeasy-param-suppress-computed-diff: true
     SourceExchangeRatesPutRequest:
       required:
         - "name"
@@ -61965,6 +62240,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-exchange-rates-update"
       x-speakeasy-entity: Source_ExchangeRates
+      x-speakeasy-param-suppress-computed-diff: true
     SourceFacebookMarketingPutRequest:
       required:
         - "name"
@@ -61980,6 +62256,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-facebook-marketing-update"
       x-speakeasy-entity: Source_FacebookMarketing
+      x-speakeasy-param-suppress-computed-diff: true
     SourceFacebookPagesPutRequest:
       required:
         - "name"
@@ -61995,6 +62272,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-facebook-pages-update"
       x-speakeasy-entity: Source_FacebookPages
+      x-speakeasy-param-suppress-computed-diff: true
     SourceFakerPutRequest:
       required:
         - "name"
@@ -62010,6 +62288,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-faker-update"
       x-speakeasy-entity: Source_Faker
+      x-speakeasy-param-suppress-computed-diff: true
     SourceFaunaPutRequest:
       required:
         - "name"
@@ -62025,6 +62304,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-fauna-update"
       x-speakeasy-entity: Source_Fauna
+      x-speakeasy-param-suppress-computed-diff: true
     SourceFileSecurePutRequest:
       required:
         - "name"
@@ -62040,6 +62320,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-file-secure-update"
       x-speakeasy-entity: Source_FileSecure
+      x-speakeasy-param-suppress-computed-diff: true
     SourceFireboltPutRequest:
       required:
         - "name"
@@ -62055,6 +62336,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-firebolt-update"
       x-speakeasy-entity: Source_Firebolt
+      x-speakeasy-param-suppress-computed-diff: true
     SourceFreshcallerPutRequest:
       required:
         - "name"
@@ -62070,6 +62352,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-freshcaller-update"
       x-speakeasy-entity: Source_Freshcaller
+      x-speakeasy-param-suppress-computed-diff: true
     SourceFreshdeskPutRequest:
       required:
         - "name"
@@ -62085,6 +62368,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-freshdesk-update"
       x-speakeasy-entity: Source_Freshdesk
+      x-speakeasy-param-suppress-computed-diff: true
     SourceFreshsalesPutRequest:
       required:
         - "name"
@@ -62100,6 +62384,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-freshsales-update"
       x-speakeasy-entity: Source_Freshsales
+      x-speakeasy-param-suppress-computed-diff: true
     SourceFreshservicePutRequest:
       required:
         - "name"
@@ -62115,6 +62400,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-freshservice-update"
       x-speakeasy-entity: Source_Freshservice
+      x-speakeasy-param-suppress-computed-diff: true
     SourceGcsPutRequest:
       required:
         - "name"
@@ -62130,6 +62416,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-gcs-update"
       x-speakeasy-entity: Source_Gcs
+      x-speakeasy-param-suppress-computed-diff: true
     SourceGetlagoPutRequest:
       required:
         - "name"
@@ -62145,6 +62432,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-getlago-update"
       x-speakeasy-entity: Source_Getlago
+      x-speakeasy-param-suppress-computed-diff: true
     SourceGithubPutRequest:
       required:
         - "name"
@@ -62160,6 +62448,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-github-update"
       x-speakeasy-entity: Source_Github
+      x-speakeasy-param-suppress-computed-diff: true
     SourceGitlabPutRequest:
       required:
         - "name"
@@ -62175,6 +62464,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-gitlab-update"
       x-speakeasy-entity: Source_Gitlab
+      x-speakeasy-param-suppress-computed-diff: true
     SourceGlassfrogPutRequest:
       required:
         - "name"
@@ -62190,6 +62480,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-glassfrog-update"
       x-speakeasy-entity: Source_Glassfrog
+      x-speakeasy-param-suppress-computed-diff: true
     SourceGnewsPutRequest:
       required:
         - "name"
@@ -62205,6 +62496,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-gnews-update"
       x-speakeasy-entity: Source_Gnews
+      x-speakeasy-param-suppress-computed-diff: true
     SourceGoogleAdsPutRequest:
       required:
         - "name"
@@ -62220,6 +62512,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-google-ads-update"
       x-speakeasy-entity: Source_GoogleAds
+      x-speakeasy-param-suppress-computed-diff: true
     SourceGoogleAnalyticsDataApiPutRequest:
       required:
         - "name"
@@ -62235,6 +62528,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-google-analytics-data-api-update"
       x-speakeasy-entity: Source_GoogleAnalyticsDataApi
+      x-speakeasy-param-suppress-computed-diff: true
     SourceGoogleAnalyticsV4PutRequest:
       required:
         - "name"
@@ -62250,6 +62544,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-google-analytics-v4-update"
       x-speakeasy-entity: Source_GoogleAnalyticsV4
+      x-speakeasy-param-suppress-computed-diff: true
     SourceGoogleDirectoryPutRequest:
       required:
         - "name"
@@ -62265,6 +62560,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-google-directory-update"
       x-speakeasy-entity: Source_GoogleDirectory
+      x-speakeasy-param-suppress-computed-diff: true
     SourceGooglePagespeedInsightsPutRequest:
       required:
         - "name"
@@ -62280,6 +62576,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-google-pagespeed-insights-update"
       x-speakeasy-entity: Source_GooglePagespeedInsights
+      x-speakeasy-param-suppress-computed-diff: true
     SourceGoogleSearchConsolePutRequest:
       required:
         - "name"
@@ -62295,6 +62592,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-google-search-console-update"
       x-speakeasy-entity: Source_GoogleSearchConsole
+      x-speakeasy-param-suppress-computed-diff: true
     SourceGoogleSheetsPutRequest:
       required:
         - "name"
@@ -62310,6 +62608,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-google-sheets-update"
       x-speakeasy-entity: Source_GoogleSheets
+      x-speakeasy-param-suppress-computed-diff: true
     SourceGoogleWebfontsPutRequest:
       required:
         - "name"
@@ -62325,6 +62624,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-google-webfonts-update"
       x-speakeasy-entity: Source_GoogleWebfonts
+      x-speakeasy-param-suppress-computed-diff: true
     SourceGoogleWorkspaceAdminReportsPutRequest:
       required:
         - "name"
@@ -62340,6 +62640,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-google-workspace-admin-reports-update"
       x-speakeasy-entity: Source_GoogleWorkspaceAdminReports
+      x-speakeasy-param-suppress-computed-diff: true
     SourceGreenhousePutRequest:
       required:
         - "name"
@@ -62355,6 +62656,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-greenhouse-update"
       x-speakeasy-entity: Source_Greenhouse
+      x-speakeasy-param-suppress-computed-diff: true
     SourceGridlyPutRequest:
       required:
         - "name"
@@ -62370,6 +62672,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-gridly-update"
       x-speakeasy-entity: Source_Gridly
+      x-speakeasy-param-suppress-computed-diff: true
     SourceHarvestPutRequest:
       required:
         - "name"
@@ -62385,6 +62688,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-harvest-update"
       x-speakeasy-entity: Source_Harvest
+      x-speakeasy-param-suppress-computed-diff: true
     SourceHubplannerPutRequest:
       required:
         - "name"
@@ -62400,6 +62704,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-hubplanner-update"
       x-speakeasy-entity: Source_Hubplanner
+      x-speakeasy-param-suppress-computed-diff: true
     SourceHubspotPutRequest:
       required:
         - "name"
@@ -62415,6 +62720,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-hubspot-update"
       x-speakeasy-entity: Source_Hubspot
+      x-speakeasy-param-suppress-computed-diff: true
     SourceInsightlyPutRequest:
       required:
         - "name"
@@ -62430,6 +62736,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-insightly-update"
       x-speakeasy-entity: Source_Insightly
+      x-speakeasy-param-suppress-computed-diff: true
     SourceInstagramPutRequest:
       required:
         - "name"
@@ -62445,6 +62752,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-instagram-update"
       x-speakeasy-entity: Source_Instagram
+      x-speakeasy-param-suppress-computed-diff: true
     SourceInstatusPutRequest:
       required:
         - "name"
@@ -62460,6 +62768,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-instatus-update"
       x-speakeasy-entity: Source_Instatus
+      x-speakeasy-param-suppress-computed-diff: true
     SourceIntercomPutRequest:
       required:
         - "name"
@@ -62475,6 +62784,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-intercom-update"
       x-speakeasy-entity: Source_Intercom
+      x-speakeasy-param-suppress-computed-diff: true
     SourceIp2whoisPutRequest:
       required:
         - "name"
@@ -62490,6 +62800,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-ip2whois-update"
       x-speakeasy-entity: Source_Ip2whois
+      x-speakeasy-param-suppress-computed-diff: true
     SourceIterablePutRequest:
       required:
         - "name"
@@ -62505,6 +62816,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-iterable-update"
       x-speakeasy-entity: Source_Iterable
+      x-speakeasy-param-suppress-computed-diff: true
     SourceJiraPutRequest:
       required:
         - "name"
@@ -62520,6 +62832,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-jira-update"
       x-speakeasy-entity: Source_Jira
+      x-speakeasy-param-suppress-computed-diff: true
     SourceK6CloudPutRequest:
       required:
         - "name"
@@ -62535,6 +62848,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-k6-cloud-update"
       x-speakeasy-entity: Source_K6Cloud
+      x-speakeasy-param-suppress-computed-diff: true
     SourceKlarnaPutRequest:
       required:
         - "name"
@@ -62550,6 +62864,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-klarna-update"
       x-speakeasy-entity: Source_Klarna
+      x-speakeasy-param-suppress-computed-diff: true
     SourceKlaviyoPutRequest:
       required:
         - "name"
@@ -62565,6 +62880,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-klaviyo-update"
       x-speakeasy-entity: Source_Klaviyo
+      x-speakeasy-param-suppress-computed-diff: true
     SourceKustomerSingerPutRequest:
       required:
         - "name"
@@ -62580,6 +62896,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-kustomer-singer-update"
       x-speakeasy-entity: Source_KustomerSinger
+      x-speakeasy-param-suppress-computed-diff: true
     SourceLaunchdarklyPutRequest:
       required:
         - "name"
@@ -62595,6 +62912,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-launchdarkly-update"
       x-speakeasy-entity: Source_Launchdarkly
+      x-speakeasy-param-suppress-computed-diff: true
     SourceLemlistPutRequest:
       required:
         - "name"
@@ -62610,6 +62928,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-lemlist-update"
       x-speakeasy-entity: Source_Lemlist
+      x-speakeasy-param-suppress-computed-diff: true
     SourceLinkedinAdsPutRequest:
       required:
         - "name"
@@ -62625,6 +62944,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-linkedin-ads-update"
       x-speakeasy-entity: Source_LinkedinAds
+      x-speakeasy-param-suppress-computed-diff: true
     SourceLinkedinPagesPutRequest:
       required:
         - "name"
@@ -62640,6 +62960,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-linkedin-pages-update"
       x-speakeasy-entity: Source_LinkedinPages
+      x-speakeasy-param-suppress-computed-diff: true
     SourceLinnworksPutRequest:
       required:
         - "name"
@@ -62655,6 +62976,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-linnworks-update"
       x-speakeasy-entity: Source_Linnworks
+      x-speakeasy-param-suppress-computed-diff: true
     SourceLokalisePutRequest:
       required:
         - "name"
@@ -62670,6 +62992,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-lokalise-update"
       x-speakeasy-entity: Source_Lokalise
+      x-speakeasy-param-suppress-computed-diff: true
     SourceMailchimpPutRequest:
       required:
         - "name"
@@ -62685,6 +63008,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-mailchimp-update"
       x-speakeasy-entity: Source_Mailchimp
+      x-speakeasy-param-suppress-computed-diff: true
     SourceMailgunPutRequest:
       required:
         - "name"
@@ -62700,6 +63024,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-mailgun-update"
       x-speakeasy-entity: Source_Mailgun
+      x-speakeasy-param-suppress-computed-diff: true
     SourceMailjetSmsPutRequest:
       required:
         - "name"
@@ -62715,6 +63040,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-mailjet-sms-update"
       x-speakeasy-entity: Source_MailjetSms
+      x-speakeasy-param-suppress-computed-diff: true
     SourceMarketoPutRequest:
       required:
         - "name"
@@ -62730,6 +63056,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-marketo-update"
       x-speakeasy-entity: Source_Marketo
+      x-speakeasy-param-suppress-computed-diff: true
     SourceMetabasePutRequest:
       required:
         - "name"
@@ -62745,6 +63072,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-metabase-update"
       x-speakeasy-entity: Source_Metabase
+      x-speakeasy-param-suppress-computed-diff: true
     SourceMicrosoftTeamsPutRequest:
       required:
         - "name"
@@ -62760,6 +63088,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-microsoft-teams-update"
       x-speakeasy-entity: Source_MicrosoftTeams
+      x-speakeasy-param-suppress-computed-diff: true
     SourceMixpanelPutRequest:
       required:
         - "name"
@@ -62775,6 +63104,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-mixpanel-update"
       x-speakeasy-entity: Source_Mixpanel
+      x-speakeasy-param-suppress-computed-diff: true
     SourceMondayPutRequest:
       required:
         - "name"
@@ -62790,6 +63120,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-monday-update"
       x-speakeasy-entity: Source_Monday
+      x-speakeasy-param-suppress-computed-diff: true
     SourceMongodbPutRequest:
       required:
         - "name"
@@ -62805,6 +63136,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-mongodb-update"
       x-speakeasy-entity: Source_Mongodb
+      x-speakeasy-param-suppress-computed-diff: true
     SourceMssqlPutRequest:
       required:
         - "name"
@@ -62820,6 +63152,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-mssql-update"
       x-speakeasy-entity: Source_Mssql
+      x-speakeasy-param-suppress-computed-diff: true
     SourceMyHoursPutRequest:
       required:
         - "name"
@@ -62835,6 +63168,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-my-hours-update"
       x-speakeasy-entity: Source_MyHours
+      x-speakeasy-param-suppress-computed-diff: true
     SourceMysqlPutRequest:
       required:
         - "name"
@@ -62850,6 +63184,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-mysql-update"
       x-speakeasy-entity: Source_Mysql
+      x-speakeasy-param-suppress-computed-diff: true
     SourceNetsuitePutRequest:
       required:
         - "name"
@@ -62865,6 +63200,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-netsuite-update"
       x-speakeasy-entity: Source_Netsuite
+      x-speakeasy-param-suppress-computed-diff: true
     SourceNotionPutRequest:
       required:
         - "name"
@@ -62880,6 +63216,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-notion-update"
       x-speakeasy-entity: Source_Notion
+      x-speakeasy-param-suppress-computed-diff: true
     SourceNytimesPutRequest:
       required:
         - "name"
@@ -62895,6 +63232,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-nytimes-update"
       x-speakeasy-entity: Source_Nytimes
+      x-speakeasy-param-suppress-computed-diff: true
     SourceOktaPutRequest:
       required:
         - "name"
@@ -62910,6 +63248,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-okta-update"
       x-speakeasy-entity: Source_Okta
+      x-speakeasy-param-suppress-computed-diff: true
     SourceOmnisendPutRequest:
       required:
         - "name"
@@ -62925,6 +63264,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-omnisend-update"
       x-speakeasy-entity: Source_Omnisend
+      x-speakeasy-param-suppress-computed-diff: true
     SourceOnesignalPutRequest:
       required:
         - "name"
@@ -62940,6 +63280,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-onesignal-update"
       x-speakeasy-entity: Source_Onesignal
+      x-speakeasy-param-suppress-computed-diff: true
     SourceOpenweatherPutRequest:
       required:
         - "name"
@@ -62955,6 +63296,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-openweather-update"
       x-speakeasy-entity: Source_Openweather
+      x-speakeasy-param-suppress-computed-diff: true
     SourceOraclePutRequest:
       required:
         - "name"
@@ -62970,6 +63312,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-oracle-update"
       x-speakeasy-entity: Source_Oracle
+      x-speakeasy-param-suppress-computed-diff: true
     SourceOrbPutRequest:
       required:
         - "name"
@@ -62985,6 +63328,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-orb-update"
       x-speakeasy-entity: Source_Orb
+      x-speakeasy-param-suppress-computed-diff: true
     SourceOrbitPutRequest:
       required:
         - "name"
@@ -63000,6 +63344,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-orbit-update"
       x-speakeasy-entity: Source_Orbit
+      x-speakeasy-param-suppress-computed-diff: true
     SourceOutreachPutRequest:
       required:
         - "name"
@@ -63015,6 +63360,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-outreach-update"
       x-speakeasy-entity: Source_Outreach
+      x-speakeasy-param-suppress-computed-diff: true
     SourcePaypalTransactionPutRequest:
       required:
         - "name"
@@ -63030,6 +63376,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-paypal-transaction-update"
       x-speakeasy-entity: Source_PaypalTransaction
+      x-speakeasy-param-suppress-computed-diff: true
     SourcePaystackPutRequest:
       required:
         - "name"
@@ -63045,6 +63392,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-paystack-update"
       x-speakeasy-entity: Source_Paystack
+      x-speakeasy-param-suppress-computed-diff: true
     SourcePendoPutRequest:
       required:
         - "name"
@@ -63060,6 +63408,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-pendo-update"
       x-speakeasy-entity: Source_Pendo
+      x-speakeasy-param-suppress-computed-diff: true
     SourcePersistiqPutRequest:
       required:
         - "name"
@@ -63075,6 +63424,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-persistiq-update"
       x-speakeasy-entity: Source_Persistiq
+      x-speakeasy-param-suppress-computed-diff: true
     SourcePexelsApiPutRequest:
       required:
         - "name"
@@ -63090,6 +63440,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-pexels-api-update"
       x-speakeasy-entity: Source_PexelsApi
+      x-speakeasy-param-suppress-computed-diff: true
     SourcePinterestPutRequest:
       required:
         - "name"
@@ -63105,6 +63456,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-pinterest-update"
       x-speakeasy-entity: Source_Pinterest
+      x-speakeasy-param-suppress-computed-diff: true
     SourcePipedrivePutRequest:
       required:
         - "name"
@@ -63120,6 +63472,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-pipedrive-update"
       x-speakeasy-entity: Source_Pipedrive
+      x-speakeasy-param-suppress-computed-diff: true
     SourcePocketPutRequest:
       required:
         - "name"
@@ -63135,6 +63488,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-pocket-update"
       x-speakeasy-entity: Source_Pocket
+      x-speakeasy-param-suppress-computed-diff: true
     SourcePokeapiPutRequest:
       required:
         - "name"
@@ -63150,6 +63504,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-pokeapi-update"
       x-speakeasy-entity: Source_Pokeapi
+      x-speakeasy-param-suppress-computed-diff: true
     SourcePolygonStockApiPutRequest:
       required:
         - "name"
@@ -63165,6 +63520,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-polygon-stock-api-update"
       x-speakeasy-entity: Source_PolygonStockApi
+      x-speakeasy-param-suppress-computed-diff: true
     SourcePostgresPutRequest:
       required:
         - "name"
@@ -63180,6 +63536,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-postgres-update"
       x-speakeasy-entity: Source_Postgres
+      x-speakeasy-param-suppress-computed-diff: true
     SourcePosthogPutRequest:
       required:
         - "name"
@@ -63195,6 +63552,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-posthog-update"
       x-speakeasy-entity: Source_Posthog
+      x-speakeasy-param-suppress-computed-diff: true
     SourcePostmarkappPutRequest:
       required:
         - "name"
@@ -63210,6 +63568,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-postmarkapp-update"
       x-speakeasy-entity: Source_Postmarkapp
+      x-speakeasy-param-suppress-computed-diff: true
     SourcePrestashopPutRequest:
       required:
         - "name"
@@ -63225,6 +63584,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-prestashop-update"
       x-speakeasy-entity: Source_Prestashop
+      x-speakeasy-param-suppress-computed-diff: true
     SourcePublicApisPutRequest:
       required:
         - "name"
@@ -63240,6 +63600,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-public-apis-update"
       x-speakeasy-entity: Source_PublicApis
+      x-speakeasy-param-suppress-computed-diff: true
     SourcePunkApiPutRequest:
       required:
         - "name"
@@ -63255,6 +63616,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-punk-api-update"
       x-speakeasy-entity: Source_PunkApi
+      x-speakeasy-param-suppress-computed-diff: true
     SourcePypiPutRequest:
       required:
         - "name"
@@ -63270,6 +63632,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-pypi-update"
       x-speakeasy-entity: Source_Pypi
+      x-speakeasy-param-suppress-computed-diff: true
     SourceQualarooPutRequest:
       required:
         - "name"
@@ -63285,6 +63648,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-qualaroo-update"
       x-speakeasy-entity: Source_Qualaroo
+      x-speakeasy-param-suppress-computed-diff: true
     SourceQuickbooksPutRequest:
       required:
         - "name"
@@ -63300,6 +63664,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-quickbooks-update"
       x-speakeasy-entity: Source_Quickbooks
+      x-speakeasy-param-suppress-computed-diff: true
     SourceRailzPutRequest:
       required:
         - "name"
@@ -63315,6 +63680,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-railz-update"
       x-speakeasy-entity: Source_Railz
+      x-speakeasy-param-suppress-computed-diff: true
     SourceRechargePutRequest:
       required:
         - "name"
@@ -63330,6 +63696,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-recharge-update"
       x-speakeasy-entity: Source_Recharge
+      x-speakeasy-param-suppress-computed-diff: true
     SourceRecreationPutRequest:
       required:
         - "name"
@@ -63345,6 +63712,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-recreation-update"
       x-speakeasy-entity: Source_Recreation
+      x-speakeasy-param-suppress-computed-diff: true
     SourceRecruiteePutRequest:
       required:
         - "name"
@@ -63360,6 +63728,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-recruitee-update"
       x-speakeasy-entity: Source_Recruitee
+      x-speakeasy-param-suppress-computed-diff: true
     SourceRecurlyPutRequest:
       required:
         - "name"
@@ -63375,6 +63744,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-recurly-update"
       x-speakeasy-entity: Source_Recurly
+      x-speakeasy-param-suppress-computed-diff: true
     SourceRedshiftPutRequest:
       required:
         - "name"
@@ -63390,6 +63760,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-redshift-update"
       x-speakeasy-entity: Source_Redshift
+      x-speakeasy-param-suppress-computed-diff: true
     SourceRetentlyPutRequest:
       required:
         - "name"
@@ -63405,6 +63776,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-retently-update"
       x-speakeasy-entity: Source_Retently
+      x-speakeasy-param-suppress-computed-diff: true
     SourceRkiCovidPutRequest:
       required:
         - "name"
@@ -63420,6 +63792,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-rki-covid-update"
       x-speakeasy-entity: Source_RkiCovid
+      x-speakeasy-param-suppress-computed-diff: true
     SourceRssPutRequest:
       required:
         - "name"
@@ -63435,6 +63808,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-rss-update"
       x-speakeasy-entity: Source_Rss
+      x-speakeasy-param-suppress-computed-diff: true
     SourceS3PutRequest:
       required:
         - "name"
@@ -63450,6 +63824,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-s3-update"
       x-speakeasy-entity: Source_S3
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSalesforcePutRequest:
       required:
         - "name"
@@ -63465,6 +63840,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-salesforce-update"
       x-speakeasy-entity: Source_Salesforce
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSalesforceSingerPutRequest:
       required:
         - "name"
@@ -63480,6 +63856,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-salesforce-singer-update"
       x-speakeasy-entity: Source_SalesforceSinger
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSalesloftPutRequest:
       required:
         - "name"
@@ -63495,6 +63872,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-salesloft-update"
       x-speakeasy-entity: Source_Salesloft
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSapFieldglassPutRequest:
       required:
         - "name"
@@ -63510,6 +63888,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-sap-fieldglass-update"
       x-speakeasy-entity: Source_SapFieldglass
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSecodaPutRequest:
       required:
         - "name"
@@ -63525,6 +63904,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-secoda-update"
       x-speakeasy-entity: Source_Secoda
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSendgridPutRequest:
       required:
         - "name"
@@ -63540,6 +63920,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-sendgrid-update"
       x-speakeasy-entity: Source_Sendgrid
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSendinbluePutRequest:
       required:
         - "name"
@@ -63555,6 +63936,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-sendinblue-update"
       x-speakeasy-entity: Source_Sendinblue
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSenseforcePutRequest:
       required:
         - "name"
@@ -63570,6 +63952,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-senseforce-update"
       x-speakeasy-entity: Source_Senseforce
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSentryPutRequest:
       required:
         - "name"
@@ -63585,6 +63968,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-sentry-update"
       x-speakeasy-entity: Source_Sentry
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSftpPutRequest:
       required:
         - "name"
@@ -63600,6 +63984,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-sftp-update"
       x-speakeasy-entity: Source_Sftp
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSftpBulkPutRequest:
       required:
         - "name"
@@ -63615,6 +64000,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-sftp-bulk-update"
       x-speakeasy-entity: Source_SftpBulk
+      x-speakeasy-param-suppress-computed-diff: true
     SourceShopifyPutRequest:
       required:
         - "name"
@@ -63630,6 +64016,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-shopify-update"
       x-speakeasy-entity: Source_Shopify
+      x-speakeasy-param-suppress-computed-diff: true
     SourceShortioPutRequest:
       required:
         - "name"
@@ -63645,6 +64032,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-shortio-update"
       x-speakeasy-entity: Source_Shortio
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSlackPutRequest:
       required:
         - "name"
@@ -63660,6 +64048,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-slack-update"
       x-speakeasy-entity: Source_Slack
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSmailyPutRequest:
       required:
         - "name"
@@ -63675,6 +64064,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-smaily-update"
       x-speakeasy-entity: Source_Smaily
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSmartengagePutRequest:
       required:
         - "name"
@@ -63690,6 +64080,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-smartengage-update"
       x-speakeasy-entity: Source_Smartengage
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSmartsheetsPutRequest:
       required:
         - "name"
@@ -63705,6 +64096,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-smartsheets-update"
       x-speakeasy-entity: Source_Smartsheets
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSnapchatMarketingPutRequest:
       required:
         - "name"
@@ -63720,6 +64112,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-snapchat-marketing-update"
       x-speakeasy-entity: Source_SnapchatMarketing
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSnowflakePutRequest:
       required:
         - "name"
@@ -63735,6 +64128,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-snowflake-update"
       x-speakeasy-entity: Source_Snowflake
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSonarCloudPutRequest:
       required:
         - "name"
@@ -63750,6 +64144,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-sonar-cloud-update"
       x-speakeasy-entity: Source_SonarCloud
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSpacexApiPutRequest:
       required:
         - "name"
@@ -63765,6 +64160,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-spacex-api-update"
       x-speakeasy-entity: Source_SpacexApi
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSquarePutRequest:
       required:
         - "name"
@@ -63780,6 +64176,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-square-update"
       x-speakeasy-entity: Source_Square
+      x-speakeasy-param-suppress-computed-diff: true
     SourceStravaPutRequest:
       required:
         - "name"
@@ -63795,6 +64192,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-strava-update"
       x-speakeasy-entity: Source_Strava
+      x-speakeasy-param-suppress-computed-diff: true
     SourceStripePutRequest:
       required:
         - "name"
@@ -63810,6 +64208,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-stripe-update"
       x-speakeasy-entity: Source_Stripe
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSurveySparrowPutRequest:
       required:
         - "name"
@@ -63825,6 +64224,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-survey-sparrow-update"
       x-speakeasy-entity: Source_SurveySparrow
+      x-speakeasy-param-suppress-computed-diff: true
     SourceSurveymonkeyPutRequest:
       required:
         - "name"
@@ -63840,6 +64240,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-surveymonkey-update"
       x-speakeasy-entity: Source_Surveymonkey
+      x-speakeasy-param-suppress-computed-diff: true
     SourceTempoPutRequest:
       required:
         - "name"
@@ -63855,6 +64256,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-tempo-update"
       x-speakeasy-entity: Source_Tempo
+      x-speakeasy-param-suppress-computed-diff: true
     SourceTheGuardianApiPutRequest:
       required:
         - "name"
@@ -63870,6 +64272,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-the-guardian-api-update"
       x-speakeasy-entity: Source_TheGuardianApi
+      x-speakeasy-param-suppress-computed-diff: true
     SourceTiktokMarketingPutRequest:
       required:
         - "name"
@@ -63885,6 +64288,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-tiktok-marketing-update"
       x-speakeasy-entity: Source_TiktokMarketing
+      x-speakeasy-param-suppress-computed-diff: true
     SourceTodoistPutRequest:
       required:
         - "name"
@@ -63900,6 +64304,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-todoist-update"
       x-speakeasy-entity: Source_Todoist
+      x-speakeasy-param-suppress-computed-diff: true
     SourceTrelloPutRequest:
       required:
         - "name"
@@ -63915,6 +64320,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-trello-update"
       x-speakeasy-entity: Source_Trello
+      x-speakeasy-param-suppress-computed-diff: true
     SourceTrustpilotPutRequest:
       required:
         - "name"
@@ -63930,6 +64336,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-trustpilot-update"
       x-speakeasy-entity: Source_Trustpilot
+      x-speakeasy-param-suppress-computed-diff: true
     SourceTvmazeSchedulePutRequest:
       required:
         - "name"
@@ -63945,6 +64352,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-tvmaze-schedule-update"
       x-speakeasy-entity: Source_TvmazeSchedule
+      x-speakeasy-param-suppress-computed-diff: true
     SourceTwilioPutRequest:
       required:
         - "name"
@@ -63960,6 +64368,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-twilio-update"
       x-speakeasy-entity: Source_Twilio
+      x-speakeasy-param-suppress-computed-diff: true
     SourceTwilioTaskrouterPutRequest:
       required:
         - "name"
@@ -63975,6 +64384,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-twilio-taskrouter-update"
       x-speakeasy-entity: Source_TwilioTaskrouter
+      x-speakeasy-param-suppress-computed-diff: true
     SourceTwitterPutRequest:
       required:
         - "name"
@@ -63990,6 +64400,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-twitter-update"
       x-speakeasy-entity: Source_Twitter
+      x-speakeasy-param-suppress-computed-diff: true
     SourceTypeformPutRequest:
       required:
         - "name"
@@ -64005,6 +64416,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-typeform-update"
       x-speakeasy-entity: Source_Typeform
+      x-speakeasy-param-suppress-computed-diff: true
     SourceUsCensusPutRequest:
       required:
         - "name"
@@ -64020,6 +64432,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-us-census-update"
       x-speakeasy-entity: Source_UsCensus
+      x-speakeasy-param-suppress-computed-diff: true
     SourceVantagePutRequest:
       required:
         - "name"
@@ -64035,6 +64448,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-vantage-update"
       x-speakeasy-entity: Source_Vantage
+      x-speakeasy-param-suppress-computed-diff: true
     SourceWebflowPutRequest:
       required:
         - "name"
@@ -64050,6 +64464,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-webflow-update"
       x-speakeasy-entity: Source_Webflow
+      x-speakeasy-param-suppress-computed-diff: true
     SourceWhiskyHunterPutRequest:
       required:
         - "name"
@@ -64065,6 +64480,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-whisky-hunter-update"
       x-speakeasy-entity: Source_WhiskyHunter
+      x-speakeasy-param-suppress-computed-diff: true
     SourceWikipediaPageviewsPutRequest:
       required:
         - "name"
@@ -64080,6 +64496,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-wikipedia-pageviews-update"
       x-speakeasy-entity: Source_WikipediaPageviews
+      x-speakeasy-param-suppress-computed-diff: true
     SourceWoocommercePutRequest:
       required:
         - "name"
@@ -64095,6 +64512,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-woocommerce-update"
       x-speakeasy-entity: Source_Woocommerce
+      x-speakeasy-param-suppress-computed-diff: true
     SourceXeroPutRequest:
       required:
         - "name"
@@ -64110,6 +64528,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-xero-update"
       x-speakeasy-entity: Source_Xero
+      x-speakeasy-param-suppress-computed-diff: true
     SourceXkcdPutRequest:
       required:
         - "name"
@@ -64125,6 +64544,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-xkcd-update"
       x-speakeasy-entity: Source_Xkcd
+      x-speakeasy-param-suppress-computed-diff: true
     SourceYandexMetricaPutRequest:
       required:
         - "name"
@@ -64140,6 +64560,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-yandex-metrica-update"
       x-speakeasy-entity: Source_YandexMetrica
+      x-speakeasy-param-suppress-computed-diff: true
     SourceYotpoPutRequest:
       required:
         - "name"
@@ -64155,6 +64576,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-yotpo-update"
       x-speakeasy-entity: Source_Yotpo
+      x-speakeasy-param-suppress-computed-diff: true
     SourceYouniumPutRequest:
       required:
         - "name"
@@ -64170,6 +64592,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-younium-update"
       x-speakeasy-entity: Source_Younium
+      x-speakeasy-param-suppress-computed-diff: true
     SourceYoutubeAnalyticsPutRequest:
       required:
         - "name"
@@ -64185,6 +64608,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-youtube-analytics-update"
       x-speakeasy-entity: Source_YoutubeAnalytics
+      x-speakeasy-param-suppress-computed-diff: true
     SourceZendeskChatPutRequest:
       required:
         - "name"
@@ -64200,6 +64624,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-zendesk-chat-update"
       x-speakeasy-entity: Source_ZendeskChat
+      x-speakeasy-param-suppress-computed-diff: true
     SourceZendeskSunshinePutRequest:
       required:
         - "name"
@@ -64215,6 +64640,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-zendesk-sunshine-update"
       x-speakeasy-entity: Source_ZendeskSunshine
+      x-speakeasy-param-suppress-computed-diff: true
     SourceZendeskSupportPutRequest:
       required:
         - "name"
@@ -64230,6 +64656,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-zendesk-support-update"
       x-speakeasy-entity: Source_ZendeskSupport
+      x-speakeasy-param-suppress-computed-diff: true
     SourceZendeskTalkPutRequest:
       required:
         - "name"
@@ -64245,6 +64672,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-zendesk-talk-update"
       x-speakeasy-entity: Source_ZendeskTalk
+      x-speakeasy-param-suppress-computed-diff: true
     SourceZenloopPutRequest:
       required:
         - "name"
@@ -64260,6 +64688,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-zenloop-update"
       x-speakeasy-entity: Source_Zenloop
+      x-speakeasy-param-suppress-computed-diff: true
     SourceZohoCrmPutRequest:
       required:
         - "name"
@@ -64275,6 +64704,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-zoho-crm-update"
       x-speakeasy-entity: Source_ZohoCrm
+      x-speakeasy-param-suppress-computed-diff: true
     SourceZoomPutRequest:
       required:
         - "name"
@@ -64290,6 +64720,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-zoom-update"
       x-speakeasy-entity: Source_Zoom
+      x-speakeasy-param-suppress-computed-diff: true
     SourceZuoraPutRequest:
       required:
         - "name"
@@ -64305,6 +64736,7 @@ components:
         configuration:
           $ref: "#/components/schemas/source-zuora-update"
       x-speakeasy-entity: Source_Zuora
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationAmazonSqsPutRequest:
       required:
         - "name"
@@ -64320,6 +64752,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-amazon-sqs-update"
       x-speakeasy-entity: Destination_AmazonSqs
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationAwsDatalakePutRequest:
       required:
         - "name"
@@ -64335,6 +64768,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-aws-datalake-update"
       x-speakeasy-entity: Destination_AwsDatalake
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationAzureBlobStoragePutRequest:
       required:
         - "name"
@@ -64350,6 +64784,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-azure-blob-storage-update"
       x-speakeasy-entity: Destination_AzureBlobStorage
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationBigqueryPutRequest:
       required:
         - "name"
@@ -64365,6 +64800,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-bigquery-update"
       x-speakeasy-entity: Destination_Bigquery
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationBigqueryDenormalizedPutRequest:
       required:
         - "name"
@@ -64380,6 +64816,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-bigquery-denormalized-update"
       x-speakeasy-entity: Destination_BigqueryDenormalized
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationCassandraPutRequest:
       required:
         - "name"
@@ -64395,6 +64832,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-cassandra-update"
       x-speakeasy-entity: Destination_Cassandra
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationClickhousePutRequest:
       required:
         - "name"
@@ -64410,6 +64848,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-clickhouse-update"
       x-speakeasy-entity: Destination_Clickhouse
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationConvexPutRequest:
       required:
         - "name"
@@ -64425,6 +64864,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-convex-update"
       x-speakeasy-entity: Destination_Convex
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationCumulioPutRequest:
       required:
         - "name"
@@ -64440,6 +64880,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-cumulio-update"
       x-speakeasy-entity: Destination_Cumulio
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationDatabendPutRequest:
       required:
         - "name"
@@ -64455,6 +64896,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-databend-update"
       x-speakeasy-entity: Destination_Databend
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationDatabricksPutRequest:
       required:
         - "name"
@@ -64470,6 +64912,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-databricks-update"
       x-speakeasy-entity: Destination_Databricks
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationDevNullPutRequest:
       required:
         - "name"
@@ -64485,6 +64928,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-dev-null-update"
       x-speakeasy-entity: Destination_DevNull
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationDynamodbPutRequest:
       required:
         - "name"
@@ -64500,6 +64944,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-dynamodb-update"
       x-speakeasy-entity: Destination_Dynamodb
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationElasticsearchPutRequest:
       required:
         - "name"
@@ -64515,6 +64960,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-elasticsearch-update"
       x-speakeasy-entity: Destination_Elasticsearch
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationFireboltPutRequest:
       required:
         - "name"
@@ -64530,6 +64976,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-firebolt-update"
       x-speakeasy-entity: Destination_Firebolt
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationFirestorePutRequest:
       required:
         - "name"
@@ -64545,6 +64992,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-firestore-update"
       x-speakeasy-entity: Destination_Firestore
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationGcsPutRequest:
       required:
         - "name"
@@ -64560,6 +65008,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-gcs-update"
       x-speakeasy-entity: Destination_Gcs
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationGoogleSheetsPutRequest:
       required:
         - "name"
@@ -64575,6 +65024,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-google-sheets-update"
       x-speakeasy-entity: Destination_GoogleSheets
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationKeenPutRequest:
       required:
         - "name"
@@ -64590,6 +65040,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-keen-update"
       x-speakeasy-entity: Destination_Keen
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationKinesisPutRequest:
       required:
         - "name"
@@ -64605,6 +65056,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-kinesis-update"
       x-speakeasy-entity: Destination_Kinesis
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationMariadbColumnstorePutRequest:
       required:
         - "name"
@@ -64620,6 +65072,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-mariadb-columnstore-update"
       x-speakeasy-entity: Destination_MariadbColumnstore
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationMeilisearchPutRequest:
       required:
         - "name"
@@ -64635,6 +65088,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-meilisearch-update"
       x-speakeasy-entity: Destination_Meilisearch
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationMongodbPutRequest:
       required:
         - "name"
@@ -64650,6 +65104,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-mongodb-update"
       x-speakeasy-entity: Destination_Mongodb
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationMssqlPutRequest:
       required:
         - "name"
@@ -64665,6 +65120,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-mssql-update"
       x-speakeasy-entity: Destination_Mssql
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationMysqlPutRequest:
       required:
         - "name"
@@ -64680,6 +65136,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-mysql-update"
       x-speakeasy-entity: Destination_Mysql
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationOraclePutRequest:
       required:
         - "name"
@@ -64695,6 +65152,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-oracle-update"
       x-speakeasy-entity: Destination_Oracle
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationPostgresPutRequest:
       required:
         - "name"
@@ -64710,6 +65168,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-postgres-update"
       x-speakeasy-entity: Destination_Postgres
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationPubsubPutRequest:
       required:
         - "name"
@@ -64725,6 +65184,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-pubsub-update"
       x-speakeasy-entity: Destination_Pubsub
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationPulsarPutRequest:
       required:
         - "name"
@@ -64740,6 +65200,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-pulsar-update"
       x-speakeasy-entity: Destination_Pulsar
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationRabbitmqPutRequest:
       required:
         - "name"
@@ -64755,6 +65216,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-rabbitmq-update"
       x-speakeasy-entity: Destination_Rabbitmq
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationRedisPutRequest:
       required:
         - "name"
@@ -64770,6 +65232,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-redis-update"
       x-speakeasy-entity: Destination_Redis
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationRedshiftPutRequest:
       required:
         - "name"
@@ -64785,6 +65248,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-redshift-update"
       x-speakeasy-entity: Destination_Redshift
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationRocksetPutRequest:
       required:
         - "name"
@@ -64800,6 +65264,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-rockset-update"
       x-speakeasy-entity: Destination_Rockset
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationS3PutRequest:
       required:
         - "name"
@@ -64815,6 +65280,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-s3-update"
       x-speakeasy-entity: Destination_S3
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationS3GluePutRequest:
       required:
         - "name"
@@ -64830,6 +65296,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-s3-glue-update"
       x-speakeasy-entity: Destination_S3Glue
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationScyllaPutRequest:
       required:
         - "name"
@@ -64845,6 +65312,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-scylla-update"
       x-speakeasy-entity: Destination_Scylla
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationSftpJsonPutRequest:
       required:
         - "name"
@@ -64860,6 +65328,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-sftp-json-update"
       x-speakeasy-entity: Destination_SftpJson
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationSnowflakePutRequest:
       required:
         - "name"
@@ -64875,6 +65344,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-snowflake-update"
       x-speakeasy-entity: Destination_Snowflake
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationTypesensePutRequest:
       required:
         - "name"
@@ -64890,6 +65360,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-typesense-update"
       x-speakeasy-entity: Destination_Typesense
+      x-speakeasy-param-suppress-computed-diff: true
     DestinationVerticaPutRequest:
       required:
         - "name"
@@ -64905,6 +65376,7 @@ components:
         configuration:
           $ref: "#/components/schemas/destination-vertica-update"
       x-speakeasy-entity: Destination_Vertica
+      x-speakeasy-param-suppress-computed-diff: true
   securitySchemes:
     bearerAuth:
       type: http
