@@ -15,7 +15,6 @@ Developers will need to create an API Key within your [Developer Portal](https:/
 The Developer Portal UI can also be used to help build your integration by showing information about network requests in the Requests tab. API usage information is also available to you in the Usage tab.
 
 <!-- Start SDK Installation -->
-
 ## SDK Installation
 
 To install this provider, copy and paste this code into your Terraform configuration. Then, run `terraform init`.
@@ -25,7 +24,7 @@ terraform {
   required_providers {
     airbyte = {
       source  = "airbytehq/airbyte"
-      version = "0.1.0"
+      version = "0.1.1"
     }
   }
 }

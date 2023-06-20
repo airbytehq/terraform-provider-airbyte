@@ -3,12 +3,12 @@
 page_title: "airbyte Provider"
 subcategory: ""
 description: |-
-  Programatically control Airbyte Cloud
+  Programatically control Airbyte Cloud.
 ---
 
 # airbyte Provider
 
-Programatically control Airbyte Cloud
+Programatically control Airbyte Cloud.
 
 
 
