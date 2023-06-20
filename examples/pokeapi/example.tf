@@ -13,6 +13,7 @@ provider "airbyte" {
 
 variable "key" {
   description = "The Airbyte API Key to use when authenticating to the Airbyte service."
+  sensitive = true
   type = string
 }
 
