@@ -23,16 +23,19 @@ variable "google_client_id" {
 }
 
 variable "google_client_secret" {
+  description = "The client secret to use for writing data to Google Sheets."
   type = string
   sensitive = true
 }
 
 variable "google_client_refresh_token" {
+  description = "The refresh token to use for writing data to Google Sheets."
   type = string
   sensitive = true
 }
 
 variable "google_spreadsheet_id" {
+  description = "The ID of the Google Sheet to load data into."
   type = string
   sensitive = false
 }
