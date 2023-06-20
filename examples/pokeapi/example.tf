@@ -12,23 +12,33 @@ provider "airbyte" {
 }
 
 variable "key" {
-  type = string
+  description = "The Airbyte API Key to use when authenticating to the Airbyte service."
+  sensitive   = true
+  type        = string
 }
 
 variable "google_client_id" {
-  type = string
-}
-
-variable "google_spreadsheet_id" {
-  type = string
+  description = "The Client ID to use when writing data to Google Sheets."
+  sensitive   = true
+  type        = string
 }
 
 variable "google_client_secret" {
-  type = string
+  description = "The client secret to use for writing data to Google Sheets."
+  type        = string
+  sensitive   = true
 }
 
 variable "google_client_refresh_token" {
-  type = string
+  description = "The refresh token to use for writing data to Google Sheets."
+  type        = string
+  sensitive   = true
+}
+
+variable "google_spreadsheet_id" {
+  description = "The ID of the Google Sheet to load data into."
+  type        = string
+  sensitive   = false
 }
 
 resource "airbyte_workspace" "my_workspace" {
