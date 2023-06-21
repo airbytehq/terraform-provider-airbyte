@@ -21434,7 +21434,6 @@ components:
           $ref: "#/components/schemas/ScheduleTypeEnum"
         cronExpression:
           type: "string"
-          x-speakeasy-terraform-ignore: true
     ScheduleTypeEnum:
       type: "string"
       enum:
@@ -21451,7 +21450,6 @@ components:
           $ref: "#/components/schemas/ScheduleTypeWithBasicEnum"
         cronExpression:
           type: "string"
-          x-speakeasy-terraform-ignore: true
         basicTiming:
           type: "string"
     ScheduleTypeWithBasicEnum:
