@@ -212,6 +212,13 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 							speakeasy_stringplanmodifier.SuppressDiff(),
 						},
 					},
+					"cron_expression": schema.StringAttribute{
+						Computed: true,
+						PlanModifiers: []planmodifier.String{
+							speakeasy_stringplanmodifier.SuppressDiff(),
+						},
+						Optional: true,
+					},
 					"schedule_type": schema.StringAttribute{
 						PlanModifiers: []planmodifier.String{
 							speakeasy_stringplanmodifier.SuppressDiff(),

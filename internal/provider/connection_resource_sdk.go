@@ -81,9 +81,16 @@ func (r *ConnectionResourceModel) ToCreateSDKType() *shared.ConnectionCreateRequ
 	}
 	var schedule *shared.ConnectionSchedule
 	if r.Schedule != nil {
+		cronExpression := new(string)
+		if !r.Schedule.CronExpression.IsUnknown() && !r.Schedule.CronExpression.IsNull() {
+			*cronExpression = r.Schedule.CronExpression.ValueString()
+		} else {
+			cronExpression = nil
+		}
 		scheduleType := shared.ScheduleTypeEnum(r.Schedule.ScheduleType.ValueString())
 		schedule = &shared.ConnectionSchedule{
-			ScheduleType: scheduleType,
+			CronExpression: cronExpression,
+			ScheduleType:   scheduleType,
 		}
 	}
 	sourceID := r.SourceID.ValueString()
@@ -187,9 +194,16 @@ func (r *ConnectionResourceModel) ToUpdateSDKType() *shared.ConnectionPatchReque
 	}
 	var schedule *shared.ConnectionSchedule
 	if r.Schedule != nil {
+		cronExpression := new(string)
+		if !r.Schedule.CronExpression.IsUnknown() && !r.Schedule.CronExpression.IsNull() {
+			*cronExpression = r.Schedule.CronExpression.ValueString()
+		} else {
+			cronExpression = nil
+		}
 		scheduleType := shared.ScheduleTypeEnum(r.Schedule.ScheduleType.ValueString())
 		schedule = &shared.ConnectionSchedule{
-			ScheduleType: scheduleType,
+			CronExpression: cronExpression,
+			ScheduleType:   scheduleType,
 		}
 	}
 	status := new(shared.ConnectionStatusEnum)
@@ -276,6 +290,11 @@ func (r *ConnectionResourceModel) RefreshFromGetResponse(resp *shared.Connection
 		r.Schedule.BasicTiming = types.StringValue(*resp.Schedule.BasicTiming)
 	} else {
 		r.Schedule.BasicTiming = types.StringNull()
+	}
+	if resp.Schedule.CronExpression != nil {
+		r.Schedule.CronExpression = types.StringValue(*resp.Schedule.CronExpression)
+	} else {
+		r.Schedule.CronExpression = types.StringNull()
 	}
 	r.Schedule.ScheduleType = types.StringValue(string(resp.Schedule.ScheduleType))
 	r.SourceID = types.StringValue(resp.SourceID)
