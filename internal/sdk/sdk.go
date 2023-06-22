@@ -122,7 +122,7 @@ func New(opts ...SDKOption) *SDK {
 		sdkConfiguration: sdkConfiguration{
 			Language:          "terraform",
 			OpenAPIDocVersion: "1.0.0",
-			SDKVersion:        "0.1.1",
+			SDKVersion:        "0.1.2",
 			GenVersion:        "2.41.5",
 		},
 	}

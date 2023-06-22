@@ -5,6 +5,7 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type ConnectionSchedule struct {
-	BasicTiming  types.String `tfsdk:"basic_timing"`
-	ScheduleType types.String `tfsdk:"schedule_type"`
+	BasicTiming    types.String `tfsdk:"basic_timing"`
+	CronExpression types.String `tfsdk:"cron_expression"`
+	ScheduleType   types.String `tfsdk:"schedule_type"`
 }
