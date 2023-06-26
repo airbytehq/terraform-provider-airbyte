@@ -31,8 +31,8 @@ DestinationDevNull Resource
 
 Required:
 
-- `destination_type` (String)
-- `test_destination` (Attributes) (see [below for nested schema](#nestedatt--configuration--test_destination))
+- `destination_type` (String) must be one of [dev-null]
+- `test_destination` (Attributes) The type of destination to be used (see [below for nested schema](#nestedatt--configuration--test_destination))
 
 <a id="nestedatt--configuration--test_destination"></a>
 ### Nested Schema for `configuration.test_destination`
@@ -47,7 +47,7 @@ Optional:
 
 Required:
 
-- `test_destination_type` (String)
+- `test_destination_type` (String) must be one of [SILENT]
 
 
 <a id="nestedatt--configuration--test_destination--destination_dev_null_update_test_destination_silent"></a>
@@ -55,6 +55,6 @@ Required:
 
 Required:
 
-- `test_destination_type` (String)
+- `test_destination_type` (String) must be one of [SILENT]
 
 

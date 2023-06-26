@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceApifyDatasetResource{}
 var _ resource.ResourceWithImportState = &SourceApifyDatasetResource{}
 
@@ -56,10 +53,12 @@ func (r *SourceApifyDatasetResource) Schema(ctx context.Context, req resource.Sc
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"clean": schema.BoolAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `If set to true, only clean items will be downloaded from the dataset. See description of what clean means in <a href="https://docs.apify.com/api/v2#/reference/datasets/item-collection/get-items">Apify API docs</a>. If not sure, set clean to false.`,
 					},
 					"dataset_id": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `ID of the dataset you would like to load to Airbyte.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -68,6 +67,7 @@ func (r *SourceApifyDatasetResource) Schema(ctx context.Context, req resource.Sc
 								"apify-dataset",
 							),
 						},
+						Description: `must be one of [apify-dataset]`,
 					},
 				},
 			},
@@ -78,7 +78,8 @@ func (r *SourceApifyDatasetResource) Schema(ctx context.Context, req resource.Sc
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

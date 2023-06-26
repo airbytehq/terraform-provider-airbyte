@@ -23,7 +23,7 @@ SourceCloseCom Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,11 +35,11 @@ SourceCloseCom Resource
 
 Required:
 
-- `api_key` (String)
-- `source_type` (String)
+- `api_key` (String) Close.com API key (usually starts with 'api_'; find yours <a href="https://app.close.com/settings/api/">here</a>).
+- `source_type` (String) must be one of [close-com]
 
 Optional:
 
-- `start_date` (String)
+- `start_date` (String) The start date to sync data. Leave blank for full sync. Format: YYYY-MM-DD.
 
 

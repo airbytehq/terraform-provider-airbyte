@@ -23,7 +23,7 @@ SourceFacebookPages Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,8 +35,8 @@ SourceFacebookPages Resource
 
 Required:
 
-- `access_token` (String)
-- `page_id` (String)
-- `source_type` (String)
+- `access_token` (String) Facebook Page Access Token
+- `page_id` (String) Page ID
+- `source_type` (String) must be one of [facebook-pages]
 
 

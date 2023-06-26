@@ -23,7 +23,7 @@ SourcePersistiq Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,7 +35,7 @@ SourcePersistiq Resource
 
 Required:
 
-- `api_key` (String)
-- `source_type` (String)
+- `api_key` (String) PersistIq API Key. See the <a href="https://apidocs.persistiq.com/#authentication">docs</a> for more information on where to find that key.
+- `source_type` (String) must be one of [persistiq]
 
 

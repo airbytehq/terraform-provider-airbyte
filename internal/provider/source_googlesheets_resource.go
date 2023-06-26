@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceGoogleSheetsResource{}
 var _ resource.ResourceWithImportState = &SourceGoogleSheetsResource{}
 
@@ -69,15 +66,19 @@ func (r *SourceGoogleSheetsResource) Schema(ctx context.Context, req resource.Sc
 												"Client",
 											),
 										},
+										Description: `must be one of [Client]`,
 									},
 									"client_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Enter your Google application's Client ID`,
 									},
 									"client_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Enter your Google application's Client Secret`,
 									},
 									"refresh_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Enter your Google application's refresh token`,
 									},
 								},
 								Description: `Credentials for connecting to the Google Sheets API`,
@@ -92,9 +93,11 @@ func (r *SourceGoogleSheetsResource) Schema(ctx context.Context, req resource.Sc
 												"Service",
 											),
 										},
+										Description: `must be one of [Service]`,
 									},
 									"service_account_info": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Enter your Google Cloud <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">service account key</a> in JSON format`,
 									},
 								},
 								Description: `Credentials for connecting to the Google Sheets API`,
@@ -109,15 +112,19 @@ func (r *SourceGoogleSheetsResource) Schema(ctx context.Context, req resource.Sc
 												"Client",
 											),
 										},
+										Description: `must be one of [Client]`,
 									},
 									"client_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Enter your Google application's Client ID`,
 									},
 									"client_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Enter your Google application's Client Secret`,
 									},
 									"refresh_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Enter your Google application's refresh token`,
 									},
 								},
 								Description: `Credentials for connecting to the Google Sheets API`,
@@ -132,9 +139,11 @@ func (r *SourceGoogleSheetsResource) Schema(ctx context.Context, req resource.Sc
 												"Service",
 											),
 										},
+										Description: `must be one of [Service]`,
 									},
 									"service_account_info": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Enter your Google Cloud <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">service account key</a> in JSON format`,
 									},
 								},
 								Description: `Credentials for connecting to the Google Sheets API`,
@@ -143,9 +152,11 @@ func (r *SourceGoogleSheetsResource) Schema(ctx context.Context, req resource.Sc
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+						Description: `Credentials for connecting to the Google Sheets API`,
 					},
 					"row_batch_size": schema.Int64Attribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Number of rows fetched when making a Google Sheet API call. Defaults to 200.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -154,9 +165,11 @@ func (r *SourceGoogleSheetsResource) Schema(ctx context.Context, req resource.Sc
 								"google-sheets",
 							),
 						},
+						Description: `must be one of [google-sheets]`,
 					},
 					"spreadsheet_id": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Enter the link to the Google spreadsheet you want to sync`,
 					},
 				},
 			},
@@ -167,7 +180,8 @@ func (r *SourceGoogleSheetsResource) Schema(ctx context.Context, req resource.Sc
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

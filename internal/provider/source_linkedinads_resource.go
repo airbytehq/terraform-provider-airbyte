@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceLinkedinAdsResource{}
 var _ resource.ResourceWithImportState = &SourceLinkedinAdsResource{}
 
@@ -59,6 +56,7 @@ func (r *SourceLinkedinAdsResource) Schema(ctx context.Context, req resource.Sch
 					"account_ids": schema.ListAttribute{
 						Optional:    true,
 						ElementType: types.Int64Type,
+						Description: `Specify the account IDs separated by a space, to pull the data from. Leave empty, if you want to pull the data from all associated accounts. See the <a href="https://www.linkedin.com/help/linkedin/answer/a424270/find-linkedin-ads-account-details?lang=en">LinkedIn Ads docs</a> for more info.`,
 					},
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
@@ -67,7 +65,8 @@ func (r *SourceLinkedinAdsResource) Schema(ctx context.Context, req resource.Sch
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The token value generated using the authentication code. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-ads#authentication">docs</a> to obtain yours.`,
 									},
 									"auth_method": schema.StringAttribute{
 										Optional: true,
@@ -76,6 +75,7 @@ func (r *SourceLinkedinAdsResource) Schema(ctx context.Context, req resource.Sch
 												"access_token",
 											),
 										},
+										Description: `must be one of [access_token]`,
 									},
 								},
 							},
@@ -89,15 +89,19 @@ func (r *SourceLinkedinAdsResource) Schema(ctx context.Context, req resource.Sch
 												"oAuth2.0",
 											),
 										},
+										Description: `must be one of [oAuth2.0]`,
 									},
 									"client_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The client ID of the LinkedIn Ads developer application.`,
 									},
 									"client_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The client secret the LinkedIn Ads developer application.`,
 									},
 									"refresh_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The key to refresh the expired access token.`,
 									},
 								},
 							},
@@ -105,7 +109,8 @@ func (r *SourceLinkedinAdsResource) Schema(ctx context.Context, req resource.Sch
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The token value generated using the authentication code. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-ads#authentication">docs</a> to obtain yours.`,
 									},
 									"auth_method": schema.StringAttribute{
 										Optional: true,
@@ -114,6 +119,7 @@ func (r *SourceLinkedinAdsResource) Schema(ctx context.Context, req resource.Sch
 												"access_token",
 											),
 										},
+										Description: `must be one of [access_token]`,
 									},
 								},
 							},
@@ -127,15 +133,19 @@ func (r *SourceLinkedinAdsResource) Schema(ctx context.Context, req resource.Sch
 												"oAuth2.0",
 											),
 										},
+										Description: `must be one of [oAuth2.0]`,
 									},
 									"client_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The client ID of the LinkedIn Ads developer application.`,
 									},
 									"client_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The client secret the LinkedIn Ads developer application.`,
 									},
 									"refresh_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The key to refresh the expired access token.`,
 									},
 								},
 							},
@@ -151,12 +161,14 @@ func (r *SourceLinkedinAdsResource) Schema(ctx context.Context, req resource.Sch
 								"linkedin-ads",
 							),
 						},
+						Description: `must be one of [linkedin-ads]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
+						Description: `UTC date in the format 2020-09-17. Any data before this date will not be replicated.`,
 					},
 				},
 			},
@@ -167,7 +179,8 @@ func (r *SourceLinkedinAdsResource) Schema(ctx context.Context, req resource.Sch
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

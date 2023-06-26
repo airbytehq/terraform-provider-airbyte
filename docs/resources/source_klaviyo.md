@@ -23,7 +23,7 @@ SourceKlaviyo Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,8 +35,8 @@ SourceKlaviyo Resource
 
 Required:
 
-- `api_key` (String)
-- `source_type` (String)
-- `start_date` (String)
+- `api_key` (String) Klaviyo API Key. See our <a href="https://docs.airbyte.com/integrations/sources/klaviyo">docs</a> if you need help finding this key.
+- `source_type` (String) must be one of [klaviyo]
+- `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 
 

@@ -23,7 +23,7 @@ SourcePunkAPI Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,12 +35,12 @@ SourcePunkAPI Resource
 
 Required:
 
-- `brewed_after` (String)
-- `brewed_before` (String)
-- `source_type` (String)
+- `brewed_after` (String) To extract specific data with Unique ID
+- `brewed_before` (String) To extract specific data with Unique ID
+- `source_type` (String) must be one of [punk-api]
 
 Optional:
 
-- `id` (String)
+- `id` (String) To extract specific data with Unique ID
 
 

@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &DestinationScyllaResource{}
 var _ resource.ResourceWithImportState = &DestinationScyllaResource{}
 
@@ -55,7 +52,8 @@ func (r *DestinationScyllaResource) Schema(ctx context.Context, req resource.Sch
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"address": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Address to connect to.`,
 					},
 					"destination_type": schema.StringAttribute{
 						Required: true,
@@ -64,21 +62,27 @@ func (r *DestinationScyllaResource) Schema(ctx context.Context, req resource.Sch
 								"scylla",
 							),
 						},
+						Description: `must be one of [scylla]`,
 					},
 					"keyspace": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Default Scylla keyspace to create data in.`,
 					},
 					"password": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Password associated with Scylla.`,
 					},
 					"port": schema.Int64Attribute{
-						Required: true,
+						Required:    true,
+						Description: `Port of Scylla.`,
 					},
 					"replication": schema.Int64Attribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Indicates to how many nodes the data should be replicated to.`,
 					},
 					"username": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Username to use to access Scylla.`,
 					},
 				},
 			},

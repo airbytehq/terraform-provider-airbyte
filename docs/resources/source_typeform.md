@@ -23,7 +23,7 @@ SourceTypeform Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,12 +35,12 @@ SourceTypeform Resource
 
 Required:
 
-- `source_type` (String)
-- `start_date` (String)
-- `token` (String)
+- `source_type` (String) must be one of [typeform]
+- `start_date` (String) UTC date and time in the format: YYYY-MM-DDTHH:mm:ss[Z]. Any data before this date will not be replicated.
+- `token` (String) The API Token for a Typeform account.
 
 Optional:
 
-- `form_ids` (List of String)
+- `form_ids` (List of String) When this parameter is set, the connector will replicate data only from the input forms. Otherwise, all forms in your Typeform account will be replicated. You can find form IDs in your form URLs. For example, in the URL "https://mysite.typeform.com/to/u6nXL7" the form_id is u6nXL7. You can find form URLs on Share panel
 
 

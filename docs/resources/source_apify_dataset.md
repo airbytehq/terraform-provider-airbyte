@@ -23,7 +23,7 @@ SourceApifyDataset Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,11 +35,11 @@ SourceApifyDataset Resource
 
 Required:
 
-- `dataset_id` (String)
-- `source_type` (String)
+- `dataset_id` (String) ID of the dataset you would like to load to Airbyte.
+- `source_type` (String) must be one of [apify-dataset]
 
 Optional:
 
-- `clean` (Boolean)
+- `clean` (Boolean) If set to true, only clean items will be downloaded from the dataset. See description of what clean means in <a href="https://docs.apify.com/api/v2#/reference/datasets/item-collection/get-items">Apify API docs</a>. If not sure, set clean to false.
 
 

@@ -23,7 +23,7 @@ SourceK6Cloud Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,7 +35,7 @@ SourceK6Cloud Resource
 
 Required:
 
-- `api_token` (String)
-- `source_type` (String)
+- `api_token` (String) Your API Token. See <a href="https://k6.io/docs/cloud/integrations/token/">here</a>. The key is case sensitive.
+- `source_type` (String) must be one of [k6-cloud]
 
 

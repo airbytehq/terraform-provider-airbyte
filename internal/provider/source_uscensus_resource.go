@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceUsCensusResource{}
 var _ resource.ResourceWithImportState = &SourceUsCensusResource{}
 
@@ -56,13 +53,16 @@ func (r *SourceUsCensusResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Your API Key. Get your key <a href="https://api.census.gov/data/key_signup.html">here</a>.`,
 					},
 					"query_params": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The query parameters portion of the GET request, without the api key`,
 					},
 					"query_path": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The path portion of the GET request`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -71,6 +71,7 @@ func (r *SourceUsCensusResource) Schema(ctx context.Context, req resource.Schema
 								"us-census",
 							),
 						},
+						Description: `must be one of [us-census]`,
 					},
 				},
 			},
@@ -81,7 +82,8 @@ func (r *SourceUsCensusResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

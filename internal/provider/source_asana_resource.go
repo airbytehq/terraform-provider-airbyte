@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceAsanaResource{}
 var _ resource.ResourceWithImportState = &SourceAsanaResource{}
 
@@ -75,7 +72,8 @@ func (r *SourceAsanaResource) Schema(ctx context.Context, req resource.SchemaReq
 												"OAuth Credentials",
 											),
 										},
-										Description: `OAuth Credentials`,
+										MarkdownDescription: `must be one of [OAuth Credentials]` + "\n" +
+											`OAuth Credentials`,
 									},
 									"refresh_token": schema.StringAttribute{
 										Required: true,
@@ -93,10 +91,12 @@ func (r *SourceAsanaResource) Schema(ctx context.Context, req resource.SchemaReq
 												"PAT Credentials",
 											),
 										},
-										Description: `PAT Credentials`,
+										MarkdownDescription: `must be one of [PAT Credentials]` + "\n" +
+											`PAT Credentials`,
 									},
 									"personal_access_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Asana Personal Access Token (generate yours <a href="https://app.asana.com/0/developer-console">here</a>).`,
 									},
 								},
 								Description: `Choose how to authenticate to Github`,
@@ -117,7 +117,8 @@ func (r *SourceAsanaResource) Schema(ctx context.Context, req resource.SchemaReq
 												"OAuth Credentials",
 											),
 										},
-										Description: `OAuth Credentials`,
+										MarkdownDescription: `must be one of [OAuth Credentials]` + "\n" +
+											`OAuth Credentials`,
 									},
 									"refresh_token": schema.StringAttribute{
 										Required: true,
@@ -135,10 +136,12 @@ func (r *SourceAsanaResource) Schema(ctx context.Context, req resource.SchemaReq
 												"PAT Credentials",
 											),
 										},
-										Description: `PAT Credentials`,
+										MarkdownDescription: `must be one of [PAT Credentials]` + "\n" +
+											`PAT Credentials`,
 									},
 									"personal_access_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Asana Personal Access Token (generate yours <a href="https://app.asana.com/0/developer-console">here</a>).`,
 									},
 								},
 								Description: `Choose how to authenticate to Github`,
@@ -147,6 +150,7 @@ func (r *SourceAsanaResource) Schema(ctx context.Context, req resource.SchemaReq
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+						Description: `Choose how to authenticate to Github`,
 					},
 					"source_type": schema.StringAttribute{
 						Optional: true,
@@ -155,6 +159,7 @@ func (r *SourceAsanaResource) Schema(ctx context.Context, req resource.SchemaReq
 								"asana",
 							),
 						},
+						Description: `must be one of [asana]`,
 					},
 				},
 			},
@@ -165,7 +170,8 @@ func (r *SourceAsanaResource) Schema(ctx context.Context, req resource.SchemaReq
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

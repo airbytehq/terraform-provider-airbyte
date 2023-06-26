@@ -23,7 +23,7 @@ SourceEmailoctopus Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,7 +35,7 @@ SourceEmailoctopus Resource
 
 Required:
 
-- `api_key` (String)
-- `source_type` (String)
+- `api_key` (String) EmailOctopus API Key. See the <a href="https://help.emailoctopus.com/article/165-how-to-create-and-delete-api-keys">docs</a> for information on how to generate this key.
+- `source_type` (String) must be one of [emailoctopus]
 
 

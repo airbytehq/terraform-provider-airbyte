@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceXeroResource{}
 var _ resource.ResourceWithImportState = &SourceXeroResource{}
 
@@ -60,19 +57,24 @@ func (r *SourceXeroResource) Schema(ctx context.Context, req resource.SchemaRequ
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"access_token": schema.StringAttribute{
-								Required: true,
+								Required:    true,
+								Description: `Enter your Xero application's access token`,
 							},
 							"client_id": schema.StringAttribute{
-								Required: true,
+								Required:    true,
+								Description: `Enter your Xero application's Client ID`,
 							},
 							"client_secret": schema.StringAttribute{
-								Required: true,
+								Required:    true,
+								Description: `Enter your Xero application's Client Secret`,
 							},
 							"refresh_token": schema.StringAttribute{
-								Required: true,
+								Required:    true,
+								Description: `Enter your Xero application's refresh token`,
 							},
 							"token_expiry_date": schema.StringAttribute{
-								Required: true,
+								Required:    true,
+								Description: `The date-time when the access token should be refreshed`,
 							},
 						},
 					},
@@ -83,15 +85,18 @@ func (r *SourceXeroResource) Schema(ctx context.Context, req resource.SchemaRequ
 								"xero",
 							),
 						},
+						Description: `must be one of [xero]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
+						Description: `UTC date and time in the format YYYY-MM-DDTHH:mm:ssZ. Any data with created_at before this data will not be synced.`,
 					},
 					"tenant_id": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Enter your Xero organization's Tenant ID`,
 					},
 				},
 			},
@@ -102,7 +107,8 @@ func (r *SourceXeroResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

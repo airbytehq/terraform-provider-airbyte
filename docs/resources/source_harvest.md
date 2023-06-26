@@ -23,7 +23,7 @@ SourceHarvest Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,14 +35,14 @@ SourceHarvest Resource
 
 Required:
 
-- `account_id` (String)
-- `replication_start_date` (String)
-- `source_type` (String)
+- `account_id` (String) Harvest account ID. Required for all Harvest requests in pair with Personal Access Token
+- `replication_start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
+- `source_type` (String) must be one of [harvest]
 
 Optional:
 
-- `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `replication_end_date` (String)
+- `credentials` (Attributes) Choose how to authenticate to Harvest. (see [below for nested schema](#nestedatt--configuration--credentials))
+- `replication_end_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data after this date will not be replicated.
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
@@ -59,14 +59,14 @@ Optional:
 
 Required:
 
-- `client_id` (String)
-- `client_secret` (String)
-- `refresh_token` (String)
+- `client_id` (String) The Client ID of your Harvest developer application.
+- `client_secret` (String) The Client Secret of your Harvest developer application.
+- `refresh_token` (String) Refresh Token to renew the expired Access Token.
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `auth_type` (String)
+- `auth_type` (String) must be one of [Client]
 
 
 <a id="nestedatt--configuration--credentials--source_harvest_authentication_mechanism_authenticate_with_personal_access_token"></a>
@@ -74,12 +74,12 @@ Optional:
 
 Required:
 
-- `api_token` (String)
+- `api_token` (String) Log into Harvest and then create new <a href="https://id.getharvest.com/developers"> personal access token</a>.
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `auth_type` (String)
+- `auth_type` (String) must be one of [Token]
 
 
 <a id="nestedatt--configuration--credentials--source_harvest_update_authentication_mechanism_authenticate_via_harvest_o_auth"></a>
@@ -87,14 +87,14 @@ Optional:
 
 Required:
 
-- `client_id` (String)
-- `client_secret` (String)
-- `refresh_token` (String)
+- `client_id` (String) The Client ID of your Harvest developer application.
+- `client_secret` (String) The Client Secret of your Harvest developer application.
+- `refresh_token` (String) Refresh Token to renew the expired Access Token.
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `auth_type` (String)
+- `auth_type` (String) must be one of [Client]
 
 
 <a id="nestedatt--configuration--credentials--source_harvest_update_authentication_mechanism_authenticate_with_personal_access_token"></a>
@@ -102,11 +102,11 @@ Optional:
 
 Required:
 
-- `api_token` (String)
+- `api_token` (String) Log into Harvest and then create new <a href="https://id.getharvest.com/developers"> personal access token</a>.
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `auth_type` (String)
+- `auth_type` (String) must be one of [Token]
 
 

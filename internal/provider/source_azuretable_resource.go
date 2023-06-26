@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceAzureTableResource{}
 var _ resource.ResourceWithImportState = &SourceAzureTableResource{}
 
@@ -62,15 +59,19 @@ func (r *SourceAzureTableResource) Schema(ctx context.Context, req resource.Sche
 								"azure-table",
 							),
 						},
+						Description: `must be one of [azure-table]`,
 					},
 					"storage_access_key": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Azure Table Storage Access Key. See the <a href="https://docs.airbyte.com/integrations/sources/azure-table">docs</a> for more information on how to obtain this key.`,
 					},
 					"storage_account_name": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The name of your storage account.`,
 					},
 					"storage_endpoint_suffix": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Azure Table Storage service account URL suffix. See the <a href="https://docs.airbyte.com/integrations/sources/azure-table">docs</a> for more information on how to obtain endpoint suffix`,
 					},
 				},
 			},
@@ -81,7 +82,8 @@ func (r *SourceAzureTableResource) Schema(ctx context.Context, req resource.Sche
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

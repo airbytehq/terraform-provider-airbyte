@@ -23,7 +23,7 @@ SourceMailjetSms Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,12 +35,12 @@ SourceMailjetSms Resource
 
 Required:
 
-- `source_type` (String)
-- `token` (String)
+- `source_type` (String) must be one of [mailjet-sms]
+- `token` (String) Your access token. See <a href="https://dev.mailjet.com/sms/reference/overview/authentication">here</a>.
 
 Optional:
 
-- `end_date` (Number)
-- `start_date` (Number)
+- `end_date` (Number) Retrieve SMS messages created before the specified timestamp. Required format - Unix timestamp.
+- `start_date` (Number) Retrieve SMS messages created after the specified timestamp. Required format - Unix timestamp.
 
 

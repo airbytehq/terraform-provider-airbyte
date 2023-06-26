@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceMailjetSmsResource{}
 var _ resource.ResourceWithImportState = &SourceMailjetSmsResource{}
 
@@ -56,7 +53,8 @@ func (r *SourceMailjetSmsResource) Schema(ctx context.Context, req resource.Sche
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"end_date": schema.Int64Attribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Retrieve SMS messages created before the specified timestamp. Required format - Unix timestamp.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -65,12 +63,15 @@ func (r *SourceMailjetSmsResource) Schema(ctx context.Context, req resource.Sche
 								"mailjet-sms",
 							),
 						},
+						Description: `must be one of [mailjet-sms]`,
 					},
 					"start_date": schema.Int64Attribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Retrieve SMS messages created after the specified timestamp. Required format - Unix timestamp.`,
 					},
 					"token": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Your access token. See <a href="https://dev.mailjet.com/sms/reference/overview/authentication">here</a>.`,
 					},
 				},
 			},
@@ -81,7 +82,8 @@ func (r *SourceMailjetSmsResource) Schema(ctx context.Context, req resource.Sche
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

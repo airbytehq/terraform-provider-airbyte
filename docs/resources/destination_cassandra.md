@@ -31,16 +31,16 @@ DestinationCassandra Resource
 
 Required:
 
-- `address` (String)
-- `destination_type` (String)
-- `keyspace` (String)
-- `password` (String)
-- `port` (Number)
-- `username` (String)
+- `address` (String) Address to connect to.
+- `destination_type` (String) must be one of [cassandra]
+- `keyspace` (String) Default Cassandra keyspace to create data in.
+- `password` (String) Password associated with Cassandra.
+- `port` (Number) Port of Cassandra.
+- `username` (String) Username to use to access Cassandra.
 
 Optional:
 
-- `datacenter` (String)
-- `replication` (Number)
+- `datacenter` (String) Datacenter of the cassandra cluster.
+- `replication` (Number) Indicates to how many nodes the data should be replicated to.
 
 

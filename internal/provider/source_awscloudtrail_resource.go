@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceAwsCloudtrailResource{}
 var _ resource.ResourceWithImportState = &SourceAwsCloudtrailResource{}
 
@@ -57,13 +54,16 @@ func (r *SourceAwsCloudtrailResource) Schema(ctx context.Context, req resource.S
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"aws_key_id": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `AWS CloudTrail Access Key ID. See the <a href="https://docs.airbyte.com/integrations/sources/aws-cloudtrail">docs</a> for more information on how to obtain this key.`,
 					},
 					"aws_region_name": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The default AWS Region to use, for example, us-west-1 or us-west-2. When specifying a Region inline during client initialization, this property is named region_name.`,
 					},
 					"aws_secret_key": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `AWS CloudTrail Access Key ID. See the <a href="https://docs.airbyte.com/integrations/sources/aws-cloudtrail">docs</a> for more information on how to obtain this key.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -72,12 +72,14 @@ func (r *SourceAwsCloudtrailResource) Schema(ctx context.Context, req resource.S
 								"aws-cloudtrail",
 							),
 						},
+						Description: `must be one of [aws-cloudtrail]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
+						Description: `The date you would like to replicate data. Data in AWS CloudTrail is available for last 90 days only. Format: YYYY-MM-DD.`,
 					},
 				},
 			},
@@ -88,7 +90,8 @@ func (r *SourceAwsCloudtrailResource) Schema(ctx context.Context, req resource.S
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

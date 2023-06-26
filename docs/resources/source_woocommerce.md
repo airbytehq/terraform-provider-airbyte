@@ -23,7 +23,7 @@ SourceWoocommerce Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,10 +35,10 @@ SourceWoocommerce Resource
 
 Required:
 
-- `api_key` (String)
-- `api_secret` (String)
-- `shop` (String)
-- `source_type` (String)
-- `start_date` (String)
+- `api_key` (String) Customer Key for API in WooCommerce shop
+- `api_secret` (String) Customer Secret for API in WooCommerce shop
+- `shop` (String) The name of the store. For https://EXAMPLE.com, the shop name is 'EXAMPLE.com'.
+- `source_type` (String) must be one of [woocommerce]
+- `start_date` (String) The date you would like to replicate data from. Format: YYYY-MM-DD
 
 

@@ -23,7 +23,7 @@ SourceYotpo Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,10 +35,10 @@ SourceYotpo Resource
 
 Required:
 
-- `access_token` (String)
-- `app_key` (String)
-- `email` (String)
-- `source_type` (String)
-- `start_date` (String)
+- `access_token` (String) Access token recieved as a result of API call to https://api.yotpo.com/oauth/token (Ref- https://apidocs.yotpo.com/reference/yotpo-authentication)
+- `app_key` (String) App key found at settings (Ref- https://settings.yotpo.com/#/general_settings)
+- `email` (String) Email address registered with yotpo.
+- `source_type` (String) must be one of [yotpo]
+- `start_date` (String) Date time filter for incremental filter, Specify which date to extract from.
 
 

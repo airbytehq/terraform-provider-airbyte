@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceFaunaResource{}
 var _ resource.ResourceWithImportState = &SourceFaunaResource{}
 
@@ -72,6 +69,7 @@ func (r *SourceFaunaResource) Schema(ctx context.Context, req resource.SchemaReq
 														"ignore",
 													),
 												},
+												Description: `must be one of [ignore]`,
 											},
 										},
 										MarkdownDescription: `<b>This only applies to incremental syncs.</b> <br>` + "\n" +
@@ -83,7 +81,8 @@ func (r *SourceFaunaResource) Schema(ctx context.Context, req resource.SchemaReq
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"column": schema.StringAttribute{
-												Required: true,
+												Required:    true,
+												Description: `Name of the "deleted at" column.`,
 											},
 											"deletion_mode": schema.StringAttribute{
 												Required: true,
@@ -92,6 +91,7 @@ func (r *SourceFaunaResource) Schema(ctx context.Context, req resource.SchemaReq
 														"deleted_field",
 													),
 												},
+												Description: `must be one of [deleted_field]`,
 											},
 										},
 										MarkdownDescription: `<b>This only applies to incremental syncs.</b> <br>` + "\n" +
@@ -109,6 +109,7 @@ func (r *SourceFaunaResource) Schema(ctx context.Context, req resource.SchemaReq
 														"ignore",
 													),
 												},
+												Description: `must be one of [ignore]`,
 											},
 										},
 										MarkdownDescription: `<b>This only applies to incremental syncs.</b> <br>` + "\n" +
@@ -120,7 +121,8 @@ func (r *SourceFaunaResource) Schema(ctx context.Context, req resource.SchemaReq
 										Optional: true,
 										Attributes: map[string]schema.Attribute{
 											"column": schema.StringAttribute{
-												Required: true,
+												Required:    true,
+												Description: `Name of the "deleted at" column.`,
 											},
 											"deletion_mode": schema.StringAttribute{
 												Required: true,
@@ -129,6 +131,7 @@ func (r *SourceFaunaResource) Schema(ctx context.Context, req resource.SchemaReq
 														"deleted_field",
 													),
 												},
+												Description: `must be one of [deleted_field]`,
 											},
 										},
 										MarkdownDescription: `<b>This only applies to incremental syncs.</b> <br>` + "\n" +
@@ -140,24 +143,35 @@ func (r *SourceFaunaResource) Schema(ctx context.Context, req resource.SchemaReq
 								Validators: []validator.Object{
 									validators.ExactlyOneChild(),
 								},
+								MarkdownDescription: `<b>This only applies to incremental syncs.</b> <br>` + "\n" +
+									`Enabling deletion mode informs your destination of deleted documents.<br>` + "\n" +
+									`Disabled - Leave this feature disabled, and ignore deleted documents.<br>` + "\n" +
+									`Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted.`,
 							},
 							"page_size": schema.Int64Attribute{
 								Required: true,
+								MarkdownDescription: `The page size used when reading documents from the database. The larger the page size, the faster the connector processes documents. However, if a page is too large, the connector may fail. <br>` + "\n" +
+									`Choose your page size based on how large the documents are. <br>` + "\n" +
+									`See <a href="https://docs.fauna.com/fauna/current/learn/understanding/types#page">the docs</a>.`,
 							},
 						},
 						Description: `Settings for the Fauna Collection.`,
 					},
 					"domain": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Domain of Fauna to query. Defaults db.fauna.com. See <a href=https://docs.fauna.com/fauna/current/learn/understanding/region_groups#how-to-use-region-groups>the docs</a>.`,
 					},
 					"port": schema.Int64Attribute{
-						Required: true,
+						Required:    true,
+						Description: `Endpoint port.`,
 					},
 					"scheme": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `URL scheme.`,
 					},
 					"secret": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Fauna secret, used when authenticating with the database.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -166,6 +180,7 @@ func (r *SourceFaunaResource) Schema(ctx context.Context, req resource.SchemaReq
 								"fauna",
 							),
 						},
+						Description: `must be one of [fauna]`,
 					},
 				},
 			},
@@ -176,7 +191,8 @@ func (r *SourceFaunaResource) Schema(ctx context.Context, req resource.SchemaReq
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

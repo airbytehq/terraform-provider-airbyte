@@ -23,7 +23,7 @@ SourceSpacexAPI Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -37,6 +37,6 @@ Optional:
 
 - `id` (String)
 - `options` (String)
-- `source_type` (String)
+- `source_type` (String) must be one of [spacex-api]
 
 

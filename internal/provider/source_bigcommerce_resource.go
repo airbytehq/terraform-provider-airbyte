@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceBigcommerceResource{}
 var _ resource.ResourceWithImportState = &SourceBigcommerceResource{}
 
@@ -56,7 +53,8 @@ func (r *SourceBigcommerceResource) Schema(ctx context.Context, req resource.Sch
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"access_token": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Access Token for making authenticated requests.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -65,12 +63,15 @@ func (r *SourceBigcommerceResource) Schema(ctx context.Context, req resource.Sch
 								"bigcommerce",
 							),
 						},
+						Description: `must be one of [bigcommerce]`,
 					},
 					"start_date": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The date you would like to replicate data. Format: YYYY-MM-DD.`,
 					},
 					"store_hash": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The hash code of the store. For https://api.bigcommerce.com/stores/HASH_CODE/v3/, The store's hash code is 'HASH_CODE'.`,
 					},
 				},
 			},
@@ -81,7 +82,8 @@ func (r *SourceBigcommerceResource) Schema(ctx context.Context, req resource.Sch
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

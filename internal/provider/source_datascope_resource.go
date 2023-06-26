@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceDatascopeResource{}
 var _ resource.ResourceWithImportState = &SourceDatascopeResource{}
 
@@ -56,7 +53,8 @@ func (r *SourceDatascopeResource) Schema(ctx context.Context, req resource.Schem
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `API Key`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -65,9 +63,11 @@ func (r *SourceDatascopeResource) Schema(ctx context.Context, req resource.Schem
 								"datascope",
 							),
 						},
+						Description: `must be one of [datascope]`,
 					},
 					"start_date": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Start date for the data to be replicated`,
 					},
 				},
 			},
@@ -78,7 +78,8 @@ func (r *SourceDatascopeResource) Schema(ctx context.Context, req resource.Schem
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceGithubResource{}
 var _ resource.ResourceWithImportState = &SourceGithubResource{}
 
@@ -57,7 +54,8 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"branch": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Space-delimited list of GitHub repository branches to pull commits for, e.g. ` + "`" + `airbytehq/airbyte/master` + "`" + `. If no branches are specified for a repository, the default branch will be pulled.`,
 					},
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
@@ -66,7 +64,8 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OAuth access token`,
 									},
 									"option_title": schema.StringAttribute{
 										Optional: true,
@@ -75,6 +74,7 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 												"OAuth Credentials",
 											),
 										},
+										Description: `must be one of [OAuth Credentials]`,
 									},
 								},
 								Description: `Choose how to authenticate to GitHub`,
@@ -89,9 +89,11 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 												"PAT Credentials",
 											),
 										},
+										Description: `must be one of [PAT Credentials]`,
 									},
 									"personal_access_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Log into GitHub and then generate a <a href="https://github.com/settings/tokens">personal access token</a>. To load balance your API quota consumption across multiple API tokens, input multiple tokens separated with ","`,
 									},
 								},
 								Description: `Choose how to authenticate to GitHub`,
@@ -100,7 +102,8 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OAuth access token`,
 									},
 									"option_title": schema.StringAttribute{
 										Optional: true,
@@ -109,6 +112,7 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 												"OAuth Credentials",
 											),
 										},
+										Description: `must be one of [OAuth Credentials]`,
 									},
 								},
 								Description: `Choose how to authenticate to GitHub`,
@@ -123,9 +127,11 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 												"PAT Credentials",
 											),
 										},
+										Description: `must be one of [PAT Credentials]`,
 									},
 									"personal_access_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Log into GitHub and then generate a <a href="https://github.com/settings/tokens">personal access token</a>. To load balance your API quota consumption across multiple API tokens, input multiple tokens separated with ","`,
 									},
 								},
 								Description: `Choose how to authenticate to GitHub`,
@@ -134,12 +140,15 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+						Description: `Choose how to authenticate to GitHub`,
 					},
 					"repository": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Space-delimited list of GitHub organizations/repositories, e.g. ` + "`" + `airbytehq/airbyte` + "`" + ` for single repository, ` + "`" + `airbytehq/*` + "`" + ` for get all repositories from organization and ` + "`" + `airbytehq/airbyte airbytehq/another-repo` + "`" + ` for multiple repositories.`,
 					},
 					"requests_per_hour": schema.Int64Attribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The GitHub API allows for a maximum of 5000 requests per hour (15000 for Github Enterprise). You can specify a lower value to limit your use of the API quota.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -148,12 +157,14 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 								"github",
 							),
 						},
+						Description: `must be one of [github]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
+						Description: `The date from which you'd like to replicate data from GitHub in the format YYYY-MM-DDT00:00:00Z. For the streams which support this configuration, only data generated on or after the start date will be replicated. This field doesn't apply to all streams, see the <a href="https://docs.airbyte.com/integrations/sources/github">docs</a> for more info`,
 					},
 				},
 			},
@@ -164,7 +175,8 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

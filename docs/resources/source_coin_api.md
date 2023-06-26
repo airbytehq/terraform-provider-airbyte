@@ -23,7 +23,7 @@ SourceCoinAPI Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,16 +35,22 @@ SourceCoinAPI Resource
 
 Required:
 
-- `api_key` (String)
-- `environment` (String) The environment to use. Either sandbox or production.
-- `period` (String)
-- `source_type` (String)
-- `start_date` (String)
-- `symbol_id` (String)
+- `api_key` (String) API Key
+- `environment` (String) must be one of [sandbox, production]
+The environment to use. Either sandbox or production.
+- `period` (String) The period to use. See the documentation for a list. https://docs.coinapi.io/#list-all-periods-get
+- `source_type` (String) must be one of [coin-api]
+- `start_date` (String) The start date in ISO 8601 format.
+- `symbol_id` (String) The symbol ID to use. See the documentation for a list.
+https://docs.coinapi.io/#list-all-symbols-get
 
 Optional:
 
-- `end_date` (String)
-- `limit` (Number)
+- `end_date` (String) The end date in ISO 8601 format. If not supplied, data will be returned
+from the start date to the current time, or when the count of result
+elements reaches its limit.
+- `limit` (Number) The maximum number of elements to return. If not supplied, the default
+is 100. For numbers larger than 100, each 100 items is counted as one
+request for pricing purposes. Maximum value is 100000.
 
 

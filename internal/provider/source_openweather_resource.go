@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceOpenweatherResource{}
 var _ resource.ResourceWithImportState = &SourceOpenweatherResource{}
 
@@ -56,7 +53,8 @@ func (r *SourceOpenweatherResource) Schema(ctx context.Context, req resource.Sch
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"appid": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Your OpenWeather API Key. See <a href="https://openweathermap.org/api">here</a>. The key is case sensitive.`,
 					},
 					"lang": schema.StringAttribute{
 						Optional: true,
@@ -113,13 +111,16 @@ func (r *SourceOpenweatherResource) Schema(ctx context.Context, req resource.Sch
 								"zu",
 							),
 						},
-						Description: `You can use lang parameter to get the output in your language. The contents of the description field will be translated. See <a href="https://openweathermap.org/api/one-call-api#multi">here</a> for the list of supported languages.`,
+						MarkdownDescription: `must be one of [af, al, ar, az, bg, ca, cz, da, de, el, en, eu, fa, fi, fr, gl, he, hi, hr, hu, id, it, ja, kr, la, lt, mk, no, nl, pl, pt, pt_br, ro, ru, sv, se, sk, sl, sp, es, sr, th, tr, ua, uk, vi, zh_cn, zh_tw, zu]` + "\n" +
+							`You can use lang parameter to get the output in your language. The contents of the description field will be translated. See <a href="https://openweathermap.org/api/one-call-api#multi">here</a> for the list of supported languages.`,
 					},
 					"lat": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Latitude for which you want to get weather condition from. (min -90, max 90)`,
 					},
 					"lon": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Longitude for which you want to get weather condition from. (min -180, max 180)`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -128,6 +129,7 @@ func (r *SourceOpenweatherResource) Schema(ctx context.Context, req resource.Sch
 								"openweather",
 							),
 						},
+						Description: `must be one of [openweather]`,
 					},
 					"units": schema.StringAttribute{
 						Optional: true,
@@ -138,7 +140,8 @@ func (r *SourceOpenweatherResource) Schema(ctx context.Context, req resource.Sch
 								"imperial",
 							),
 						},
-						Description: `Units of measurement. standard, metric and imperial units are available. If you do not use the units parameter, standard units will be applied by default.`,
+						MarkdownDescription: `must be one of [standard, metric, imperial]` + "\n" +
+							`Units of measurement. standard, metric and imperial units are available. If you do not use the units parameter, standard units will be applied by default.`,
 					},
 				},
 			},
@@ -149,7 +152,8 @@ func (r *SourceOpenweatherResource) Schema(ctx context.Context, req resource.Sch
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

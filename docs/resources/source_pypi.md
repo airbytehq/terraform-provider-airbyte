@@ -23,7 +23,7 @@ SourcePypi Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,11 +35,11 @@ SourcePypi Resource
 
 Required:
 
-- `project_name` (String)
-- `source_type` (String)
+- `project_name` (String) Name of the project/package. Can only be in lowercase with hyphen. This is the name used using pip command for installing the package.
+- `source_type` (String) must be one of [pypi]
 
 Optional:
 
-- `version` (String)
+- `version` (String) Version of the project/package.  Use it to find a particular release instead of all releases.
 
 

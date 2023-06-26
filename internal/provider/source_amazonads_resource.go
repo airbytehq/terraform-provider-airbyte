@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceAmazonAdsResource{}
 var _ resource.ResourceWithImportState = &SourceAmazonAdsResource{}
 
@@ -62,22 +59,28 @@ func (r *SourceAmazonAdsResource) Schema(ctx context.Context, req resource.Schem
 								"oauth2.0",
 							),
 						},
+						Description: `must be one of [oauth2.0]`,
 					},
 					"client_id": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The client ID of your Amazon Ads developer application. See the <a href="https://advertising.amazon.com/API/docs/en-us/get-started/generate-api-tokens#retrieve-your-client-id-and-client-secret">docs</a> for more information.`,
 					},
 					"client_secret": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The client secret of your Amazon Ads developer application. See the <a href="https://advertising.amazon.com/API/docs/en-us/get-started/generate-api-tokens#retrieve-your-client-id-and-client-secret">docs</a> for more information.`,
 					},
 					"look_back_window": schema.Int64Attribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The amount of days to go back in time to get the updated data from Amazon Ads`,
 					},
 					"profiles": schema.ListAttribute{
 						Optional:    true,
 						ElementType: types.Int64Type,
+						Description: `Profile IDs you want to fetch data for. See <a href="https://advertising.amazon.com/API/docs/en-us/concepts/authorization/profiles">docs</a> for more details.`,
 					},
 					"refresh_token": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Amazon Ads refresh token. See the <a href="https://advertising.amazon.com/API/docs/en-us/get-started/generate-api-tokens">docs</a> for more information on how to obtain this token.`,
 					},
 					"region": schema.StringAttribute{
 						Optional: true,
@@ -88,11 +91,13 @@ func (r *SourceAmazonAdsResource) Schema(ctx context.Context, req resource.Schem
 								"FE",
 							),
 						},
-						Description: `Region to pull data from (EU/NA/FE). See <a href="https://advertising.amazon.com/API/docs/en-us/info/api-overview#api-endpoints">docs</a> for more details.`,
+						MarkdownDescription: `must be one of [NA, EU, FE]` + "\n" +
+							`Region to pull data from (EU/NA/FE). See <a href="https://advertising.amazon.com/API/docs/en-us/info/api-overview#api-endpoints">docs</a> for more details.`,
 					},
 					"report_record_types": schema.ListAttribute{
 						Optional:    true,
 						ElementType: types.StringType,
+						Description: `Optional configuration which accepts an array of string of record types. Leave blank for default behaviour to pull all report types. Use this config option only if you want to pull specific report type(s). See <a href="https://advertising.amazon.com/API/docs/en-us/reporting/v2/report-types">docs</a> for more details`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -101,13 +106,16 @@ func (r *SourceAmazonAdsResource) Schema(ctx context.Context, req resource.Schem
 								"amazon-ads",
 							),
 						},
+						Description: `must be one of [amazon-ads]`,
 					},
 					"start_date": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The Start date for collecting reports, should not be more than 60 days in the past. In YYYY-MM-DD format`,
 					},
 					"state_filter": schema.ListAttribute{
 						Optional:    true,
 						ElementType: types.StringType,
+						Description: `Reflects the state of the Display, Product, and Brand Campaign streams as enabled, paused, or archived. If you do not populate this field, it will be ignored completely.`,
 					},
 				},
 			},
@@ -118,7 +126,8 @@ func (r *SourceAmazonAdsResource) Schema(ctx context.Context, req resource.Schem
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

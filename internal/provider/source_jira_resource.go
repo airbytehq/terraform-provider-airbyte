@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceJiraResource{}
 var _ resource.ResourceWithImportState = &SourceJiraResource{}
 
@@ -57,26 +54,33 @@ func (r *SourceJiraResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"api_token": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Jira API Token. See the <a href="https://docs.airbyte.com/integrations/sources/jira">docs</a> for more information on how to generate this key. API Token is used for Authorization to your account by BasicAuth.`,
 					},
 					"domain": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The Domain for your Jira account, e.g. airbyteio.atlassian.net, airbyteio.jira.com, jira.your-domain.com`,
 					},
 					"email": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The user email for your Jira account which you used to generate the API token. This field is used for Authorization to your account by BasicAuth.`,
 					},
 					"enable_experimental_streams": schema.BoolAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Allow the use of experimental streams which rely on undocumented Jira API endpoints. See https://docs.airbyte.com/integrations/sources/jira#experimental-tables for more info.`,
 					},
 					"expand_issue_changelog": schema.BoolAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Expand the changelog when replicating issues.`,
 					},
 					"projects": schema.ListAttribute{
 						Optional:    true,
 						ElementType: types.StringType,
+						Description: `List of Jira project keys to replicate data for, or leave it empty if you want to replicate data for all projects.`,
 					},
 					"render_fields": schema.BoolAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Render issue fields in HTML format in addition to Jira JSON-like format.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -85,12 +89,14 @@ func (r *SourceJiraResource) Schema(ctx context.Context, req resource.SchemaRequ
 								"jira",
 							),
 						},
+						Description: `must be one of [jira]`,
 					},
 					"start_date": schema.StringAttribute{
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
+						Description: `The date from which you want to replicate data from Jira, use the format YYYY-MM-DDT00:00:00Z. Note that this field only applies to certain streams, and only data generated on or after the start date will be replicated. Or leave it empty if you want to replicate all data. For more information, refer to the <a href="https://docs.airbyte.com/integrations/sources/jira/">documentation</a>.`,
 					},
 				},
 			},
@@ -101,7 +107,8 @@ func (r *SourceJiraResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

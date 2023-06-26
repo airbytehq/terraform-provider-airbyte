@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceAmazonSqsResource{}
 var _ resource.ResourceWithImportState = &SourceAmazonSqsResource{}
 
@@ -56,22 +53,28 @@ func (r *SourceAmazonSqsResource) Schema(ctx context.Context, req resource.Schem
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"access_key": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The Access Key ID of the AWS IAM Role to use for pulling messages`,
 					},
 					"attributes_to_return": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Comma separated list of Mesage Attribute names to return`,
 					},
 					"delete_messages": schema.BoolAttribute{
-						Required: true,
+						Required:    true,
+						Description: `If Enabled, messages will be deleted from the SQS Queue after being read. If Disabled, messages are left in the queue and can be read more than once. WARNING: Enabling this option can result in data loss in cases of failure, use with caution, see documentation for more detail. `,
 					},
 					"max_batch_size": schema.Int64Attribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Max amount of messages to get in one batch (10 max)`,
 					},
 					"max_wait_time": schema.Int64Attribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Max amount of time in seconds to wait for messages in a single poll (20 max)`,
 					},
 					"queue_url": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `URL of the SQS Queue`,
 					},
 					"region": schema.StringAttribute{
 						Required: true,
@@ -104,10 +107,12 @@ func (r *SourceAmazonSqsResource) Schema(ctx context.Context, req resource.Schem
 								"us-gov-west-1",
 							),
 						},
-						Description: `AWS Region of the SQS Queue`,
+						MarkdownDescription: `must be one of [us-east-1, us-east-2, us-west-1, us-west-2, af-south-1, ap-east-1, ap-south-1, ap-northeast-1, ap-northeast-2, ap-northeast-3, ap-southeast-1, ap-southeast-2, ca-central-1, cn-north-1, cn-northwest-1, eu-central-1, eu-north-1, eu-south-1, eu-west-1, eu-west-2, eu-west-3, sa-east-1, me-south-1, us-gov-east-1, us-gov-west-1]` + "\n" +
+							`AWS Region of the SQS Queue`,
 					},
 					"secret_key": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The Secret Key of the AWS IAM Role to use for pulling messages`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -116,9 +121,11 @@ func (r *SourceAmazonSqsResource) Schema(ctx context.Context, req resource.Schem
 								"amazon-sqs",
 							),
 						},
+						Description: `must be one of [amazon-sqs]`,
 					},
 					"visibility_timeout": schema.Int64Attribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Modify the Visibility Timeout of the individual message from the Queue's default (seconds).`,
 					},
 				},
 			},
@@ -129,7 +136,8 @@ func (r *SourceAmazonSqsResource) Schema(ctx context.Context, req resource.Schem
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

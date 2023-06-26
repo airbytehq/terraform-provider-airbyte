@@ -23,7 +23,7 @@ SourceAirtable Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -36,7 +36,7 @@ SourceAirtable Resource
 Optional:
 
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `source_type` (String)
+- `source_type` (String) must be one of [airtable]
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
@@ -53,15 +53,15 @@ Optional:
 
 Required:
 
-- `client_id` (String)
-- `client_secret` (String)
-- `refresh_token` (String)
+- `client_id` (String) The client ID of the Airtable developer application.
+- `client_secret` (String) The client secret the Airtable developer application.
+- `refresh_token` (String) The key to refresh the expired access token.
 
 Optional:
 
-- `access_token` (String)
-- `auth_method` (String)
-- `token_expiry_date` (String)
+- `access_token` (String) Access Token for making authenticated requests.
+- `auth_method` (String) must be one of [oauth2.0]
+- `token_expiry_date` (String) The date-time when the access token should be refreshed.
 
 
 <a id="nestedatt--configuration--credentials--source_airtable_authentication_personal_access_token"></a>
@@ -69,11 +69,11 @@ Optional:
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String) The Personal Access Token for the Airtable account. See the <a href="https://airtable.com/developers/web/guides/personal-access-tokens">Support Guide</a> for more information on how to obtain this token.
 
 Optional:
 
-- `auth_method` (String)
+- `auth_method` (String) must be one of [api_key]
 
 
 <a id="nestedatt--configuration--credentials--source_airtable_update_authentication_o_auth2_0"></a>
@@ -81,15 +81,15 @@ Optional:
 
 Required:
 
-- `client_id` (String)
-- `client_secret` (String)
-- `refresh_token` (String)
+- `client_id` (String) The client ID of the Airtable developer application.
+- `client_secret` (String) The client secret the Airtable developer application.
+- `refresh_token` (String) The key to refresh the expired access token.
 
 Optional:
 
-- `access_token` (String)
-- `auth_method` (String)
-- `token_expiry_date` (String)
+- `access_token` (String) Access Token for making authenticated requests.
+- `auth_method` (String) must be one of [oauth2.0]
+- `token_expiry_date` (String) The date-time when the access token should be refreshed.
 
 
 <a id="nestedatt--configuration--credentials--source_airtable_update_authentication_personal_access_token"></a>
@@ -97,10 +97,10 @@ Optional:
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String) The Personal Access Token for the Airtable account. See the <a href="https://airtable.com/developers/web/guides/personal-access-tokens">Support Guide</a> for more information on how to obtain this token.
 
 Optional:
 
-- `auth_method` (String)
+- `auth_method` (String) must be one of [api_key]
 
 

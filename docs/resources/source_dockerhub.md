@@ -23,7 +23,7 @@ SourceDockerhub Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,7 +35,7 @@ SourceDockerhub Resource
 
 Required:
 
-- `docker_username` (String)
-- `source_type` (String)
+- `docker_username` (String) Username of DockerHub person or organization (for https://hub.docker.com/v2/repositories/USERNAME/ API call)
+- `source_type` (String) must be one of [dockerhub]
 
 

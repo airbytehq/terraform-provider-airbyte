@@ -23,7 +23,7 @@ SourceLokalise Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,8 +35,8 @@ SourceLokalise Resource
 
 Required:
 
-- `api_key` (String)
-- `project_id` (String)
-- `source_type` (String)
+- `api_key` (String) Lokalise API Key with read-access. Available at Profile settings > API tokens. See <a href="https://docs.lokalise.com/en/articles/1929556-api-tokens">here</a>.
+- `project_id` (String) Lokalise project ID. Available at Project Settings > General.
+- `source_type` (String) must be one of [lokalise]
 
 

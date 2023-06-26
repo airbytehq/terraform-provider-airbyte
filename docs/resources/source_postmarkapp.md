@@ -23,7 +23,7 @@ SourcePostmarkapp Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,8 +35,8 @@ SourcePostmarkapp Resource
 
 Required:
 
-- `source_type` (String)
-- `x_postmark_account_token` (String)
-- `x_postmark_server_token` (String)
+- `source_type` (String) must be one of [postmarkapp]
+- `x_postmark_account_token` (String) API Key for account
+- `x_postmark_server_token` (String) API Key for server
 
 

@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceGnewsResource{}
 var _ resource.ResourceWithImportState = &SourceGnewsResource{}
 
@@ -56,7 +53,8 @@ func (r *SourceGnewsResource) Schema(ctx context.Context, req resource.SchemaReq
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `API Key`,
 					},
 					"country": schema.StringAttribute{
 						Optional: true,
@@ -94,14 +92,17 @@ func (r *SourceGnewsResource) Schema(ctx context.Context, req resource.SchemaReq
 								"us",
 							),
 						},
-						Description: `This parameter allows you to specify the country where the news articles returned by the API were published, the contents of the articles are not necessarily related to the specified country. You have to set as value the 2 letters code of the country you want to filter.`,
+						MarkdownDescription: `must be one of [au, br, ca, cn, eg, fr, de, gr, hk, in, ie, il, it, jp, nl, no, pk, pe, ph, pt, ro, ru, sg, es, se, ch, tw, ua, gb, us]` + "\n" +
+							`This parameter allows you to specify the country where the news articles returned by the API were published, the contents of the articles are not necessarily related to the specified country. You have to set as value the 2 letters code of the country you want to filter.`,
 					},
 					"end_date": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `This parameter allows you to filter the articles that have a publication date smaller than or equal to the  specified value. The date must respect the following format: YYYY-MM-DD hh:mm:ss (in UTC)`,
 					},
 					"in": schema.ListAttribute{
 						Optional:    true,
 						ElementType: types.StringType,
+						Description: `This parameter allows you to choose in which attributes the keywords are searched. The attributes that can be set are title, description and content. It is possible to combine several attributes.`,
 					},
 					"language": schema.StringAttribute{
 						Optional: true,
@@ -131,13 +132,29 @@ func (r *SourceGnewsResource) Schema(ctx context.Context, req resource.SchemaReq
 								"uk",
 							),
 						},
+						Description: `must be one of [ar, zh, nl, en, fr, de, el, he, hi, it, ja, ml, mr, no, pt, ro, ru, es, sv, ta, te, uk]`,
 					},
 					"nullable": schema.ListAttribute{
 						Optional:    true,
 						ElementType: types.StringType,
+						Description: `This parameter allows you to specify the attributes that you allow to return null values. The attributes that  can be set are title, description and content. It is possible to combine several attributes`,
 					},
 					"query": schema.StringAttribute{
 						Required: true,
+						MarkdownDescription: `This parameter allows you to specify your search keywords to find the news articles you are looking for. The keywords will be used to return the most relevant articles. It is possible to use logical operators  with keywords. - Phrase Search Operator: This operator allows you to make an exact search. Keywords surrounded by ` + "\n" +
+							`  quotation marks are used to search for articles with the exact same keyword sequence. ` + "\n" +
+							`  For example the query: "Apple iPhone" will return articles matching at least once this sequence of keywords.` + "\n" +
+							`- Logical AND Operator: This operator allows you to make sure that several keywords are all used in the article` + "\n" +
+							`  search. By default the space character acts as an AND operator, it is possible to replace the space character ` + "\n" +
+							`  by AND to obtain the same result. For example the query: Apple Microsoft is equivalent to Apple AND Microsoft` + "\n" +
+							`- Logical OR Operator: This operator allows you to retrieve articles matching the keyword a or the keyword b.` + "\n" +
+							`  It is important to note that this operator has a higher precedence than the AND operator. For example the ` + "\n" +
+							`  query: Apple OR Microsoft will return all articles matching the keyword Apple as well as all articles matching ` + "\n" +
+							`  the keyword Microsoft` + "\n" +
+							`- Logical NOT Operator: This operator allows you to remove from the results the articles corresponding to the` + "\n" +
+							`  specified keywords. To use it, you need to add NOT in front of each word or phrase surrounded by quotes.` + "\n" +
+							`  For example the query: Apple NOT iPhone will return all articles matching the keyword Apple but not the keyword` + "\n" +
+							`  iPhone`,
 					},
 					"sortby": schema.StringAttribute{
 						Optional: true,
@@ -147,7 +164,8 @@ func (r *SourceGnewsResource) Schema(ctx context.Context, req resource.SchemaReq
 								"relevance",
 							),
 						},
-						MarkdownDescription: `This parameter allows you to choose with which type of sorting the articles should be returned. Two values  are possible:` + "\n" +
+						MarkdownDescription: `must be one of [publishedAt, relevance]` + "\n" +
+							`This parameter allows you to choose with which type of sorting the articles should be returned. Two values  are possible:` + "\n" +
 							`  - publishedAt = sort by publication date, the articles with the most recent publication date are returned first` + "\n" +
 							`  - relevance = sort by best match to keywords, the articles with the best match are returned first`,
 					},
@@ -158,12 +176,28 @@ func (r *SourceGnewsResource) Schema(ctx context.Context, req resource.SchemaReq
 								"gnews",
 							),
 						},
+						Description: `must be one of [gnews]`,
 					},
 					"start_date": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `This parameter allows you to filter the articles that have a publication date greater than or equal to the  specified value. The date must respect the following format: YYYY-MM-DD hh:mm:ss (in UTC)`,
 					},
 					"top_headlines_query": schema.StringAttribute{
 						Optional: true,
+						MarkdownDescription: `This parameter allows you to specify your search keywords to find the news articles you are looking for. The keywords will be used to return the most relevant articles. It is possible to use logical operators  with keywords. - Phrase Search Operator: This operator allows you to make an exact search. Keywords surrounded by ` + "\n" +
+							`  quotation marks are used to search for articles with the exact same keyword sequence. ` + "\n" +
+							`  For example the query: "Apple iPhone" will return articles matching at least once this sequence of keywords.` + "\n" +
+							`- Logical AND Operator: This operator allows you to make sure that several keywords are all used in the article` + "\n" +
+							`  search. By default the space character acts as an AND operator, it is possible to replace the space character ` + "\n" +
+							`  by AND to obtain the same result. For example the query: Apple Microsoft is equivalent to Apple AND Microsoft` + "\n" +
+							`- Logical OR Operator: This operator allows you to retrieve articles matching the keyword a or the keyword b.` + "\n" +
+							`  It is important to note that this operator has a higher precedence than the AND operator. For example the ` + "\n" +
+							`  query: Apple OR Microsoft will return all articles matching the keyword Apple as well as all articles matching ` + "\n" +
+							`  the keyword Microsoft` + "\n" +
+							`- Logical NOT Operator: This operator allows you to remove from the results the articles corresponding to the` + "\n" +
+							`  specified keywords. To use it, you need to add NOT in front of each word or phrase surrounded by quotes.` + "\n" +
+							`  For example the query: Apple NOT iPhone will return all articles matching the keyword Apple but not the keyword` + "\n" +
+							`  iPhone`,
 					},
 					"top_headlines_topic": schema.StringAttribute{
 						Optional: true,
@@ -180,7 +214,8 @@ func (r *SourceGnewsResource) Schema(ctx context.Context, req resource.SchemaReq
 								"health",
 							),
 						},
-						Description: `This parameter allows you to change the category for the request.`,
+						MarkdownDescription: `must be one of [breaking-news, world, nation, business, technology, entertainment, sports, science, health]` + "\n" +
+							`This parameter allows you to change the category for the request.`,
 					},
 				},
 			},
@@ -191,7 +226,8 @@ func (r *SourceGnewsResource) Schema(ctx context.Context, req resource.SchemaReq
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

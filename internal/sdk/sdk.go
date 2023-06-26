@@ -59,7 +59,7 @@ func (c *sdkConfiguration) GetServerDetails() (string, map[string]string) {
 	return ServerList[c.ServerIndex], nil
 }
 
-// SDK
+// SDK - airbyte-api: Programatically control Airbyte Cloud.
 type SDK struct {
 	Connections  *connections
 	Destinations *destinations
@@ -123,7 +123,7 @@ func New(opts ...SDKOption) *SDK {
 			Language:          "terraform",
 			OpenAPIDocVersion: "1.0.0",
 			SDKVersion:        "0.1.2",
-			GenVersion:        "2.41.5",
+			GenVersion:        "internal",
 		},
 	}
 	for _, opt := range opts {

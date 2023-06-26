@@ -23,7 +23,7 @@ SourceFreshservice Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,9 +35,9 @@ SourceFreshservice Resource
 
 Required:
 
-- `api_key` (String)
-- `domain_name` (String)
-- `source_type` (String)
-- `start_date` (String)
+- `api_key` (String) Freshservice API Key. See <a href="https://api.freshservice.com/#authentication">here</a>. The key is case sensitive.
+- `domain_name` (String) The name of your Freshservice domain
+- `source_type` (String) must be one of [freshservice]
+- `start_date` (String) UTC date and time in the format 2020-10-01T00:00:00Z. Any data before this date will not be replicated.
 
 

@@ -23,7 +23,7 @@ SourceGoogleSearchConsole Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -36,15 +36,16 @@ SourceGoogleSearchConsole Resource
 Required:
 
 - `authorization` (Attributes) (see [below for nested schema](#nestedatt--configuration--authorization))
-- `site_urls` (List of String)
-- `source_type` (String)
-- `start_date` (String)
+- `site_urls` (List of String) The URLs of the website property attached to your GSC account. Read more <a href="https://support.google.com/webmasters/answer/34592?hl=en">here</a>.
+- `source_type` (String) must be one of [google-search-console]
+- `start_date` (String) UTC date in the format 2017-01-25. Any data before this date will not be replicated.
 
 Optional:
 
-- `custom_reports` (String)
-- `data_state` (String) If "final" or if this parameter is omitted, the returned data will include only finalized data. Setting this parameter to "all" should not be used with Incremental Sync mode as it may cause data loss. If "all", data will include fresh data.
-- `end_date` (String)
+- `custom_reports` (String) A JSON array describing the custom reports you want to sync from Google Search Console. See <a href="https://docs.airbyte.com/integrations/sources/google-search-console#step-2-set-up-the-google-search-console-connector-in-airbyte">the docs</a> for more information about the exact format you can use to fill out this field.
+- `data_state` (String) must be one of [final, all]
+If "final" or if this parameter is omitted, the returned data will include only finalized data. Setting this parameter to "all" should not be used with Incremental Sync mode as it may cause data loss. If "all", data will include fresh data.
+- `end_date` (String) UTC date in the format 2017-01-25. Any data after this date will not be replicated. Must be greater or equal to the start date field.
 
 <a id="nestedatt--configuration--authorization"></a>
 ### Nested Schema for `configuration.authorization`
@@ -61,14 +62,14 @@ Optional:
 
 Required:
 
-- `auth_type` (String)
-- `client_id` (String)
-- `client_secret` (String)
-- `refresh_token` (String)
+- `auth_type` (String) must be one of [Client]
+- `client_id` (String) The client ID of your Google Search Console developer application. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
+- `client_secret` (String) The client secret of your Google Search Console developer application. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
+- `refresh_token` (String) The token for obtaining a new access token. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
 
 Optional:
 
-- `access_token` (String)
+- `access_token` (String) Access token for making authenticated requests. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
 
 
 <a id="nestedatt--configuration--authorization--source_google_search_console_authentication_type_service_account_key_authentication"></a>
@@ -76,9 +77,9 @@ Optional:
 
 Required:
 
-- `auth_type` (String)
-- `email` (String)
-- `service_account_info` (String)
+- `auth_type` (String) must be one of [Service]
+- `email` (String) The email of the user which has permissions to access the Google Workspace Admin APIs.
+- `service_account_info` (String) The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys">here</a>.
 
 
 <a id="nestedatt--configuration--authorization--source_google_search_console_update_authentication_type_o_auth"></a>
@@ -86,14 +87,14 @@ Required:
 
 Required:
 
-- `auth_type` (String)
-- `client_id` (String)
-- `client_secret` (String)
-- `refresh_token` (String)
+- `auth_type` (String) must be one of [Client]
+- `client_id` (String) The client ID of your Google Search Console developer application. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
+- `client_secret` (String) The client secret of your Google Search Console developer application. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
+- `refresh_token` (String) The token for obtaining a new access token. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
 
 Optional:
 
-- `access_token` (String)
+- `access_token` (String) Access token for making authenticated requests. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
 
 
 <a id="nestedatt--configuration--authorization--source_google_search_console_update_authentication_type_service_account_key_authentication"></a>
@@ -101,8 +102,8 @@ Optional:
 
 Required:
 
-- `auth_type` (String)
-- `email` (String)
-- `service_account_info` (String)
+- `auth_type` (String) must be one of [Service]
+- `email` (String) The email of the user which has permissions to access the Google Workspace Admin APIs.
+- `service_account_info` (String) The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys">here</a>.
 
 

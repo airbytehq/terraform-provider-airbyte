@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceFreshcallerResource{}
 var _ resource.ResourceWithImportState = &SourceFreshcallerResource{}
 
@@ -57,13 +54,16 @@ func (r *SourceFreshcallerResource) Schema(ctx context.Context, req resource.Sch
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Freshcaller API Key. See the <a href="https://docs.airbyte.com/integrations/sources/freshcaller">docs</a> for more information on how to obtain this key.`,
 					},
 					"domain": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Used to construct Base URL for the Freshcaller APIs`,
 					},
 					"requests_per_minute": schema.Int64Attribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The number of requests per minute that this source allowed to use. There is a rate limit of 50 requests per minute per app per account.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -72,15 +72,18 @@ func (r *SourceFreshcallerResource) Schema(ctx context.Context, req resource.Sch
 								"freshcaller",
 							),
 						},
+						Description: `must be one of [freshcaller]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
+						Description: `UTC date and time. Any data created after this date will be replicated.`,
 					},
 					"sync_lag_minutes": schema.Int64Attribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Lag in minutes for each sync, i.e., at time T, data for the time range [prev_sync_time, T-30] will be fetched`,
 					},
 				},
 			},
@@ -91,7 +94,8 @@ func (r *SourceFreshcallerResource) Schema(ctx context.Context, req resource.Sch
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceDynamodbResource{}
 var _ resource.ResourceWithImportState = &SourceDynamodbResource{}
 
@@ -56,10 +53,12 @@ func (r *SourceDynamodbResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"access_key_id": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The access key id to access Dynamodb. Airbyte requires read permissions to the database`,
 					},
 					"endpoint": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `the URL of the Dynamodb database`,
 					},
 					"region": schema.StringAttribute{
 						Optional: true,
@@ -93,13 +92,16 @@ func (r *SourceDynamodbResource) Schema(ctx context.Context, req resource.Schema
 								"us-gov-west-1",
 							),
 						},
-						Description: `The region of the Dynamodb database`,
+						MarkdownDescription: `must be one of [, us-east-1, us-east-2, us-west-1, us-west-2, af-south-1, ap-east-1, ap-south-1, ap-northeast-1, ap-northeast-2, ap-northeast-3, ap-southeast-1, ap-southeast-2, ca-central-1, cn-north-1, cn-northwest-1, eu-central-1, eu-north-1, eu-south-1, eu-west-1, eu-west-2, eu-west-3, sa-east-1, me-south-1, us-gov-east-1, us-gov-west-1]` + "\n" +
+							`The region of the Dynamodb database`,
 					},
 					"reserved_attribute_names": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Comma separated reserved attribute names present in your tables`,
 					},
 					"secret_access_key": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The corresponding secret to the access key id.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -108,6 +110,7 @@ func (r *SourceDynamodbResource) Schema(ctx context.Context, req resource.Schema
 								"dynamodb",
 							),
 						},
+						Description: `must be one of [dynamodb]`,
 					},
 				},
 			},
@@ -118,7 +121,8 @@ func (r *SourceDynamodbResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

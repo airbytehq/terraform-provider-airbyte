@@ -23,7 +23,7 @@ SourceAircall Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,9 +35,9 @@ SourceAircall Resource
 
 Required:
 
-- `api_id` (String)
-- `api_token` (String)
-- `source_type` (String)
-- `start_date` (String)
+- `api_id` (String) App ID found at settings https://dashboard.aircall.io/integrations/api-keys
+- `api_token` (String) App token found at settings (Ref- https://dashboard.aircall.io/integrations/api-keys)
+- `source_type` (String) must be one of [aircall]
+- `start_date` (String) Date time filter for incremental filter, Specify which date to extract from.
 
 

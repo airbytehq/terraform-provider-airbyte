@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceGoogleDirectoryResource{}
 var _ resource.ResourceWithImportState = &SourceGoogleDirectoryResource{}
 
@@ -56,10 +53,12 @@ func (r *SourceGoogleDirectoryResource) Schema(ctx context.Context, req resource
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"credentials_json": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The contents of the JSON service account key. See the <a href="https://developers.google.com/admin-sdk/directory/v1/guides/delegation">docs</a> for more information on how to generate this key.`,
 					},
 					"email": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The email of the user, which has permissions to access the Google Workspace Admin APIs.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -68,6 +67,7 @@ func (r *SourceGoogleDirectoryResource) Schema(ctx context.Context, req resource
 								"google-directory",
 							),
 						},
+						Description: `must be one of [google-directory]`,
 					},
 				},
 			},
@@ -78,7 +78,8 @@ func (r *SourceGoogleDirectoryResource) Schema(ctx context.Context, req resource
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

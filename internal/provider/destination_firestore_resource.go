@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &DestinationFirestoreResource{}
 var _ resource.ResourceWithImportState = &DestinationFirestoreResource{}
 
@@ -55,7 +52,8 @@ func (r *DestinationFirestoreResource) Schema(ctx context.Context, req resource.
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"credentials_json": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The contents of the JSON service account key. Check out the <a href="https://docs.airbyte.io/integrations/destinations/firestore">docs</a> if you need help generating this key. Default credentials will be used if this field is left empty.`,
 					},
 					"destination_type": schema.StringAttribute{
 						Required: true,
@@ -64,9 +62,11 @@ func (r *DestinationFirestoreResource) Schema(ctx context.Context, req resource.
 								"firestore",
 							),
 						},
+						Description: `must be one of [firestore]`,
 					},
 					"project_id": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The GCP project ID for the project containing the target BigQuery dataset.`,
 					},
 				},
 			},

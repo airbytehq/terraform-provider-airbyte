@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &DestinationSftpJSONResource{}
 var _ resource.ResourceWithImportState = &DestinationSftpJSONResource{}
 
@@ -55,7 +52,8 @@ func (r *DestinationSftpJSONResource) Schema(ctx context.Context, req resource.S
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"destination_path": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Path to the directory where json files will be written.`,
 					},
 					"destination_type": schema.StringAttribute{
 						Required: true,
@@ -64,18 +62,23 @@ func (r *DestinationSftpJSONResource) Schema(ctx context.Context, req resource.S
 								"sftp-json",
 							),
 						},
+						Description: `must be one of [sftp-json]`,
 					},
 					"host": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Hostname of the SFTP server.`,
 					},
 					"password": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Password associated with the username.`,
 					},
 					"port": schema.Int64Attribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Port of the SFTP server.`,
 					},
 					"username": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Username to use to access the SFTP server.`,
 					},
 				},
 			},

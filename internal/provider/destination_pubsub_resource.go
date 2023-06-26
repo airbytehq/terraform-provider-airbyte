@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &DestinationPubsubResource{}
 var _ resource.ResourceWithImportState = &DestinationPubsubResource{}
 
@@ -55,19 +52,24 @@ func (r *DestinationPubsubResource) Schema(ctx context.Context, req resource.Sch
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"batching_delay_threshold": schema.Int64Attribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Number of ms before the buffer is flushed`,
 					},
 					"batching_element_count_threshold": schema.Int64Attribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Number of messages before the buffer is flushed`,
 					},
 					"batching_enabled": schema.BoolAttribute{
-						Required: true,
+						Required:    true,
+						Description: `If TRUE messages will be buffered instead of sending them one by one`,
 					},
 					"batching_request_bytes_threshold": schema.Int64Attribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Number of bytes before the buffer is flushed`,
 					},
 					"credentials_json": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The contents of the JSON service account key. Check out the <a href="https://docs.airbyte.com/integrations/destinations/pubsub">docs</a> if you need help generating this key.`,
 					},
 					"destination_type": schema.StringAttribute{
 						Required: true,
@@ -76,15 +78,19 @@ func (r *DestinationPubsubResource) Schema(ctx context.Context, req resource.Sch
 								"pubsub",
 							),
 						},
+						Description: `must be one of [pubsub]`,
 					},
 					"ordering_enabled": schema.BoolAttribute{
-						Required: true,
+						Required:    true,
+						Description: `If TRUE PubSub publisher will have <a href="https://cloud.google.com/pubsub/docs/ordering">message ordering</a> enabled. Every message will have an ordering key of stream`,
 					},
 					"project_id": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The GCP project ID for the project containing the target PubSub.`,
 					},
 					"topic_id": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The PubSub topic ID in the given GCP project ID.`,
 					},
 				},
 			},

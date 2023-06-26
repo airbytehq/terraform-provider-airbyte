@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceSnowflakeResource{}
 var _ resource.ResourceWithImportState = &SourceSnowflakeResource{}
 
@@ -63,7 +60,8 @@ func (r *SourceSnowflakeResource) Schema(ctx context.Context, req resource.Schem
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Access Token for making authenticated requests.`,
 									},
 									"auth_type": schema.StringAttribute{
 										Required: true,
@@ -72,15 +70,19 @@ func (r *SourceSnowflakeResource) Schema(ctx context.Context, req resource.Schem
 												"OAuth",
 											),
 										},
+										Description: `must be one of [OAuth]`,
 									},
 									"client_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Client ID of your Snowflake developer application.`,
 									},
 									"client_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Client Secret of your Snowflake developer application.`,
 									},
 									"refresh_token": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Refresh Token for making authenticated requests.`,
 									},
 								},
 							},
@@ -94,12 +96,15 @@ func (r *SourceSnowflakeResource) Schema(ctx context.Context, req resource.Schem
 												"username/password",
 											),
 										},
+										Description: `must be one of [username/password]`,
 									},
 									"password": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The password associated with the username.`,
 									},
 									"username": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The username you created to allow Airbyte to access the database.`,
 									},
 								},
 							},
@@ -107,7 +112,8 @@ func (r *SourceSnowflakeResource) Schema(ctx context.Context, req resource.Schem
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Access Token for making authenticated requests.`,
 									},
 									"auth_type": schema.StringAttribute{
 										Required: true,
@@ -116,15 +122,19 @@ func (r *SourceSnowflakeResource) Schema(ctx context.Context, req resource.Schem
 												"OAuth",
 											),
 										},
+										Description: `must be one of [OAuth]`,
 									},
 									"client_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Client ID of your Snowflake developer application.`,
 									},
 									"client_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Client Secret of your Snowflake developer application.`,
 									},
 									"refresh_token": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Refresh Token for making authenticated requests.`,
 									},
 								},
 							},
@@ -138,12 +148,15 @@ func (r *SourceSnowflakeResource) Schema(ctx context.Context, req resource.Schem
 												"username/password",
 											),
 										},
+										Description: `must be one of [username/password]`,
 									},
 									"password": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The password associated with the username.`,
 									},
 									"username": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The username you created to allow Airbyte to access the database.`,
 									},
 								},
 							},
@@ -153,19 +166,24 @@ func (r *SourceSnowflakeResource) Schema(ctx context.Context, req resource.Schem
 						},
 					},
 					"database": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The database you created for Airbyte to access data.`,
 					},
 					"host": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The host domain of the snowflake instance (must include the account, region, cloud environment, and end with snowflakecomputing.com).`,
 					},
 					"jdbc_url_params": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).`,
 					},
 					"role": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The role you created for Airbyte to access Snowflake.`,
 					},
 					"schema": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The source Snowflake schema tables. Leave empty to access tables from multiple schemas.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -174,9 +192,11 @@ func (r *SourceSnowflakeResource) Schema(ctx context.Context, req resource.Schem
 								"snowflake",
 							),
 						},
+						Description: `must be one of [snowflake]`,
 					},
 					"warehouse": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The warehouse you created for Airbyte to access data.`,
 					},
 				},
 			},
@@ -187,7 +207,8 @@ func (r *SourceSnowflakeResource) Schema(ctx context.Context, req resource.Schem
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

@@ -23,7 +23,7 @@ SourceGitlab Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,15 +35,15 @@ SourceGitlab Resource
 
 Required:
 
-- `api_url` (String)
+- `api_url` (String) Please enter your basic URL from GitLab instance.
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `source_type` (String)
-- `start_date` (String)
+- `source_type` (String) must be one of [gitlab]
+- `start_date` (String) The date from which you'd like to replicate data for GitLab API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 
 Optional:
 
-- `groups` (String)
-- `projects` (String)
+- `groups` (String) Space-delimited list of groups. e.g. airbyte.io.
+- `projects` (String) Space-delimited list of projects. e.g. airbyte.io/documentation meltano/tap-gitlab.
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
@@ -60,15 +60,15 @@ Optional:
 
 Required:
 
-- `access_token` (String)
-- `client_id` (String)
-- `client_secret` (String)
-- `refresh_token` (String)
-- `token_expiry_date` (String)
+- `access_token` (String) Access Token for making authenticated requests.
+- `client_id` (String) The API ID of the Gitlab developer application.
+- `client_secret` (String) The API Secret the Gitlab developer application.
+- `refresh_token` (String) The key to refresh the expired access_token.
+- `token_expiry_date` (String) The date-time when the access token should be refreshed.
 
 Optional:
 
-- `auth_type` (String)
+- `auth_type` (String) must be one of [oauth2.0]
 
 
 <a id="nestedatt--configuration--credentials--source_gitlab_authorization_method_private_token"></a>
@@ -76,11 +76,11 @@ Optional:
 
 Required:
 
-- `access_token` (String)
+- `access_token` (String) Log into your Gitlab account and then generate a personal Access Token.
 
 Optional:
 
-- `auth_type` (String)
+- `auth_type` (String) must be one of [access_token]
 
 
 <a id="nestedatt--configuration--credentials--source_gitlab_update_authorization_method_o_auth2_0"></a>
@@ -88,15 +88,15 @@ Optional:
 
 Required:
 
-- `access_token` (String)
-- `client_id` (String)
-- `client_secret` (String)
-- `refresh_token` (String)
-- `token_expiry_date` (String)
+- `access_token` (String) Access Token for making authenticated requests.
+- `client_id` (String) The API ID of the Gitlab developer application.
+- `client_secret` (String) The API Secret the Gitlab developer application.
+- `refresh_token` (String) The key to refresh the expired access_token.
+- `token_expiry_date` (String) The date-time when the access token should be refreshed.
 
 Optional:
 
-- `auth_type` (String)
+- `auth_type` (String) must be one of [oauth2.0]
 
 
 <a id="nestedatt--configuration--credentials--source_gitlab_update_authorization_method_private_token"></a>
@@ -104,10 +104,10 @@ Optional:
 
 Required:
 
-- `access_token` (String)
+- `access_token` (String) Log into your Gitlab account and then generate a personal Access Token.
 
 Optional:
 
-- `auth_type` (String)
+- `auth_type` (String) must be one of [access_token]
 
 

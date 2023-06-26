@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceZendeskChatResource{}
 var _ resource.ResourceWithImportState = &SourceZendeskChatResource{}
 
@@ -63,7 +60,8 @@ func (r *SourceZendeskChatResource) Schema(ctx context.Context, req resource.Sch
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Access Token to make authenticated requests.`,
 									},
 									"credentials": schema.StringAttribute{
 										Required: true,
@@ -72,6 +70,7 @@ func (r *SourceZendeskChatResource) Schema(ctx context.Context, req resource.Sch
 												"access_token",
 											),
 										},
+										Description: `must be one of [access_token]`,
 									},
 								},
 							},
@@ -79,13 +78,16 @@ func (r *SourceZendeskChatResource) Schema(ctx context.Context, req resource.Sch
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Access Token for making authenticated requests.`,
 									},
 									"client_id": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `The Client ID of your OAuth application`,
 									},
 									"client_secret": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `The Client Secret of your OAuth application.`,
 									},
 									"credentials": schema.StringAttribute{
 										Required: true,
@@ -94,9 +96,11 @@ func (r *SourceZendeskChatResource) Schema(ctx context.Context, req resource.Sch
 												"oauth2.0",
 											),
 										},
+										Description: `must be one of [oauth2.0]`,
 									},
 									"refresh_token": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Refresh Token to obtain new Access Token, when it's expired.`,
 									},
 								},
 							},
@@ -104,7 +108,8 @@ func (r *SourceZendeskChatResource) Schema(ctx context.Context, req resource.Sch
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Access Token to make authenticated requests.`,
 									},
 									"credentials": schema.StringAttribute{
 										Required: true,
@@ -113,6 +118,7 @@ func (r *SourceZendeskChatResource) Schema(ctx context.Context, req resource.Sch
 												"access_token",
 											),
 										},
+										Description: `must be one of [access_token]`,
 									},
 								},
 							},
@@ -120,13 +126,16 @@ func (r *SourceZendeskChatResource) Schema(ctx context.Context, req resource.Sch
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Access Token for making authenticated requests.`,
 									},
 									"client_id": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `The Client ID of your OAuth application`,
 									},
 									"client_secret": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `The Client Secret of your OAuth application.`,
 									},
 									"credentials": schema.StringAttribute{
 										Required: true,
@@ -135,9 +144,11 @@ func (r *SourceZendeskChatResource) Schema(ctx context.Context, req resource.Sch
 												"oauth2.0",
 											),
 										},
+										Description: `must be one of [oauth2.0]`,
 									},
 									"refresh_token": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Refresh Token to obtain new Access Token, when it's expired.`,
 									},
 								},
 							},
@@ -153,15 +164,18 @@ func (r *SourceZendeskChatResource) Schema(ctx context.Context, req resource.Sch
 								"zendesk-chat",
 							),
 						},
+						Description: `must be one of [zendesk-chat]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
+						Description: `The date from which you'd like to replicate data for Zendesk Chat API, in the format YYYY-MM-DDT00:00:00Z.`,
 					},
 					"subdomain": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Required if you access Zendesk Chat from a Zendesk Support subdomain.`,
 					},
 				},
 			},
@@ -172,7 +186,8 @@ func (r *SourceZendeskChatResource) Schema(ctx context.Context, req resource.Sch
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

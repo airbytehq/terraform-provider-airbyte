@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &DestinationGcsResource{}
 var _ resource.ResourceWithImportState = &DestinationGcsResource{}
 
@@ -68,12 +65,15 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 												"HMAC_KEY",
 											),
 										},
+										Description: `must be one of [HMAC_KEY]`,
 									},
 									"hmac_key_access_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `When linked to a service account, this ID is 61 characters long; when linked to a user account, it is 24 characters long. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys#overview">here</a>.`,
 									},
 									"hmac_key_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The corresponding secret for the access ID. It is a 40-character base-64 encoded string.  Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys#secrets">here</a>.`,
 									},
 								},
 								Description: `An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>.`,
@@ -88,12 +88,15 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 												"HMAC_KEY",
 											),
 										},
+										Description: `must be one of [HMAC_KEY]`,
 									},
 									"hmac_key_access_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `When linked to a service account, this ID is 61 characters long; when linked to a user account, it is 24 characters long. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys#overview">here</a>.`,
 									},
 									"hmac_key_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The corresponding secret for the access ID. It is a 40-character base-64 encoded string.  Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys#secrets">here</a>.`,
 									},
 								},
 								Description: `An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>.`,
@@ -102,6 +105,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+						Description: `An HMAC key is a type of credential and can be associated with a service account or a user account in Cloud Storage. Read more <a href="https://cloud.google.com/storage/docs/authentication/hmackeys">here</a>.`,
 					},
 					"destination_type": schema.StringAttribute{
 						Required: true,
@@ -110,6 +114,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 								"gcs",
 							),
 						},
+						Description: `must be one of [gcs]`,
 					},
 					"format": schema.SingleNestedAttribute{
 						Required: true,
@@ -130,6 +135,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 																"bzip2",
 															),
 														},
+														Description: `must be one of [bzip2]`,
 													},
 												},
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
@@ -144,9 +150,11 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 																"Deflate",
 															),
 														},
+														Description: `must be one of [Deflate]`,
 													},
 													"compression_level": schema.Int64Attribute{
-														Optional: true,
+														Optional:    true,
+														Description: `0: no compression & fastest, 9: best compression & slowest.`,
 													},
 												},
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
@@ -161,6 +169,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 																"no compression",
 															),
 														},
+														Description: `must be one of [no compression]`,
 													},
 												},
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
@@ -175,6 +184,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 																"snappy",
 															),
 														},
+														Description: `must be one of [snappy]`,
 													},
 												},
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
@@ -189,9 +199,11 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 																"xz",
 															),
 														},
+														Description: `must be one of [xz]`,
 													},
 													"compression_level": schema.Int64Attribute{
-														Optional: true,
+														Optional:    true,
+														Description: `The presets 0-3 are fast presets with medium compression. The presets 4-6 are fairly slow presets with high compression. The default preset is 6. The presets 7-9 are like the preset 6 but use bigger dictionaries and have higher compressor and decompressor memory requirements. Unless the uncompressed size of the file exceeds 8 MiB, 16 MiB, or 32 MiB, it is waste of memory to use the presets 7, 8, or 9, respectively. Read more <a href="https://commons.apache.org/proper/commons-compress/apidocs/org/apache/commons/compress/compressors/xz/XZCompressorOutputStream.html#XZCompressorOutputStream-java.io.OutputStream-int-">here</a> for details.`,
 													},
 												},
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
@@ -206,12 +218,15 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 																"zstandard",
 															),
 														},
+														Description: `must be one of [zstandard]`,
 													},
 													"compression_level": schema.Int64Attribute{
-														Optional: true,
+														Optional:    true,
+														Description: `Negative levels are 'fast' modes akin to lz4 or snappy, levels above 9 are generally for archival purposes, and levels above 18 use a lot of memory.`,
 													},
 													"include_checksum": schema.BoolAttribute{
-														Optional: true,
+														Optional:    true,
+														Description: `If true, include a checksum with each data block.`,
 													},
 												},
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
@@ -220,6 +235,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 										Validators: []validator.Object{
 											validators.ExactlyOneChild(),
 										},
+										Description: `The compression algorithm used to compress data. Default to no compression.`,
 									},
 									"format_type": schema.StringAttribute{
 										Required: true,
@@ -228,6 +244,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 												"Avro",
 											),
 										},
+										Description: `must be one of [Avro]`,
 									},
 								},
 								Description: `Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.`,
@@ -248,6 +265,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 																"GZIP",
 															),
 														},
+														Description: `must be one of [GZIP]`,
 													},
 												},
 												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").`,
@@ -262,6 +280,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 																"No Compression",
 															),
 														},
+														Description: `must be one of [No Compression]`,
 													},
 												},
 												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").`,
@@ -270,6 +289,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 										Validators: []validator.Object{
 											validators.ExactlyOneChild(),
 										},
+										Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").`,
 									},
 									"flattening": schema.StringAttribute{
 										Optional: true,
@@ -279,7 +299,8 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 												"Root level flattening",
 											),
 										},
-										Description: `Whether the input JSON data should be normalized (flattened) in the output CSV. Please refer to docs for details.`,
+										MarkdownDescription: `must be one of [No flattening, Root level flattening]` + "\n" +
+											`Whether the input JSON data should be normalized (flattened) in the output CSV. Please refer to docs for details.`,
 									},
 									"format_type": schema.StringAttribute{
 										Required: true,
@@ -288,6 +309,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 												"CSV",
 											),
 										},
+										Description: `must be one of [CSV]`,
 									},
 								},
 								Description: `Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.`,
@@ -308,6 +330,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 																"GZIP",
 															),
 														},
+														Description: `must be one of [GZIP]`,
 													},
 												},
 												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
@@ -322,6 +345,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 																"No Compression",
 															),
 														},
+														Description: `must be one of [No Compression]`,
 													},
 												},
 												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
@@ -330,6 +354,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 										Validators: []validator.Object{
 											validators.ExactlyOneChild(),
 										},
+										Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
 									},
 									"format_type": schema.StringAttribute{
 										Required: true,
@@ -338,6 +363,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 												"JSONL",
 											),
 										},
+										Description: `must be one of [JSONL]`,
 									},
 								},
 								Description: `Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.`,
@@ -346,7 +372,8 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"block_size_mb": schema.Int64Attribute{
-										Optional: true,
+										Optional:    true,
+										Description: `This is the size of a row group being buffered in memory. It limits the memory usage when writing. Larger values will improve the IO when reading, but consume more memory when writing. Default: 128 MB.`,
 									},
 									"compression_codec": schema.StringAttribute{
 										Optional: true,
@@ -361,13 +388,16 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 												"ZSTD",
 											),
 										},
-										Description: `The compression algorithm used to compress data pages.`,
+										MarkdownDescription: `must be one of [UNCOMPRESSED, SNAPPY, GZIP, LZO, BROTLI, LZ4, ZSTD]` + "\n" +
+											`The compression algorithm used to compress data pages.`,
 									},
 									"dictionary_encoding": schema.BoolAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Default: true.`,
 									},
 									"dictionary_page_size_kb": schema.Int64Attribute{
-										Optional: true,
+										Optional:    true,
+										Description: `There is one dictionary page per column per row group when dictionary encoding is used. The dictionary page size works like the page size but for dictionary. Default: 1024 KB.`,
 									},
 									"format_type": schema.StringAttribute{
 										Required: true,
@@ -376,12 +406,15 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 												"Parquet",
 											),
 										},
+										Description: `must be one of [Parquet]`,
 									},
 									"max_padding_size_mb": schema.Int64Attribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Maximum size allowed as padding to align row groups. This is also the minimum size of a row group. Default: 8 MB.`,
 									},
 									"page_size_kb": schema.Int64Attribute{
-										Optional: true,
+										Optional:    true,
+										Description: `The page size is for compression. A block is composed of pages. A page is the smallest unit that must be read fully to access a single record. If this value is too small, the compression will deteriorate. Default: 1024 KB.`,
 									},
 								},
 								Description: `Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.`,
@@ -402,6 +435,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 																"no compression",
 															),
 														},
+														Description: `must be one of [no compression]`,
 													},
 												},
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
@@ -416,9 +450,11 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 																"Deflate",
 															),
 														},
+														Description: `must be one of [Deflate]`,
 													},
 													"compression_level": schema.Int64Attribute{
-														Optional: true,
+														Optional:    true,
+														Description: `0: no compression & fastest, 9: best compression & slowest.`,
 													},
 												},
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
@@ -433,6 +469,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 																"bzip2",
 															),
 														},
+														Description: `must be one of [bzip2]`,
 													},
 												},
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
@@ -447,9 +484,11 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 																"xz",
 															),
 														},
+														Description: `must be one of [xz]`,
 													},
 													"compression_level": schema.Int64Attribute{
-														Optional: true,
+														Optional:    true,
+														Description: `The presets 0-3 are fast presets with medium compression. The presets 4-6 are fairly slow presets with high compression. The default preset is 6. The presets 7-9 are like the preset 6 but use bigger dictionaries and have higher compressor and decompressor memory requirements. Unless the uncompressed size of the file exceeds 8 MiB, 16 MiB, or 32 MiB, it is waste of memory to use the presets 7, 8, or 9, respectively. Read more <a href="https://commons.apache.org/proper/commons-compress/apidocs/org/apache/commons/compress/compressors/xz/XZCompressorOutputStream.html#XZCompressorOutputStream-java.io.OutputStream-int-">here</a> for details.`,
 													},
 												},
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
@@ -464,12 +503,15 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 																"zstandard",
 															),
 														},
+														Description: `must be one of [zstandard]`,
 													},
 													"compression_level": schema.Int64Attribute{
-														Optional: true,
+														Optional:    true,
+														Description: `Negative levels are 'fast' modes akin to lz4 or snappy, levels above 9 are generally for archival purposes, and levels above 18 use a lot of memory.`,
 													},
 													"include_checksum": schema.BoolAttribute{
-														Optional: true,
+														Optional:    true,
+														Description: `If true, include a checksum with each data block.`,
 													},
 												},
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
@@ -484,6 +526,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 																"snappy",
 															),
 														},
+														Description: `must be one of [snappy]`,
 													},
 												},
 												Description: `The compression algorithm used to compress data. Default to no compression.`,
@@ -492,6 +535,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 										Validators: []validator.Object{
 											validators.ExactlyOneChild(),
 										},
+										Description: `The compression algorithm used to compress data. Default to no compression.`,
 									},
 									"format_type": schema.StringAttribute{
 										Required: true,
@@ -500,6 +544,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 												"Avro",
 											),
 										},
+										Description: `must be one of [Avro]`,
 									},
 								},
 								Description: `Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.`,
@@ -520,6 +565,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 																"No Compression",
 															),
 														},
+														Description: `must be one of [No Compression]`,
 													},
 												},
 												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").`,
@@ -534,6 +580,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 																"GZIP",
 															),
 														},
+														Description: `must be one of [GZIP]`,
 													},
 												},
 												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").`,
@@ -542,6 +589,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 										Validators: []validator.Object{
 											validators.ExactlyOneChild(),
 										},
+										Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".csv.gz").`,
 									},
 									"flattening": schema.StringAttribute{
 										Optional: true,
@@ -551,7 +599,8 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 												"Root level flattening",
 											),
 										},
-										Description: `Whether the input JSON data should be normalized (flattened) in the output CSV. Please refer to docs for details.`,
+										MarkdownDescription: `must be one of [No flattening, Root level flattening]` + "\n" +
+											`Whether the input JSON data should be normalized (flattened) in the output CSV. Please refer to docs for details.`,
 									},
 									"format_type": schema.StringAttribute{
 										Required: true,
@@ -560,6 +609,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 												"CSV",
 											),
 										},
+										Description: `must be one of [CSV]`,
 									},
 								},
 								Description: `Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.`,
@@ -580,6 +630,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 																"No Compression",
 															),
 														},
+														Description: `must be one of [No Compression]`,
 													},
 												},
 												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
@@ -594,6 +645,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 																"GZIP",
 															),
 														},
+														Description: `must be one of [GZIP]`,
 													},
 												},
 												Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
@@ -602,6 +654,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 										Validators: []validator.Object{
 											validators.ExactlyOneChild(),
 										},
+										Description: `Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz").`,
 									},
 									"format_type": schema.StringAttribute{
 										Required: true,
@@ -610,6 +663,7 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 												"JSONL",
 											),
 										},
+										Description: `must be one of [JSONL]`,
 									},
 								},
 								Description: `Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.`,
@@ -618,7 +672,8 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"block_size_mb": schema.Int64Attribute{
-										Optional: true,
+										Optional:    true,
+										Description: `This is the size of a row group being buffered in memory. It limits the memory usage when writing. Larger values will improve the IO when reading, but consume more memory when writing. Default: 128 MB.`,
 									},
 									"compression_codec": schema.StringAttribute{
 										Optional: true,
@@ -633,13 +688,16 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 												"ZSTD",
 											),
 										},
-										Description: `The compression algorithm used to compress data pages.`,
+										MarkdownDescription: `must be one of [UNCOMPRESSED, SNAPPY, GZIP, LZO, BROTLI, LZ4, ZSTD]` + "\n" +
+											`The compression algorithm used to compress data pages.`,
 									},
 									"dictionary_encoding": schema.BoolAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Default: true.`,
 									},
 									"dictionary_page_size_kb": schema.Int64Attribute{
-										Optional: true,
+										Optional:    true,
+										Description: `There is one dictionary page per column per row group when dictionary encoding is used. The dictionary page size works like the page size but for dictionary. Default: 1024 KB.`,
 									},
 									"format_type": schema.StringAttribute{
 										Required: true,
@@ -648,12 +706,15 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 												"Parquet",
 											),
 										},
+										Description: `must be one of [Parquet]`,
 									},
 									"max_padding_size_mb": schema.Int64Attribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Maximum size allowed as padding to align row groups. This is also the minimum size of a row group. Default: 8 MB.`,
 									},
 									"page_size_kb": schema.Int64Attribute{
-										Optional: true,
+										Optional:    true,
+										Description: `The page size is for compression. A block is composed of pages. A page is the smallest unit that must be read fully to access a single record. If this value is too small, the compression will deteriorate. Default: 1024 KB.`,
 									},
 								},
 								Description: `Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.`,
@@ -662,12 +723,15 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+						Description: `Output data format. One of the following formats must be selected - <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-avro#advantages_of_avro">AVRO</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-parquet#parquet_schemas">PARQUET</a> format, <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-csv#loading_csv_data_into_a_table">CSV</a> format, or <a href="https://cloud.google.com/bigquery/docs/loading-data-cloud-storage-json#loading_json_data_into_a_new_table">JSONL</a> format.`,
 					},
 					"gcs_bucket_name": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `You can find the bucket name in the App Engine Admin console Application Settings page, under the label Google Cloud Storage Bucket. Read more <a href="https://cloud.google.com/storage/docs/naming-buckets">here</a>.`,
 					},
 					"gcs_bucket_path": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `GCS Bucket Path string Subdirectory under the above bucket to sync the data into.`,
 					},
 					"gcs_bucket_region": schema.StringAttribute{
 						Optional: true,
@@ -710,7 +774,8 @@ func (r *DestinationGcsResource) Schema(ctx context.Context, req resource.Schema
 								"nam4",
 							),
 						},
-						Description: `Select a Region of the GCS Bucket. Read more <a href="https://cloud.google.com/storage/docs/locations">here</a>.`,
+						MarkdownDescription: `must be one of [northamerica-northeast1, northamerica-northeast2, us-central1, us-east1, us-east4, us-west1, us-west2, us-west3, us-west4, southamerica-east1, southamerica-west1, europe-central2, europe-north1, europe-west1, europe-west2, europe-west3, europe-west4, europe-west6, asia-east1, asia-east2, asia-northeast1, asia-northeast2, asia-northeast3, asia-south1, asia-south2, asia-southeast1, asia-southeast2, australia-southeast1, australia-southeast2, asia, eu, us, asia1, eur4, nam4]` + "\n" +
+							`Select a Region of the GCS Bucket. Read more <a href="https://cloud.google.com/storage/docs/locations">here</a>.`,
 					},
 				},
 			},

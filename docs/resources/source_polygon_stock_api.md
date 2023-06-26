@@ -23,7 +23,7 @@ SourcePolygonStockAPI Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,18 +35,18 @@ SourcePolygonStockAPI Resource
 
 Required:
 
-- `api_key` (String)
-- `end_date` (String)
-- `multiplier` (Number)
-- `source_type` (String)
-- `start_date` (String)
-- `stocks_ticker` (String)
-- `timespan` (String)
+- `api_key` (String) Your API ACCESS Key
+- `end_date` (String) The target date for the aggregate window.
+- `multiplier` (Number) The size of the timespan multiplier.
+- `source_type` (String) must be one of [polygon-stock-api]
+- `start_date` (String) The beginning date for the aggregate window.
+- `stocks_ticker` (String) The exchange symbol that this item is traded under.
+- `timespan` (String) The size of the time window.
 
 Optional:
 
-- `adjusted` (String)
-- `limit` (Number)
-- `sort` (String)
+- `adjusted` (String) Determines whether or not the results are adjusted for splits. By default, results are adjusted and set to true. Set this to false to get results that are NOT adjusted for splits.
+- `limit` (Number) The target date for the aggregate window.
+- `sort` (String) Sort the results by timestamp. asc will return results in ascending order (oldest at the top), desc will return results in descending order (newest at the top).
 
 

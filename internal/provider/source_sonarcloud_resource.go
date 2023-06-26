@@ -13,16 +13,13 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceSonarCloudResource{}
 var _ resource.ResourceWithImportState = &SourceSonarCloudResource{}
 
@@ -63,15 +60,18 @@ func (r *SourceSonarCloudResource) Schema(ctx context.Context, req resource.Sche
 						Validators: []validator.List{
 							listvalidator.ValueStringsAre(validators.IsValidJSON()),
 						},
+						Description: `Comma-separated list of component keys.`,
 					},
 					"end_date": schema.StringAttribute{
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
+						Description: `To retrieve issues created before the given date (inclusive).`,
 					},
 					"organization": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Organization key. See <a href="https://docs.sonarcloud.io/appendices/project-information/#project-and-organization-keys">here</a>.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -80,15 +80,18 @@ func (r *SourceSonarCloudResource) Schema(ctx context.Context, req resource.Sche
 								"sonar-cloud",
 							),
 						},
+						Description: `must be one of [sonar-cloud]`,
 					},
 					"start_date": schema.StringAttribute{
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
+						Description: `To retrieve issues created after the given date (inclusive).`,
 					},
 					"user_token": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Your User Token. See <a href="https://docs.sonarcloud.io/advanced-setup/user-accounts/">here</a>. The token is case sensitive.`,
 					},
 				},
 			},
@@ -99,7 +102,8 @@ func (r *SourceSonarCloudResource) Schema(ctx context.Context, req resource.Sche
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

@@ -23,7 +23,7 @@ SourceSecoda Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,7 +35,7 @@ SourceSecoda Resource
 
 Required:
 
-- `api_key` (String)
-- `source_type` (String)
+- `api_key` (String) Your API Access Key. See <a href="https://docs.secoda.co/secoda-api/authentication">here</a>. The key is case sensitive.
+- `source_type` (String) must be one of [secoda]
 
 

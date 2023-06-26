@@ -23,7 +23,7 @@ SourceTrustpilot Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,10 +35,10 @@ SourceTrustpilot Resource
 
 Required:
 
-- `business_units` (List of String)
+- `business_units` (List of String) The names of business units which shall be synchronized. Some streams e.g. configured_business_units or private_reviews use this configuration.
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `source_type` (String)
-- `start_date` (String)
+- `source_type` (String) must be one of [trustpilot]
+- `start_date` (String) For streams with sync. method incremental the start date time to be used
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
@@ -55,11 +55,11 @@ Optional:
 
 Required:
 
-- `client_id` (String)
+- `client_id` (String) The API key of the Trustpilot API application.
 
 Optional:
 
-- `auth_type` (String)
+- `auth_type` (String) must be one of [apikey]
 
 
 <a id="nestedatt--configuration--credentials--source_trustpilot_authorization_method_o_auth_2_0"></a>
@@ -67,15 +67,15 @@ Optional:
 
 Required:
 
-- `access_token` (String)
-- `client_id` (String)
-- `client_secret` (String)
-- `refresh_token` (String)
-- `token_expiry_date` (String)
+- `access_token` (String) Access Token for making authenticated requests.
+- `client_id` (String) The API key of the Trustpilot API application. (represents the OAuth Client ID)
+- `client_secret` (String) The Secret of the Trustpilot API application. (represents the OAuth Client Secret)
+- `refresh_token` (String) The key to refresh the expired access_token.
+- `token_expiry_date` (String) The date-time when the access token should be refreshed.
 
 Optional:
 
-- `auth_type` (String)
+- `auth_type` (String) must be one of [oauth2.0]
 
 
 <a id="nestedatt--configuration--credentials--source_trustpilot_update_authorization_method_api_key"></a>
@@ -83,11 +83,11 @@ Optional:
 
 Required:
 
-- `client_id` (String)
+- `client_id` (String) The API key of the Trustpilot API application.
 
 Optional:
 
-- `auth_type` (String)
+- `auth_type` (String) must be one of [apikey]
 
 
 <a id="nestedatt--configuration--credentials--source_trustpilot_update_authorization_method_o_auth_2_0"></a>
@@ -95,14 +95,14 @@ Optional:
 
 Required:
 
-- `access_token` (String)
-- `client_id` (String)
-- `client_secret` (String)
-- `refresh_token` (String)
-- `token_expiry_date` (String)
+- `access_token` (String) Access Token for making authenticated requests.
+- `client_id` (String) The API key of the Trustpilot API application. (represents the OAuth Client ID)
+- `client_secret` (String) The Secret of the Trustpilot API application. (represents the OAuth Client Secret)
+- `refresh_token` (String) The key to refresh the expired access_token.
+- `token_expiry_date` (String) The date-time when the access token should be refreshed.
 
 Optional:
 
-- `auth_type` (String)
+- `auth_type` (String) must be one of [oauth2.0]
 
 

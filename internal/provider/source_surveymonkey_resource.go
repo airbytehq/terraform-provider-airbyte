@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceSurveymonkeyResource{}
 var _ resource.ResourceWithImportState = &SourceSurveymonkeyResource{}
 
@@ -60,7 +57,8 @@ func (r *SourceSurveymonkeyResource) Schema(ctx context.Context, req resource.Sc
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
 							"access_token": schema.StringAttribute{
-								Required: true,
+								Required:    true,
+								Description: `Access Token for making authenticated requests. See the <a href="https://docs.airbyte.io/integrations/sources/surveymonkey">docs</a> for information on how to generate this key.`,
 							},
 							"auth_method": schema.StringAttribute{
 								Required: true,
@@ -69,12 +67,15 @@ func (r *SourceSurveymonkeyResource) Schema(ctx context.Context, req resource.Sc
 										"oauth2.0",
 									),
 								},
+								Description: `must be one of [oauth2.0]`,
 							},
 							"client_id": schema.StringAttribute{
-								Optional: true,
+								Optional:    true,
+								Description: `The Client ID of the SurveyMonkey developer application.`,
 							},
 							"client_secret": schema.StringAttribute{
-								Optional: true,
+								Optional:    true,
+								Description: `The Client Secret of the SurveyMonkey developer application.`,
 							},
 						},
 						Description: `The authorization method to use to retrieve data from SurveyMonkey`,
@@ -88,7 +89,8 @@ func (r *SourceSurveymonkeyResource) Schema(ctx context.Context, req resource.Sc
 								"Canada",
 							),
 						},
-						Description: `Depending on the originating datacenter of the SurveyMonkey account, the API access URL may be different.`,
+						MarkdownDescription: `must be one of [USA, Europe, Canada]` + "\n" +
+							`Depending on the originating datacenter of the SurveyMonkey account, the API access URL may be different.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -97,16 +99,19 @@ func (r *SourceSurveymonkeyResource) Schema(ctx context.Context, req resource.Sc
 								"surveymonkey",
 							),
 						},
+						Description: `must be one of [surveymonkey]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
+						Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.`,
 					},
 					"survey_ids": schema.ListAttribute{
 						Optional:    true,
 						ElementType: types.StringType,
+						Description: `IDs of the surveys from which you'd like to replicate data. If left empty, data from all boards to which you have access will be replicated.`,
 					},
 				},
 			},
@@ -117,7 +122,8 @@ func (r *SourceSurveymonkeyResource) Schema(ctx context.Context, req resource.Sc
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

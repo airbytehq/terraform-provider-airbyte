@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceZendeskSunshineResource{}
 var _ resource.ResourceWithImportState = &SourceZendeskSunshineResource{}
 
@@ -63,7 +60,8 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `API Token. See the <a href="https://docs.airbyte.io/integrations/sources/zendesk_sunshine">docs</a> for information on how to generate this key.`,
 									},
 									"auth_method": schema.StringAttribute{
 										Required: true,
@@ -72,9 +70,11 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 												"api_token",
 											),
 										},
+										Description: `must be one of [api_token]`,
 									},
 									"email": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The user email for your Zendesk account`,
 									},
 								},
 							},
@@ -82,7 +82,8 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Long-term access Token for making authenticated requests.`,
 									},
 									"auth_method": schema.StringAttribute{
 										Required: true,
@@ -91,12 +92,15 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 												"oauth2.0",
 											),
 										},
+										Description: `must be one of [oauth2.0]`,
 									},
 									"client_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Client ID of your OAuth application.`,
 									},
 									"client_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Client Secret of your OAuth application.`,
 									},
 								},
 							},
@@ -104,7 +108,8 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `API Token. See the <a href="https://docs.airbyte.io/integrations/sources/zendesk_sunshine">docs</a> for information on how to generate this key.`,
 									},
 									"auth_method": schema.StringAttribute{
 										Required: true,
@@ -113,9 +118,11 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 												"api_token",
 											),
 										},
+										Description: `must be one of [api_token]`,
 									},
 									"email": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The user email for your Zendesk account`,
 									},
 								},
 							},
@@ -123,7 +130,8 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Long-term access Token for making authenticated requests.`,
 									},
 									"auth_method": schema.StringAttribute{
 										Required: true,
@@ -132,12 +140,15 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 												"oauth2.0",
 											),
 										},
+										Description: `must be one of [oauth2.0]`,
 									},
 									"client_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Client ID of your OAuth application.`,
 									},
 									"client_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Client Secret of your OAuth application.`,
 									},
 								},
 							},
@@ -153,12 +164,15 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 								"zendesk-sunshine",
 							),
 						},
+						Description: `must be one of [zendesk-sunshine]`,
 					},
 					"start_date": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The date from which you'd like to replicate data for Zendesk Sunshine API, in the format YYYY-MM-DDT00:00:00Z.`,
 					},
 					"subdomain": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The subdomain for your Zendesk Account.`,
 					},
 				},
 			},
@@ -169,7 +183,8 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

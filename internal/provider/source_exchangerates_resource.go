@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceExchangeRatesResource{}
 var _ resource.ResourceWithImportState = &SourceExchangeRatesResource{}
 
@@ -57,13 +54,16 @@ func (r *SourceExchangeRatesResource) Schema(ctx context.Context, req resource.S
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"access_key": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Your API Key. See <a href="https://apilayer.com/marketplace/exchangerates_data-api">here</a>. The key is case sensitive.`,
 					},
 					"base": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `ISO reference currency. See <a href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html">here</a>. Free plan doesn't support Source Currency Switching, default base currency is EUR`,
 					},
 					"ignore_weekends": schema.BoolAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Ignore weekends? (Exchanges don't run on weekends)`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -72,12 +72,14 @@ func (r *SourceExchangeRatesResource) Schema(ctx context.Context, req resource.S
 								"exchange-rates",
 							),
 						},
+						Description: `must be one of [exchange-rates]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
+						Description: `Start getting data from that date.`,
 					},
 				},
 			},
@@ -88,7 +90,8 @@ func (r *SourceExchangeRatesResource) Schema(ctx context.Context, req resource.S
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

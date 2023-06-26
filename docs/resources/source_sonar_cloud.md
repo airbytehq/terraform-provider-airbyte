@@ -23,7 +23,7 @@ SourceSonarCloud Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,14 +35,14 @@ SourceSonarCloud Resource
 
 Required:
 
-- `component_keys` (List of String)
-- `organization` (String)
-- `source_type` (String)
-- `user_token` (String)
+- `component_keys` (List of String) Comma-separated list of component keys.
+- `organization` (String) Organization key. See <a href="https://docs.sonarcloud.io/appendices/project-information/#project-and-organization-keys">here</a>.
+- `source_type` (String) must be one of [sonar-cloud]
+- `user_token` (String) Your User Token. See <a href="https://docs.sonarcloud.io/advanced-setup/user-accounts/">here</a>. The token is case sensitive.
 
 Optional:
 
-- `end_date` (String)
-- `start_date` (String)
+- `end_date` (String) To retrieve issues created before the given date (inclusive).
+- `start_date` (String) To retrieve issues created after the given date (inclusive).
 
 

@@ -23,7 +23,7 @@ SourcePosthog Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,12 +35,12 @@ SourcePosthog Resource
 
 Required:
 
-- `api_key` (String)
-- `source_type` (String)
-- `start_date` (String)
+- `api_key` (String) API Key. See the <a href="https://docs.airbyte.com/integrations/sources/posthog">docs</a> for information on how to generate this key.
+- `source_type` (String) must be one of [posthog]
+- `start_date` (String) The date from which you'd like to replicate the data. Any data before this date will not be replicated.
 
 Optional:
 
-- `base_url` (String)
+- `base_url` (String) Base PostHog url. Defaults to PostHog Cloud (https://app.posthog.com).
 
 

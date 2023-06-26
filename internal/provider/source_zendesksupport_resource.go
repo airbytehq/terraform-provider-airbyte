@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceZendeskSupportResource{}
 var _ resource.ResourceWithImportState = &SourceZendeskSupportResource{}
 
@@ -63,7 +60,8 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The value of the API token generated. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk-support#setup-guide">docs</a> for more information.`,
 									},
 									"credentials": schema.StringAttribute{
 										Optional: true,
@@ -72,9 +70,11 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 												"api_token",
 											),
 										},
+										Description: `must be one of [api_token]`,
 									},
 									"email": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The user email for your Zendesk account.`,
 									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
@@ -90,7 +90,8 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The value of the API token generated. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk-support">docs</a> for more information.`,
 									},
 									"credentials": schema.StringAttribute{
 										Optional: true,
@@ -99,6 +100,7 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 												"oauth2.0",
 											),
 										},
+										Description: `must be one of [oauth2.0]`,
 									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
@@ -114,7 +116,8 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The value of the API token generated. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk-support#setup-guide">docs</a> for more information.`,
 									},
 									"credentials": schema.StringAttribute{
 										Optional: true,
@@ -123,9 +126,11 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 												"api_token",
 											),
 										},
+										Description: `must be one of [api_token]`,
 									},
 									"email": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The user email for your Zendesk account.`,
 									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
@@ -141,7 +146,8 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The value of the API token generated. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk-support">docs</a> for more information.`,
 									},
 									"credentials": schema.StringAttribute{
 										Optional: true,
@@ -150,6 +156,7 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 												"oauth2.0",
 											),
 										},
+										Description: `must be one of [oauth2.0]`,
 									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
@@ -165,9 +172,11 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+						Description: `Zendesk service provides two authentication methods. Choose between: ` + "`" + `OAuth2.0` + "`" + ` or ` + "`" + `API token` + "`" + `.`,
 					},
 					"ignore_pagination": schema.BoolAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Makes each stream read a single page of data.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -176,15 +185,18 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 								"zendesk-support",
 							),
 						},
+						Description: `must be one of [zendesk-support]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
+						Description: `The date from which you'd like to replicate data for Zendesk Support API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.`,
 					},
 					"subdomain": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `This is your Zendesk subdomain that can be found in your account URL. For example, in https://{MY_SUBDOMAIN}.zendesk.com/, where MY_SUBDOMAIN is the value of your subdomain.`,
 					},
 				},
 			},
@@ -195,7 +207,8 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceNetsuiteResource{}
 var _ resource.ResourceWithImportState = &SourceNetsuiteResource{}
 
@@ -56,17 +53,21 @@ func (r *SourceNetsuiteResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"consumer_key": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Consumer key associated with your integration`,
 					},
 					"consumer_secret": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Consumer secret associated with your integration`,
 					},
 					"object_types": schema.ListAttribute{
 						Optional:    true,
 						ElementType: types.StringType,
+						Description: `The API names of the Netsuite objects you want to sync. Setting this speeds up the connection setup process by limiting the number of schemas that need to be retrieved from Netsuite.`,
 					},
 					"realm": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Netsuite realm e.g. 2344535, as for ` + "`" + `production` + "`" + ` or 2344535_SB1, as for the ` + "`" + `sandbox` + "`" + ``,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -75,18 +76,23 @@ func (r *SourceNetsuiteResource) Schema(ctx context.Context, req resource.Schema
 								"netsuite",
 							),
 						},
+						Description: `must be one of [netsuite]`,
 					},
 					"start_datetime": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Starting point for your data replication, in format of "YYYY-MM-DDTHH:mm:ssZ"`,
 					},
 					"token_key": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Access token key`,
 					},
 					"token_secret": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Access token secret`,
 					},
 					"window_in_days": schema.Int64Attribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The amount of days used to query the data with date chunks. Set smaller value, if you have lots of data.`,
 					},
 				},
 			},
@@ -97,7 +103,8 @@ func (r *SourceNetsuiteResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourcePaystackResource{}
 var _ resource.ResourceWithImportState = &SourcePaystackResource{}
 
@@ -57,10 +54,12 @@ func (r *SourcePaystackResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"lookback_window_days": schema.Int64Attribute{
-						Optional: true,
+						Optional:    true,
+						Description: `When set, the connector will always reload data from the past N days, where N is the value set here. This is useful if your data is updated after creation.`,
 					},
 					"secret_key": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The Paystack API key (usually starts with 'sk_live_'; find yours <a href="https://dashboard.paystack.com/#/settings/developer">here</a>).`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -69,12 +68,14 @@ func (r *SourcePaystackResource) Schema(ctx context.Context, req resource.Schema
 								"paystack",
 							),
 						},
+						Description: `must be one of [paystack]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
+						Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.`,
 					},
 				},
 			},
@@ -85,7 +86,8 @@ func (r *SourcePaystackResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

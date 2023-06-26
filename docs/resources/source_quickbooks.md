@@ -23,7 +23,7 @@ SourceQuickbooks Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -36,9 +36,9 @@ SourceQuickbooks Resource
 Required:
 
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `sandbox` (Boolean)
-- `source_type` (String)
-- `start_date` (String)
+- `sandbox` (Boolean) Determines whether to use the sandbox or production environment.
+- `source_type` (String) must be one of [quickbooks]
+- `start_date` (String) The default value to use if no bookmark exists for an endpoint (rfc3339 date string). E.g, 2021-03-20T00:00:00+00:00. Any data before this date will not be replicated.
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
@@ -53,16 +53,16 @@ Optional:
 
 Required:
 
-- `access_token` (String)
-- `client_id` (String)
-- `client_secret` (String)
-- `realm_id` (String)
-- `refresh_token` (String)
-- `token_expiry_date` (String)
+- `access_token` (String) Access token fot making authenticated requests.
+- `client_id` (String) Identifies which app is making the request. Obtain this value from the Keys tab on the app profile via My Apps on the developer site. There are two versions of this key: development and production.
+- `client_secret` (String) Obtain this value from the Keys tab on the app profile via My Apps on the developer site. There are two versions of this key: development and production.
+- `realm_id` (String) Labeled Company ID. The Make API Calls panel is populated with the realm id and the current access token.
+- `refresh_token` (String) A token used when refreshing the access token.
+- `token_expiry_date` (String) The date-time when the access token should be refreshed.
 
 Optional:
 
-- `auth_type` (String)
+- `auth_type` (String) must be one of [oauth2.0]
 
 
 <a id="nestedatt--configuration--credentials--source_quickbooks_update_authorization_method_o_auth2_0"></a>
@@ -70,15 +70,15 @@ Optional:
 
 Required:
 
-- `access_token` (String)
-- `client_id` (String)
-- `client_secret` (String)
-- `realm_id` (String)
-- `refresh_token` (String)
-- `token_expiry_date` (String)
+- `access_token` (String) Access token fot making authenticated requests.
+- `client_id` (String) Identifies which app is making the request. Obtain this value from the Keys tab on the app profile via My Apps on the developer site. There are two versions of this key: development and production.
+- `client_secret` (String) Obtain this value from the Keys tab on the app profile via My Apps on the developer site. There are two versions of this key: development and production.
+- `realm_id` (String) Labeled Company ID. The Make API Calls panel is populated with the realm id and the current access token.
+- `refresh_token` (String) A token used when refreshing the access token.
+- `token_expiry_date` (String) The date-time when the access token should be refreshed.
 
 Optional:
 
-- `auth_type` (String)
+- `auth_type` (String) must be one of [oauth2.0]
 
 

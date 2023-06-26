@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceRssResource{}
 var _ resource.ResourceWithImportState = &SourceRssResource{}
 
@@ -62,9 +59,11 @@ func (r *SourceRssResource) Schema(ctx context.Context, req resource.SchemaReque
 								"rss",
 							),
 						},
+						Description: `must be one of [rss]`,
 					},
 					"url": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `RSS Feed URL`,
 					},
 				},
 			},
@@ -75,7 +74,8 @@ func (r *SourceRssResource) Schema(ctx context.Context, req resource.SchemaReque
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

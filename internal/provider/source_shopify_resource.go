@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceShopifyResource{}
 var _ resource.ResourceWithImportState = &SourceShopifyResource{}
 
@@ -63,7 +60,8 @@ func (r *SourceShopifyResource) Schema(ctx context.Context, req resource.SchemaR
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_password": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The API Password for your private application in the ` + "`" + `Shopify` + "`" + ` store.`,
 									},
 									"auth_method": schema.StringAttribute{
 										Required: true,
@@ -72,6 +70,7 @@ func (r *SourceShopifyResource) Schema(ctx context.Context, req resource.SchemaR
 												"api_password",
 											),
 										},
+										Description: `must be one of [api_password]`,
 									},
 								},
 								Description: `API Password Auth`,
@@ -80,7 +79,8 @@ func (r *SourceShopifyResource) Schema(ctx context.Context, req resource.SchemaR
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `The Access Token for making authenticated requests.`,
 									},
 									"auth_method": schema.StringAttribute{
 										Required: true,
@@ -89,12 +89,15 @@ func (r *SourceShopifyResource) Schema(ctx context.Context, req resource.SchemaR
 												"oauth2.0",
 											),
 										},
+										Description: `must be one of [oauth2.0]`,
 									},
 									"client_id": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `The Client ID of the Shopify developer application.`,
 									},
 									"client_secret": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `The Client Secret of the Shopify developer application.`,
 									},
 								},
 								Description: `OAuth2.0`,
@@ -103,7 +106,8 @@ func (r *SourceShopifyResource) Schema(ctx context.Context, req resource.SchemaR
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_password": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The API Password for your private application in the ` + "`" + `Shopify` + "`" + ` store.`,
 									},
 									"auth_method": schema.StringAttribute{
 										Required: true,
@@ -112,6 +116,7 @@ func (r *SourceShopifyResource) Schema(ctx context.Context, req resource.SchemaR
 												"api_password",
 											),
 										},
+										Description: `must be one of [api_password]`,
 									},
 								},
 								Description: `API Password Auth`,
@@ -120,7 +125,8 @@ func (r *SourceShopifyResource) Schema(ctx context.Context, req resource.SchemaR
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `The Access Token for making authenticated requests.`,
 									},
 									"auth_method": schema.StringAttribute{
 										Required: true,
@@ -129,12 +135,15 @@ func (r *SourceShopifyResource) Schema(ctx context.Context, req resource.SchemaR
 												"oauth2.0",
 											),
 										},
+										Description: `must be one of [oauth2.0]`,
 									},
 									"client_id": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `The Client ID of the Shopify developer application.`,
 									},
 									"client_secret": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `The Client Secret of the Shopify developer application.`,
 									},
 								},
 								Description: `OAuth2.0`,
@@ -143,9 +152,11 @@ func (r *SourceShopifyResource) Schema(ctx context.Context, req resource.SchemaR
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+						Description: `The authorization method to use to retrieve data from Shopify`,
 					},
 					"shop": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The name of your Shopify store found in the URL. For example, if your URL was https://NAME.myshopify.com, then the name would be 'NAME'.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -154,12 +165,14 @@ func (r *SourceShopifyResource) Schema(ctx context.Context, req resource.SchemaR
 								"shopify",
 							),
 						},
+						Description: `must be one of [shopify]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
+						Description: `The date you would like to replicate data from. Format: YYYY-MM-DD. Any data before this date will not be replicated.`,
 					},
 				},
 			},
@@ -170,7 +183,8 @@ func (r *SourceShopifyResource) Schema(ctx context.Context, req resource.SchemaR
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

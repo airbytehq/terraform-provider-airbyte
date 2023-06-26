@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &DestinationKeenResource{}
 var _ resource.ResourceWithImportState = &DestinationKeenResource{}
 
@@ -55,7 +52,8 @@ func (r *DestinationKeenResource) Schema(ctx context.Context, req resource.Schem
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `To get Keen Master API Key, navigate to the Access tab from the left-hand, side panel and check the Project Details section.`,
 					},
 					"destination_type": schema.StringAttribute{
 						Required: true,
@@ -64,12 +62,15 @@ func (r *DestinationKeenResource) Schema(ctx context.Context, req resource.Schem
 								"keen",
 							),
 						},
+						Description: `must be one of [keen]`,
 					},
 					"infer_timestamp": schema.BoolAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Allow connector to guess keen.timestamp value based on the streamed data.`,
 					},
 					"project_id": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `To get Keen Project ID, navigate to the Access tab from the left-hand, side panel and check the Project Details section.`,
 					},
 				},
 			},

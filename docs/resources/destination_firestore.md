@@ -31,11 +31,11 @@ DestinationFirestore Resource
 
 Required:
 
-- `destination_type` (String)
-- `project_id` (String)
+- `destination_type` (String) must be one of [firestore]
+- `project_id` (String) The GCP project ID for the project containing the target BigQuery dataset.
 
 Optional:
 
-- `credentials_json` (String)
+- `credentials_json` (String) The contents of the JSON service account key. Check out the <a href="https://docs.airbyte.io/integrations/destinations/firestore">docs</a> if you need help generating this key. Default credentials will be used if this field is left empty.
 
 

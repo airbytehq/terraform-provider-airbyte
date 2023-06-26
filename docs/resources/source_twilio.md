@@ -23,7 +23,7 @@ SourceTwilio Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,13 +35,13 @@ SourceTwilio Resource
 
 Required:
 
-- `account_sid` (String)
-- `auth_token` (String)
-- `source_type` (String)
-- `start_date` (String)
+- `account_sid` (String) Twilio account SID
+- `auth_token` (String) Twilio Auth Token.
+- `source_type` (String) must be one of [twilio]
+- `start_date` (String) UTC date and time in the format 2020-10-01T00:00:00Z. Any data before this date will not be replicated.
 
 Optional:
 
-- `lookback_window` (Number)
+- `lookback_window` (Number) How far into the past to look for records. (in minutes)
 
 

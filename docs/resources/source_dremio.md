@@ -23,7 +23,7 @@ SourceDremio Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,8 +35,8 @@ SourceDremio Resource
 
 Required:
 
-- `api_key` (String)
-- `base_url` (String)
-- `source_type` (String)
+- `api_key` (String) API Key that is generated when you authenticate to Dremio API
+- `base_url` (String) URL of your Dremio instance
+- `source_type` (String) must be one of [dremio]
 
 

@@ -23,14 +23,16 @@ Connection Resource
 ### Optional
 
 - `configurations` (Attributes) A list of configured stream options for a connection. (see [below for nested schema](#nestedatt--configurations))
-- `data_residency` (String)
-- `name` (String)
-- `namespace_definition` (String) Define the location where the data will be stored in the destination
-- `namespace_format` (String)
-- `non_breaking_schema_updates_behavior` (String) Set how Airbyte handles syncs when it detects a non-breaking schema change in the source
-- `prefix` (String)
+- `data_residency` (String) must be one of [auto, us, eu]
+- `name` (String) Optional name of the connection
+- `namespace_definition` (String) must be one of [source, destination, custom_format]
+Define the location where the data will be stored in the destination
+- `namespace_format` (String) Used when namespaceDefinition is 'custom_format'. If blank then behaves like namespaceDefinition = 'destination'. If "${SOURCE_NAMESPACE}" then behaves like namespaceDefinition = 'source'.
+- `non_breaking_schema_updates_behavior` (String) must be one of [ignore, disable_connection]
+Set how Airbyte handles syncs when it detects a non-breaking schema change in the source
+- `prefix` (String) Prefix that will be prepended to the name of each stream when it is written to the destination (ex. “airbyte_” causes “projects” => “airbyte_projects”).
 - `schedule` (Attributes) schedule for when the the connection should run, per the schedule type (see [below for nested schema](#nestedatt--schedule))
-- `status` (String)
+- `status` (String) must be one of [active, inactive, deprecated]
 
 ### Read-Only
 
@@ -53,9 +55,9 @@ Required:
 
 Optional:
 
-- `cursor_field` (List of String)
-- `primary_key` (List of List of String)
-- `sync_mode` (String)
+- `cursor_field` (List of String) Path to the field that will be used to determine if a record is new or modified since the last sync. This field is REQUIRED if `sync_mode` is `incremental` unless there is a default.
+- `primary_key` (List of List of String) Paths to the fields that will be used as primary key. This field is REQUIRED if `destination_sync_mode` is `*_dedup` unless it is already supplied by the source schema.
+- `sync_mode` (String) must be one of [full_refresh_overwrite, full_refresh_append, incremental_append, incremental_deduped_history]
 
 
 
@@ -64,7 +66,7 @@ Optional:
 
 Required:
 
-- `schedule_type` (String)
+- `schedule_type` (String) must be one of [manual, cron]
 
 Optional:
 

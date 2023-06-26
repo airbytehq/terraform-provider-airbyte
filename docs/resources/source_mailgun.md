@@ -23,7 +23,7 @@ SourceMailgun Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,12 +35,12 @@ SourceMailgun Resource
 
 Required:
 
-- `private_key` (String)
-- `source_type` (String)
+- `private_key` (String) Primary account API key to access your Mailgun data.
+- `source_type` (String) must be one of [mailgun]
 
 Optional:
 
-- `domain_region` (String)
-- `start_date` (String)
+- `domain_region` (String) Domain region code. 'EU' or 'US' are possible values. The default is 'US'.
+- `start_date` (String) UTC date and time in the format 2020-10-01 00:00:00. Any data before this date will not be replicated. If omitted, defaults to 3 days ago.
 
 

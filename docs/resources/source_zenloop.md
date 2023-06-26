@@ -23,7 +23,7 @@ SourceZenloop Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,13 +35,13 @@ SourceZenloop Resource
 
 Required:
 
-- `api_token` (String)
-- `source_type` (String)
+- `api_token` (String) Zenloop API Token. You can get the API token in settings page <a href="https://app.zenloop.com/settings/api">here</a>
+- `source_type` (String) must be one of [zenloop]
 
 Optional:
 
-- `date_from` (String)
-- `survey_group_id` (String)
-- `survey_id` (String)
+- `date_from` (String) Zenloop date_from. Format: 2021-10-24T03:30:30Z or 2021-10-24. Leave empty if only data from current data should be synced
+- `survey_group_id` (String) Zenloop Survey Group ID. Can be found by pulling All Survey Groups via SurveyGroups stream. Leave empty to pull answers from all survey groups
+- `survey_id` (String) Zenloop Survey ID. Can be found <a href="https://app.zenloop.com/settings/api">here</a>. Leave empty to pull answers from all surveys
 
 

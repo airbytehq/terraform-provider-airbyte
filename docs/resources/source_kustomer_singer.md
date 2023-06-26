@@ -23,7 +23,7 @@ SourceKustomerSinger Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,8 +35,8 @@ SourceKustomerSinger Resource
 
 Required:
 
-- `api_token` (String)
-- `source_type` (String)
-- `start_date` (String)
+- `api_token` (String) Kustomer API Token. See the <a href="https://developer.kustomer.com/kustomer-api-docs/reference/authentication">docs</a> on how to obtain this
+- `source_type` (String) must be one of [kustomer-singer]
+- `start_date` (String) The date from which you'd like to replicate the data
 
 

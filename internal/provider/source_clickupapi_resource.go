@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceClickupAPIResource{}
 var _ resource.ResourceWithImportState = &SourceClickupAPIResource{}
 
@@ -56,16 +53,20 @@ func (r *SourceClickupAPIResource) Schema(ctx context.Context, req resource.Sche
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"api_token": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Every ClickUp API call required authentication. This field is your personal API token. See <a href="https://clickup.com/api/developer-portal/authentication/#personal-token">here</a>.`,
 					},
 					"folder_id": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The ID of your folder in your space. Retrieve it from the ` + "`" + `/space/{space_id}/folder` + "`" + ` of the ClickUp API. See <a href="https://clickup.com/api/clickupreference/operation/GetFolders/">here</a>.`,
 					},
 					"include_closed_tasks": schema.BoolAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Include or exclude closed tasks. By default, they are excluded. See <a https://clickup.com/api/clickupreference/operation/GetTasks/#!in=query&path=include_closed&t=request">here</a>.`,
 					},
 					"list_id": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The ID of your list in your folder. Retrieve it from the ` + "`" + `/folder/{folder_id}/list` + "`" + ` of the ClickUp API. See <a href="https://clickup.com/api/clickupreference/operation/GetLists/">here</a>.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -74,12 +75,15 @@ func (r *SourceClickupAPIResource) Schema(ctx context.Context, req resource.Sche
 								"clickup-api",
 							),
 						},
+						Description: `must be one of [clickup-api]`,
 					},
 					"space_id": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The ID of your space in your workspace. Retrieve it from the ` + "`" + `/team/{team_id}/space` + "`" + ` of the ClickUp API. See <a href="https://clickup.com/api/clickupreference/operation/GetSpaces/">here</a>.`,
 					},
 					"team_id": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The ID of your team in ClickUp. Retrieve it from the ` + "`" + `/team` + "`" + ` of the ClickUp API. See <a href="https://clickup.com/api/clickupreference/operation/GetAuthorizedTeams/">here</a>.`,
 					},
 				},
 			},
@@ -90,7 +94,8 @@ func (r *SourceClickupAPIResource) Schema(ctx context.Context, req resource.Sche
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

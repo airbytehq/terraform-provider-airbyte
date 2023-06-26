@@ -23,7 +23,7 @@ SourcePaypalTransaction Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,14 +35,14 @@ SourcePaypalTransaction Resource
 
 Required:
 
-- `is_sandbox` (Boolean)
-- `source_type` (String)
-- `start_date` (String)
+- `is_sandbox` (Boolean) Determines whether to use the sandbox or production environment.
+- `source_type` (String) must be one of [paypal-transaction]
+- `start_date` (String) Start Date for data extraction in <a href="https://datatracker.ietf.org/doc/html/rfc3339#section-5.6">ISO format</a>. Date must be in range from 3 years till 12 hrs before present time.
 
 Optional:
 
-- `client_id` (String)
-- `client_secret` (String)
-- `refresh_token` (String)
+- `client_id` (String) The Client ID of your Paypal developer application.
+- `client_secret` (String) The Client Secret of your Paypal developer application.
+- `refresh_token` (String) The key to refresh the expired access token.
 
 

@@ -23,7 +23,7 @@ SourceOpenweather Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,14 +35,16 @@ SourceOpenweather Resource
 
 Required:
 
-- `appid` (String)
-- `lat` (String)
-- `lon` (String)
-- `source_type` (String)
+- `appid` (String) Your OpenWeather API Key. See <a href="https://openweathermap.org/api">here</a>. The key is case sensitive.
+- `lat` (String) Latitude for which you want to get weather condition from. (min -90, max 90)
+- `lon` (String) Longitude for which you want to get weather condition from. (min -180, max 180)
+- `source_type` (String) must be one of [openweather]
 
 Optional:
 
-- `lang` (String) You can use lang parameter to get the output in your language. The contents of the description field will be translated. See <a href="https://openweathermap.org/api/one-call-api#multi">here</a> for the list of supported languages.
-- `units` (String) Units of measurement. standard, metric and imperial units are available. If you do not use the units parameter, standard units will be applied by default.
+- `lang` (String) must be one of [af, al, ar, az, bg, ca, cz, da, de, el, en, eu, fa, fi, fr, gl, he, hi, hr, hu, id, it, ja, kr, la, lt, mk, no, nl, pl, pt, pt_br, ro, ru, sv, se, sk, sl, sp, es, sr, th, tr, ua, uk, vi, zh_cn, zh_tw, zu]
+You can use lang parameter to get the output in your language. The contents of the description field will be translated. See <a href="https://openweathermap.org/api/one-call-api#multi">here</a> for the list of supported languages.
+- `units` (String) must be one of [standard, metric, imperial]
+Units of measurement. standard, metric and imperial units are available. If you do not use the units parameter, standard units will be applied by default.
 
 

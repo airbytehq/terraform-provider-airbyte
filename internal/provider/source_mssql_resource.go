@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceMssqlResource{}
 var _ resource.ResourceWithImportState = &SourceMssqlResource{}
 
@@ -57,19 +54,24 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"database": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The name of the database.`,
 					},
 					"host": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The hostname of the database.`,
 					},
 					"jdbc_url_params": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).`,
 					},
 					"password": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The password associated with the username.`,
 					},
 					"port": schema.Int64Attribute{
-						Required: true,
+						Required:    true,
+						Description: `The port of the database.`,
 					},
 					"replication_method": schema.SingleNestedAttribute{
 						Optional: true,
@@ -85,10 +87,12 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"New Changes Only",
 											),
 										},
-										Description: `What data should be synced under the CDC. "Existing and New" will read existing data as a snapshot, and sync new changes through CDC. "New Changes Only" will skip the initial snapshot, and only sync new changes through CDC.`,
+										MarkdownDescription: `must be one of [Existing and New, New Changes Only]` + "\n" +
+											`What data should be synced under the CDC. "Existing and New" will read existing data as a snapshot, and sync new changes through CDC. "New Changes Only" will skip the initial snapshot, and only sync new changes through CDC.`,
 									},
 									"initial_waiting_seconds": schema.Int64Attribute{
-										Optional: true,
+										Optional:    true,
+										Description: `The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">initial waiting time</a>.`,
 									},
 									"method": schema.StringAttribute{
 										Required: true,
@@ -97,6 +101,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"CDC",
 											),
 										},
+										Description: `must be one of [CDC]`,
 									},
 									"snapshot_isolation": schema.StringAttribute{
 										Optional: true,
@@ -106,7 +111,8 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"Read Committed",
 											),
 										},
-										Description: `Existing data in the database are synced through an initial snapshot. This parameter controls the isolation level that will be used during the initial snapshotting. If you choose the "Snapshot" level, you must enable the <a href="https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/snapshot-isolation-in-sql-server">snapshot isolation mode</a> on the database.`,
+										MarkdownDescription: `must be one of [Snapshot, Read Committed]` + "\n" +
+											`Existing data in the database are synced through an initial snapshot. This parameter controls the isolation level that will be used during the initial snapshotting. If you choose the "Snapshot" level, you must enable the <a href="https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/snapshot-isolation-in-sql-server">snapshot isolation mode</a> on the database.`,
 									},
 								},
 								Description: `CDC uses {TBC} to detect inserts, updates, and deletes. This needs to be configured on the source database itself.`,
@@ -121,6 +127,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"STANDARD",
 											),
 										},
+										Description: `must be one of [STANDARD]`,
 									},
 								},
 								Description: `Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
@@ -136,10 +143,12 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"New Changes Only",
 											),
 										},
-										Description: `What data should be synced under the CDC. "Existing and New" will read existing data as a snapshot, and sync new changes through CDC. "New Changes Only" will skip the initial snapshot, and only sync new changes through CDC.`,
+										MarkdownDescription: `must be one of [Existing and New, New Changes Only]` + "\n" +
+											`What data should be synced under the CDC. "Existing and New" will read existing data as a snapshot, and sync new changes through CDC. "New Changes Only" will skip the initial snapshot, and only sync new changes through CDC.`,
 									},
 									"initial_waiting_seconds": schema.Int64Attribute{
-										Optional: true,
+										Optional:    true,
+										Description: `The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">initial waiting time</a>.`,
 									},
 									"method": schema.StringAttribute{
 										Required: true,
@@ -148,6 +157,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"CDC",
 											),
 										},
+										Description: `must be one of [CDC]`,
 									},
 									"snapshot_isolation": schema.StringAttribute{
 										Optional: true,
@@ -157,7 +167,8 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"Read Committed",
 											),
 										},
-										Description: `Existing data in the database are synced through an initial snapshot. This parameter controls the isolation level that will be used during the initial snapshotting. If you choose the "Snapshot" level, you must enable the <a href="https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/snapshot-isolation-in-sql-server">snapshot isolation mode</a> on the database.`,
+										MarkdownDescription: `must be one of [Snapshot, Read Committed]` + "\n" +
+											`Existing data in the database are synced through an initial snapshot. This parameter controls the isolation level that will be used during the initial snapshotting. If you choose the "Snapshot" level, you must enable the <a href="https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/snapshot-isolation-in-sql-server">snapshot isolation mode</a> on the database.`,
 									},
 								},
 								Description: `CDC uses {TBC} to detect inserts, updates, and deletes. This needs to be configured on the source database itself.`,
@@ -172,6 +183,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"STANDARD",
 											),
 										},
+										Description: `must be one of [STANDARD]`,
 									},
 								},
 								Description: `Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
@@ -180,10 +192,12 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+						Description: `The replication method used for extracting data from the database. STANDARD replication requires no setup on the DB side but will not be able to represent deletions incrementally. CDC uses {TBC} to detect inserts, updates, and deletes. This needs to be configured on the source database itself.`,
 					},
 					"schemas": schema.ListAttribute{
 						Optional:    true,
 						ElementType: types.StringType,
+						Description: `The list of schemas to sync from. Defaults to user. Case sensitive.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -192,6 +206,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								"mssql",
 							),
 						},
+						Description: `must be one of [mssql]`,
 					},
 					"ssl_method": schema.SingleNestedAttribute{
 						Optional: true,
@@ -206,6 +221,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"encrypted_trust_server_certificate",
 											),
 										},
+										Description: `must be one of [encrypted_trust_server_certificate]`,
 									},
 								},
 								Description: `Use the certificate provided by the server without verification. (For testing purposes only!)`,
@@ -214,7 +230,8 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"host_name_in_certificate": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Specifies the host name of the server. The value of this property must match the subject property of the certificate.`,
 									},
 									"ssl_method": schema.StringAttribute{
 										Required: true,
@@ -223,6 +240,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"encrypted_verify_certificate",
 											),
 										},
+										Description: `must be one of [encrypted_verify_certificate]`,
 									},
 								},
 								Description: `Verify and use the certificate provided by the server.`,
@@ -237,6 +255,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"encrypted_trust_server_certificate",
 											),
 										},
+										Description: `must be one of [encrypted_trust_server_certificate]`,
 									},
 								},
 								Description: `Use the certificate provided by the server without verification. (For testing purposes only!)`,
@@ -245,7 +264,8 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"host_name_in_certificate": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Specifies the host name of the server. The value of this property must match the subject property of the certificate.`,
 									},
 									"ssl_method": schema.StringAttribute{
 										Required: true,
@@ -254,6 +274,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"encrypted_verify_certificate",
 											),
 										},
+										Description: `must be one of [encrypted_verify_certificate]`,
 									},
 								},
 								Description: `Verify and use the certificate provided by the server.`,
@@ -262,6 +283,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+						Description: `The encryption method which is used when communicating with the database.`,
 					},
 					"tunnel_method": schema.SingleNestedAttribute{
 						Optional: true,
@@ -276,7 +298,8 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"NO_TUNNEL",
 											),
 										},
-										Description: `No ssh tunnel needed to connect to database`,
+										MarkdownDescription: `must be one of [NO_TUNNEL]` + "\n" +
+											`No ssh tunnel needed to connect to database`,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -285,7 +308,8 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_host": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
 									"tunnel_method": schema.StringAttribute{
 										Required: true,
@@ -294,16 +318,20 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"SSH_PASSWORD_AUTH",
 											),
 										},
-										Description: `Connect through a jump server tunnel host using username and password authentication`,
+										MarkdownDescription: `must be one of [SSH_PASSWORD_AUTH]` + "\n" +
+											`Connect through a jump server tunnel host using username and password authentication`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										Required: true,
+										Required:    true,
+										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level username for logging into the jump server host`,
 									},
 									"tunnel_user_password": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level password for logging into the jump server host`,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -312,10 +340,12 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )`,
 									},
 									"tunnel_host": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
 									"tunnel_method": schema.StringAttribute{
 										Required: true,
@@ -324,13 +354,16 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"SSH_KEY_AUTH",
 											),
 										},
-										Description: `Connect through a jump server tunnel host using username and ssh key`,
+										MarkdownDescription: `must be one of [SSH_KEY_AUTH]` + "\n" +
+											`Connect through a jump server tunnel host using username and ssh key`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										Required: true,
+										Required:    true,
+										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level username for logging into the jump server host.`,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -345,7 +378,8 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"NO_TUNNEL",
 											),
 										},
-										Description: `No ssh tunnel needed to connect to database`,
+										MarkdownDescription: `must be one of [NO_TUNNEL]` + "\n" +
+											`No ssh tunnel needed to connect to database`,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -354,7 +388,8 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_host": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
 									"tunnel_method": schema.StringAttribute{
 										Required: true,
@@ -363,16 +398,20 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"SSH_PASSWORD_AUTH",
 											),
 										},
-										Description: `Connect through a jump server tunnel host using username and password authentication`,
+										MarkdownDescription: `must be one of [SSH_PASSWORD_AUTH]` + "\n" +
+											`Connect through a jump server tunnel host using username and password authentication`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										Required: true,
+										Required:    true,
+										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level username for logging into the jump server host`,
 									},
 									"tunnel_user_password": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level password for logging into the jump server host`,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -381,10 +420,12 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )`,
 									},
 									"tunnel_host": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
 									"tunnel_method": schema.StringAttribute{
 										Required: true,
@@ -393,13 +434,16 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"SSH_KEY_AUTH",
 											),
 										},
-										Description: `Connect through a jump server tunnel host using username and ssh key`,
+										MarkdownDescription: `must be one of [SSH_KEY_AUTH]` + "\n" +
+											`Connect through a jump server tunnel host using username and ssh key`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										Required: true,
+										Required:    true,
+										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level username for logging into the jump server host.`,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -408,9 +452,11 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+						Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 					},
 					"username": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The username which is used to access the database.`,
 					},
 				},
 			},
@@ -421,7 +467,8 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

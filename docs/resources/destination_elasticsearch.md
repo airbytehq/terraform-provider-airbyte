@@ -31,14 +31,14 @@ DestinationElasticsearch Resource
 
 Required:
 
-- `destination_type` (String)
-- `endpoint` (String)
+- `destination_type` (String) must be one of [elasticsearch]
+- `endpoint` (String) The full url of the Elasticsearch server
 
 Optional:
 
-- `authentication_method` (Attributes) (see [below for nested schema](#nestedatt--configuration--authentication_method))
-- `ca_certificate` (String)
-- `upsert` (Boolean)
+- `authentication_method` (Attributes) The type of authentication to be used (see [below for nested schema](#nestedatt--configuration--authentication_method))
+- `ca_certificate` (String) CA certificate
+- `upsert` (Boolean) If a primary key identifier is defined in the source, an upsert will be performed using the primary key value as the elasticsearch doc id. Does not support composite primary keys.
 
 <a id="nestedatt--configuration--authentication_method"></a>
 ### Nested Schema for `configuration.authentication_method`
@@ -55,9 +55,9 @@ Optional:
 
 Required:
 
-- `api_key_id` (String)
-- `api_key_secret` (String)
-- `method` (String)
+- `api_key_id` (String) The Key ID to used when accessing an enterprise Elasticsearch instance.
+- `api_key_secret` (String) The secret associated with the API Key ID.
+- `method` (String) must be one of [secret]
 
 
 <a id="nestedatt--configuration--authentication_method--destination_elasticsearch_authentication_method_username_password"></a>
@@ -65,9 +65,9 @@ Required:
 
 Required:
 
-- `method` (String)
-- `password` (String)
-- `username` (String)
+- `method` (String) must be one of [basic]
+- `password` (String) Basic auth password to access a secure Elasticsearch server
+- `username` (String) Basic auth username to access a secure Elasticsearch server
 
 
 <a id="nestedatt--configuration--authentication_method--destination_elasticsearch_update_authentication_method_api_key_secret"></a>
@@ -75,9 +75,9 @@ Required:
 
 Required:
 
-- `api_key_id` (String)
-- `api_key_secret` (String)
-- `method` (String)
+- `api_key_id` (String) The Key ID to used when accessing an enterprise Elasticsearch instance.
+- `api_key_secret` (String) The secret associated with the API Key ID.
+- `method` (String) must be one of [secret]
 
 
 <a id="nestedatt--configuration--authentication_method--destination_elasticsearch_update_authentication_method_username_password"></a>
@@ -85,8 +85,8 @@ Required:
 
 Required:
 
-- `method` (String)
-- `password` (String)
-- `username` (String)
+- `method` (String) must be one of [basic]
+- `password` (String) Basic auth password to access a secure Elasticsearch server
+- `username` (String) Basic auth username to access a secure Elasticsearch server
 
 

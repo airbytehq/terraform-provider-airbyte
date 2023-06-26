@@ -23,7 +23,7 @@ SourceYounium Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,13 +35,13 @@ SourceYounium Resource
 
 Required:
 
-- `legal_entity` (String)
-- `password` (String)
-- `source_type` (String)
-- `username` (String)
+- `legal_entity` (String) Legal Entity that data should be pulled from
+- `password` (String) Account password for younium account API key
+- `source_type` (String) must be one of [younium]
+- `username` (String) Username for Younium account
 
 Optional:
 
-- `playground` (Boolean)
+- `playground` (Boolean) Property defining if connector is used against playground or production environment
 
 

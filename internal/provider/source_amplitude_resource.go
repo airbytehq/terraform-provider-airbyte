@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceAmplitudeResource{}
 var _ resource.ResourceWithImportState = &SourceAmplitudeResource{}
 
@@ -56,7 +53,8 @@ func (r *SourceAmplitudeResource) Schema(ctx context.Context, req resource.Schem
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Amplitude API Key. See the <a href="https://docs.airbyte.com/integrations/sources/amplitude#setup-guide">setup guide</a> for more information on how to obtain this key.`,
 					},
 					"data_region": schema.StringAttribute{
 						Optional: true,
@@ -66,13 +64,16 @@ func (r *SourceAmplitudeResource) Schema(ctx context.Context, req resource.Schem
 								"EU Residency Server",
 							),
 						},
-						Description: `Amplitude data region server`,
+						MarkdownDescription: `must be one of [Standard Server, EU Residency Server]` + "\n" +
+							`Amplitude data region server`,
 					},
 					"request_time_range": schema.Int64Attribute{
-						Optional: true,
+						Optional:    true,
+						Description: `According to <a href="https://www.docs.developers.amplitude.com/analytics/apis/export-api/#considerations">Considerations</a> too big time range in request can cause a timeout error. In this case, set shorter time interval in hours.`,
 					},
 					"secret_key": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Amplitude Secret Key. See the <a href="https://docs.airbyte.com/integrations/sources/amplitude#setup-guide">setup guide</a> for more information on how to obtain this key.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -81,9 +82,11 @@ func (r *SourceAmplitudeResource) Schema(ctx context.Context, req resource.Schem
 								"amplitude",
 							),
 						},
+						Description: `must be one of [amplitude]`,
 					},
 					"start_date": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `UTC date and time in the format 2021-01-25T00:00:00Z. Any data before this date will not be replicated.`,
 					},
 				},
 			},
@@ -94,7 +97,8 @@ func (r *SourceAmplitudeResource) Schema(ctx context.Context, req resource.Schem
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

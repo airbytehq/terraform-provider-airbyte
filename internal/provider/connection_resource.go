@@ -13,17 +13,14 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
+	"github.com/hashicorp/terraform-plugin-framework/resource"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
-	"github.com/hashicorp/terraform-plugin-framework/resource"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &ConnectionResource{}
 var _ resource.ResourceWithImportState = &ConnectionResource{}
 
@@ -84,6 +81,7 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 									},
 									Optional:    true,
 									ElementType: types.StringType,
+									Description: `Path to the field that will be used to determine if a record is new or modified since the last sync. This field is REQUIRED if ` + "`" + `sync_mode` + "`" + ` is ` + "`" + `incremental` + "`" + ` unless there is a default.`,
 								},
 								"name": schema.StringAttribute{
 									PlanModifiers: []planmodifier.String{
@@ -100,6 +98,7 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 									ElementType: types.ListType{
 										ElemType: types.StringType,
 									},
+									Description: `Paths to the fields that will be used as primary key. This field is REQUIRED if ` + "`" + `destination_sync_mode` + "`" + ` is ` + "`" + `*_dedup` + "`" + ` unless it is already supplied by the source schema.`,
 								},
 								"sync_mode": schema.StringAttribute{
 									Computed: true,
@@ -115,6 +114,7 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 											"incremental_deduped_history",
 										),
 									},
+									Description: `must be one of [full_refresh_overwrite, full_refresh_append, incremental_append, incremental_deduped_history]`,
 								},
 							},
 						},
@@ -141,6 +141,7 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 						"eu",
 					),
 				},
+				Description: `must be one of [auto, us, eu]`,
 			},
 			"destination_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
@@ -154,7 +155,8 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
-				Optional: true,
+				Optional:    true,
+				Description: `Optional name of the connection`,
 			},
 			"namespace_definition": schema.StringAttribute{
 				Computed: true,
@@ -169,14 +171,16 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 						"custom_format",
 					),
 				},
-				Description: `Define the location where the data will be stored in the destination`,
+				MarkdownDescription: `must be one of [source, destination, custom_format]` + "\n" +
+					`Define the location where the data will be stored in the destination`,
 			},
 			"namespace_format": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
-				Optional: true,
+				Optional:    true,
+				Description: `Used when namespaceDefinition is 'custom_format'. If blank then behaves like namespaceDefinition = 'destination'. If "${SOURCE_NAMESPACE}" then behaves like namespaceDefinition = 'source'.`,
 			},
 			"non_breaking_schema_updates_behavior": schema.StringAttribute{
 				Computed: true,
@@ -190,14 +194,16 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 						"disable_connection",
 					),
 				},
-				Description: `Set how Airbyte handles syncs when it detects a non-breaking schema change in the source`,
+				MarkdownDescription: `must be one of [ignore, disable_connection]` + "\n" +
+					`Set how Airbyte handles syncs when it detects a non-breaking schema change in the source`,
 			},
 			"prefix": schema.StringAttribute{
 				Computed: true,
 				PlanModifiers: []planmodifier.String{
 					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
-				Optional: true,
+				Optional:    true,
+				Description: `Prefix that will be prepended to the name of each stream when it is written to the destination (ex. “airbyte_” causes “projects” => “airbyte_projects”).`,
 			},
 			"schedule": schema.SingleNestedAttribute{
 				Computed: true,
@@ -230,6 +236,7 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 								"cron",
 							),
 						},
+						Description: `must be one of [manual, cron]`,
 					},
 				},
 				Description: `schedule for when the the connection should run, per the schedule type`,
@@ -254,6 +261,7 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 						"deprecated",
 					),
 				},
+				Description: `must be one of [active, inactive, deprecated]`,
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,

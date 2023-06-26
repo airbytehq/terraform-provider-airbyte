@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceTheGuardianAPIResource{}
 var _ resource.ResourceWithImportState = &SourceTheGuardianAPIResource{}
 
@@ -56,16 +53,20 @@ func (r *SourceTheGuardianAPIResource) Schema(ctx context.Context, req resource.
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Your API Key. See <a href="https://open-platform.theguardian.com/access/">here</a>. The key is case sensitive.`,
 					},
 					"end_date": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `(Optional) Use this to set the maximum date (YYYY-MM-DD) of the results. Results newer than the end_date will not be shown. Default is set to the current date (today) for incremental syncs.`,
 					},
 					"query": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `(Optional) The query (q) parameter filters the results to only those that include that search term. The q parameter supports AND, OR and NOT operators.`,
 					},
 					"section": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `(Optional) Use this to filter the results by a particular section. See <a href="https://content.guardianapis.com/sections?api-key=test">here</a> for a list of all sections, and <a href="https://open-platform.theguardian.com/documentation/section">here</a> for the sections endpoint documentation.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -74,12 +75,15 @@ func (r *SourceTheGuardianAPIResource) Schema(ctx context.Context, req resource.
 								"the-guardian-api",
 							),
 						},
+						Description: `must be one of [the-guardian-api]`,
 					},
 					"start_date": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Use this to set the minimum date (YYYY-MM-DD) of the results. Results older than the start_date will not be shown.`,
 					},
 					"tag": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `(Optional) A tag is a piece of data that is used by The Guardian to categorise content. Use this parameter to filter results by showing only the ones matching the entered tag. See <a href="https://content.guardianapis.com/tags?api-key=test">here</a> for a list of all tags, and <a href="https://open-platform.theguardian.com/documentation/tag">here</a> for the tags endpoint documentation.`,
 					},
 				},
 			},
@@ -90,7 +94,8 @@ func (r *SourceTheGuardianAPIResource) Schema(ctx context.Context, req resource.
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

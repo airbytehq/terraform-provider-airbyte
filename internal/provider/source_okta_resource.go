@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceOktaResource{}
 var _ resource.ResourceWithImportState = &SourceOktaResource{}
 
@@ -63,7 +60,8 @@ func (r *SourceOktaResource) Schema(ctx context.Context, req resource.SchemaRequ
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `An Okta token. See the <a href="https://docs.airbyte.com/integrations/sources/okta">docs</a> for instructions on how to generate it.`,
 									},
 									"auth_type": schema.StringAttribute{
 										Required: true,
@@ -72,6 +70,7 @@ func (r *SourceOktaResource) Schema(ctx context.Context, req resource.SchemaRequ
 												"api_token",
 											),
 										},
+										Description: `must be one of [api_token]`,
 									},
 								},
 							},
@@ -85,15 +84,19 @@ func (r *SourceOktaResource) Schema(ctx context.Context, req resource.SchemaRequ
 												"oauth2.0",
 											),
 										},
+										Description: `must be one of [oauth2.0]`,
 									},
 									"client_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Client ID of your OAuth application.`,
 									},
 									"client_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Client Secret of your OAuth application.`,
 									},
 									"refresh_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Refresh Token to obtain new Access Token, when it's expired.`,
 									},
 								},
 							},
@@ -101,7 +104,8 @@ func (r *SourceOktaResource) Schema(ctx context.Context, req resource.SchemaRequ
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `An Okta token. See the <a href="https://docs.airbyte.com/integrations/sources/okta">docs</a> for instructions on how to generate it.`,
 									},
 									"auth_type": schema.StringAttribute{
 										Required: true,
@@ -110,6 +114,7 @@ func (r *SourceOktaResource) Schema(ctx context.Context, req resource.SchemaRequ
 												"api_token",
 											),
 										},
+										Description: `must be one of [api_token]`,
 									},
 								},
 							},
@@ -123,15 +128,19 @@ func (r *SourceOktaResource) Schema(ctx context.Context, req resource.SchemaRequ
 												"oauth2.0",
 											),
 										},
+										Description: `must be one of [oauth2.0]`,
 									},
 									"client_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Client ID of your OAuth application.`,
 									},
 									"client_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Client Secret of your OAuth application.`,
 									},
 									"refresh_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Refresh Token to obtain new Access Token, when it's expired.`,
 									},
 								},
 							},
@@ -141,7 +150,8 @@ func (r *SourceOktaResource) Schema(ctx context.Context, req resource.SchemaRequ
 						},
 					},
 					"domain": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The Okta domain. See the <a href="https://docs.airbyte.com/integrations/sources/okta">docs</a> for instructions on how to find it.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -150,9 +160,11 @@ func (r *SourceOktaResource) Schema(ctx context.Context, req resource.SchemaRequ
 								"okta",
 							),
 						},
+						Description: `must be one of [okta]`,
 					},
 					"start_date": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `UTC date and time in the format YYYY-MM-DDTHH:MM:SSZ. Any data before this date will not be replicated.`,
 					},
 				},
 			},
@@ -163,7 +175,8 @@ func (r *SourceOktaResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

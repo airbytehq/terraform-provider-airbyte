@@ -23,7 +23,7 @@ SourceGoogleSheets Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,13 +35,13 @@ SourceGoogleSheets Resource
 
 Required:
 
-- `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `source_type` (String)
-- `spreadsheet_id` (String)
+- `credentials` (Attributes) Credentials for connecting to the Google Sheets API (see [below for nested schema](#nestedatt--configuration--credentials))
+- `source_type` (String) must be one of [google-sheets]
+- `spreadsheet_id` (String) Enter the link to the Google spreadsheet you want to sync
 
 Optional:
 
-- `row_batch_size` (Number)
+- `row_batch_size` (Number) Number of rows fetched when making a Google Sheet API call. Defaults to 200.
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
@@ -58,10 +58,10 @@ Optional:
 
 Required:
 
-- `auth_type` (String)
-- `client_id` (String)
-- `client_secret` (String)
-- `refresh_token` (String)
+- `auth_type` (String) must be one of [Client]
+- `client_id` (String) Enter your Google application's Client ID
+- `client_secret` (String) Enter your Google application's Client Secret
+- `refresh_token` (String) Enter your Google application's refresh token
 
 
 <a id="nestedatt--configuration--credentials--source_google_sheets_authentication_service_account_key_authentication"></a>
@@ -69,8 +69,8 @@ Required:
 
 Required:
 
-- `auth_type` (String)
-- `service_account_info` (String)
+- `auth_type` (String) must be one of [Service]
+- `service_account_info` (String) Enter your Google Cloud <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">service account key</a> in JSON format
 
 
 <a id="nestedatt--configuration--credentials--source_google_sheets_update_authentication_authenticate_via_google_o_auth"></a>
@@ -78,10 +78,10 @@ Required:
 
 Required:
 
-- `auth_type` (String)
-- `client_id` (String)
-- `client_secret` (String)
-- `refresh_token` (String)
+- `auth_type` (String) must be one of [Client]
+- `client_id` (String) Enter your Google application's Client ID
+- `client_secret` (String) Enter your Google application's Client Secret
+- `refresh_token` (String) Enter your Google application's refresh token
 
 
 <a id="nestedatt--configuration--credentials--source_google_sheets_update_authentication_service_account_key_authentication"></a>
@@ -89,7 +89,7 @@ Required:
 
 Required:
 
-- `auth_type` (String)
-- `service_account_info` (String)
+- `auth_type` (String) must be one of [Service]
+- `service_account_info` (String) Enter your Google Cloud <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">service account key</a> in JSON format
 
 

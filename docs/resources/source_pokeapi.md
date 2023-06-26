@@ -23,7 +23,7 @@ SourcePokeapi Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,7 +35,7 @@ SourcePokeapi Resource
 
 Required:
 
-- `pokemon_name` (String)
-- `source_type` (String)
+- `pokemon_name` (String) Pokemon requested from the API.
+- `source_type` (String) must be one of [pokeapi]
 
 

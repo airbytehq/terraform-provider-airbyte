@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &DestinationConvexResource{}
 var _ resource.ResourceWithImportState = &DestinationConvexResource{}
 
@@ -55,10 +52,12 @@ func (r *DestinationConvexResource) Schema(ctx context.Context, req resource.Sch
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"access_key": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `API access key used to send data to a Convex deployment.`,
 					},
 					"deployment_url": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `URL of the Convex deployment that is the destination`,
 					},
 					"destination_type": schema.StringAttribute{
 						Required: true,
@@ -67,6 +66,7 @@ func (r *DestinationConvexResource) Schema(ctx context.Context, req resource.Sch
 								"convex",
 							),
 						},
+						Description: `must be one of [convex]`,
 					},
 				},
 			},

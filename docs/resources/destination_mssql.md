@@ -31,19 +31,19 @@ DestinationMssql Resource
 
 Required:
 
-- `database` (String)
-- `destination_type` (String)
-- `host` (String)
-- `port` (Number)
-- `schema` (String)
-- `username` (String)
+- `database` (String) The name of the MSSQL database.
+- `destination_type` (String) must be one of [mssql]
+- `host` (String) The host name of the MSSQL database.
+- `port` (Number) The port of the MSSQL database.
+- `schema` (String) The default schema tables are written to if the source does not specify a namespace. The usual value for this field is "public".
+- `username` (String) The username which is used to access the database.
 
 Optional:
 
-- `jdbc_url_params` (String)
-- `password` (String)
-- `ssl_method` (Attributes) (see [below for nested schema](#nestedatt--configuration--ssl_method))
-- `tunnel_method` (Attributes) (see [below for nested schema](#nestedatt--configuration--tunnel_method))
+- `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
+- `password` (String) The password associated with this username.
+- `ssl_method` (Attributes) The encryption method which is used to communicate with the database. (see [below for nested schema](#nestedatt--configuration--ssl_method))
+- `tunnel_method` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method))
 
 <a id="nestedatt--configuration--ssl_method"></a>
 ### Nested Schema for `configuration.ssl_method`
@@ -60,7 +60,7 @@ Optional:
 
 Required:
 
-- `ssl_method` (String)
+- `ssl_method` (String) must be one of [encrypted_trust_server_certificate]
 
 
 <a id="nestedatt--configuration--ssl_method--destination_mssql_ssl_method_encrypted_verify_certificate"></a>
@@ -68,11 +68,11 @@ Required:
 
 Required:
 
-- `ssl_method` (String)
+- `ssl_method` (String) must be one of [encrypted_verify_certificate]
 
 Optional:
 
-- `host_name_in_certificate` (String)
+- `host_name_in_certificate` (String) Specifies the host name of the server. The value of this property must match the subject property of the certificate.
 
 
 <a id="nestedatt--configuration--ssl_method--destination_mssql_update_ssl_method_encrypted_trust_server_certificate"></a>
@@ -80,7 +80,7 @@ Optional:
 
 Required:
 
-- `ssl_method` (String)
+- `ssl_method` (String) must be one of [encrypted_trust_server_certificate]
 
 
 <a id="nestedatt--configuration--ssl_method--destination_mssql_update_ssl_method_encrypted_verify_certificate"></a>
@@ -88,11 +88,11 @@ Required:
 
 Required:
 
-- `ssl_method` (String)
+- `ssl_method` (String) must be one of [encrypted_verify_certificate]
 
 Optional:
 
-- `host_name_in_certificate` (String)
+- `host_name_in_certificate` (String) Specifies the host name of the server. The value of this property must match the subject property of the certificate.
 
 
 
@@ -113,7 +113,8 @@ Optional:
 
 Required:
 
-- `tunnel_method` (String) No ssh tunnel needed to connect to database
+- `tunnel_method` (String) must be one of [NO_TUNNEL]
+No ssh tunnel needed to connect to database
 
 
 <a id="nestedatt--configuration--tunnel_method--destination_mssql_ssh_tunnel_method_password_authentication"></a>
@@ -121,11 +122,12 @@ Required:
 
 Required:
 
-- `tunnel_host` (String)
-- `tunnel_method` (String) Connect through a jump server tunnel host using username and password authentication
-- `tunnel_port` (Number)
-- `tunnel_user` (String)
-- `tunnel_user_password` (String)
+- `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
+- `tunnel_method` (String) must be one of [SSH_PASSWORD_AUTH]
+Connect through a jump server tunnel host using username and password authentication
+- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_user` (String) OS-level username for logging into the jump server host
+- `tunnel_user_password` (String) OS-level password for logging into the jump server host
 
 
 <a id="nestedatt--configuration--tunnel_method--destination_mssql_ssh_tunnel_method_ssh_key_authentication"></a>
@@ -133,11 +135,12 @@ Required:
 
 Required:
 
-- `ssh_key` (String)
-- `tunnel_host` (String)
-- `tunnel_method` (String) Connect through a jump server tunnel host using username and ssh key
-- `tunnel_port` (Number)
-- `tunnel_user` (String)
+- `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
+- `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
+- `tunnel_method` (String) must be one of [SSH_KEY_AUTH]
+Connect through a jump server tunnel host using username and ssh key
+- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_user` (String) OS-level username for logging into the jump server host.
 
 
 <a id="nestedatt--configuration--tunnel_method--destination_mssql_update_ssh_tunnel_method_no_tunnel"></a>
@@ -145,7 +148,8 @@ Required:
 
 Required:
 
-- `tunnel_method` (String) No ssh tunnel needed to connect to database
+- `tunnel_method` (String) must be one of [NO_TUNNEL]
+No ssh tunnel needed to connect to database
 
 
 <a id="nestedatt--configuration--tunnel_method--destination_mssql_update_ssh_tunnel_method_password_authentication"></a>
@@ -153,11 +157,12 @@ Required:
 
 Required:
 
-- `tunnel_host` (String)
-- `tunnel_method` (String) Connect through a jump server tunnel host using username and password authentication
-- `tunnel_port` (Number)
-- `tunnel_user` (String)
-- `tunnel_user_password` (String)
+- `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
+- `tunnel_method` (String) must be one of [SSH_PASSWORD_AUTH]
+Connect through a jump server tunnel host using username and password authentication
+- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_user` (String) OS-level username for logging into the jump server host
+- `tunnel_user_password` (String) OS-level password for logging into the jump server host
 
 
 <a id="nestedatt--configuration--tunnel_method--destination_mssql_update_ssh_tunnel_method_ssh_key_authentication"></a>
@@ -165,10 +170,11 @@ Required:
 
 Required:
 
-- `ssh_key` (String)
-- `tunnel_host` (String)
-- `tunnel_method` (String) Connect through a jump server tunnel host using username and ssh key
-- `tunnel_port` (Number)
-- `tunnel_user` (String)
+- `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
+- `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
+- `tunnel_method` (String) must be one of [SSH_KEY_AUTH]
+Connect through a jump server tunnel host using username and ssh key
+- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_user` (String) OS-level username for logging into the jump server host.
 
 

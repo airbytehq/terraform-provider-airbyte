@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceCoinmarketcapResource{}
 var _ resource.ResourceWithImportState = &SourceCoinmarketcapResource{}
 
@@ -56,7 +53,8 @@ func (r *SourceCoinmarketcapResource) Schema(ctx context.Context, req resource.S
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Your API Key. See <a href="https://coinmarketcap.com/api/documentation/v1/#section/Authentication">here</a>. The token is case sensitive.`,
 					},
 					"data_type": schema.StringAttribute{
 						Required: true,
@@ -66,7 +64,8 @@ func (r *SourceCoinmarketcapResource) Schema(ctx context.Context, req resource.S
 								"historical",
 							),
 						},
-						Description: `/latest: Latest market ticker quotes and averages for cryptocurrencies and exchanges. /historical: Intervals of historic market data like OHLCV data or data for use in charting libraries. See <a href="https://coinmarketcap.com/api/documentation/v1/#section/Endpoint-Overview">here</a>.`,
+						MarkdownDescription: `must be one of [latest, historical]` + "\n" +
+							`/latest: Latest market ticker quotes and averages for cryptocurrencies and exchanges. /historical: Intervals of historic market data like OHLCV data or data for use in charting libraries. See <a href="https://coinmarketcap.com/api/documentation/v1/#section/Endpoint-Overview">here</a>.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -75,10 +74,12 @@ func (r *SourceCoinmarketcapResource) Schema(ctx context.Context, req resource.S
 								"coinmarketcap",
 							),
 						},
+						Description: `must be one of [coinmarketcap]`,
 					},
 					"symbols": schema.ListAttribute{
 						Optional:    true,
 						ElementType: types.StringType,
+						Description: `Cryptocurrency symbols. (only used for quotes stream)`,
 					},
 				},
 			},
@@ -89,7 +90,8 @@ func (r *SourceCoinmarketcapResource) Schema(ctx context.Context, req resource.S
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

@@ -31,14 +31,14 @@ DestinationSftpJSON Resource
 
 Required:
 
-- `destination_path` (String)
-- `destination_type` (String)
-- `host` (String)
-- `password` (String)
-- `username` (String)
+- `destination_path` (String) Path to the directory where json files will be written.
+- `destination_type` (String) must be one of [sftp-json]
+- `host` (String) Hostname of the SFTP server.
+- `password` (String) Password associated with the username.
+- `username` (String) Username to use to access the SFTP server.
 
 Optional:
 
-- `port` (Number)
+- `port` (Number) Port of the SFTP server.
 
 

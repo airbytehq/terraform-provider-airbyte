@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourcePocketResource{}
 var _ resource.ResourceWithImportState = &SourcePocketResource{}
 
@@ -56,10 +53,12 @@ func (r *SourcePocketResource) Schema(ctx context.Context, req resource.SchemaRe
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"access_token": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The user's Pocket access token.`,
 					},
 					"consumer_key": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Your application's Consumer Key.`,
 					},
 					"content_type": schema.StringAttribute{
 						Optional: true,
@@ -70,7 +69,8 @@ func (r *SourcePocketResource) Schema(ctx context.Context, req resource.SchemaRe
 								"image",
 							),
 						},
-						Description: `Select the content type of the items to retrieve.`,
+						MarkdownDescription: `must be one of [article, video, image]` + "\n" +
+							`Select the content type of the items to retrieve.`,
 					},
 					"detail_type": schema.StringAttribute{
 						Optional: true,
@@ -80,19 +80,24 @@ func (r *SourcePocketResource) Schema(ctx context.Context, req resource.SchemaRe
 								"complete",
 							),
 						},
-						Description: `Select the granularity of the information about each item.`,
+						MarkdownDescription: `must be one of [simple, complete]` + "\n" +
+							`Select the granularity of the information about each item.`,
 					},
 					"domain": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Only return items from a particular ` + "`" + `domain` + "`" + `.`,
 					},
 					"favorite": schema.BoolAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Retrieve only favorited items.`,
 					},
 					"search": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Only return items whose title or url contain the ` + "`" + `search` + "`" + ` string.`,
 					},
 					"since": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Only return items modified since the given timestamp.`,
 					},
 					"sort": schema.StringAttribute{
 						Optional: true,
@@ -104,7 +109,8 @@ func (r *SourcePocketResource) Schema(ctx context.Context, req resource.SchemaRe
 								"site",
 							),
 						},
-						Description: `Sort retrieved items by the given criteria.`,
+						MarkdownDescription: `must be one of [newest, oldest, title, site]` + "\n" +
+							`Sort retrieved items by the given criteria.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -113,6 +119,7 @@ func (r *SourcePocketResource) Schema(ctx context.Context, req resource.SchemaRe
 								"pocket",
 							),
 						},
+						Description: `must be one of [pocket]`,
 					},
 					"state": schema.StringAttribute{
 						Optional: true,
@@ -123,10 +130,12 @@ func (r *SourcePocketResource) Schema(ctx context.Context, req resource.SchemaRe
 								"all",
 							),
 						},
-						Description: `Select the state of the items to retrieve.`,
+						MarkdownDescription: `must be one of [unread, archive, all]` + "\n" +
+							`Select the state of the items to retrieve.`,
 					},
 					"tag": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Return only items tagged with this tag name. Use _untagged_ for retrieving only untagged items.`,
 					},
 				},
 			},
@@ -137,7 +146,8 @@ func (r *SourcePocketResource) Schema(ctx context.Context, req resource.SchemaRe
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

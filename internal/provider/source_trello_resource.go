@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceTrelloResource{}
 var _ resource.ResourceWithImportState = &SourceTrelloResource{}
 
@@ -59,9 +56,11 @@ func (r *SourceTrelloResource) Schema(ctx context.Context, req resource.SchemaRe
 					"board_ids": schema.ListAttribute{
 						Optional:    true,
 						ElementType: types.StringType,
+						Description: `IDs of the boards to replicate data from. If left empty, data from all boards to which you have access will be replicated.`,
 					},
 					"key": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Trello API key. See the <a href="https://developer.atlassian.com/cloud/trello/guides/rest-api/authorization/#using-basic-oauth">docs</a> for instructions on how to generate it.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -70,15 +69,18 @@ func (r *SourceTrelloResource) Schema(ctx context.Context, req resource.SchemaRe
 								"trello",
 							),
 						},
+						Description: `must be one of [trello]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
+						Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.`,
 					},
 					"token": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Trello API token. See the <a href="https://developer.atlassian.com/cloud/trello/guides/rest-api/authorization/#using-basic-oauth">docs</a> for instructions on how to generate it.`,
 					},
 				},
 			},
@@ -89,7 +91,8 @@ func (r *SourceTrelloResource) Schema(ctx context.Context, req resource.SchemaRe
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

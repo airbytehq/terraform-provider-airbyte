@@ -23,7 +23,7 @@ SourceDelighted Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,8 +35,8 @@ SourceDelighted Resource
 
 Required:
 
-- `api_key` (String)
-- `since` (String)
-- `source_type` (String)
+- `api_key` (String) A Delighted API key.
+- `since` (String) The date from which you'd like to replicate the data
+- `source_type` (String) must be one of [delighted]
 
 

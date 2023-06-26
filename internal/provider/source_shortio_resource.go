@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceShortioResource{}
 var _ resource.ResourceWithImportState = &SourceShortioResource{}
 
@@ -59,7 +56,8 @@ func (r *SourceShortioResource) Schema(ctx context.Context, req resource.SchemaR
 						Required: true,
 					},
 					"secret_key": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Short.io Secret Key`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -68,9 +66,11 @@ func (r *SourceShortioResource) Schema(ctx context.Context, req resource.SchemaR
 								"shortio",
 							),
 						},
+						Description: `must be one of [shortio]`,
 					},
 					"start_date": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.`,
 					},
 				},
 			},
@@ -81,7 +81,8 @@ func (r *SourceShortioResource) Schema(ctx context.Context, req resource.SchemaR
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

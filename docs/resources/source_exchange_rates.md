@@ -23,7 +23,7 @@ SourceExchangeRates Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,13 +35,13 @@ SourceExchangeRates Resource
 
 Required:
 
-- `access_key` (String)
-- `source_type` (String)
-- `start_date` (String)
+- `access_key` (String) Your API Key. See <a href="https://apilayer.com/marketplace/exchangerates_data-api">here</a>. The key is case sensitive.
+- `source_type` (String) must be one of [exchange-rates]
+- `start_date` (String) Start getting data from that date.
 
 Optional:
 
-- `base` (String)
-- `ignore_weekends` (Boolean)
+- `base` (String) ISO reference currency. See <a href="https://www.ecb.europa.eu/stats/policy_and_exchange_rates/euro_reference_exchange_rates/html/index.en.html">here</a>. Free plan doesn't support Source Currency Switching, default base currency is EUR
+- `ignore_weekends` (Boolean) Ignore weekends? (Exchanges don't run on weekends)
 
 

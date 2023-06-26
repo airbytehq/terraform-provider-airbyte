@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceHarvestResource{}
 var _ resource.ResourceWithImportState = &SourceHarvestResource{}
 
@@ -57,7 +54,8 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"account_id": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Harvest account ID. Required for all Harvest requests in pair with Personal Access Token`,
 					},
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
@@ -72,15 +70,19 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 												"Client",
 											),
 										},
+										Description: `must be one of [Client]`,
 									},
 									"client_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Client ID of your Harvest developer application.`,
 									},
 									"client_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Client Secret of your Harvest developer application.`,
 									},
 									"refresh_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Refresh Token to renew the expired Access Token.`,
 									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
@@ -96,7 +98,8 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Log into Harvest and then create new <a href="https://id.getharvest.com/developers"> personal access token</a>.`,
 									},
 									"auth_type": schema.StringAttribute{
 										Optional: true,
@@ -105,6 +108,7 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 												"Token",
 											),
 										},
+										Description: `must be one of [Token]`,
 									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
@@ -126,15 +130,19 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 												"Client",
 											),
 										},
+										Description: `must be one of [Client]`,
 									},
 									"client_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Client ID of your Harvest developer application.`,
 									},
 									"client_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Client Secret of your Harvest developer application.`,
 									},
 									"refresh_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Refresh Token to renew the expired Access Token.`,
 									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
@@ -150,7 +158,8 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Log into Harvest and then create new <a href="https://id.getharvest.com/developers"> personal access token</a>.`,
 									},
 									"auth_type": schema.StringAttribute{
 										Optional: true,
@@ -159,6 +168,7 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 												"Token",
 											),
 										},
+										Description: `must be one of [Token]`,
 									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
@@ -174,18 +184,21 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+						Description: `Choose how to authenticate to Harvest.`,
 					},
 					"replication_end_date": schema.StringAttribute{
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
+						Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Any data after this date will not be replicated.`,
 					},
 					"replication_start_date": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
+						Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -194,6 +207,7 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 								"harvest",
 							),
 						},
+						Description: `must be one of [harvest]`,
 					},
 				},
 			},
@@ -204,7 +218,8 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

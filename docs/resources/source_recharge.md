@@ -23,7 +23,7 @@ SourceRecharge Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,8 +35,8 @@ SourceRecharge Resource
 
 Required:
 
-- `access_token` (String)
-- `source_type` (String)
-- `start_date` (String)
+- `access_token` (String) The value of the Access Token generated. See the <a href="https://docs.airbyte.com/integrations/sources/recharge">docs</a> for more information.
+- `source_type` (String) must be one of [recharge]
+- `start_date` (String) The date from which you'd like to replicate data for Recharge API, in the format YYYY-MM-DDT00:00:00Z. Any data before this date will not be replicated.
 
 

@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceStravaResource{}
 var _ resource.ResourceWithImportState = &SourceStravaResource{}
 
@@ -57,7 +54,8 @@ func (r *SourceStravaResource) Schema(ctx context.Context, req resource.SchemaRe
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"athlete_id": schema.Int64Attribute{
-						Required: true,
+						Required:    true,
+						Description: `The Athlete ID of your Strava developer application.`,
 					},
 					"auth_type": schema.StringAttribute{
 						Optional: true,
@@ -66,15 +64,19 @@ func (r *SourceStravaResource) Schema(ctx context.Context, req resource.SchemaRe
 								"Client",
 							),
 						},
+						Description: `must be one of [Client]`,
 					},
 					"client_id": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The Client ID of your Strava developer application.`,
 					},
 					"client_secret": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The Client Secret of your Strava developer application.`,
 					},
 					"refresh_token": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The Refresh Token with the activity: read_all permissions.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -83,12 +85,14 @@ func (r *SourceStravaResource) Schema(ctx context.Context, req resource.SchemaRe
 								"strava",
 							),
 						},
+						Description: `must be one of [strava]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
+						Description: `UTC date and time. Any data before this date will not be replicated.`,
 					},
 				},
 			},
@@ -99,7 +103,8 @@ func (r *SourceStravaResource) Schema(ctx context.Context, req resource.SchemaRe
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

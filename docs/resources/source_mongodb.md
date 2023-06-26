@@ -23,7 +23,7 @@ SourceMongodb Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,15 +35,15 @@ SourceMongodb Resource
 
 Required:
 
-- `database` (String)
-- `source_type` (String)
+- `database` (String) The database you want to replicate.
+- `source_type` (String) must be one of [mongodb]
 
 Optional:
 
-- `auth_source` (String)
-- `instance_type` (Attributes) (see [below for nested schema](#nestedatt--configuration--instance_type))
-- `password` (String)
-- `user` (String)
+- `auth_source` (String) The authentication source where the user information is stored.
+- `instance_type` (Attributes) The MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default. (see [below for nested schema](#nestedatt--configuration--instance_type))
+- `password` (String) The password associated with this username.
+- `user` (String) The username which is used to access the database.
 
 <a id="nestedatt--configuration--instance_type"></a>
 ### Nested Schema for `configuration.instance_type`
@@ -62,8 +62,8 @@ Optional:
 
 Required:
 
-- `cluster_url` (String)
-- `instance` (String)
+- `cluster_url` (String) The URL of a cluster to connect to.
+- `instance` (String) must be one of [atlas]
 
 
 <a id="nestedatt--configuration--instance_type--source_mongodb_mongo_db_instance_type_replica_set"></a>
@@ -71,12 +71,12 @@ Required:
 
 Required:
 
-- `instance` (String)
-- `server_addresses` (String)
+- `instance` (String) must be one of [replica]
+- `server_addresses` (String) The members of a replica set. Please specify `host`:`port` of each member separated by comma.
 
 Optional:
 
-- `replica_set` (String)
+- `replica_set` (String) A replica set in MongoDB is a group of mongod processes that maintain the same data set.
 
 
 <a id="nestedatt--configuration--instance_type--source_mongodb_mongo_db_instance_type_standalone_mongo_db_instance"></a>
@@ -84,9 +84,9 @@ Optional:
 
 Required:
 
-- `host` (String)
-- `instance` (String)
-- `port` (Number)
+- `host` (String) The host name of the Mongo database.
+- `instance` (String) must be one of [standalone]
+- `port` (Number) The port of the Mongo database.
 
 
 <a id="nestedatt--configuration--instance_type--source_mongodb_update_mongo_db_instance_type_mongo_db_atlas"></a>
@@ -94,8 +94,8 @@ Required:
 
 Required:
 
-- `cluster_url` (String)
-- `instance` (String)
+- `cluster_url` (String) The URL of a cluster to connect to.
+- `instance` (String) must be one of [atlas]
 
 
 <a id="nestedatt--configuration--instance_type--source_mongodb_update_mongo_db_instance_type_replica_set"></a>
@@ -103,12 +103,12 @@ Required:
 
 Required:
 
-- `instance` (String)
-- `server_addresses` (String)
+- `instance` (String) must be one of [replica]
+- `server_addresses` (String) The members of a replica set. Please specify `host`:`port` of each member separated by comma.
 
 Optional:
 
-- `replica_set` (String)
+- `replica_set` (String) A replica set in MongoDB is a group of mongod processes that maintain the same data set.
 
 
 <a id="nestedatt--configuration--instance_type--source_mongodb_update_mongo_db_instance_type_standalone_mongo_db_instance"></a>
@@ -116,8 +116,8 @@ Optional:
 
 Required:
 
-- `host` (String)
-- `instance` (String)
-- `port` (Number)
+- `host` (String) The host name of the Mongo database.
+- `instance` (String) must be one of [standalone]
+- `port` (Number) The port of the Mongo database.
 
 

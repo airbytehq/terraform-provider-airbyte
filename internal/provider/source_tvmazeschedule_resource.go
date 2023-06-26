@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceTvmazeScheduleResource{}
 var _ resource.ResourceWithImportState = &SourceTvmazeScheduleResource{}
 
@@ -56,10 +53,13 @@ func (r *SourceTvmazeScheduleResource) Schema(ctx context.Context, req resource.
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"domestic_schedule_country_code": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Country code for domestic TV schedule retrieval.`,
 					},
 					"end_date": schema.StringAttribute{
 						Optional: true,
+						MarkdownDescription: `End date for TV schedule retrieval. May be in the future. Optional.` + "\n" +
+							``,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -68,12 +68,18 @@ func (r *SourceTvmazeScheduleResource) Schema(ctx context.Context, req resource.
 								"tvmaze-schedule",
 							),
 						},
+						Description: `must be one of [tvmaze-schedule]`,
 					},
 					"start_date": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Start date for TV schedule retrieval. May be in the future.`,
 					},
 					"web_schedule_country_code": schema.StringAttribute{
 						Optional: true,
+						MarkdownDescription: `ISO 3166-1 country code for web TV schedule retrieval. Leave blank for` + "\n" +
+							`all countries plus global web channels (e.g. Netflix). Alternatively,` + "\n" +
+							`set to 'global' for just global web channels.` + "\n" +
+							``,
 					},
 				},
 			},
@@ -84,7 +90,8 @@ func (r *SourceTvmazeScheduleResource) Schema(ctx context.Context, req resource.
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &DestinationDevNullResource{}
 var _ resource.ResourceWithImportState = &DestinationDevNullResource{}
 
@@ -62,6 +59,7 @@ func (r *DestinationDevNullResource) Schema(ctx context.Context, req resource.Sc
 								"dev-null",
 							),
 						},
+						Description: `must be one of [dev-null]`,
 					},
 					"test_destination": schema.SingleNestedAttribute{
 						Required: true,
@@ -76,6 +74,7 @@ func (r *DestinationDevNullResource) Schema(ctx context.Context, req resource.Sc
 												"SILENT",
 											),
 										},
+										Description: `must be one of [SILENT]`,
 									},
 								},
 								Description: `The type of destination to be used`,
@@ -90,6 +89,7 @@ func (r *DestinationDevNullResource) Schema(ctx context.Context, req resource.Sc
 												"SILENT",
 											),
 										},
+										Description: `must be one of [SILENT]`,
 									},
 								},
 								Description: `The type of destination to be used`,
@@ -98,6 +98,7 @@ func (r *DestinationDevNullResource) Schema(ctx context.Context, req resource.Sc
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+						Description: `The type of destination to be used`,
 					},
 				},
 			},

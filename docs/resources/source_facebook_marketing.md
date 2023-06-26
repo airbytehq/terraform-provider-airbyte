@@ -23,7 +23,7 @@ SourceFacebookMarketing Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,38 +35,39 @@ SourceFacebookMarketing Resource
 
 Required:
 
-- `access_token` (String)
-- `account_id` (String)
-- `source_type` (String)
-- `start_date` (String)
+- `access_token` (String) The value of the generated access token. From your App’s Dashboard, click on "Marketing API" then "Tools". Select permissions <b>ads_management, ads_read, read_insights, business_management</b>. Then click on "Get token". See the <a href="https://docs.airbyte.com/integrations/sources/facebook-marketing">docs</a> for more information.
+- `account_id` (String) The Facebook Ad account ID to use when pulling data from the Facebook Marketing API. Open your Meta Ads Manager. The Ad account ID number is in the account dropdown menu or in your browser's address bar. See the <a href="https://www.facebook.com/business/help/1492627900875762">docs</a> for more information.
+- `source_type` (String) must be one of [facebook-marketing]
+- `start_date` (String) The date from which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 
 Optional:
 
-- `action_breakdowns_allow_empty` (Boolean)
-- `custom_insights` (Attributes List) (see [below for nested schema](#nestedatt--configuration--custom_insights))
-- `end_date` (String)
-- `fetch_thumbnail_images` (Boolean)
-- `include_deleted` (Boolean)
-- `insights_lookback_window` (Number)
-- `max_batch_size` (Number)
-- `page_size` (Number)
+- `action_breakdowns_allow_empty` (Boolean) Allows action_breakdowns to be an empty list
+- `custom_insights` (Attributes List) A list which contains ad statistics entries, each entry must have a name and can contains fields, breakdowns or action_breakdowns. Click on "add" to fill this field. (see [below for nested schema](#nestedatt--configuration--custom_insights))
+- `end_date` (String) The date until which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DDT00:00:00Z. All data generated between the start date and this end date will be replicated. Not setting this option will result in always syncing the latest data.
+- `fetch_thumbnail_images` (Boolean) Set to active if you want to fetch the thumbnail_url and store the result in thumbnail_data_url for each Ad Creative.
+- `include_deleted` (Boolean) Set to active if you want to include data from deleted Campaigns, Ads, and AdSets.
+- `insights_lookback_window` (Number) The attribution window. Facebook freezes insight data 28 days after it was generated, which means that all data from the past 28 days may have changed since we last emitted it, so you can retrieve refreshed insights from the past by setting this parameter. If you set a custom lookback window value in Facebook account, please provide the same value here.
+- `max_batch_size` (Number) Maximum batch size used when sending batch requests to Facebook API. Most users do not need to set this field unless they specifically need to tune the connector to address specific issues or use cases.
+- `page_size` (Number) Page size used when sending requests to Facebook API to specify number of records per page when response has pagination. Most users do not need to set this field unless they specifically need to tune the connector to address specific issues or use cases.
 
 <a id="nestedatt--configuration--custom_insights"></a>
 ### Nested Schema for `configuration.custom_insights`
 
 Required:
 
-- `name` (String)
+- `name` (String) The name value of insight
 
 Optional:
 
-- `action_breakdowns` (List of String)
-- `breakdowns` (List of String)
-- `end_date` (String)
-- `fields` (List of String)
-- `insights_lookback_window` (Number)
-- `level` (String) Chosen level for API
-- `start_date` (String)
-- `time_increment` (Number)
+- `action_breakdowns` (List of String) A list of chosen action_breakdowns for action_breakdowns
+- `breakdowns` (List of String) A list of chosen breakdowns for breakdowns
+- `end_date` (String) The date until which you'd like to replicate data for this stream, in the format YYYY-MM-DDT00:00:00Z. All data generated between the start date and this end date will be replicated. Not setting this option will result in always syncing the latest data.
+- `fields` (List of String) A list of chosen fields for fields parameter
+- `insights_lookback_window` (Number) The attribution window
+- `level` (String) must be one of [ad, adset, campaign, account]
+Chosen level for API
+- `start_date` (String) The date from which you'd like to replicate data for this stream, in the format YYYY-MM-DDT00:00:00Z.
+- `time_increment` (Number) Time window in days by which to aggregate statistics. The sync will be chunked into N day intervals, where N is the number of days you specified. For example, if you set this value to 7, then all statistics will be reported as 7-day aggregates by starting from the start_date. If the start and end dates are October 1st and October 30th, then the connector will output 5 records: 01 - 06, 07 - 13, 14 - 20, 21 - 27, and 28 - 30 (3 days only).
 
 

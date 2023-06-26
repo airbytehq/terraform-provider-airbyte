@@ -23,7 +23,7 @@ SourceTempo Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,7 +35,7 @@ SourceTempo Resource
 
 Required:
 
-- `api_token` (String)
-- `source_type` (String)
+- `api_token` (String) Tempo API Token. Go to Tempo>Settings, scroll down to Data Access and select API integration.
+- `source_type` (String) must be one of [tempo]
 
 

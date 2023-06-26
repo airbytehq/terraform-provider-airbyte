@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourcePexelsAPIResource{}
 var _ resource.ResourceWithImportState = &SourcePexelsAPIResource{}
 
@@ -56,22 +53,28 @@ func (r *SourcePexelsAPIResource) Schema(ctx context.Context, req resource.Schem
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `API key is required to access pexels api, For getting your's goto https://www.pexels.com/api/documentation and create account for free.`,
 					},
 					"color": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Optional, Desired photo color. Supported colors red, orange, yellow, green, turquoise, blue, violet, pink, brown, black, gray, white or any hexidecimal color code.`,
 					},
 					"locale": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Optional, The locale of the search you are performing. The current supported locales are 'en-US' 'pt-BR' 'es-ES' 'ca-ES' 'de-DE' 'it-IT' 'fr-FR' 'sv-SE' 'id-ID' 'pl-PL' 'ja-JP' 'zh-TW' 'zh-CN' 'ko-KR' 'th-TH' 'nl-NL' 'hu-HU' 'vi-VN' 'cs-CZ' 'da-DK' 'fi-FI' 'uk-UA' 'el-GR' 'ro-RO' 'nb-NO' 'sk-SK' 'tr-TR' 'ru-RU'.`,
 					},
 					"orientation": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Optional, Desired photo orientation. The current supported orientations are landscape, portrait or square`,
 					},
 					"query": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Optional, the search query, Example Ocean, Tigers, Pears, etc.`,
 					},
 					"size": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Optional, Minimum photo size. The current supported sizes are large(24MP), medium(12MP) or small(4MP).`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -80,6 +83,7 @@ func (r *SourcePexelsAPIResource) Schema(ctx context.Context, req resource.Schem
 								"pexels-api",
 							),
 						},
+						Description: `must be one of [pexels-api]`,
 					},
 				},
 			},
@@ -90,7 +94,8 @@ func (r *SourcePexelsAPIResource) Schema(ctx context.Context, req resource.Schem
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

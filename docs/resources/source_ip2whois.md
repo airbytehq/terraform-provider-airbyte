@@ -23,7 +23,7 @@ SourceIp2whois Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,8 +35,8 @@ SourceIp2whois Resource
 
 Optional:
 
-- `api_key` (String)
-- `domain` (String)
-- `source_type` (String)
+- `api_key` (String) Your API Key. See <a href="https://www.ip2whois.com/developers-api">here</a>.
+- `domain` (String) Domain name. See <a href="https://www.ip2whois.com/developers-api">here</a>.
+- `source_type` (String) must be one of [ip2whois]
 
 

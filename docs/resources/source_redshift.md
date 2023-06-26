@@ -23,7 +23,7 @@ SourceRedshift Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,16 +35,16 @@ SourceRedshift Resource
 
 Required:
 
-- `database` (String)
-- `host` (String)
-- `password` (String)
-- `port` (Number)
-- `source_type` (String)
-- `username` (String)
+- `database` (String) Name of the database.
+- `host` (String) Host Endpoint of the Redshift Cluster (must include the cluster-id, region and end with .redshift.amazonaws.com).
+- `password` (String) Password associated with the username.
+- `port` (Number) Port of the database.
+- `source_type` (String) must be one of [redshift]
+- `username` (String) Username to use to access the database.
 
 Optional:
 
-- `jdbc_url_params` (String)
-- `schemas` (List of String)
+- `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
+- `schemas` (List of String) The list of schemas to sync from. Specify one or more explicitly or keep empty to process all schemas. Schema names are case sensitive.
 
 

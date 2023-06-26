@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceMailchimpResource{}
 var _ resource.ResourceWithImportState = &SourceMailchimpResource{}
 
@@ -66,7 +63,8 @@ func (r *SourceMailchimpResource) Schema(ctx context.Context, req resource.Schem
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"apikey": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Mailchimp API Key. See the <a href="https://docs.airbyte.com/integrations/sources/mailchimp">docs</a> for information on how to generate this key.`,
 									},
 									"auth_type": schema.StringAttribute{
 										Required: true,
@@ -75,6 +73,7 @@ func (r *SourceMailchimpResource) Schema(ctx context.Context, req resource.Schem
 												"apikey",
 											),
 										},
+										Description: `must be one of [apikey]`,
 									},
 								},
 							},
@@ -82,7 +81,8 @@ func (r *SourceMailchimpResource) Schema(ctx context.Context, req resource.Schem
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `An access token generated using the above client ID and secret.`,
 									},
 									"auth_type": schema.StringAttribute{
 										Required: true,
@@ -91,12 +91,15 @@ func (r *SourceMailchimpResource) Schema(ctx context.Context, req resource.Schem
 												"oauth2.0",
 											),
 										},
+										Description: `must be one of [oauth2.0]`,
 									},
 									"client_id": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `The Client ID of your OAuth application.`,
 									},
 									"client_secret": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `The Client Secret of your OAuth application.`,
 									},
 								},
 							},
@@ -104,7 +107,8 @@ func (r *SourceMailchimpResource) Schema(ctx context.Context, req resource.Schem
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"apikey": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Mailchimp API Key. See the <a href="https://docs.airbyte.com/integrations/sources/mailchimp">docs</a> for information on how to generate this key.`,
 									},
 									"auth_type": schema.StringAttribute{
 										Required: true,
@@ -113,6 +117,7 @@ func (r *SourceMailchimpResource) Schema(ctx context.Context, req resource.Schem
 												"apikey",
 											),
 										},
+										Description: `must be one of [apikey]`,
 									},
 								},
 							},
@@ -120,7 +125,8 @@ func (r *SourceMailchimpResource) Schema(ctx context.Context, req resource.Schem
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `An access token generated using the above client ID and secret.`,
 									},
 									"auth_type": schema.StringAttribute{
 										Required: true,
@@ -129,12 +135,15 @@ func (r *SourceMailchimpResource) Schema(ctx context.Context, req resource.Schem
 												"oauth2.0",
 											),
 										},
+										Description: `must be one of [oauth2.0]`,
 									},
 									"client_id": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `The Client ID of your OAuth application.`,
 									},
 									"client_secret": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `The Client Secret of your OAuth application.`,
 									},
 								},
 							},
@@ -150,6 +159,7 @@ func (r *SourceMailchimpResource) Schema(ctx context.Context, req resource.Schem
 								"mailchimp",
 							),
 						},
+						Description: `must be one of [mailchimp]`,
 					},
 				},
 			},
@@ -160,7 +170,8 @@ func (r *SourceMailchimpResource) Schema(ctx context.Context, req resource.Schem
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

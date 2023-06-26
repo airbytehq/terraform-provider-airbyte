@@ -23,7 +23,7 @@ SourceConfigcat Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,8 +35,8 @@ SourceConfigcat Resource
 
 Required:
 
-- `password` (String)
-- `source_type` (String)
-- `username` (String)
+- `password` (String) Basic auth password. See <a href="https://api.configcat.com/docs/#section/Authentication">here</a>.
+- `source_type` (String) must be one of [configcat]
+- `username` (String) Basic auth user name. See <a href="https://api.configcat.com/docs/#section/Authentication">here</a>.
 
 

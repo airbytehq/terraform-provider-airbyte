@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &DestinationDatabendResource{}
 var _ resource.ResourceWithImportState = &DestinationDatabendResource{}
 
@@ -55,7 +52,8 @@ func (r *DestinationDatabendResource) Schema(ctx context.Context, req resource.S
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"database": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Name of the database.`,
 					},
 					"destination_type": schema.StringAttribute{
 						Required: true,
@@ -64,21 +62,27 @@ func (r *DestinationDatabendResource) Schema(ctx context.Context, req resource.S
 								"databend",
 							),
 						},
+						Description: `must be one of [databend]`,
 					},
 					"host": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Hostname of the database.`,
 					},
 					"password": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Password associated with the username.`,
 					},
 					"port": schema.Int64Attribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Port of the database.`,
 					},
 					"table": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The default  table was written to.`,
 					},
 					"username": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Username to use to access the database.`,
 					},
 				},
 			},

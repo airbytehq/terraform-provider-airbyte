@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceSmailyResource{}
 var _ resource.ResourceWithImportState = &SourceSmailyResource{}
 
@@ -56,13 +53,16 @@ func (r *SourceSmailyResource) Schema(ctx context.Context, req resource.SchemaRe
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"api_password": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `API user password. See https://smaily.com/help/api/general/create-api-user/`,
 					},
 					"api_subdomain": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `API Subdomain. See https://smaily.com/help/api/general/create-api-user/`,
 					},
 					"api_username": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `API user username. See https://smaily.com/help/api/general/create-api-user/`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -71,6 +71,7 @@ func (r *SourceSmailyResource) Schema(ctx context.Context, req resource.SchemaRe
 								"smaily",
 							),
 						},
+						Description: `must be one of [smaily]`,
 					},
 				},
 			},
@@ -81,7 +82,8 @@ func (r *SourceSmailyResource) Schema(ctx context.Context, req resource.SchemaRe
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

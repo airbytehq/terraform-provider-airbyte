@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceOrbitResource{}
 var _ resource.ResourceWithImportState = &SourceOrbitResource{}
 
@@ -56,7 +53,8 @@ func (r *SourceOrbitResource) Schema(ctx context.Context, req resource.SchemaReq
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"api_token": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Authorizes you to work with Orbit workspaces associated with the token.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -65,12 +63,15 @@ func (r *SourceOrbitResource) Schema(ctx context.Context, req resource.SchemaReq
 								"orbit",
 							),
 						},
+						Description: `must be one of [orbit]`,
 					},
 					"start_date": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Date in the format 2022-06-26. Only load members whose last activities are after this date.`,
 					},
 					"workspace": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The unique name of the workspace that your API token is associated with.`,
 					},
 				},
 			},
@@ -81,7 +82,8 @@ func (r *SourceOrbitResource) Schema(ctx context.Context, req resource.SchemaReq
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

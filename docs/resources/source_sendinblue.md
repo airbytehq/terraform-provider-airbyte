@@ -23,7 +23,7 @@ SourceSendinblue Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,7 +35,7 @@ SourceSendinblue Resource
 
 Required:
 
-- `api_key` (String)
-- `source_type` (String)
+- `api_key` (String) Your API Key. See <a href="https://developers.sendinblue.com/docs/getting-started">here</a>.
+- `source_type` (String) must be one of [sendinblue]
 
 

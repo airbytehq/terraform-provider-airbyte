@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceSlackResource{}
 var _ resource.ResourceWithImportState = &SourceSlackResource{}
 
@@ -59,6 +56,7 @@ func (r *SourceSlackResource) Schema(ctx context.Context, req resource.SchemaReq
 					"channel_filter": schema.ListAttribute{
 						Optional:    true,
 						ElementType: types.StringType,
+						Description: `A channel name list (without leading '#' char) which limit the channels from which you'd like to sync. Empty list means no filter.`,
 					},
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
@@ -67,7 +65,8 @@ func (r *SourceSlackResource) Schema(ctx context.Context, req resource.SchemaReq
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `A Slack bot token. See the <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> for instructions on how to generate it.`,
 									},
 									"option_title": schema.StringAttribute{
 										Required: true,
@@ -76,6 +75,7 @@ func (r *SourceSlackResource) Schema(ctx context.Context, req resource.SchemaReq
 												"API Token Credentials",
 											),
 										},
+										Description: `must be one of [API Token Credentials]`,
 									},
 								},
 								Description: `Choose how to authenticate into Slack`,
@@ -84,13 +84,16 @@ func (r *SourceSlackResource) Schema(ctx context.Context, req resource.SchemaReq
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Slack access_token. See our <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> if you need help generating the token.`,
 									},
 									"client_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Slack client_id. See our <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> if you need help finding this id.`,
 									},
 									"client_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Slack client_secret. See our <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> if you need help finding this secret.`,
 									},
 									"option_title": schema.StringAttribute{
 										Required: true,
@@ -99,6 +102,7 @@ func (r *SourceSlackResource) Schema(ctx context.Context, req resource.SchemaReq
 												"Default OAuth2.0 authorization",
 											),
 										},
+										Description: `must be one of [Default OAuth2.0 authorization]`,
 									},
 								},
 								Description: `Choose how to authenticate into Slack`,
@@ -107,7 +111,8 @@ func (r *SourceSlackResource) Schema(ctx context.Context, req resource.SchemaReq
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `A Slack bot token. See the <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> for instructions on how to generate it.`,
 									},
 									"option_title": schema.StringAttribute{
 										Required: true,
@@ -116,6 +121,7 @@ func (r *SourceSlackResource) Schema(ctx context.Context, req resource.SchemaReq
 												"API Token Credentials",
 											),
 										},
+										Description: `must be one of [API Token Credentials]`,
 									},
 								},
 								Description: `Choose how to authenticate into Slack`,
@@ -124,13 +130,16 @@ func (r *SourceSlackResource) Schema(ctx context.Context, req resource.SchemaReq
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Slack access_token. See our <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> if you need help generating the token.`,
 									},
 									"client_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Slack client_id. See our <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> if you need help finding this id.`,
 									},
 									"client_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Slack client_secret. See our <a href="https://docs.airbyte.com/integrations/sources/slack">docs</a> if you need help finding this secret.`,
 									},
 									"option_title": schema.StringAttribute{
 										Required: true,
@@ -139,6 +148,7 @@ func (r *SourceSlackResource) Schema(ctx context.Context, req resource.SchemaReq
 												"Default OAuth2.0 authorization",
 											),
 										},
+										Description: `must be one of [Default OAuth2.0 authorization]`,
 									},
 								},
 								Description: `Choose how to authenticate into Slack`,
@@ -147,12 +157,15 @@ func (r *SourceSlackResource) Schema(ctx context.Context, req resource.SchemaReq
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+						Description: `Choose how to authenticate into Slack`,
 					},
 					"join_channels": schema.BoolAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Whether to join all channels or to sync data only from channels the bot is already in.  If false, you'll need to manually add the bot to all the channels from which you'd like to sync messages. `,
 					},
 					"lookback_window": schema.Int64Attribute{
-						Required: true,
+						Required:    true,
+						Description: `How far into the past to look for messages in threads, default is 0 days`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -161,12 +174,14 @@ func (r *SourceSlackResource) Schema(ctx context.Context, req resource.SchemaReq
 								"slack",
 							),
 						},
+						Description: `must be one of [slack]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
+						Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.`,
 					},
 				},
 			},
@@ -177,7 +192,8 @@ func (r *SourceSlackResource) Schema(ctx context.Context, req resource.SchemaReq
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

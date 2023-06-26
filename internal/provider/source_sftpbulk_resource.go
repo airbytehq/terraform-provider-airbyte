@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceSftpBulkResource{}
 var _ resource.ResourceWithImportState = &SourceSftpBulkResource{}
 
@@ -57,10 +54,12 @@ func (r *SourceSftpBulkResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"file_most_recent": schema.BoolAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Sync only the most recent file for the configured folder path and file pattern`,
 					},
 					"file_pattern": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The regular expression to specify files for sync in a chosen Folder Path`,
 					},
 					"file_type": schema.StringAttribute{
 						Optional: true,
@@ -70,25 +69,32 @@ func (r *SourceSftpBulkResource) Schema(ctx context.Context, req resource.Schema
 								"json",
 							),
 						},
-						Description: `The file type you want to sync. Currently only 'csv' and 'json' files are supported.`,
+						MarkdownDescription: `must be one of [csv, json]` + "\n" +
+							`The file type you want to sync. Currently only 'csv' and 'json' files are supported.`,
 					},
 					"folder_path": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The directory to search files for sync`,
 					},
 					"host": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The server host address`,
 					},
 					"password": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `OS-level password for logging into the jump server host`,
 					},
 					"port": schema.Int64Attribute{
-						Required: true,
+						Required:    true,
+						Description: `The server port`,
 					},
 					"private_key": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The private key`,
 					},
 					"separator": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The separator used in the CSV files. Define None if you want to use the Sniffer functionality`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -97,18 +103,22 @@ func (r *SourceSftpBulkResource) Schema(ctx context.Context, req resource.Schema
 								"sftp-bulk",
 							),
 						},
+						Description: `must be one of [sftp-bulk]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
+						Description: `The date from which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.`,
 					},
 					"stream_name": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The name of the stream or table you want to create`,
 					},
 					"username": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The server user`,
 					},
 				},
 			},
@@ -119,7 +129,8 @@ func (r *SourceSftpBulkResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

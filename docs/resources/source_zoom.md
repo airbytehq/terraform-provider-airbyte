@@ -23,7 +23,7 @@ SourceZoom Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,7 +35,7 @@ SourceZoom Resource
 
 Required:
 
-- `jwt_token` (String)
-- `source_type` (String)
+- `jwt_token` (String) JWT Token
+- `source_type` (String) must be one of [zoom]
 
 

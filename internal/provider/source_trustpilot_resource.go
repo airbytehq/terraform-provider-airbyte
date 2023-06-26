@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceTrustpilotResource{}
 var _ resource.ResourceWithImportState = &SourceTrustpilotResource{}
 
@@ -59,6 +56,7 @@ func (r *SourceTrustpilotResource) Schema(ctx context.Context, req resource.Sche
 					"business_units": schema.ListAttribute{
 						Required:    true,
 						ElementType: types.StringType,
+						Description: `The names of business units which shall be synchronized. Some streams e.g. configured_business_units or private_reviews use this configuration.`,
 					},
 					"credentials": schema.SingleNestedAttribute{
 						Required: true,
@@ -73,9 +71,11 @@ func (r *SourceTrustpilotResource) Schema(ctx context.Context, req resource.Sche
 												"apikey",
 											),
 										},
+										Description: `must be one of [apikey]`,
 									},
 									"client_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The API key of the Trustpilot API application.`,
 									},
 								},
 								Description: `The API key authentication method gives you access to only the streams which are part of the Public API. When you want to get streams available via the Consumer API (e.g. the private reviews) you need to use authentication method OAuth 2.0.`,
@@ -84,7 +84,8 @@ func (r *SourceTrustpilotResource) Schema(ctx context.Context, req resource.Sche
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Access Token for making authenticated requests.`,
 									},
 									"auth_type": schema.StringAttribute{
 										Optional: true,
@@ -93,21 +94,26 @@ func (r *SourceTrustpilotResource) Schema(ctx context.Context, req resource.Sche
 												"oauth2.0",
 											),
 										},
+										Description: `must be one of [oauth2.0]`,
 									},
 									"client_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The API key of the Trustpilot API application. (represents the OAuth Client ID)`,
 									},
 									"client_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Secret of the Trustpilot API application. (represents the OAuth Client Secret)`,
 									},
 									"refresh_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The key to refresh the expired access_token.`,
 									},
 									"token_expiry_date": schema.StringAttribute{
 										Required: true,
 										Validators: []validator.String{
 											validators.IsRFC3339(),
 										},
+										Description: `The date-time when the access token should be refreshed.`,
 									},
 								},
 							},
@@ -121,9 +127,11 @@ func (r *SourceTrustpilotResource) Schema(ctx context.Context, req resource.Sche
 												"apikey",
 											),
 										},
+										Description: `must be one of [apikey]`,
 									},
 									"client_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The API key of the Trustpilot API application.`,
 									},
 								},
 								Description: `The API key authentication method gives you access to only the streams which are part of the Public API. When you want to get streams available via the Consumer API (e.g. the private reviews) you need to use authentication method OAuth 2.0.`,
@@ -132,7 +140,8 @@ func (r *SourceTrustpilotResource) Schema(ctx context.Context, req resource.Sche
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Access Token for making authenticated requests.`,
 									},
 									"auth_type": schema.StringAttribute{
 										Optional: true,
@@ -141,21 +150,26 @@ func (r *SourceTrustpilotResource) Schema(ctx context.Context, req resource.Sche
 												"oauth2.0",
 											),
 										},
+										Description: `must be one of [oauth2.0]`,
 									},
 									"client_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The API key of the Trustpilot API application. (represents the OAuth Client ID)`,
 									},
 									"client_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Secret of the Trustpilot API application. (represents the OAuth Client Secret)`,
 									},
 									"refresh_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The key to refresh the expired access_token.`,
 									},
 									"token_expiry_date": schema.StringAttribute{
 										Required: true,
 										Validators: []validator.String{
 											validators.IsRFC3339(),
 										},
+										Description: `The date-time when the access token should be refreshed.`,
 									},
 								},
 							},
@@ -171,9 +185,11 @@ func (r *SourceTrustpilotResource) Schema(ctx context.Context, req resource.Sche
 								"trustpilot",
 							),
 						},
+						Description: `must be one of [trustpilot]`,
 					},
 					"start_date": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `For streams with sync. method incremental the start date time to be used`,
 					},
 				},
 			},
@@ -184,7 +200,8 @@ func (r *SourceTrustpilotResource) Schema(ctx context.Context, req resource.Sche
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

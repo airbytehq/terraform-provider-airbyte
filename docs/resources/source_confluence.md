@@ -23,7 +23,7 @@ SourceConfluence Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,9 +35,9 @@ SourceConfluence Resource
 
 Required:
 
-- `api_token` (String)
-- `domain_name` (String)
-- `email` (String)
-- `source_type` (String)
+- `api_token` (String) Please follow the Jira confluence for generating an API token: <a href="https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/">generating an API token</a>.
+- `domain_name` (String) Your Confluence domain name
+- `email` (String) Your Confluence login email
+- `source_type` (String) must be one of [confluence]
 
 

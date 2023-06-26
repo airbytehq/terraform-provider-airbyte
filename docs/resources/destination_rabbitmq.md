@@ -31,17 +31,17 @@ DestinationRabbitmq Resource
 
 Required:
 
-- `destination_type` (String)
-- `host` (String)
-- `routing_key` (String)
+- `destination_type` (String) must be one of [rabbitmq]
+- `host` (String) The RabbitMQ host name.
+- `routing_key` (String) The routing key.
 
 Optional:
 
-- `exchange` (String)
-- `password` (String)
-- `port` (Number)
-- `ssl` (Boolean)
-- `username` (String)
-- `virtual_host` (String)
+- `exchange` (String) The exchange name.
+- `password` (String) The password to connect.
+- `port` (Number) The RabbitMQ port.
+- `ssl` (Boolean) SSL enabled.
+- `username` (String) The username to connect.
+- `virtual_host` (String) The RabbitMQ virtual host name.
 
 

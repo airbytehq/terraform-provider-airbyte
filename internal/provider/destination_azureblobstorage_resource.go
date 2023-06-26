@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &DestinationAzureBlobStorageResource{}
 var _ resource.ResourceWithImportState = &DestinationAzureBlobStorageResource{}
 
@@ -56,22 +53,28 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"azure_blob_storage_account_key": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The Azure blob storage account key.`,
 					},
 					"azure_blob_storage_account_name": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The account's name of the Azure Blob Storage.`,
 					},
 					"azure_blob_storage_container_name": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The name of the Azure blob storage container. If not exists - will be created automatically. May be empty, then will be created automatically airbytecontainer+timestamp`,
 					},
 					"azure_blob_storage_endpoint_domain_name": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example.`,
 					},
 					"azure_blob_storage_output_buffer_size": schema.Int64Attribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The amount of megabytes to buffer for the output stream to Azure. This will impact memory footprint on workers, but may need adjustment for performance and appropriate block size in Azure.`,
 					},
 					"azure_blob_storage_spill_size": schema.Int64Attribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The amount of megabytes after which the connector should spill the records in a new blob object. Make sure to configure size greater than individual records. Enter 0 if not applicable`,
 					},
 					"destination_type": schema.StringAttribute{
 						Required: true,
@@ -80,6 +83,7 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 								"azure-blob-storage",
 							),
 						},
+						Description: `must be one of [azure-blob-storage]`,
 					},
 					"format": schema.SingleNestedAttribute{
 						Required: true,
@@ -95,7 +99,8 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 												"Root level flattening",
 											),
 										},
-										Description: `Whether the input json data should be normalized (flattened) in the output CSV. Please refer to docs for details.`,
+										MarkdownDescription: `must be one of [No flattening, Root level flattening]` + "\n" +
+											`Whether the input json data should be normalized (flattened) in the output CSV. Please refer to docs for details.`,
 									},
 									"format_type": schema.StringAttribute{
 										Required: true,
@@ -104,6 +109,7 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 												"CSV",
 											),
 										},
+										Description: `must be one of [CSV]`,
 									},
 								},
 								Description: `Output data format`,
@@ -118,6 +124,7 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 												"JSONL",
 											),
 										},
+										Description: `must be one of [JSONL]`,
 									},
 								},
 								Description: `Output data format`,
@@ -133,7 +140,8 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 												"Root level flattening",
 											),
 										},
-										Description: `Whether the input json data should be normalized (flattened) in the output CSV. Please refer to docs for details.`,
+										MarkdownDescription: `must be one of [No flattening, Root level flattening]` + "\n" +
+											`Whether the input json data should be normalized (flattened) in the output CSV. Please refer to docs for details.`,
 									},
 									"format_type": schema.StringAttribute{
 										Required: true,
@@ -142,6 +150,7 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 												"CSV",
 											),
 										},
+										Description: `must be one of [CSV]`,
 									},
 								},
 								Description: `Output data format`,
@@ -156,6 +165,7 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 												"JSONL",
 											),
 										},
+										Description: `must be one of [JSONL]`,
 									},
 								},
 								Description: `Output data format`,
@@ -164,6 +174,7 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+						Description: `Output data format`,
 					},
 				},
 			},

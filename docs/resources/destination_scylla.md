@@ -31,15 +31,15 @@ DestinationScylla Resource
 
 Required:
 
-- `address` (String)
-- `destination_type` (String)
-- `keyspace` (String)
-- `password` (String)
-- `port` (Number)
-- `username` (String)
+- `address` (String) Address to connect to.
+- `destination_type` (String) must be one of [scylla]
+- `keyspace` (String) Default Scylla keyspace to create data in.
+- `password` (String) Password associated with Scylla.
+- `port` (Number) Port of Scylla.
+- `username` (String) Username to use to access Scylla.
 
 Optional:
 
-- `replication` (Number)
+- `replication` (Number) Indicates to how many nodes the data should be replicated to.
 
 

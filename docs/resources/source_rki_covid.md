@@ -23,7 +23,7 @@ SourceRkiCovid Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,7 +35,7 @@ SourceRkiCovid Resource
 
 Required:
 
-- `source_type` (String)
-- `start_date` (String)
+- `source_type` (String) must be one of [rki-covid]
+- `start_date` (String) UTC date in the format 2017-01-25. Any data before this date will not be replicated.
 
 

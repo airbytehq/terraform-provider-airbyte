@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourcePypiResource{}
 var _ resource.ResourceWithImportState = &SourcePypiResource{}
 
@@ -56,7 +53,8 @@ func (r *SourcePypiResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"project_name": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Name of the project/package. Can only be in lowercase with hyphen. This is the name used using pip command for installing the package.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -65,9 +63,11 @@ func (r *SourcePypiResource) Schema(ctx context.Context, req resource.SchemaRequ
 								"pypi",
 							),
 						},
+						Description: `must be one of [pypi]`,
 					},
 					"version": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Version of the project/package.  Use it to find a particular release instead of all releases.`,
 					},
 				},
 			},
@@ -78,7 +78,8 @@ func (r *SourcePypiResource) Schema(ctx context.Context, req resource.SchemaRequ
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

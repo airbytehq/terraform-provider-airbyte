@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &DestinationKinesisResource{}
 var _ resource.ResourceWithImportState = &DestinationKinesisResource{}
 
@@ -55,10 +52,12 @@ func (r *DestinationKinesisResource) Schema(ctx context.Context, req resource.Sc
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"access_key": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Generate the AWS Access Key for current user.`,
 					},
 					"buffer_size": schema.Int64Attribute{
-						Required: true,
+						Required:    true,
+						Description: `Buffer size for storing kinesis records before being batch streamed.`,
 					},
 					"destination_type": schema.StringAttribute{
 						Required: true,
@@ -67,18 +66,23 @@ func (r *DestinationKinesisResource) Schema(ctx context.Context, req resource.Sc
 								"kinesis",
 							),
 						},
+						Description: `must be one of [kinesis]`,
 					},
 					"endpoint": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `AWS Kinesis endpoint.`,
 					},
 					"private_key": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The AWS Private Key - a string of numbers and letters that are unique for each account, also known as a "recovery phrase".`,
 					},
 					"region": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `AWS region. Your account determines the Regions that are available to you.`,
 					},
 					"shard_count": schema.Int64Attribute{
-						Required: true,
+						Required:    true,
+						Description: `Number of shards to which the data should be streamed.`,
 					},
 				},
 			},

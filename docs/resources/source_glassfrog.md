@@ -23,7 +23,7 @@ SourceGlassfrog Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,7 +35,7 @@ SourceGlassfrog Resource
 
 Required:
 
-- `api_key` (String)
-- `source_type` (String)
+- `api_key` (String) API key provided by Glassfrog
+- `source_type` (String) must be one of [glassfrog]
 
 

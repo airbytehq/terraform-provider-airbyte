@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceFreshserviceResource{}
 var _ resource.ResourceWithImportState = &SourceFreshserviceResource{}
 
@@ -56,10 +53,12 @@ func (r *SourceFreshserviceResource) Schema(ctx context.Context, req resource.Sc
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Freshservice API Key. See <a href="https://api.freshservice.com/#authentication">here</a>. The key is case sensitive.`,
 					},
 					"domain_name": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The name of your Freshservice domain`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -68,9 +67,11 @@ func (r *SourceFreshserviceResource) Schema(ctx context.Context, req resource.Sc
 								"freshservice",
 							),
 						},
+						Description: `must be one of [freshservice]`,
 					},
 					"start_date": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `UTC date and time in the format 2020-10-01T00:00:00Z. Any data before this date will not be replicated.`,
 					},
 				},
 			},
@@ -81,7 +82,8 @@ func (r *SourceFreshserviceResource) Schema(ctx context.Context, req resource.Sc
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

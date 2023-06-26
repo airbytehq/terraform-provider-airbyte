@@ -31,26 +31,28 @@ DestinationPulsar Resource
 
 Required:
 
-- `batching_enabled` (Boolean)
-- `batching_max_messages` (Number)
-- `batching_max_publish_delay` (Number)
-- `block_if_queue_full` (Boolean)
-- `brokers` (String)
-- `compression_type` (String) Compression type for the producer.
-- `destination_type` (String)
-- `max_pending_messages` (Number)
-- `max_pending_messages_across_partitions` (Number)
-- `send_timeout_ms` (Number)
-- `topic_namespace` (String)
-- `topic_pattern` (String)
-- `topic_tenant` (String)
-- `topic_type` (String) It identifies type of topic. Pulsar supports two kind of topics: persistent and non-persistent. In persistent topic, all messages are durably persisted on disk (that means on multiple disks unless the broker is standalone), whereas non-persistent topic does not persist message into storage disk.
-- `use_tls` (Boolean)
+- `batching_enabled` (Boolean) Control whether automatic batching of messages is enabled for the producer.
+- `batching_max_messages` (Number) Maximum number of messages permitted in a batch.
+- `batching_max_publish_delay` (Number) Time period in milliseconds within which the messages sent will be batched.
+- `block_if_queue_full` (Boolean) If the send operation should block when the outgoing message queue is full.
+- `brokers` (String) A list of host/port pairs to use for establishing the initial connection to the Pulsar cluster.
+- `compression_type` (String) must be one of [NONE, LZ4, ZLIB, ZSTD, SNAPPY]
+Compression type for the producer.
+- `destination_type` (String) must be one of [pulsar]
+- `max_pending_messages` (Number) The maximum size of a queue holding pending messages.
+- `max_pending_messages_across_partitions` (Number) The maximum number of pending messages across partitions.
+- `send_timeout_ms` (Number) If a message is not acknowledged by a server before the send-timeout expires, an error occurs (in ms).
+- `topic_namespace` (String) The administrative unit of the topic, which acts as a grouping mechanism for related topics. Most topic configuration is performed at the namespace level. Each tenant has one or multiple namespaces.
+- `topic_pattern` (String) Topic pattern in which the records will be sent. You can use patterns like '{namespace}' and/or '{stream}' to send the message to a specific topic based on these values. Notice that the topic name will be transformed to a standard naming convention.
+- `topic_tenant` (String) The topic tenant within the instance. Tenants are essential to multi-tenancy in Pulsar, and spread across clusters.
+- `topic_type` (String) must be one of [persistent, non-persistent]
+It identifies type of topic. Pulsar supports two kind of topics: persistent and non-persistent. In persistent topic, all messages are durably persisted on disk (that means on multiple disks unless the broker is standalone), whereas non-persistent topic does not persist message into storage disk.
+- `use_tls` (Boolean) Whether to use TLS encryption on the connection.
 
 Optional:
 
-- `producer_name` (String)
-- `producer_sync` (Boolean)
-- `topic_test` (String)
+- `producer_name` (String) Name for the producer. If not filled, the system will generate a globally unique name which can be accessed with.
+- `producer_sync` (Boolean) Wait synchronously until the record has been sent to Pulsar.
+- `topic_test` (String) Topic to test if Airbyte can produce messages.
 
 

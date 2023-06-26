@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceGitlabResource{}
 var _ resource.ResourceWithImportState = &SourceGitlabResource{}
 
@@ -57,7 +54,8 @@ func (r *SourceGitlabResource) Schema(ctx context.Context, req resource.SchemaRe
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"api_url": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Please enter your basic URL from GitLab instance.`,
 					},
 					"credentials": schema.SingleNestedAttribute{
 						Required: true,
@@ -66,7 +64,8 @@ func (r *SourceGitlabResource) Schema(ctx context.Context, req resource.SchemaRe
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Access Token for making authenticated requests.`,
 									},
 									"auth_type": schema.StringAttribute{
 										Optional: true,
@@ -75,21 +74,26 @@ func (r *SourceGitlabResource) Schema(ctx context.Context, req resource.SchemaRe
 												"oauth2.0",
 											),
 										},
+										Description: `must be one of [oauth2.0]`,
 									},
 									"client_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The API ID of the Gitlab developer application.`,
 									},
 									"client_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The API Secret the Gitlab developer application.`,
 									},
 									"refresh_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The key to refresh the expired access_token.`,
 									},
 									"token_expiry_date": schema.StringAttribute{
 										Required: true,
 										Validators: []validator.String{
 											validators.IsRFC3339(),
 										},
+										Description: `The date-time when the access token should be refreshed.`,
 									},
 								},
 							},
@@ -97,7 +101,8 @@ func (r *SourceGitlabResource) Schema(ctx context.Context, req resource.SchemaRe
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Log into your Gitlab account and then generate a personal Access Token.`,
 									},
 									"auth_type": schema.StringAttribute{
 										Optional: true,
@@ -106,6 +111,7 @@ func (r *SourceGitlabResource) Schema(ctx context.Context, req resource.SchemaRe
 												"access_token",
 											),
 										},
+										Description: `must be one of [access_token]`,
 									},
 								},
 							},
@@ -113,7 +119,8 @@ func (r *SourceGitlabResource) Schema(ctx context.Context, req resource.SchemaRe
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Access Token for making authenticated requests.`,
 									},
 									"auth_type": schema.StringAttribute{
 										Optional: true,
@@ -122,21 +129,26 @@ func (r *SourceGitlabResource) Schema(ctx context.Context, req resource.SchemaRe
 												"oauth2.0",
 											),
 										},
+										Description: `must be one of [oauth2.0]`,
 									},
 									"client_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The API ID of the Gitlab developer application.`,
 									},
 									"client_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The API Secret the Gitlab developer application.`,
 									},
 									"refresh_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The key to refresh the expired access_token.`,
 									},
 									"token_expiry_date": schema.StringAttribute{
 										Required: true,
 										Validators: []validator.String{
 											validators.IsRFC3339(),
 										},
+										Description: `The date-time when the access token should be refreshed.`,
 									},
 								},
 							},
@@ -144,7 +156,8 @@ func (r *SourceGitlabResource) Schema(ctx context.Context, req resource.SchemaRe
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Log into your Gitlab account and then generate a personal Access Token.`,
 									},
 									"auth_type": schema.StringAttribute{
 										Optional: true,
@@ -153,6 +166,7 @@ func (r *SourceGitlabResource) Schema(ctx context.Context, req resource.SchemaRe
 												"access_token",
 											),
 										},
+										Description: `must be one of [access_token]`,
 									},
 								},
 							},
@@ -162,10 +176,12 @@ func (r *SourceGitlabResource) Schema(ctx context.Context, req resource.SchemaRe
 						},
 					},
 					"groups": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Space-delimited list of groups. e.g. airbyte.io.`,
 					},
 					"projects": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Space-delimited list of projects. e.g. airbyte.io/documentation meltano/tap-gitlab.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -174,12 +190,14 @@ func (r *SourceGitlabResource) Schema(ctx context.Context, req resource.SchemaRe
 								"gitlab",
 							),
 						},
+						Description: `must be one of [gitlab]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
+						Description: `The date from which you'd like to replicate data for GitLab API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.`,
 					},
 				},
 			},
@@ -190,7 +208,8 @@ func (r *SourceGitlabResource) Schema(ctx context.Context, req resource.SchemaRe
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceBambooHrResource{}
 var _ resource.ResourceWithImportState = &SourceBambooHrResource{}
 
@@ -56,13 +53,16 @@ func (r *SourceBambooHrResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Api key of bamboo hr`,
 					},
 					"custom_reports_fields": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Comma-separated list of fields to include in custom reports.`,
 					},
 					"custom_reports_include_default_fields": schema.BoolAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `If true, the custom reports endpoint will include the default fields defined here: https://documentation.bamboohr.com/docs/list-of-field-names.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -71,9 +71,11 @@ func (r *SourceBambooHrResource) Schema(ctx context.Context, req resource.Schema
 								"bamboo-hr",
 							),
 						},
+						Description: `must be one of [bamboo-hr]`,
 					},
 					"subdomain": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Sub Domain of bamboo hr`,
 					},
 				},
 			},
@@ -84,7 +86,8 @@ func (r *SourceBambooHrResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

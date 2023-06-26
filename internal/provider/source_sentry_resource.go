@@ -13,16 +13,13 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceSentryResource{}
 var _ resource.ResourceWithImportState = &SourceSentryResource{}
 
@@ -58,7 +55,8 @@ func (r *SourceSentryResource) Schema(ctx context.Context, req resource.SchemaRe
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"auth_token": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Log into Sentry and then <a href="https://sentry.io/settings/account/api/auth-tokens/">create authentication tokens</a>.For self-hosted, you can find or create authentication tokens by visiting "{instance_url_prefix}/settings/account/api/auth-tokens/"`,
 					},
 					"discover_fields": schema.ListAttribute{
 						Optional:    true,
@@ -66,15 +64,19 @@ func (r *SourceSentryResource) Schema(ctx context.Context, req resource.SchemaRe
 						Validators: []validator.List{
 							listvalidator.ValueStringsAre(validators.IsValidJSON()),
 						},
+						Description: `Fields to retrieve when fetching discover events`,
 					},
 					"hostname": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Host name of Sentry API server.For self-hosted, specify your host name here. Otherwise, leave it empty.`,
 					},
 					"organization": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The slug of the organization the groups belong to.`,
 					},
 					"project": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The name (slug) of the Project you want to sync.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -83,6 +85,7 @@ func (r *SourceSentryResource) Schema(ctx context.Context, req resource.SchemaRe
 								"sentry",
 							),
 						},
+						Description: `must be one of [sentry]`,
 					},
 				},
 			},
@@ -93,7 +96,8 @@ func (r *SourceSentryResource) Schema(ctx context.Context, req resource.SchemaRe
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

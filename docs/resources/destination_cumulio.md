@@ -31,9 +31,9 @@ DestinationCumulio Resource
 
 Required:
 
-- `api_host` (String)
-- `api_key` (String)
-- `api_token` (String)
-- `destination_type` (String)
+- `api_host` (String) URL of the Cumul.io API (e.g. 'https://api.cumul.io', 'https://api.us.cumul.io', or VPC-specific API url). Defaults to 'https://api.cumul.io'.
+- `api_key` (String) An API key generated in Cumul.io's platform (can be generated here: https://app.cumul.io/start/profile/integration).
+- `api_token` (String) The corresponding API token generated in Cumul.io's platform (can be generated here: https://app.cumul.io/start/profile/integration).
+- `destination_type` (String) must be one of [cumulio]
 
 

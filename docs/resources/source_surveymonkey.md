@@ -23,7 +23,7 @@ SourceSurveymonkey Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,26 +35,27 @@ SourceSurveymonkey Resource
 
 Required:
 
-- `source_type` (String)
-- `start_date` (String)
+- `source_type` (String) must be one of [surveymonkey]
+- `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 
 Optional:
 
 - `credentials` (Attributes) The authorization method to use to retrieve data from SurveyMonkey (see [below for nested schema](#nestedatt--configuration--credentials))
-- `origin` (String) Depending on the originating datacenter of the SurveyMonkey account, the API access URL may be different.
-- `survey_ids` (List of String)
+- `origin` (String) must be one of [USA, Europe, Canada]
+Depending on the originating datacenter of the SurveyMonkey account, the API access URL may be different.
+- `survey_ids` (List of String) IDs of the surveys from which you'd like to replicate data. If left empty, data from all boards to which you have access will be replicated.
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
 
 Required:
 
-- `access_token` (String)
-- `auth_method` (String)
+- `access_token` (String) Access Token for making authenticated requests. See the <a href="https://docs.airbyte.io/integrations/sources/surveymonkey">docs</a> for information on how to generate this key.
+- `auth_method` (String) must be one of [oauth2.0]
 
 Optional:
 
-- `client_id` (String)
-- `client_secret` (String)
+- `client_id` (String) The Client ID of the SurveyMonkey developer application.
+- `client_secret` (String) The Client Secret of the SurveyMonkey developer application.
 
 

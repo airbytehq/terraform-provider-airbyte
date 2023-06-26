@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &DestinationGoogleSheetsResource{}
 var _ resource.ResourceWithImportState = &DestinationGoogleSheetsResource{}
 
@@ -58,13 +55,16 @@ func (r *DestinationGoogleSheetsResource) Schema(ctx context.Context, req resour
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"client_id": schema.StringAttribute{
-								Required: true,
+								Required:    true,
+								Description: `The Client ID of your Google Sheets developer application.`,
 							},
 							"client_secret": schema.StringAttribute{
-								Required: true,
+								Required:    true,
+								Description: `The Client Secret of your Google Sheets developer application.`,
 							},
 							"refresh_token": schema.StringAttribute{
-								Required: true,
+								Required:    true,
+								Description: `The token for obtaining new access token.`,
 							},
 						},
 						Description: `Google API Credentials for connecting to Google Sheets and Google Drive APIs`,
@@ -76,9 +76,11 @@ func (r *DestinationGoogleSheetsResource) Schema(ctx context.Context, req resour
 								"google-sheets",
 							),
 						},
+						Description: `must be one of [google-sheets]`,
 					},
 					"spreadsheet_id": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The link to your spreadsheet. See <a href='https://docs.airbyte.com/integrations/destinations/google-sheets#sheetlink'>this guide</a> for more details.`,
 					},
 				},
 			},

@@ -23,7 +23,7 @@ SourceSalesforceSinger Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,17 +35,18 @@ SourceSalesforceSinger Resource
 
 Required:
 
-- `api_type` (String) Unless you know that you are transferring a very small amount of data, prefer using the BULK API. This will help avoid using up all of your API call quota with Salesforce. Valid values are BULK or REST.
-- `client_id` (String)
-- `client_secret` (String)
-- `refresh_token` (String)
-- `source_type` (String)
-- `start_date` (String)
+- `api_type` (String) must be one of [BULK, REST]
+Unless you know that you are transferring a very small amount of data, prefer using the BULK API. This will help avoid using up all of your API call quota with Salesforce. Valid values are BULK or REST.
+- `client_id` (String) The Consumer Key that can be found when viewing your app in Salesforce
+- `client_secret` (String) The Consumer Secret that can be found when viewing your app in Salesforce
+- `refresh_token` (String) Salesforce Refresh Token used for Airbyte to access your Salesforce account. If you don't know what this is, follow this <a href="https://medium.com/@bpmmendis94/obtain-access-refresh-tokens-from-salesforce-rest-api-a324fe4ccd9b">guide</a> to retrieve it.
+- `source_type` (String) must be one of [salesforce-singer]
+- `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 
 Optional:
 
-- `is_sandbox` (Boolean)
-- `quota_percent_per_run` (Number)
-- `quota_percent_total` (Number)
+- `is_sandbox` (Boolean) Whether or not the the app is in a Salesforce sandbox. If you do not know what this, assume it is false. We provide more info on this field in the <a href="https://docs.airbyte.io/integrations/destinations/salesforce#is_sandbox">docs</a>.
+- `quota_percent_per_run` (Number) determines the maximum allowed API quota percentage the connector is allowed to consume per sync job
+- `quota_percent_total` (Number) Determines the maximum allowed API quota percentage the connector is allowed to consume at any time
 
 
