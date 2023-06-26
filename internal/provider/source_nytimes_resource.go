@@ -13,16 +13,13 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework-validators/int64validator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceNytimesResource{}
 var _ resource.ResourceWithImportState = &SourceNytimesResource{}
 
@@ -58,13 +55,15 @@ func (r *SourceNytimesResource) Schema(ctx context.Context, req resource.SchemaR
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `API Key`,
 					},
 					"end_date": schema.StringAttribute{
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
+						Description: `End date to stop the article retrieval (format YYYY-MM)`,
 					},
 					"period": schema.Int64Attribute{
 						Required: true,
@@ -77,7 +76,8 @@ func (r *SourceNytimesResource) Schema(ctx context.Context, req resource.SchemaR
 								}...,
 							),
 						},
-						Description: `Period of time (in days)`,
+						MarkdownDescription: `must be one of [1, 7, 30]` + "\n" +
+							`Period of time (in days)`,
 					},
 					"share_type": schema.StringAttribute{
 						Optional: true,
@@ -86,7 +86,8 @@ func (r *SourceNytimesResource) Schema(ctx context.Context, req resource.SchemaR
 								"facebook",
 							),
 						},
-						Description: `Share Type`,
+						MarkdownDescription: `must be one of [facebook]` + "\n" +
+							`Share Type`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -95,12 +96,14 @@ func (r *SourceNytimesResource) Schema(ctx context.Context, req resource.SchemaR
 								"nytimes",
 							),
 						},
+						Description: `must be one of [nytimes]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
+						Description: `Start date to begin the article retrieval (format YYYY-MM)`,
 					},
 				},
 			},
@@ -111,7 +114,8 @@ func (r *SourceNytimesResource) Schema(ctx context.Context, req resource.SchemaR
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

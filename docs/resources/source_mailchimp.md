@@ -23,7 +23,7 @@ SourceMailchimp Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,7 +35,7 @@ SourceMailchimp Resource
 
 Required:
 
-- `source_type` (String)
+- `source_type` (String) must be one of [mailchimp]
 
 Optional:
 
@@ -57,8 +57,8 @@ Optional:
 
 Required:
 
-- `apikey` (String)
-- `auth_type` (String)
+- `apikey` (String) Mailchimp API Key. See the <a href="https://docs.airbyte.com/integrations/sources/mailchimp">docs</a> for information on how to generate this key.
+- `auth_type` (String) must be one of [apikey]
 
 
 <a id="nestedatt--configuration--credentials--source_mailchimp_authentication_o_auth2_0"></a>
@@ -66,13 +66,13 @@ Required:
 
 Required:
 
-- `access_token` (String)
-- `auth_type` (String)
+- `access_token` (String) An access token generated using the above client ID and secret.
+- `auth_type` (String) must be one of [oauth2.0]
 
 Optional:
 
-- `client_id` (String)
-- `client_secret` (String)
+- `client_id` (String) The Client ID of your OAuth application.
+- `client_secret` (String) The Client Secret of your OAuth application.
 
 
 <a id="nestedatt--configuration--credentials--source_mailchimp_update_authentication_api_key"></a>
@@ -80,8 +80,8 @@ Optional:
 
 Required:
 
-- `apikey` (String)
-- `auth_type` (String)
+- `apikey` (String) Mailchimp API Key. See the <a href="https://docs.airbyte.com/integrations/sources/mailchimp">docs</a> for information on how to generate this key.
+- `auth_type` (String) must be one of [apikey]
 
 
 <a id="nestedatt--configuration--credentials--source_mailchimp_update_authentication_o_auth2_0"></a>
@@ -89,12 +89,12 @@ Required:
 
 Required:
 
-- `access_token` (String)
-- `auth_type` (String)
+- `access_token` (String) An access token generated using the above client ID and secret.
+- `auth_type` (String) must be one of [oauth2.0]
 
 Optional:
 
-- `client_id` (String)
-- `client_secret` (String)
+- `client_id` (String) The Client ID of your OAuth application.
+- `client_secret` (String) The Client Secret of your OAuth application.
 
 

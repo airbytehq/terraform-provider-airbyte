@@ -23,7 +23,7 @@ SourceFirebolt Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,15 +35,15 @@ SourceFirebolt Resource
 
 Required:
 
-- `database` (String)
-- `password` (String)
-- `source_type` (String)
-- `username` (String)
+- `database` (String) The database to connect to.
+- `password` (String) Firebolt password.
+- `source_type` (String) must be one of [firebolt]
+- `username` (String) Firebolt email address you use to login.
 
 Optional:
 
-- `account` (String)
-- `engine` (String)
-- `host` (String)
+- `account` (String) Firebolt account to login.
+- `engine` (String) Engine name or url to connect to.
+- `host` (String) The host name of your Firebolt database.
 
 

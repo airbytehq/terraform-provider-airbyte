@@ -31,11 +31,11 @@ DestinationMeilisearch Resource
 
 Required:
 
-- `destination_type` (String)
-- `host` (String)
+- `destination_type` (String) must be one of [meilisearch]
+- `host` (String) Hostname of the MeiliSearch instance.
 
 Optional:
 
-- `api_key` (String)
+- `api_key` (String) MeiliSearch API Key. See the <a href="https://docs.airbyte.com/integrations/destinations/meilisearch">docs</a> for more information on how to obtain this key.
 
 

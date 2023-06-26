@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceFreshdeskResource{}
 var _ resource.ResourceWithImportState = &SourceFreshdeskResource{}
 
@@ -57,13 +54,16 @@ func (r *SourceFreshdeskResource) Schema(ctx context.Context, req resource.Schem
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Freshdesk API Key. See the <a href="https://docs.airbyte.com/integrations/sources/freshdesk">docs</a> for more information on how to obtain this key.`,
 					},
 					"domain": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Freshdesk domain`,
 					},
 					"requests_per_minute": schema.Int64Attribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The number of requests per minute that this source allowed to use. There is a rate limit of 50 requests per minute per app per account.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -72,12 +72,14 @@ func (r *SourceFreshdeskResource) Schema(ctx context.Context, req resource.Schem
 								"freshdesk",
 							),
 						},
+						Description: `must be one of [freshdesk]`,
 					},
 					"start_date": schema.StringAttribute{
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
+						Description: `UTC date and time. Any data created after this date will be replicated. If this parameter is not set, all data will be replicated.`,
 					},
 				},
 			},
@@ -88,7 +90,8 @@ func (r *SourceFreshdeskResource) Schema(ctx context.Context, req resource.Schem
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

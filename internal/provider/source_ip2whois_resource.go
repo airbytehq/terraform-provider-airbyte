@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceIp2whoisResource{}
 var _ resource.ResourceWithImportState = &SourceIp2whoisResource{}
 
@@ -56,10 +53,12 @@ func (r *SourceIp2whoisResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"api_key": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Your API Key. See <a href="https://www.ip2whois.com/developers-api">here</a>.`,
 					},
 					"domain": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Domain name. See <a href="https://www.ip2whois.com/developers-api">here</a>.`,
 					},
 					"source_type": schema.StringAttribute{
 						Optional: true,
@@ -68,6 +67,7 @@ func (r *SourceIp2whoisResource) Schema(ctx context.Context, req resource.Schema
 								"ip2whois",
 							),
 						},
+						Description: `must be one of [ip2whois]`,
 					},
 				},
 			},
@@ -78,7 +78,8 @@ func (r *SourceIp2whoisResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

@@ -31,18 +31,18 @@ DestinationOracle Resource
 
 Required:
 
-- `destination_type` (String)
-- `host` (String)
-- `port` (Number)
-- `sid` (String)
-- `username` (String)
+- `destination_type` (String) must be one of [oracle]
+- `host` (String) The hostname of the database.
+- `port` (Number) The port of the database.
+- `sid` (String) The System Identifier uniquely distinguishes the instance from any other instance on the same computer.
+- `username` (String) The username to access the database. This user must have CREATE USER privileges in the database.
 
 Optional:
 
-- `jdbc_url_params` (String)
-- `password` (String)
-- `schema` (String)
-- `tunnel_method` (Attributes) (see [below for nested schema](#nestedatt--configuration--tunnel_method))
+- `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
+- `password` (String) The password associated with the username.
+- `schema` (String) The default schema is used as the target schema for all statements issued from the connection that do not explicitly specify a schema name. The usual value for this field is "airbyte".  In Oracle, schemas and users are the same thing, so the "user" parameter is used as the login credentials and this is used for the default Airbyte message schema.
+- `tunnel_method` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method))
 
 <a id="nestedatt--configuration--tunnel_method"></a>
 ### Nested Schema for `configuration.tunnel_method`
@@ -61,7 +61,8 @@ Optional:
 
 Required:
 
-- `tunnel_method` (String) No ssh tunnel needed to connect to database
+- `tunnel_method` (String) must be one of [NO_TUNNEL]
+No ssh tunnel needed to connect to database
 
 
 <a id="nestedatt--configuration--tunnel_method--destination_oracle_ssh_tunnel_method_password_authentication"></a>
@@ -69,11 +70,12 @@ Required:
 
 Required:
 
-- `tunnel_host` (String)
-- `tunnel_method` (String) Connect through a jump server tunnel host using username and password authentication
-- `tunnel_port` (Number)
-- `tunnel_user` (String)
-- `tunnel_user_password` (String)
+- `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
+- `tunnel_method` (String) must be one of [SSH_PASSWORD_AUTH]
+Connect through a jump server tunnel host using username and password authentication
+- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_user` (String) OS-level username for logging into the jump server host
+- `tunnel_user_password` (String) OS-level password for logging into the jump server host
 
 
 <a id="nestedatt--configuration--tunnel_method--destination_oracle_ssh_tunnel_method_ssh_key_authentication"></a>
@@ -81,11 +83,12 @@ Required:
 
 Required:
 
-- `ssh_key` (String)
-- `tunnel_host` (String)
-- `tunnel_method` (String) Connect through a jump server tunnel host using username and ssh key
-- `tunnel_port` (Number)
-- `tunnel_user` (String)
+- `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
+- `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
+- `tunnel_method` (String) must be one of [SSH_KEY_AUTH]
+Connect through a jump server tunnel host using username and ssh key
+- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_user` (String) OS-level username for logging into the jump server host.
 
 
 <a id="nestedatt--configuration--tunnel_method--destination_oracle_update_ssh_tunnel_method_no_tunnel"></a>
@@ -93,7 +96,8 @@ Required:
 
 Required:
 
-- `tunnel_method` (String) No ssh tunnel needed to connect to database
+- `tunnel_method` (String) must be one of [NO_TUNNEL]
+No ssh tunnel needed to connect to database
 
 
 <a id="nestedatt--configuration--tunnel_method--destination_oracle_update_ssh_tunnel_method_password_authentication"></a>
@@ -101,11 +105,12 @@ Required:
 
 Required:
 
-- `tunnel_host` (String)
-- `tunnel_method` (String) Connect through a jump server tunnel host using username and password authentication
-- `tunnel_port` (Number)
-- `tunnel_user` (String)
-- `tunnel_user_password` (String)
+- `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
+- `tunnel_method` (String) must be one of [SSH_PASSWORD_AUTH]
+Connect through a jump server tunnel host using username and password authentication
+- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_user` (String) OS-level username for logging into the jump server host
+- `tunnel_user_password` (String) OS-level password for logging into the jump server host
 
 
 <a id="nestedatt--configuration--tunnel_method--destination_oracle_update_ssh_tunnel_method_ssh_key_authentication"></a>
@@ -113,10 +118,11 @@ Required:
 
 Required:
 
-- `ssh_key` (String)
-- `tunnel_host` (String)
-- `tunnel_method` (String) Connect through a jump server tunnel host using username and ssh key
-- `tunnel_port` (Number)
-- `tunnel_user` (String)
+- `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
+- `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
+- `tunnel_method` (String) must be one of [SSH_KEY_AUTH]
+Connect through a jump server tunnel host using username and ssh key
+- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_user` (String) OS-level username for logging into the jump server host.
 
 

@@ -17,11 +17,11 @@ Workspace Resource
 
 ### Required
 
-- `name` (String)
+- `name` (String) Name of the workspace
 
 ### Read-Only
 
-- `data_residency` (String)
+- `data_residency` (String) must be one of [auto, us, eu]
 - `workspace_id` (String)
 
 

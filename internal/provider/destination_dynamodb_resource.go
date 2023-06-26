@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &DestinationDynamodbResource{}
 var _ resource.ResourceWithImportState = &DestinationDynamodbResource{}
 
@@ -55,7 +52,8 @@ func (r *DestinationDynamodbResource) Schema(ctx context.Context, req resource.S
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"access_key_id": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The access key id to access the DynamoDB. Airbyte requires Read and Write permissions to the DynamoDB.`,
 					},
 					"destination_type": schema.StringAttribute{
 						Required: true,
@@ -64,9 +62,11 @@ func (r *DestinationDynamodbResource) Schema(ctx context.Context, req resource.S
 								"dynamodb",
 							),
 						},
+						Description: `must be one of [dynamodb]`,
 					},
 					"dynamodb_endpoint": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `This is your DynamoDB endpoint url.(if you are working with AWS DynamoDB, just leave empty).`,
 					},
 					"dynamodb_region": schema.StringAttribute{
 						Required: true,
@@ -100,13 +100,16 @@ func (r *DestinationDynamodbResource) Schema(ctx context.Context, req resource.S
 								"us-gov-west-1",
 							),
 						},
-						Description: `The region of the DynamoDB.`,
+						MarkdownDescription: `must be one of [, us-east-1, us-east-2, us-west-1, us-west-2, af-south-1, ap-east-1, ap-south-1, ap-northeast-1, ap-northeast-2, ap-northeast-3, ap-southeast-1, ap-southeast-2, ca-central-1, cn-north-1, cn-northwest-1, eu-central-1, eu-north-1, eu-south-1, eu-west-1, eu-west-2, eu-west-3, sa-east-1, me-south-1, us-gov-east-1, us-gov-west-1]` + "\n" +
+							`The region of the DynamoDB.`,
 					},
 					"dynamodb_table_name_prefix": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The prefix to use when naming DynamoDB tables.`,
 					},
 					"secret_access_key": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The corresponding secret to the access key id.`,
 					},
 				},
 			},

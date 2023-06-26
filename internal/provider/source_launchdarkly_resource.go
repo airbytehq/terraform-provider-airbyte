@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceLaunchdarklyResource{}
 var _ resource.ResourceWithImportState = &SourceLaunchdarklyResource{}
 
@@ -56,7 +53,8 @@ func (r *SourceLaunchdarklyResource) Schema(ctx context.Context, req resource.Sc
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"access_token": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Your Access token. See <a href="https://apidocs.launchdarkly.com/#section/Overview/Authentication">here</a>.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -65,6 +63,7 @@ func (r *SourceLaunchdarklyResource) Schema(ctx context.Context, req resource.Sc
 								"launchdarkly",
 							),
 						},
+						Description: `must be one of [launchdarkly]`,
 					},
 				},
 			},
@@ -75,7 +74,8 @@ func (r *SourceLaunchdarklyResource) Schema(ctx context.Context, req resource.Sc
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

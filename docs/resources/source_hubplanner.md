@@ -23,7 +23,7 @@ SourceHubplanner Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,7 +35,7 @@ SourceHubplanner Resource
 
 Required:
 
-- `api_key` (String)
-- `source_type` (String)
+- `api_key` (String) Hubplanner API key. See https://github.com/hubplanner/API#authentication for more details.
+- `source_type` (String) must be one of [hubplanner]
 
 

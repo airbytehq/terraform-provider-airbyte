@@ -23,7 +23,7 @@ SourceSftpBulk Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,21 +35,22 @@ SourceSftpBulk Resource
 
 Required:
 
-- `folder_path` (String)
-- `host` (String)
-- `port` (Number)
-- `source_type` (String)
-- `start_date` (String)
-- `stream_name` (String)
-- `username` (String)
+- `folder_path` (String) The directory to search files for sync
+- `host` (String) The server host address
+- `port` (Number) The server port
+- `source_type` (String) must be one of [sftp-bulk]
+- `start_date` (String) The date from which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
+- `stream_name` (String) The name of the stream or table you want to create
+- `username` (String) The server user
 
 Optional:
 
-- `file_most_recent` (Boolean)
-- `file_pattern` (String)
-- `file_type` (String) The file type you want to sync. Currently only 'csv' and 'json' files are supported.
-- `password` (String)
-- `private_key` (String)
-- `separator` (String)
+- `file_most_recent` (Boolean) Sync only the most recent file for the configured folder path and file pattern
+- `file_pattern` (String) The regular expression to specify files for sync in a chosen Folder Path
+- `file_type` (String) must be one of [csv, json]
+The file type you want to sync. Currently only 'csv' and 'json' files are supported.
+- `password` (String) OS-level password for logging into the jump server host
+- `private_key` (String) The private key
+- `separator` (String) The separator used in the CSV files. Define None if you want to use the Sniffer functionality
 
 

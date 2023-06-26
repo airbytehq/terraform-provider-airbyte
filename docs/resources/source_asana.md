@@ -23,7 +23,7 @@ SourceAsana Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,8 +35,8 @@ SourceAsana Resource
 
 Optional:
 
-- `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `source_type` (String)
+- `credentials` (Attributes) Choose how to authenticate to Github (see [below for nested schema](#nestedatt--configuration--credentials))
+- `source_type` (String) must be one of [asana]
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
@@ -59,7 +59,8 @@ Required:
 
 Optional:
 
-- `option_title` (String) OAuth Credentials
+- `option_title` (String) must be one of [OAuth Credentials]
+OAuth Credentials
 
 
 <a id="nestedatt--configuration--credentials--source_asana_authentication_mechanism_authenticate_with_personal_access_token"></a>
@@ -67,11 +68,12 @@ Optional:
 
 Required:
 
-- `personal_access_token` (String)
+- `personal_access_token` (String) Asana Personal Access Token (generate yours <a href="https://app.asana.com/0/developer-console">here</a>).
 
 Optional:
 
-- `option_title` (String) PAT Credentials
+- `option_title` (String) must be one of [PAT Credentials]
+PAT Credentials
 
 
 <a id="nestedatt--configuration--credentials--source_asana_update_authentication_mechanism_authenticate_via_asana_oauth"></a>
@@ -85,7 +87,8 @@ Required:
 
 Optional:
 
-- `option_title` (String) OAuth Credentials
+- `option_title` (String) must be one of [OAuth Credentials]
+OAuth Credentials
 
 
 <a id="nestedatt--configuration--credentials--source_asana_update_authentication_mechanism_authenticate_with_personal_access_token"></a>
@@ -93,10 +96,11 @@ Optional:
 
 Required:
 
-- `personal_access_token` (String)
+- `personal_access_token` (String) Asana Personal Access Token (generate yours <a href="https://app.asana.com/0/developer-console">here</a>).
 
 Optional:
 
-- `option_title` (String) PAT Credentials
+- `option_title` (String) must be one of [PAT Credentials]
+PAT Credentials
 
 

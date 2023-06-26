@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceGcsResource{}
 var _ resource.ResourceWithImportState = &SourceGcsResource{}
 
@@ -56,13 +53,16 @@ func (r *SourceGcsResource) Schema(ctx context.Context, req resource.SchemaReque
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"gcs_bucket": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `GCS bucket name`,
 					},
 					"gcs_path": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `GCS path to data`,
 					},
 					"service_account": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Enter your Google Cloud <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">service account key</a> in JSON format`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -71,6 +71,7 @@ func (r *SourceGcsResource) Schema(ctx context.Context, req resource.SchemaReque
 								"gcs",
 							),
 						},
+						Description: `must be one of [gcs]`,
 					},
 				},
 			},
@@ -81,7 +82,8 @@ func (r *SourceGcsResource) Schema(ctx context.Context, req resource.SchemaReque
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

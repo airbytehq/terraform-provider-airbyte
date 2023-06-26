@@ -2552,8 +2552,8 @@ internal/sdk/pkg/models/shared/workspacecreaterequest.go
 internal/sdk/pkg/models/shared/workspacesresponse.go
 internal/sdk/pkg/models/shared/workspaceupdaterequest.go
 internal/sdk/pkg/models/shared/security.go
-internal/sdk/pkg/models/shared/workspaceresponseroottypeforworkspaceresponse.go
 internal/sdk/pkg/models/shared/connectionresponseroottypeforconnectionresponse.go
+internal/sdk/pkg/models/shared/workspaceresponseroottypeforworkspaceresponse.go
 USAGE.md
 internal/provider/provider.go
 internal/provider/connection_resource.go

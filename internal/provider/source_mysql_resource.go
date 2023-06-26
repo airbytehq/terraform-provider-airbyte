@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceMysqlResource{}
 var _ resource.ResourceWithImportState = &SourceMysqlResource{}
 
@@ -57,19 +54,24 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"database": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The database name.`,
 					},
 					"host": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The host name of the database.`,
 					},
 					"jdbc_url_params": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3). For more information read about <a href="https://dev.mysql.com/doc/connector-j/8.0/en/connector-j-reference-jdbc-url-format.html">JDBC URL parameters</a>.`,
 					},
 					"password": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The password associated with the username.`,
 					},
 					"port": schema.Int64Attribute{
-						Required: true,
+						Required:    true,
+						Description: `The port to connect to.`,
 					},
 					"replication_method": schema.SingleNestedAttribute{
 						Required: true,
@@ -78,7 +80,8 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"initial_waiting_seconds": schema.Int64Attribute{
-										Optional: true,
+										Optional:    true,
+										Description: `The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">initial waiting time</a>.`,
 									},
 									"method": schema.StringAttribute{
 										Required: true,
@@ -87,9 +90,11 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"CDC",
 											),
 										},
+										Description: `must be one of [CDC]`,
 									},
 									"server_time_zone": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Enter the configured MySQL server timezone. This should only be done if the configured timezone in your MySQL instance does not conform to IANNA standard.`,
 									},
 								},
 								Description: `CDC uses the Binlog to detect inserts, updates, and deletes. This needs to be configured on the source database itself.`,
@@ -104,6 +109,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"STANDARD",
 											),
 										},
+										Description: `must be one of [STANDARD]`,
 									},
 								},
 								Description: `Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
@@ -112,7 +118,8 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"initial_waiting_seconds": schema.Int64Attribute{
-										Optional: true,
+										Optional:    true,
+										Description: `The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">initial waiting time</a>.`,
 									},
 									"method": schema.StringAttribute{
 										Required: true,
@@ -121,9 +128,11 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"CDC",
 											),
 										},
+										Description: `must be one of [CDC]`,
 									},
 									"server_time_zone": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Enter the configured MySQL server timezone. This should only be done if the configured timezone in your MySQL instance does not conform to IANNA standard.`,
 									},
 								},
 								Description: `CDC uses the Binlog to detect inserts, updates, and deletes. This needs to be configured on the source database itself.`,
@@ -138,6 +147,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"STANDARD",
 											),
 										},
+										Description: `must be one of [STANDARD]`,
 									},
 								},
 								Description: `Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
@@ -146,6 +156,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+						Description: `Replication method to use for extracting data from the database.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -154,6 +165,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								"mysql",
 							),
 						},
+						Description: `must be one of [mysql]`,
 					},
 					"ssl_mode": schema.SingleNestedAttribute{
 						Optional: true,
@@ -168,6 +180,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"preferred",
 											),
 										},
+										Description: `must be one of [preferred]`,
 									},
 								},
 								Description: `Automatically attempt SSL connection. If the MySQL server does not support SSL, continue with a regular connection.`,
@@ -182,6 +195,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"required",
 											),
 										},
+										Description: `must be one of [required]`,
 									},
 								},
 								Description: `Always connect with SSL. If the MySQL server doesn’t support SSL, the connection will not be established. Certificate Authority (CA) and Hostname are not verified.`,
@@ -190,16 +204,20 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ca_certificate": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `CA certificate`,
 									},
 									"client_certificate": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Client certificate (this is not a required field, but if you want to use it, you will need to add the <b>Client key</b> as well)`,
 									},
 									"client_key": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Client key (this is not a required field, but if you want to use it, you will need to add the <b>Client certificate</b> as well)`,
 									},
 									"client_key_password": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.`,
 									},
 									"mode": schema.StringAttribute{
 										Required: true,
@@ -208,6 +226,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"verify_ca",
 											),
 										},
+										Description: `must be one of [verify_ca]`,
 									},
 								},
 								Description: `Always connect with SSL. Verifies CA, but allows connection even if Hostname does not match.`,
@@ -216,16 +235,20 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ca_certificate": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `CA certificate`,
 									},
 									"client_certificate": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Client certificate (this is not a required field, but if you want to use it, you will need to add the <b>Client key</b> as well)`,
 									},
 									"client_key": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Client key (this is not a required field, but if you want to use it, you will need to add the <b>Client certificate</b> as well)`,
 									},
 									"client_key_password": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.`,
 									},
 									"mode": schema.StringAttribute{
 										Required: true,
@@ -234,6 +257,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"verify_identity",
 											),
 										},
+										Description: `must be one of [verify_identity]`,
 									},
 								},
 								Description: `Always connect with SSL. Verify both CA and Hostname.`,
@@ -248,6 +272,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"preferred",
 											),
 										},
+										Description: `must be one of [preferred]`,
 									},
 								},
 								Description: `Automatically attempt SSL connection. If the MySQL server does not support SSL, continue with a regular connection.`,
@@ -262,6 +287,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"required",
 											),
 										},
+										Description: `must be one of [required]`,
 									},
 								},
 								Description: `Always connect with SSL. If the MySQL server doesn’t support SSL, the connection will not be established. Certificate Authority (CA) and Hostname are not verified.`,
@@ -270,16 +296,20 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ca_certificate": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `CA certificate`,
 									},
 									"client_certificate": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Client certificate (this is not a required field, but if you want to use it, you will need to add the <b>Client key</b> as well)`,
 									},
 									"client_key": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Client key (this is not a required field, but if you want to use it, you will need to add the <b>Client certificate</b> as well)`,
 									},
 									"client_key_password": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.`,
 									},
 									"mode": schema.StringAttribute{
 										Required: true,
@@ -288,6 +318,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"verify_ca",
 											),
 										},
+										Description: `must be one of [verify_ca]`,
 									},
 								},
 								Description: `Always connect with SSL. Verifies CA, but allows connection even if Hostname does not match.`,
@@ -296,16 +327,20 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ca_certificate": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `CA certificate`,
 									},
 									"client_certificate": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Client certificate (this is not a required field, but if you want to use it, you will need to add the <b>Client key</b> as well)`,
 									},
 									"client_key": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Client key (this is not a required field, but if you want to use it, you will need to add the <b>Client certificate</b> as well)`,
 									},
 									"client_key_password": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.`,
 									},
 									"mode": schema.StringAttribute{
 										Required: true,
@@ -314,6 +349,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"verify_identity",
 											),
 										},
+										Description: `must be one of [verify_identity]`,
 									},
 								},
 								Description: `Always connect with SSL. Verify both CA and Hostname.`,
@@ -322,6 +358,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+						Description: `SSL connection modes. Read more <a href="https://dev.mysql.com/doc/connector-j/8.0/en/connector-j-reference-using-ssl.html"> in the docs</a>.`,
 					},
 					"tunnel_method": schema.SingleNestedAttribute{
 						Optional: true,
@@ -336,7 +373,8 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"NO_TUNNEL",
 											),
 										},
-										Description: `No ssh tunnel needed to connect to database`,
+										MarkdownDescription: `must be one of [NO_TUNNEL]` + "\n" +
+											`No ssh tunnel needed to connect to database`,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -345,7 +383,8 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_host": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
 									"tunnel_method": schema.StringAttribute{
 										Required: true,
@@ -354,16 +393,20 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"SSH_PASSWORD_AUTH",
 											),
 										},
-										Description: `Connect through a jump server tunnel host using username and password authentication`,
+										MarkdownDescription: `must be one of [SSH_PASSWORD_AUTH]` + "\n" +
+											`Connect through a jump server tunnel host using username and password authentication`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										Required: true,
+										Required:    true,
+										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level username for logging into the jump server host`,
 									},
 									"tunnel_user_password": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level password for logging into the jump server host`,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -372,10 +415,12 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )`,
 									},
 									"tunnel_host": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
 									"tunnel_method": schema.StringAttribute{
 										Required: true,
@@ -384,13 +429,16 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"SSH_KEY_AUTH",
 											),
 										},
-										Description: `Connect through a jump server tunnel host using username and ssh key`,
+										MarkdownDescription: `must be one of [SSH_KEY_AUTH]` + "\n" +
+											`Connect through a jump server tunnel host using username and ssh key`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										Required: true,
+										Required:    true,
+										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level username for logging into the jump server host.`,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -405,7 +453,8 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"NO_TUNNEL",
 											),
 										},
-										Description: `No ssh tunnel needed to connect to database`,
+										MarkdownDescription: `must be one of [NO_TUNNEL]` + "\n" +
+											`No ssh tunnel needed to connect to database`,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -414,7 +463,8 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_host": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
 									"tunnel_method": schema.StringAttribute{
 										Required: true,
@@ -423,16 +473,20 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"SSH_PASSWORD_AUTH",
 											),
 										},
-										Description: `Connect through a jump server tunnel host using username and password authentication`,
+										MarkdownDescription: `must be one of [SSH_PASSWORD_AUTH]` + "\n" +
+											`Connect through a jump server tunnel host using username and password authentication`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										Required: true,
+										Required:    true,
+										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level username for logging into the jump server host`,
 									},
 									"tunnel_user_password": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level password for logging into the jump server host`,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -441,10 +495,12 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )`,
 									},
 									"tunnel_host": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
 									"tunnel_method": schema.StringAttribute{
 										Required: true,
@@ -453,13 +509,16 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"SSH_KEY_AUTH",
 											),
 										},
-										Description: `Connect through a jump server tunnel host using username and ssh key`,
+										MarkdownDescription: `must be one of [SSH_KEY_AUTH]` + "\n" +
+											`Connect through a jump server tunnel host using username and ssh key`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										Required: true,
+										Required:    true,
+										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level username for logging into the jump server host.`,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -468,9 +527,11 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+						Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 					},
 					"username": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The username which is used to access the database.`,
 					},
 				},
 			},
@@ -481,7 +542,8 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

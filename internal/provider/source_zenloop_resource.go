@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceZenloopResource{}
 var _ resource.ResourceWithImportState = &SourceZenloopResource{}
 
@@ -56,10 +53,12 @@ func (r *SourceZenloopResource) Schema(ctx context.Context, req resource.SchemaR
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"api_token": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Zenloop API Token. You can get the API token in settings page <a href="https://app.zenloop.com/settings/api">here</a> `,
 					},
 					"date_from": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Zenloop date_from. Format: 2021-10-24T03:30:30Z or 2021-10-24. Leave empty if only data from current data should be synced`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -68,12 +67,15 @@ func (r *SourceZenloopResource) Schema(ctx context.Context, req resource.SchemaR
 								"zenloop",
 							),
 						},
+						Description: `must be one of [zenloop]`,
 					},
 					"survey_group_id": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Zenloop Survey Group ID. Can be found by pulling All Survey Groups via SurveyGroups stream. Leave empty to pull answers from all survey groups`,
 					},
 					"survey_id": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Zenloop Survey ID. Can be found <a href="https://app.zenloop.com/settings/api">here</a>. Leave empty to pull answers from all surveys`,
 					},
 				},
 			},
@@ -84,7 +86,8 @@ func (r *SourceZenloopResource) Schema(ctx context.Context, req resource.SchemaR
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

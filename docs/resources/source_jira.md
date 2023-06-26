@@ -23,7 +23,7 @@ SourceJira Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,17 +35,17 @@ SourceJira Resource
 
 Required:
 
-- `api_token` (String)
-- `domain` (String)
-- `email` (String)
-- `source_type` (String)
+- `api_token` (String) Jira API Token. See the <a href="https://docs.airbyte.com/integrations/sources/jira">docs</a> for more information on how to generate this key. API Token is used for Authorization to your account by BasicAuth.
+- `domain` (String) The Domain for your Jira account, e.g. airbyteio.atlassian.net, airbyteio.jira.com, jira.your-domain.com
+- `email` (String) The user email for your Jira account which you used to generate the API token. This field is used for Authorization to your account by BasicAuth.
+- `source_type` (String) must be one of [jira]
 
 Optional:
 
-- `enable_experimental_streams` (Boolean)
-- `expand_issue_changelog` (Boolean)
-- `projects` (List of String)
-- `render_fields` (Boolean)
-- `start_date` (String)
+- `enable_experimental_streams` (Boolean) Allow the use of experimental streams which rely on undocumented Jira API endpoints. See https://docs.airbyte.com/integrations/sources/jira#experimental-tables for more info.
+- `expand_issue_changelog` (Boolean) Expand the changelog when replicating issues.
+- `projects` (List of String) List of Jira project keys to replicate data for, or leave it empty if you want to replicate data for all projects.
+- `render_fields` (Boolean) Render issue fields in HTML format in addition to Jira JSON-like format.
+- `start_date` (String) The date from which you want to replicate data from Jira, use the format YYYY-MM-DDT00:00:00Z. Note that this field only applies to certain streams, and only data generated on or after the start date will be replicated. Or leave it empty if you want to replicate all data. For more information, refer to the <a href="https://docs.airbyte.com/integrations/sources/jira/">documentation</a>.
 
 

@@ -23,7 +23,7 @@ SourceShopify Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,13 +35,13 @@ SourceShopify Resource
 
 Required:
 
-- `shop` (String)
-- `source_type` (String)
-- `start_date` (String)
+- `shop` (String) The name of your Shopify store found in the URL. For example, if your URL was https://NAME.myshopify.com, then the name would be 'NAME'.
+- `source_type` (String) must be one of [shopify]
+- `start_date` (String) The date you would like to replicate data from. Format: YYYY-MM-DD. Any data before this date will not be replicated.
 
 Optional:
 
-- `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
+- `credentials` (Attributes) The authorization method to use to retrieve data from Shopify (see [below for nested schema](#nestedatt--configuration--credentials))
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
@@ -58,8 +58,8 @@ Optional:
 
 Required:
 
-- `api_password` (String)
-- `auth_method` (String)
+- `api_password` (String) The API Password for your private application in the `Shopify` store.
+- `auth_method` (String) must be one of [api_password]
 
 
 <a id="nestedatt--configuration--credentials--source_shopify_shopify_authorization_method_o_auth2_0"></a>
@@ -67,13 +67,13 @@ Required:
 
 Required:
 
-- `auth_method` (String)
+- `auth_method` (String) must be one of [oauth2.0]
 
 Optional:
 
-- `access_token` (String)
-- `client_id` (String)
-- `client_secret` (String)
+- `access_token` (String) The Access Token for making authenticated requests.
+- `client_id` (String) The Client ID of the Shopify developer application.
+- `client_secret` (String) The Client Secret of the Shopify developer application.
 
 
 <a id="nestedatt--configuration--credentials--source_shopify_update_shopify_authorization_method_api_password"></a>
@@ -81,8 +81,8 @@ Optional:
 
 Required:
 
-- `api_password` (String)
-- `auth_method` (String)
+- `api_password` (String) The API Password for your private application in the `Shopify` store.
+- `auth_method` (String) must be one of [api_password]
 
 
 <a id="nestedatt--configuration--credentials--source_shopify_update_shopify_authorization_method_o_auth2_0"></a>
@@ -90,12 +90,12 @@ Required:
 
 Required:
 
-- `auth_method` (String)
+- `auth_method` (String) must be one of [oauth2.0]
 
 Optional:
 
-- `access_token` (String)
-- `client_id` (String)
-- `client_secret` (String)
+- `access_token` (String) The Access Token for making authenticated requests.
+- `client_id` (String) The Client ID of the Shopify developer application.
+- `client_secret` (String) The Client Secret of the Shopify developer application.
 
 

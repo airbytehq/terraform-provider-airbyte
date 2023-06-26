@@ -23,7 +23,7 @@ SourceFauna Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,11 +35,11 @@ SourceFauna Resource
 
 Required:
 
-- `domain` (String)
-- `port` (Number)
-- `scheme` (String)
-- `secret` (String)
-- `source_type` (String)
+- `domain` (String) Domain of Fauna to query. Defaults db.fauna.com. See <a href=https://docs.fauna.com/fauna/current/learn/understanding/region_groups#how-to-use-region-groups>the docs</a>.
+- `port` (Number) Endpoint port.
+- `scheme` (String) URL scheme.
+- `secret` (String) Fauna secret, used when authenticating with the database.
+- `source_type` (String) must be one of [fauna]
 
 Optional:
 
@@ -50,8 +50,13 @@ Optional:
 
 Required:
 
-- `deletions` (Attributes) (see [below for nested schema](#nestedatt--configuration--collection--deletions))
-- `page_size` (Number)
+- `deletions` (Attributes) <b>This only applies to incremental syncs.</b> <br>
+Enabling deletion mode informs your destination of deleted documents.<br>
+Disabled - Leave this feature disabled, and ignore deleted documents.<br>
+Enabled - Enables this feature. When a document is deleted, the connector exports a record with a "deleted at" column containing the time that the document was deleted. (see [below for nested schema](#nestedatt--configuration--collection--deletions))
+- `page_size` (Number) The page size used when reading documents from the database. The larger the page size, the faster the connector processes documents. However, if a page is too large, the connector may fail. <br>
+Choose your page size based on how large the documents are. <br>
+See <a href="https://docs.fauna.com/fauna/current/learn/understanding/types#page">the docs</a>.
 
 <a id="nestedatt--configuration--collection--deletions"></a>
 ### Nested Schema for `configuration.collection.deletions`
@@ -80,7 +85,7 @@ Enabled - Enables this feature. When a document is deleted, the connector export
 
 Required:
 
-- `deletion_mode` (String)
+- `deletion_mode` (String) must be one of [ignore]
 
 
 <a id="nestedatt--configuration--collection--deletions--source_fauna_collection_deletion_mode_enabled"></a>
@@ -88,8 +93,8 @@ Required:
 
 Required:
 
-- `column` (String)
-- `deletion_mode` (String)
+- `column` (String) Name of the "deleted at" column.
+- `deletion_mode` (String) must be one of [deleted_field]
 
 
 <a id="nestedatt--configuration--collection--deletions--source_fauna_update_collection_deletion_mode_disabled"></a>
@@ -97,7 +102,7 @@ Required:
 
 Required:
 
-- `deletion_mode` (String)
+- `deletion_mode` (String) must be one of [ignore]
 
 
 <a id="nestedatt--configuration--collection--deletions--source_fauna_update_collection_deletion_mode_enabled"></a>
@@ -105,7 +110,7 @@ Required:
 
 Required:
 
-- `column` (String)
-- `deletion_mode` (String)
+- `column` (String) Name of the "deleted at" column.
+- `deletion_mode` (String) must be one of [deleted_field]
 
 

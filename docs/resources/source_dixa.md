@@ -23,7 +23,7 @@ SourceDixa Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,12 +35,12 @@ SourceDixa Resource
 
 Required:
 
-- `api_token` (String)
-- `source_type` (String)
-- `start_date` (String)
+- `api_token` (String) Dixa API token
+- `source_type` (String) must be one of [dixa]
+- `start_date` (String) The connector pulls records updated from this date onwards.
 
 Optional:
 
-- `batch_size` (Number)
+- `batch_size` (Number) Number of days to batch into one request. Max 31.
 
 

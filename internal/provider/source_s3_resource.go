@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceS3Resource{}
 var _ resource.ResourceWithImportState = &SourceS3Resource{}
 
@@ -57,7 +54,8 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"dataset": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The name of the stream you would like this source to output. Can contain letters, numbers, or underscores.`,
 					},
 					"format": schema.SingleNestedAttribute{
 						Optional: true,
@@ -72,6 +70,7 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 												"avro",
 											),
 										},
+										Description: `must be one of [avro]`,
 									},
 								},
 								Description: `This connector utilises <a href="https://fastavro.readthedocs.io/en/latest/" target="_blank">fastavro</a> for Avro parsing.`,
@@ -80,25 +79,32 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"additional_reader_options": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Optionally add a valid JSON string here to provide additional options to the csv reader. Mappings must correspond to options <a href="https://arrow.apache.org/docs/python/generated/pyarrow.csv.ConvertOptions.html#pyarrow.csv.ConvertOptions" target="_blank">detailed here</a>. 'column_types' is used internally to handle schema so overriding that would likely cause problems.`,
 									},
 									"advanced_options": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Optionally add a valid JSON string here to provide additional <a href="https://arrow.apache.org/docs/python/generated/pyarrow.csv.ReadOptions.html#pyarrow.csv.ReadOptions" target="_blank">Pyarrow ReadOptions</a>. Specify 'column_names' here if your CSV doesn't have header, or if you want to use custom column names. 'block_size' and 'encoding' are already used above, specify them again here will override the values above.`,
 									},
 									"block_size": schema.Int64Attribute{
-										Optional: true,
+										Optional:    true,
+										Description: `The chunk size in bytes to process at a time in memory from each file. If your data is particularly wide and failing during schema detection, increasing this should solve it. Beware of raising this too high as you could hit OOM errors.`,
 									},
 									"delimiter": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.`,
 									},
 									"double_quote": schema.BoolAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Whether two quotes in a quoted CSV value denote a single quote in the data.`,
 									},
 									"encoding": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.`,
 									},
 									"escape_char": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `The character used for escaping special characters. To disallow escaping, leave this field blank.`,
 									},
 									"filetype": schema.StringAttribute{
 										Optional: true,
@@ -107,15 +113,19 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 												"csv",
 											),
 										},
+										Description: `must be one of [csv]`,
 									},
 									"infer_datatypes": schema.BoolAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Configures whether a schema for the source should be inferred from the current data or not. If set to false and a custom schema is set, then the manually enforced schema is used. If a schema is not manually set, and this is set to false, then all fields will be read as strings`,
 									},
 									"newlines_in_values": schema.BoolAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Whether newline characters are allowed in CSV values. Turning this on may affect performance. Leave blank to default to False.`,
 									},
 									"quote_char": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `The character used for quoting CSV values. To disallow quoting, make this field blank.`,
 									},
 								},
 								Description: `This connector utilises <a href="https: // arrow.apache.org/docs/python/generated/pyarrow.csv.open_csv.html" target="_blank">PyArrow (Apache Arrow)</a> for CSV parsing.`,
@@ -124,7 +134,8 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"block_size": schema.Int64Attribute{
-										Optional: true,
+										Optional:    true,
+										Description: `The chunk size in bytes to process at a time in memory from each file. If your data is particularly wide and failing during schema detection, increasing this should solve it. Beware of raising this too high as you could hit OOM errors.`,
 									},
 									"filetype": schema.StringAttribute{
 										Optional: true,
@@ -133,9 +144,11 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 												"jsonl",
 											),
 										},
+										Description: `must be one of [jsonl]`,
 									},
 									"newlines_in_values": schema.BoolAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Whether newline characters are allowed in JSON values. Turning this on may affect performance. Leave blank to default to False.`,
 									},
 									"unexpected_field_behavior": schema.StringAttribute{
 										Optional: true,
@@ -146,7 +159,8 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 												"error",
 											),
 										},
-										Description: `How JSON fields outside of explicit_schema (if given) are treated. Check <a href="https://arrow.apache.org/docs/python/generated/pyarrow.json.ParseOptions.html" target="_blank">PyArrow documentation</a> for details`,
+										MarkdownDescription: `must be one of [ignore, infer, error]` + "\n" +
+											`How JSON fields outside of explicit_schema (if given) are treated. Check <a href="https://arrow.apache.org/docs/python/generated/pyarrow.json.ParseOptions.html" target="_blank">PyArrow documentation</a> for details`,
 									},
 								},
 								Description: `This connector uses <a href="https://arrow.apache.org/docs/python/json.html" target="_blank">PyArrow</a> for JSON Lines (jsonl) file parsing.`,
@@ -155,14 +169,17 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"batch_size": schema.Int64Attribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Maximum number of records per batch read from the input files. Batches may be smaller if there aren’t enough rows in the file. This option can help avoid out-of-memory errors if your data is particularly wide.`,
 									},
 									"buffer_size": schema.Int64Attribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Perform read buffering when deserializing individual column chunks. By default every group column will be loaded fully to memory. This option can help avoid out-of-memory errors if your data is particularly wide.`,
 									},
 									"columns": schema.ListAttribute{
 										Optional:    true,
 										ElementType: types.StringType,
+										Description: `If you only want to sync a subset of the columns from the file(s), add the columns you want here as a comma-delimited list. Leave it empty to sync all columns.`,
 									},
 									"filetype": schema.StringAttribute{
 										Optional: true,
@@ -171,6 +188,7 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 												"parquet",
 											),
 										},
+										Description: `must be one of [parquet]`,
 									},
 								},
 								Description: `This connector utilises <a href="https://arrow.apache.org/docs/python/generated/pyarrow.parquet.ParquetFile.html" target="_blank">PyArrow (Apache Arrow)</a> for Parquet parsing.`,
@@ -185,6 +203,7 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 												"avro",
 											),
 										},
+										Description: `must be one of [avro]`,
 									},
 								},
 								Description: `This connector utilises <a href="https://fastavro.readthedocs.io/en/latest/" target="_blank">fastavro</a> for Avro parsing.`,
@@ -193,25 +212,32 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"additional_reader_options": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Optionally add a valid JSON string here to provide additional options to the csv reader. Mappings must correspond to options <a href="https://arrow.apache.org/docs/python/generated/pyarrow.csv.ConvertOptions.html#pyarrow.csv.ConvertOptions" target="_blank">detailed here</a>. 'column_types' is used internally to handle schema so overriding that would likely cause problems.`,
 									},
 									"advanced_options": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Optionally add a valid JSON string here to provide additional <a href="https://arrow.apache.org/docs/python/generated/pyarrow.csv.ReadOptions.html#pyarrow.csv.ReadOptions" target="_blank">Pyarrow ReadOptions</a>. Specify 'column_names' here if your CSV doesn't have header, or if you want to use custom column names. 'block_size' and 'encoding' are already used above, specify them again here will override the values above.`,
 									},
 									"block_size": schema.Int64Attribute{
-										Optional: true,
+										Optional:    true,
+										Description: `The chunk size in bytes to process at a time in memory from each file. If your data is particularly wide and failing during schema detection, increasing this should solve it. Beware of raising this too high as you could hit OOM errors.`,
 									},
 									"delimiter": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.`,
 									},
 									"double_quote": schema.BoolAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Whether two quotes in a quoted CSV value denote a single quote in the data.`,
 									},
 									"encoding": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.`,
 									},
 									"escape_char": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `The character used for escaping special characters. To disallow escaping, leave this field blank.`,
 									},
 									"filetype": schema.StringAttribute{
 										Optional: true,
@@ -220,15 +246,19 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 												"csv",
 											),
 										},
+										Description: `must be one of [csv]`,
 									},
 									"infer_datatypes": schema.BoolAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Configures whether a schema for the source should be inferred from the current data or not. If set to false and a custom schema is set, then the manually enforced schema is used. If a schema is not manually set, and this is set to false, then all fields will be read as strings`,
 									},
 									"newlines_in_values": schema.BoolAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Whether newline characters are allowed in CSV values. Turning this on may affect performance. Leave blank to default to False.`,
 									},
 									"quote_char": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `The character used for quoting CSV values. To disallow quoting, make this field blank.`,
 									},
 								},
 								Description: `This connector utilises <a href="https: // arrow.apache.org/docs/python/generated/pyarrow.csv.open_csv.html" target="_blank">PyArrow (Apache Arrow)</a> for CSV parsing.`,
@@ -237,7 +267,8 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"block_size": schema.Int64Attribute{
-										Optional: true,
+										Optional:    true,
+										Description: `The chunk size in bytes to process at a time in memory from each file. If your data is particularly wide and failing during schema detection, increasing this should solve it. Beware of raising this too high as you could hit OOM errors.`,
 									},
 									"filetype": schema.StringAttribute{
 										Optional: true,
@@ -246,9 +277,11 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 												"jsonl",
 											),
 										},
+										Description: `must be one of [jsonl]`,
 									},
 									"newlines_in_values": schema.BoolAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Whether newline characters are allowed in JSON values. Turning this on may affect performance. Leave blank to default to False.`,
 									},
 									"unexpected_field_behavior": schema.StringAttribute{
 										Optional: true,
@@ -259,7 +292,8 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 												"error",
 											),
 										},
-										Description: `How JSON fields outside of explicit_schema (if given) are treated. Check <a href="https://arrow.apache.org/docs/python/generated/pyarrow.json.ParseOptions.html" target="_blank">PyArrow documentation</a> for details`,
+										MarkdownDescription: `must be one of [ignore, infer, error]` + "\n" +
+											`How JSON fields outside of explicit_schema (if given) are treated. Check <a href="https://arrow.apache.org/docs/python/generated/pyarrow.json.ParseOptions.html" target="_blank">PyArrow documentation</a> for details`,
 									},
 								},
 								Description: `This connector uses <a href="https://arrow.apache.org/docs/python/json.html" target="_blank">PyArrow</a> for JSON Lines (jsonl) file parsing.`,
@@ -268,14 +302,17 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"batch_size": schema.Int64Attribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Maximum number of records per batch read from the input files. Batches may be smaller if there aren’t enough rows in the file. This option can help avoid out-of-memory errors if your data is particularly wide.`,
 									},
 									"buffer_size": schema.Int64Attribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Perform read buffering when deserializing individual column chunks. By default every group column will be loaded fully to memory. This option can help avoid out-of-memory errors if your data is particularly wide.`,
 									},
 									"columns": schema.ListAttribute{
 										Optional:    true,
 										ElementType: types.StringType,
+										Description: `If you only want to sync a subset of the columns from the file(s), add the columns you want here as a comma-delimited list. Leave it empty to sync all columns.`,
 									},
 									"filetype": schema.StringAttribute{
 										Optional: true,
@@ -284,6 +321,7 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 												"parquet",
 											),
 										},
+										Description: `must be one of [parquet]`,
 									},
 								},
 								Description: `This connector utilises <a href="https://arrow.apache.org/docs/python/generated/pyarrow.parquet.ParquetFile.html" target="_blank">PyArrow (Apache Arrow)</a> for Parquet parsing.`,
@@ -292,39 +330,48 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+						Description: `The format of the files you'd like to replicate`,
 					},
 					"path_pattern": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `A regular expression which tells the connector which files to replicate. All files which match this pattern will be replicated. Use | to separate multiple patterns. See <a href="https://facelessuser.github.io/wcmatch/glob/" target="_blank">this page</a> to understand pattern syntax (GLOBSTAR and SPLIT flags are enabled). Use pattern <strong>**</strong> to pick up all files.`,
 					},
 					"provider": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"aws_access_key_id": schema.StringAttribute{
-								Optional: true,
+								Optional:    true,
+								Description: `In order to access private Buckets stored on AWS S3, this connector requires credentials with the proper permissions. If accessing publicly available data, this field is not necessary.`,
 							},
 							"aws_secret_access_key": schema.StringAttribute{
-								Optional: true,
+								Optional:    true,
+								Description: `In order to access private Buckets stored on AWS S3, this connector requires credentials with the proper permissions. If accessing publicly available data, this field is not necessary.`,
 							},
 							"bucket": schema.StringAttribute{
-								Required: true,
+								Required:    true,
+								Description: `Name of the S3 bucket where the file(s) exist.`,
 							},
 							"endpoint": schema.StringAttribute{
-								Optional: true,
+								Optional:    true,
+								Description: `Endpoint to an S3 compatible service. Leave empty to use AWS.`,
 							},
 							"path_prefix": schema.StringAttribute{
-								Optional: true,
+								Optional:    true,
+								Description: `By providing a path-like prefix (e.g. myFolder/thisTable/) under which all the relevant files sit, we can optimize finding these in S3. This is optional but recommended if your bucket contains many folders/files which you don't need to replicate.`,
 							},
 							"start_date": schema.StringAttribute{
 								Optional: true,
 								Validators: []validator.String{
 									validators.IsRFC3339(),
 								},
+								Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Any file modified before this date will not be replicated.`,
 							},
 						},
 						Description: `Use this to load files from S3 or S3-compatible services`,
 					},
 					"schema": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Optionally provide a schema to enforce, as a valid JSON string. Ensure this is a mapping of <strong>{ "column" : "type" }</strong>, where types are valid <a href="https://json-schema.org/understanding-json-schema/reference/type.html" target="_blank">JSON Schema datatypes</a>. Leave as {} to auto-infer the schema.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -333,6 +380,7 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 								"s3",
 							),
 						},
+						Description: `must be one of [s3]`,
 					},
 				},
 			},
@@ -343,7 +391,8 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

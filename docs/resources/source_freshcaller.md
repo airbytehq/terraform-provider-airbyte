@@ -23,7 +23,7 @@ SourceFreshcaller Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,14 +35,14 @@ SourceFreshcaller Resource
 
 Required:
 
-- `api_key` (String)
-- `domain` (String)
-- `source_type` (String)
-- `start_date` (String)
+- `api_key` (String) Freshcaller API Key. See the <a href="https://docs.airbyte.com/integrations/sources/freshcaller">docs</a> for more information on how to obtain this key.
+- `domain` (String) Used to construct Base URL for the Freshcaller APIs
+- `source_type` (String) must be one of [freshcaller]
+- `start_date` (String) UTC date and time. Any data created after this date will be replicated.
 
 Optional:
 
-- `requests_per_minute` (Number)
-- `sync_lag_minutes` (Number)
+- `requests_per_minute` (Number) The number of requests per minute that this source allowed to use. There is a rate limit of 50 requests per minute per app per account.
+- `sync_lag_minutes` (Number) Lag in minutes for each sync, i.e., at time T, data for the time range [prev_sync_time, T-30] will be fetched
 
 

@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceMixpanelResource{}
 var _ resource.ResourceWithImportState = &SourceMixpanelResource{}
 
@@ -57,7 +54,8 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"attribution_window": schema.Int64Attribute{
-						Optional: true,
+						Optional:    true,
+						Description: ` A period of time for attributing results to ads and the lookback period after those actions occur during which ad results are counted. Default attribution window is 5 days.`,
 					},
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
@@ -66,7 +64,8 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Mixpanel project secret. See the <a href="https://developer.mixpanel.com/reference/project-secret#managing-a-projects-secret">docs</a> for more information on how to obtain this.`,
 									},
 									"option_title": schema.StringAttribute{
 										Optional: true,
@@ -75,6 +74,7 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 												"Project Secret",
 											),
 										},
+										Description: `must be one of [Project Secret]`,
 									},
 								},
 								Description: `Choose how to authenticate to Mixpanel`,
@@ -89,12 +89,15 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 												"Service Account",
 											),
 										},
+										Description: `must be one of [Service Account]`,
 									},
 									"secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Mixpanel Service Account Secret. See the <a href="https://developer.mixpanel.com/reference/service-accounts">docs</a> for more information on how to obtain this.`,
 									},
 									"username": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Mixpanel Service Account Username. See the <a href="https://developer.mixpanel.com/reference/service-accounts">docs</a> for more information on how to obtain this.`,
 									},
 								},
 								Description: `Choose how to authenticate to Mixpanel`,
@@ -103,7 +106,8 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Mixpanel project secret. See the <a href="https://developer.mixpanel.com/reference/project-secret#managing-a-projects-secret">docs</a> for more information on how to obtain this.`,
 									},
 									"option_title": schema.StringAttribute{
 										Optional: true,
@@ -112,6 +116,7 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 												"Project Secret",
 											),
 										},
+										Description: `must be one of [Project Secret]`,
 									},
 								},
 								Description: `Choose how to authenticate to Mixpanel`,
@@ -126,12 +131,15 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 												"Service Account",
 											),
 										},
+										Description: `must be one of [Service Account]`,
 									},
 									"secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Mixpanel Service Account Secret. See the <a href="https://developer.mixpanel.com/reference/service-accounts">docs</a> for more information on how to obtain this.`,
 									},
 									"username": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Mixpanel Service Account Username. See the <a href="https://developer.mixpanel.com/reference/service-accounts">docs</a> for more information on how to obtain this.`,
 									},
 								},
 								Description: `Choose how to authenticate to Mixpanel`,
@@ -140,21 +148,26 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+						Description: `Choose how to authenticate to Mixpanel`,
 					},
 					"date_window_size": schema.Int64Attribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Defines window size in days, that used to slice through data. You can reduce it, if amount of data in each window is too big for your environment.`,
 					},
 					"end_date": schema.StringAttribute{
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
+						Description: `The date in the format YYYY-MM-DD. Any data after this date will not be replicated. Left empty to always sync to most recent date`,
 					},
 					"project_id": schema.Int64Attribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Your project ID number. See the <a href="https://help.mixpanel.com/hc/en-us/articles/115004490503-Project-Settings#project-id">docs</a> for more information on how to obtain this.`,
 					},
 					"project_timezone": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Time zone in which integer date times are stored. The project timezone may be found in the project settings in the <a href="https://help.mixpanel.com/hc/en-us/articles/115004547203-Manage-Timezones-for-Projects-in-Mixpanel">Mixpanel console</a>.`,
 					},
 					"region": schema.StringAttribute{
 						Optional: true,
@@ -164,10 +177,12 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 								"EU",
 							),
 						},
-						Description: `The region of mixpanel domain instance either US or EU.`,
+						MarkdownDescription: `must be one of [US, EU]` + "\n" +
+							`The region of mixpanel domain instance either US or EU.`,
 					},
 					"select_properties_by_default": schema.BoolAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Setting this config parameter to TRUE ensures that new properties on events and engage records are captured. Otherwise new properties will be ignored.`,
 					},
 					"source_type": schema.StringAttribute{
 						Optional: true,
@@ -176,12 +191,14 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 								"mixpanel",
 							),
 						},
+						Description: `must be one of [mixpanel]`,
 					},
 					"start_date": schema.StringAttribute{
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
+						Description: `The date in the format YYYY-MM-DD. Any data before this date will not be replicated. If this option is not set, the connector will replicate data from up to one year ago by default.`,
 					},
 				},
 			},
@@ -192,7 +209,8 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

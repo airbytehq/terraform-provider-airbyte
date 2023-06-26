@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceConfigcatResource{}
 var _ resource.ResourceWithImportState = &SourceConfigcatResource{}
 
@@ -56,7 +53,8 @@ func (r *SourceConfigcatResource) Schema(ctx context.Context, req resource.Schem
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"password": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Basic auth password. See <a href="https://api.configcat.com/docs/#section/Authentication">here</a>.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -65,9 +63,11 @@ func (r *SourceConfigcatResource) Schema(ctx context.Context, req resource.Schem
 								"configcat",
 							),
 						},
+						Description: `must be one of [configcat]`,
 					},
 					"username": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Basic auth user name. See <a href="https://api.configcat.com/docs/#section/Authentication">here</a>.`,
 					},
 				},
 			},
@@ -78,7 +78,8 @@ func (r *SourceConfigcatResource) Schema(ctx context.Context, req resource.Schem
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

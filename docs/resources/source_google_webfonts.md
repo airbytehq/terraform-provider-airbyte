@@ -23,7 +23,7 @@ SourceGoogleWebfonts Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,13 +35,13 @@ SourceGoogleWebfonts Resource
 
 Required:
 
-- `api_key` (String)
-- `source_type` (String)
+- `api_key` (String) API key is required to access google apis, For getting your's goto google console and generate api key for Webfonts
+- `source_type` (String) must be one of [google-webfonts]
 
 Optional:
 
-- `alt` (String)
-- `pretty_print` (String)
-- `sort` (String)
+- `alt` (String) Optional, Available params- json, media, proto
+- `pretty_print` (String) Optional, boolean type
+- `sort` (String) Optional, to find how to sort
 
 

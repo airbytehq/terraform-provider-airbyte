@@ -23,7 +23,7 @@ SourceStrava Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,15 +35,15 @@ SourceStrava Resource
 
 Required:
 
-- `athlete_id` (Number)
-- `client_id` (String)
-- `client_secret` (String)
-- `refresh_token` (String)
-- `source_type` (String)
-- `start_date` (String)
+- `athlete_id` (Number) The Athlete ID of your Strava developer application.
+- `client_id` (String) The Client ID of your Strava developer application.
+- `client_secret` (String) The Client Secret of your Strava developer application.
+- `refresh_token` (String) The Refresh Token with the activity: read_all permissions.
+- `source_type` (String) must be one of [strava]
+- `start_date` (String) UTC date and time. Any data before this date will not be replicated.
 
 Optional:
 
-- `auth_type` (String)
+- `auth_type` (String) must be one of [Client]
 
 

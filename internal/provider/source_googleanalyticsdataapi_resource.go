@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceGoogleAnalyticsDataAPIResource{}
 var _ resource.ResourceWithImportState = &SourceGoogleAnalyticsDataAPIResource{}
 
@@ -63,7 +60,8 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Access Token for making authenticated requests.`,
 									},
 									"auth_type": schema.StringAttribute{
 										Optional: true,
@@ -72,15 +70,19 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 												"Client",
 											),
 										},
+										Description: `must be one of [Client]`,
 									},
 									"client_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Client ID of your Google Analytics developer application.`,
 									},
 									"client_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Client Secret of your Google Analytics developer application.`,
 									},
 									"refresh_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The token for obtaining a new access token.`,
 									},
 								},
 								Description: `Credentials for the service`,
@@ -95,9 +97,11 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 												"Service",
 											),
 										},
+										Description: `must be one of [Service]`,
 									},
 									"credentials_json": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The JSON key of the service account to use for authorization`,
 									},
 								},
 								Description: `Credentials for the service`,
@@ -106,7 +110,8 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Access Token for making authenticated requests.`,
 									},
 									"auth_type": schema.StringAttribute{
 										Optional: true,
@@ -115,15 +120,19 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 												"Client",
 											),
 										},
+										Description: `must be one of [Client]`,
 									},
 									"client_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Client ID of your Google Analytics developer application.`,
 									},
 									"client_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Client Secret of your Google Analytics developer application.`,
 									},
 									"refresh_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The token for obtaining a new access token.`,
 									},
 								},
 								Description: `Credentials for the service`,
@@ -138,9 +147,11 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 												"Service",
 											),
 										},
+										Description: `must be one of [Service]`,
 									},
 									"credentials_json": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The JSON key of the service account to use for authorization`,
 									},
 								},
 								Description: `Credentials for the service`,
@@ -149,18 +160,22 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+						Description: `Credentials for the service`,
 					},
 					"custom_reports": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `A JSON array describing the custom reports you want to sync from Google Analytics. See <a href="https://docs.airbyte.com/integrations/sources/google-analytics-v4/#custom-reports">the docs</a> for more information about the exact format you can use to fill out this field.`,
 					},
 					"date_ranges_start_date": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
+						Description: `The start date from which to replicate report data in the format YYYY-MM-DD. Data generated before this date will not be included in the report. Not applied to custom Cohort reports.`,
 					},
 					"property_id": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `A Google Analytics GA4 property identifier whose events are tracked. Specified in the URL path and not the body such as "123...". See <a href="https://developers.google.com/analytics/devguides/reporting/data/v1/property-id#what_is_my_property_id">the docs</a> for more details.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -169,9 +184,11 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 								"google-analytics-data-api",
 							),
 						},
+						Description: `must be one of [google-analytics-data-api]`,
 					},
 					"window_in_days": schema.Int64Attribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The time increment used by the connector when requesting data from the Google Analytics API. More information is available in the <a href="https://docs.airbyte.com/integrations/sources/google-analytics-v4/#sampling-in-reports">the docs</a>. The bigger this value is, the faster the sync will be, but the more likely that sampling will be applied to your data, potentially causing inaccuracies in the returned results. We recommend setting this to 1 unless you have a hard requirement to make the sync faster at the expense of accuracy. The minimum allowed value for this field is 1, and the maximum is 364. Not applied to custom Cohort reports.`,
 					},
 				},
 			},
@@ -182,7 +199,8 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

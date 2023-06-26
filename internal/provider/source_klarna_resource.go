@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceKlarnaResource{}
 var _ resource.ResourceWithImportState = &SourceKlarnaResource{}
 
@@ -56,10 +53,12 @@ func (r *SourceKlarnaResource) Schema(ctx context.Context, req resource.SchemaRe
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"password": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `A string which is associated with your Merchant ID and is used to authorize use of Klarna's APIs (https://developers.klarna.com/api/#authentication)`,
 					},
 					"playground": schema.BoolAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Propertie defining if connector is used against playground or production environment`,
 					},
 					"region": schema.StringAttribute{
 						Required: true,
@@ -70,7 +69,8 @@ func (r *SourceKlarnaResource) Schema(ctx context.Context, req resource.SchemaRe
 								"oc",
 							),
 						},
-						Description: `Base url region (For playground eu https://docs.klarna.com/klarna-payments/api/payments-api/#tag/API-URLs). Supported 'eu', 'us', 'oc'`,
+						MarkdownDescription: `must be one of [eu, us, oc]` + "\n" +
+							`Base url region (For playground eu https://docs.klarna.com/klarna-payments/api/payments-api/#tag/API-URLs). Supported 'eu', 'us', 'oc'`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -79,9 +79,11 @@ func (r *SourceKlarnaResource) Schema(ctx context.Context, req resource.SchemaRe
 								"klarna",
 							),
 						},
+						Description: `must be one of [klarna]`,
 					},
 					"username": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Consists of your Merchant ID (eid) - a unique number that identifies your e-store, combined with a random string (https://developers.klarna.com/api/#authentication)`,
 					},
 				},
 			},
@@ -92,7 +94,8 @@ func (r *SourceKlarnaResource) Schema(ctx context.Context, req resource.SchemaRe
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

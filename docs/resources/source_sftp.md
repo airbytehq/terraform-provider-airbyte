@@ -23,7 +23,7 @@ SourceSftp Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,17 +35,17 @@ SourceSftp Resource
 
 Required:
 
-- `host` (String)
-- `port` (Number)
-- `source_type` (String)
-- `user` (String)
+- `host` (String) The server host address
+- `port` (Number) The server port
+- `source_type` (String) must be one of [sftp]
+- `user` (String) The server user
 
 Optional:
 
-- `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `file_pattern` (String)
-- `file_types` (String)
-- `folder_path` (String)
+- `credentials` (Attributes) The server authentication method (see [below for nested schema](#nestedatt--configuration--credentials))
+- `file_pattern` (String) The regular expression to specify files for sync in a chosen Folder Path
+- `file_types` (String) Coma separated file types. Currently only 'csv' and 'json' types are supported.
+- `folder_path` (String) The directory to search files for sync
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
@@ -62,8 +62,9 @@ Optional:
 
 Required:
 
-- `auth_method` (String) Connect through password authentication
-- `auth_user_password` (String)
+- `auth_method` (String) must be one of [SSH_PASSWORD_AUTH]
+Connect through password authentication
+- `auth_user_password` (String) OS-level password for logging into the jump server host
 
 
 <a id="nestedatt--configuration--credentials--source_sftp_authentication_wildcard_ssh_key_authentication"></a>
@@ -71,8 +72,9 @@ Required:
 
 Required:
 
-- `auth_method` (String) Connect through ssh key
-- `auth_ssh_key` (String)
+- `auth_method` (String) must be one of [SSH_KEY_AUTH]
+Connect through ssh key
+- `auth_ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 
 
 <a id="nestedatt--configuration--credentials--source_sftp_update_authentication_wildcard_password_authentication"></a>
@@ -80,8 +82,9 @@ Required:
 
 Required:
 
-- `auth_method` (String) Connect through password authentication
-- `auth_user_password` (String)
+- `auth_method` (String) must be one of [SSH_PASSWORD_AUTH]
+Connect through password authentication
+- `auth_user_password` (String) OS-level password for logging into the jump server host
 
 
 <a id="nestedatt--configuration--credentials--source_sftp_update_authentication_wildcard_ssh_key_authentication"></a>
@@ -89,7 +92,8 @@ Required:
 
 Required:
 
-- `auth_method` (String) Connect through ssh key
-- `auth_ssh_key` (String)
+- `auth_method` (String) must be one of [SSH_KEY_AUTH]
+Connect through ssh key
+- `auth_ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 
 

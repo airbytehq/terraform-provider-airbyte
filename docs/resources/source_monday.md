@@ -23,7 +23,7 @@ SourceMonday Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,7 +35,7 @@ SourceMonday Resource
 
 Required:
 
-- `source_type` (String)
+- `source_type` (String) must be one of [monday]
 
 Optional:
 
@@ -56,8 +56,8 @@ Optional:
 
 Required:
 
-- `api_token` (String)
-- `auth_type` (String)
+- `api_token` (String) API Token for making authenticated requests.
+- `auth_type` (String) must be one of [api_token]
 
 
 <a id="nestedatt--configuration--credentials--source_monday_authorization_method_o_auth2_0"></a>
@@ -65,14 +65,14 @@ Required:
 
 Required:
 
-- `access_token` (String)
-- `auth_type` (String)
-- `client_id` (String)
-- `client_secret` (String)
+- `access_token` (String) Access Token for making authenticated requests.
+- `auth_type` (String) must be one of [oauth2.0]
+- `client_id` (String) The Client ID of your OAuth application.
+- `client_secret` (String) The Client Secret of your OAuth application.
 
 Optional:
 
-- `subdomain` (String)
+- `subdomain` (String) Slug/subdomain of the account, or the first part of the URL that comes before .monday.com
 
 
 <a id="nestedatt--configuration--credentials--source_monday_update_authorization_method_api_token"></a>
@@ -80,8 +80,8 @@ Optional:
 
 Required:
 
-- `api_token` (String)
-- `auth_type` (String)
+- `api_token` (String) API Token for making authenticated requests.
+- `auth_type` (String) must be one of [api_token]
 
 
 <a id="nestedatt--configuration--credentials--source_monday_update_authorization_method_o_auth2_0"></a>
@@ -89,13 +89,13 @@ Required:
 
 Required:
 
-- `access_token` (String)
-- `auth_type` (String)
-- `client_id` (String)
-- `client_secret` (String)
+- `access_token` (String) Access Token for making authenticated requests.
+- `auth_type` (String) must be one of [oauth2.0]
+- `client_id` (String) The Client ID of your OAuth application.
+- `client_secret` (String) The Client Secret of your OAuth application.
 
 Optional:
 
-- `subdomain` (String)
+- `subdomain` (String) Slug/subdomain of the account, or the first part of the URL that comes before .monday.com
 
 

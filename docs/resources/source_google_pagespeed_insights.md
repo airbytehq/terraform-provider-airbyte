@@ -23,7 +23,7 @@ SourceGooglePagespeedInsights Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,13 +35,13 @@ SourceGooglePagespeedInsights Resource
 
 Required:
 
-- `categories` (List of String)
-- `source_type` (String)
-- `strategies` (List of String)
-- `urls` (List of String)
+- `categories` (List of String) Defines which Lighthouse category to run. One or many of: "accessibility", "best-practices", "performance", "pwa", "seo".
+- `source_type` (String) must be one of [google-pagespeed-insights]
+- `strategies` (List of String) The analyses strategy to use. Either "desktop" or "mobile".
+- `urls` (List of String) The URLs to retrieve pagespeed information from. The connector will attempt to sync PageSpeed reports for all the defined URLs. Format: https://(www.)url.domain
 
 Optional:
 
-- `api_key` (String)
+- `api_key` (String) Google PageSpeed API Key. See <a href="https://developers.google.com/speed/docs/insights/v5/get-started#APIKey">here</a>. The key is optional - however the API is heavily rate limited when using without API Key. Creating and using the API key therefore is recommended. The key is case sensitive.
 
 

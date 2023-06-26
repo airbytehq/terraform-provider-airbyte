@@ -23,7 +23,7 @@ SourceLinkedinAds Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,12 +35,12 @@ SourceLinkedinAds Resource
 
 Required:
 
-- `source_type` (String)
-- `start_date` (String)
+- `source_type` (String) must be one of [linkedin-ads]
+- `start_date` (String) UTC date in the format 2020-09-17. Any data before this date will not be replicated.
 
 Optional:
 
-- `account_ids` (List of Number)
+- `account_ids` (List of Number) Specify the account IDs separated by a space, to pull the data from. Leave empty, if you want to pull the data from all associated accounts. See the <a href="https://www.linkedin.com/help/linkedin/answer/a424270/find-linkedin-ads-account-details?lang=en">LinkedIn Ads docs</a> for more info.
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
 
 <a id="nestedatt--configuration--credentials"></a>
@@ -58,11 +58,11 @@ Optional:
 
 Required:
 
-- `access_token` (String)
+- `access_token` (String) The token value generated using the authentication code. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-ads#authentication">docs</a> to obtain yours.
 
 Optional:
 
-- `auth_method` (String)
+- `auth_method` (String) must be one of [access_token]
 
 
 <a id="nestedatt--configuration--credentials--source_linkedin_ads_authentication_o_auth2_0"></a>
@@ -70,13 +70,13 @@ Optional:
 
 Required:
 
-- `client_id` (String)
-- `client_secret` (String)
-- `refresh_token` (String)
+- `client_id` (String) The client ID of the LinkedIn Ads developer application.
+- `client_secret` (String) The client secret the LinkedIn Ads developer application.
+- `refresh_token` (String) The key to refresh the expired access token.
 
 Optional:
 
-- `auth_method` (String)
+- `auth_method` (String) must be one of [oAuth2.0]
 
 
 <a id="nestedatt--configuration--credentials--source_linkedin_ads_update_authentication_access_token"></a>
@@ -84,11 +84,11 @@ Optional:
 
 Required:
 
-- `access_token` (String)
+- `access_token` (String) The token value generated using the authentication code. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-ads#authentication">docs</a> to obtain yours.
 
 Optional:
 
-- `auth_method` (String)
+- `auth_method` (String) must be one of [access_token]
 
 
 <a id="nestedatt--configuration--credentials--source_linkedin_ads_update_authentication_o_auth2_0"></a>
@@ -96,12 +96,12 @@ Optional:
 
 Required:
 
-- `client_id` (String)
-- `client_secret` (String)
-- `refresh_token` (String)
+- `client_id` (String) The client ID of the LinkedIn Ads developer application.
+- `client_secret` (String) The client secret the LinkedIn Ads developer application.
+- `refresh_token` (String) The key to refresh the expired access token.
 
 Optional:
 
-- `auth_method` (String)
+- `auth_method` (String) must be one of [oAuth2.0]
 
 

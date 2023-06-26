@@ -23,7 +23,7 @@ SourceStripe Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,14 +35,14 @@ SourceStripe Resource
 
 Required:
 
-- `account_id` (String)
-- `client_secret` (String)
-- `source_type` (String)
-- `start_date` (String)
+- `account_id` (String) Your Stripe account ID (starts with 'acct_', find yours <a href="https://dashboard.stripe.com/settings/account">here</a>).
+- `client_secret` (String) Stripe API key (usually starts with 'sk_live_'; find yours <a href="https://dashboard.stripe.com/apikeys">here</a>).
+- `source_type` (String) must be one of [stripe]
+- `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Only data generated after this date will be replicated.
 
 Optional:
 
-- `lookback_window_days` (Number)
-- `slice_range` (Number)
+- `lookback_window_days` (Number) When set, the connector will always re-export data from the past N days, where N is the value set here. This is useful if your data is frequently updated after creation. More info <a href="https://docs.airbyte.com/integrations/sources/stripe#requirements">here</a>
+- `slice_range` (Number) The time increment used by the connector when requesting data from the Stripe API. The bigger the value is, the less requests will be made and faster the sync will be. On the other hand, the more seldom the state is persisted.
 
 

@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceZohoCrmResource{}
 var _ resource.ResourceWithImportState = &SourceZohoCrmResource{}
 
@@ -57,10 +54,12 @@ func (r *SourceZohoCrmResource) Schema(ctx context.Context, req resource.SchemaR
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"client_id": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `OAuth2.0 Client ID`,
 					},
 					"client_secret": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `OAuth2.0 Client Secret`,
 					},
 					"dc_region": schema.StringAttribute{
 						Required: true,
@@ -74,7 +73,8 @@ func (r *SourceZohoCrmResource) Schema(ctx context.Context, req resource.SchemaR
 								"JP",
 							),
 						},
-						Description: `Please choose the region of your Data Center location. More info by this <a href="https://www.zoho.com/crm/developer/docs/api/v2/multi-dc.html">Link</a>`,
+						MarkdownDescription: `must be one of [US, AU, EU, IN, CN, JP]` + "\n" +
+							`Please choose the region of your Data Center location. More info by this <a href="https://www.zoho.com/crm/developer/docs/api/v2/multi-dc.html">Link</a>`,
 					},
 					"edition": schema.StringAttribute{
 						Required: true,
@@ -87,7 +87,8 @@ func (r *SourceZohoCrmResource) Schema(ctx context.Context, req resource.SchemaR
 								"Ultimate",
 							),
 						},
-						Description: `Choose your Edition of Zoho CRM to determine API Concurrency Limits`,
+						MarkdownDescription: `must be one of [Free, Standard, Professional, Enterprise, Ultimate]` + "\n" +
+							`Choose your Edition of Zoho CRM to determine API Concurrency Limits`,
 					},
 					"environment": schema.StringAttribute{
 						Required: true,
@@ -98,10 +99,12 @@ func (r *SourceZohoCrmResource) Schema(ctx context.Context, req resource.SchemaR
 								"Sandbox",
 							),
 						},
-						Description: `Please choose the environment`,
+						MarkdownDescription: `must be one of [Production, Developer, Sandbox]` + "\n" +
+							`Please choose the environment`,
 					},
 					"refresh_token": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `OAuth2.0 Refresh Token`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -110,12 +113,14 @@ func (r *SourceZohoCrmResource) Schema(ctx context.Context, req resource.SchemaR
 								"zoho-crm",
 							),
 						},
+						Description: `must be one of [zoho-crm]`,
 					},
 					"start_datetime": schema.StringAttribute{
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
+						Description: `ISO 8601, for instance: ` + "`" + `YYYY-MM-DD` + "`" + `, ` + "`" + `YYYY-MM-DD HH:MM:SS+HH:MM` + "`" + ``,
 					},
 				},
 			},
@@ -126,7 +131,8 @@ func (r *SourceZohoCrmResource) Schema(ctx context.Context, req resource.SchemaR
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceFireboltResource{}
 var _ resource.ResourceWithImportState = &SourceFireboltResource{}
 
@@ -56,19 +53,24 @@ func (r *SourceFireboltResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"account": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Firebolt account to login.`,
 					},
 					"database": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The database to connect to.`,
 					},
 					"engine": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Engine name or url to connect to.`,
 					},
 					"host": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The host name of your Firebolt database.`,
 					},
 					"password": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Firebolt password.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -77,9 +79,11 @@ func (r *SourceFireboltResource) Schema(ctx context.Context, req resource.Schema
 								"firebolt",
 							),
 						},
+						Description: `must be one of [firebolt]`,
 					},
 					"username": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Firebolt email address you use to login.`,
 					},
 				},
 			},
@@ -90,7 +94,8 @@ func (r *SourceFireboltResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

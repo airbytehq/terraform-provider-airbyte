@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceGooglePagespeedInsightsResource{}
 var _ resource.ResourceWithImportState = &SourceGooglePagespeedInsightsResource{}
 
@@ -56,11 +53,13 @@ func (r *SourceGooglePagespeedInsightsResource) Schema(ctx context.Context, req 
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"api_key": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Google PageSpeed API Key. See <a href="https://developers.google.com/speed/docs/insights/v5/get-started#APIKey">here</a>. The key is optional - however the API is heavily rate limited when using without API Key. Creating and using the API key therefore is recommended. The key is case sensitive.`,
 					},
 					"categories": schema.ListAttribute{
 						Required:    true,
 						ElementType: types.StringType,
+						Description: `Defines which Lighthouse category to run. One or many of: "accessibility", "best-practices", "performance", "pwa", "seo".`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -69,14 +68,17 @@ func (r *SourceGooglePagespeedInsightsResource) Schema(ctx context.Context, req 
 								"google-pagespeed-insights",
 							),
 						},
+						Description: `must be one of [google-pagespeed-insights]`,
 					},
 					"strategies": schema.ListAttribute{
 						Required:    true,
 						ElementType: types.StringType,
+						Description: `The analyses strategy to use. Either "desktop" or "mobile".`,
 					},
 					"urls": schema.ListAttribute{
 						Required:    true,
 						ElementType: types.StringType,
+						Description: `The URLs to retrieve pagespeed information from. The connector will attempt to sync PageSpeed reports for all the defined URLs. Format: https://(www.)url.domain`,
 					},
 				},
 			},
@@ -87,7 +89,8 @@ func (r *SourceGooglePagespeedInsightsResource) Schema(ctx context.Context, req 
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

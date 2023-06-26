@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &DestinationRedisResource{}
 var _ resource.ResourceWithImportState = &DestinationRedisResource{}
 
@@ -62,7 +59,8 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 								"hash",
 							),
 						},
-						Description: `Redis cache type to store data in.`,
+						MarkdownDescription: `must be one of [hash]` + "\n" +
+							`Redis cache type to store data in.`,
 					},
 					"destination_type": schema.StringAttribute{
 						Required: true,
@@ -71,18 +69,23 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 								"redis",
 							),
 						},
+						Description: `must be one of [redis]`,
 					},
 					"host": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Redis host to connect to.`,
 					},
 					"password": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Password associated with Redis.`,
 					},
 					"port": schema.Int64Attribute{
-						Required: true,
+						Required:    true,
+						Description: `Port of Redis.`,
 					},
 					"ssl": schema.BoolAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Indicates whether SSL encryption protocol will be used to connect to Redis. It is recommended to use SSL connection if possible.`,
 					},
 					"ssl_mode": schema.SingleNestedAttribute{
 						Optional: true,
@@ -97,6 +100,7 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 												"disable",
 											),
 										},
+										Description: `must be one of [disable]`,
 									},
 								},
 								Description: `Disable SSL.`,
@@ -105,16 +109,20 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ca_certificate": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `CA certificate`,
 									},
 									"client_certificate": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Client certificate`,
 									},
 									"client_key": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Client key`,
 									},
 									"client_key_password": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Password for keystorage. If you do not add it - the password will be generated automatically.`,
 									},
 									"mode": schema.StringAttribute{
 										Required: true,
@@ -123,6 +131,7 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 												"verify-full",
 											),
 										},
+										Description: `must be one of [verify-full]`,
 									},
 								},
 								Description: `Verify-full SSL mode.`,
@@ -137,6 +146,7 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 												"disable",
 											),
 										},
+										Description: `must be one of [disable]`,
 									},
 								},
 								Description: `Disable SSL.`,
@@ -145,16 +155,20 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ca_certificate": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `CA certificate`,
 									},
 									"client_certificate": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Client certificate`,
 									},
 									"client_key": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Client key`,
 									},
 									"client_key_password": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Password for keystorage. If you do not add it - the password will be generated automatically.`,
 									},
 									"mode": schema.StringAttribute{
 										Required: true,
@@ -163,6 +177,7 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 												"verify-full",
 											),
 										},
+										Description: `must be one of [verify-full]`,
 									},
 								},
 								Description: `Verify-full SSL mode.`,
@@ -171,6 +186,8 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+						MarkdownDescription: `SSL connection modes. ` + "\n" +
+							`  <li><b>verify-full</b> - This is the most secure mode. Always require encryption and verifies the identity of the source database server`,
 					},
 					"tunnel_method": schema.SingleNestedAttribute{
 						Optional: true,
@@ -185,7 +202,8 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 												"NO_TUNNEL",
 											),
 										},
-										Description: `No ssh tunnel needed to connect to database`,
+										MarkdownDescription: `must be one of [NO_TUNNEL]` + "\n" +
+											`No ssh tunnel needed to connect to database`,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -194,7 +212,8 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_host": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
 									"tunnel_method": schema.StringAttribute{
 										Required: true,
@@ -203,16 +222,20 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 												"SSH_PASSWORD_AUTH",
 											),
 										},
-										Description: `Connect through a jump server tunnel host using username and password authentication`,
+										MarkdownDescription: `must be one of [SSH_PASSWORD_AUTH]` + "\n" +
+											`Connect through a jump server tunnel host using username and password authentication`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										Required: true,
+										Required:    true,
+										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level username for logging into the jump server host`,
 									},
 									"tunnel_user_password": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level password for logging into the jump server host`,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -221,10 +244,12 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )`,
 									},
 									"tunnel_host": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
 									"tunnel_method": schema.StringAttribute{
 										Required: true,
@@ -233,13 +258,16 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 												"SSH_KEY_AUTH",
 											),
 										},
-										Description: `Connect through a jump server tunnel host using username and ssh key`,
+										MarkdownDescription: `must be one of [SSH_KEY_AUTH]` + "\n" +
+											`Connect through a jump server tunnel host using username and ssh key`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										Required: true,
+										Required:    true,
+										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level username for logging into the jump server host.`,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -254,7 +282,8 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 												"NO_TUNNEL",
 											),
 										},
-										Description: `No ssh tunnel needed to connect to database`,
+										MarkdownDescription: `must be one of [NO_TUNNEL]` + "\n" +
+											`No ssh tunnel needed to connect to database`,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -263,7 +292,8 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_host": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
 									"tunnel_method": schema.StringAttribute{
 										Required: true,
@@ -272,16 +302,20 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 												"SSH_PASSWORD_AUTH",
 											),
 										},
-										Description: `Connect through a jump server tunnel host using username and password authentication`,
+										MarkdownDescription: `must be one of [SSH_PASSWORD_AUTH]` + "\n" +
+											`Connect through a jump server tunnel host using username and password authentication`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										Required: true,
+										Required:    true,
+										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level username for logging into the jump server host`,
 									},
 									"tunnel_user_password": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level password for logging into the jump server host`,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -290,10 +324,12 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )`,
 									},
 									"tunnel_host": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
 									"tunnel_method": schema.StringAttribute{
 										Required: true,
@@ -302,13 +338,16 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 												"SSH_KEY_AUTH",
 											),
 										},
-										Description: `Connect through a jump server tunnel host using username and ssh key`,
+										MarkdownDescription: `must be one of [SSH_KEY_AUTH]` + "\n" +
+											`Connect through a jump server tunnel host using username and ssh key`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										Required: true,
+										Required:    true,
+										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level username for logging into the jump server host.`,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -317,9 +356,11 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+						Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 					},
 					"username": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Username associated with Redis.`,
 					},
 				},
 			},

@@ -32,16 +32,16 @@ DestinationGoogleSheets Resource
 Required:
 
 - `credentials` (Attributes) Google API Credentials for connecting to Google Sheets and Google Drive APIs (see [below for nested schema](#nestedatt--configuration--credentials))
-- `destination_type` (String)
-- `spreadsheet_id` (String)
+- `destination_type` (String) must be one of [google-sheets]
+- `spreadsheet_id` (String) The link to your spreadsheet. See <a href='https://docs.airbyte.com/integrations/destinations/google-sheets#sheetlink'>this guide</a> for more details.
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
 
 Required:
 
-- `client_id` (String)
-- `client_secret` (String)
-- `refresh_token` (String)
+- `client_id` (String) The Client ID of your Google Sheets developer application.
+- `client_secret` (String) The Client Secret of your Google Sheets developer application.
+- `refresh_token` (String) The token for obtaining new access token.
 
 

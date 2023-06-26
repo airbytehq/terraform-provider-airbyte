@@ -23,7 +23,7 @@ SourceVantage Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,7 +35,7 @@ SourceVantage Resource
 
 Required:
 
-- `access_token` (String)
-- `source_type` (String)
+- `access_token` (String) Your API Access token. See <a href="https://vantage.readme.io/reference/authentication">here</a>.
+- `source_type` (String) must be one of [vantage]
 
 

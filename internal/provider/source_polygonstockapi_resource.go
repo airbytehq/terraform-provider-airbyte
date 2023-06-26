@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourcePolygonStockAPIResource{}
 var _ resource.ResourceWithImportState = &SourcePolygonStockAPIResource{}
 
@@ -57,25 +54,31 @@ func (r *SourcePolygonStockAPIResource) Schema(ctx context.Context, req resource
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"adjusted": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Determines whether or not the results are adjusted for splits. By default, results are adjusted and set to true. Set this to false to get results that are NOT adjusted for splits.`,
 					},
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Your API ACCESS Key`,
 					},
 					"end_date": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
+						Description: `The target date for the aggregate window.`,
 					},
 					"limit": schema.Int64Attribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The target date for the aggregate window.`,
 					},
 					"multiplier": schema.Int64Attribute{
-						Required: true,
+						Required:    true,
+						Description: `The size of the timespan multiplier.`,
 					},
 					"sort": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Sort the results by timestamp. asc will return results in ascending order (oldest at the top), desc will return results in descending order (newest at the top).`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -84,18 +87,22 @@ func (r *SourcePolygonStockAPIResource) Schema(ctx context.Context, req resource
 								"polygon-stock-api",
 							),
 						},
+						Description: `must be one of [polygon-stock-api]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
+						Description: `The beginning date for the aggregate window.`,
 					},
 					"stocks_ticker": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The exchange symbol that this item is traded under.`,
 					},
 					"timespan": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The size of the time window.`,
 					},
 				},
 			},
@@ -106,7 +113,8 @@ func (r *SourcePolygonStockAPIResource) Schema(ctx context.Context, req resource
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

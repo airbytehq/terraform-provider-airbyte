@@ -23,7 +23,7 @@ SourceSurveySparrow Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,13 +35,13 @@ SourceSurveySparrow Resource
 
 Required:
 
-- `access_token` (String)
-- `source_type` (String)
+- `access_token` (String) Your access token. See <a href="https://developers.surveysparrow.com/rest-apis#authentication">here</a>. The key is case sensitive.
+- `source_type` (String) must be one of [survey-sparrow]
 
 Optional:
 
-- `region` (Attributes) (see [below for nested schema](#nestedatt--configuration--region))
-- `survey_id` (List of String)
+- `region` (Attributes) Is your account location is EU based? If yes, the base url to retrieve data will be different. (see [below for nested schema](#nestedatt--configuration--region))
+- `survey_id` (List of String) A List of your survey ids for survey-specific stream
 
 <a id="nestedatt--configuration--region"></a>
 ### Nested Schema for `configuration.region`
@@ -58,7 +58,7 @@ Optional:
 
 Optional:
 
-- `url_base` (String)
+- `url_base` (String) must be one of [https://eu-api.surveysparrow.com/v3]
 
 
 <a id="nestedatt--configuration--region--source_survey_sparrow_base_url_global_account"></a>
@@ -66,7 +66,7 @@ Optional:
 
 Optional:
 
-- `url_base` (String)
+- `url_base` (String) must be one of [https://api.surveysparrow.com/v3]
 
 
 <a id="nestedatt--configuration--region--source_survey_sparrow_update_base_url_eu_based_account"></a>
@@ -74,7 +74,7 @@ Optional:
 
 Optional:
 
-- `url_base` (String)
+- `url_base` (String) must be one of [https://eu-api.surveysparrow.com/v3]
 
 
 <a id="nestedatt--configuration--region--source_survey_sparrow_update_base_url_global_account"></a>
@@ -82,6 +82,6 @@ Optional:
 
 Optional:
 
-- `url_base` (String)
+- `url_base` (String) must be one of [https://api.surveysparrow.com/v3]
 
 

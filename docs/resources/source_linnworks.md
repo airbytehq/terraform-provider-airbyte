@@ -23,7 +23,7 @@ SourceLinnworks Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,10 +35,10 @@ SourceLinnworks Resource
 
 Required:
 
-- `application_id` (String)
-- `application_secret` (String)
-- `source_type` (String)
-- `start_date` (String)
+- `application_id` (String) Linnworks Application ID
+- `application_secret` (String) Linnworks Application Secret
+- `source_type` (String) must be one of [linnworks]
+- `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 - `token` (String)
 
 

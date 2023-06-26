@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceAuth0Resource{}
 var _ resource.ResourceWithImportState = &SourceAuth0Resource{}
 
@@ -57,7 +54,8 @@ func (r *SourceAuth0Resource) Schema(ctx context.Context, req resource.SchemaReq
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"base_url": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The Authentication API is served over HTTPS. All URLs referenced in the documentation have the following base ` + "`" + `https://YOUR_DOMAIN` + "`" + ``,
 					},
 					"credentials": schema.SingleNestedAttribute{
 						Required: true,
@@ -66,7 +64,8 @@ func (r *SourceAuth0Resource) Schema(ctx context.Context, req resource.SchemaReq
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Also called <a href="https://auth0.com/docs/secure/tokens/access-tokens/get-management-api-access-tokens-for-testing">API Access Token </a> The access token used to call the Auth0 Management API Token. It's a JWT that contains specific grant permissions knowns as scopes.`,
 									},
 									"auth_type": schema.StringAttribute{
 										Required: true,
@@ -75,6 +74,7 @@ func (r *SourceAuth0Resource) Schema(ctx context.Context, req resource.SchemaReq
 												"oauth2_access_token",
 											),
 										},
+										Description: `must be one of [oauth2_access_token]`,
 									},
 								},
 							},
@@ -82,7 +82,8 @@ func (r *SourceAuth0Resource) Schema(ctx context.Context, req resource.SchemaReq
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"audience": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The audience for the token, which is your API. You can find this in the Identifier field on your  <a href="https://manage.auth0.com/#/apis">API's settings tab</a>`,
 									},
 									"auth_type": schema.StringAttribute{
 										Required: true,
@@ -91,12 +92,15 @@ func (r *SourceAuth0Resource) Schema(ctx context.Context, req resource.SchemaReq
 												"oauth2_confidential_application",
 											),
 										},
+										Description: `must be one of [oauth2_confidential_application]`,
 									},
 									"client_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Your application's Client ID. You can find this value on the <a href="https://manage.auth0.com/#/applications">application's settings tab</a> after you login the admin portal.`,
 									},
 									"client_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Your application's Client Secret. You can find this value on the <a href="https://manage.auth0.com/#/applications">application's settings tab</a> after you login the admin portal.`,
 									},
 								},
 							},
@@ -104,7 +108,8 @@ func (r *SourceAuth0Resource) Schema(ctx context.Context, req resource.SchemaReq
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Also called <a href="https://auth0.com/docs/secure/tokens/access-tokens/get-management-api-access-tokens-for-testing">API Access Token </a> The access token used to call the Auth0 Management API Token. It's a JWT that contains specific grant permissions knowns as scopes.`,
 									},
 									"auth_type": schema.StringAttribute{
 										Required: true,
@@ -113,6 +118,7 @@ func (r *SourceAuth0Resource) Schema(ctx context.Context, req resource.SchemaReq
 												"oauth2_access_token",
 											),
 										},
+										Description: `must be one of [oauth2_access_token]`,
 									},
 								},
 							},
@@ -120,7 +126,8 @@ func (r *SourceAuth0Resource) Schema(ctx context.Context, req resource.SchemaReq
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"audience": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The audience for the token, which is your API. You can find this in the Identifier field on your  <a href="https://manage.auth0.com/#/apis">API's settings tab</a>`,
 									},
 									"auth_type": schema.StringAttribute{
 										Required: true,
@@ -129,12 +136,15 @@ func (r *SourceAuth0Resource) Schema(ctx context.Context, req resource.SchemaReq
 												"oauth2_confidential_application",
 											),
 										},
+										Description: `must be one of [oauth2_confidential_application]`,
 									},
 									"client_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Your application's Client ID. You can find this value on the <a href="https://manage.auth0.com/#/applications">application's settings tab</a> after you login the admin portal.`,
 									},
 									"client_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Your application's Client Secret. You can find this value on the <a href="https://manage.auth0.com/#/applications">application's settings tab</a> after you login the admin portal.`,
 									},
 								},
 							},
@@ -150,6 +160,7 @@ func (r *SourceAuth0Resource) Schema(ctx context.Context, req resource.SchemaReq
 								"auth0",
 							),
 						},
+						Description: `must be one of [auth0]`,
 					},
 				},
 			},
@@ -160,7 +171,8 @@ func (r *SourceAuth0Resource) Schema(ctx context.Context, req resource.SchemaReq
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

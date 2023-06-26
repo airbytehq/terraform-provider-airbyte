@@ -31,14 +31,14 @@ DestinationTypesense Resource
 
 Required:
 
-- `api_key` (String)
-- `destination_type` (String)
-- `host` (String)
+- `api_key` (String) Typesense API Key
+- `destination_type` (String) must be one of [typesense]
+- `host` (String) Hostname of the Typesense instance without protocol.
 
 Optional:
 
-- `batch_size` (String)
-- `port` (String)
-- `protocol` (String)
+- `batch_size` (String) How many documents should be imported together. Default 1000
+- `port` (String) Port of the Typesense instance. Ex: 8108, 80, 443. Default is 443
+- `protocol` (String) Protocol of the Typesense instance. Ex: http or https. Default is https
 
 

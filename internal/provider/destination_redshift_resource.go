@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &DestinationRedshiftResource{}
 var _ resource.ResourceWithImportState = &DestinationRedshiftResource{}
 
@@ -56,7 +53,8 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"database": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Name of the database.`,
 					},
 					"destination_type": schema.StringAttribute{
 						Required: true,
@@ -65,21 +63,27 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 								"redshift",
 							),
 						},
+						Description: `must be one of [redshift]`,
 					},
 					"host": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Host Endpoint of the Redshift Cluster (must include the cluster-id, region and end with .redshift.amazonaws.com)`,
 					},
 					"jdbc_url_params": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).`,
 					},
 					"password": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Password associated with the username.`,
 					},
 					"port": schema.Int64Attribute{
-						Required: true,
+						Required:    true,
+						Description: `Port of the database.`,
 					},
 					"schema": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The default schema tables are written to if the source does not specify a namespace. Unless specifically configured, the usual value for this field is "public".`,
 					},
 					"tunnel_method": schema.SingleNestedAttribute{
 						Optional: true,
@@ -94,7 +98,8 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 												"NO_TUNNEL",
 											),
 										},
-										Description: `No ssh tunnel needed to connect to database`,
+										MarkdownDescription: `must be one of [NO_TUNNEL]` + "\n" +
+											`No ssh tunnel needed to connect to database`,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -103,7 +108,8 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_host": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
 									"tunnel_method": schema.StringAttribute{
 										Required: true,
@@ -112,16 +118,20 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 												"SSH_PASSWORD_AUTH",
 											),
 										},
-										Description: `Connect through a jump server tunnel host using username and password authentication`,
+										MarkdownDescription: `must be one of [SSH_PASSWORD_AUTH]` + "\n" +
+											`Connect through a jump server tunnel host using username and password authentication`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										Required: true,
+										Required:    true,
+										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level username for logging into the jump server host`,
 									},
 									"tunnel_user_password": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level password for logging into the jump server host`,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -130,10 +140,12 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )`,
 									},
 									"tunnel_host": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
 									"tunnel_method": schema.StringAttribute{
 										Required: true,
@@ -142,13 +154,16 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 												"SSH_KEY_AUTH",
 											),
 										},
-										Description: `Connect through a jump server tunnel host using username and ssh key`,
+										MarkdownDescription: `must be one of [SSH_KEY_AUTH]` + "\n" +
+											`Connect through a jump server tunnel host using username and ssh key`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										Required: true,
+										Required:    true,
+										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level username for logging into the jump server host.`,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -163,7 +178,8 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 												"NO_TUNNEL",
 											),
 										},
-										Description: `No ssh tunnel needed to connect to database`,
+										MarkdownDescription: `must be one of [NO_TUNNEL]` + "\n" +
+											`No ssh tunnel needed to connect to database`,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -172,7 +188,8 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_host": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
 									"tunnel_method": schema.StringAttribute{
 										Required: true,
@@ -181,16 +198,20 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 												"SSH_PASSWORD_AUTH",
 											),
 										},
-										Description: `Connect through a jump server tunnel host using username and password authentication`,
+										MarkdownDescription: `must be one of [SSH_PASSWORD_AUTH]` + "\n" +
+											`Connect through a jump server tunnel host using username and password authentication`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										Required: true,
+										Required:    true,
+										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level username for logging into the jump server host`,
 									},
 									"tunnel_user_password": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level password for logging into the jump server host`,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -199,10 +220,12 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )`,
 									},
 									"tunnel_host": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
 									"tunnel_method": schema.StringAttribute{
 										Required: true,
@@ -211,13 +234,16 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 												"SSH_KEY_AUTH",
 											),
 										},
-										Description: `Connect through a jump server tunnel host using username and ssh key`,
+										MarkdownDescription: `must be one of [SSH_KEY_AUTH]` + "\n" +
+											`Connect through a jump server tunnel host using username and ssh key`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										Required: true,
+										Required:    true,
+										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level username for logging into the jump server host.`,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -226,6 +252,7 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+						Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 					},
 					"uploading_method": schema.SingleNestedAttribute{
 						Optional: true,
@@ -234,7 +261,8 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_key_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `This ID grants access to the above S3 staging bucket. Airbyte requires Read and Write permissions to the given bucket. See <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">AWS docs</a> on how to generate an access key ID and secret access key.`,
 									},
 									"encryption": schema.SingleNestedAttribute{
 										Optional: true,
@@ -249,9 +277,11 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 																"aes_cbc_envelope",
 															),
 														},
+														Description: `must be one of [aes_cbc_envelope]`,
 													},
 													"key_encrypting_key": schema.StringAttribute{
-														Optional: true,
+														Optional:    true,
+														Description: `The key, base64-encoded. Must be either 128, 192, or 256 bits. Leave blank to have Airbyte generate an ephemeral key for each sync.`,
 													},
 												},
 												Description: `Staging data will be encrypted using AES-CBC envelope encryption.`,
@@ -266,6 +296,7 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 																"none",
 															),
 														},
+														Description: `must be one of [none]`,
 													},
 												},
 												Description: `Staging data will be stored in plaintext.`,
@@ -274,12 +305,15 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 										Validators: []validator.Object{
 											validators.ExactlyOneChild(),
 										},
+										Description: `How to encrypt the staging data`,
 									},
 									"file_buffer_count": schema.Int64Attribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Number of file buffers allocated for writing data. Increasing this number is beneficial for connections using Change Data Capture (CDC) and up to the number of streams within a connection. Increasing the number of file buffers past the maximum number of streams has deteriorating effects`,
 									},
 									"file_name_pattern": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `The pattern allows you to set the file-name format for the S3 staging file(s)`,
 									},
 									"method": schema.StringAttribute{
 										Required: true,
@@ -288,15 +322,19 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 												"S3 Staging",
 											),
 										},
+										Description: `must be one of [S3 Staging]`,
 									},
 									"purge_staging_data": schema.BoolAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Whether to delete the staging files from S3 after completing the sync. See <a href="https://docs.airbyte.com/integrations/destinations/redshift/#:~:text=the%20root%20directory.-,Purge%20Staging%20Data,-Whether%20to%20delete"> docs</a> for details.`,
 									},
 									"s3_bucket_name": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The name of the staging S3 bucket to use if utilising a COPY strategy. COPY is recommended for production workloads for better speed and scalability. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html">AWS docs</a> for more details.`,
 									},
 									"s3_bucket_path": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `The directory under the S3 bucket where data will be written. If not provided, then defaults to the root directory. See <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/defining-bucket-names-data-lakes/faq.html#:~:text=be%20globally%20unique.-,For%20S3%20bucket%20paths,-%2C%20you%20can%20use">path's name recommendations</a> for more details.`,
 									},
 									"s3_bucket_region": schema.StringAttribute{
 										Required: true,
@@ -328,10 +366,12 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 												"me-south-1",
 											),
 										},
-										Description: `The region of the S3 staging bucket to use if utilising a COPY strategy. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html#:~:text=In-,Region,-%2C%20choose%20the%20AWS">AWS docs</a> for details.`,
+										MarkdownDescription: `must be one of [, us-east-1, us-east-2, us-west-1, us-west-2, af-south-1, ap-east-1, ap-south-1, ap-northeast-1, ap-northeast-2, ap-northeast-3, ap-southeast-1, ap-southeast-2, ca-central-1, cn-north-1, cn-northwest-1, eu-central-1, eu-north-1, eu-south-1, eu-west-1, eu-west-2, eu-west-3, sa-east-1, me-south-1]` + "\n" +
+											`The region of the S3 staging bucket to use if utilising a COPY strategy. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html#:~:text=In-,Region,-%2C%20choose%20the%20AWS">AWS docs</a> for details.`,
 									},
 									"secret_access_key": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The corresponding secret to the above access key id. See <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">AWS docs</a> on how to generate an access key ID and secret access key.`,
 									},
 								},
 								Description: `The method how the data will be uploaded to the database.`,
@@ -346,6 +386,7 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 												"Standard",
 											),
 										},
+										Description: `must be one of [Standard]`,
 									},
 								},
 								Description: `The method how the data will be uploaded to the database.`,
@@ -354,7 +395,8 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_key_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `This ID grants access to the above S3 staging bucket. Airbyte requires Read and Write permissions to the given bucket. See <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">AWS docs</a> on how to generate an access key ID and secret access key.`,
 									},
 									"encryption": schema.SingleNestedAttribute{
 										Optional: true,
@@ -369,6 +411,7 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 																"none",
 															),
 														},
+														Description: `must be one of [none]`,
 													},
 												},
 												Description: `Staging data will be stored in plaintext.`,
@@ -383,9 +426,11 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 																"aes_cbc_envelope",
 															),
 														},
+														Description: `must be one of [aes_cbc_envelope]`,
 													},
 													"key_encrypting_key": schema.StringAttribute{
-														Optional: true,
+														Optional:    true,
+														Description: `The key, base64-encoded. Must be either 128, 192, or 256 bits. Leave blank to have Airbyte generate an ephemeral key for each sync.`,
 													},
 												},
 												Description: `Staging data will be encrypted using AES-CBC envelope encryption.`,
@@ -394,12 +439,15 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 										Validators: []validator.Object{
 											validators.ExactlyOneChild(),
 										},
+										Description: `How to encrypt the staging data`,
 									},
 									"file_buffer_count": schema.Int64Attribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Number of file buffers allocated for writing data. Increasing this number is beneficial for connections using Change Data Capture (CDC) and up to the number of streams within a connection. Increasing the number of file buffers past the maximum number of streams has deteriorating effects`,
 									},
 									"file_name_pattern": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `The pattern allows you to set the file-name format for the S3 staging file(s)`,
 									},
 									"method": schema.StringAttribute{
 										Required: true,
@@ -408,15 +456,19 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 												"S3 Staging",
 											),
 										},
+										Description: `must be one of [S3 Staging]`,
 									},
 									"purge_staging_data": schema.BoolAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Whether to delete the staging files from S3 after completing the sync. See <a href="https://docs.airbyte.com/integrations/destinations/redshift/#:~:text=the%20root%20directory.-,Purge%20Staging%20Data,-Whether%20to%20delete"> docs</a> for details.`,
 									},
 									"s3_bucket_name": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The name of the staging S3 bucket to use if utilising a COPY strategy. COPY is recommended for production workloads for better speed and scalability. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html">AWS docs</a> for more details.`,
 									},
 									"s3_bucket_path": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `The directory under the S3 bucket where data will be written. If not provided, then defaults to the root directory. See <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/defining-bucket-names-data-lakes/faq.html#:~:text=be%20globally%20unique.-,For%20S3%20bucket%20paths,-%2C%20you%20can%20use">path's name recommendations</a> for more details.`,
 									},
 									"s3_bucket_region": schema.StringAttribute{
 										Required: true,
@@ -448,10 +500,12 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 												"me-south-1",
 											),
 										},
-										Description: `The region of the S3 staging bucket to use if utilising a COPY strategy. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html#:~:text=In-,Region,-%2C%20choose%20the%20AWS">AWS docs</a> for details.`,
+										MarkdownDescription: `must be one of [, us-east-1, us-east-2, us-west-1, us-west-2, af-south-1, ap-east-1, ap-south-1, ap-northeast-1, ap-northeast-2, ap-northeast-3, ap-southeast-1, ap-southeast-2, ca-central-1, cn-north-1, cn-northwest-1, eu-central-1, eu-north-1, eu-south-1, eu-west-1, eu-west-2, eu-west-3, sa-east-1, me-south-1]` + "\n" +
+											`The region of the S3 staging bucket to use if utilising a COPY strategy. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html#:~:text=In-,Region,-%2C%20choose%20the%20AWS">AWS docs</a> for details.`,
 									},
 									"secret_access_key": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The corresponding secret to the above access key id. See <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">AWS docs</a> on how to generate an access key ID and secret access key.`,
 									},
 								},
 								Description: `The method how the data will be uploaded to the database.`,
@@ -466,6 +520,7 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 												"Standard",
 											),
 										},
+										Description: `must be one of [Standard]`,
 									},
 								},
 								Description: `The method how the data will be uploaded to the database.`,
@@ -474,9 +529,11 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+						Description: `The method how the data will be uploaded to the database.`,
 					},
 					"username": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Username to use to access the database.`,
 					},
 				},
 			},

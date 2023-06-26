@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceLinnworksResource{}
 var _ resource.ResourceWithImportState = &SourceLinnworksResource{}
 
@@ -57,10 +54,12 @@ func (r *SourceLinnworksResource) Schema(ctx context.Context, req resource.Schem
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"application_id": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Linnworks Application ID`,
 					},
 					"application_secret": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Linnworks Application Secret`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -69,12 +68,14 @@ func (r *SourceLinnworksResource) Schema(ctx context.Context, req resource.Schem
 								"linnworks",
 							),
 						},
+						Description: `must be one of [linnworks]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
+						Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.`,
 					},
 					"token": schema.StringAttribute{
 						Required: true,
@@ -88,7 +89,8 @@ func (r *SourceLinnworksResource) Schema(ctx context.Context, req resource.Schem
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

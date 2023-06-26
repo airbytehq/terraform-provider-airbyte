@@ -31,19 +31,19 @@ DestinationRedshift Resource
 
 Required:
 
-- `database` (String)
-- `destination_type` (String)
-- `host` (String)
-- `password` (String)
-- `port` (Number)
-- `schema` (String)
-- `username` (String)
+- `database` (String) Name of the database.
+- `destination_type` (String) must be one of [redshift]
+- `host` (String) Host Endpoint of the Redshift Cluster (must include the cluster-id, region and end with .redshift.amazonaws.com)
+- `password` (String) Password associated with the username.
+- `port` (Number) Port of the database.
+- `schema` (String) The default schema tables are written to if the source does not specify a namespace. Unless specifically configured, the usual value for this field is "public".
+- `username` (String) Username to use to access the database.
 
 Optional:
 
-- `jdbc_url_params` (String)
-- `tunnel_method` (Attributes) (see [below for nested schema](#nestedatt--configuration--tunnel_method))
-- `uploading_method` (Attributes) (see [below for nested schema](#nestedatt--configuration--uploading_method))
+- `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
+- `tunnel_method` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method))
+- `uploading_method` (Attributes) The method how the data will be uploaded to the database. (see [below for nested schema](#nestedatt--configuration--uploading_method))
 
 <a id="nestedatt--configuration--tunnel_method"></a>
 ### Nested Schema for `configuration.tunnel_method`
@@ -62,7 +62,8 @@ Optional:
 
 Required:
 
-- `tunnel_method` (String) No ssh tunnel needed to connect to database
+- `tunnel_method` (String) must be one of [NO_TUNNEL]
+No ssh tunnel needed to connect to database
 
 
 <a id="nestedatt--configuration--tunnel_method--destination_redshift_ssh_tunnel_method_password_authentication"></a>
@@ -70,11 +71,12 @@ Required:
 
 Required:
 
-- `tunnel_host` (String)
-- `tunnel_method` (String) Connect through a jump server tunnel host using username and password authentication
-- `tunnel_port` (Number)
-- `tunnel_user` (String)
-- `tunnel_user_password` (String)
+- `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
+- `tunnel_method` (String) must be one of [SSH_PASSWORD_AUTH]
+Connect through a jump server tunnel host using username and password authentication
+- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_user` (String) OS-level username for logging into the jump server host
+- `tunnel_user_password` (String) OS-level password for logging into the jump server host
 
 
 <a id="nestedatt--configuration--tunnel_method--destination_redshift_ssh_tunnel_method_ssh_key_authentication"></a>
@@ -82,11 +84,12 @@ Required:
 
 Required:
 
-- `ssh_key` (String)
-- `tunnel_host` (String)
-- `tunnel_method` (String) Connect through a jump server tunnel host using username and ssh key
-- `tunnel_port` (Number)
-- `tunnel_user` (String)
+- `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
+- `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
+- `tunnel_method` (String) must be one of [SSH_KEY_AUTH]
+Connect through a jump server tunnel host using username and ssh key
+- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_user` (String) OS-level username for logging into the jump server host.
 
 
 <a id="nestedatt--configuration--tunnel_method--destination_redshift_update_ssh_tunnel_method_no_tunnel"></a>
@@ -94,7 +97,8 @@ Required:
 
 Required:
 
-- `tunnel_method` (String) No ssh tunnel needed to connect to database
+- `tunnel_method` (String) must be one of [NO_TUNNEL]
+No ssh tunnel needed to connect to database
 
 
 <a id="nestedatt--configuration--tunnel_method--destination_redshift_update_ssh_tunnel_method_password_authentication"></a>
@@ -102,11 +106,12 @@ Required:
 
 Required:
 
-- `tunnel_host` (String)
-- `tunnel_method` (String) Connect through a jump server tunnel host using username and password authentication
-- `tunnel_port` (Number)
-- `tunnel_user` (String)
-- `tunnel_user_password` (String)
+- `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
+- `tunnel_method` (String) must be one of [SSH_PASSWORD_AUTH]
+Connect through a jump server tunnel host using username and password authentication
+- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_user` (String) OS-level username for logging into the jump server host
+- `tunnel_user_password` (String) OS-level password for logging into the jump server host
 
 
 <a id="nestedatt--configuration--tunnel_method--destination_redshift_update_ssh_tunnel_method_ssh_key_authentication"></a>
@@ -114,11 +119,12 @@ Required:
 
 Required:
 
-- `ssh_key` (String)
-- `tunnel_host` (String)
-- `tunnel_method` (String) Connect through a jump server tunnel host using username and ssh key
-- `tunnel_port` (Number)
-- `tunnel_user` (String)
+- `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
+- `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
+- `tunnel_method` (String) must be one of [SSH_KEY_AUTH]
+Connect through a jump server tunnel host using username and ssh key
+- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_user` (String) OS-level username for logging into the jump server host.
 
 
 
@@ -137,19 +143,20 @@ Optional:
 
 Required:
 
-- `access_key_id` (String)
-- `method` (String)
-- `s3_bucket_name` (String)
-- `s3_bucket_region` (String) The region of the S3 staging bucket to use if utilising a COPY strategy. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html#:~:text=In-,Region,-%2C%20choose%20the%20AWS">AWS docs</a> for details.
-- `secret_access_key` (String)
+- `access_key_id` (String) This ID grants access to the above S3 staging bucket. Airbyte requires Read and Write permissions to the given bucket. See <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">AWS docs</a> on how to generate an access key ID and secret access key.
+- `method` (String) must be one of [S3 Staging]
+- `s3_bucket_name` (String) The name of the staging S3 bucket to use if utilising a COPY strategy. COPY is recommended for production workloads for better speed and scalability. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html">AWS docs</a> for more details.
+- `s3_bucket_region` (String) must be one of [, us-east-1, us-east-2, us-west-1, us-west-2, af-south-1, ap-east-1, ap-south-1, ap-northeast-1, ap-northeast-2, ap-northeast-3, ap-southeast-1, ap-southeast-2, ca-central-1, cn-north-1, cn-northwest-1, eu-central-1, eu-north-1, eu-south-1, eu-west-1, eu-west-2, eu-west-3, sa-east-1, me-south-1]
+The region of the S3 staging bucket to use if utilising a COPY strategy. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html#:~:text=In-,Region,-%2C%20choose%20the%20AWS">AWS docs</a> for details.
+- `secret_access_key` (String) The corresponding secret to the above access key id. See <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">AWS docs</a> on how to generate an access key ID and secret access key.
 
 Optional:
 
-- `encryption` (Attributes) (see [below for nested schema](#nestedatt--configuration--uploading_method--destination_redshift_update_uploading_method_s3_staging--encryption))
-- `file_buffer_count` (Number)
-- `file_name_pattern` (String)
-- `purge_staging_data` (Boolean)
-- `s3_bucket_path` (String)
+- `encryption` (Attributes) How to encrypt the staging data (see [below for nested schema](#nestedatt--configuration--uploading_method--destination_redshift_update_uploading_method_s3_staging--encryption))
+- `file_buffer_count` (Number) Number of file buffers allocated for writing data. Increasing this number is beneficial for connections using Change Data Capture (CDC) and up to the number of streams within a connection. Increasing the number of file buffers past the maximum number of streams has deteriorating effects
+- `file_name_pattern` (String) The pattern allows you to set the file-name format for the S3 staging file(s)
+- `purge_staging_data` (Boolean) Whether to delete the staging files from S3 after completing the sync. See <a href="https://docs.airbyte.com/integrations/destinations/redshift/#:~:text=the%20root%20directory.-,Purge%20Staging%20Data,-Whether%20to%20delete"> docs</a> for details.
+- `s3_bucket_path` (String) The directory under the S3 bucket where data will be written. If not provided, then defaults to the root directory. See <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/defining-bucket-names-data-lakes/faq.html#:~:text=be%20globally%20unique.-,For%20S3%20bucket%20paths,-%2C%20you%20can%20use">path's name recommendations</a> for more details.
 
 <a id="nestedatt--configuration--uploading_method--destination_redshift_update_uploading_method_s3_staging--encryption"></a>
 ### Nested Schema for `configuration.uploading_method.destination_redshift_update_uploading_method_s3_staging.s3_bucket_path`
@@ -164,11 +171,11 @@ Optional:
 
 Required:
 
-- `encryption_type` (String)
+- `encryption_type` (String) must be one of [aes_cbc_envelope]
 
 Optional:
 
-- `key_encrypting_key` (String)
+- `key_encrypting_key` (String) The key, base64-encoded. Must be either 128, 192, or 256 bits. Leave blank to have Airbyte generate an ephemeral key for each sync.
 
 
 <a id="nestedatt--configuration--uploading_method--destination_redshift_update_uploading_method_s3_staging--s3_bucket_path--destination_redshift_update_uploading_method_s3_staging_encryption_no_encryption"></a>
@@ -176,7 +183,7 @@ Optional:
 
 Required:
 
-- `encryption_type` (String)
+- `encryption_type` (String) must be one of [none]
 
 
 
@@ -186,7 +193,7 @@ Required:
 
 Required:
 
-- `method` (String)
+- `method` (String) must be one of [Standard]
 
 
 <a id="nestedatt--configuration--uploading_method--destination_redshift_uploading_method_s3_staging"></a>
@@ -194,19 +201,20 @@ Required:
 
 Required:
 
-- `access_key_id` (String)
-- `method` (String)
-- `s3_bucket_name` (String)
-- `s3_bucket_region` (String) The region of the S3 staging bucket to use if utilising a COPY strategy. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html#:~:text=In-,Region,-%2C%20choose%20the%20AWS">AWS docs</a> for details.
-- `secret_access_key` (String)
+- `access_key_id` (String) This ID grants access to the above S3 staging bucket. Airbyte requires Read and Write permissions to the given bucket. See <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">AWS docs</a> on how to generate an access key ID and secret access key.
+- `method` (String) must be one of [S3 Staging]
+- `s3_bucket_name` (String) The name of the staging S3 bucket to use if utilising a COPY strategy. COPY is recommended for production workloads for better speed and scalability. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html">AWS docs</a> for more details.
+- `s3_bucket_region` (String) must be one of [, us-east-1, us-east-2, us-west-1, us-west-2, af-south-1, ap-east-1, ap-south-1, ap-northeast-1, ap-northeast-2, ap-northeast-3, ap-southeast-1, ap-southeast-2, ca-central-1, cn-north-1, cn-northwest-1, eu-central-1, eu-north-1, eu-south-1, eu-west-1, eu-west-2, eu-west-3, sa-east-1, me-south-1]
+The region of the S3 staging bucket to use if utilising a COPY strategy. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html#:~:text=In-,Region,-%2C%20choose%20the%20AWS">AWS docs</a> for details.
+- `secret_access_key` (String) The corresponding secret to the above access key id. See <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">AWS docs</a> on how to generate an access key ID and secret access key.
 
 Optional:
 
-- `encryption` (Attributes) (see [below for nested schema](#nestedatt--configuration--uploading_method--destination_redshift_uploading_method_s3_staging--encryption))
-- `file_buffer_count` (Number)
-- `file_name_pattern` (String)
-- `purge_staging_data` (Boolean)
-- `s3_bucket_path` (String)
+- `encryption` (Attributes) How to encrypt the staging data (see [below for nested schema](#nestedatt--configuration--uploading_method--destination_redshift_uploading_method_s3_staging--encryption))
+- `file_buffer_count` (Number) Number of file buffers allocated for writing data. Increasing this number is beneficial for connections using Change Data Capture (CDC) and up to the number of streams within a connection. Increasing the number of file buffers past the maximum number of streams has deteriorating effects
+- `file_name_pattern` (String) The pattern allows you to set the file-name format for the S3 staging file(s)
+- `purge_staging_data` (Boolean) Whether to delete the staging files from S3 after completing the sync. See <a href="https://docs.airbyte.com/integrations/destinations/redshift/#:~:text=the%20root%20directory.-,Purge%20Staging%20Data,-Whether%20to%20delete"> docs</a> for details.
+- `s3_bucket_path` (String) The directory under the S3 bucket where data will be written. If not provided, then defaults to the root directory. See <a href="https://docs.aws.amazon.com/prescriptive-guidance/latest/defining-bucket-names-data-lakes/faq.html#:~:text=be%20globally%20unique.-,For%20S3%20bucket%20paths,-%2C%20you%20can%20use">path's name recommendations</a> for more details.
 
 <a id="nestedatt--configuration--uploading_method--destination_redshift_uploading_method_s3_staging--encryption"></a>
 ### Nested Schema for `configuration.uploading_method.destination_redshift_uploading_method_s3_staging.s3_bucket_path`
@@ -221,11 +229,11 @@ Optional:
 
 Required:
 
-- `encryption_type` (String)
+- `encryption_type` (String) must be one of [aes_cbc_envelope]
 
 Optional:
 
-- `key_encrypting_key` (String)
+- `key_encrypting_key` (String) The key, base64-encoded. Must be either 128, 192, or 256 bits. Leave blank to have Airbyte generate an ephemeral key for each sync.
 
 
 <a id="nestedatt--configuration--uploading_method--destination_redshift_uploading_method_s3_staging--s3_bucket_path--destination_redshift_uploading_method_s3_staging_encryption_no_encryption"></a>
@@ -233,7 +241,7 @@ Optional:
 
 Required:
 
-- `encryption_type` (String)
+- `encryption_type` (String) must be one of [none]
 
 
 
@@ -243,6 +251,6 @@ Required:
 
 Required:
 
-- `method` (String)
+- `method` (String) must be one of [Standard]
 
 

@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceSnapchatMarketingResource{}
 var _ resource.ResourceWithImportState = &SourceSnapchatMarketingResource{}
 
@@ -57,19 +54,23 @@ func (r *SourceSnapchatMarketingResource) Schema(ctx context.Context, req resour
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"client_id": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The Client ID of your Snapchat developer application.`,
 					},
 					"client_secret": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The Client Secret of your Snapchat developer application.`,
 					},
 					"end_date": schema.StringAttribute{
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
+						Description: `Date in the format 2017-01-25. Any data after this date will not be replicated.`,
 					},
 					"refresh_token": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Refresh Token to renew the expired Access Token.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -78,12 +79,14 @@ func (r *SourceSnapchatMarketingResource) Schema(ctx context.Context, req resour
 								"snapchat-marketing",
 							),
 						},
+						Description: `must be one of [snapchat-marketing]`,
 					},
 					"start_date": schema.StringAttribute{
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
+						Description: `Date in the format 2022-01-01. Any data before this date will not be replicated.`,
 					},
 				},
 			},
@@ -94,7 +97,8 @@ func (r *SourceSnapchatMarketingResource) Schema(ctx context.Context, req resour
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

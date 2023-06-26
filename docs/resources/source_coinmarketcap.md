@@ -23,7 +23,7 @@ SourceCoinmarketcap Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,12 +35,13 @@ SourceCoinmarketcap Resource
 
 Required:
 
-- `api_key` (String)
-- `data_type` (String) /latest: Latest market ticker quotes and averages for cryptocurrencies and exchanges. /historical: Intervals of historic market data like OHLCV data or data for use in charting libraries. See <a href="https://coinmarketcap.com/api/documentation/v1/#section/Endpoint-Overview">here</a>.
-- `source_type` (String)
+- `api_key` (String) Your API Key. See <a href="https://coinmarketcap.com/api/documentation/v1/#section/Authentication">here</a>. The token is case sensitive.
+- `data_type` (String) must be one of [latest, historical]
+/latest: Latest market ticker quotes and averages for cryptocurrencies and exchanges. /historical: Intervals of historic market data like OHLCV data or data for use in charting libraries. See <a href="https://coinmarketcap.com/api/documentation/v1/#section/Endpoint-Overview">here</a>.
+- `source_type` (String) must be one of [coinmarketcap]
 
 Optional:
 
-- `symbols` (List of String)
+- `symbols` (List of String) Cryptocurrency symbols. (only used for quotes stream)
 
 

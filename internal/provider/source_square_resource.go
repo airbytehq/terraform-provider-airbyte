@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceSquareResource{}
 var _ resource.ResourceWithImportState = &SourceSquareResource{}
 
@@ -63,7 +60,8 @@ func (r *SourceSquareResource) Schema(ctx context.Context, req resource.SchemaRe
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_key": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The API key for a Square application`,
 									},
 									"auth_type": schema.StringAttribute{
 										Required: true,
@@ -72,6 +70,7 @@ func (r *SourceSquareResource) Schema(ctx context.Context, req resource.SchemaRe
 												"API Key",
 											),
 										},
+										Description: `must be one of [API Key]`,
 									},
 								},
 								Description: `Choose how to authenticate to Square.`,
@@ -86,15 +85,19 @@ func (r *SourceSquareResource) Schema(ctx context.Context, req resource.SchemaRe
 												"OAuth",
 											),
 										},
+										Description: `must be one of [OAuth]`,
 									},
 									"client_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Square-issued ID of your application`,
 									},
 									"client_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Square-issued application secret for your application`,
 									},
 									"refresh_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `A refresh token generated using the above client ID and secret`,
 									},
 								},
 								Description: `Choose how to authenticate to Square.`,
@@ -103,7 +106,8 @@ func (r *SourceSquareResource) Schema(ctx context.Context, req resource.SchemaRe
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_key": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The API key for a Square application`,
 									},
 									"auth_type": schema.StringAttribute{
 										Required: true,
@@ -112,6 +116,7 @@ func (r *SourceSquareResource) Schema(ctx context.Context, req resource.SchemaRe
 												"API Key",
 											),
 										},
+										Description: `must be one of [API Key]`,
 									},
 								},
 								Description: `Choose how to authenticate to Square.`,
@@ -126,15 +131,19 @@ func (r *SourceSquareResource) Schema(ctx context.Context, req resource.SchemaRe
 												"OAuth",
 											),
 										},
+										Description: `must be one of [OAuth]`,
 									},
 									"client_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Square-issued ID of your application`,
 									},
 									"client_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Square-issued application secret for your application`,
 									},
 									"refresh_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `A refresh token generated using the above client ID and secret`,
 									},
 								},
 								Description: `Choose how to authenticate to Square.`,
@@ -143,12 +152,15 @@ func (r *SourceSquareResource) Schema(ctx context.Context, req resource.SchemaRe
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+						Description: `Choose how to authenticate to Square.`,
 					},
 					"include_deleted_objects": schema.BoolAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `In some streams there is an option to include deleted objects (Items, Categories, Discounts, Taxes)`,
 					},
 					"is_sandbox": schema.BoolAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Determines whether to use the sandbox or production environment.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -157,12 +169,14 @@ func (r *SourceSquareResource) Schema(ctx context.Context, req resource.SchemaRe
 								"square",
 							),
 						},
+						Description: `must be one of [square]`,
 					},
 					"start_date": schema.StringAttribute{
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
+						Description: `UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated. If not set, all data will be replicated.`,
 					},
 				},
 			},
@@ -173,7 +187,8 @@ func (r *SourceSquareResource) Schema(ctx context.Context, req resource.SchemaRe
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

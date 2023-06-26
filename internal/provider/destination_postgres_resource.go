@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &DestinationPostgresResource{}
 var _ resource.ResourceWithImportState = &DestinationPostgresResource{}
 
@@ -56,7 +53,8 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"database": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Name of the database.`,
 					},
 					"destination_type": schema.StringAttribute{
 						Required: true,
@@ -65,21 +63,27 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 								"postgres",
 							),
 						},
+						Description: `must be one of [postgres]`,
 					},
 					"host": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Hostname of the database.`,
 					},
 					"jdbc_url_params": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).`,
 					},
 					"password": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Password associated with the username.`,
 					},
 					"port": schema.Int64Attribute{
-						Required: true,
+						Required:    true,
+						Description: `Port of the database.`,
 					},
 					"schema": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The default schema tables are written to if the source does not specify a namespace. The usual value for this field is "public".`,
 					},
 					"ssl_mode": schema.SingleNestedAttribute{
 						Optional: true,
@@ -94,6 +98,7 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 												"allow",
 											),
 										},
+										Description: `must be one of [allow]`,
 									},
 								},
 								Description: `Allow SSL mode.`,
@@ -108,6 +113,7 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 												"disable",
 											),
 										},
+										Description: `must be one of [disable]`,
 									},
 								},
 								Description: `Disable SSL.`,
@@ -122,6 +128,7 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 												"prefer",
 											),
 										},
+										Description: `must be one of [prefer]`,
 									},
 								},
 								Description: `Prefer SSL mode.`,
@@ -136,6 +143,7 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 												"require",
 											),
 										},
+										Description: `must be one of [require]`,
 									},
 								},
 								Description: `Require SSL mode.`,
@@ -144,10 +152,12 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ca_certificate": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `CA certificate`,
 									},
 									"client_key_password": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.`,
 									},
 									"mode": schema.StringAttribute{
 										Required: true,
@@ -156,6 +166,7 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 												"verify-ca",
 											),
 										},
+										Description: `must be one of [verify-ca]`,
 									},
 								},
 								Description: `Verify-ca SSL mode.`,
@@ -164,16 +175,20 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ca_certificate": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `CA certificate`,
 									},
 									"client_certificate": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Client certificate`,
 									},
 									"client_key": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Client key`,
 									},
 									"client_key_password": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.`,
 									},
 									"mode": schema.StringAttribute{
 										Required: true,
@@ -182,6 +197,7 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 												"verify-full",
 											),
 										},
+										Description: `must be one of [verify-full]`,
 									},
 								},
 								Description: `Verify-full SSL mode.`,
@@ -196,6 +212,7 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 												"allow",
 											),
 										},
+										Description: `must be one of [allow]`,
 									},
 								},
 								Description: `Allow SSL mode.`,
@@ -210,6 +227,7 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 												"disable",
 											),
 										},
+										Description: `must be one of [disable]`,
 									},
 								},
 								Description: `Disable SSL.`,
@@ -224,6 +242,7 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 												"prefer",
 											),
 										},
+										Description: `must be one of [prefer]`,
 									},
 								},
 								Description: `Prefer SSL mode.`,
@@ -238,6 +257,7 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 												"require",
 											),
 										},
+										Description: `must be one of [require]`,
 									},
 								},
 								Description: `Require SSL mode.`,
@@ -246,10 +266,12 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ca_certificate": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `CA certificate`,
 									},
 									"client_key_password": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.`,
 									},
 									"mode": schema.StringAttribute{
 										Required: true,
@@ -258,6 +280,7 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 												"verify-ca",
 											),
 										},
+										Description: `must be one of [verify-ca]`,
 									},
 								},
 								Description: `Verify-ca SSL mode.`,
@@ -266,16 +289,20 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ca_certificate": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `CA certificate`,
 									},
 									"client_certificate": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Client certificate`,
 									},
 									"client_key": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Client key`,
 									},
 									"client_key_password": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Password for keystorage. This field is optional. If you do not add it - the password will be generated automatically.`,
 									},
 									"mode": schema.StringAttribute{
 										Required: true,
@@ -284,6 +311,7 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 												"verify-full",
 											),
 										},
+										Description: `must be one of [verify-full]`,
 									},
 								},
 								Description: `Verify-full SSL mode.`,
@@ -292,6 +320,14 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+						MarkdownDescription: `SSL connection modes. ` + "\n" +
+							` <b>disable</b> - Chose this mode to disable encryption of communication between Airbyte and destination database` + "\n" +
+							` <b>allow</b> - Chose this mode to enable encryption only when required by the source database` + "\n" +
+							` <b>prefer</b> - Chose this mode to allow unencrypted connection only if the source database does not support encryption` + "\n" +
+							` <b>require</b> - Chose this mode to always require encryption. If the source database server does not support encryption, connection will fail` + "\n" +
+							`  <b>verify-ca</b> - Chose this mode to always require encryption and to verify that the source database server has a valid SSL certificate` + "\n" +
+							`  <b>verify-full</b> - This is the most secure mode. Chose this mode to always require encryption and to verify the identity of the source database server` + "\n" +
+							` See more information - <a href="https://jdbc.postgresql.org/documentation/head/ssl-client.html"> in the docs</a>.`,
 					},
 					"tunnel_method": schema.SingleNestedAttribute{
 						Optional: true,
@@ -306,7 +342,8 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 												"NO_TUNNEL",
 											),
 										},
-										Description: `No ssh tunnel needed to connect to database`,
+										MarkdownDescription: `must be one of [NO_TUNNEL]` + "\n" +
+											`No ssh tunnel needed to connect to database`,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -315,7 +352,8 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_host": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
 									"tunnel_method": schema.StringAttribute{
 										Required: true,
@@ -324,16 +362,20 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 												"SSH_PASSWORD_AUTH",
 											),
 										},
-										Description: `Connect through a jump server tunnel host using username and password authentication`,
+										MarkdownDescription: `must be one of [SSH_PASSWORD_AUTH]` + "\n" +
+											`Connect through a jump server tunnel host using username and password authentication`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										Required: true,
+										Required:    true,
+										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level username for logging into the jump server host`,
 									},
 									"tunnel_user_password": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level password for logging into the jump server host`,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -342,10 +384,12 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )`,
 									},
 									"tunnel_host": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
 									"tunnel_method": schema.StringAttribute{
 										Required: true,
@@ -354,13 +398,16 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 												"SSH_KEY_AUTH",
 											),
 										},
-										Description: `Connect through a jump server tunnel host using username and ssh key`,
+										MarkdownDescription: `must be one of [SSH_KEY_AUTH]` + "\n" +
+											`Connect through a jump server tunnel host using username and ssh key`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										Required: true,
+										Required:    true,
+										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level username for logging into the jump server host.`,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -375,7 +422,8 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 												"NO_TUNNEL",
 											),
 										},
-										Description: `No ssh tunnel needed to connect to database`,
+										MarkdownDescription: `must be one of [NO_TUNNEL]` + "\n" +
+											`No ssh tunnel needed to connect to database`,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -384,7 +432,8 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_host": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
 									"tunnel_method": schema.StringAttribute{
 										Required: true,
@@ -393,16 +442,20 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 												"SSH_PASSWORD_AUTH",
 											),
 										},
-										Description: `Connect through a jump server tunnel host using username and password authentication`,
+										MarkdownDescription: `must be one of [SSH_PASSWORD_AUTH]` + "\n" +
+											`Connect through a jump server tunnel host using username and password authentication`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										Required: true,
+										Required:    true,
+										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level username for logging into the jump server host`,
 									},
 									"tunnel_user_password": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level password for logging into the jump server host`,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -411,10 +464,12 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )`,
 									},
 									"tunnel_host": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
 									"tunnel_method": schema.StringAttribute{
 										Required: true,
@@ -423,13 +478,16 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 												"SSH_KEY_AUTH",
 											),
 										},
-										Description: `Connect through a jump server tunnel host using username and ssh key`,
+										MarkdownDescription: `must be one of [SSH_KEY_AUTH]` + "\n" +
+											`Connect through a jump server tunnel host using username and ssh key`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										Required: true,
+										Required:    true,
+										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level username for logging into the jump server host.`,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -438,9 +496,11 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+						Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 					},
 					"username": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Username to use to access the database.`,
 					},
 				},
 			},

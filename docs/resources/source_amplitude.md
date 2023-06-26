@@ -23,7 +23,7 @@ SourceAmplitude Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,14 +35,15 @@ SourceAmplitude Resource
 
 Required:
 
-- `api_key` (String)
-- `secret_key` (String)
-- `source_type` (String)
-- `start_date` (String)
+- `api_key` (String) Amplitude API Key. See the <a href="https://docs.airbyte.com/integrations/sources/amplitude#setup-guide">setup guide</a> for more information on how to obtain this key.
+- `secret_key` (String) Amplitude Secret Key. See the <a href="https://docs.airbyte.com/integrations/sources/amplitude#setup-guide">setup guide</a> for more information on how to obtain this key.
+- `source_type` (String) must be one of [amplitude]
+- `start_date` (String) UTC date and time in the format 2021-01-25T00:00:00Z. Any data before this date will not be replicated.
 
 Optional:
 
-- `data_region` (String) Amplitude data region server
-- `request_time_range` (Number)
+- `data_region` (String) must be one of [Standard Server, EU Residency Server]
+Amplitude data region server
+- `request_time_range` (Number) According to <a href="https://www.docs.developers.amplitude.com/analytics/apis/export-api/#considerations">Considerations</a> too big time range in request can cause a timeout error. In this case, set shorter time interval in hours.
 
 

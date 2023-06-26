@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceSalesforceSingerResource{}
 var _ resource.ResourceWithImportState = &SourceSalesforceSingerResource{}
 
@@ -63,25 +60,32 @@ func (r *SourceSalesforceSingerResource) Schema(ctx context.Context, req resourc
 								"REST",
 							),
 						},
-						Description: `Unless you know that you are transferring a very small amount of data, prefer using the BULK API. This will help avoid using up all of your API call quota with Salesforce. Valid values are BULK or REST.`,
+						MarkdownDescription: `must be one of [BULK, REST]` + "\n" +
+							`Unless you know that you are transferring a very small amount of data, prefer using the BULK API. This will help avoid using up all of your API call quota with Salesforce. Valid values are BULK or REST.`,
 					},
 					"client_id": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The Consumer Key that can be found when viewing your app in Salesforce`,
 					},
 					"client_secret": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The Consumer Secret that can be found when viewing your app in Salesforce`,
 					},
 					"is_sandbox": schema.BoolAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Whether or not the the app is in a Salesforce sandbox. If you do not know what this, assume it is false. We provide more info on this field in the <a href="https://docs.airbyte.io/integrations/destinations/salesforce#is_sandbox">docs</a>.`,
 					},
 					"quota_percent_per_run": schema.NumberAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `determines the maximum allowed API quota percentage the connector is allowed to consume per sync job`,
 					},
 					"quota_percent_total": schema.NumberAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Determines the maximum allowed API quota percentage the connector is allowed to consume at any time`,
 					},
 					"refresh_token": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Salesforce Refresh Token used for Airbyte to access your Salesforce account. If you don't know what this is, follow this <a href="https://medium.com/@bpmmendis94/obtain-access-refresh-tokens-from-salesforce-rest-api-a324fe4ccd9b">guide</a> to retrieve it.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -90,9 +94,11 @@ func (r *SourceSalesforceSingerResource) Schema(ctx context.Context, req resourc
 								"salesforce-singer",
 							),
 						},
+						Description: `must be one of [salesforce-singer]`,
 					},
 					"start_date": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.`,
 					},
 				},
 			},
@@ -103,7 +109,8 @@ func (r *SourceSalesforceSingerResource) Schema(ctx context.Context, req resourc
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

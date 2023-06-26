@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourcePinterestResource{}
 var _ resource.ResourceWithImportState = &SourcePinterestResource{}
 
@@ -63,7 +60,8 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Access Token to make authenticated requests.`,
 									},
 									"auth_method": schema.StringAttribute{
 										Required: true,
@@ -72,6 +70,7 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 												"access_token",
 											),
 										},
+										Description: `must be one of [access_token]`,
 									},
 								},
 							},
@@ -85,15 +84,19 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 												"oauth2.0",
 											),
 										},
+										Description: `must be one of [oauth2.0]`,
 									},
 									"client_id": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `The Client ID of your OAuth application`,
 									},
 									"client_secret": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `The Client Secret of your OAuth application.`,
 									},
 									"refresh_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Refresh Token to obtain new Access Token, when it's expired.`,
 									},
 								},
 							},
@@ -101,7 +104,8 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Access Token to make authenticated requests.`,
 									},
 									"auth_method": schema.StringAttribute{
 										Required: true,
@@ -110,6 +114,7 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 												"access_token",
 											),
 										},
+										Description: `must be one of [access_token]`,
 									},
 								},
 							},
@@ -123,15 +128,19 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 												"oauth2.0",
 											),
 										},
+										Description: `must be one of [oauth2.0]`,
 									},
 									"client_id": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `The Client ID of your OAuth application`,
 									},
 									"client_secret": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `The Client Secret of your OAuth application.`,
 									},
 									"refresh_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Refresh Token to obtain new Access Token, when it's expired.`,
 									},
 								},
 							},
@@ -147,16 +156,19 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 								"pinterest",
 							),
 						},
+						Description: `must be one of [pinterest]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
+						Description: `A date in the format YYYY-MM-DD. If you have not set a date, it would be defaulted to latest allowed date by api (89 days from today).`,
 					},
 					"status": schema.ListAttribute{
 						Optional:    true,
 						ElementType: types.StringType,
+						Description: `Entity statuses based off of campaigns, ad_groups, and ads. If you do not have a status set, it will be ignored completely.`,
 					},
 				},
 			},
@@ -167,7 +179,8 @@ func (r *SourcePinterestResource) Schema(ctx context.Context, req resource.Schem
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

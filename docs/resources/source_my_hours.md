@@ -23,7 +23,7 @@ SourceMyHours Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,13 +35,13 @@ SourceMyHours Resource
 
 Required:
 
-- `email` (String)
-- `password` (String)
-- `source_type` (String)
-- `start_date` (String)
+- `email` (String) Your My Hours username
+- `password` (String) The password associated to the username
+- `source_type` (String) must be one of [my-hours]
+- `start_date` (String) Start date for collecting time logs
 
 Optional:
 
-- `logs_batch_size` (Number)
+- `logs_batch_size` (Number) Pagination size used for retrieving logs in days
 
 

@@ -23,7 +23,7 @@ SourceOrbit Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,12 +35,12 @@ SourceOrbit Resource
 
 Required:
 
-- `api_token` (String)
-- `source_type` (String)
-- `workspace` (String)
+- `api_token` (String) Authorizes you to work with Orbit workspaces associated with the token.
+- `source_type` (String) must be one of [orbit]
+- `workspace` (String) The unique name of the workspace that your API token is associated with.
 
 Optional:
 
-- `start_date` (String)
+- `start_date` (String) Date in the format 2022-06-26. Only load members whose last activities are after this date.
 
 

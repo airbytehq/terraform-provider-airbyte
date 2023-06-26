@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceBraintreeResource{}
 var _ resource.ResourceWithImportState = &SourceBraintreeResource{}
 
@@ -66,16 +63,20 @@ func (r *SourceBraintreeResource) Schema(ctx context.Context, req resource.Schem
 								"Production",
 							),
 						},
-						Description: `Environment specifies where the data will come from.`,
+						MarkdownDescription: `must be one of [Development, Sandbox, Qa, Production]` + "\n" +
+							`Environment specifies where the data will come from.`,
 					},
 					"merchant_id": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The unique identifier for your entire gateway account. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this ID.`,
 					},
 					"private_key": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Braintree Private Key. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this key.`,
 					},
 					"public_key": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Braintree Public Key. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this key.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -84,12 +85,14 @@ func (r *SourceBraintreeResource) Schema(ctx context.Context, req resource.Schem
 								"braintree",
 							),
 						},
+						Description: `must be one of [braintree]`,
 					},
 					"start_date": schema.StringAttribute{
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
+						Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.`,
 					},
 				},
 			},
@@ -100,7 +103,8 @@ func (r *SourceBraintreeResource) Schema(ctx context.Context, req resource.Schem
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

@@ -31,16 +31,17 @@ DestinationAmazonSqs Resource
 
 Required:
 
-- `destination_type` (String)
-- `queue_url` (String)
-- `region` (String) AWS Region of the SQS Queue
+- `destination_type` (String) must be one of [amazon-sqs]
+- `queue_url` (String) URL of the SQS Queue
+- `region` (String) must be one of [us-east-1, us-east-2, us-west-1, us-west-2, af-south-1, ap-east-1, ap-south-1, ap-northeast-1, ap-northeast-2, ap-northeast-3, ap-southeast-1, ap-southeast-2, ca-central-1, cn-north-1, cn-northwest-1, eu-central-1, eu-north-1, eu-south-1, eu-west-1, eu-west-2, eu-west-3, sa-east-1, me-south-1, us-gov-east-1, us-gov-west-1]
+AWS Region of the SQS Queue
 
 Optional:
 
-- `access_key` (String)
-- `message_body_key` (String)
-- `message_delay` (Number)
-- `message_group_id` (String)
-- `secret_key` (String)
+- `access_key` (String) The Access Key ID of the AWS IAM Role to use for sending  messages
+- `message_body_key` (String) Use this property to extract the contents of the named key in the input record to use as the SQS message body. If not set, the entire content of the input record data is used as the message body.
+- `message_delay` (Number) Modify the Message Delay of the individual message from the Queue's default (seconds).
+- `message_group_id` (String) The tag that specifies that a message belongs to a specific message group. This parameter applies only to, and is REQUIRED by, FIFO queues.
+- `secret_key` (String) The Secret Key of the AWS IAM Role to use for sending messages
 
 

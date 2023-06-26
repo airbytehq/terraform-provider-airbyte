@@ -23,7 +23,7 @@ SourceZendeskChat Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,13 +35,13 @@ SourceZendeskChat Resource
 
 Required:
 
-- `source_type` (String)
-- `start_date` (String)
+- `source_type` (String) must be one of [zendesk-chat]
+- `start_date` (String) The date from which you'd like to replicate data for Zendesk Chat API, in the format YYYY-MM-DDT00:00:00Z.
 
 Optional:
 
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `subdomain` (String)
+- `subdomain` (String) Required if you access Zendesk Chat from a Zendesk Support subdomain.
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
@@ -58,8 +58,8 @@ Optional:
 
 Required:
 
-- `access_token` (String)
-- `credentials` (String)
+- `access_token` (String) The Access Token to make authenticated requests.
+- `credentials` (String) must be one of [access_token]
 
 
 <a id="nestedatt--configuration--credentials--source_zendesk_chat_authorization_method_o_auth2_0"></a>
@@ -67,14 +67,14 @@ Required:
 
 Required:
 
-- `credentials` (String)
+- `credentials` (String) must be one of [oauth2.0]
 
 Optional:
 
-- `access_token` (String)
-- `client_id` (String)
-- `client_secret` (String)
-- `refresh_token` (String)
+- `access_token` (String) Access Token for making authenticated requests.
+- `client_id` (String) The Client ID of your OAuth application
+- `client_secret` (String) The Client Secret of your OAuth application.
+- `refresh_token` (String) Refresh Token to obtain new Access Token, when it's expired.
 
 
 <a id="nestedatt--configuration--credentials--source_zendesk_chat_update_authorization_method_access_token"></a>
@@ -82,8 +82,8 @@ Optional:
 
 Required:
 
-- `access_token` (String)
-- `credentials` (String)
+- `access_token` (String) The Access Token to make authenticated requests.
+- `credentials` (String) must be one of [access_token]
 
 
 <a id="nestedatt--configuration--credentials--source_zendesk_chat_update_authorization_method_o_auth2_0"></a>
@@ -91,13 +91,13 @@ Required:
 
 Required:
 
-- `credentials` (String)
+- `credentials` (String) must be one of [oauth2.0]
 
 Optional:
 
-- `access_token` (String)
-- `client_id` (String)
-- `client_secret` (String)
-- `refresh_token` (String)
+- `access_token` (String) Access Token for making authenticated requests.
+- `client_id` (String) The Client ID of your OAuth application
+- `client_secret` (String) The Client Secret of your OAuth application.
+- `refresh_token` (String) Refresh Token to obtain new Access Token, when it's expired.
 
 

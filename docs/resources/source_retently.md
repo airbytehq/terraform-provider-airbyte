@@ -23,7 +23,7 @@ SourceRetently Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,8 +35,8 @@ SourceRetently Resource
 
 Optional:
 
-- `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `source_type` (String)
+- `credentials` (Attributes) Choose how to authenticate to Retently (see [below for nested schema](#nestedatt--configuration--credentials))
+- `source_type` (String) must be one of [retently]
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
@@ -53,14 +53,14 @@ Optional:
 
 Required:
 
-- `client_id` (String)
-- `client_secret` (String)
-- `refresh_token` (String)
+- `client_id` (String) The Client ID of your Retently developer application.
+- `client_secret` (String) The Client Secret of your Retently developer application.
+- `refresh_token` (String) Retently Refresh Token which can be used to fetch new Bearer Tokens when the current one expires.
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `auth_type` (String)
+- `auth_type` (String) must be one of [Client]
 
 
 <a id="nestedatt--configuration--credentials--source_retently_authentication_mechanism_authenticate_with_api_token"></a>
@@ -68,12 +68,12 @@ Optional:
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String) Retently API Token. See the <a href="https://app.retently.com/settings/api/tokens">docs</a> for more information on how to obtain this key.
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `auth_type` (String)
+- `auth_type` (String) must be one of [Token]
 
 
 <a id="nestedatt--configuration--credentials--source_retently_update_authentication_mechanism_authenticate_via_retently_o_auth"></a>
@@ -81,14 +81,14 @@ Optional:
 
 Required:
 
-- `client_id` (String)
-- `client_secret` (String)
-- `refresh_token` (String)
+- `client_id` (String) The Client ID of your Retently developer application.
+- `client_secret` (String) The Client Secret of your Retently developer application.
+- `refresh_token` (String) Retently Refresh Token which can be used to fetch new Bearer Tokens when the current one expires.
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `auth_type` (String)
+- `auth_type` (String) must be one of [Client]
 
 
 <a id="nestedatt--configuration--credentials--source_retently_update_authentication_mechanism_authenticate_with_api_token"></a>
@@ -96,11 +96,11 @@ Optional:
 
 Required:
 
-- `api_key` (String)
+- `api_key` (String) Retently API Token. See the <a href="https://app.retently.com/settings/api/tokens">docs</a> for more information on how to obtain this key.
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `auth_type` (String)
+- `auth_type` (String) must be one of [Token]
 
 

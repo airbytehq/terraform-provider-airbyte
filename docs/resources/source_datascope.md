@@ -23,7 +23,7 @@ SourceDatascope Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,8 +35,8 @@ SourceDatascope Resource
 
 Required:
 
-- `api_key` (String)
-- `source_type` (String)
-- `start_date` (String)
+- `api_key` (String) API Key
+- `source_type` (String) must be one of [datascope]
+- `start_date` (String) Start date for the data to be replicated
 
 

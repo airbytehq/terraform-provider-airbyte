@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceAzureBlobStorageResource{}
 var _ resource.ResourceWithImportState = &SourceAzureBlobStorageResource{}
 
@@ -57,22 +54,28 @@ func (r *SourceAzureBlobStorageResource) Schema(ctx context.Context, req resourc
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"azure_blob_storage_account_key": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The Azure blob storage account key.`,
 					},
 					"azure_blob_storage_account_name": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The account's name of the Azure Blob Storage.`,
 					},
 					"azure_blob_storage_blobs_prefix": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The Azure blob storage prefix to be applied`,
 					},
 					"azure_blob_storage_container_name": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The name of the Azure blob storage container.`,
 					},
 					"azure_blob_storage_endpoint": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `This is Azure Blob Storage endpoint domain name. Leave default value (or leave it empty if run container from command line) to use Microsoft native from example.`,
 					},
 					"azure_blob_storage_schema_inference_limit": schema.Int64Attribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The Azure blob storage blobs to scan for inferring the schema, useful on large amounts of data with consistent structure`,
 					},
 					"format": schema.SingleNestedAttribute{
 						Required: true,
@@ -87,6 +90,7 @@ func (r *SourceAzureBlobStorageResource) Schema(ctx context.Context, req resourc
 												"JSONL",
 											),
 										},
+										Description: `must be one of [JSONL]`,
 									},
 								},
 								Description: `Input data format`,
@@ -101,6 +105,7 @@ func (r *SourceAzureBlobStorageResource) Schema(ctx context.Context, req resourc
 												"JSONL",
 											),
 										},
+										Description: `must be one of [JSONL]`,
 									},
 								},
 								Description: `Input data format`,
@@ -109,6 +114,7 @@ func (r *SourceAzureBlobStorageResource) Schema(ctx context.Context, req resourc
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+						Description: `Input data format`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -117,6 +123,7 @@ func (r *SourceAzureBlobStorageResource) Schema(ctx context.Context, req resourc
 								"azure-blob-storage",
 							),
 						},
+						Description: `must be one of [azure-blob-storage]`,
 					},
 				},
 			},
@@ -127,7 +134,8 @@ func (r *SourceAzureBlobStorageResource) Schema(ctx context.Context, req resourc
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

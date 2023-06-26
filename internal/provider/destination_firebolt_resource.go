@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &DestinationFireboltResource{}
 var _ resource.ResourceWithImportState = &DestinationFireboltResource{}
 
@@ -56,10 +53,12 @@ func (r *DestinationFireboltResource) Schema(ctx context.Context, req resource.S
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"account": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Firebolt account to login.`,
 					},
 					"database": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The database to connect to.`,
 					},
 					"destination_type": schema.StringAttribute{
 						Required: true,
@@ -68,12 +67,15 @@ func (r *DestinationFireboltResource) Schema(ctx context.Context, req resource.S
 								"firebolt",
 							),
 						},
+						Description: `must be one of [firebolt]`,
 					},
 					"engine": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Engine name or url to connect to.`,
 					},
 					"host": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The host name of your Firebolt database.`,
 					},
 					"loading_method": schema.SingleNestedAttribute{
 						Optional: true,
@@ -82,10 +84,12 @@ func (r *DestinationFireboltResource) Schema(ctx context.Context, req resource.S
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"aws_key_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `AWS access key granting read and write access to S3.`,
 									},
 									"aws_key_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Corresponding secret part of the AWS Key`,
 									},
 									"method": schema.StringAttribute{
 										Required: true,
@@ -94,12 +98,15 @@ func (r *DestinationFireboltResource) Schema(ctx context.Context, req resource.S
 												"S3",
 											),
 										},
+										Description: `must be one of [S3]`,
 									},
 									"s3_bucket": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The name of the S3 bucket.`,
 									},
 									"s3_region": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Region name of the S3 bucket.`,
 									},
 								},
 								Description: `Loading method used to select the way data will be uploaded to Firebolt`,
@@ -114,6 +121,7 @@ func (r *DestinationFireboltResource) Schema(ctx context.Context, req resource.S
 												"SQL",
 											),
 										},
+										Description: `must be one of [SQL]`,
 									},
 								},
 								Description: `Loading method used to select the way data will be uploaded to Firebolt`,
@@ -122,10 +130,12 @@ func (r *DestinationFireboltResource) Schema(ctx context.Context, req resource.S
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"aws_key_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `AWS access key granting read and write access to S3.`,
 									},
 									"aws_key_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Corresponding secret part of the AWS Key`,
 									},
 									"method": schema.StringAttribute{
 										Required: true,
@@ -134,12 +144,15 @@ func (r *DestinationFireboltResource) Schema(ctx context.Context, req resource.S
 												"S3",
 											),
 										},
+										Description: `must be one of [S3]`,
 									},
 									"s3_bucket": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The name of the S3 bucket.`,
 									},
 									"s3_region": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Region name of the S3 bucket.`,
 									},
 								},
 								Description: `Loading method used to select the way data will be uploaded to Firebolt`,
@@ -154,6 +167,7 @@ func (r *DestinationFireboltResource) Schema(ctx context.Context, req resource.S
 												"SQL",
 											),
 										},
+										Description: `must be one of [SQL]`,
 									},
 								},
 								Description: `Loading method used to select the way data will be uploaded to Firebolt`,
@@ -162,12 +176,15 @@ func (r *DestinationFireboltResource) Schema(ctx context.Context, req resource.S
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+						Description: `Loading method used to select the way data will be uploaded to Firebolt`,
 					},
 					"password": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Firebolt password.`,
 					},
 					"username": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Firebolt email address you use to login.`,
 					},
 				},
 			},

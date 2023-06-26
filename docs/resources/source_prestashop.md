@@ -23,7 +23,7 @@ SourcePrestashop Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,9 +35,9 @@ SourcePrestashop Resource
 
 Required:
 
-- `access_key` (String)
-- `source_type` (String)
-- `start_date` (String)
-- `url` (String)
+- `access_key` (String) Your PrestaShop access key. See <a href="https://devdocs.prestashop.com/1.7/webservice/tutorials/creating-access/#create-an-access-key"> the docs </a> for info on how to obtain this.
+- `source_type` (String) must be one of [prestashop]
+- `start_date` (String) The Start date in the format YYYY-MM-DD.
+- `url` (String) Shop URL without trailing slash.
 
 

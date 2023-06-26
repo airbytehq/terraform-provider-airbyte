@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &DestinationTypesenseResource{}
 var _ resource.ResourceWithImportState = &DestinationTypesenseResource{}
 
@@ -55,10 +52,12 @@ func (r *DestinationTypesenseResource) Schema(ctx context.Context, req resource.
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Typesense API Key`,
 					},
 					"batch_size": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `How many documents should be imported together. Default 1000`,
 					},
 					"destination_type": schema.StringAttribute{
 						Required: true,
@@ -67,15 +66,19 @@ func (r *DestinationTypesenseResource) Schema(ctx context.Context, req resource.
 								"typesense",
 							),
 						},
+						Description: `must be one of [typesense]`,
 					},
 					"host": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Hostname of the Typesense instance without protocol.`,
 					},
 					"port": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Port of the Typesense instance. Ex: 8108, 80, 443. Default is 443`,
 					},
 					"protocol": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Protocol of the Typesense instance. Ex: http or https. Default is https`,
 					},
 				},
 			},

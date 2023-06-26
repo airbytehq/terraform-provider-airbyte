@@ -23,7 +23,7 @@ SourceBraintree Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,14 +35,15 @@ SourceBraintree Resource
 
 Required:
 
-- `environment` (String) Environment specifies where the data will come from.
-- `merchant_id` (String)
-- `private_key` (String)
-- `public_key` (String)
-- `source_type` (String)
+- `environment` (String) must be one of [Development, Sandbox, Qa, Production]
+Environment specifies where the data will come from.
+- `merchant_id` (String) The unique identifier for your entire gateway account. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this ID.
+- `private_key` (String) Braintree Private Key. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this key.
+- `public_key` (String) Braintree Public Key. See the <a href="https://docs.airbyte.com/integrations/sources/braintree">docs</a> for more information on how to obtain this key.
+- `source_type` (String) must be one of [braintree]
 
 Optional:
 
-- `start_date` (String)
+- `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 
 

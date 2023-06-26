@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceTiktokMarketingResource{}
 var _ resource.ResourceWithImportState = &SourceTiktokMarketingResource{}
 
@@ -57,7 +54,8 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"attribution_window": schema.Int64Attribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The attribution window in days.`,
 					},
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
@@ -66,13 +64,16 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Long-term Authorized Access Token.`,
 									},
 									"advertiser_id": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `The Advertiser ID to filter reports and streams. Let this empty to retrieve all.`,
 									},
 									"app_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Developer Application App ID.`,
 									},
 									"auth_type": schema.StringAttribute{
 										Optional: true,
@@ -81,9 +82,11 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 												"oauth2.0",
 											),
 										},
+										Description: `must be one of [oauth2.0]`,
 									},
 									"secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Developer Application Secret.`,
 									},
 								},
 								Description: `Authentication method`,
@@ -92,10 +95,12 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The long-term authorized access token.`,
 									},
 									"advertiser_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Advertiser ID which generated for the developer's Sandbox application.`,
 									},
 									"auth_type": schema.StringAttribute{
 										Optional: true,
@@ -104,6 +109,7 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 												"sandbox_access_token",
 											),
 										},
+										Description: `must be one of [sandbox_access_token]`,
 									},
 								},
 								Description: `Authentication method`,
@@ -112,13 +118,16 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Long-term Authorized Access Token.`,
 									},
 									"advertiser_id": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `The Advertiser ID to filter reports and streams. Let this empty to retrieve all.`,
 									},
 									"app_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Developer Application App ID.`,
 									},
 									"auth_type": schema.StringAttribute{
 										Optional: true,
@@ -127,9 +136,11 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 												"oauth2.0",
 											),
 										},
+										Description: `must be one of [oauth2.0]`,
 									},
 									"secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Developer Application Secret.`,
 									},
 								},
 								Description: `Authentication method`,
@@ -138,10 +149,12 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The long-term authorized access token.`,
 									},
 									"advertiser_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Advertiser ID which generated for the developer's Sandbox application.`,
 									},
 									"auth_type": schema.StringAttribute{
 										Optional: true,
@@ -150,6 +163,7 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 												"sandbox_access_token",
 											),
 										},
+										Description: `must be one of [sandbox_access_token]`,
 									},
 								},
 								Description: `Authentication method`,
@@ -158,12 +172,14 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+						Description: `Authentication method`,
 					},
 					"end_date": schema.StringAttribute{
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
+						Description: `The date until which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DD. All data generated between start_date and this date will be replicated. Not setting this option will result in always syncing the data till the current date.`,
 					},
 					"source_type": schema.StringAttribute{
 						Optional: true,
@@ -172,12 +188,14 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 								"tiktok-marketing",
 							),
 						},
+						Description: `must be one of [tiktok-marketing]`,
 					},
 					"start_date": schema.StringAttribute{
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
+						Description: `The Start Date in format: YYYY-MM-DD. Any data before this date will not be replicated. If this parameter is not set, all data will be replicated.`,
 					},
 				},
 			},
@@ -188,7 +206,8 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

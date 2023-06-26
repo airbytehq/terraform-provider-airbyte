@@ -23,7 +23,7 @@ SourceRailz Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,9 +35,9 @@ SourceRailz Resource
 
 Required:
 
-- `client_id` (String)
-- `secret_key` (String)
-- `source_type` (String)
-- `start_date` (String)
+- `client_id` (String) Client ID (client_id)
+- `secret_key` (String) Secret key (secret_key)
+- `source_type` (String) must be one of [railz]
+- `start_date` (String) Start date
 
 

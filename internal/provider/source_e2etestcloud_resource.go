@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceE2eTestCloudResource{}
 var _ resource.ResourceWithImportState = &SourceE2eTestCloudResource{}
 
@@ -57,10 +54,12 @@ func (r *SourceE2eTestCloudResource) Schema(ctx context.Context, req resource.Sc
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"max_messages": schema.Int64Attribute{
-						Required: true,
+						Required:    true,
+						Description: `Number of records to emit per stream. Min 1. Max 100 billion.`,
 					},
 					"message_interval_ms": schema.Int64Attribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Interval between messages in ms. Min 0 ms. Max 60000 ms (1 minute).`,
 					},
 					"mock_catalog": schema.SingleNestedAttribute{
 						Required: true,
@@ -69,7 +68,8 @@ func (r *SourceE2eTestCloudResource) Schema(ctx context.Context, req resource.Sc
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"stream_schemas": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `A Json object specifying multiple data streams and their schemas. Each key in this object is one stream name. Each value is the schema for that stream. The schema should be compatible with <a href="https://json-schema.org/draft-07/json-schema-release-notes.html">draft-07</a>. See <a href="https://cswr.github.io/JsonSchema/spec/introduction/">this doc</a> for examples.`,
 									},
 									"type": schema.StringAttribute{
 										Required: true,
@@ -78,6 +78,7 @@ func (r *SourceE2eTestCloudResource) Schema(ctx context.Context, req resource.Sc
 												"MULTI_STREAM",
 											),
 										},
+										Description: `must be one of [MULTI_STREAM]`,
 									},
 								},
 								Description: `A catalog with multiple data streams, each with a different schema.`,
@@ -86,13 +87,16 @@ func (r *SourceE2eTestCloudResource) Schema(ctx context.Context, req resource.Sc
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"stream_duplication": schema.Int64Attribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Duplicate the stream for easy load testing. Each stream name will have a number suffix. For example, if the stream name is "ds", the duplicated streams will be "ds_0", "ds_1", etc.`,
 									},
 									"stream_name": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Name of the data stream.`,
 									},
 									"stream_schema": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `A Json schema for the stream. The schema should be compatible with <a href="https://json-schema.org/draft-07/json-schema-release-notes.html">draft-07</a>. See <a href="https://cswr.github.io/JsonSchema/spec/introduction/">this doc</a> for examples.`,
 									},
 									"type": schema.StringAttribute{
 										Required: true,
@@ -101,6 +105,7 @@ func (r *SourceE2eTestCloudResource) Schema(ctx context.Context, req resource.Sc
 												"SINGLE_STREAM",
 											),
 										},
+										Description: `must be one of [SINGLE_STREAM]`,
 									},
 								},
 								Description: `A catalog with one or multiple streams that share the same schema.`,
@@ -109,7 +114,8 @@ func (r *SourceE2eTestCloudResource) Schema(ctx context.Context, req resource.Sc
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"stream_schemas": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `A Json object specifying multiple data streams and their schemas. Each key in this object is one stream name. Each value is the schema for that stream. The schema should be compatible with <a href="https://json-schema.org/draft-07/json-schema-release-notes.html">draft-07</a>. See <a href="https://cswr.github.io/JsonSchema/spec/introduction/">this doc</a> for examples.`,
 									},
 									"type": schema.StringAttribute{
 										Required: true,
@@ -118,6 +124,7 @@ func (r *SourceE2eTestCloudResource) Schema(ctx context.Context, req resource.Sc
 												"MULTI_STREAM",
 											),
 										},
+										Description: `must be one of [MULTI_STREAM]`,
 									},
 								},
 								Description: `A catalog with multiple data streams, each with a different schema.`,
@@ -126,13 +133,16 @@ func (r *SourceE2eTestCloudResource) Schema(ctx context.Context, req resource.Sc
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"stream_duplication": schema.Int64Attribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Duplicate the stream for easy load testing. Each stream name will have a number suffix. For example, if the stream name is "ds", the duplicated streams will be "ds_0", "ds_1", etc.`,
 									},
 									"stream_name": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Name of the data stream.`,
 									},
 									"stream_schema": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `A Json schema for the stream. The schema should be compatible with <a href="https://json-schema.org/draft-07/json-schema-release-notes.html">draft-07</a>. See <a href="https://cswr.github.io/JsonSchema/spec/introduction/">this doc</a> for examples.`,
 									},
 									"type": schema.StringAttribute{
 										Required: true,
@@ -141,6 +151,7 @@ func (r *SourceE2eTestCloudResource) Schema(ctx context.Context, req resource.Sc
 												"SINGLE_STREAM",
 											),
 										},
+										Description: `must be one of [SINGLE_STREAM]`,
 									},
 								},
 								Description: `A catalog with one or multiple streams that share the same schema.`,
@@ -151,7 +162,8 @@ func (r *SourceE2eTestCloudResource) Schema(ctx context.Context, req resource.Sc
 						},
 					},
 					"seed": schema.Int64Attribute{
-						Optional: true,
+						Optional:    true,
+						Description: `When the seed is unspecified, the current time millis will be used as the seed. Range: [0, 1000000].`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -160,6 +172,7 @@ func (r *SourceE2eTestCloudResource) Schema(ctx context.Context, req resource.Sc
 								"e2e-test-cloud",
 							),
 						},
+						Description: `must be one of [e2e-test-cloud]`,
 					},
 					"type": schema.StringAttribute{
 						Optional: true,
@@ -168,6 +181,7 @@ func (r *SourceE2eTestCloudResource) Schema(ctx context.Context, req resource.Sc
 								"CONTINUOUS_FEED",
 							),
 						},
+						Description: `must be one of [CONTINUOUS_FEED]`,
 					},
 				},
 			},
@@ -178,7 +192,8 @@ func (r *SourceE2eTestCloudResource) Schema(ctx context.Context, req resource.Sc
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

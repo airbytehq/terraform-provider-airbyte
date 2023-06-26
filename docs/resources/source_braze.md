@@ -23,7 +23,7 @@ SourceBraze Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,9 +35,9 @@ SourceBraze Resource
 
 Required:
 
-- `api_key` (String)
-- `source_type` (String)
-- `start_date` (String)
-- `url` (String)
+- `api_key` (String) Braze REST API key
+- `source_type` (String) must be one of [braze]
+- `start_date` (String) Rows after this date will be synced
+- `url` (String) Braze REST API endpoint
 
 

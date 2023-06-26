@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceLinkedinPagesResource{}
 var _ resource.ResourceWithImportState = &SourceLinkedinPagesResource{}
 
@@ -63,7 +60,8 @@ func (r *SourceLinkedinPagesResource) Schema(ctx context.Context, req resource.S
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The token value generated using the LinkedIn Developers OAuth Token Tools. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-pages/">docs</a> to obtain yours.`,
 									},
 									"auth_method": schema.StringAttribute{
 										Optional: true,
@@ -72,6 +70,7 @@ func (r *SourceLinkedinPagesResource) Schema(ctx context.Context, req resource.S
 												"access_token",
 											),
 										},
+										Description: `must be one of [access_token]`,
 									},
 								},
 							},
@@ -85,15 +84,19 @@ func (r *SourceLinkedinPagesResource) Schema(ctx context.Context, req resource.S
 												"oAuth2.0",
 											),
 										},
+										Description: `must be one of [oAuth2.0]`,
 									},
 									"client_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The client ID of the LinkedIn developer application.`,
 									},
 									"client_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The client secret of the LinkedIn developer application.`,
 									},
 									"refresh_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The token value generated using the LinkedIn Developers OAuth Token Tools. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-pages/">docs</a> to obtain yours.`,
 									},
 								},
 							},
@@ -101,7 +104,8 @@ func (r *SourceLinkedinPagesResource) Schema(ctx context.Context, req resource.S
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The token value generated using the LinkedIn Developers OAuth Token Tools. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-pages/">docs</a> to obtain yours.`,
 									},
 									"auth_method": schema.StringAttribute{
 										Optional: true,
@@ -110,6 +114,7 @@ func (r *SourceLinkedinPagesResource) Schema(ctx context.Context, req resource.S
 												"access_token",
 											),
 										},
+										Description: `must be one of [access_token]`,
 									},
 								},
 							},
@@ -123,15 +128,19 @@ func (r *SourceLinkedinPagesResource) Schema(ctx context.Context, req resource.S
 												"oAuth2.0",
 											),
 										},
+										Description: `must be one of [oAuth2.0]`,
 									},
 									"client_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The client ID of the LinkedIn developer application.`,
 									},
 									"client_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The client secret of the LinkedIn developer application.`,
 									},
 									"refresh_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The token value generated using the LinkedIn Developers OAuth Token Tools. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-pages/">docs</a> to obtain yours.`,
 									},
 								},
 							},
@@ -141,7 +150,8 @@ func (r *SourceLinkedinPagesResource) Schema(ctx context.Context, req resource.S
 						},
 					},
 					"org_id": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Specify the Organization ID`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -150,6 +160,7 @@ func (r *SourceLinkedinPagesResource) Schema(ctx context.Context, req resource.S
 								"linkedin-pages",
 							),
 						},
+						Description: `must be one of [linkedin-pages]`,
 					},
 				},
 			},
@@ -160,7 +171,8 @@ func (r *SourceLinkedinPagesResource) Schema(ctx context.Context, req resource.S
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

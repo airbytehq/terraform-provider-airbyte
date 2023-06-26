@@ -23,7 +23,7 @@ SourceXero Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -36,19 +36,19 @@ SourceXero Resource
 Required:
 
 - `authentication` (Attributes) (see [below for nested schema](#nestedatt--configuration--authentication))
-- `source_type` (String)
-- `start_date` (String)
-- `tenant_id` (String)
+- `source_type` (String) must be one of [xero]
+- `start_date` (String) UTC date and time in the format YYYY-MM-DDTHH:mm:ssZ. Any data with created_at before this data will not be synced.
+- `tenant_id` (String) Enter your Xero organization's Tenant ID
 
 <a id="nestedatt--configuration--authentication"></a>
 ### Nested Schema for `configuration.authentication`
 
 Required:
 
-- `access_token` (String)
-- `client_id` (String)
-- `client_secret` (String)
-- `refresh_token` (String)
-- `token_expiry_date` (String)
+- `access_token` (String) Enter your Xero application's access token
+- `client_id` (String) Enter your Xero application's Client ID
+- `client_secret` (String) Enter your Xero application's Client Secret
+- `refresh_token` (String) Enter your Xero application's refresh token
+- `token_expiry_date` (String) The date-time when the access token should be refreshed
 
 

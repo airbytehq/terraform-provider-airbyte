@@ -23,7 +23,7 @@ SourceYoutubeAnalytics Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -36,16 +36,16 @@ SourceYoutubeAnalytics Resource
 Required:
 
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `source_type` (String)
+- `source_type` (String) must be one of [youtube-analytics]
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
 
 Required:
 
-- `client_id` (String)
-- `client_secret` (String)
-- `refresh_token` (String)
+- `client_id` (String) The Client ID of your developer application
+- `client_secret` (String) The client secret of your developer application
+- `refresh_token` (String) A refresh token generated using the above client ID and secret
 
 Optional:
 

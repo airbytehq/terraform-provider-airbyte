@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &DestinationCassandraResource{}
 var _ resource.ResourceWithImportState = &DestinationCassandraResource{}
 
@@ -55,10 +52,12 @@ func (r *DestinationCassandraResource) Schema(ctx context.Context, req resource.
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"address": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Address to connect to.`,
 					},
 					"datacenter": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Datacenter of the cassandra cluster.`,
 					},
 					"destination_type": schema.StringAttribute{
 						Required: true,
@@ -67,21 +66,27 @@ func (r *DestinationCassandraResource) Schema(ctx context.Context, req resource.
 								"cassandra",
 							),
 						},
+						Description: `must be one of [cassandra]`,
 					},
 					"keyspace": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Default Cassandra keyspace to create data in.`,
 					},
 					"password": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Password associated with Cassandra.`,
 					},
 					"port": schema.Int64Attribute{
-						Required: true,
+						Required:    true,
+						Description: `Port of Cassandra.`,
 					},
 					"replication": schema.Int64Attribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Indicates to how many nodes the data should be replicated to.`,
 					},
 					"username": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Username to use to access Cassandra.`,
 					},
 				},
 			},

@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceMicrosoftTeamsResource{}
 var _ resource.ResourceWithImportState = &SourceMicrosoftTeamsResource{}
 
@@ -69,15 +66,19 @@ func (r *SourceMicrosoftTeamsResource) Schema(ctx context.Context, req resource.
 												"Token",
 											),
 										},
+										Description: `must be one of [Token]`,
 									},
 									"client_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Client ID of your Microsoft Teams developer application.`,
 									},
 									"client_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Client Secret of your Microsoft Teams developer application.`,
 									},
 									"tenant_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `A globally unique identifier (GUID) that is different than your organization name or domain. Follow these steps to obtain: open one of the Teams where you belong inside the Teams Application -> Click on the … next to the Team title -> Click on Get link to team -> Copy the link to the team and grab the tenant ID form the URL`,
 									},
 								},
 								Description: `Choose how to authenticate to Microsoft`,
@@ -92,18 +93,23 @@ func (r *SourceMicrosoftTeamsResource) Schema(ctx context.Context, req resource.
 												"Client",
 											),
 										},
+										Description: `must be one of [Client]`,
 									},
 									"client_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Client ID of your Microsoft Teams developer application.`,
 									},
 									"client_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Client Secret of your Microsoft Teams developer application.`,
 									},
 									"refresh_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `A Refresh Token to renew the expired Access Token.`,
 									},
 									"tenant_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `A globally unique identifier (GUID) that is different than your organization name or domain. Follow these steps to obtain: open one of the Teams where you belong inside the Teams Application -> Click on the … next to the Team title -> Click on Get link to team -> Copy the link to the team and grab the tenant ID form the URL`,
 									},
 								},
 								Description: `Choose how to authenticate to Microsoft`,
@@ -118,15 +124,19 @@ func (r *SourceMicrosoftTeamsResource) Schema(ctx context.Context, req resource.
 												"Token",
 											),
 										},
+										Description: `must be one of [Token]`,
 									},
 									"client_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Client ID of your Microsoft Teams developer application.`,
 									},
 									"client_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Client Secret of your Microsoft Teams developer application.`,
 									},
 									"tenant_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `A globally unique identifier (GUID) that is different than your organization name or domain. Follow these steps to obtain: open one of the Teams where you belong inside the Teams Application -> Click on the … next to the Team title -> Click on Get link to team -> Copy the link to the team and grab the tenant ID form the URL`,
 									},
 								},
 								Description: `Choose how to authenticate to Microsoft`,
@@ -141,18 +151,23 @@ func (r *SourceMicrosoftTeamsResource) Schema(ctx context.Context, req resource.
 												"Client",
 											),
 										},
+										Description: `must be one of [Client]`,
 									},
 									"client_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Client ID of your Microsoft Teams developer application.`,
 									},
 									"client_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Client Secret of your Microsoft Teams developer application.`,
 									},
 									"refresh_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `A Refresh Token to renew the expired Access Token.`,
 									},
 									"tenant_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `A globally unique identifier (GUID) that is different than your organization name or domain. Follow these steps to obtain: open one of the Teams where you belong inside the Teams Application -> Click on the … next to the Team title -> Click on Get link to team -> Copy the link to the team and grab the tenant ID form the URL`,
 									},
 								},
 								Description: `Choose how to authenticate to Microsoft`,
@@ -161,9 +176,11 @@ func (r *SourceMicrosoftTeamsResource) Schema(ctx context.Context, req resource.
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+						Description: `Choose how to authenticate to Microsoft`,
 					},
 					"period": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Specifies the length of time over which the Team Device Report stream is aggregated. The supported values are: D7, D30, D90, and D180.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -172,6 +189,7 @@ func (r *SourceMicrosoftTeamsResource) Schema(ctx context.Context, req resource.
 								"microsoft-teams",
 							),
 						},
+						Description: `must be one of [microsoft-teams]`,
 					},
 				},
 			},
@@ -182,7 +200,8 @@ func (r *SourceMicrosoftTeamsResource) Schema(ctx context.Context, req resource.
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

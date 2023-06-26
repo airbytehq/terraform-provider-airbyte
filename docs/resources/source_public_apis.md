@@ -23,7 +23,7 @@ SourcePublicApis Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,6 +35,6 @@ SourcePublicApis Resource
 
 Required:
 
-- `source_type` (String)
+- `source_type` (String) must be one of [public-apis]
 
 

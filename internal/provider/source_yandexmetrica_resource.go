@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceYandexMetricaResource{}
 var _ resource.ResourceWithImportState = &SourceYandexMetricaResource{}
 
@@ -57,16 +54,19 @@ func (r *SourceYandexMetricaResource) Schema(ctx context.Context, req resource.S
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"auth_token": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Your Yandex Metrica API access token`,
 					},
 					"counter_id": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Counter ID`,
 					},
 					"end_date": schema.StringAttribute{
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
+						Description: `Starting point for your data replication, in format of "YYYY-MM-DD". If not provided will sync till most recent date.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -75,12 +75,14 @@ func (r *SourceYandexMetricaResource) Schema(ctx context.Context, req resource.S
 								"yandex-metrica",
 							),
 						},
+						Description: `must be one of [yandex-metrica]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
+						Description: `Starting point for your data replication, in format of "YYYY-MM-DD".`,
 					},
 				},
 			},
@@ -91,7 +93,8 @@ func (r *SourceYandexMetricaResource) Schema(ctx context.Context, req resource.S
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

@@ -23,7 +23,7 @@ SourceMicrosoftTeams Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,12 +35,12 @@ SourceMicrosoftTeams Resource
 
 Required:
 
-- `period` (String)
-- `source_type` (String)
+- `period` (String) Specifies the length of time over which the Team Device Report stream is aggregated. The supported values are: D7, D30, D90, and D180.
+- `source_type` (String) must be one of [microsoft-teams]
 
 Optional:
 
-- `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
+- `credentials` (Attributes) Choose how to authenticate to Microsoft (see [below for nested schema](#nestedatt--configuration--credentials))
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
@@ -57,13 +57,13 @@ Optional:
 
 Required:
 
-- `client_id` (String)
-- `client_secret` (String)
-- `tenant_id` (String)
+- `client_id` (String) The Client ID of your Microsoft Teams developer application.
+- `client_secret` (String) The Client Secret of your Microsoft Teams developer application.
+- `tenant_id` (String) A globally unique identifier (GUID) that is different than your organization name or domain. Follow these steps to obtain: open one of the Teams where you belong inside the Teams Application -> Click on the … next to the Team title -> Click on Get link to team -> Copy the link to the team and grab the tenant ID form the URL
 
 Optional:
 
-- `auth_type` (String)
+- `auth_type` (String) must be one of [Token]
 
 
 <a id="nestedatt--configuration--credentials--source_microsoft_teams_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0"></a>
@@ -71,14 +71,14 @@ Optional:
 
 Required:
 
-- `client_id` (String)
-- `client_secret` (String)
-- `refresh_token` (String)
-- `tenant_id` (String)
+- `client_id` (String) The Client ID of your Microsoft Teams developer application.
+- `client_secret` (String) The Client Secret of your Microsoft Teams developer application.
+- `refresh_token` (String) A Refresh Token to renew the expired Access Token.
+- `tenant_id` (String) A globally unique identifier (GUID) that is different than your organization name or domain. Follow these steps to obtain: open one of the Teams where you belong inside the Teams Application -> Click on the … next to the Team title -> Click on Get link to team -> Copy the link to the team and grab the tenant ID form the URL
 
 Optional:
 
-- `auth_type` (String)
+- `auth_type` (String) must be one of [Client]
 
 
 <a id="nestedatt--configuration--credentials--source_microsoft_teams_update_authentication_mechanism_authenticate_via_microsoft"></a>
@@ -86,13 +86,13 @@ Optional:
 
 Required:
 
-- `client_id` (String)
-- `client_secret` (String)
-- `tenant_id` (String)
+- `client_id` (String) The Client ID of your Microsoft Teams developer application.
+- `client_secret` (String) The Client Secret of your Microsoft Teams developer application.
+- `tenant_id` (String) A globally unique identifier (GUID) that is different than your organization name or domain. Follow these steps to obtain: open one of the Teams where you belong inside the Teams Application -> Click on the … next to the Team title -> Click on Get link to team -> Copy the link to the team and grab the tenant ID form the URL
 
 Optional:
 
-- `auth_type` (String)
+- `auth_type` (String) must be one of [Token]
 
 
 <a id="nestedatt--configuration--credentials--source_microsoft_teams_update_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0"></a>
@@ -100,13 +100,13 @@ Optional:
 
 Required:
 
-- `client_id` (String)
-- `client_secret` (String)
-- `refresh_token` (String)
-- `tenant_id` (String)
+- `client_id` (String) The Client ID of your Microsoft Teams developer application.
+- `client_secret` (String) The Client Secret of your Microsoft Teams developer application.
+- `refresh_token` (String) A Refresh Token to renew the expired Access Token.
+- `tenant_id` (String) A globally unique identifier (GUID) that is different than your organization name or domain. Follow these steps to obtain: open one of the Teams where you belong inside the Teams Application -> Click on the … next to the Team title -> Click on Get link to team -> Copy the link to the team and grab the tenant ID form the URL
 
 Optional:
 
-- `auth_type` (String)
+- `auth_type` (String) must be one of [Client]
 
 

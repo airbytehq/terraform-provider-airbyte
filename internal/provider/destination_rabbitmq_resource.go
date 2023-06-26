@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &DestinationRabbitmqResource{}
 var _ resource.ResourceWithImportState = &DestinationRabbitmqResource{}
 
@@ -61,30 +58,39 @@ func (r *DestinationRabbitmqResource) Schema(ctx context.Context, req resource.S
 								"rabbitmq",
 							),
 						},
+						Description: `must be one of [rabbitmq]`,
 					},
 					"exchange": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The exchange name.`,
 					},
 					"host": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The RabbitMQ host name.`,
 					},
 					"password": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The password to connect.`,
 					},
 					"port": schema.Int64Attribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The RabbitMQ port.`,
 					},
 					"routing_key": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The routing key.`,
 					},
 					"ssl": schema.BoolAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `SSL enabled.`,
 					},
 					"username": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The username to connect.`,
 					},
 					"virtual_host": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The RabbitMQ virtual host name.`,
 					},
 				},
 			},

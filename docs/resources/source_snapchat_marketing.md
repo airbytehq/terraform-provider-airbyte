@@ -23,7 +23,7 @@ SourceSnapchatMarketing Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,14 +35,14 @@ SourceSnapchatMarketing Resource
 
 Required:
 
-- `client_id` (String)
-- `client_secret` (String)
-- `refresh_token` (String)
-- `source_type` (String)
+- `client_id` (String) The Client ID of your Snapchat developer application.
+- `client_secret` (String) The Client Secret of your Snapchat developer application.
+- `refresh_token` (String) Refresh Token to renew the expired Access Token.
+- `source_type` (String) must be one of [snapchat-marketing]
 
 Optional:
 
-- `end_date` (String)
-- `start_date` (String)
+- `end_date` (String) Date in the format 2017-01-25. Any data after this date will not be replicated.
+- `start_date` (String) Date in the format 2022-01-01. Any data before this date will not be replicated.
 
 

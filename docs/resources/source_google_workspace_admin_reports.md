@@ -23,7 +23,7 @@ SourceGoogleWorkspaceAdminReports Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,12 +35,12 @@ SourceGoogleWorkspaceAdminReports Resource
 
 Required:
 
-- `credentials_json` (String)
-- `email` (String)
-- `source_type` (String)
+- `credentials_json` (String) The contents of the JSON service account key. See the <a href="https://developers.google.com/admin-sdk/reports/v1/guides/delegation">docs</a> for more information on how to generate this key.
+- `email` (String) The email of the user, which has permissions to access the Google Workspace Admin APIs.
+- `source_type` (String) must be one of [google-workspace-admin-reports]
 
 Optional:
 
-- `lookback` (Number)
+- `lookback` (Number) Sets the range of time shown in the report. Reports API allows from up to 180 days ago.
 
 

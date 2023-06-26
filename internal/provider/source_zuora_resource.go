@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceZuoraResource{}
 var _ resource.ResourceWithImportState = &SourceZuoraResource{}
 
@@ -56,10 +53,12 @@ func (r *SourceZuoraResource) Schema(ctx context.Context, req resource.SchemaReq
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"client_id": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Your OAuth user Client ID`,
 					},
 					"client_secret": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Your OAuth user Client Secret`,
 					},
 					"data_query": schema.StringAttribute{
 						Required: true,
@@ -69,7 +68,8 @@ func (r *SourceZuoraResource) Schema(ctx context.Context, req resource.SchemaReq
 								"Unlimited",
 							),
 						},
-						Description: `Choose between ` + "`" + `Live` + "`" + `, or ` + "`" + `Unlimited` + "`" + ` - the optimized, replicated database at 12 hours freshness for high volume extraction <a href="https://knowledgecenter.zuora.com/Central_Platform/Query/Data_Query/A_Overview_of_Data_Query#Query_Processing_Limitations">Link</a>`,
+						MarkdownDescription: `must be one of [Live, Unlimited]` + "\n" +
+							`Choose between ` + "`" + `Live` + "`" + `, or ` + "`" + `Unlimited` + "`" + ` - the optimized, replicated database at 12 hours freshness for high volume extraction <a href="https://knowledgecenter.zuora.com/Central_Platform/Query/Data_Query/A_Overview_of_Data_Query#Query_Processing_Limitations">Link</a>`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -78,9 +78,11 @@ func (r *SourceZuoraResource) Schema(ctx context.Context, req resource.SchemaReq
 								"zuora",
 							),
 						},
+						Description: `must be one of [zuora]`,
 					},
 					"start_date": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Start Date in format: YYYY-MM-DD`,
 					},
 					"tenant_endpoint": schema.StringAttribute{
 						Required: true,
@@ -97,10 +99,12 @@ func (r *SourceZuoraResource) Schema(ctx context.Context, req resource.SchemaReq
 								"EU Central Sandbox",
 							),
 						},
-						Description: `Please choose the right endpoint where your Tenant is located. More info by this <a href="https://www.zuora.com/developer/api-reference/#section/Introduction/Access-to-the-API">Link</a>`,
+						MarkdownDescription: `must be one of [US Production, US Cloud Production, US API Sandbox, US Cloud API Sandbox, US Central Sandbox, US Performance Test, EU Production, EU API Sandbox, EU Central Sandbox]` + "\n" +
+							`Please choose the right endpoint where your Tenant is located. More info by this <a href="https://www.zuora.com/developer/api-reference/#section/Introduction/Access-to-the-API">Link</a>`,
 					},
 					"window_in_days": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The amount of days for each data-chunk begining from start_date. Bigger the value - faster the fetch. (0.1 - as for couple of hours, 1 - as for a Day; 364 - as for a Year).`,
 					},
 				},
 			},
@@ -111,7 +115,8 @@ func (r *SourceZuoraResource) Schema(ctx context.Context, req resource.SchemaReq
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

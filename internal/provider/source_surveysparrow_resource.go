@@ -13,16 +13,13 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework-validators/listvalidator"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceSurveySparrowResource{}
 var _ resource.ResourceWithImportState = &SourceSurveySparrowResource{}
 
@@ -58,7 +55,8 @@ func (r *SourceSurveySparrowResource) Schema(ctx context.Context, req resource.S
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"access_token": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Your access token. See <a href="https://developers.surveysparrow.com/rest-apis#authentication">here</a>. The key is case sensitive.`,
 					},
 					"region": schema.SingleNestedAttribute{
 						Optional: true,
@@ -73,6 +71,7 @@ func (r *SourceSurveySparrowResource) Schema(ctx context.Context, req resource.S
 												"https://eu-api.surveysparrow.com/v3",
 											),
 										},
+										Description: `must be one of [https://eu-api.surveysparrow.com/v3]`,
 									},
 								},
 								Description: `Is your account location is EU based? If yes, the base url to retrieve data will be different.`,
@@ -87,6 +86,7 @@ func (r *SourceSurveySparrowResource) Schema(ctx context.Context, req resource.S
 												"https://api.surveysparrow.com/v3",
 											),
 										},
+										Description: `must be one of [https://api.surveysparrow.com/v3]`,
 									},
 								},
 								Description: `Is your account location is EU based? If yes, the base url to retrieve data will be different.`,
@@ -101,6 +101,7 @@ func (r *SourceSurveySparrowResource) Schema(ctx context.Context, req resource.S
 												"https://eu-api.surveysparrow.com/v3",
 											),
 										},
+										Description: `must be one of [https://eu-api.surveysparrow.com/v3]`,
 									},
 								},
 								Description: `Is your account location is EU based? If yes, the base url to retrieve data will be different.`,
@@ -115,6 +116,7 @@ func (r *SourceSurveySparrowResource) Schema(ctx context.Context, req resource.S
 												"https://api.surveysparrow.com/v3",
 											),
 										},
+										Description: `must be one of [https://api.surveysparrow.com/v3]`,
 									},
 								},
 								Description: `Is your account location is EU based? If yes, the base url to retrieve data will be different.`,
@@ -123,6 +125,7 @@ func (r *SourceSurveySparrowResource) Schema(ctx context.Context, req resource.S
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+						Description: `Is your account location is EU based? If yes, the base url to retrieve data will be different.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -131,6 +134,7 @@ func (r *SourceSurveySparrowResource) Schema(ctx context.Context, req resource.S
 								"survey-sparrow",
 							),
 						},
+						Description: `must be one of [survey-sparrow]`,
 					},
 					"survey_id": schema.ListAttribute{
 						Optional:    true,
@@ -138,6 +142,7 @@ func (r *SourceSurveySparrowResource) Schema(ctx context.Context, req resource.S
 						Validators: []validator.List{
 							listvalidator.ValueStringsAre(validators.IsValidJSON()),
 						},
+						Description: `A List of your survey ids for survey-specific stream`,
 					},
 				},
 			},
@@ -148,7 +153,8 @@ func (r *SourceSurveySparrowResource) Schema(ctx context.Context, req resource.S
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

@@ -23,7 +23,7 @@ SourceTvmazeSchedule Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,13 +35,15 @@ SourceTvmazeSchedule Resource
 
 Required:
 
-- `domestic_schedule_country_code` (String)
-- `source_type` (String)
-- `start_date` (String)
+- `domestic_schedule_country_code` (String) Country code for domestic TV schedule retrieval.
+- `source_type` (String) must be one of [tvmaze-schedule]
+- `start_date` (String) Start date for TV schedule retrieval. May be in the future.
 
 Optional:
 
-- `end_date` (String)
-- `web_schedule_country_code` (String)
+- `end_date` (String) End date for TV schedule retrieval. May be in the future. Optional.
+- `web_schedule_country_code` (String) ISO 3166-1 country code for web TV schedule retrieval. Leave blank for
+all countries plus global web channels (e.g. Netflix). Alternatively,
+set to 'global' for just global web channels.
 
 

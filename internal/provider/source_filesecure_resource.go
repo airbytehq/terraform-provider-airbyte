@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceFileSecureResource{}
 var _ resource.ResourceWithImportState = &SourceFileSecureResource{}
 
@@ -57,7 +54,8 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"dataset_name": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The Name of the final table to replicate this file into (should include letters, numbers dash and underscores only).`,
 					},
 					"format": schema.StringAttribute{
 						Required: true,
@@ -73,7 +71,8 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 								"yaml",
 							),
 						},
-						Description: `The Format of the file which should be replicated (Warning: some formats may be experimental, please refer to the docs).`,
+						MarkdownDescription: `must be one of [csv, json, jsonl, excel, excel_binary, feather, parquet, yaml]` + "\n" +
+							`The Format of the file which should be replicated (Warning: some formats may be experimental, please refer to the docs).`,
 					},
 					"provider": schema.SingleNestedAttribute{
 						Required: true,
@@ -82,10 +81,12 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"sas_token": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `To access Azure Blob Storage, this connector would need credentials with the proper permissions. One option is a SAS (Shared Access Signature) token. If accessing publicly available data, this field is not necessary.`,
 									},
 									"shared_key": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `To access Azure Blob Storage, this connector would need credentials with the proper permissions. One option is a storage account shared key (aka account key or access key). If accessing publicly available data, this field is not necessary.`,
 									},
 									"storage": schema.StringAttribute{
 										Required: true,
@@ -94,9 +95,11 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 												"AzBlob",
 											),
 										},
+										Description: `must be one of [AzBlob]`,
 									},
 									"storage_account": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The globally unique name of the storage account that the desired blob sits within. See <a href="https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview" target="_blank">here</a> for more details.`,
 									},
 								},
 								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
@@ -105,7 +108,8 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"service_account_json": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `In order to access private Buckets stored on Google Cloud, this connector would need a service account json credentials with the proper permissions as described <a href="https://cloud.google.com/iam/docs/service-accounts" target="_blank">here</a>. Please generate the credentials.json file and copy/paste its content to this field (expecting JSON formats). If accessing publicly available data, this field is not necessary.`,
 									},
 									"storage": schema.StringAttribute{
 										Required: true,
@@ -114,6 +118,7 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 												"GCS",
 											),
 										},
+										Description: `must be one of [GCS]`,
 									},
 								},
 								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
@@ -128,9 +133,11 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 												"HTTPS",
 											),
 										},
+										Description: `must be one of [HTTPS]`,
 									},
 									"user_agent": schema.BoolAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Add User-Agent to request`,
 									},
 								},
 								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
@@ -139,10 +146,12 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"aws_access_key_id": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `In order to access private Buckets stored on AWS S3, this connector would need credentials with the proper permissions. If accessing publicly available data, this field is not necessary.`,
 									},
 									"aws_secret_access_key": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `In order to access private Buckets stored on AWS S3, this connector would need credentials with the proper permissions. If accessing publicly available data, this field is not necessary.`,
 									},
 									"storage": schema.StringAttribute{
 										Required: true,
@@ -151,6 +160,7 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 												"S3",
 											),
 										},
+										Description: `must be one of [S3]`,
 									},
 								},
 								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
@@ -174,6 +184,7 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 												"SCP",
 											),
 										},
+										Description: `must be one of [SCP]`,
 									},
 									"user": schema.StringAttribute{
 										Required: true,
@@ -200,6 +211,7 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 												"SFTP",
 											),
 										},
+										Description: `must be one of [SFTP]`,
 									},
 									"user": schema.StringAttribute{
 										Required: true,
@@ -226,6 +238,7 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 												"SSH",
 											),
 										},
+										Description: `must be one of [SSH]`,
 									},
 									"user": schema.StringAttribute{
 										Required: true,
@@ -237,10 +250,12 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"sas_token": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `To access Azure Blob Storage, this connector would need credentials with the proper permissions. One option is a SAS (Shared Access Signature) token. If accessing publicly available data, this field is not necessary.`,
 									},
 									"shared_key": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `To access Azure Blob Storage, this connector would need credentials with the proper permissions. One option is a storage account shared key (aka account key or access key). If accessing publicly available data, this field is not necessary.`,
 									},
 									"storage": schema.StringAttribute{
 										Required: true,
@@ -249,9 +264,11 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 												"AzBlob",
 											),
 										},
+										Description: `must be one of [AzBlob]`,
 									},
 									"storage_account": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The globally unique name of the storage account that the desired blob sits within. See <a href="https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview" target="_blank">here</a> for more details.`,
 									},
 								},
 								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
@@ -260,7 +277,8 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"service_account_json": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `In order to access private Buckets stored on Google Cloud, this connector would need a service account json credentials with the proper permissions as described <a href="https://cloud.google.com/iam/docs/service-accounts" target="_blank">here</a>. Please generate the credentials.json file and copy/paste its content to this field (expecting JSON formats). If accessing publicly available data, this field is not necessary.`,
 									},
 									"storage": schema.StringAttribute{
 										Required: true,
@@ -269,6 +287,7 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 												"GCS",
 											),
 										},
+										Description: `must be one of [GCS]`,
 									},
 								},
 								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
@@ -283,9 +302,11 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 												"HTTPS",
 											),
 										},
+										Description: `must be one of [HTTPS]`,
 									},
 									"user_agent": schema.BoolAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `Add User-Agent to request`,
 									},
 								},
 								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
@@ -294,10 +315,12 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"aws_access_key_id": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `In order to access private Buckets stored on AWS S3, this connector would need credentials with the proper permissions. If accessing publicly available data, this field is not necessary.`,
 									},
 									"aws_secret_access_key": schema.StringAttribute{
-										Optional: true,
+										Optional:    true,
+										Description: `In order to access private Buckets stored on AWS S3, this connector would need credentials with the proper permissions. If accessing publicly available data, this field is not necessary.`,
 									},
 									"storage": schema.StringAttribute{
 										Required: true,
@@ -306,6 +329,7 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 												"S3",
 											),
 										},
+										Description: `must be one of [S3]`,
 									},
 								},
 								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
@@ -329,6 +353,7 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 												"SCP",
 											),
 										},
+										Description: `must be one of [SCP]`,
 									},
 									"user": schema.StringAttribute{
 										Required: true,
@@ -355,6 +380,7 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 												"SFTP",
 											),
 										},
+										Description: `must be one of [SFTP]`,
 									},
 									"user": schema.StringAttribute{
 										Required: true,
@@ -381,6 +407,7 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 												"SSH",
 											),
 										},
+										Description: `must be one of [SSH]`,
 									},
 									"user": schema.StringAttribute{
 										Required: true,
@@ -392,9 +419,11 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+						Description: `The storage Provider or Location of the file(s) which should be replicated.`,
 					},
 					"reader_options": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `This should be a string in JSON format. It depends on the chosen file format to provide additional options and tune its behavior.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -403,9 +432,11 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 								"file-secure",
 							),
 						},
+						Description: `must be one of [file-secure]`,
 					},
 					"url": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The URL path to access the file which should be replicated.`,
 					},
 				},
 			},
@@ -416,7 +447,8 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

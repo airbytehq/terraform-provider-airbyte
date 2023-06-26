@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceFakerResource{}
 var _ resource.ResourceWithImportState = &SourceFakerResource{}
 
@@ -56,19 +53,24 @@ func (r *SourceFakerResource) Schema(ctx context.Context, req resource.SchemaReq
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"count": schema.Int64Attribute{
-						Required: true,
+						Required:    true,
+						Description: `How many users should be generated in total.  This setting does not apply to the purchases or products stream.`,
 					},
 					"parallelism": schema.Int64Attribute{
-						Optional: true,
+						Optional:    true,
+						Description: `How many parallel workers should we use to generate fake data?  Choose a value equal to the number of CPUs you will allocate to this source.`,
 					},
 					"records_per_slice": schema.Int64Attribute{
-						Optional: true,
+						Optional:    true,
+						Description: `How many fake records will be in each page (stream slice), before a state message is emitted?`,
 					},
 					"records_per_sync": schema.Int64Attribute{
-						Optional: true,
+						Optional:    true,
+						Description: `How many fake records will be returned for each sync, for each stream?  By default, it will take 2 syncs to create the requested 1000 records.`,
 					},
 					"seed": schema.Int64Attribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Manually control the faker random seed to return the same values on subsequent runs (leave -1 for random)`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -77,6 +79,7 @@ func (r *SourceFakerResource) Schema(ctx context.Context, req resource.SchemaReq
 								"faker",
 							),
 						},
+						Description: `must be one of [faker]`,
 					},
 				},
 			},
@@ -87,7 +90,8 @@ func (r *SourceFakerResource) Schema(ctx context.Context, req resource.SchemaReq
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

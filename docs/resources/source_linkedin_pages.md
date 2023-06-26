@@ -23,7 +23,7 @@ SourceLinkedinPages Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,8 +35,8 @@ SourceLinkedinPages Resource
 
 Required:
 
-- `org_id` (String)
-- `source_type` (String)
+- `org_id` (String) Specify the Organization ID
+- `source_type` (String) must be one of [linkedin-pages]
 
 Optional:
 
@@ -57,11 +57,11 @@ Optional:
 
 Required:
 
-- `access_token` (String)
+- `access_token` (String) The token value generated using the LinkedIn Developers OAuth Token Tools. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-pages/">docs</a> to obtain yours.
 
 Optional:
 
-- `auth_method` (String)
+- `auth_method` (String) must be one of [access_token]
 
 
 <a id="nestedatt--configuration--credentials--source_linkedin_pages_authentication_o_auth2_0"></a>
@@ -69,13 +69,13 @@ Optional:
 
 Required:
 
-- `client_id` (String)
-- `client_secret` (String)
-- `refresh_token` (String)
+- `client_id` (String) The client ID of the LinkedIn developer application.
+- `client_secret` (String) The client secret of the LinkedIn developer application.
+- `refresh_token` (String) The token value generated using the LinkedIn Developers OAuth Token Tools. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-pages/">docs</a> to obtain yours.
 
 Optional:
 
-- `auth_method` (String)
+- `auth_method` (String) must be one of [oAuth2.0]
 
 
 <a id="nestedatt--configuration--credentials--source_linkedin_pages_update_authentication_access_token"></a>
@@ -83,11 +83,11 @@ Optional:
 
 Required:
 
-- `access_token` (String)
+- `access_token` (String) The token value generated using the LinkedIn Developers OAuth Token Tools. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-pages/">docs</a> to obtain yours.
 
 Optional:
 
-- `auth_method` (String)
+- `auth_method` (String) must be one of [access_token]
 
 
 <a id="nestedatt--configuration--credentials--source_linkedin_pages_update_authentication_o_auth2_0"></a>
@@ -95,12 +95,12 @@ Optional:
 
 Required:
 
-- `client_id` (String)
-- `client_secret` (String)
-- `refresh_token` (String)
+- `client_id` (String) The client ID of the LinkedIn developer application.
+- `client_secret` (String) The client secret of the LinkedIn developer application.
+- `refresh_token` (String) The token value generated using the LinkedIn Developers OAuth Token Tools. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-pages/">docs</a> to obtain yours.
 
 Optional:
 
-- `auth_method` (String)
+- `auth_method` (String) must be one of [oAuth2.0]
 
 

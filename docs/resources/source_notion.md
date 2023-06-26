@@ -23,7 +23,7 @@ SourceNotion Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,12 +35,12 @@ SourceNotion Resource
 
 Required:
 
-- `source_type` (String)
-- `start_date` (String)
+- `source_type` (String) must be one of [notion]
+- `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00.000Z. Any data before this date will not be replicated.
 
 Optional:
 
-- `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
+- `credentials` (Attributes) Pick an authentication method. (see [below for nested schema](#nestedatt--configuration--credentials))
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
@@ -57,8 +57,8 @@ Optional:
 
 Required:
 
-- `auth_type` (String)
-- `token` (String)
+- `auth_type` (String) must be one of [token]
+- `token` (String) Notion API access token, see the <a href="https://developers.notion.com/docs/authorization">docs</a> for more information on how to obtain this token.
 
 
 <a id="nestedatt--configuration--credentials--source_notion_authenticate_using_o_auth2_0"></a>
@@ -66,10 +66,10 @@ Required:
 
 Required:
 
-- `access_token` (String)
-- `auth_type` (String)
-- `client_id` (String)
-- `client_secret` (String)
+- `access_token` (String) Access Token is a token you received by complete the OauthWebFlow of Notion.
+- `auth_type` (String) must be one of [OAuth2.0]
+- `client_id` (String) The ClientID of your Notion integration.
+- `client_secret` (String) The ClientSecret of your Notion integration.
 
 
 <a id="nestedatt--configuration--credentials--source_notion_update_authenticate_using_access_token"></a>
@@ -77,8 +77,8 @@ Required:
 
 Required:
 
-- `auth_type` (String)
-- `token` (String)
+- `auth_type` (String) must be one of [token]
+- `token` (String) Notion API access token, see the <a href="https://developers.notion.com/docs/authorization">docs</a> for more information on how to obtain this token.
 
 
 <a id="nestedatt--configuration--credentials--source_notion_update_authenticate_using_o_auth2_0"></a>
@@ -86,9 +86,9 @@ Required:
 
 Required:
 
-- `access_token` (String)
-- `auth_type` (String)
-- `client_id` (String)
-- `client_secret` (String)
+- `access_token` (String) Access Token is a token you received by complete the OauthWebFlow of Notion.
+- `auth_type` (String) must be one of [OAuth2.0]
+- `client_id` (String) The ClientID of your Notion integration.
+- `client_secret` (String) The ClientSecret of your Notion integration.
 
 

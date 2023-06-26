@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceNotionResource{}
 var _ resource.ResourceWithImportState = &SourceNotionResource{}
 
@@ -69,9 +66,11 @@ func (r *SourceNotionResource) Schema(ctx context.Context, req resource.SchemaRe
 												"token",
 											),
 										},
+										Description: `must be one of [token]`,
 									},
 									"token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Notion API access token, see the <a href="https://developers.notion.com/docs/authorization">docs</a> for more information on how to obtain this token.`,
 									},
 								},
 								Description: `Pick an authentication method.`,
@@ -80,7 +79,8 @@ func (r *SourceNotionResource) Schema(ctx context.Context, req resource.SchemaRe
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Access Token is a token you received by complete the OauthWebFlow of Notion.`,
 									},
 									"auth_type": schema.StringAttribute{
 										Required: true,
@@ -89,12 +89,15 @@ func (r *SourceNotionResource) Schema(ctx context.Context, req resource.SchemaRe
 												"OAuth2.0",
 											),
 										},
+										Description: `must be one of [OAuth2.0]`,
 									},
 									"client_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The ClientID of your Notion integration.`,
 									},
 									"client_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The ClientSecret of your Notion integration.`,
 									},
 								},
 								Description: `Pick an authentication method.`,
@@ -109,9 +112,11 @@ func (r *SourceNotionResource) Schema(ctx context.Context, req resource.SchemaRe
 												"token",
 											),
 										},
+										Description: `must be one of [token]`,
 									},
 									"token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Notion API access token, see the <a href="https://developers.notion.com/docs/authorization">docs</a> for more information on how to obtain this token.`,
 									},
 								},
 								Description: `Pick an authentication method.`,
@@ -120,7 +125,8 @@ func (r *SourceNotionResource) Schema(ctx context.Context, req resource.SchemaRe
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Access Token is a token you received by complete the OauthWebFlow of Notion.`,
 									},
 									"auth_type": schema.StringAttribute{
 										Required: true,
@@ -129,12 +135,15 @@ func (r *SourceNotionResource) Schema(ctx context.Context, req resource.SchemaRe
 												"OAuth2.0",
 											),
 										},
+										Description: `must be one of [OAuth2.0]`,
 									},
 									"client_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The ClientID of your Notion integration.`,
 									},
 									"client_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The ClientSecret of your Notion integration.`,
 									},
 								},
 								Description: `Pick an authentication method.`,
@@ -143,6 +152,7 @@ func (r *SourceNotionResource) Schema(ctx context.Context, req resource.SchemaRe
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+						Description: `Pick an authentication method.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -151,12 +161,14 @@ func (r *SourceNotionResource) Schema(ctx context.Context, req resource.SchemaRe
 								"notion",
 							),
 						},
+						Description: `must be one of [notion]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
+						Description: `UTC date and time in the format 2017-01-25T00:00:00.000Z. Any data before this date will not be replicated.`,
 					},
 				},
 			},
@@ -167,7 +179,8 @@ func (r *SourceNotionResource) Schema(ctx context.Context, req resource.SchemaRe
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

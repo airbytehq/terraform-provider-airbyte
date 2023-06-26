@@ -23,7 +23,7 @@ SourcePexelsAPI Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,15 +35,15 @@ SourcePexelsAPI Resource
 
 Required:
 
-- `api_key` (String)
-- `query` (String)
-- `source_type` (String)
+- `api_key` (String) API key is required to access pexels api, For getting your's goto https://www.pexels.com/api/documentation and create account for free.
+- `query` (String) Optional, the search query, Example Ocean, Tigers, Pears, etc.
+- `source_type` (String) must be one of [pexels-api]
 
 Optional:
 
-- `color` (String)
-- `locale` (String)
-- `orientation` (String)
-- `size` (String)
+- `color` (String) Optional, Desired photo color. Supported colors red, orange, yellow, green, turquoise, blue, violet, pink, brown, black, gray, white or any hexidecimal color code.
+- `locale` (String) Optional, The locale of the search you are performing. The current supported locales are 'en-US' 'pt-BR' 'es-ES' 'ca-ES' 'de-DE' 'it-IT' 'fr-FR' 'sv-SE' 'id-ID' 'pl-PL' 'ja-JP' 'zh-TW' 'zh-CN' 'ko-KR' 'th-TH' 'nl-NL' 'hu-HU' 'vi-VN' 'cs-CZ' 'da-DK' 'fi-FI' 'uk-UA' 'el-GR' 'ro-RO' 'nb-NO' 'sk-SK' 'tr-TR' 'ru-RU'.
+- `orientation` (String) Optional, Desired photo orientation. The current supported orientations are landscape, portrait or square
+- `size` (String) Optional, Minimum photo size. The current supported sizes are large(24MP), medium(12MP) or small(4MP).
 
 

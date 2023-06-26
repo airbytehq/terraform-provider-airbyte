@@ -23,7 +23,7 @@ SourceRecreation Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,8 +35,8 @@ SourceRecreation Resource
 
 Required:
 
-- `apikey` (String)
-- `source_type` (String)
+- `apikey` (String) API Key
+- `source_type` (String) must be one of [recreation]
 
 Optional:
 

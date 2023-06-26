@@ -23,7 +23,7 @@ SourceTodoist Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,7 +35,7 @@ SourceTodoist Resource
 
 Required:
 
-- `source_type` (String)
-- `token` (String)
+- `source_type` (String) must be one of [todoist]
+- `token` (String) Your API Token. See <a href="https://todoist.com/app/settings/integrations/">here</a>. The token is case sensitive.
 
 

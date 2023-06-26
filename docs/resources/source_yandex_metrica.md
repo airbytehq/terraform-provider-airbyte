@@ -23,7 +23,7 @@ SourceYandexMetrica Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,13 +35,13 @@ SourceYandexMetrica Resource
 
 Required:
 
-- `auth_token` (String)
-- `counter_id` (String)
-- `source_type` (String)
-- `start_date` (String)
+- `auth_token` (String) Your Yandex Metrica API access token
+- `counter_id` (String) Counter ID
+- `source_type` (String) must be one of [yandex-metrica]
+- `start_date` (String) Starting point for your data replication, in format of "YYYY-MM-DD".
 
 Optional:
 
-- `end_date` (String)
+- `end_date` (String) Starting point for your data replication, in format of "YYYY-MM-DD". If not provided will sync till most recent date.
 
 

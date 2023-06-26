@@ -23,7 +23,7 @@ SourceSnowflake Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,17 +35,17 @@ SourceSnowflake Resource
 
 Required:
 
-- `database` (String)
-- `host` (String)
-- `role` (String)
-- `source_type` (String)
-- `warehouse` (String)
+- `database` (String) The database you created for Airbyte to access data.
+- `host` (String) The host domain of the snowflake instance (must include the account, region, cloud environment, and end with snowflakecomputing.com).
+- `role` (String) The role you created for Airbyte to access Snowflake.
+- `source_type` (String) must be one of [snowflake]
+- `warehouse` (String) The warehouse you created for Airbyte to access data.
 
 Optional:
 
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `jdbc_url_params` (String)
-- `schema` (String)
+- `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
+- `schema` (String) The source Snowflake schema tables. Leave empty to access tables from multiple schemas.
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
@@ -62,14 +62,14 @@ Optional:
 
 Required:
 
-- `auth_type` (String)
-- `client_id` (String)
-- `client_secret` (String)
+- `auth_type` (String) must be one of [OAuth]
+- `client_id` (String) The Client ID of your Snowflake developer application.
+- `client_secret` (String) The Client Secret of your Snowflake developer application.
 
 Optional:
 
-- `access_token` (String)
-- `refresh_token` (String)
+- `access_token` (String) Access Token for making authenticated requests.
+- `refresh_token` (String) Refresh Token for making authenticated requests.
 
 
 <a id="nestedatt--configuration--credentials--source_snowflake_authorization_method_username_and_password"></a>
@@ -77,9 +77,9 @@ Optional:
 
 Required:
 
-- `auth_type` (String)
-- `password` (String)
-- `username` (String)
+- `auth_type` (String) must be one of [username/password]
+- `password` (String) The password associated with the username.
+- `username` (String) The username you created to allow Airbyte to access the database.
 
 
 <a id="nestedatt--configuration--credentials--source_snowflake_update_authorization_method_o_auth2_0"></a>
@@ -87,14 +87,14 @@ Required:
 
 Required:
 
-- `auth_type` (String)
-- `client_id` (String)
-- `client_secret` (String)
+- `auth_type` (String) must be one of [OAuth]
+- `client_id` (String) The Client ID of your Snowflake developer application.
+- `client_secret` (String) The Client Secret of your Snowflake developer application.
 
 Optional:
 
-- `access_token` (String)
-- `refresh_token` (String)
+- `access_token` (String) Access Token for making authenticated requests.
+- `refresh_token` (String) Refresh Token for making authenticated requests.
 
 
 <a id="nestedatt--configuration--credentials--source_snowflake_update_authorization_method_username_and_password"></a>
@@ -102,8 +102,8 @@ Optional:
 
 Required:
 
-- `auth_type` (String)
-- `password` (String)
-- `username` (String)
+- `auth_type` (String) must be one of [username/password]
+- `password` (String) The password associated with the username.
+- `username` (String) The username you created to allow Airbyte to access the database.
 
 

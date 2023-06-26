@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceOutreachResource{}
 var _ resource.ResourceWithImportState = &SourceOutreachResource{}
 
@@ -56,16 +53,20 @@ func (r *SourceOutreachResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"client_id": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The Client ID of your Outreach developer application.`,
 					},
 					"client_secret": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The Client Secret of your Outreach developer application.`,
 					},
 					"redirect_uri": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `A Redirect URI is the location where the authorization server sends the user once the app has been successfully authorized and granted an authorization code or access token.`,
 					},
 					"refresh_token": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The token for obtaining the new access token.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -74,9 +75,11 @@ func (r *SourceOutreachResource) Schema(ctx context.Context, req resource.Schema
 								"outreach",
 							),
 						},
+						Description: `must be one of [outreach]`,
 					},
 					"start_date": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The date from which you'd like to replicate data for Outreach API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.`,
 					},
 				},
 			},
@@ -87,7 +90,8 @@ func (r *SourceOutreachResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

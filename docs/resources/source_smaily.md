@@ -23,7 +23,7 @@ SourceSmaily Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,9 +35,9 @@ SourceSmaily Resource
 
 Required:
 
-- `api_password` (String)
-- `api_subdomain` (String)
-- `api_username` (String)
-- `source_type` (String)
+- `api_password` (String) API user password. See https://smaily.com/help/api/general/create-api-user/
+- `api_subdomain` (String) API Subdomain. See https://smaily.com/help/api/general/create-api-user/
+- `api_username` (String) API user username. See https://smaily.com/help/api/general/create-api-user/
+- `source_type` (String) must be one of [smaily]
 
 

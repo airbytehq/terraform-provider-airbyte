@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceRetentlyResource{}
 var _ resource.ResourceWithImportState = &SourceRetentlyResource{}
 
@@ -69,15 +66,19 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 												"Client",
 											),
 										},
+										Description: `must be one of [Client]`,
 									},
 									"client_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Client ID of your Retently developer application.`,
 									},
 									"client_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Client Secret of your Retently developer application.`,
 									},
 									"refresh_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Retently Refresh Token which can be used to fetch new Bearer Tokens when the current one expires.`,
 									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
@@ -93,7 +94,8 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_key": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Retently API Token. See the <a href="https://app.retently.com/settings/api/tokens">docs</a> for more information on how to obtain this key.`,
 									},
 									"auth_type": schema.StringAttribute{
 										Optional: true,
@@ -102,6 +104,7 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 												"Token",
 											),
 										},
+										Description: `must be one of [Token]`,
 									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
@@ -123,15 +126,19 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 												"Client",
 											),
 										},
+										Description: `must be one of [Client]`,
 									},
 									"client_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Client ID of your Retently developer application.`,
 									},
 									"client_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Client Secret of your Retently developer application.`,
 									},
 									"refresh_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Retently Refresh Token which can be used to fetch new Bearer Tokens when the current one expires.`,
 									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
@@ -147,7 +154,8 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_key": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Retently API Token. See the <a href="https://app.retently.com/settings/api/tokens">docs</a> for more information on how to obtain this key.`,
 									},
 									"auth_type": schema.StringAttribute{
 										Optional: true,
@@ -156,6 +164,7 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 												"Token",
 											),
 										},
+										Description: `must be one of [Token]`,
 									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
@@ -171,6 +180,7 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+						Description: `Choose how to authenticate to Retently`,
 					},
 					"source_type": schema.StringAttribute{
 						Optional: true,
@@ -179,6 +189,7 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 								"retently",
 							),
 						},
+						Description: `must be one of [retently]`,
 					},
 				},
 			},
@@ -189,7 +200,8 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

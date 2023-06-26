@@ -23,7 +23,7 @@ SourceRecruitee Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,8 +35,8 @@ SourceRecruitee Resource
 
 Required:
 
-- `api_key` (String)
-- `company_id` (Number)
-- `source_type` (String)
+- `api_key` (String) Recruitee API Key. See <a href="https://docs.recruitee.com/reference/getting-started#generate-api-token">here</a>.
+- `company_id` (Number) Recruitee Company ID. You can also find this ID on the <a href="https://app.recruitee.com/#/settings/api_tokens">Recruitee API tokens page</a>.
+- `source_type` (String) must be one of [recruitee]
 
 

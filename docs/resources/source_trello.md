@@ -23,7 +23,7 @@ SourceTrello Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,13 +35,13 @@ SourceTrello Resource
 
 Required:
 
-- `key` (String)
-- `source_type` (String)
-- `start_date` (String)
-- `token` (String)
+- `key` (String) Trello API key. See the <a href="https://developer.atlassian.com/cloud/trello/guides/rest-api/authorization/#using-basic-oauth">docs</a> for instructions on how to generate it.
+- `source_type` (String) must be one of [trello]
+- `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
+- `token` (String) Trello API token. See the <a href="https://developer.atlassian.com/cloud/trello/guides/rest-api/authorization/#using-basic-oauth">docs</a> for instructions on how to generate it.
 
 Optional:
 
-- `board_ids` (List of String)
+- `board_ids` (List of String) IDs of the boards to replicate data from. If left empty, data from all boards to which you have access will be replicated.
 
 

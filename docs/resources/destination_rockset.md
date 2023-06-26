@@ -31,12 +31,12 @@ DestinationRockset Resource
 
 Required:
 
-- `api_key` (String)
-- `destination_type` (String)
-- `workspace` (String)
+- `api_key` (String) Rockset api key
+- `destination_type` (String) must be one of [rockset]
+- `workspace` (String) The Rockset workspace in which collections will be created + written to.
 
 Optional:
 
-- `api_server` (String)
+- `api_server` (String) Rockset api URL
 
 

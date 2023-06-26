@@ -31,15 +31,15 @@ DestinationDatabend Resource
 
 Required:
 
-- `database` (String)
-- `destination_type` (String)
-- `host` (String)
-- `username` (String)
+- `database` (String) Name of the database.
+- `destination_type` (String) must be one of [databend]
+- `host` (String) Hostname of the database.
+- `username` (String) Username to use to access the database.
 
 Optional:
 
-- `password` (String)
-- `port` (Number)
-- `table` (String)
+- `password` (String) Password associated with the username.
+- `port` (Number) Port of the database.
+- `table` (String) The default  table was written to.
 
 

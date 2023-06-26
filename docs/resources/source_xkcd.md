@@ -23,7 +23,7 @@ SourceXkcd Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,6 +35,6 @@ SourceXkcd Resource
 
 Optional:
 
-- `source_type` (String)
+- `source_type` (String) must be one of [xkcd]
 
 

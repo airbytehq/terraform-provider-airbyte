@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceGoogleWorkspaceAdminReportsResource{}
 var _ resource.ResourceWithImportState = &SourceGoogleWorkspaceAdminReportsResource{}
 
@@ -56,13 +53,16 @@ func (r *SourceGoogleWorkspaceAdminReportsResource) Schema(ctx context.Context, 
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"credentials_json": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The contents of the JSON service account key. See the <a href="https://developers.google.com/admin-sdk/reports/v1/guides/delegation">docs</a> for more information on how to generate this key.`,
 					},
 					"email": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The email of the user, which has permissions to access the Google Workspace Admin APIs.`,
 					},
 					"lookback": schema.Int64Attribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Sets the range of time shown in the report. Reports API allows from up to 180 days ago. `,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -71,6 +71,7 @@ func (r *SourceGoogleWorkspaceAdminReportsResource) Schema(ctx context.Context, 
 								"google-workspace-admin-reports",
 							),
 						},
+						Description: `must be one of [google-workspace-admin-reports]`,
 					},
 				},
 			},
@@ -81,7 +82,8 @@ func (r *SourceGoogleWorkspaceAdminReportsResource) Schema(ctx context.Context, 
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

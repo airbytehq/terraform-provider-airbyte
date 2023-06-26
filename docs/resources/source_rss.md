@@ -23,7 +23,7 @@ SourceRss Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,7 +35,7 @@ SourceRss Resource
 
 Required:
 
-- `source_type` (String)
-- `url` (String)
+- `source_type` (String) must be one of [rss]
+- `url` (String) RSS Feed URL
 
 

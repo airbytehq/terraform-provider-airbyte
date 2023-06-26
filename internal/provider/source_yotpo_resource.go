@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceYotpoResource{}
 var _ resource.ResourceWithImportState = &SourceYotpoResource{}
 
@@ -57,13 +54,16 @@ func (r *SourceYotpoResource) Schema(ctx context.Context, req resource.SchemaReq
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"access_token": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Access token recieved as a result of API call to https://api.yotpo.com/oauth/token (Ref- https://apidocs.yotpo.com/reference/yotpo-authentication)`,
 					},
 					"app_key": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `App key found at settings (Ref- https://settings.yotpo.com/#/general_settings)`,
 					},
 					"email": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Email address registered with yotpo.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -72,12 +72,14 @@ func (r *SourceYotpoResource) Schema(ctx context.Context, req resource.SchemaReq
 								"yotpo",
 							),
 						},
+						Description: `must be one of [yotpo]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
+						Description: `Date time filter for incremental filter, Specify which date to extract from.`,
 					},
 				},
 			},
@@ -88,7 +90,8 @@ func (r *SourceYotpoResource) Schema(ctx context.Context, req resource.SchemaReq
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

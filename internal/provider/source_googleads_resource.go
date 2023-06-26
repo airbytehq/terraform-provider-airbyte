@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceGoogleAdsResource{}
 var _ resource.ResourceWithImportState = &SourceGoogleAdsResource{}
 
@@ -57,25 +54,31 @@ func (r *SourceGoogleAdsResource) Schema(ctx context.Context, req resource.Schem
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"conversion_window_days": schema.Int64Attribute{
-						Optional: true,
+						Optional:    true,
+						Description: `A conversion window is the period of time after an ad interaction (such as an ad click or video view) during which a conversion, such as a purchase, is recorded in Google Ads. For more information, see Google's <a href="https://support.google.com/google-ads/answer/3123169?hl=en">documentation</a>.`,
 					},
 					"credentials": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"access_token": schema.StringAttribute{
-								Optional: true,
+								Optional:    true,
+								Description: `Access Token for making authenticated requests. More instruction on how to find this value in our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">docs</a>`,
 							},
 							"client_id": schema.StringAttribute{
-								Required: true,
+								Required:    true,
+								Description: `The Client ID of your Google Ads developer application. More instruction on how to find this value in our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">docs</a>`,
 							},
 							"client_secret": schema.StringAttribute{
-								Required: true,
+								Required:    true,
+								Description: `The Client Secret of your Google Ads developer application. More instruction on how to find this value in our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">docs</a>`,
 							},
 							"developer_token": schema.StringAttribute{
-								Required: true,
+								Required:    true,
+								Description: `Developer token granted by Google to use their APIs. More instruction on how to find this value in our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">docs</a>`,
 							},
 							"refresh_token": schema.StringAttribute{
-								Required: true,
+								Required:    true,
+								Description: `The token for obtaining a new access token. More instruction on how to find this value in our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">docs</a>`,
 							},
 						},
 					},
@@ -84,25 +87,30 @@ func (r *SourceGoogleAdsResource) Schema(ctx context.Context, req resource.Schem
 						NestedObject: schema.NestedAttributeObject{
 							Attributes: map[string]schema.Attribute{
 								"query": schema.StringAttribute{
-									Required: true,
+									Required:    true,
+									Description: `A custom defined GAQL query for building the report. Should not contain segments.date expression because it is used by incremental streams. See Google's <a href="https://developers.google.com/google-ads/api/fields/v11/overview_query_builder">query builder</a> for more information.`,
 								},
 								"table_name": schema.StringAttribute{
-									Required: true,
+									Required:    true,
+									Description: `The table name in your destination database for choosen query.`,
 								},
 							},
 						},
 					},
 					"customer_id": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Comma separated list of (client) customer IDs. Each customer ID must be specified as a 10-digit number without dashes. More instruction on how to find this value in our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">docs</a>. Metrics streams like AdGroupAdReport cannot be requested for a manager account.`,
 					},
 					"end_date": schema.StringAttribute{
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
+						Description: `UTC date and time in the format 2017-01-25. Any data after this date will not be replicated.`,
 					},
 					"login_customer_id": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `If your access to the customer account is through a manager account, this field is required and must be set to the customer ID of the manager account (10-digit number without dashes). More information about this field you can see <a href="https://developers.google.com/google-ads/api/docs/concepts/call-structure#cid">here</a>`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -111,12 +119,14 @@ func (r *SourceGoogleAdsResource) Schema(ctx context.Context, req resource.Schem
 								"google-ads",
 							),
 						},
+						Description: `must be one of [google-ads]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
+						Description: `UTC date and time in the format 2017-01-25. Any data before this date will not be replicated.`,
 					},
 				},
 			},
@@ -127,7 +137,8 @@ func (r *SourceGoogleAdsResource) Schema(ctx context.Context, req resource.Schem
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

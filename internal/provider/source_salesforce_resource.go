@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceSalesforceResource{}
 var _ resource.ResourceWithImportState = &SourceSalesforceResource{}
 
@@ -63,18 +60,23 @@ func (r *SourceSalesforceResource) Schema(ctx context.Context, req resource.Sche
 								"Client",
 							),
 						},
+						Description: `must be one of [Client]`,
 					},
 					"client_id": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Enter your Salesforce developer application's <a href="https://developer.salesforce.com/forums/?id=9062I000000DLgbQAG">Client ID</a>`,
 					},
 					"client_secret": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Enter your Salesforce developer application's <a href="https://developer.salesforce.com/forums/?id=9062I000000DLgbQAG">Client secret</a>`,
 					},
 					"is_sandbox": schema.BoolAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Toggle if you're using a <a href="https://help.salesforce.com/s/articleView?id=sf.deploy_sandboxes_parent.htm&type=5">Salesforce Sandbox</a>`,
 					},
 					"refresh_token": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Enter your application's <a href="https://developer.salesforce.com/docs/atlas.en-us.mobile_sdk.meta/mobile_sdk/oauth_refresh_token_flow.htm">Salesforce Refresh Token</a> used for Airbyte to access your Salesforce account.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -83,12 +85,14 @@ func (r *SourceSalesforceResource) Schema(ctx context.Context, req resource.Sche
 								"salesforce",
 							),
 						},
+						Description: `must be one of [salesforce]`,
 					},
 					"start_date": schema.StringAttribute{
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
+						Description: `Enter the date in the YYYY-MM-DD format. Airbyte will replicate the data added on and after this date. If this field is blank, Airbyte will replicate the data for last two years.`,
 					},
 					"streams_criteria": schema.ListNestedAttribute{
 						Optional: true,
@@ -108,12 +112,14 @@ func (r *SourceSalesforceResource) Schema(ctx context.Context, req resource.Sche
 											"not exacts",
 										),
 									},
+									Description: `must be one of [starts with, ends with, contains, exacts, starts not with, ends not with, not contains, not exacts]`,
 								},
 								"value": schema.StringAttribute{
 									Required: true,
 								},
 							},
 						},
+						Description: `Filter streams relevant to you`,
 					},
 				},
 			},
@@ -124,7 +130,8 @@ func (r *SourceSalesforceResource) Schema(ctx context.Context, req resource.Sche
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

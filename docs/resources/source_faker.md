@@ -23,7 +23,7 @@ SourceFaker Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,14 +35,14 @@ SourceFaker Resource
 
 Required:
 
-- `count` (Number)
-- `source_type` (String)
+- `count` (Number) How many users should be generated in total.  This setting does not apply to the purchases or products stream.
+- `source_type` (String) must be one of [faker]
 
 Optional:
 
-- `parallelism` (Number)
-- `records_per_slice` (Number)
-- `records_per_sync` (Number)
-- `seed` (Number)
+- `parallelism` (Number) How many parallel workers should we use to generate fake data?  Choose a value equal to the number of CPUs you will allocate to this source.
+- `records_per_slice` (Number) How many fake records will be in each page (stream slice), before a state message is emitted?
+- `records_per_sync` (Number) How many fake records will be returned for each sync, for each stream?  By default, it will take 2 syncs to create the requested 1000 records.
+- `seed` (Number) Manually control the faker random seed to return the same values on subsequent runs (leave -1 for random)
 
 

@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceCoinAPIResource{}
 var _ resource.ResourceWithImportState = &SourceCoinAPIResource{}
 
@@ -56,10 +53,15 @@ func (r *SourceCoinAPIResource) Schema(ctx context.Context, req resource.SchemaR
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `API Key`,
 					},
 					"end_date": schema.StringAttribute{
 						Optional: true,
+						MarkdownDescription: `The end date in ISO 8601 format. If not supplied, data will be returned` + "\n" +
+							`from the start date to the current time, or when the count of result` + "\n" +
+							`elements reaches its limit.` + "\n" +
+							``,
 					},
 					"environment": schema.StringAttribute{
 						Required: true,
@@ -69,14 +71,20 @@ func (r *SourceCoinAPIResource) Schema(ctx context.Context, req resource.SchemaR
 								"production",
 							),
 						},
-						MarkdownDescription: `The environment to use. Either sandbox or production.` + "\n" +
+						MarkdownDescription: `must be one of [sandbox, production]` + "\n" +
+							`The environment to use. Either sandbox or production.` + "\n" +
 							``,
 					},
 					"limit": schema.Int64Attribute{
 						Optional: true,
+						MarkdownDescription: `The maximum number of elements to return. If not supplied, the default` + "\n" +
+							`is 100. For numbers larger than 100, each 100 items is counted as one` + "\n" +
+							`request for pricing purposes. Maximum value is 100000.` + "\n" +
+							``,
 					},
 					"period": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The period to use. See the documentation for a list. https://docs.coinapi.io/#list-all-periods-get`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -85,12 +93,17 @@ func (r *SourceCoinAPIResource) Schema(ctx context.Context, req resource.SchemaR
 								"coin-api",
 							),
 						},
+						Description: `must be one of [coin-api]`,
 					},
 					"start_date": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The start date in ISO 8601 format.`,
 					},
 					"symbol_id": schema.StringAttribute{
 						Required: true,
+						MarkdownDescription: `The symbol ID to use. See the documentation for a list.` + "\n" +
+							`https://docs.coinapi.io/#list-all-symbols-get` + "\n" +
+							``,
 					},
 				},
 			},
@@ -101,7 +114,8 @@ func (r *SourceCoinAPIResource) Schema(ctx context.Context, req resource.SchemaR
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

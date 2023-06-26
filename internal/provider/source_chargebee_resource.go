@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceChargebeeResource{}
 var _ resource.ResourceWithImportState = &SourceChargebeeResource{}
 
@@ -64,13 +61,16 @@ func (r *SourceChargebeeResource) Schema(ctx context.Context, req resource.Schem
 								"2.0",
 							),
 						},
-						Description: `Product Catalog version of your Chargebee site. Instructions on how to find your version you may find <a href="https://apidocs.chargebee.com/docs/api?prod_cat_ver=2">here</a> under ` + "`" + `API Version` + "`" + ` section.`,
+						MarkdownDescription: `must be one of [1.0, 2.0]` + "\n" +
+							`Product Catalog version of your Chargebee site. Instructions on how to find your version you may find <a href="https://apidocs.chargebee.com/docs/api?prod_cat_ver=2">here</a> under ` + "`" + `API Version` + "`" + ` section.`,
 					},
 					"site": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The site prefix for your Chargebee instance.`,
 					},
 					"site_api_key": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Chargebee API Key. See the <a href="https://docs.airbyte.com/integrations/sources/chargebee">docs</a> for more information on how to obtain this key.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -79,12 +79,14 @@ func (r *SourceChargebeeResource) Schema(ctx context.Context, req resource.Schem
 								"chargebee",
 							),
 						},
+						Description: `must be one of [chargebee]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
+						Description: `UTC date and time in the format 2021-01-25T00:00:00Z. Any data before this date will not be replicated.`,
 					},
 				},
 			},
@@ -95,7 +97,8 @@ func (r *SourceChargebeeResource) Schema(ctx context.Context, req resource.Schem
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

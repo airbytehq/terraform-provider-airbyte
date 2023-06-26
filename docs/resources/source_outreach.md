@@ -23,7 +23,7 @@ SourceOutreach Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,11 +35,11 @@ SourceOutreach Resource
 
 Required:
 
-- `client_id` (String)
-- `client_secret` (String)
-- `redirect_uri` (String)
-- `refresh_token` (String)
-- `source_type` (String)
-- `start_date` (String)
+- `client_id` (String) The Client ID of your Outreach developer application.
+- `client_secret` (String) The Client Secret of your Outreach developer application.
+- `redirect_uri` (String) A Redirect URI is the location where the authorization server sends the user once the app has been successfully authorized and granted an authorization code or access token.
+- `refresh_token` (String) The token for obtaining the new access token.
+- `source_type` (String) must be one of [outreach]
+- `start_date` (String) The date from which you'd like to replicate data for Outreach API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 
 

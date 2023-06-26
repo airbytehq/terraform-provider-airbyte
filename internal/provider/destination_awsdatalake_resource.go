@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &DestinationAwsDatalakeResource{}
 var _ resource.ResourceWithImportState = &DestinationAwsDatalakeResource{}
 
@@ -56,13 +53,16 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"aws_account_id": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `target aws account id`,
 					},
 					"bucket_name": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The name of the S3 bucket. Read more <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html">here</a>.`,
 					},
 					"bucket_prefix": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `S3 prefix`,
 					},
 					"credentials": schema.SingleNestedAttribute{
 						Required: true,
@@ -77,10 +77,12 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 												"IAM Role",
 											),
 										},
-										Description: `Name of the credentials`,
+										MarkdownDescription: `must be one of [IAM Role]` + "\n" +
+											`Name of the credentials`,
 									},
 									"role_arn": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Will assume this role to write data to s3`,
 									},
 								},
 								Description: `Choose How to Authenticate to AWS.`,
@@ -89,10 +91,12 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"aws_access_key_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `AWS User Access Key Id`,
 									},
 									"aws_secret_access_key": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Secret Access Key`,
 									},
 									"credentials_title": schema.StringAttribute{
 										Required: true,
@@ -101,7 +105,8 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 												"IAM User",
 											),
 										},
-										Description: `Name of the credentials`,
+										MarkdownDescription: `must be one of [IAM User]` + "\n" +
+											`Name of the credentials`,
 									},
 								},
 								Description: `Choose How to Authenticate to AWS.`,
@@ -116,10 +121,12 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 												"IAM Role",
 											),
 										},
-										Description: `Name of the credentials`,
+										MarkdownDescription: `must be one of [IAM Role]` + "\n" +
+											`Name of the credentials`,
 									},
 									"role_arn": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Will assume this role to write data to s3`,
 									},
 								},
 								Description: `Choose How to Authenticate to AWS.`,
@@ -128,10 +135,12 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"aws_access_key_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `AWS User Access Key Id`,
 									},
 									"aws_secret_access_key": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Secret Access Key`,
 									},
 									"credentials_title": schema.StringAttribute{
 										Required: true,
@@ -140,7 +149,8 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 												"IAM User",
 											),
 										},
-										Description: `Name of the credentials`,
+										MarkdownDescription: `must be one of [IAM User]` + "\n" +
+											`Name of the credentials`,
 									},
 								},
 								Description: `Choose How to Authenticate to AWS.`,
@@ -149,6 +159,7 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+						Description: `Choose How to Authenticate to AWS.`,
 					},
 					"destination_type": schema.StringAttribute{
 						Required: true,
@@ -157,6 +168,7 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 								"aws-datalake",
 							),
 						},
+						Description: `must be one of [aws-datalake]`,
 					},
 					"format": schema.SingleNestedAttribute{
 						Optional: true,
@@ -172,7 +184,8 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 												"GZIP",
 											),
 										},
-										Description: `The compression algorithm used to compress data.`,
+										MarkdownDescription: `must be one of [UNCOMPRESSED, GZIP]` + "\n" +
+											`The compression algorithm used to compress data.`,
 									},
 									"format_type": schema.StringAttribute{
 										Required: true,
@@ -181,6 +194,7 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 												"JSONL",
 											),
 										},
+										Description: `must be one of [JSONL]`,
 									},
 								},
 								Description: `Format of the data output.`,
@@ -198,7 +212,8 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 												"ZSTD",
 											),
 										},
-										Description: `The compression algorithm used to compress data.`,
+										MarkdownDescription: `must be one of [UNCOMPRESSED, SNAPPY, GZIP, ZSTD]` + "\n" +
+											`The compression algorithm used to compress data.`,
 									},
 									"format_type": schema.StringAttribute{
 										Required: true,
@@ -207,6 +222,7 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 												"Parquet",
 											),
 										},
+										Description: `must be one of [Parquet]`,
 									},
 								},
 								Description: `Format of the data output.`,
@@ -222,7 +238,8 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 												"GZIP",
 											),
 										},
-										Description: `The compression algorithm used to compress data.`,
+										MarkdownDescription: `must be one of [UNCOMPRESSED, GZIP]` + "\n" +
+											`The compression algorithm used to compress data.`,
 									},
 									"format_type": schema.StringAttribute{
 										Required: true,
@@ -231,6 +248,7 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 												"JSONL",
 											),
 										},
+										Description: `must be one of [JSONL]`,
 									},
 								},
 								Description: `Format of the data output.`,
@@ -248,7 +266,8 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 												"ZSTD",
 											),
 										},
-										Description: `The compression algorithm used to compress data.`,
+										MarkdownDescription: `must be one of [UNCOMPRESSED, SNAPPY, GZIP, ZSTD]` + "\n" +
+											`The compression algorithm used to compress data.`,
 									},
 									"format_type": schema.StringAttribute{
 										Required: true,
@@ -257,6 +276,7 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 												"Parquet",
 											),
 										},
+										Description: `must be one of [Parquet]`,
 									},
 								},
 								Description: `Format of the data output.`,
@@ -265,21 +285,27 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+						Description: `Format of the data output.`,
 					},
 					"glue_catalog_float_as_decimal": schema.BoolAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Cast float/double as decimal(38,18). This can help achieve higher accuracy and represent numbers correctly as received from the source.`,
 					},
 					"lakeformation_database_default_tag_key": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Add a default tag key to databases created by this destination`,
 					},
 					"lakeformation_database_default_tag_values": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Add default values for the ` + "`" + `Tag Key` + "`" + ` to databases created by this destination. Comma separate for multiple values.`,
 					},
 					"lakeformation_database_name": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The default database this destination will use to create tables in per stream. Can be changed per connection by customizing the namespace.`,
 					},
 					"lakeformation_governed_tables": schema.BoolAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Whether to create tables as LF governed tables.`,
 					},
 					"partitioning": schema.StringAttribute{
 						Optional: true,
@@ -294,7 +320,8 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 								"YEAR/MONTH/DAY",
 							),
 						},
-						Description: `Partition data by cursor fields when a cursor field is a date`,
+						MarkdownDescription: `must be one of [NO PARTITIONING, DATE, YEAR, MONTH, DAY, YEAR/MONTH, YEAR/MONTH/DAY]` + "\n" +
+							`Partition data by cursor fields when a cursor field is a date`,
 					},
 					"region": schema.StringAttribute{
 						Required: true,
@@ -328,7 +355,8 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 								"us-gov-west-1",
 							),
 						},
-						Description: `The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes.`,
+						MarkdownDescription: `must be one of [, us-east-1, us-east-2, us-west-1, us-west-2, af-south-1, ap-east-1, ap-south-1, ap-northeast-1, ap-northeast-2, ap-northeast-3, ap-southeast-1, ap-southeast-2, ca-central-1, cn-north-1, cn-northwest-1, eu-central-1, eu-north-1, eu-south-1, eu-west-1, eu-west-2, eu-west-3, sa-east-1, me-south-1, us-gov-east-1, us-gov-west-1]` + "\n" +
+							`The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes.`,
 					},
 				},
 			},

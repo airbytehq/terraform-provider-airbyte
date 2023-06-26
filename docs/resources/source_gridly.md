@@ -23,7 +23,7 @@ SourceGridly Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -36,7 +36,7 @@ SourceGridly Resource
 Required:
 
 - `api_key` (String)
-- `grid_id` (String)
-- `source_type` (String)
+- `grid_id` (String) ID of a grid, or can be ID of a branch
+- `source_type` (String) must be one of [gridly]
 
 

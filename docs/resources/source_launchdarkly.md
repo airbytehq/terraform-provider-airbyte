@@ -23,7 +23,7 @@ SourceLaunchdarkly Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,7 +35,7 @@ SourceLaunchdarkly Resource
 
 Required:
 
-- `access_token` (String)
-- `source_type` (String)
+- `access_token` (String) Your Access token. See <a href="https://apidocs.launchdarkly.com/#section/Overview/Authentication">here</a>.
+- `source_type` (String) must be one of [launchdarkly]
 
 

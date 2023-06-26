@@ -23,7 +23,7 @@ SourceNetsuite Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,17 +35,17 @@ SourceNetsuite Resource
 
 Required:
 
-- `consumer_key` (String)
-- `consumer_secret` (String)
-- `realm` (String)
-- `source_type` (String)
-- `start_datetime` (String)
-- `token_key` (String)
-- `token_secret` (String)
+- `consumer_key` (String) Consumer key associated with your integration
+- `consumer_secret` (String) Consumer secret associated with your integration
+- `realm` (String) Netsuite realm e.g. 2344535, as for `production` or 2344535_SB1, as for the `sandbox`
+- `source_type` (String) must be one of [netsuite]
+- `start_datetime` (String) Starting point for your data replication, in format of "YYYY-MM-DDTHH:mm:ssZ"
+- `token_key` (String) Access token key
+- `token_secret` (String) Access token secret
 
 Optional:
 
-- `object_types` (List of String)
-- `window_in_days` (Number)
+- `object_types` (List of String) The API names of the Netsuite objects you want to sync. Setting this speeds up the connection setup process by limiting the number of schemas that need to be retrieved from Netsuite.
+- `window_in_days` (Number) The amount of days used to query the data with date chunks. Set smaller value, if you have lots of data.
 
 

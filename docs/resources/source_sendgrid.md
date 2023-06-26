@@ -23,7 +23,7 @@ SourceSendgrid Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,11 +35,11 @@ SourceSendgrid Resource
 
 Required:
 
-- `apikey` (String)
-- `source_type` (String)
+- `apikey` (String) API Key, use <a href="https://app.sendgrid.com/settings/api_keys/">admin</a> to generate this key.
+- `source_type` (String) must be one of [sendgrid]
 
 Optional:
 
-- `start_time` (String)
+- `start_time` (String) Start time in ISO8601 format. Any data before this time point will not be replicated.
 
 

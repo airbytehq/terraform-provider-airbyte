@@ -23,7 +23,7 @@ SourceFreshsales Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,8 +35,8 @@ SourceFreshsales Resource
 
 Required:
 
-- `api_key` (String)
-- `domain_name` (String)
-- `source_type` (String)
+- `api_key` (String) Freshsales API Key. See <a href="https://crmsupport.freshworks.com/support/solutions/articles/50000002503-how-to-find-my-api-key-">here</a>. The key is case sensitive.
+- `domain_name` (String) The Name of your Freshsales domain
+- `source_type` (String) must be one of [freshsales]
 
 

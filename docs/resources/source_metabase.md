@@ -23,7 +23,7 @@ SourceMetabase Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,13 +35,18 @@ SourceMetabase Resource
 
 Required:
 
-- `instance_api_url` (String)
-- `source_type` (String)
+- `instance_api_url` (String) URL to your metabase instance API
+- `source_type` (String) must be one of [metabase]
 
 Optional:
 
 - `password` (String)
-- `session_token` (String)
+- `session_token` (String) To generate your session token, you need to run the following command: ``` curl -X POST \
+  -H "Content-Type: application/json" \
+  -d '{"username": "person@metabase.com", "password": "fakepassword"}' \
+  http://localhost:3000/api/session
+``` Then copy the value of the `id` field returned by a successful call to that API.
+Note that by default, sessions are good for 14 days and needs to be regenerated.
 - `username` (String)
 
 

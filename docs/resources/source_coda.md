@@ -23,7 +23,7 @@ SourceCoda Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,7 +35,7 @@ SourceCoda Resource
 
 Required:
 
-- `auth_token` (String)
-- `source_type` (String)
+- `auth_token` (String) Bearer token
+- `source_type` (String) must be one of [coda]
 
 

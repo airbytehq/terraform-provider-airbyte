@@ -23,7 +23,7 @@ SourceUsCensus Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,12 +35,12 @@ SourceUsCensus Resource
 
 Required:
 
-- `api_key` (String)
-- `query_path` (String)
-- `source_type` (String)
+- `api_key` (String) Your API Key. Get your key <a href="https://api.census.gov/data/key_signup.html">here</a>.
+- `query_path` (String) The path portion of the GET request
+- `source_type` (String) must be one of [us-census]
 
 Optional:
 
-- `query_params` (String)
+- `query_params` (String) The query parameters portion of the GET request, without the api key
 
 

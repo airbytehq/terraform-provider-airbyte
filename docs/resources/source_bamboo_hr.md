@@ -23,7 +23,7 @@ SourceBambooHr Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,13 +35,13 @@ SourceBambooHr Resource
 
 Required:
 
-- `api_key` (String)
-- `source_type` (String)
-- `subdomain` (String)
+- `api_key` (String) Api key of bamboo hr
+- `source_type` (String) must be one of [bamboo-hr]
+- `subdomain` (String) Sub Domain of bamboo hr
 
 Optional:
 
-- `custom_reports_fields` (String)
-- `custom_reports_include_default_fields` (Boolean)
+- `custom_reports_fields` (String) Comma-separated list of fields to include in custom reports.
+- `custom_reports_include_default_fields` (Boolean) If true, the custom reports endpoint will include the default fields defined here: https://documentation.bamboohr.com/docs/list-of-field-names.
 
 

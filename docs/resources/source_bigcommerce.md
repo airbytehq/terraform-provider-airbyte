@@ -23,7 +23,7 @@ SourceBigcommerce Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,9 +35,9 @@ SourceBigcommerce Resource
 
 Required:
 
-- `access_token` (String)
-- `source_type` (String)
-- `start_date` (String)
-- `store_hash` (String)
+- `access_token` (String) Access Token for making authenticated requests.
+- `source_type` (String) must be one of [bigcommerce]
+- `start_date` (String) The date you would like to replicate data. Format: YYYY-MM-DD.
+- `store_hash` (String) The hash code of the store. For https://api.bigcommerce.com/stores/HASH_CODE/v3/, The store's hash code is 'HASH_CODE'.
 
 

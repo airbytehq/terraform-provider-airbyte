@@ -23,7 +23,7 @@ SourceGetlago Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,7 +35,7 @@ SourceGetlago Resource
 
 Required:
 
-- `api_key` (String)
-- `source_type` (String)
+- `api_key` (String) Your API Key. See <a href="https://doc.getlago.com/docs/api/intro">here</a>.
+- `source_type` (String) must be one of [getlago]
 
 

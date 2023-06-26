@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceSalesloftResource{}
 var _ resource.ResourceWithImportState = &SourceSalesloftResource{}
 
@@ -63,7 +60,8 @@ func (r *SourceSalesloftResource) Schema(ctx context.Context, req resource.Schem
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_key": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `API Key for making authenticated requests. More instruction on how to find this value in our <a href="https://docs.airbyte.com/integrations/sources/salesloft#setup-guide">docs</a>`,
 									},
 									"auth_type": schema.StringAttribute{
 										Required: true,
@@ -72,6 +70,7 @@ func (r *SourceSalesloftResource) Schema(ctx context.Context, req resource.Schem
 												"api_key",
 											),
 										},
+										Description: `must be one of [api_key]`,
 									},
 								},
 							},
@@ -79,7 +78,8 @@ func (r *SourceSalesloftResource) Schema(ctx context.Context, req resource.Schem
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Access Token for making authenticated requests.`,
 									},
 									"auth_type": schema.StringAttribute{
 										Required: true,
@@ -88,21 +88,26 @@ func (r *SourceSalesloftResource) Schema(ctx context.Context, req resource.Schem
 												"oauth2.0",
 											),
 										},
+										Description: `must be one of [oauth2.0]`,
 									},
 									"client_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Client ID of your Salesloft developer application.`,
 									},
 									"client_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Client Secret of your Salesloft developer application.`,
 									},
 									"refresh_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The token for obtaining a new access token.`,
 									},
 									"token_expiry_date": schema.StringAttribute{
 										Required: true,
 										Validators: []validator.String{
 											validators.IsRFC3339(),
 										},
+										Description: `The date-time when the access token should be refreshed.`,
 									},
 								},
 							},
@@ -110,7 +115,8 @@ func (r *SourceSalesloftResource) Schema(ctx context.Context, req resource.Schem
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_key": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `API Key for making authenticated requests. More instruction on how to find this value in our <a href="https://docs.airbyte.com/integrations/sources/salesloft#setup-guide">docs</a>`,
 									},
 									"auth_type": schema.StringAttribute{
 										Required: true,
@@ -119,6 +125,7 @@ func (r *SourceSalesloftResource) Schema(ctx context.Context, req resource.Schem
 												"api_key",
 											),
 										},
+										Description: `must be one of [api_key]`,
 									},
 								},
 							},
@@ -126,7 +133,8 @@ func (r *SourceSalesloftResource) Schema(ctx context.Context, req resource.Schem
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Access Token for making authenticated requests.`,
 									},
 									"auth_type": schema.StringAttribute{
 										Required: true,
@@ -135,21 +143,26 @@ func (r *SourceSalesloftResource) Schema(ctx context.Context, req resource.Schem
 												"oauth2.0",
 											),
 										},
+										Description: `must be one of [oauth2.0]`,
 									},
 									"client_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Client ID of your Salesloft developer application.`,
 									},
 									"client_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The Client Secret of your Salesloft developer application.`,
 									},
 									"refresh_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The token for obtaining a new access token.`,
 									},
 									"token_expiry_date": schema.StringAttribute{
 										Required: true,
 										Validators: []validator.String{
 											validators.IsRFC3339(),
 										},
+										Description: `The date-time when the access token should be refreshed.`,
 									},
 								},
 							},
@@ -165,12 +178,14 @@ func (r *SourceSalesloftResource) Schema(ctx context.Context, req resource.Schem
 								"salesloft",
 							),
 						},
+						Description: `must be one of [salesloft]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
+						Description: `The date from which you'd like to replicate data for Salesloft API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.`,
 					},
 				},
 			},
@@ -181,7 +196,8 @@ func (r *SourceSalesloftResource) Schema(ctx context.Context, req resource.Schem
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

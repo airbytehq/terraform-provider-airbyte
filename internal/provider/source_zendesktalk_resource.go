@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceZendeskTalkResource{}
 var _ resource.ResourceWithImportState = &SourceZendeskTalkResource{}
 
@@ -63,7 +60,8 @@ func (r *SourceZendeskTalkResource) Schema(ctx context.Context, req resource.Sch
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The value of the API token generated. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk-talk">docs</a> for more information.`,
 									},
 									"auth_type": schema.StringAttribute{
 										Optional: true,
@@ -72,9 +70,11 @@ func (r *SourceZendeskTalkResource) Schema(ctx context.Context, req resource.Sch
 												"api_token",
 											),
 										},
+										Description: `must be one of [api_token]`,
 									},
 									"email": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The user email for your Zendesk account.`,
 									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
@@ -90,7 +90,8 @@ func (r *SourceZendeskTalkResource) Schema(ctx context.Context, req resource.Sch
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The value of the API token generated. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk-talk">docs</a> for more information.`,
 									},
 									"auth_type": schema.StringAttribute{
 										Optional: true,
@@ -99,6 +100,7 @@ func (r *SourceZendeskTalkResource) Schema(ctx context.Context, req resource.Sch
 												"oauth2.0",
 											),
 										},
+										Description: `must be one of [oauth2.0]`,
 									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
@@ -114,7 +116,8 @@ func (r *SourceZendeskTalkResource) Schema(ctx context.Context, req resource.Sch
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The value of the API token generated. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk-talk">docs</a> for more information.`,
 									},
 									"auth_type": schema.StringAttribute{
 										Optional: true,
@@ -123,9 +126,11 @@ func (r *SourceZendeskTalkResource) Schema(ctx context.Context, req resource.Sch
 												"api_token",
 											),
 										},
+										Description: `must be one of [api_token]`,
 									},
 									"email": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The user email for your Zendesk account.`,
 									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
@@ -141,7 +146,8 @@ func (r *SourceZendeskTalkResource) Schema(ctx context.Context, req resource.Sch
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `The value of the API token generated. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk-talk">docs</a> for more information.`,
 									},
 									"auth_type": schema.StringAttribute{
 										Optional: true,
@@ -150,6 +156,7 @@ func (r *SourceZendeskTalkResource) Schema(ctx context.Context, req resource.Sch
 												"oauth2.0",
 											),
 										},
+										Description: `must be one of [oauth2.0]`,
 									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
@@ -165,6 +172,7 @@ func (r *SourceZendeskTalkResource) Schema(ctx context.Context, req resource.Sch
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+						Description: `Zendesk service provides two authentication methods. Choose between: ` + "`" + `OAuth2.0` + "`" + ` or ` + "`" + `API token` + "`" + `.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -173,15 +181,18 @@ func (r *SourceZendeskTalkResource) Schema(ctx context.Context, req resource.Sch
 								"zendesk-talk",
 							),
 						},
+						Description: `must be one of [zendesk-talk]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
+						Description: `The date from which you'd like to replicate data for Zendesk Talk API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.`,
 					},
 					"subdomain": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `This is your Zendesk subdomain that can be found in your account URL. For example, in https://{MY_SUBDOMAIN}.zendesk.com/, where MY_SUBDOMAIN is the value of your subdomain.`,
 					},
 				},
 			},
@@ -192,7 +203,8 @@ func (r *SourceZendeskTalkResource) Schema(ctx context.Context, req resource.Sch
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

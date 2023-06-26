@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourcePaypalTransactionResource{}
 var _ resource.ResourceWithImportState = &SourcePaypalTransactionResource{}
 
@@ -57,16 +54,20 @@ func (r *SourcePaypalTransactionResource) Schema(ctx context.Context, req resour
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"client_id": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The Client ID of your Paypal developer application.`,
 					},
 					"client_secret": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The Client Secret of your Paypal developer application.`,
 					},
 					"is_sandbox": schema.BoolAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Determines whether to use the sandbox or production environment.`,
 					},
 					"refresh_token": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The key to refresh the expired access token.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -75,12 +76,14 @@ func (r *SourcePaypalTransactionResource) Schema(ctx context.Context, req resour
 								"paypal-transaction",
 							),
 						},
+						Description: `must be one of [paypal-transaction]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
+						Description: `Start Date for data extraction in <a href="https://datatracker.ietf.org/doc/html/rfc3339#section-5.6">ISO format</a>. Date must be in range from 3 years till 12 hrs before present time.`,
 					},
 				},
 			},
@@ -91,7 +94,8 @@ func (r *SourcePaypalTransactionResource) Schema(ctx context.Context, req resour
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

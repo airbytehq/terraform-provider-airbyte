@@ -23,7 +23,7 @@ SourceAzureTable Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,12 +35,12 @@ SourceAzureTable Resource
 
 Required:
 
-- `source_type` (String)
-- `storage_access_key` (String)
-- `storage_account_name` (String)
+- `source_type` (String) must be one of [azure-table]
+- `storage_access_key` (String) Azure Table Storage Access Key. See the <a href="https://docs.airbyte.com/integrations/sources/azure-table">docs</a> for more information on how to obtain this key.
+- `storage_account_name` (String) The name of your storage account.
 
 Optional:
 
-- `storage_endpoint_suffix` (String)
+- `storage_endpoint_suffix` (String) Azure Table Storage service account URL suffix. See the <a href="https://docs.airbyte.com/integrations/sources/azure-table">docs</a> for more information on how to obtain endpoint suffix
 
 

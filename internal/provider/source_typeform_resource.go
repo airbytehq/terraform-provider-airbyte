@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceTypeformResource{}
 var _ resource.ResourceWithImportState = &SourceTypeformResource{}
 
@@ -59,6 +56,7 @@ func (r *SourceTypeformResource) Schema(ctx context.Context, req resource.Schema
 					"form_ids": schema.ListAttribute{
 						Optional:    true,
 						ElementType: types.StringType,
+						Description: `When this parameter is set, the connector will replicate data only from the input forms. Otherwise, all forms in your Typeform account will be replicated. You can find form IDs in your form URLs. For example, in the URL "https://mysite.typeform.com/to/u6nXL7" the form_id is u6nXL7. You can find form URLs on Share panel`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -67,15 +65,18 @@ func (r *SourceTypeformResource) Schema(ctx context.Context, req resource.Schema
 								"typeform",
 							),
 						},
+						Description: `must be one of [typeform]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
+						Description: `UTC date and time in the format: YYYY-MM-DDTHH:mm:ss[Z]. Any data before this date will not be replicated.`,
 					},
 					"token": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The API Token for a Typeform account.`,
 					},
 				},
 			},
@@ -86,7 +87,8 @@ func (r *SourceTypeformResource) Schema(ctx context.Context, req resource.Schema
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

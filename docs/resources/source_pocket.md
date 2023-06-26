@@ -23,7 +23,7 @@ SourcePocket Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,20 +35,24 @@ SourcePocket Resource
 
 Required:
 
-- `access_token` (String)
-- `consumer_key` (String)
-- `source_type` (String)
+- `access_token` (String) The user's Pocket access token.
+- `consumer_key` (String) Your application's Consumer Key.
+- `source_type` (String) must be one of [pocket]
 
 Optional:
 
-- `content_type` (String) Select the content type of the items to retrieve.
-- `detail_type` (String) Select the granularity of the information about each item.
-- `domain` (String)
-- `favorite` (Boolean)
-- `search` (String)
-- `since` (String)
-- `sort` (String) Sort retrieved items by the given criteria.
-- `state` (String) Select the state of the items to retrieve.
-- `tag` (String)
+- `content_type` (String) must be one of [article, video, image]
+Select the content type of the items to retrieve.
+- `detail_type` (String) must be one of [simple, complete]
+Select the granularity of the information about each item.
+- `domain` (String) Only return items from a particular `domain`.
+- `favorite` (Boolean) Retrieve only favorited items.
+- `search` (String) Only return items whose title or url contain the `search` string.
+- `since` (String) Only return items modified since the given timestamp.
+- `sort` (String) must be one of [newest, oldest, title, site]
+Sort retrieved items by the given criteria.
+- `state` (String) must be one of [unread, archive, all]
+Select the state of the items to retrieve.
+- `tag` (String) Return only items tagged with this tag name. Use _untagged_ for retrieving only untagged items.
 
 

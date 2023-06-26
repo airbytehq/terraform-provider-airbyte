@@ -31,17 +31,17 @@ DestinationFirebolt Resource
 
 Required:
 
-- `database` (String)
-- `destination_type` (String)
-- `password` (String)
-- `username` (String)
+- `database` (String) The database to connect to.
+- `destination_type` (String) must be one of [firebolt]
+- `password` (String) Firebolt password.
+- `username` (String) Firebolt email address you use to login.
 
 Optional:
 
-- `account` (String)
-- `engine` (String)
-- `host` (String)
-- `loading_method` (Attributes) (see [below for nested schema](#nestedatt--configuration--loading_method))
+- `account` (String) Firebolt account to login.
+- `engine` (String) Engine name or url to connect to.
+- `host` (String) The host name of your Firebolt database.
+- `loading_method` (Attributes) Loading method used to select the way data will be uploaded to Firebolt (see [below for nested schema](#nestedatt--configuration--loading_method))
 
 <a id="nestedatt--configuration--loading_method"></a>
 ### Nested Schema for `configuration.loading_method`
@@ -58,11 +58,11 @@ Optional:
 
 Required:
 
-- `aws_key_id` (String)
-- `aws_key_secret` (String)
-- `method` (String)
-- `s3_bucket` (String)
-- `s3_region` (String)
+- `aws_key_id` (String) AWS access key granting read and write access to S3.
+- `aws_key_secret` (String) Corresponding secret part of the AWS Key
+- `method` (String) must be one of [S3]
+- `s3_bucket` (String) The name of the S3 bucket.
+- `s3_region` (String) Region name of the S3 bucket.
 
 
 <a id="nestedatt--configuration--loading_method--destination_firebolt_loading_method_sql_inserts"></a>
@@ -70,7 +70,7 @@ Required:
 
 Required:
 
-- `method` (String)
+- `method` (String) must be one of [SQL]
 
 
 <a id="nestedatt--configuration--loading_method--destination_firebolt_update_loading_method_external_table_via_s3"></a>
@@ -78,11 +78,11 @@ Required:
 
 Required:
 
-- `aws_key_id` (String)
-- `aws_key_secret` (String)
-- `method` (String)
-- `s3_bucket` (String)
-- `s3_region` (String)
+- `aws_key_id` (String) AWS access key granting read and write access to S3.
+- `aws_key_secret` (String) Corresponding secret part of the AWS Key
+- `method` (String) must be one of [S3]
+- `s3_bucket` (String) The name of the S3 bucket.
+- `s3_region` (String) Region name of the S3 bucket.
 
 
 <a id="nestedatt--configuration--loading_method--destination_firebolt_update_loading_method_sql_inserts"></a>
@@ -90,6 +90,6 @@ Required:
 
 Required:
 
-- `method` (String)
+- `method` (String) must be one of [SQL]
 
 

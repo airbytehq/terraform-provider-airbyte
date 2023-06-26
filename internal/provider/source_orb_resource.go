@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceOrbResource{}
 var _ resource.ResourceWithImportState = &SourceOrbResource{}
 
@@ -56,17 +53,21 @@ func (r *SourceOrbResource) Schema(ctx context.Context, req resource.SchemaReque
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Orb API Key, issued from the Orb admin console.`,
 					},
 					"lookback_window_days": schema.Int64Attribute{
-						Optional: true,
+						Optional:    true,
+						Description: `When set to N, the connector will always refresh resources created within the past N days. By default, updated objects that are not newly created are not incrementally synced.`,
 					},
 					"numeric_event_properties_keys": schema.ListAttribute{
 						Optional:    true,
 						ElementType: types.StringType,
+						Description: `Property key names to extract from all events, in order to enrich ledger entries corresponding to an event deduction.`,
 					},
 					"plan_id": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Orb Plan ID to filter subscriptions that should have usage fetched.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -75,16 +76,20 @@ func (r *SourceOrbResource) Schema(ctx context.Context, req resource.SchemaReque
 								"orb",
 							),
 						},
+						Description: `must be one of [orb]`,
 					},
 					"start_date": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `UTC date and time in the format 2022-03-01T00:00:00Z. Any data with created_at before this data will not be synced. For Subscription Usage, this becomes the ` + "`" + `timeframe_start` + "`" + ` API parameter.`,
 					},
 					"string_event_properties_keys": schema.ListAttribute{
 						Optional:    true,
 						ElementType: types.StringType,
+						Description: `Property key names to extract from all events, in order to enrich ledger entries corresponding to an event deduction.`,
 					},
 					"subscription_usage_grouping_key": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Property key name to group subscription usage by.`,
 					},
 				},
 			},
@@ -95,7 +100,8 @@ func (r *SourceOrbResource) Schema(ctx context.Context, req resource.SchemaReque
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &DestinationAmazonSqsResource{}
 var _ resource.ResourceWithImportState = &DestinationAmazonSqsResource{}
 
@@ -55,7 +52,8 @@ func (r *DestinationAmazonSqsResource) Schema(ctx context.Context, req resource.
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"access_key": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The Access Key ID of the AWS IAM Role to use for sending  messages`,
 					},
 					"destination_type": schema.StringAttribute{
 						Required: true,
@@ -64,18 +62,23 @@ func (r *DestinationAmazonSqsResource) Schema(ctx context.Context, req resource.
 								"amazon-sqs",
 							),
 						},
+						Description: `must be one of [amazon-sqs]`,
 					},
 					"message_body_key": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Use this property to extract the contents of the named key in the input record to use as the SQS message body. If not set, the entire content of the input record data is used as the message body.`,
 					},
 					"message_delay": schema.Int64Attribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Modify the Message Delay of the individual message from the Queue's default (seconds).`,
 					},
 					"message_group_id": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The tag that specifies that a message belongs to a specific message group. This parameter applies only to, and is REQUIRED by, FIFO queues.`,
 					},
 					"queue_url": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `URL of the SQS Queue`,
 					},
 					"region": schema.StringAttribute{
 						Required: true,
@@ -108,10 +111,12 @@ func (r *DestinationAmazonSqsResource) Schema(ctx context.Context, req resource.
 								"us-gov-west-1",
 							),
 						},
-						Description: `AWS Region of the SQS Queue`,
+						MarkdownDescription: `must be one of [us-east-1, us-east-2, us-west-1, us-west-2, af-south-1, ap-east-1, ap-south-1, ap-northeast-1, ap-northeast-2, ap-northeast-3, ap-southeast-1, ap-southeast-2, ca-central-1, cn-north-1, cn-northwest-1, eu-central-1, eu-north-1, eu-south-1, eu-west-1, eu-west-2, eu-west-3, sa-east-1, me-south-1, us-gov-east-1, us-gov-west-1]` + "\n" +
+							`AWS Region of the SQS Queue`,
 					},
 					"secret_key": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The Secret Key of the AWS IAM Role to use for sending messages`,
 					},
 				},
 			},

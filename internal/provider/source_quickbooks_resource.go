@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceQuickbooksResource{}
 var _ resource.ResourceWithImportState = &SourceQuickbooksResource{}
 
@@ -63,7 +60,8 @@ func (r *SourceQuickbooksResource) Schema(ctx context.Context, req resource.Sche
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Access token fot making authenticated requests.`,
 									},
 									"auth_type": schema.StringAttribute{
 										Optional: true,
@@ -72,24 +70,30 @@ func (r *SourceQuickbooksResource) Schema(ctx context.Context, req resource.Sche
 												"oauth2.0",
 											),
 										},
+										Description: `must be one of [oauth2.0]`,
 									},
 									"client_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Identifies which app is making the request. Obtain this value from the Keys tab on the app profile via My Apps on the developer site. There are two versions of this key: development and production.`,
 									},
 									"client_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: ` Obtain this value from the Keys tab on the app profile via My Apps on the developer site. There are two versions of this key: development and production.`,
 									},
 									"realm_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Labeled Company ID. The Make API Calls panel is populated with the realm id and the current access token.`,
 									},
 									"refresh_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `A token used when refreshing the access token.`,
 									},
 									"token_expiry_date": schema.StringAttribute{
 										Required: true,
 										Validators: []validator.String{
 											validators.IsRFC3339(),
 										},
+										Description: `The date-time when the access token should be refreshed.`,
 									},
 								},
 							},
@@ -97,7 +101,8 @@ func (r *SourceQuickbooksResource) Schema(ctx context.Context, req resource.Sche
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Access token fot making authenticated requests.`,
 									},
 									"auth_type": schema.StringAttribute{
 										Optional: true,
@@ -106,24 +111,30 @@ func (r *SourceQuickbooksResource) Schema(ctx context.Context, req resource.Sche
 												"oauth2.0",
 											),
 										},
+										Description: `must be one of [oauth2.0]`,
 									},
 									"client_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Identifies which app is making the request. Obtain this value from the Keys tab on the app profile via My Apps on the developer site. There are two versions of this key: development and production.`,
 									},
 									"client_secret": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: ` Obtain this value from the Keys tab on the app profile via My Apps on the developer site. There are two versions of this key: development and production.`,
 									},
 									"realm_id": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Labeled Company ID. The Make API Calls panel is populated with the realm id and the current access token.`,
 									},
 									"refresh_token": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `A token used when refreshing the access token.`,
 									},
 									"token_expiry_date": schema.StringAttribute{
 										Required: true,
 										Validators: []validator.String{
 											validators.IsRFC3339(),
 										},
+										Description: `The date-time when the access token should be refreshed.`,
 									},
 								},
 							},
@@ -133,7 +144,8 @@ func (r *SourceQuickbooksResource) Schema(ctx context.Context, req resource.Sche
 						},
 					},
 					"sandbox": schema.BoolAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Determines whether to use the sandbox or production environment.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -142,12 +154,14 @@ func (r *SourceQuickbooksResource) Schema(ctx context.Context, req resource.Sche
 								"quickbooks",
 							),
 						},
+						Description: `must be one of [quickbooks]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
+						Description: `The default value to use if no bookmark exists for an endpoint (rfc3339 date string). E.g, 2021-03-20T00:00:00+00:00. Any data before this date will not be replicated.`,
 					},
 				},
 			},
@@ -158,7 +172,8 @@ func (r *SourceQuickbooksResource) Schema(ctx context.Context, req resource.Sche
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

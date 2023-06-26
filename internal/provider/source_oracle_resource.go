@@ -12,16 +12,13 @@ import (
 	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &SourceOracleResource{}
 var _ resource.ResourceWithImportState = &SourceOracleResource{}
 
@@ -69,6 +66,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 												"service_name",
 											),
 										},
+										Description: `must be one of [service_name]`,
 									},
 									"service_name": schema.StringAttribute{
 										Required: true,
@@ -86,6 +84,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 												"sid",
 											),
 										},
+										Description: `must be one of [sid]`,
 									},
 									"sid": schema.StringAttribute{
 										Required: true,
@@ -103,6 +102,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 												"service_name",
 											),
 										},
+										Description: `must be one of [service_name]`,
 									},
 									"service_name": schema.StringAttribute{
 										Required: true,
@@ -120,6 +120,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 												"sid",
 											),
 										},
+										Description: `must be one of [sid]`,
 									},
 									"sid": schema.StringAttribute{
 										Required: true,
@@ -131,6 +132,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+						Description: `Connect data that will be used for DB connection`,
 					},
 					"encryption": schema.SingleNestedAttribute{
 						Required: true,
@@ -147,7 +149,8 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 												"3DES168",
 											),
 										},
-										Description: `This parameter defines what encryption algorithm is used.`,
+										MarkdownDescription: `must be one of [AES256, RC4_56, 3DES168]` + "\n" +
+											`This parameter defines what encryption algorithm is used.`,
 									},
 									"encryption_method": schema.StringAttribute{
 										Required: true,
@@ -156,6 +159,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 												"client_nne",
 											),
 										},
+										Description: `must be one of [client_nne]`,
 									},
 								},
 								Description: `The native network encryption gives you the ability to encrypt database connections, without the configuration overhead of TCP/IP and SSL/TLS and without the need to open and listen on different ports.`,
@@ -170,9 +174,11 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 												"encrypted_verify_certificate",
 											),
 										},
+										Description: `must be one of [encrypted_verify_certificate]`,
 									},
 									"ssl_certificate": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Privacy Enhanced Mail (PEM) files are concatenated certificate containers frequently used in certificate installations.`,
 									},
 								},
 								Description: `Verify and use the certificate provided by the server.`,
@@ -189,7 +195,8 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 												"3DES168",
 											),
 										},
-										Description: `This parameter defines what encryption algorithm is used.`,
+										MarkdownDescription: `must be one of [AES256, RC4_56, 3DES168]` + "\n" +
+											`This parameter defines what encryption algorithm is used.`,
 									},
 									"encryption_method": schema.StringAttribute{
 										Required: true,
@@ -198,6 +205,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 												"client_nne",
 											),
 										},
+										Description: `must be one of [client_nne]`,
 									},
 								},
 								Description: `The native network encryption gives you the ability to encrypt database connections, without the configuration overhead of TCP/IP and SSL/TLS and without the need to open and listen on different ports.`,
@@ -212,9 +220,11 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 												"encrypted_verify_certificate",
 											),
 										},
+										Description: `must be one of [encrypted_verify_certificate]`,
 									},
 									"ssl_certificate": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Privacy Enhanced Mail (PEM) files are concatenated certificate containers frequently used in certificate installations.`,
 									},
 								},
 								Description: `Verify and use the certificate provided by the server.`,
@@ -223,22 +233,31 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+						Description: `The encryption method with is used when communicating with the database.`,
 					},
 					"host": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `Hostname of the database.`,
 					},
 					"jdbc_url_params": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).`,
 					},
 					"password": schema.StringAttribute{
-						Optional: true,
+						Optional:    true,
+						Description: `The password associated with the username.`,
 					},
 					"port": schema.Int64Attribute{
 						Required: true,
+						MarkdownDescription: `Port of the database.` + "\n" +
+							`Oracle Corporations recommends the following port numbers:` + "\n" +
+							`1521 - Default listening port for client connections to the listener. ` + "\n" +
+							`2484 - Recommended and officially registered listening port for client connections to the listener using TCP/IP with SSL`,
 					},
 					"schemas": schema.ListAttribute{
 						Optional:    true,
 						ElementType: types.StringType,
+						Description: `The list of schemas to sync from. Defaults to user. Case sensitive.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -247,6 +266,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 								"oracle",
 							),
 						},
+						Description: `must be one of [oracle]`,
 					},
 					"tunnel_method": schema.SingleNestedAttribute{
 						Optional: true,
@@ -261,7 +281,8 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 												"NO_TUNNEL",
 											),
 										},
-										Description: `No ssh tunnel needed to connect to database`,
+										MarkdownDescription: `must be one of [NO_TUNNEL]` + "\n" +
+											`No ssh tunnel needed to connect to database`,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -270,7 +291,8 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_host": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
 									"tunnel_method": schema.StringAttribute{
 										Required: true,
@@ -279,16 +301,20 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 												"SSH_PASSWORD_AUTH",
 											),
 										},
-										Description: `Connect through a jump server tunnel host using username and password authentication`,
+										MarkdownDescription: `must be one of [SSH_PASSWORD_AUTH]` + "\n" +
+											`Connect through a jump server tunnel host using username and password authentication`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										Required: true,
+										Required:    true,
+										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level username for logging into the jump server host`,
 									},
 									"tunnel_user_password": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level password for logging into the jump server host`,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -297,10 +323,12 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )`,
 									},
 									"tunnel_host": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
 									"tunnel_method": schema.StringAttribute{
 										Required: true,
@@ -309,13 +337,16 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 												"SSH_KEY_AUTH",
 											),
 										},
-										Description: `Connect through a jump server tunnel host using username and ssh key`,
+										MarkdownDescription: `must be one of [SSH_KEY_AUTH]` + "\n" +
+											`Connect through a jump server tunnel host using username and ssh key`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										Required: true,
+										Required:    true,
+										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level username for logging into the jump server host.`,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -330,7 +361,8 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 												"NO_TUNNEL",
 											),
 										},
-										Description: `No ssh tunnel needed to connect to database`,
+										MarkdownDescription: `must be one of [NO_TUNNEL]` + "\n" +
+											`No ssh tunnel needed to connect to database`,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -339,7 +371,8 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"tunnel_host": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
 									"tunnel_method": schema.StringAttribute{
 										Required: true,
@@ -348,16 +381,20 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 												"SSH_PASSWORD_AUTH",
 											),
 										},
-										Description: `Connect through a jump server tunnel host using username and password authentication`,
+										MarkdownDescription: `must be one of [SSH_PASSWORD_AUTH]` + "\n" +
+											`Connect through a jump server tunnel host using username and password authentication`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										Required: true,
+										Required:    true,
+										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level username for logging into the jump server host`,
 									},
 									"tunnel_user_password": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level password for logging into the jump server host`,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -366,10 +403,12 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"ssh_key": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )`,
 									},
 									"tunnel_host": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `Hostname of the jump server host that allows inbound ssh tunnel.`,
 									},
 									"tunnel_method": schema.StringAttribute{
 										Required: true,
@@ -378,13 +417,16 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 												"SSH_KEY_AUTH",
 											),
 										},
-										Description: `Connect through a jump server tunnel host using username and ssh key`,
+										MarkdownDescription: `must be one of [SSH_KEY_AUTH]` + "\n" +
+											`Connect through a jump server tunnel host using username and ssh key`,
 									},
 									"tunnel_port": schema.Int64Attribute{
-										Required: true,
+										Required:    true,
+										Description: `Port on the proxy/jump server that accepts inbound ssh connections.`,
 									},
 									"tunnel_user": schema.StringAttribute{
-										Required: true,
+										Required:    true,
+										Description: `OS-level username for logging into the jump server host.`,
 									},
 								},
 								Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
@@ -393,9 +435,11 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
+						Description: `Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.`,
 					},
 					"username": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The username which is used to access the database.`,
 					},
 				},
 			},
@@ -406,7 +450,8 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 				Required: true,
 			},
 			"secret_id": schema.StringAttribute{
-				Optional: true,
+				Optional:    true,
+				Description: `Optional secretID obtained through the public API OAuth redirect flow.`,
 			},
 			"source_id": schema.StringAttribute{
 				Computed: true,

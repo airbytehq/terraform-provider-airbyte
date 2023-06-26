@@ -11,16 +11,13 @@ import (
 	"airbyte/internal/sdk/pkg/models/operations"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/path"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
-
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
+	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
+	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-)
-
-// Ensure provider defined types fully satisfy framework interfaces.
+) // Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &DestinationCumulioResource{}
 var _ resource.ResourceWithImportState = &DestinationCumulioResource{}
 
@@ -55,13 +52,16 @@ func (r *DestinationCumulioResource) Schema(ctx context.Context, req resource.Sc
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"api_host": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `URL of the Cumul.io API (e.g. 'https://api.cumul.io', 'https://api.us.cumul.io', or VPC-specific API url). Defaults to 'https://api.cumul.io'.`,
 					},
 					"api_key": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `An API key generated in Cumul.io's platform (can be generated here: https://app.cumul.io/start/profile/integration).`,
 					},
 					"api_token": schema.StringAttribute{
-						Required: true,
+						Required:    true,
+						Description: `The corresponding API token generated in Cumul.io's platform (can be generated here: https://app.cumul.io/start/profile/integration).`,
 					},
 					"destination_type": schema.StringAttribute{
 						Required: true,
@@ -70,6 +70,7 @@ func (r *DestinationCumulioResource) Schema(ctx context.Context, req resource.Sc
 								"cumulio",
 							),
 						},
+						Description: `must be one of [cumulio]`,
 					},
 				},
 			},

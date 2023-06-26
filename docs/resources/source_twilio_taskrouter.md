@@ -23,7 +23,7 @@ SourceTwilioTaskrouter Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,8 +35,8 @@ SourceTwilioTaskrouter Resource
 
 Required:
 
-- `account_sid` (String)
-- `auth_token` (String)
-- `source_type` (String)
+- `account_sid` (String) Twilio Account ID
+- `auth_token` (String) Twilio Auth Token
+- `source_type` (String) must be one of [twilio-taskrouter]
 
 

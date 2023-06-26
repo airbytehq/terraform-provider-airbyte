@@ -31,12 +31,12 @@ DestinationKeen Resource
 
 Required:
 
-- `api_key` (String)
-- `destination_type` (String)
-- `project_id` (String)
+- `api_key` (String) To get Keen Master API Key, navigate to the Access tab from the left-hand, side panel and check the Project Details section.
+- `destination_type` (String) must be one of [keen]
+- `project_id` (String) To get Keen Project ID, navigate to the Access tab from the left-hand, side panel and check the Project Details section.
 
 Optional:
 
-- `infer_timestamp` (Boolean)
+- `infer_timestamp` (Boolean) Allow connector to guess keen.timestamp value based on the streamed data.
 
 

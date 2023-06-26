@@ -23,7 +23,7 @@ SourceSquare Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,14 +35,14 @@ SourceSquare Resource
 
 Required:
 
-- `is_sandbox` (Boolean)
-- `source_type` (String)
+- `is_sandbox` (Boolean) Determines whether to use the sandbox or production environment.
+- `source_type` (String) must be one of [square]
 
 Optional:
 
-- `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `include_deleted_objects` (Boolean)
-- `start_date` (String)
+- `credentials` (Attributes) Choose how to authenticate to Square. (see [below for nested schema](#nestedatt--configuration--credentials))
+- `include_deleted_objects` (Boolean) In some streams there is an option to include deleted objects (Items, Categories, Discounts, Taxes)
+- `start_date` (String) UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated. If not set, all data will be replicated.
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
@@ -59,8 +59,8 @@ Optional:
 
 Required:
 
-- `api_key` (String)
-- `auth_type` (String)
+- `api_key` (String) The API key for a Square application
+- `auth_type` (String) must be one of [API Key]
 
 
 <a id="nestedatt--configuration--credentials--source_square_authentication_oauth_authentication"></a>
@@ -68,10 +68,10 @@ Required:
 
 Required:
 
-- `auth_type` (String)
-- `client_id` (String)
-- `client_secret` (String)
-- `refresh_token` (String)
+- `auth_type` (String) must be one of [OAuth]
+- `client_id` (String) The Square-issued ID of your application
+- `client_secret` (String) The Square-issued application secret for your application
+- `refresh_token` (String) A refresh token generated using the above client ID and secret
 
 
 <a id="nestedatt--configuration--credentials--source_square_update_authentication_api_key"></a>
@@ -79,8 +79,8 @@ Required:
 
 Required:
 
-- `api_key` (String)
-- `auth_type` (String)
+- `api_key` (String) The API key for a Square application
+- `auth_type` (String) must be one of [API Key]
 
 
 <a id="nestedatt--configuration--credentials--source_square_update_authentication_oauth_authentication"></a>
@@ -88,9 +88,9 @@ Required:
 
 Required:
 
-- `auth_type` (String)
-- `client_id` (String)
-- `client_secret` (String)
-- `refresh_token` (String)
+- `auth_type` (String) must be one of [OAuth]
+- `client_id` (String) The Square-issued ID of your application
+- `client_secret` (String) The Square-issued application secret for your application
+- `refresh_token` (String) A refresh token generated using the above client ID and secret
 
 

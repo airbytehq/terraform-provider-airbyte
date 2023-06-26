@@ -23,7 +23,7 @@ SourceNytimes Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,14 +35,16 @@ SourceNytimes Resource
 
 Required:
 
-- `api_key` (String)
-- `period` (Number) Period of time (in days)
-- `source_type` (String)
-- `start_date` (String)
+- `api_key` (String) API Key
+- `period` (Number) must be one of [1, 7, 30]
+Period of time (in days)
+- `source_type` (String) must be one of [nytimes]
+- `start_date` (String) Start date to begin the article retrieval (format YYYY-MM)
 
 Optional:
 
-- `end_date` (String)
-- `share_type` (String) Share Type
+- `end_date` (String) End date to stop the article retrieval (format YYYY-MM)
+- `share_type` (String) must be one of [facebook]
+Share Type
 
 

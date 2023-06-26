@@ -31,22 +31,24 @@ DestinationAwsDatalake Resource
 
 Required:
 
-- `bucket_name` (String)
-- `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `destination_type` (String)
-- `lakeformation_database_name` (String)
-- `region` (String) The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes.
+- `bucket_name` (String) The name of the S3 bucket. Read more <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html">here</a>.
+- `credentials` (Attributes) Choose How to Authenticate to AWS. (see [below for nested schema](#nestedatt--configuration--credentials))
+- `destination_type` (String) must be one of [aws-datalake]
+- `lakeformation_database_name` (String) The default database this destination will use to create tables in per stream. Can be changed per connection by customizing the namespace.
+- `region` (String) must be one of [, us-east-1, us-east-2, us-west-1, us-west-2, af-south-1, ap-east-1, ap-south-1, ap-northeast-1, ap-northeast-2, ap-northeast-3, ap-southeast-1, ap-southeast-2, ca-central-1, cn-north-1, cn-northwest-1, eu-central-1, eu-north-1, eu-south-1, eu-west-1, eu-west-2, eu-west-3, sa-east-1, me-south-1, us-gov-east-1, us-gov-west-1]
+The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes.
 
 Optional:
 
-- `aws_account_id` (String)
-- `bucket_prefix` (String)
-- `format` (Attributes) (see [below for nested schema](#nestedatt--configuration--format))
-- `glue_catalog_float_as_decimal` (Boolean)
-- `lakeformation_database_default_tag_key` (String)
-- `lakeformation_database_default_tag_values` (String)
-- `lakeformation_governed_tables` (Boolean)
-- `partitioning` (String) Partition data by cursor fields when a cursor field is a date
+- `aws_account_id` (String) target aws account id
+- `bucket_prefix` (String) S3 prefix
+- `format` (Attributes) Format of the data output. (see [below for nested schema](#nestedatt--configuration--format))
+- `glue_catalog_float_as_decimal` (Boolean) Cast float/double as decimal(38,18). This can help achieve higher accuracy and represent numbers correctly as received from the source.
+- `lakeformation_database_default_tag_key` (String) Add a default tag key to databases created by this destination
+- `lakeformation_database_default_tag_values` (String) Add default values for the `Tag Key` to databases created by this destination. Comma separate for multiple values.
+- `lakeformation_governed_tables` (Boolean) Whether to create tables as LF governed tables.
+- `partitioning` (String) must be one of [NO PARTITIONING, DATE, YEAR, MONTH, DAY, YEAR/MONTH, YEAR/MONTH/DAY]
+Partition data by cursor fields when a cursor field is a date
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
@@ -63,8 +65,9 @@ Optional:
 
 Required:
 
-- `credentials_title` (String) Name of the credentials
-- `role_arn` (String)
+- `credentials_title` (String) must be one of [IAM Role]
+Name of the credentials
+- `role_arn` (String) Will assume this role to write data to s3
 
 
 <a id="nestedatt--configuration--credentials--destination_aws_datalake_authentication_mode_iam_user"></a>
@@ -72,9 +75,10 @@ Required:
 
 Required:
 
-- `aws_access_key_id` (String)
-- `aws_secret_access_key` (String)
-- `credentials_title` (String) Name of the credentials
+- `aws_access_key_id` (String) AWS User Access Key Id
+- `aws_secret_access_key` (String) Secret Access Key
+- `credentials_title` (String) must be one of [IAM User]
+Name of the credentials
 
 
 <a id="nestedatt--configuration--credentials--destination_aws_datalake_update_authentication_mode_iam_role"></a>
@@ -82,8 +86,9 @@ Required:
 
 Required:
 
-- `credentials_title` (String) Name of the credentials
-- `role_arn` (String)
+- `credentials_title` (String) must be one of [IAM Role]
+Name of the credentials
+- `role_arn` (String) Will assume this role to write data to s3
 
 
 <a id="nestedatt--configuration--credentials--destination_aws_datalake_update_authentication_mode_iam_user"></a>
@@ -91,9 +96,10 @@ Required:
 
 Required:
 
-- `aws_access_key_id` (String)
-- `aws_secret_access_key` (String)
-- `credentials_title` (String) Name of the credentials
+- `aws_access_key_id` (String) AWS User Access Key Id
+- `aws_secret_access_key` (String) Secret Access Key
+- `credentials_title` (String) must be one of [IAM User]
+Name of the credentials
 
 
 
@@ -112,11 +118,12 @@ Optional:
 
 Required:
 
-- `format_type` (String)
+- `format_type` (String) must be one of [JSONL]
 
 Optional:
 
-- `compression_codec` (String) The compression algorithm used to compress data.
+- `compression_codec` (String) must be one of [UNCOMPRESSED, GZIP]
+The compression algorithm used to compress data.
 
 
 <a id="nestedatt--configuration--format--destination_aws_datalake_output_format_wildcard_parquet_columnar_storage"></a>
@@ -124,11 +131,12 @@ Optional:
 
 Required:
 
-- `format_type` (String)
+- `format_type` (String) must be one of [Parquet]
 
 Optional:
 
-- `compression_codec` (String) The compression algorithm used to compress data.
+- `compression_codec` (String) must be one of [UNCOMPRESSED, SNAPPY, GZIP, ZSTD]
+The compression algorithm used to compress data.
 
 
 <a id="nestedatt--configuration--format--destination_aws_datalake_update_output_format_wildcard_json_lines_newline_delimited_json"></a>
@@ -136,11 +144,12 @@ Optional:
 
 Required:
 
-- `format_type` (String)
+- `format_type` (String) must be one of [JSONL]
 
 Optional:
 
-- `compression_codec` (String) The compression algorithm used to compress data.
+- `compression_codec` (String) must be one of [UNCOMPRESSED, GZIP]
+The compression algorithm used to compress data.
 
 
 <a id="nestedatt--configuration--format--destination_aws_datalake_update_output_format_wildcard_parquet_columnar_storage"></a>
@@ -148,10 +157,11 @@ Optional:
 
 Required:
 
-- `format_type` (String)
+- `format_type` (String) must be one of [Parquet]
 
 Optional:
 
-- `compression_codec` (String) The compression algorithm used to compress data.
+- `compression_codec` (String) must be one of [UNCOMPRESSED, SNAPPY, GZIP, ZSTD]
+The compression algorithm used to compress data.
 
 

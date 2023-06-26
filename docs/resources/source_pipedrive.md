@@ -23,7 +23,7 @@ SourcePipedrive Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,8 +35,8 @@ SourcePipedrive Resource
 
 Required:
 
-- `replication_start_date` (String)
-- `source_type` (String)
+- `replication_start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. When specified and not None, then stream will behave as incremental
+- `source_type` (String) must be one of [pipedrive]
 
 Optional:
 
@@ -47,7 +47,7 @@ Optional:
 
 Required:
 
-- `api_token` (String)
-- `auth_type` (String)
+- `api_token` (String) The Pipedrive API Token.
+- `auth_type` (String) must be one of [Token]
 
 

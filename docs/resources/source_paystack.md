@@ -23,7 +23,7 @@ SourcePaystack Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,12 +35,12 @@ SourcePaystack Resource
 
 Required:
 
-- `secret_key` (String)
-- `source_type` (String)
-- `start_date` (String)
+- `secret_key` (String) The Paystack API key (usually starts with 'sk_live_'; find yours <a href="https://dashboard.paystack.com/#/settings/developer">here</a>).
+- `source_type` (String) must be one of [paystack]
+- `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 
 Optional:
 
-- `lookback_window_days` (Number)
+- `lookback_window_days` (Number) When set, the connector will always reload data from the past N days, where N is the value set here. This is useful if your data is updated after creation.
 
 

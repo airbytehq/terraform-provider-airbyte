@@ -23,7 +23,7 @@ SourcePostgres Resource
 
 ### Optional
 
-- `secret_id` (String)
+- `secret_id` (String) Optional secretID obtained through the public API OAuth redirect flow.
 
 ### Read-Only
 
@@ -35,20 +35,21 @@ SourcePostgres Resource
 
 Required:
 
-- `database` (String)
-- `host` (String)
-- `port` (Number)
-- `source_type` (String)
-- `username` (String)
+- `database` (String) Name of the database.
+- `host` (String) Hostname of the database.
+- `port` (Number) Port of the database.
+- `source_type` (String) must be one of [postgres]
+- `username` (String) Username to access the database.
 
 Optional:
 
-- `jdbc_url_params` (String)
-- `password` (String)
-- `replication_method` (Attributes) (see [below for nested schema](#nestedatt--configuration--replication_method))
-- `schemas` (List of String)
-- `ssl_mode` (Attributes) (see [below for nested schema](#nestedatt--configuration--ssl_mode))
-- `tunnel_method` (Attributes) (see [below for nested schema](#nestedatt--configuration--tunnel_method))
+- `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (Eg. key1=value1&key2=value2&key3=value3). For more information read about <a href="https://jdbc.postgresql.org/documentation/head/connect.html">JDBC URL parameters</a>.
+- `password` (String) Password associated with the username.
+- `replication_method` (Attributes) Replication method for extracting data from the database. (see [below for nested schema](#nestedatt--configuration--replication_method))
+- `schemas` (List of String) The list of schemas (case sensitive) to sync from. Defaults to public.
+- `ssl_mode` (Attributes) SSL connection modes. 
+  Read more <a href="https://jdbc.postgresql.org/documentation/head/ssl-client.html"> in the docs</a>. (see [below for nested schema](#nestedatt--configuration--ssl_mode))
+- `tunnel_method` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method))
 
 <a id="nestedatt--configuration--replication_method"></a>
 ### Nested Schema for `configuration.replication_method`
@@ -65,17 +66,19 @@ Optional:
 
 Required:
 
-- `method` (String)
-- `publication` (String)
-- `replication_slot` (String)
+- `method` (String) must be one of [CDC]
+- `publication` (String) A Postgres publication used for consuming changes. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-4-create-publications-and-replication-identities-for-tables">publications and replication identities</a>.
+- `replication_slot` (String) A plugin logical replication slot. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-3-create-replication-slot">replication slots</a>.
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `initial_waiting_seconds` (Number)
-- `lsn_commit_behaviour` (String) Determines when Airbtye should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.
-- `plugin` (String) A logical decoding plugin installed on the PostgreSQL server.
-- `queue_size` (Number)
+- `initial_waiting_seconds` (Number) The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-5-optional-set-up-initial-waiting-time">initial waiting time</a>.
+- `lsn_commit_behaviour` (String) must be one of [While reading Data, After loading Data in the destination]
+Determines when Airbtye should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.
+- `plugin` (String) must be one of [pgoutput]
+A logical decoding plugin installed on the PostgreSQL server.
+- `queue_size` (Number) The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful.
 
 
 <a id="nestedatt--configuration--replication_method--source_postgres_replication_method_standard"></a>
@@ -83,7 +86,7 @@ Optional:
 
 Required:
 
-- `method` (String)
+- `method` (String) must be one of [Standard]
 
 
 <a id="nestedatt--configuration--replication_method--source_postgres_update_replication_method_logical_replication_cdc"></a>
@@ -91,17 +94,19 @@ Required:
 
 Required:
 
-- `method` (String)
-- `publication` (String)
-- `replication_slot` (String)
+- `method` (String) must be one of [CDC]
+- `publication` (String) A Postgres publication used for consuming changes. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-4-create-publications-and-replication-identities-for-tables">publications and replication identities</a>.
+- `replication_slot` (String) A plugin logical replication slot. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-3-create-replication-slot">replication slots</a>.
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `initial_waiting_seconds` (Number)
-- `lsn_commit_behaviour` (String) Determines when Airbtye should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.
-- `plugin` (String) A logical decoding plugin installed on the PostgreSQL server.
-- `queue_size` (Number)
+- `initial_waiting_seconds` (Number) The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-5-optional-set-up-initial-waiting-time">initial waiting time</a>.
+- `lsn_commit_behaviour` (String) must be one of [While reading Data, After loading Data in the destination]
+Determines when Airbtye should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.
+- `plugin` (String) must be one of [pgoutput]
+A logical decoding plugin installed on the PostgreSQL server.
+- `queue_size` (Number) The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful.
 
 
 <a id="nestedatt--configuration--replication_method--source_postgres_update_replication_method_standard"></a>
@@ -109,7 +114,7 @@ Optional:
 
 Required:
 
-- `method` (String)
+- `method` (String) must be one of [Standard]
 
 
 
@@ -136,7 +141,7 @@ Optional:
 
 Required:
 
-- `mode` (String)
+- `mode` (String) must be one of [allow]
 
 Optional:
 
@@ -148,7 +153,7 @@ Optional:
 
 Required:
 
-- `mode` (String)
+- `mode` (String) must be one of [disable]
 
 Optional:
 
@@ -160,7 +165,7 @@ Optional:
 
 Required:
 
-- `mode` (String)
+- `mode` (String) must be one of [prefer]
 
 Optional:
 
@@ -172,7 +177,7 @@ Optional:
 
 Required:
 
-- `mode` (String)
+- `mode` (String) must be one of [require]
 
 Optional:
 
@@ -184,15 +189,15 @@ Optional:
 
 Required:
 
-- `ca_certificate` (String)
-- `mode` (String)
+- `ca_certificate` (String) CA certificate
+- `mode` (String) must be one of [verify-ca]
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `client_certificate` (String)
-- `client_key` (String)
-- `client_key_password` (String)
+- `client_certificate` (String) Client certificate
+- `client_key` (String) Client key
+- `client_key_password` (String) Password for keystorage. If you do not add it - the password will be generated automatically.
 
 
 <a id="nestedatt--configuration--ssl_mode--source_postgres_ssl_modes_verify_full"></a>
@@ -200,15 +205,15 @@ Optional:
 
 Required:
 
-- `ca_certificate` (String)
-- `mode` (String)
+- `ca_certificate` (String) CA certificate
+- `mode` (String) must be one of [verify-full]
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `client_certificate` (String)
-- `client_key` (String)
-- `client_key_password` (String)
+- `client_certificate` (String) Client certificate
+- `client_key` (String) Client key
+- `client_key_password` (String) Password for keystorage. If you do not add it - the password will be generated automatically.
 
 
 <a id="nestedatt--configuration--ssl_mode--source_postgres_update_ssl_modes_allow"></a>
@@ -216,7 +221,7 @@ Optional:
 
 Required:
 
-- `mode` (String)
+- `mode` (String) must be one of [allow]
 
 Optional:
 
@@ -228,7 +233,7 @@ Optional:
 
 Required:
 
-- `mode` (String)
+- `mode` (String) must be one of [disable]
 
 Optional:
 
@@ -240,7 +245,7 @@ Optional:
 
 Required:
 
-- `mode` (String)
+- `mode` (String) must be one of [prefer]
 
 Optional:
 
@@ -252,7 +257,7 @@ Optional:
 
 Required:
 
-- `mode` (String)
+- `mode` (String) must be one of [require]
 
 Optional:
 
@@ -264,15 +269,15 @@ Optional:
 
 Required:
 
-- `ca_certificate` (String)
-- `mode` (String)
+- `ca_certificate` (String) CA certificate
+- `mode` (String) must be one of [verify-ca]
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `client_certificate` (String)
-- `client_key` (String)
-- `client_key_password` (String)
+- `client_certificate` (String) Client certificate
+- `client_key` (String) Client key
+- `client_key_password` (String) Password for keystorage. If you do not add it - the password will be generated automatically.
 
 
 <a id="nestedatt--configuration--ssl_mode--source_postgres_update_ssl_modes_verify_full"></a>
@@ -280,15 +285,15 @@ Optional:
 
 Required:
 
-- `ca_certificate` (String)
-- `mode` (String)
+- `ca_certificate` (String) CA certificate
+- `mode` (String) must be one of [verify-full]
 
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `client_certificate` (String)
-- `client_key` (String)
-- `client_key_password` (String)
+- `client_certificate` (String) Client certificate
+- `client_key` (String) Client key
+- `client_key_password` (String) Password for keystorage. If you do not add it - the password will be generated automatically.
 
 
 
@@ -309,7 +314,8 @@ Optional:
 
 Required:
 
-- `tunnel_method` (String) No ssh tunnel needed to connect to database
+- `tunnel_method` (String) must be one of [NO_TUNNEL]
+No ssh tunnel needed to connect to database
 
 
 <a id="nestedatt--configuration--tunnel_method--source_postgres_ssh_tunnel_method_password_authentication"></a>
@@ -317,11 +323,12 @@ Required:
 
 Required:
 
-- `tunnel_host` (String)
-- `tunnel_method` (String) Connect through a jump server tunnel host using username and password authentication
-- `tunnel_port` (Number)
-- `tunnel_user` (String)
-- `tunnel_user_password` (String)
+- `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
+- `tunnel_method` (String) must be one of [SSH_PASSWORD_AUTH]
+Connect through a jump server tunnel host using username and password authentication
+- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_user` (String) OS-level username for logging into the jump server host
+- `tunnel_user_password` (String) OS-level password for logging into the jump server host
 
 
 <a id="nestedatt--configuration--tunnel_method--source_postgres_ssh_tunnel_method_ssh_key_authentication"></a>
@@ -329,11 +336,12 @@ Required:
 
 Required:
 
-- `ssh_key` (String)
-- `tunnel_host` (String)
-- `tunnel_method` (String) Connect through a jump server tunnel host using username and ssh key
-- `tunnel_port` (Number)
-- `tunnel_user` (String)
+- `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
+- `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
+- `tunnel_method` (String) must be one of [SSH_KEY_AUTH]
+Connect through a jump server tunnel host using username and ssh key
+- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_user` (String) OS-level username for logging into the jump server host.
 
 
 <a id="nestedatt--configuration--tunnel_method--source_postgres_update_ssh_tunnel_method_no_tunnel"></a>
@@ -341,7 +349,8 @@ Required:
 
 Required:
 
-- `tunnel_method` (String) No ssh tunnel needed to connect to database
+- `tunnel_method` (String) must be one of [NO_TUNNEL]
+No ssh tunnel needed to connect to database
 
 
 <a id="nestedatt--configuration--tunnel_method--source_postgres_update_ssh_tunnel_method_password_authentication"></a>
@@ -349,11 +358,12 @@ Required:
 
 Required:
 
-- `tunnel_host` (String)
-- `tunnel_method` (String) Connect through a jump server tunnel host using username and password authentication
-- `tunnel_port` (Number)
-- `tunnel_user` (String)
-- `tunnel_user_password` (String)
+- `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
+- `tunnel_method` (String) must be one of [SSH_PASSWORD_AUTH]
+Connect through a jump server tunnel host using username and password authentication
+- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_user` (String) OS-level username for logging into the jump server host
+- `tunnel_user_password` (String) OS-level password for logging into the jump server host
 
 
 <a id="nestedatt--configuration--tunnel_method--source_postgres_update_ssh_tunnel_method_ssh_key_authentication"></a>
@@ -361,10 +371,11 @@ Required:
 
 Required:
 
-- `ssh_key` (String)
-- `tunnel_host` (String)
-- `tunnel_method` (String) Connect through a jump server tunnel host using username and ssh key
-- `tunnel_port` (Number)
-- `tunnel_user` (String)
+- `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
+- `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
+- `tunnel_method` (String) must be one of [SSH_KEY_AUTH]
+Connect through a jump server tunnel host using username and ssh key
+- `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
+- `tunnel_user` (String) OS-level username for logging into the jump server host.
 
 
