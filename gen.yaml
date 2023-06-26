@@ -4,7 +4,7 @@ generation:
   singleTagPerOp: false
   telemetryEnabled: true
 terraform:
-  version: 0.1.2
+  version: 0.1.4
   author: airbytehq
   baseServerURL: https://api.airbyte.com/v1/
   packageName: airbyte
