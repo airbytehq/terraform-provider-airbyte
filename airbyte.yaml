@@ -21450,6 +21450,7 @@ components:
         scheduleType:
           $ref: "#/components/schemas/ScheduleTypeWithBasicEnum"
         cronExpression:
+          x-speakeasy-ignore: true
           type: "string"
         basicTiming:
           type: "string"

@@ -4,7 +4,6 @@ package shared
 
 // ConnectionScheduleResponse - schedule for when the the connection should run, per the schedule type
 type ConnectionScheduleResponse struct {
-	BasicTiming    *string                   `json:"basicTiming,omitempty"`
-	CronExpression *string                   `json:"cronExpression,omitempty"`
-	ScheduleType   ScheduleTypeWithBasicEnum `json:"scheduleType"`
+	BasicTiming  *string                   `json:"basicTiming,omitempty"`
+	ScheduleType ScheduleTypeWithBasicEnum `json:"scheduleType"`
 }

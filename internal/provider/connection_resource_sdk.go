@@ -291,11 +291,6 @@ func (r *ConnectionResourceModel) RefreshFromGetResponse(resp *shared.Connection
 	} else {
 		r.Schedule.BasicTiming = types.StringNull()
 	}
-	if resp.Schedule.CronExpression != nil {
-		r.Schedule.CronExpression = types.StringValue(*resp.Schedule.CronExpression)
-	} else {
-		r.Schedule.CronExpression = types.StringNull()
-	}
 	r.Schedule.ScheduleType = types.StringValue(string(resp.Schedule.ScheduleType))
 	r.SourceID = types.StringValue(resp.SourceID)
 	r.Status = types.StringValue(string(resp.Status))
