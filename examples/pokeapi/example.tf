@@ -2,7 +2,7 @@ terraform {
   required_providers {
     airbyte = {
       source  = "airbytehq/airbyte"
-      version = "0.1.0"
+      version = "0.2.0"
     }
   }
 }
@@ -73,6 +73,11 @@ resource "airbyte_connection" "test_connection" {
   name           = "pokeapi_to_google_sheets"
   source_id      = airbyte_source_pokeapi.kido.source_id
   destination_id = airbyte_destination_google_sheets.output.destination_id
+  schedule = {
+    schedule_type   = "cron"
+    cron_expression = "0 0 12 * * ? UTC"
+  }
+
   configurations = {
     streams = [
       {
