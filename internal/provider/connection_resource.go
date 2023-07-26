@@ -16,11 +16,12 @@ import (
 	"github.com/hashicorp/terraform-plugin-framework/resource"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema"
 	"github.com/hashicorp/terraform-plugin-framework/resource/schema/planmodifier"
-	"github.com/hashicorp/terraform-plugin-framework/resource/schema/stringplanmodifier"
 	"github.com/hashicorp/terraform-plugin-framework/schema/validator"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 	"github.com/hashicorp/terraform-plugin-framework/types/basetypes"
-) // Ensure provider defined types fully satisfy framework interfaces.
+)
+
+// Ensure provider defined types fully satisfy framework interfaces.
 var _ resource.Resource = &ConnectionResource{}
 var _ resource.ResourceWithImportState = &ConnectionResource{}
 
@@ -145,7 +146,6 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"destination_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
 					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
 				Required: true,
@@ -243,7 +243,6 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 			},
 			"source_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
-					stringplanmodifier.RequiresReplace(),
 					speakeasy_stringplanmodifier.SuppressDiff(),
 				},
 				Required: true,
