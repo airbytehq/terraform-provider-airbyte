@@ -6,5 +6,4 @@ generation:
 terraform:
   version: 0.2.0
   author: airbytehq
-  baseServerURL: https://api.airbyte.com/v1/
   packageName: airbyte
