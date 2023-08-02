@@ -15,18 +15,17 @@ SourceWikipediaPageviews Resource
 ```terraform
 resource "airbyte_source_wikipedia_pageviews" "my_source_wikipediapageviews" {
   configuration = {
-    access      = "desktop"
+    access      = "mobile-web"
     agent       = "user"
     article     = "Are_You_the_One%3F"
-    country     = "FR"
+    country     = "IN"
     end         = "...my_end..."
-    project     = "en.wikipedia.org"
+    project     = "commons.wikimedia.org"
     source_type = "wikipedia-pageviews"
     start       = "...my_start..."
   }
-  name         = "Taylor Paucek"
-  secret_id    = "...my_secretId..."
-  workspace_id = "fded84a3-5a41-4238-a1a7-35ac26ae33be"
+  name         = "Esther Littel"
+  workspace_id = "5fc2b862-a00b-4ef6-9e10-0157630bda7a"
 }
 ```
 

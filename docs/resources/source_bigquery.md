@@ -20,9 +20,8 @@ resource "airbyte_source_bigquery" "my_source_bigquery" {
     project_id       = "...my_project_id..."
     source_type      = "bigquery"
   }
-  name         = "Luis Schumm"
-  secret_id    = "...my_secretId..."
-  workspace_id = "fdaf313a-1f5f-4d94-a59c-0b36f25ea944"
+  name         = "Joy Kessler"
+  workspace_id = "e63562a7-b408-4f05-a3d4-8fdaf313a1f5"
 }
 ```
 

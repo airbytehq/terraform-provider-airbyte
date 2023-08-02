@@ -20,11 +20,10 @@ resource "airbyte_source_paypal_transaction" "my_source_paypaltransaction" {
     is_sandbox    = true
     refresh_token = "...my_refresh_token..."
     source_type   = "paypal-transaction"
-    start_date    = "2021-06-11T23:59:59"
+    start_date    = "2021-06-11T23:59:59+00:00"
   }
-  name         = "Mattie Gutkowski"
-  secret_id    = "...my_secretId..."
-  workspace_id = "6aed4aec-b753-47cd-9222-c9ff57491aab"
+  name         = "Rodolfo Champlin"
+  workspace_id = "e2e10594-4b93-45d2-b7a7-2f90849d6aed"
 }
 ```
 

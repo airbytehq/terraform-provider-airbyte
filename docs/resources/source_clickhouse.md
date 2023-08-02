@@ -21,15 +21,12 @@ resource "airbyte_source_clickhouse" "my_source_clickhouse" {
     port        = 8123
     source_type = "clickhouse"
     tunnel_method = {
-      source_clickhouse_ssh_tunnel_method_no_tunnel = {
-        tunnel_method = "NO_TUNNEL"
-      }
+      tunnel_method = "NO_TUNNEL"
     }
-    username = "Alfonzo.OReilly"
+    username = "Deven_Koch"
   }
-  name         = "Miss Peter Hermiston"
-  secret_id    = "...my_secretId..."
-  workspace_id = "72af923c-5949-4f83-b350-cf876ffb901c"
+  name         = "Crystal Terry I"
+  workspace_id = "c14125b0-960a-4668-951a-472af923c594"
 }
 ```
 

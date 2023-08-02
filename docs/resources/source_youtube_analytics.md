@@ -22,9 +22,8 @@ resource "airbyte_source_youtube_analytics" "my_source_youtubeanalytics" {
     }
     source_type = "youtube-analytics"
   }
-  name         = "Clark McGlynn"
-  secret_id    = "...my_secretId..."
-  workspace_id = "61aae5eb-5f0c-4492-b574-4d08a2267aae"
+  name         = "Mike Hansen"
+  workspace_id = "e01bf33e-aab4-4540-aac1-704bf1cc9fc6"
 }
 ```
 

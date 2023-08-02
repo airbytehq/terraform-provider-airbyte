@@ -22,9 +22,8 @@ resource "airbyte_source_coinmarketcap" "my_source_coinmarketcap" {
       "...",
     ]
   }
-  name         = "Walter Jacobs"
-  secret_id    = "...my_secretId..."
-  workspace_id = "363c8873-e484-4380-b1f6-b8ca275a60a0"
+  name         = "Susan Wyman"
+  workspace_id = "d3d6fa18-04e5-44c8-af16-8a363c8873e4"
 }
 ```
 

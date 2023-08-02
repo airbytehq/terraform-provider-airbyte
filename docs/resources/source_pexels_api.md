@@ -17,15 +17,14 @@ resource "airbyte_source_pexels_api" "my_source_pexelsapi" {
   configuration = {
     api_key     = "...my_api_key..."
     color       = "red"
-    locale      = "en-US"
-    orientation = "square"
+    locale      = "pt-BR"
+    orientation = "landscape"
     query       = "people"
-    size        = "small"
+    size        = "large"
     source_type = "pexels-api"
   }
-  name         = "Jean Denesik"
-  secret_id    = "...my_secretId..."
-  workspace_id = "46645c1d-81f2-4904-af56-9b7aff0ea221"
+  name         = "Terrell Cremin"
+  workspace_id = "5dddb46a-a1cf-4d6d-828d-a01319112964"
 }
 ```
 

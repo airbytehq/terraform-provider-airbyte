@@ -15,23 +15,20 @@ SourceTiktokMarketing Resource
 ```terraform
 resource "airbyte_source_tiktok_marketing" "my_source_tiktokmarketing" {
   configuration = {
-    attribution_window = 8
+    attribution_window = 1
     credentials = {
-      source_tiktok_marketing_authentication_method_o_auth2_0 = {
-        access_token  = "...my_access_token..."
-        advertiser_id = "...my_advertiser_id..."
-        app_id        = "...my_app_id..."
-        auth_type     = "oauth2.0"
-        secret        = "...my_secret..."
-      }
+      access_token  = "...my_access_token..."
+      advertiser_id = "...my_advertiser_id..."
+      app_id        = "...my_app_id..."
+      auth_type     = "oauth2.0"
+      secret        = "...my_secret..."
     }
-    end_date    = "2021-01-19"
+    end_date    = "2022-09-30"
     source_type = "tiktok-marketing"
-    start_date  = "2022-09-08"
+    start_date  = "2021-04-07"
   }
-  name         = "Jeremy Krajcik"
-  secret_id    = "...my_secretId..."
-  workspace_id = "9e2c9e6d-10e9-4db3-ad4c-6b03108d9c33"
+  name         = "Cecil Wintheiser"
+  workspace_id = "b20fe5d9-11cb-4fe7-89ca-f45a27f69e2c"
 }
 ```
 
