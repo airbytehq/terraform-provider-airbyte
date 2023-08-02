@@ -69,7 +69,7 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToCreateSDKType() *shared.Sourc
 	} else {
 		endDate = nil
 	}
-	siteUrls := make([]string, 0)
+	var siteUrls []string = nil
 	for _, siteUrlsItem := range r.Configuration.SiteUrls {
 		siteUrls = append(siteUrls, siteUrlsItem.ValueString())
 	}
@@ -167,7 +167,7 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToUpdateSDKType() *shared.Sourc
 	} else {
 		endDate = nil
 	}
-	siteUrls := make([]string, 0)
+	var siteUrls []string = nil
 	for _, siteUrlsItem := range r.Configuration.SiteUrls {
 		siteUrls = append(siteUrls, siteUrlsItem.ValueString())
 	}

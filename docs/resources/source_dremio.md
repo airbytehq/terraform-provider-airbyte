@@ -19,8 +19,9 @@ resource "airbyte_source_dremio" "my_source_dremio" {
     base_url    = "...my_base_url..."
     source_type = "dremio"
   }
-  name         = "Wallace Wiegand"
-  workspace_id = "f144f3e0-7edc-4c4a-a5f3-cabd905a972e"
+  name         = "Lloyd Witting"
+  secret_id    = "...my_secretId..."
+  workspace_id = "abd905a9-72e0-4567-a822-7b2d309470bf"
 }
 ```
 

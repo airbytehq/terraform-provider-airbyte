@@ -18,8 +18,9 @@ resource "airbyte_source_getlago" "my_source_getlago" {
     api_key     = "...my_api_key..."
     source_type = "getlago"
   }
-  name         = "Jacqueline Jacobs"
-  workspace_id = "5816ddca-8ef5-41fc-b4c5-93ec12cdaad0"
+  name         = "Myra Hills"
+  secret_id    = "...my_secretId..."
+  workspace_id = "ec12cdaa-d0ec-47af-adbd-80df448a47f9"
 }
 ```
 

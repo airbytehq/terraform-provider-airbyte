@@ -19,8 +19,9 @@ resource "airbyte_source_twilio_taskrouter" "my_source_twiliotaskrouter" {
     auth_token  = "...my_auth_token..."
     source_type = "twilio-taskrouter"
   }
-  name         = "Dwayne Graham"
-  workspace_id = "36b86b3c-df64-415b-8449-f9df13f4eedb"
+  name         = "Marta Graham"
+  secret_id    = "...my_secretId..."
+  workspace_id = "dbe78bf6-0682-4589-8ea7-63d5c72795b7"
 }
 ```
 

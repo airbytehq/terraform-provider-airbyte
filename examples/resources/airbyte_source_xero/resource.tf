@@ -11,6 +11,7 @@ resource "airbyte_source_xero" "my_source_xero" {
     start_date  = "2022-03-01T00:00:00Z"
     tenant_id   = "...my_tenant_id..."
   }
-  name         = "Mr. Clark O'Hara III"
-  workspace_id = "fe965b71-1d08-4cf8-8ec9-f7b99a550a65"
+  name         = "Miss Maurice Hauck"
+  secret_id    = "...my_secretId..."
+  workspace_id = "56ed333b-b0ce-48aa-a543-2a986eb7e14c"
 }

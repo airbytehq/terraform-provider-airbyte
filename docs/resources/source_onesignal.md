@@ -27,8 +27,9 @@ resource "airbyte_source_onesignal" "my_source_onesignal" {
     start_date    = "2020-11-16T00:00:00Z"
     user_auth_key = "...my_user_auth_key..."
   }
-  name         = "Rosemary Abshire"
-  workspace_id = "bfbdc41f-f5d4-4e2a-a4fb-5cb35d17638f"
+  name         = "Ms. Regina Steuber"
+  secret_id    = "...my_secretId..."
+  workspace_id = "38f1edb7-8359-4ecc-9cb8-60f8cd580ba7"
 }
 ```
 

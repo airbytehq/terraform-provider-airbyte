@@ -10,33 +10,35 @@ import (
 
 func (r *SourcePinterestResourceModel) ToCreateSDKType() *shared.SourcePinterestCreateRequest {
 	var credentials *shared.SourcePinterestAuthorizationMethod
-	var sourcePinterestAuthorizationMethodOAuth20 *shared.SourcePinterestAuthorizationMethodOAuth20
-	if r.Configuration.Credentials.SourcePinterestAuthorizationMethodAccessToken != nil {
-		authMethod := shared.SourcePinterestAuthorizationMethodOAuth20AuthMethod(r.Configuration.Credentials.SourcePinterestAuthorizationMethodAccessToken.AuthMethod.ValueString())
-		sourcePinterestAuthorizationMethodOAuth20 = &shared.SourcePinterestAuthorizationMethodOAuth20{
-			AuthMethod: authMethod,
+	if r.Configuration.Credentials != nil {
+		var sourcePinterestAuthorizationMethodOAuth20 *shared.SourcePinterestAuthorizationMethodOAuth20
+		if r.Configuration.Credentials.SourcePinterestAuthorizationMethodAccessToken != nil {
+			authMethod := shared.SourcePinterestAuthorizationMethodOAuth20AuthMethod(r.Configuration.Credentials.SourcePinterestAuthorizationMethodAccessToken.AuthMethod.ValueString())
+			sourcePinterestAuthorizationMethodOAuth20 = &shared.SourcePinterestAuthorizationMethodOAuth20{
+				AuthMethod: authMethod,
+			}
 		}
-	}
-	if sourcePinterestAuthorizationMethodOAuth20 != nil {
-		credentials = &shared.SourcePinterestAuthorizationMethod{
-			SourcePinterestAuthorizationMethodOAuth20: sourcePinterestAuthorizationMethodOAuth20,
+		if sourcePinterestAuthorizationMethodOAuth20 != nil {
+			credentials = &shared.SourcePinterestAuthorizationMethod{
+				SourcePinterestAuthorizationMethodOAuth20: sourcePinterestAuthorizationMethodOAuth20,
+			}
 		}
-	}
-	var sourcePinterestAuthorizationMethodAccessToken *shared.SourcePinterestAuthorizationMethodAccessToken
-	if r.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20 != nil {
-		authMethod1 := shared.SourcePinterestAuthorizationMethodAccessTokenAuthMethod(r.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20.AuthMethod.ValueString())
-		sourcePinterestAuthorizationMethodAccessToken = &shared.SourcePinterestAuthorizationMethodAccessToken{
-			AuthMethod: authMethod1,
+		var sourcePinterestAuthorizationMethodAccessToken *shared.SourcePinterestAuthorizationMethodAccessToken
+		if r.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20 != nil {
+			authMethod1 := shared.SourcePinterestAuthorizationMethodAccessTokenAuthMethod(r.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20.AuthMethod.ValueString())
+			sourcePinterestAuthorizationMethodAccessToken = &shared.SourcePinterestAuthorizationMethodAccessToken{
+				AuthMethod: authMethod1,
+			}
 		}
-	}
-	if sourcePinterestAuthorizationMethodAccessToken != nil {
-		credentials = &shared.SourcePinterestAuthorizationMethod{
-			SourcePinterestAuthorizationMethodAccessToken: sourcePinterestAuthorizationMethodAccessToken,
+		if sourcePinterestAuthorizationMethodAccessToken != nil {
+			credentials = &shared.SourcePinterestAuthorizationMethod{
+				SourcePinterestAuthorizationMethodAccessToken: sourcePinterestAuthorizationMethodAccessToken,
+			}
 		}
 	}
 	sourceType := shared.SourcePinterestPinterest(r.Configuration.SourceType.ValueString())
 	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
-	status := make([]shared.SourcePinterestStatus, 0)
+	var status []shared.SourcePinterestStatus = nil
 	for _, statusItem := range r.Configuration.Status {
 		status = append(status, shared.SourcePinterestStatus(statusItem.ValueString()))
 	}
@@ -70,32 +72,34 @@ func (r *SourcePinterestResourceModel) ToGetSDKType() *shared.SourcePinterestCre
 
 func (r *SourcePinterestResourceModel) ToUpdateSDKType() *shared.SourcePinterestPutRequest {
 	var credentials *shared.SourcePinterestUpdateAuthorizationMethod
-	var sourcePinterestUpdateAuthorizationMethodOAuth20 *shared.SourcePinterestUpdateAuthorizationMethodOAuth20
-	if r.Configuration.Credentials.SourcePinterestAuthorizationMethodAccessToken != nil {
-		authMethod := shared.SourcePinterestUpdateAuthorizationMethodOAuth20AuthMethod(r.Configuration.Credentials.SourcePinterestAuthorizationMethodAccessToken.AuthMethod.ValueString())
-		sourcePinterestUpdateAuthorizationMethodOAuth20 = &shared.SourcePinterestUpdateAuthorizationMethodOAuth20{
-			AuthMethod: authMethod,
+	if r.Configuration.Credentials != nil {
+		var sourcePinterestUpdateAuthorizationMethodOAuth20 *shared.SourcePinterestUpdateAuthorizationMethodOAuth20
+		if r.Configuration.Credentials.SourcePinterestAuthorizationMethodAccessToken != nil {
+			authMethod := shared.SourcePinterestUpdateAuthorizationMethodOAuth20AuthMethod(r.Configuration.Credentials.SourcePinterestAuthorizationMethodAccessToken.AuthMethod.ValueString())
+			sourcePinterestUpdateAuthorizationMethodOAuth20 = &shared.SourcePinterestUpdateAuthorizationMethodOAuth20{
+				AuthMethod: authMethod,
+			}
 		}
-	}
-	if sourcePinterestUpdateAuthorizationMethodOAuth20 != nil {
-		credentials = &shared.SourcePinterestUpdateAuthorizationMethod{
-			SourcePinterestUpdateAuthorizationMethodOAuth20: sourcePinterestUpdateAuthorizationMethodOAuth20,
+		if sourcePinterestUpdateAuthorizationMethodOAuth20 != nil {
+			credentials = &shared.SourcePinterestUpdateAuthorizationMethod{
+				SourcePinterestUpdateAuthorizationMethodOAuth20: sourcePinterestUpdateAuthorizationMethodOAuth20,
+			}
 		}
-	}
-	var sourcePinterestUpdateAuthorizationMethodAccessToken *shared.SourcePinterestUpdateAuthorizationMethodAccessToken
-	if r.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20 != nil {
-		authMethod1 := shared.SourcePinterestUpdateAuthorizationMethodAccessTokenAuthMethod(r.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20.AuthMethod.ValueString())
-		sourcePinterestUpdateAuthorizationMethodAccessToken = &shared.SourcePinterestUpdateAuthorizationMethodAccessToken{
-			AuthMethod: authMethod1,
+		var sourcePinterestUpdateAuthorizationMethodAccessToken *shared.SourcePinterestUpdateAuthorizationMethodAccessToken
+		if r.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20 != nil {
+			authMethod1 := shared.SourcePinterestUpdateAuthorizationMethodAccessTokenAuthMethod(r.Configuration.Credentials.SourcePinterestAuthorizationMethodOAuth20.AuthMethod.ValueString())
+			sourcePinterestUpdateAuthorizationMethodAccessToken = &shared.SourcePinterestUpdateAuthorizationMethodAccessToken{
+				AuthMethod: authMethod1,
+			}
 		}
-	}
-	if sourcePinterestUpdateAuthorizationMethodAccessToken != nil {
-		credentials = &shared.SourcePinterestUpdateAuthorizationMethod{
-			SourcePinterestUpdateAuthorizationMethodAccessToken: sourcePinterestUpdateAuthorizationMethodAccessToken,
+		if sourcePinterestUpdateAuthorizationMethodAccessToken != nil {
+			credentials = &shared.SourcePinterestUpdateAuthorizationMethod{
+				SourcePinterestUpdateAuthorizationMethodAccessToken: sourcePinterestUpdateAuthorizationMethodAccessToken,
+			}
 		}
 	}
 	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
-	status := make([]shared.SourcePinterestUpdateStatus, 0)
+	var status []shared.SourcePinterestUpdateStatus = nil
 	for _, statusItem := range r.Configuration.Status {
 		status = append(status, shared.SourcePinterestUpdateStatus(statusItem.ValueString()))
 	}

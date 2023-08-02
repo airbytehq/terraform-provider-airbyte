@@ -14,16 +14,16 @@ func (r *SourceGooglePagespeedInsightsResourceModel) ToCreateSDKType() *shared.S
 	} else {
 		apiKey = nil
 	}
-	categories := make([]shared.SourceGooglePagespeedInsightsCategories, 0)
+	var categories []shared.SourceGooglePagespeedInsightsCategories = nil
 	for _, categoriesItem := range r.Configuration.Categories {
 		categories = append(categories, shared.SourceGooglePagespeedInsightsCategories(categoriesItem.ValueString()))
 	}
 	sourceType := shared.SourceGooglePagespeedInsightsGooglePagespeedInsights(r.Configuration.SourceType.ValueString())
-	strategies := make([]shared.SourceGooglePagespeedInsightsStrategies, 0)
+	var strategies []shared.SourceGooglePagespeedInsightsStrategies = nil
 	for _, strategiesItem := range r.Configuration.Strategies {
 		strategies = append(strategies, shared.SourceGooglePagespeedInsightsStrategies(strategiesItem.ValueString()))
 	}
-	urls := make([]string, 0)
+	var urls []string = nil
 	for _, urlsItem := range r.Configuration.Urls {
 		urls = append(urls, urlsItem.ValueString())
 	}
@@ -63,15 +63,15 @@ func (r *SourceGooglePagespeedInsightsResourceModel) ToUpdateSDKType() *shared.S
 	} else {
 		apiKey = nil
 	}
-	categories := make([]shared.SourceGooglePagespeedInsightsUpdateCategories, 0)
+	var categories []shared.SourceGooglePagespeedInsightsUpdateCategories = nil
 	for _, categoriesItem := range r.Configuration.Categories {
 		categories = append(categories, shared.SourceGooglePagespeedInsightsUpdateCategories(categoriesItem.ValueString()))
 	}
-	strategies := make([]shared.SourceGooglePagespeedInsightsUpdateStrategies, 0)
+	var strategies []shared.SourceGooglePagespeedInsightsUpdateStrategies = nil
 	for _, strategiesItem := range r.Configuration.Strategies {
 		strategies = append(strategies, shared.SourceGooglePagespeedInsightsUpdateStrategies(strategiesItem.ValueString()))
 	}
-	urls := make([]string, 0)
+	var urls []string = nil
 	for _, urlsItem := range r.Configuration.Urls {
 		urls = append(urls, urlsItem.ValueString())
 	}

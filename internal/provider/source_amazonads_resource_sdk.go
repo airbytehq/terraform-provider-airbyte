@@ -22,7 +22,7 @@ func (r *SourceAmazonAdsResourceModel) ToCreateSDKType() *shared.SourceAmazonAds
 	} else {
 		lookBackWindow = nil
 	}
-	profiles := make([]int64, 0)
+	var profiles []int64 = nil
 	for _, profilesItem := range r.Configuration.Profiles {
 		profiles = append(profiles, profilesItem.ValueInt64())
 	}
@@ -33,7 +33,7 @@ func (r *SourceAmazonAdsResourceModel) ToCreateSDKType() *shared.SourceAmazonAds
 	} else {
 		region = nil
 	}
-	reportRecordTypes := make([]shared.SourceAmazonAdsReportRecordTypes, 0)
+	var reportRecordTypes []shared.SourceAmazonAdsReportRecordTypes = nil
 	for _, reportRecordTypesItem := range r.Configuration.ReportRecordTypes {
 		reportRecordTypes = append(reportRecordTypes, shared.SourceAmazonAdsReportRecordTypes(reportRecordTypesItem.ValueString()))
 	}
@@ -44,7 +44,7 @@ func (r *SourceAmazonAdsResourceModel) ToCreateSDKType() *shared.SourceAmazonAds
 	} else {
 		startDate = nil
 	}
-	stateFilter := make([]shared.SourceAmazonAdsStateFilter, 0)
+	var stateFilter []shared.SourceAmazonAdsStateFilter = nil
 	for _, stateFilterItem := range r.Configuration.StateFilter {
 		stateFilter = append(stateFilter, shared.SourceAmazonAdsStateFilter(stateFilterItem.ValueString()))
 	}
@@ -98,7 +98,7 @@ func (r *SourceAmazonAdsResourceModel) ToUpdateSDKType() *shared.SourceAmazonAds
 	} else {
 		lookBackWindow = nil
 	}
-	profiles := make([]int64, 0)
+	var profiles []int64 = nil
 	for _, profilesItem := range r.Configuration.Profiles {
 		profiles = append(profiles, profilesItem.ValueInt64())
 	}
@@ -109,7 +109,7 @@ func (r *SourceAmazonAdsResourceModel) ToUpdateSDKType() *shared.SourceAmazonAds
 	} else {
 		region = nil
 	}
-	reportRecordTypes := make([]shared.SourceAmazonAdsUpdateReportRecordTypes, 0)
+	var reportRecordTypes []shared.SourceAmazonAdsUpdateReportRecordTypes = nil
 	for _, reportRecordTypesItem := range r.Configuration.ReportRecordTypes {
 		reportRecordTypes = append(reportRecordTypes, shared.SourceAmazonAdsUpdateReportRecordTypes(reportRecordTypesItem.ValueString()))
 	}
@@ -119,7 +119,7 @@ func (r *SourceAmazonAdsResourceModel) ToUpdateSDKType() *shared.SourceAmazonAds
 	} else {
 		startDate = nil
 	}
-	stateFilter := make([]shared.SourceAmazonAdsUpdateStateFilter, 0)
+	var stateFilter []shared.SourceAmazonAdsUpdateStateFilter = nil
 	for _, stateFilterItem := range r.Configuration.StateFilter {
 		stateFilter = append(stateFilter, shared.SourceAmazonAdsUpdateStateFilter(stateFilterItem.ValueString()))
 	}

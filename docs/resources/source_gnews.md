@@ -16,24 +16,25 @@ SourceGnews Resource
 resource "airbyte_source_gnews" "my_source_gnews" {
   configuration = {
     api_key  = "...my_api_key..."
-    country  = "de"
+    country  = "nl"
     end_date = "2022-08-21 16:27:09"
     in = [
       "title",
     ]
-    language = "ml"
+    language = "ja"
     nullable = [
       "title",
     ]
-    query               = "Intel AND (i7 OR i9)"
+    query               = "Apple OR Microsoft"
     sortby              = "publishedAt"
     source_type         = "gnews"
     start_date          = "2022-08-21 16:27:09"
-    top_headlines_query = "(Windows 7) AND (Windows 10)"
-    top_headlines_topic = "health"
+    top_headlines_query = "Apple OR Microsoft"
+    top_headlines_topic = "nation"
   }
-  name         = "Lois Rutherford"
-  workspace_id = "91f82ce1-1571-4723-8537-7dcfa89df975"
+  name         = "Allison Streich"
+  secret_id    = "...my_secretId..."
+  workspace_id = "a89df975-e356-4686-892e-9c3ddc5f111d"
 }
 ```
 

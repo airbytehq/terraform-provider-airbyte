@@ -28,8 +28,9 @@ resource "airbyte_source_orb" "my_source_orb" {
     ]
     subscription_usage_grouping_key = "...my_subscription_usage_grouping_key..."
   }
-  name         = "Nelson Hagenes V"
-  workspace_id = "53b44bd3-c431-459d-b3e5-953c00113986"
+  name         = "Mr. Traci Adams I"
+  secret_id    = "...my_secretId..."
+  workspace_id = "9863aa41-e6c3-41cc-af1f-cb51c9a41ffb"
 }
 ```
 

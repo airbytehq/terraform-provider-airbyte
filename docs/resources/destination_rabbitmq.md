@@ -19,14 +19,14 @@ resource "airbyte_destination_rabbitmq" "my_destination_rabbitmq" {
     exchange         = "...my_exchange..."
     host             = "...my_host..."
     password         = "...my_password..."
-    port             = 3
+    port             = 0
     routing_key      = "...my_routing_key..."
-    ssl              = false
-    username         = "Walker35"
+    ssl              = true
+    username         = "Winfield_Herman"
     virtual_host     = "...my_virtual_host..."
   }
-  name         = "Lynda Heathcote"
-  workspace_id = "da660ff5-7bfa-4ad4-b9ef-c1b4512c1032"
+  name         = "Oliver Osinski"
+  workspace_id = "f9efc1b4-512c-4103-a648-dc2f615199eb"
 }
 ```
 

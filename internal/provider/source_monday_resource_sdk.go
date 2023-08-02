@@ -9,28 +9,30 @@ import (
 
 func (r *SourceMondayResourceModel) ToCreateSDKType() *shared.SourceMondayCreateRequest {
 	var credentials *shared.SourceMondayAuthorizationMethod
-	var sourceMondayAuthorizationMethodOAuth20 *shared.SourceMondayAuthorizationMethodOAuth20
-	if r.Configuration.Credentials.SourceMondayAuthorizationMethodAPIToken != nil {
-		authType := shared.SourceMondayAuthorizationMethodOAuth20AuthType(r.Configuration.Credentials.SourceMondayAuthorizationMethodAPIToken.AuthType.ValueString())
-		sourceMondayAuthorizationMethodOAuth20 = &shared.SourceMondayAuthorizationMethodOAuth20{
-			AuthType: authType,
+	if r.Configuration.Credentials != nil {
+		var sourceMondayAuthorizationMethodOAuth20 *shared.SourceMondayAuthorizationMethodOAuth20
+		if r.Configuration.Credentials.SourceMondayAuthorizationMethodAPIToken != nil {
+			authType := shared.SourceMondayAuthorizationMethodOAuth20AuthType(r.Configuration.Credentials.SourceMondayAuthorizationMethodAPIToken.AuthType.ValueString())
+			sourceMondayAuthorizationMethodOAuth20 = &shared.SourceMondayAuthorizationMethodOAuth20{
+				AuthType: authType,
+			}
 		}
-	}
-	if sourceMondayAuthorizationMethodOAuth20 != nil {
-		credentials = &shared.SourceMondayAuthorizationMethod{
-			SourceMondayAuthorizationMethodOAuth20: sourceMondayAuthorizationMethodOAuth20,
+		if sourceMondayAuthorizationMethodOAuth20 != nil {
+			credentials = &shared.SourceMondayAuthorizationMethod{
+				SourceMondayAuthorizationMethodOAuth20: sourceMondayAuthorizationMethodOAuth20,
+			}
 		}
-	}
-	var sourceMondayAuthorizationMethodAPIToken *shared.SourceMondayAuthorizationMethodAPIToken
-	if r.Configuration.Credentials.SourceMondayAuthorizationMethodOAuth20 != nil {
-		authType1 := shared.SourceMondayAuthorizationMethodAPITokenAuthType(r.Configuration.Credentials.SourceMondayAuthorizationMethodOAuth20.AuthType.ValueString())
-		sourceMondayAuthorizationMethodAPIToken = &shared.SourceMondayAuthorizationMethodAPIToken{
-			AuthType: authType1,
+		var sourceMondayAuthorizationMethodAPIToken *shared.SourceMondayAuthorizationMethodAPIToken
+		if r.Configuration.Credentials.SourceMondayAuthorizationMethodOAuth20 != nil {
+			authType1 := shared.SourceMondayAuthorizationMethodAPITokenAuthType(r.Configuration.Credentials.SourceMondayAuthorizationMethodOAuth20.AuthType.ValueString())
+			sourceMondayAuthorizationMethodAPIToken = &shared.SourceMondayAuthorizationMethodAPIToken{
+				AuthType: authType1,
+			}
 		}
-	}
-	if sourceMondayAuthorizationMethodAPIToken != nil {
-		credentials = &shared.SourceMondayAuthorizationMethod{
-			SourceMondayAuthorizationMethodAPIToken: sourceMondayAuthorizationMethodAPIToken,
+		if sourceMondayAuthorizationMethodAPIToken != nil {
+			credentials = &shared.SourceMondayAuthorizationMethod{
+				SourceMondayAuthorizationMethodAPIToken: sourceMondayAuthorizationMethodAPIToken,
+			}
 		}
 	}
 	sourceType := shared.SourceMondayMonday(r.Configuration.SourceType.ValueString())
@@ -62,28 +64,30 @@ func (r *SourceMondayResourceModel) ToGetSDKType() *shared.SourceMondayCreateReq
 
 func (r *SourceMondayResourceModel) ToUpdateSDKType() *shared.SourceMondayPutRequest {
 	var credentials *shared.SourceMondayUpdateAuthorizationMethod
-	var sourceMondayUpdateAuthorizationMethodOAuth20 *shared.SourceMondayUpdateAuthorizationMethodOAuth20
-	if r.Configuration.Credentials.SourceMondayAuthorizationMethodAPIToken != nil {
-		authType := shared.SourceMondayUpdateAuthorizationMethodOAuth20AuthType(r.Configuration.Credentials.SourceMondayAuthorizationMethodAPIToken.AuthType.ValueString())
-		sourceMondayUpdateAuthorizationMethodOAuth20 = &shared.SourceMondayUpdateAuthorizationMethodOAuth20{
-			AuthType: authType,
+	if r.Configuration.Credentials != nil {
+		var sourceMondayUpdateAuthorizationMethodOAuth20 *shared.SourceMondayUpdateAuthorizationMethodOAuth20
+		if r.Configuration.Credentials.SourceMondayAuthorizationMethodAPIToken != nil {
+			authType := shared.SourceMondayUpdateAuthorizationMethodOAuth20AuthType(r.Configuration.Credentials.SourceMondayAuthorizationMethodAPIToken.AuthType.ValueString())
+			sourceMondayUpdateAuthorizationMethodOAuth20 = &shared.SourceMondayUpdateAuthorizationMethodOAuth20{
+				AuthType: authType,
+			}
 		}
-	}
-	if sourceMondayUpdateAuthorizationMethodOAuth20 != nil {
-		credentials = &shared.SourceMondayUpdateAuthorizationMethod{
-			SourceMondayUpdateAuthorizationMethodOAuth20: sourceMondayUpdateAuthorizationMethodOAuth20,
+		if sourceMondayUpdateAuthorizationMethodOAuth20 != nil {
+			credentials = &shared.SourceMondayUpdateAuthorizationMethod{
+				SourceMondayUpdateAuthorizationMethodOAuth20: sourceMondayUpdateAuthorizationMethodOAuth20,
+			}
 		}
-	}
-	var sourceMondayUpdateAuthorizationMethodAPIToken *shared.SourceMondayUpdateAuthorizationMethodAPIToken
-	if r.Configuration.Credentials.SourceMondayAuthorizationMethodOAuth20 != nil {
-		authType1 := shared.SourceMondayUpdateAuthorizationMethodAPITokenAuthType(r.Configuration.Credentials.SourceMondayAuthorizationMethodOAuth20.AuthType.ValueString())
-		sourceMondayUpdateAuthorizationMethodAPIToken = &shared.SourceMondayUpdateAuthorizationMethodAPIToken{
-			AuthType: authType1,
+		var sourceMondayUpdateAuthorizationMethodAPIToken *shared.SourceMondayUpdateAuthorizationMethodAPIToken
+		if r.Configuration.Credentials.SourceMondayAuthorizationMethodOAuth20 != nil {
+			authType1 := shared.SourceMondayUpdateAuthorizationMethodAPITokenAuthType(r.Configuration.Credentials.SourceMondayAuthorizationMethodOAuth20.AuthType.ValueString())
+			sourceMondayUpdateAuthorizationMethodAPIToken = &shared.SourceMondayUpdateAuthorizationMethodAPIToken{
+				AuthType: authType1,
+			}
 		}
-	}
-	if sourceMondayUpdateAuthorizationMethodAPIToken != nil {
-		credentials = &shared.SourceMondayUpdateAuthorizationMethod{
-			SourceMondayUpdateAuthorizationMethodAPIToken: sourceMondayUpdateAuthorizationMethodAPIToken,
+		if sourceMondayUpdateAuthorizationMethodAPIToken != nil {
+			credentials = &shared.SourceMondayUpdateAuthorizationMethod{
+				SourceMondayUpdateAuthorizationMethodAPIToken: sourceMondayUpdateAuthorizationMethodAPIToken,
+			}
 		}
 	}
 	configuration := shared.SourceMondayUpdate{

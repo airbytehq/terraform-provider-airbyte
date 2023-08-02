@@ -115,38 +115,40 @@ func (r *DestinationS3ResourceModel) ToCreateSDKType() *shared.DestinationS3Crea
 	var destinationS3OutputFormatCSVCommaSeparatedValues *shared.DestinationS3OutputFormatCSVCommaSeparatedValues
 	if r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues != nil {
 		var compression *shared.DestinationS3OutputFormatCSVCommaSeparatedValuesCompression
-		var destinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression *shared.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression
-		if r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.Compression.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP != nil {
-			compressionType := new(shared.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionType)
-			if !r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.Compression.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP.CompressionType.IsUnknown() && !r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.Compression.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP.CompressionType.IsNull() {
-				*compressionType = shared.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionType(r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.Compression.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP.CompressionType.ValueString())
-			} else {
-				compressionType = nil
+		if r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.Compression != nil {
+			var destinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression *shared.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression
+			if r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.Compression.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP != nil {
+				compressionType := new(shared.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionType)
+				if !r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.Compression.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP.CompressionType.IsUnknown() && !r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.Compression.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP.CompressionType.IsNull() {
+					*compressionType = shared.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionType(r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.Compression.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP.CompressionType.ValueString())
+				} else {
+					compressionType = nil
+				}
+				destinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression = &shared.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression{
+					CompressionType: compressionType,
+				}
 			}
-			destinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression = &shared.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression{
-				CompressionType: compressionType,
+			if destinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression != nil {
+				compression = &shared.DestinationS3OutputFormatCSVCommaSeparatedValuesCompression{
+					DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression: destinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression,
+				}
 			}
-		}
-		if destinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression != nil {
-			compression = &shared.DestinationS3OutputFormatCSVCommaSeparatedValuesCompression{
-				DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression: destinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression,
+			var destinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP *shared.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP
+			if r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.Compression.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression != nil {
+				compressionType1 := new(shared.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionType)
+				if !r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.Compression.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression.CompressionType.IsUnknown() && !r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.Compression.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression.CompressionType.IsNull() {
+					*compressionType1 = shared.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionType(r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.Compression.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression.CompressionType.ValueString())
+				} else {
+					compressionType1 = nil
+				}
+				destinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP = &shared.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP{
+					CompressionType: compressionType1,
+				}
 			}
-		}
-		var destinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP *shared.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP
-		if r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.Compression.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression != nil {
-			compressionType1 := new(shared.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionType)
-			if !r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.Compression.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression.CompressionType.IsUnknown() && !r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.Compression.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression.CompressionType.IsNull() {
-				*compressionType1 = shared.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionType(r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.Compression.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression.CompressionType.ValueString())
-			} else {
-				compressionType1 = nil
-			}
-			destinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP = &shared.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP{
-				CompressionType: compressionType1,
-			}
-		}
-		if destinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP != nil {
-			compression = &shared.DestinationS3OutputFormatCSVCommaSeparatedValuesCompression{
-				DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP: destinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP,
+			if destinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP != nil {
+				compression = &shared.DestinationS3OutputFormatCSVCommaSeparatedValuesCompression{
+					DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP: destinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP,
+				}
 			}
 		}
 		flattening := shared.DestinationS3OutputFormatCSVCommaSeparatedValuesFlattening(r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.Flattening.ValueString())
@@ -165,38 +167,40 @@ func (r *DestinationS3ResourceModel) ToCreateSDKType() *shared.DestinationS3Crea
 	var destinationS3OutputFormatJSONLinesNewlineDelimitedJSON *shared.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON
 	if r.Configuration.Format.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON != nil {
 		var compression1 *shared.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompression
-		var destinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression *shared.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression
-		if r.Configuration.Format.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP != nil {
-			compressionType2 := new(shared.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType)
-			if !r.Configuration.Format.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP.CompressionType.IsUnknown() && !r.Configuration.Format.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP.CompressionType.IsNull() {
-				*compressionType2 = shared.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType(r.Configuration.Format.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP.CompressionType.ValueString())
-			} else {
-				compressionType2 = nil
+		if r.Configuration.Format.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON.Compression != nil {
+			var destinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression *shared.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression
+			if r.Configuration.Format.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP != nil {
+				compressionType2 := new(shared.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType)
+				if !r.Configuration.Format.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP.CompressionType.IsUnknown() && !r.Configuration.Format.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP.CompressionType.IsNull() {
+					*compressionType2 = shared.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType(r.Configuration.Format.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP.CompressionType.ValueString())
+				} else {
+					compressionType2 = nil
+				}
+				destinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression = &shared.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression{
+					CompressionType: compressionType2,
+				}
 			}
-			destinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression = &shared.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression{
-				CompressionType: compressionType2,
+			if destinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression != nil {
+				compression1 = &shared.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompression{
+					DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression: destinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression,
+				}
 			}
-		}
-		if destinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression != nil {
-			compression1 = &shared.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompression{
-				DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression: destinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression,
+			var destinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP *shared.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP
+			if r.Configuration.Format.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression != nil {
+				compressionType3 := new(shared.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType)
+				if !r.Configuration.Format.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression.CompressionType.IsUnknown() && !r.Configuration.Format.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression.CompressionType.IsNull() {
+					*compressionType3 = shared.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType(r.Configuration.Format.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression.CompressionType.ValueString())
+				} else {
+					compressionType3 = nil
+				}
+				destinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP = &shared.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP{
+					CompressionType: compressionType3,
+				}
 			}
-		}
-		var destinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP *shared.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP
-		if r.Configuration.Format.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression != nil {
-			compressionType3 := new(shared.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType)
-			if !r.Configuration.Format.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression.CompressionType.IsUnknown() && !r.Configuration.Format.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression.CompressionType.IsNull() {
-				*compressionType3 = shared.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType(r.Configuration.Format.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression.CompressionType.ValueString())
-			} else {
-				compressionType3 = nil
-			}
-			destinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP = &shared.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP{
-				CompressionType: compressionType3,
-			}
-		}
-		if destinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP != nil {
-			compression1 = &shared.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompression{
-				DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP: destinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP,
+			if destinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP != nil {
+				compression1 = &shared.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompression{
+					DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP: destinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP,
+				}
 			}
 		}
 		flattening1 := new(shared.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONFlattening)
@@ -426,38 +430,40 @@ func (r *DestinationS3ResourceModel) ToUpdateSDKType() *shared.DestinationS3PutR
 	var destinationS3UpdateOutputFormatCSVCommaSeparatedValues *shared.DestinationS3UpdateOutputFormatCSVCommaSeparatedValues
 	if r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues != nil {
 		var compression *shared.DestinationS3UpdateOutputFormatCSVCommaSeparatedValuesCompression
-		var destinationS3UpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression *shared.DestinationS3UpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression
-		if r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.Compression.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP != nil {
-			compressionType := new(shared.DestinationS3UpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionType)
-			if !r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.Compression.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP.CompressionType.IsUnknown() && !r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.Compression.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP.CompressionType.IsNull() {
-				*compressionType = shared.DestinationS3UpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionType(r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.Compression.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP.CompressionType.ValueString())
-			} else {
-				compressionType = nil
+		if r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.Compression != nil {
+			var destinationS3UpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression *shared.DestinationS3UpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression
+			if r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.Compression.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP != nil {
+				compressionType := new(shared.DestinationS3UpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionType)
+				if !r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.Compression.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP.CompressionType.IsUnknown() && !r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.Compression.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP.CompressionType.IsNull() {
+					*compressionType = shared.DestinationS3UpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionType(r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.Compression.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionGZIP.CompressionType.ValueString())
+				} else {
+					compressionType = nil
+				}
+				destinationS3UpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression = &shared.DestinationS3UpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression{
+					CompressionType: compressionType,
+				}
 			}
-			destinationS3UpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression = &shared.DestinationS3UpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression{
-				CompressionType: compressionType,
+			if destinationS3UpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression != nil {
+				compression = &shared.DestinationS3UpdateOutputFormatCSVCommaSeparatedValuesCompression{
+					DestinationS3UpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression: destinationS3UpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression,
+				}
 			}
-		}
-		if destinationS3UpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression != nil {
-			compression = &shared.DestinationS3UpdateOutputFormatCSVCommaSeparatedValuesCompression{
-				DestinationS3UpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression: destinationS3UpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression,
+			var destinationS3UpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP *shared.DestinationS3UpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP
+			if r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.Compression.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression != nil {
+				compressionType1 := new(shared.DestinationS3UpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionType)
+				if !r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.Compression.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression.CompressionType.IsUnknown() && !r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.Compression.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression.CompressionType.IsNull() {
+					*compressionType1 = shared.DestinationS3UpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionType(r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.Compression.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression.CompressionType.ValueString())
+				} else {
+					compressionType1 = nil
+				}
+				destinationS3UpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP = &shared.DestinationS3UpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP{
+					CompressionType: compressionType1,
+				}
 			}
-		}
-		var destinationS3UpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP *shared.DestinationS3UpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP
-		if r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.Compression.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression != nil {
-			compressionType1 := new(shared.DestinationS3UpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionType)
-			if !r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.Compression.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression.CompressionType.IsUnknown() && !r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.Compression.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression.CompressionType.IsNull() {
-				*compressionType1 = shared.DestinationS3UpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionType(r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.Compression.DestinationS3OutputFormatCSVCommaSeparatedValuesCompressionNoCompression.CompressionType.ValueString())
-			} else {
-				compressionType1 = nil
-			}
-			destinationS3UpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP = &shared.DestinationS3UpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP{
-				CompressionType: compressionType1,
-			}
-		}
-		if destinationS3UpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP != nil {
-			compression = &shared.DestinationS3UpdateOutputFormatCSVCommaSeparatedValuesCompression{
-				DestinationS3UpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP: destinationS3UpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP,
+			if destinationS3UpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP != nil {
+				compression = &shared.DestinationS3UpdateOutputFormatCSVCommaSeparatedValuesCompression{
+					DestinationS3UpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP: destinationS3UpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP,
+				}
 			}
 		}
 		flattening := shared.DestinationS3UpdateOutputFormatCSVCommaSeparatedValuesFlattening(r.Configuration.Format.DestinationS3OutputFormatCSVCommaSeparatedValues.Flattening.ValueString())
@@ -476,38 +482,40 @@ func (r *DestinationS3ResourceModel) ToUpdateSDKType() *shared.DestinationS3PutR
 	var destinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSON *shared.DestinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSON
 	if r.Configuration.Format.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON != nil {
 		var compression1 *shared.DestinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONCompression
-		var destinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression *shared.DestinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression
-		if r.Configuration.Format.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP != nil {
-			compressionType2 := new(shared.DestinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType)
-			if !r.Configuration.Format.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP.CompressionType.IsUnknown() && !r.Configuration.Format.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP.CompressionType.IsNull() {
-				*compressionType2 = shared.DestinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType(r.Configuration.Format.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP.CompressionType.ValueString())
-			} else {
-				compressionType2 = nil
+		if r.Configuration.Format.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON.Compression != nil {
+			var destinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression *shared.DestinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression
+			if r.Configuration.Format.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP != nil {
+				compressionType2 := new(shared.DestinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType)
+				if !r.Configuration.Format.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP.CompressionType.IsUnknown() && !r.Configuration.Format.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP.CompressionType.IsNull() {
+					*compressionType2 = shared.DestinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType(r.Configuration.Format.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP.CompressionType.ValueString())
+				} else {
+					compressionType2 = nil
+				}
+				destinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression = &shared.DestinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression{
+					CompressionType: compressionType2,
+				}
 			}
-			destinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression = &shared.DestinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression{
-				CompressionType: compressionType2,
+			if destinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression != nil {
+				compression1 = &shared.DestinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONCompression{
+					DestinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression: destinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression,
+				}
 			}
-		}
-		if destinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression != nil {
-			compression1 = &shared.DestinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONCompression{
-				DestinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression: destinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression,
+			var destinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP *shared.DestinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP
+			if r.Configuration.Format.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression != nil {
+				compressionType3 := new(shared.DestinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType)
+				if !r.Configuration.Format.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression.CompressionType.IsUnknown() && !r.Configuration.Format.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression.CompressionType.IsNull() {
+					*compressionType3 = shared.DestinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType(r.Configuration.Format.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression.CompressionType.ValueString())
+				} else {
+					compressionType3 = nil
+				}
+				destinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP = &shared.DestinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP{
+					CompressionType: compressionType3,
+				}
 			}
-		}
-		var destinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP *shared.DestinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP
-		if r.Configuration.Format.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression != nil {
-			compressionType3 := new(shared.DestinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType)
-			if !r.Configuration.Format.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression.CompressionType.IsUnknown() && !r.Configuration.Format.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression.CompressionType.IsNull() {
-				*compressionType3 = shared.DestinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType(r.Configuration.Format.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationS3OutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression.CompressionType.ValueString())
-			} else {
-				compressionType3 = nil
-			}
-			destinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP = &shared.DestinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP{
-				CompressionType: compressionType3,
-			}
-		}
-		if destinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP != nil {
-			compression1 = &shared.DestinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONCompression{
-				DestinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP: destinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP,
+			if destinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP != nil {
+				compression1 = &shared.DestinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONCompression{
+					DestinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP: destinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP,
+				}
 			}
 		}
 		flattening1 := new(shared.DestinationS3UpdateOutputFormatJSONLinesNewlineDelimitedJSONFlattening)

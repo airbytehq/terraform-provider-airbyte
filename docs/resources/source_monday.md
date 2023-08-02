@@ -16,13 +16,16 @@ SourceMonday Resource
 resource "airbyte_source_monday" "my_source_monday" {
   configuration = {
     credentials = {
-      api_token = "...my_api_token..."
-      auth_type = "api_token"
+      source_monday_authorization_method_api_token = {
+        api_token = "...my_api_token..."
+        auth_type = "api_token"
+      }
     }
     source_type = "monday"
   }
-  name         = "Carl Weimann"
-  workspace_id = "bdd88e71-f6c4-4825-ad77-71e7fd074009"
+  name         = "Frances Vandervort"
+  secret_id    = "...my_secretId..."
+  workspace_id = "d074009e-f8d2-49de-9dd7-097b5da08c57"
 }
 ```
 

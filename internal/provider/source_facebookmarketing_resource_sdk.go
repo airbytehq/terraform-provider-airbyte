@@ -17,13 +17,13 @@ func (r *SourceFacebookMarketingResourceModel) ToCreateSDKType() *shared.SourceF
 	} else {
 		actionBreakdownsAllowEmpty = nil
 	}
-	customInsights := make([]shared.SourceFacebookMarketingInsightConfig, 0)
+	var customInsights []shared.SourceFacebookMarketingInsightConfig = nil
 	for _, customInsightsItem := range r.Configuration.CustomInsights {
-		actionBreakdowns := make([]shared.SourceFacebookMarketingInsightConfigValidActionBreakdowns, 0)
+		var actionBreakdowns []shared.SourceFacebookMarketingInsightConfigValidActionBreakdowns = nil
 		for _, actionBreakdownsItem := range customInsightsItem.ActionBreakdowns {
 			actionBreakdowns = append(actionBreakdowns, shared.SourceFacebookMarketingInsightConfigValidActionBreakdowns(actionBreakdownsItem.ValueString()))
 		}
-		breakdowns := make([]shared.SourceFacebookMarketingInsightConfigValidBreakdowns, 0)
+		var breakdowns []shared.SourceFacebookMarketingInsightConfigValidBreakdowns = nil
 		for _, breakdownsItem := range customInsightsItem.Breakdowns {
 			breakdowns = append(breakdowns, shared.SourceFacebookMarketingInsightConfigValidBreakdowns(breakdownsItem.ValueString()))
 		}
@@ -33,7 +33,7 @@ func (r *SourceFacebookMarketingResourceModel) ToCreateSDKType() *shared.SourceF
 		} else {
 			endDate = nil
 		}
-		fields := make([]shared.SourceFacebookMarketingInsightConfigValidEnums, 0)
+		var fields []shared.SourceFacebookMarketingInsightConfigValidEnums = nil
 		for _, fieldsItem := range customInsightsItem.Fields {
 			fields = append(fields, shared.SourceFacebookMarketingInsightConfigValidEnums(fieldsItem.ValueString()))
 		}
@@ -157,13 +157,13 @@ func (r *SourceFacebookMarketingResourceModel) ToUpdateSDKType() *shared.SourceF
 	} else {
 		actionBreakdownsAllowEmpty = nil
 	}
-	customInsights := make([]shared.SourceFacebookMarketingUpdateInsightConfig, 0)
+	var customInsights []shared.SourceFacebookMarketingUpdateInsightConfig = nil
 	for _, customInsightsItem := range r.Configuration.CustomInsights {
-		actionBreakdowns := make([]shared.SourceFacebookMarketingUpdateInsightConfigValidActionBreakdowns, 0)
+		var actionBreakdowns []shared.SourceFacebookMarketingUpdateInsightConfigValidActionBreakdowns = nil
 		for _, actionBreakdownsItem := range customInsightsItem.ActionBreakdowns {
 			actionBreakdowns = append(actionBreakdowns, shared.SourceFacebookMarketingUpdateInsightConfigValidActionBreakdowns(actionBreakdownsItem.ValueString()))
 		}
-		breakdowns := make([]shared.SourceFacebookMarketingUpdateInsightConfigValidBreakdowns, 0)
+		var breakdowns []shared.SourceFacebookMarketingUpdateInsightConfigValidBreakdowns = nil
 		for _, breakdownsItem := range customInsightsItem.Breakdowns {
 			breakdowns = append(breakdowns, shared.SourceFacebookMarketingUpdateInsightConfigValidBreakdowns(breakdownsItem.ValueString()))
 		}
@@ -173,7 +173,7 @@ func (r *SourceFacebookMarketingResourceModel) ToUpdateSDKType() *shared.SourceF
 		} else {
 			endDate = nil
 		}
-		fields := make([]shared.SourceFacebookMarketingUpdateInsightConfigValidEnums, 0)
+		var fields []shared.SourceFacebookMarketingUpdateInsightConfigValidEnums = nil
 		for _, fieldsItem := range customInsightsItem.Fields {
 			fields = append(fields, shared.SourceFacebookMarketingUpdateInsightConfigValidEnums(fieldsItem.ValueString()))
 		}

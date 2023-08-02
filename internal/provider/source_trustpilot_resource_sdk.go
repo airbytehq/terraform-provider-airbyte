@@ -8,7 +8,7 @@ import (
 )
 
 func (r *SourceTrustpilotResourceModel) ToCreateSDKType() *shared.SourceTrustpilotCreateRequest {
-	businessUnits := make([]string, 0)
+	var businessUnits []string = nil
 	for _, businessUnitsItem := range r.Configuration.BusinessUnits {
 		businessUnits = append(businessUnits, businessUnitsItem.ValueString())
 	}
@@ -82,7 +82,7 @@ func (r *SourceTrustpilotResourceModel) ToGetSDKType() *shared.SourceTrustpilotC
 }
 
 func (r *SourceTrustpilotResourceModel) ToUpdateSDKType() *shared.SourceTrustpilotPutRequest {
-	businessUnits := make([]string, 0)
+	var businessUnits []string = nil
 	for _, businessUnitsItem := range r.Configuration.BusinessUnits {
 		businessUnits = append(businessUnits, businessUnitsItem.ValueString())
 	}

@@ -8,9 +8,10 @@ resource "airbyte_source_polygon_stock_api" "my_source_polygonstockapi" {
     sort          = "desc"
     source_type   = "polygon-stock-api"
     start_date    = "2020-10-14"
-    stocks_ticker = "IBM"
+    stocks_ticker = "MSFT"
     timespan      = "day"
   }
-  name         = "Rosalie Kuhlman"
-  workspace_id = "6a1f30c7-3df5-4b67-9989-0f42a4bb438d"
+  name         = "Sylvia Lindgren"
+  secret_id    = "...my_secretId..."
+  workspace_id = "5b260591-d745-4e3c-a059-c9c3f567e0e2"
 }

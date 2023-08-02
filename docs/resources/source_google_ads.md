@@ -35,8 +35,9 @@ resource "airbyte_source_google_ads" "my_source_googleads" {
     source_type       = "google-ads"
     start_date        = "2017-01-25"
   }
-  name         = "Gilbert Bayer"
-  workspace_id = "e9c3ddc5-f111-4dea-9026-d541a4d190fe"
+  name         = "Freda Hamill MD"
+  secret_id    = "...my_secretId..."
+  workspace_id = "4d190feb-2178-40bc-8c0d-bbddb484708f"
 }
 ```
 

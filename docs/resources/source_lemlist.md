@@ -18,8 +18,9 @@ resource "airbyte_source_lemlist" "my_source_lemlist" {
     api_key     = "...my_api_key..."
     source_type = "lemlist"
   }
-  name         = "Danielle Wunsch DVM"
-  workspace_id = "8b084c31-97e1-493a-a454-67f94874c2d5"
+  name         = "Jeanette Kutch"
+  secret_id    = "...my_secretId..."
+  workspace_id = "4874c2d5-cc49-4722-b3e6-6bd8fe5d00b9"
 }
 ```
 

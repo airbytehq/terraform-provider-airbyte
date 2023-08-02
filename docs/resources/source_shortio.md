@@ -20,8 +20,9 @@ resource "airbyte_source_shortio" "my_source_shortio" {
     source_type = "shortio"
     start_date  = "...my_start_date..."
   }
-  name         = "Billy Heathcote MD"
-  workspace_id = "9f2e0724-67b8-4a40-bc05-fab0d650edf2"
+  name         = "Kenneth Swaniawski"
+  secret_id    = "...my_secretId..."
+  workspace_id = "0edf22a9-4d20-4ec9-8ea4-1d1f465e8515"
 }
 ```
 

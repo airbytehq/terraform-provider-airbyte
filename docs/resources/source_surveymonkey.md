@@ -28,8 +28,9 @@ resource "airbyte_source_surveymonkey" "my_source_surveymonkey" {
       "...",
     ]
   }
-  name         = "Henry Pollich DDS"
-  workspace_id = "c8e1f206-d5d8-431d-8081-090f6706673f"
+  name         = "Marcia Berge"
+  secret_id    = "...my_secretId..."
+  workspace_id = "73f3a681-c576-48dc-a742-409a215e0860"
 }
 ```
 

@@ -22,12 +22,14 @@ resource "airbyte_destination_mariadb_columnstore" "my_destination_mariadbcolumn
     password         = "...my_password..."
     port             = 3306
     tunnel_method = {
-      tunnel_method = "NO_TUNNEL"
+      destination_mariadb_columnstore_ssh_tunnel_method_no_tunnel = {
+        tunnel_method = "NO_TUNNEL"
+      }
     }
-    username = "Loyce_Schoen"
+    username = "Delaney_Nader"
   }
-  name         = "Vernon Bergnaum"
-  workspace_id = "c413aa63-aae8-4d67-864d-bb675fd5e60b"
+  name         = "Nicolas Kassulke"
+  workspace_id = "64dbb675-fd5e-460b-b75e-d4f6fbee41f3"
 }
 ```
 

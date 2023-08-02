@@ -17,12 +17,13 @@ resource "airbyte_source_younium" "my_source_younium" {
   configuration = {
     legal_entity = "...my_legal_entity..."
     password     = "...my_password..."
-    playground   = false
+    playground   = true
     source_type  = "younium"
-    username     = "Carley.Cole"
+    username     = "Kimberly_Kuhlman9"
   }
-  name         = "Catherine Balistreri"
-  workspace_id = "80312292-cc61-4c2a-b02b-b97ee102da2d"
+  name         = "Bonnie Steuber"
+  secret_id    = "...my_secretId..."
+  workspace_id = "de35f8e0-1bf3-43ea-ab45-402ac1704bf1"
 }
 ```
 

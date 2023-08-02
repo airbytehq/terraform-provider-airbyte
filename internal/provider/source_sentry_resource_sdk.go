@@ -10,7 +10,7 @@ import (
 
 func (r *SourceSentryResourceModel) ToCreateSDKType() *shared.SourceSentryCreateRequest {
 	authToken := r.Configuration.AuthToken.ValueString()
-	discoverFields := make([]interface{}, 0)
+	var discoverFields []interface{} = nil
 	for _, discoverFieldsItem := range r.Configuration.DiscoverFields {
 		var discoverFieldsTmp interface{}
 		_ = json.Unmarshal([]byte(discoverFieldsItem.ValueString()), &discoverFieldsTmp)
@@ -57,7 +57,7 @@ func (r *SourceSentryResourceModel) ToGetSDKType() *shared.SourceSentryCreateReq
 
 func (r *SourceSentryResourceModel) ToUpdateSDKType() *shared.SourceSentryPutRequest {
 	authToken := r.Configuration.AuthToken.ValueString()
-	discoverFields := make([]interface{}, 0)
+	var discoverFields []interface{} = nil
 	for _, discoverFieldsItem := range r.Configuration.DiscoverFields {
 		var discoverFieldsTmp interface{}
 		_ = json.Unmarshal([]byte(discoverFieldsItem.ValueString()), &discoverFieldsTmp)

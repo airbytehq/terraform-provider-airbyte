@@ -21,7 +21,7 @@ func (r *SourceGnewsResourceModel) ToCreateSDKType() *shared.SourceGnewsCreateRe
 	} else {
 		endDate = nil
 	}
-	in := make([]shared.SourceGnewsIn, 0)
+	var in []shared.SourceGnewsIn = nil
 	for _, inItem := range r.Configuration.In {
 		in = append(in, shared.SourceGnewsIn(inItem.ValueString()))
 	}
@@ -31,7 +31,7 @@ func (r *SourceGnewsResourceModel) ToCreateSDKType() *shared.SourceGnewsCreateRe
 	} else {
 		language = nil
 	}
-	nullable := make([]shared.SourceGnewsNullable, 0)
+	var nullable []shared.SourceGnewsNullable = nil
 	for _, nullableItem := range r.Configuration.Nullable {
 		nullable = append(nullable, shared.SourceGnewsNullable(nullableItem.ValueString()))
 	}
@@ -111,7 +111,7 @@ func (r *SourceGnewsResourceModel) ToUpdateSDKType() *shared.SourceGnewsPutReque
 	} else {
 		endDate = nil
 	}
-	in := make([]shared.SourceGnewsUpdateIn, 0)
+	var in []shared.SourceGnewsUpdateIn = nil
 	for _, inItem := range r.Configuration.In {
 		in = append(in, shared.SourceGnewsUpdateIn(inItem.ValueString()))
 	}
@@ -121,7 +121,7 @@ func (r *SourceGnewsResourceModel) ToUpdateSDKType() *shared.SourceGnewsPutReque
 	} else {
 		language = nil
 	}
-	nullable := make([]shared.SourceGnewsUpdateNullable, 0)
+	var nullable []shared.SourceGnewsUpdateNullable = nil
 	for _, nullableItem := range r.Configuration.Nullable {
 		nullable = append(nullable, shared.SourceGnewsUpdateNullable(nullableItem.ValueString()))
 	}

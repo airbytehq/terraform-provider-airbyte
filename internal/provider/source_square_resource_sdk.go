@@ -10,28 +10,30 @@ import (
 
 func (r *SourceSquareResourceModel) ToCreateSDKType() *shared.SourceSquareCreateRequest {
 	var credentials *shared.SourceSquareAuthentication
-	var sourceSquareAuthenticationOauthAuthentication *shared.SourceSquareAuthenticationOauthAuthentication
-	if r.Configuration.Credentials.SourceSquareAuthenticationAPIKey != nil {
-		authType := shared.SourceSquareAuthenticationOauthAuthenticationAuthType(r.Configuration.Credentials.SourceSquareAuthenticationAPIKey.AuthType.ValueString())
-		sourceSquareAuthenticationOauthAuthentication = &shared.SourceSquareAuthenticationOauthAuthentication{
-			AuthType: authType,
+	if r.Configuration.Credentials != nil {
+		var sourceSquareAuthenticationOauthAuthentication *shared.SourceSquareAuthenticationOauthAuthentication
+		if r.Configuration.Credentials.SourceSquareAuthenticationAPIKey != nil {
+			authType := shared.SourceSquareAuthenticationOauthAuthenticationAuthType(r.Configuration.Credentials.SourceSquareAuthenticationAPIKey.AuthType.ValueString())
+			sourceSquareAuthenticationOauthAuthentication = &shared.SourceSquareAuthenticationOauthAuthentication{
+				AuthType: authType,
+			}
 		}
-	}
-	if sourceSquareAuthenticationOauthAuthentication != nil {
-		credentials = &shared.SourceSquareAuthentication{
-			SourceSquareAuthenticationOauthAuthentication: sourceSquareAuthenticationOauthAuthentication,
+		if sourceSquareAuthenticationOauthAuthentication != nil {
+			credentials = &shared.SourceSquareAuthentication{
+				SourceSquareAuthenticationOauthAuthentication: sourceSquareAuthenticationOauthAuthentication,
+			}
 		}
-	}
-	var sourceSquareAuthenticationAPIKey *shared.SourceSquareAuthenticationAPIKey
-	if r.Configuration.Credentials.SourceSquareAuthenticationOauthAuthentication != nil {
-		authType1 := shared.SourceSquareAuthenticationAPIKeyAuthType(r.Configuration.Credentials.SourceSquareAuthenticationOauthAuthentication.AuthType.ValueString())
-		sourceSquareAuthenticationAPIKey = &shared.SourceSquareAuthenticationAPIKey{
-			AuthType: authType1,
+		var sourceSquareAuthenticationAPIKey *shared.SourceSquareAuthenticationAPIKey
+		if r.Configuration.Credentials.SourceSquareAuthenticationOauthAuthentication != nil {
+			authType1 := shared.SourceSquareAuthenticationAPIKeyAuthType(r.Configuration.Credentials.SourceSquareAuthenticationOauthAuthentication.AuthType.ValueString())
+			sourceSquareAuthenticationAPIKey = &shared.SourceSquareAuthenticationAPIKey{
+				AuthType: authType1,
+			}
 		}
-	}
-	if sourceSquareAuthenticationAPIKey != nil {
-		credentials = &shared.SourceSquareAuthentication{
-			SourceSquareAuthenticationAPIKey: sourceSquareAuthenticationAPIKey,
+		if sourceSquareAuthenticationAPIKey != nil {
+			credentials = &shared.SourceSquareAuthentication{
+				SourceSquareAuthenticationAPIKey: sourceSquareAuthenticationAPIKey,
+			}
 		}
 	}
 	includeDeletedObjects := new(bool)
@@ -79,28 +81,30 @@ func (r *SourceSquareResourceModel) ToGetSDKType() *shared.SourceSquareCreateReq
 
 func (r *SourceSquareResourceModel) ToUpdateSDKType() *shared.SourceSquarePutRequest {
 	var credentials *shared.SourceSquareUpdateAuthentication
-	var sourceSquareUpdateAuthenticationOauthAuthentication *shared.SourceSquareUpdateAuthenticationOauthAuthentication
-	if r.Configuration.Credentials.SourceSquareAuthenticationAPIKey != nil {
-		authType := shared.SourceSquareUpdateAuthenticationOauthAuthenticationAuthType(r.Configuration.Credentials.SourceSquareAuthenticationAPIKey.AuthType.ValueString())
-		sourceSquareUpdateAuthenticationOauthAuthentication = &shared.SourceSquareUpdateAuthenticationOauthAuthentication{
-			AuthType: authType,
+	if r.Configuration.Credentials != nil {
+		var sourceSquareUpdateAuthenticationOauthAuthentication *shared.SourceSquareUpdateAuthenticationOauthAuthentication
+		if r.Configuration.Credentials.SourceSquareAuthenticationAPIKey != nil {
+			authType := shared.SourceSquareUpdateAuthenticationOauthAuthenticationAuthType(r.Configuration.Credentials.SourceSquareAuthenticationAPIKey.AuthType.ValueString())
+			sourceSquareUpdateAuthenticationOauthAuthentication = &shared.SourceSquareUpdateAuthenticationOauthAuthentication{
+				AuthType: authType,
+			}
 		}
-	}
-	if sourceSquareUpdateAuthenticationOauthAuthentication != nil {
-		credentials = &shared.SourceSquareUpdateAuthentication{
-			SourceSquareUpdateAuthenticationOauthAuthentication: sourceSquareUpdateAuthenticationOauthAuthentication,
+		if sourceSquareUpdateAuthenticationOauthAuthentication != nil {
+			credentials = &shared.SourceSquareUpdateAuthentication{
+				SourceSquareUpdateAuthenticationOauthAuthentication: sourceSquareUpdateAuthenticationOauthAuthentication,
+			}
 		}
-	}
-	var sourceSquareUpdateAuthenticationAPIKey *shared.SourceSquareUpdateAuthenticationAPIKey
-	if r.Configuration.Credentials.SourceSquareAuthenticationOauthAuthentication != nil {
-		authType1 := shared.SourceSquareUpdateAuthenticationAPIKeyAuthType(r.Configuration.Credentials.SourceSquareAuthenticationOauthAuthentication.AuthType.ValueString())
-		sourceSquareUpdateAuthenticationAPIKey = &shared.SourceSquareUpdateAuthenticationAPIKey{
-			AuthType: authType1,
+		var sourceSquareUpdateAuthenticationAPIKey *shared.SourceSquareUpdateAuthenticationAPIKey
+		if r.Configuration.Credentials.SourceSquareAuthenticationOauthAuthentication != nil {
+			authType1 := shared.SourceSquareUpdateAuthenticationAPIKeyAuthType(r.Configuration.Credentials.SourceSquareAuthenticationOauthAuthentication.AuthType.ValueString())
+			sourceSquareUpdateAuthenticationAPIKey = &shared.SourceSquareUpdateAuthenticationAPIKey{
+				AuthType: authType1,
+			}
 		}
-	}
-	if sourceSquareUpdateAuthenticationAPIKey != nil {
-		credentials = &shared.SourceSquareUpdateAuthentication{
-			SourceSquareUpdateAuthenticationAPIKey: sourceSquareUpdateAuthenticationAPIKey,
+		if sourceSquareUpdateAuthenticationAPIKey != nil {
+			credentials = &shared.SourceSquareUpdateAuthentication{
+				SourceSquareUpdateAuthenticationAPIKey: sourceSquareUpdateAuthenticationAPIKey,
+			}
 		}
 	}
 	includeDeletedObjects := new(bool)

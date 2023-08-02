@@ -15,18 +15,18 @@ DestinationPubsub Resource
 ```terraform
 resource "airbyte_destination_pubsub" "my_destination_pubsub" {
   configuration = {
-    batching_delay_threshold         = 5
-    batching_element_count_threshold = 1
-    batching_enabled                 = true
-    batching_request_bytes_threshold = 7
+    batching_delay_threshold         = 10
+    batching_element_count_threshold = 6
+    batching_enabled                 = false
+    batching_request_bytes_threshold = 9
     credentials_json                 = "...my_credentials_json..."
     destination_type                 = "pubsub"
-    ordering_enabled                 = true
+    ordering_enabled                 = false
     project_id                       = "...my_project_id..."
     topic_id                         = "...my_topic_id..."
   }
-  name         = "Lela Baumbach Jr."
-  workspace_id = "12563f94-e29e-4973-a922-a57a15be3e06"
+  name         = "Frankie Metz"
+  workspace_id = "e922a57a-15be-43e0-a080-7e2b6e3ab884"
 }
 ```
 

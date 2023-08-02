@@ -16,17 +16,20 @@ SourceZendeskSupport Resource
 resource "airbyte_source_zendesk_support" "my_source_zendesksupport" {
   configuration = {
     credentials = {
-      api_token   = "...my_api_token..."
-      credentials = "api_token"
-      email       = "Urban_Bechtelar@yahoo.com"
+      source_zendesk_support_authentication_api_token = {
+        api_token   = "...my_api_token..."
+        credentials = "api_token"
+        email       = "Ignacio_Langosh@hotmail.com"
+      }
     }
-    ignore_pagination = false
+    ignore_pagination = true
     source_type       = "zendesk-support"
     start_date        = "2020-10-15T00:00:00Z"
     subdomain         = "...my_subdomain..."
   }
-  name         = "Gregg Littel"
-  workspace_id = "92386f62-c969-4c4c-86b7-8890a3fd3c81"
+  name         = "Dallas Douglas"
+  secret_id    = "...my_secretId..."
+  workspace_id = "1da10f8c-23df-4931-9a3e-db51fad94acc"
 }
 ```
 

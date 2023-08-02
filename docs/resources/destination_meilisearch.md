@@ -19,8 +19,8 @@ resource "airbyte_destination_meilisearch" "my_destination_meilisearch" {
     destination_type = "meilisearch"
     host             = "...my_host..."
   }
-  name         = "Arlene Heidenreich"
-  workspace_id = "4f6fbee4-1f33-4317-be35-b60eb1ea4265"
+  name         = "Wendy Breitenberg"
+  workspace_id = "e35b60eb-1ea4-4265-95ba-3c28744ed53b"
 }
 ```
 

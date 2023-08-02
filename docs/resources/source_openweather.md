@@ -16,14 +16,15 @@ SourceOpenweather Resource
 resource "airbyte_source_openweather" "my_source_openweather" {
   configuration = {
     appid       = "...my_appid..."
-    lang        = "en"
+    lang        = "fr"
     lat         = "-21.249107858038816"
-    lon         = "-70.39482074115321"
+    lon         = "4.835659"
     source_type = "openweather"
-    units       = "imperial"
+    units       = "standard"
   }
-  name         = "Penny Feest"
-  workspace_id = "ecc5cb86-0f8c-4d58-8ba7-3810e4fe4447"
+  name         = "Alex Zulauf"
+  secret_id    = "...my_secretId..."
+  workspace_id = "447297cd-3b1d-4d3b-bce2-47b7684eff50"
 }
 ```
 

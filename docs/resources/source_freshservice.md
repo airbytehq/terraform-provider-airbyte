@@ -20,8 +20,9 @@ resource "airbyte_source_freshservice" "my_source_freshservice" {
     source_type = "freshservice"
     start_date  = "2020-10-01T00:00:00Z"
   }
-  name         = "Stephanie Wolf"
-  workspace_id = "d030c4ec-c11a-4083-a429-068b8502a55e"
+  name         = "Anita Dare III"
+  secret_id    = "...my_secretId..."
+  workspace_id = "8b8502a5-5e7f-473b-8845-e320a319f4ba"
 }
 ```
 

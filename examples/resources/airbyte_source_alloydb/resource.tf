@@ -6,25 +6,32 @@ resource "airbyte_source_alloydb" "my_source_alloydb" {
     password        = "...my_password..."
     port            = 5432
     replication_method = {
-      initial_waiting_seconds = 10
-      lsn_commit_behaviour    = "After loading Data in the destination"
-      method                  = "CDC"
-      plugin                  = "pgoutput"
-      publication             = "...my_publication..."
-      replication_slot        = "...my_replication_slot..."
+      source_alloydb_replication_method_logical_replication_cdc_ = {
+        initial_waiting_seconds = 8
+        lsn_commit_behaviour    = "After loading Data in the destination"
+        method                  = "CDC"
+        plugin                  = "pgoutput"
+        publication             = "...my_publication..."
+        replication_slot        = "...my_replication_slot..."
+      }
     }
     schemas = [
       "...",
     ]
     source_type = "alloydb"
     ssl_mode = {
-      mode = "allow"
+      source_alloydb_ssl_modes_allow = {
+        mode = "allow"
+      }
     }
     tunnel_method = {
-      tunnel_method = "NO_TUNNEL"
+      source_alloydb_ssh_tunnel_method_no_tunnel = {
+        tunnel_method = "NO_TUNNEL"
+      }
     }
-    username = "Alvis28"
+    username = "Bruce.Zieme44"
   }
-  name         = "Sergio Hirthe"
-  workspace_id = "ca5acfbe-2fd5-4707-9779-29177deac646"
+  name         = "Viola Hane"
+  secret_id    = "...my_secretId..."
+  workspace_id = "929177de-ac64-46ec-b573-409e3eb1e5a2"
 }

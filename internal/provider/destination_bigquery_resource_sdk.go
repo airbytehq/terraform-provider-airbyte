@@ -24,28 +24,30 @@ func (r *DestinationBigqueryResourceModel) ToCreateSDKType() *shared.Destination
 	datasetLocation := shared.DestinationBigqueryDatasetLocation(r.Configuration.DatasetLocation.ValueString())
 	destinationType := shared.DestinationBigqueryBigquery(r.Configuration.DestinationType.ValueString())
 	var loadingMethod *shared.DestinationBigqueryLoadingMethod
-	var destinationBigqueryLoadingMethodStandardInserts *shared.DestinationBigqueryLoadingMethodStandardInserts
-	if r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging != nil {
-		method := shared.DestinationBigqueryLoadingMethodStandardInsertsMethod(r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.Method.ValueString())
-		destinationBigqueryLoadingMethodStandardInserts = &shared.DestinationBigqueryLoadingMethodStandardInserts{
-			Method: method,
+	if r.Configuration.LoadingMethod != nil {
+		var destinationBigqueryLoadingMethodStandardInserts *shared.DestinationBigqueryLoadingMethodStandardInserts
+		if r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging != nil {
+			method := shared.DestinationBigqueryLoadingMethodStandardInsertsMethod(r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.Method.ValueString())
+			destinationBigqueryLoadingMethodStandardInserts = &shared.DestinationBigqueryLoadingMethodStandardInserts{
+				Method: method,
+			}
 		}
-	}
-	if destinationBigqueryLoadingMethodStandardInserts != nil {
-		loadingMethod = &shared.DestinationBigqueryLoadingMethod{
-			DestinationBigqueryLoadingMethodStandardInserts: destinationBigqueryLoadingMethodStandardInserts,
+		if destinationBigqueryLoadingMethodStandardInserts != nil {
+			loadingMethod = &shared.DestinationBigqueryLoadingMethod{
+				DestinationBigqueryLoadingMethodStandardInserts: destinationBigqueryLoadingMethodStandardInserts,
+			}
 		}
-	}
-	var destinationBigqueryLoadingMethodGCSStaging *shared.DestinationBigqueryLoadingMethodGCSStaging
-	if r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodStandardInserts != nil {
-		method1 := shared.DestinationBigqueryLoadingMethodGCSStagingMethod(r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodStandardInserts.Method.ValueString())
-		destinationBigqueryLoadingMethodGCSStaging = &shared.DestinationBigqueryLoadingMethodGCSStaging{
-			Method: method1,
+		var destinationBigqueryLoadingMethodGCSStaging *shared.DestinationBigqueryLoadingMethodGCSStaging
+		if r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodStandardInserts != nil {
+			method1 := shared.DestinationBigqueryLoadingMethodGCSStagingMethod(r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodStandardInserts.Method.ValueString())
+			destinationBigqueryLoadingMethodGCSStaging = &shared.DestinationBigqueryLoadingMethodGCSStaging{
+				Method: method1,
+			}
 		}
-	}
-	if destinationBigqueryLoadingMethodGCSStaging != nil {
-		loadingMethod = &shared.DestinationBigqueryLoadingMethod{
-			DestinationBigqueryLoadingMethodGCSStaging: destinationBigqueryLoadingMethodGCSStaging,
+		if destinationBigqueryLoadingMethodGCSStaging != nil {
+			loadingMethod = &shared.DestinationBigqueryLoadingMethod{
+				DestinationBigqueryLoadingMethodGCSStaging: destinationBigqueryLoadingMethodGCSStaging,
+			}
 		}
 	}
 	projectID := r.Configuration.ProjectID.ValueString()
@@ -96,28 +98,30 @@ func (r *DestinationBigqueryResourceModel) ToUpdateSDKType() *shared.Destination
 	datasetID := r.Configuration.DatasetID.ValueString()
 	datasetLocation := shared.DestinationBigqueryUpdateDatasetLocation(r.Configuration.DatasetLocation.ValueString())
 	var loadingMethod *shared.DestinationBigqueryUpdateLoadingMethod
-	var destinationBigqueryUpdateLoadingMethodStandardInserts *shared.DestinationBigqueryUpdateLoadingMethodStandardInserts
-	if r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging != nil {
-		method := shared.DestinationBigqueryUpdateLoadingMethodStandardInsertsMethod(r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.Method.ValueString())
-		destinationBigqueryUpdateLoadingMethodStandardInserts = &shared.DestinationBigqueryUpdateLoadingMethodStandardInserts{
-			Method: method,
+	if r.Configuration.LoadingMethod != nil {
+		var destinationBigqueryUpdateLoadingMethodStandardInserts *shared.DestinationBigqueryUpdateLoadingMethodStandardInserts
+		if r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging != nil {
+			method := shared.DestinationBigqueryUpdateLoadingMethodStandardInsertsMethod(r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodGCSStaging.Method.ValueString())
+			destinationBigqueryUpdateLoadingMethodStandardInserts = &shared.DestinationBigqueryUpdateLoadingMethodStandardInserts{
+				Method: method,
+			}
 		}
-	}
-	if destinationBigqueryUpdateLoadingMethodStandardInserts != nil {
-		loadingMethod = &shared.DestinationBigqueryUpdateLoadingMethod{
-			DestinationBigqueryUpdateLoadingMethodStandardInserts: destinationBigqueryUpdateLoadingMethodStandardInserts,
+		if destinationBigqueryUpdateLoadingMethodStandardInserts != nil {
+			loadingMethod = &shared.DestinationBigqueryUpdateLoadingMethod{
+				DestinationBigqueryUpdateLoadingMethodStandardInserts: destinationBigqueryUpdateLoadingMethodStandardInserts,
+			}
 		}
-	}
-	var destinationBigqueryUpdateLoadingMethodGCSStaging *shared.DestinationBigqueryUpdateLoadingMethodGCSStaging
-	if r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodStandardInserts != nil {
-		method1 := shared.DestinationBigqueryUpdateLoadingMethodGCSStagingMethod(r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodStandardInserts.Method.ValueString())
-		destinationBigqueryUpdateLoadingMethodGCSStaging = &shared.DestinationBigqueryUpdateLoadingMethodGCSStaging{
-			Method: method1,
+		var destinationBigqueryUpdateLoadingMethodGCSStaging *shared.DestinationBigqueryUpdateLoadingMethodGCSStaging
+		if r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodStandardInserts != nil {
+			method1 := shared.DestinationBigqueryUpdateLoadingMethodGCSStagingMethod(r.Configuration.LoadingMethod.DestinationBigqueryLoadingMethodStandardInserts.Method.ValueString())
+			destinationBigqueryUpdateLoadingMethodGCSStaging = &shared.DestinationBigqueryUpdateLoadingMethodGCSStaging{
+				Method: method1,
+			}
 		}
-	}
-	if destinationBigqueryUpdateLoadingMethodGCSStaging != nil {
-		loadingMethod = &shared.DestinationBigqueryUpdateLoadingMethod{
-			DestinationBigqueryUpdateLoadingMethodGCSStaging: destinationBigqueryUpdateLoadingMethodGCSStaging,
+		if destinationBigqueryUpdateLoadingMethodGCSStaging != nil {
+			loadingMethod = &shared.DestinationBigqueryUpdateLoadingMethod{
+				DestinationBigqueryUpdateLoadingMethodGCSStaging: destinationBigqueryUpdateLoadingMethodGCSStaging,
+			}
 		}
 	}
 	projectID := r.Configuration.ProjectID.ValueString()
