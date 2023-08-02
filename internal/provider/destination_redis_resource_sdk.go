@@ -25,94 +25,90 @@ func (r *DestinationRedisResourceModel) ToCreateSDKType() *shared.DestinationRed
 		ssl = nil
 	}
 	var sslMode *shared.DestinationRedisSSLModes
-	if r.Configuration.SslMode != nil {
-		var destinationRedisSSLModesDisable *shared.DestinationRedisSSLModesDisable
-		if r.Configuration.SslMode.DestinationRedisSSLModesDisable != nil {
-			mode := shared.DestinationRedisSSLModesDisableMode(r.Configuration.SslMode.DestinationRedisSSLModesDisable.Mode.ValueString())
-			destinationRedisSSLModesDisable = &shared.DestinationRedisSSLModesDisable{
-				Mode: mode,
-			}
+	var destinationRedisSSLModesDisable *shared.DestinationRedisSSLModesDisable
+	if r.Configuration.SslMode.DestinationRedisSSLModesDisable != nil {
+		mode := shared.DestinationRedisSSLModesDisableMode(r.Configuration.SslMode.DestinationRedisSSLModesDisable.Mode.ValueString())
+		destinationRedisSSLModesDisable = &shared.DestinationRedisSSLModesDisable{
+			Mode: mode,
 		}
-		if destinationRedisSSLModesDisable != nil {
-			sslMode = &shared.DestinationRedisSSLModes{
-				DestinationRedisSSLModesDisable: destinationRedisSSLModesDisable,
-			}
+	}
+	if destinationRedisSSLModesDisable != nil {
+		sslMode = &shared.DestinationRedisSSLModes{
+			DestinationRedisSSLModesDisable: destinationRedisSSLModesDisable,
 		}
-		var destinationRedisSSLModesVerifyFull *shared.DestinationRedisSSLModesVerifyFull
-		if r.Configuration.SslMode.DestinationRedisSSLModesVerifyFull != nil {
-			caCertificate := r.Configuration.SslMode.DestinationRedisSSLModesVerifyFull.CaCertificate.ValueString()
-			clientCertificate := r.Configuration.SslMode.DestinationRedisSSLModesVerifyFull.ClientCertificate.ValueString()
-			clientKey := r.Configuration.SslMode.DestinationRedisSSLModesVerifyFull.ClientKey.ValueString()
-			clientKeyPassword := new(string)
-			if !r.Configuration.SslMode.DestinationRedisSSLModesVerifyFull.ClientKeyPassword.IsUnknown() && !r.Configuration.SslMode.DestinationRedisSSLModesVerifyFull.ClientKeyPassword.IsNull() {
-				*clientKeyPassword = r.Configuration.SslMode.DestinationRedisSSLModesVerifyFull.ClientKeyPassword.ValueString()
-			} else {
-				clientKeyPassword = nil
-			}
-			mode1 := shared.DestinationRedisSSLModesVerifyFullMode(r.Configuration.SslMode.DestinationRedisSSLModesVerifyFull.Mode.ValueString())
-			destinationRedisSSLModesVerifyFull = &shared.DestinationRedisSSLModesVerifyFull{
-				CaCertificate:     caCertificate,
-				ClientCertificate: clientCertificate,
-				ClientKey:         clientKey,
-				ClientKeyPassword: clientKeyPassword,
-				Mode:              mode1,
-			}
+	}
+	var destinationRedisSSLModesVerifyFull *shared.DestinationRedisSSLModesVerifyFull
+	if r.Configuration.SslMode.DestinationRedisSSLModesVerifyFull != nil {
+		caCertificate := r.Configuration.SslMode.DestinationRedisSSLModesVerifyFull.CaCertificate.ValueString()
+		clientCertificate := r.Configuration.SslMode.DestinationRedisSSLModesVerifyFull.ClientCertificate.ValueString()
+		clientKey := r.Configuration.SslMode.DestinationRedisSSLModesVerifyFull.ClientKey.ValueString()
+		clientKeyPassword := new(string)
+		if !r.Configuration.SslMode.DestinationRedisSSLModesVerifyFull.ClientKeyPassword.IsUnknown() && !r.Configuration.SslMode.DestinationRedisSSLModesVerifyFull.ClientKeyPassword.IsNull() {
+			*clientKeyPassword = r.Configuration.SslMode.DestinationRedisSSLModesVerifyFull.ClientKeyPassword.ValueString()
+		} else {
+			clientKeyPassword = nil
 		}
-		if destinationRedisSSLModesVerifyFull != nil {
-			sslMode = &shared.DestinationRedisSSLModes{
-				DestinationRedisSSLModesVerifyFull: destinationRedisSSLModesVerifyFull,
-			}
+		mode1 := shared.DestinationRedisSSLModesVerifyFullMode(r.Configuration.SslMode.DestinationRedisSSLModesVerifyFull.Mode.ValueString())
+		destinationRedisSSLModesVerifyFull = &shared.DestinationRedisSSLModesVerifyFull{
+			CaCertificate:     caCertificate,
+			ClientCertificate: clientCertificate,
+			ClientKey:         clientKey,
+			ClientKeyPassword: clientKeyPassword,
+			Mode:              mode1,
+		}
+	}
+	if destinationRedisSSLModesVerifyFull != nil {
+		sslMode = &shared.DestinationRedisSSLModes{
+			DestinationRedisSSLModesVerifyFull: destinationRedisSSLModesVerifyFull,
 		}
 	}
 	var tunnelMethod *shared.DestinationRedisSSHTunnelMethod
-	if r.Configuration.TunnelMethod != nil {
-		var destinationRedisSSHTunnelMethodNoTunnel *shared.DestinationRedisSSHTunnelMethodNoTunnel
-		if r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodNoTunnel != nil {
-			tunnelMethod1 := shared.DestinationRedisSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
-			destinationRedisSSHTunnelMethodNoTunnel = &shared.DestinationRedisSSHTunnelMethodNoTunnel{
-				TunnelMethod: tunnelMethod1,
-			}
+	var destinationRedisSSHTunnelMethodNoTunnel *shared.DestinationRedisSSHTunnelMethodNoTunnel
+	if r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodNoTunnel != nil {
+		tunnelMethod1 := shared.DestinationRedisSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
+		destinationRedisSSHTunnelMethodNoTunnel = &shared.DestinationRedisSSHTunnelMethodNoTunnel{
+			TunnelMethod: tunnelMethod1,
 		}
-		if destinationRedisSSHTunnelMethodNoTunnel != nil {
-			tunnelMethod = &shared.DestinationRedisSSHTunnelMethod{
-				DestinationRedisSSHTunnelMethodNoTunnel: destinationRedisSSHTunnelMethodNoTunnel,
-			}
+	}
+	if destinationRedisSSHTunnelMethodNoTunnel != nil {
+		tunnelMethod = &shared.DestinationRedisSSHTunnelMethod{
+			DestinationRedisSSHTunnelMethodNoTunnel: destinationRedisSSHTunnelMethodNoTunnel,
 		}
-		var destinationRedisSSHTunnelMethodSSHKeyAuthentication *shared.DestinationRedisSSHTunnelMethodSSHKeyAuthentication
-		if r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodPasswordAuthentication != nil {
-			tunnelHost := r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
-			tunnelMethod2 := shared.DestinationRedisSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
-			tunnelPort := r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
-			tunnelUser := r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
-			destinationRedisSSHTunnelMethodSSHKeyAuthentication = &shared.DestinationRedisSSHTunnelMethodSSHKeyAuthentication{
-				TunnelHost:   tunnelHost,
-				TunnelMethod: tunnelMethod2,
-				TunnelPort:   tunnelPort,
-				TunnelUser:   tunnelUser,
-			}
+	}
+	var destinationRedisSSHTunnelMethodSSHKeyAuthentication *shared.DestinationRedisSSHTunnelMethodSSHKeyAuthentication
+	if r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodPasswordAuthentication != nil {
+		tunnelHost := r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
+		tunnelMethod2 := shared.DestinationRedisSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
+		tunnelPort := r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
+		tunnelUser := r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
+		destinationRedisSSHTunnelMethodSSHKeyAuthentication = &shared.DestinationRedisSSHTunnelMethodSSHKeyAuthentication{
+			TunnelHost:   tunnelHost,
+			TunnelMethod: tunnelMethod2,
+			TunnelPort:   tunnelPort,
+			TunnelUser:   tunnelUser,
 		}
-		if destinationRedisSSHTunnelMethodSSHKeyAuthentication != nil {
-			tunnelMethod = &shared.DestinationRedisSSHTunnelMethod{
-				DestinationRedisSSHTunnelMethodSSHKeyAuthentication: destinationRedisSSHTunnelMethodSSHKeyAuthentication,
-			}
+	}
+	if destinationRedisSSHTunnelMethodSSHKeyAuthentication != nil {
+		tunnelMethod = &shared.DestinationRedisSSHTunnelMethod{
+			DestinationRedisSSHTunnelMethodSSHKeyAuthentication: destinationRedisSSHTunnelMethodSSHKeyAuthentication,
 		}
-		var destinationRedisSSHTunnelMethodPasswordAuthentication *shared.DestinationRedisSSHTunnelMethodPasswordAuthentication
-		if r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodSSHKeyAuthentication != nil {
-			tunnelHost1 := r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
-			tunnelMethod3 := shared.DestinationRedisSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
-			tunnelPort1 := r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
-			tunnelUser1 := r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
-			destinationRedisSSHTunnelMethodPasswordAuthentication = &shared.DestinationRedisSSHTunnelMethodPasswordAuthentication{
-				TunnelHost:   tunnelHost1,
-				TunnelMethod: tunnelMethod3,
-				TunnelPort:   tunnelPort1,
-				TunnelUser:   tunnelUser1,
-			}
+	}
+	var destinationRedisSSHTunnelMethodPasswordAuthentication *shared.DestinationRedisSSHTunnelMethodPasswordAuthentication
+	if r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodSSHKeyAuthentication != nil {
+		tunnelHost1 := r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
+		tunnelMethod3 := shared.DestinationRedisSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
+		tunnelPort1 := r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
+		tunnelUser1 := r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
+		destinationRedisSSHTunnelMethodPasswordAuthentication = &shared.DestinationRedisSSHTunnelMethodPasswordAuthentication{
+			TunnelHost:   tunnelHost1,
+			TunnelMethod: tunnelMethod3,
+			TunnelPort:   tunnelPort1,
+			TunnelUser:   tunnelUser1,
 		}
-		if destinationRedisSSHTunnelMethodPasswordAuthentication != nil {
-			tunnelMethod = &shared.DestinationRedisSSHTunnelMethod{
-				DestinationRedisSSHTunnelMethodPasswordAuthentication: destinationRedisSSHTunnelMethodPasswordAuthentication,
-			}
+	}
+	if destinationRedisSSHTunnelMethodPasswordAuthentication != nil {
+		tunnelMethod = &shared.DestinationRedisSSHTunnelMethod{
+			DestinationRedisSSHTunnelMethodPasswordAuthentication: destinationRedisSSHTunnelMethodPasswordAuthentication,
 		}
 	}
 	username := r.Configuration.Username.ValueString()
@@ -159,94 +155,90 @@ func (r *DestinationRedisResourceModel) ToUpdateSDKType() *shared.DestinationRed
 		ssl = nil
 	}
 	var sslMode *shared.DestinationRedisUpdateSSLModes
-	if r.Configuration.SslMode != nil {
-		var destinationRedisUpdateSSLModesDisable *shared.DestinationRedisUpdateSSLModesDisable
-		if r.Configuration.SslMode.DestinationRedisSSLModesDisable != nil {
-			mode := shared.DestinationRedisUpdateSSLModesDisableMode(r.Configuration.SslMode.DestinationRedisSSLModesDisable.Mode.ValueString())
-			destinationRedisUpdateSSLModesDisable = &shared.DestinationRedisUpdateSSLModesDisable{
-				Mode: mode,
-			}
+	var destinationRedisUpdateSSLModesDisable *shared.DestinationRedisUpdateSSLModesDisable
+	if r.Configuration.SslMode.DestinationRedisSSLModesDisable != nil {
+		mode := shared.DestinationRedisUpdateSSLModesDisableMode(r.Configuration.SslMode.DestinationRedisSSLModesDisable.Mode.ValueString())
+		destinationRedisUpdateSSLModesDisable = &shared.DestinationRedisUpdateSSLModesDisable{
+			Mode: mode,
 		}
-		if destinationRedisUpdateSSLModesDisable != nil {
-			sslMode = &shared.DestinationRedisUpdateSSLModes{
-				DestinationRedisUpdateSSLModesDisable: destinationRedisUpdateSSLModesDisable,
-			}
+	}
+	if destinationRedisUpdateSSLModesDisable != nil {
+		sslMode = &shared.DestinationRedisUpdateSSLModes{
+			DestinationRedisUpdateSSLModesDisable: destinationRedisUpdateSSLModesDisable,
 		}
-		var destinationRedisUpdateSSLModesVerifyFull *shared.DestinationRedisUpdateSSLModesVerifyFull
-		if r.Configuration.SslMode.DestinationRedisSSLModesVerifyFull != nil {
-			caCertificate := r.Configuration.SslMode.DestinationRedisSSLModesVerifyFull.CaCertificate.ValueString()
-			clientCertificate := r.Configuration.SslMode.DestinationRedisSSLModesVerifyFull.ClientCertificate.ValueString()
-			clientKey := r.Configuration.SslMode.DestinationRedisSSLModesVerifyFull.ClientKey.ValueString()
-			clientKeyPassword := new(string)
-			if !r.Configuration.SslMode.DestinationRedisSSLModesVerifyFull.ClientKeyPassword.IsUnknown() && !r.Configuration.SslMode.DestinationRedisSSLModesVerifyFull.ClientKeyPassword.IsNull() {
-				*clientKeyPassword = r.Configuration.SslMode.DestinationRedisSSLModesVerifyFull.ClientKeyPassword.ValueString()
-			} else {
-				clientKeyPassword = nil
-			}
-			mode1 := shared.DestinationRedisUpdateSSLModesVerifyFullMode(r.Configuration.SslMode.DestinationRedisSSLModesVerifyFull.Mode.ValueString())
-			destinationRedisUpdateSSLModesVerifyFull = &shared.DestinationRedisUpdateSSLModesVerifyFull{
-				CaCertificate:     caCertificate,
-				ClientCertificate: clientCertificate,
-				ClientKey:         clientKey,
-				ClientKeyPassword: clientKeyPassword,
-				Mode:              mode1,
-			}
+	}
+	var destinationRedisUpdateSSLModesVerifyFull *shared.DestinationRedisUpdateSSLModesVerifyFull
+	if r.Configuration.SslMode.DestinationRedisSSLModesVerifyFull != nil {
+		caCertificate := r.Configuration.SslMode.DestinationRedisSSLModesVerifyFull.CaCertificate.ValueString()
+		clientCertificate := r.Configuration.SslMode.DestinationRedisSSLModesVerifyFull.ClientCertificate.ValueString()
+		clientKey := r.Configuration.SslMode.DestinationRedisSSLModesVerifyFull.ClientKey.ValueString()
+		clientKeyPassword := new(string)
+		if !r.Configuration.SslMode.DestinationRedisSSLModesVerifyFull.ClientKeyPassword.IsUnknown() && !r.Configuration.SslMode.DestinationRedisSSLModesVerifyFull.ClientKeyPassword.IsNull() {
+			*clientKeyPassword = r.Configuration.SslMode.DestinationRedisSSLModesVerifyFull.ClientKeyPassword.ValueString()
+		} else {
+			clientKeyPassword = nil
 		}
-		if destinationRedisUpdateSSLModesVerifyFull != nil {
-			sslMode = &shared.DestinationRedisUpdateSSLModes{
-				DestinationRedisUpdateSSLModesVerifyFull: destinationRedisUpdateSSLModesVerifyFull,
-			}
+		mode1 := shared.DestinationRedisUpdateSSLModesVerifyFullMode(r.Configuration.SslMode.DestinationRedisSSLModesVerifyFull.Mode.ValueString())
+		destinationRedisUpdateSSLModesVerifyFull = &shared.DestinationRedisUpdateSSLModesVerifyFull{
+			CaCertificate:     caCertificate,
+			ClientCertificate: clientCertificate,
+			ClientKey:         clientKey,
+			ClientKeyPassword: clientKeyPassword,
+			Mode:              mode1,
+		}
+	}
+	if destinationRedisUpdateSSLModesVerifyFull != nil {
+		sslMode = &shared.DestinationRedisUpdateSSLModes{
+			DestinationRedisUpdateSSLModesVerifyFull: destinationRedisUpdateSSLModesVerifyFull,
 		}
 	}
 	var tunnelMethod *shared.DestinationRedisUpdateSSHTunnelMethod
-	if r.Configuration.TunnelMethod != nil {
-		var destinationRedisUpdateSSHTunnelMethodNoTunnel *shared.DestinationRedisUpdateSSHTunnelMethodNoTunnel
-		if r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodNoTunnel != nil {
-			tunnelMethod1 := shared.DestinationRedisUpdateSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
-			destinationRedisUpdateSSHTunnelMethodNoTunnel = &shared.DestinationRedisUpdateSSHTunnelMethodNoTunnel{
-				TunnelMethod: tunnelMethod1,
-			}
+	var destinationRedisUpdateSSHTunnelMethodNoTunnel *shared.DestinationRedisUpdateSSHTunnelMethodNoTunnel
+	if r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodNoTunnel != nil {
+		tunnelMethod1 := shared.DestinationRedisUpdateSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
+		destinationRedisUpdateSSHTunnelMethodNoTunnel = &shared.DestinationRedisUpdateSSHTunnelMethodNoTunnel{
+			TunnelMethod: tunnelMethod1,
 		}
-		if destinationRedisUpdateSSHTunnelMethodNoTunnel != nil {
-			tunnelMethod = &shared.DestinationRedisUpdateSSHTunnelMethod{
-				DestinationRedisUpdateSSHTunnelMethodNoTunnel: destinationRedisUpdateSSHTunnelMethodNoTunnel,
-			}
+	}
+	if destinationRedisUpdateSSHTunnelMethodNoTunnel != nil {
+		tunnelMethod = &shared.DestinationRedisUpdateSSHTunnelMethod{
+			DestinationRedisUpdateSSHTunnelMethodNoTunnel: destinationRedisUpdateSSHTunnelMethodNoTunnel,
 		}
-		var destinationRedisUpdateSSHTunnelMethodSSHKeyAuthentication *shared.DestinationRedisUpdateSSHTunnelMethodSSHKeyAuthentication
-		if r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodPasswordAuthentication != nil {
-			tunnelHost := r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
-			tunnelMethod2 := shared.DestinationRedisUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
-			tunnelPort := r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
-			tunnelUser := r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
-			destinationRedisUpdateSSHTunnelMethodSSHKeyAuthentication = &shared.DestinationRedisUpdateSSHTunnelMethodSSHKeyAuthentication{
-				TunnelHost:   tunnelHost,
-				TunnelMethod: tunnelMethod2,
-				TunnelPort:   tunnelPort,
-				TunnelUser:   tunnelUser,
-			}
+	}
+	var destinationRedisUpdateSSHTunnelMethodSSHKeyAuthentication *shared.DestinationRedisUpdateSSHTunnelMethodSSHKeyAuthentication
+	if r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodPasswordAuthentication != nil {
+		tunnelHost := r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
+		tunnelMethod2 := shared.DestinationRedisUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
+		tunnelPort := r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
+		tunnelUser := r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
+		destinationRedisUpdateSSHTunnelMethodSSHKeyAuthentication = &shared.DestinationRedisUpdateSSHTunnelMethodSSHKeyAuthentication{
+			TunnelHost:   tunnelHost,
+			TunnelMethod: tunnelMethod2,
+			TunnelPort:   tunnelPort,
+			TunnelUser:   tunnelUser,
 		}
-		if destinationRedisUpdateSSHTunnelMethodSSHKeyAuthentication != nil {
-			tunnelMethod = &shared.DestinationRedisUpdateSSHTunnelMethod{
-				DestinationRedisUpdateSSHTunnelMethodSSHKeyAuthentication: destinationRedisUpdateSSHTunnelMethodSSHKeyAuthentication,
-			}
+	}
+	if destinationRedisUpdateSSHTunnelMethodSSHKeyAuthentication != nil {
+		tunnelMethod = &shared.DestinationRedisUpdateSSHTunnelMethod{
+			DestinationRedisUpdateSSHTunnelMethodSSHKeyAuthentication: destinationRedisUpdateSSHTunnelMethodSSHKeyAuthentication,
 		}
-		var destinationRedisUpdateSSHTunnelMethodPasswordAuthentication *shared.DestinationRedisUpdateSSHTunnelMethodPasswordAuthentication
-		if r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodSSHKeyAuthentication != nil {
-			tunnelHost1 := r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
-			tunnelMethod3 := shared.DestinationRedisUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
-			tunnelPort1 := r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
-			tunnelUser1 := r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
-			destinationRedisUpdateSSHTunnelMethodPasswordAuthentication = &shared.DestinationRedisUpdateSSHTunnelMethodPasswordAuthentication{
-				TunnelHost:   tunnelHost1,
-				TunnelMethod: tunnelMethod3,
-				TunnelPort:   tunnelPort1,
-				TunnelUser:   tunnelUser1,
-			}
+	}
+	var destinationRedisUpdateSSHTunnelMethodPasswordAuthentication *shared.DestinationRedisUpdateSSHTunnelMethodPasswordAuthentication
+	if r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodSSHKeyAuthentication != nil {
+		tunnelHost1 := r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
+		tunnelMethod3 := shared.DestinationRedisUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
+		tunnelPort1 := r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
+		tunnelUser1 := r.Configuration.TunnelMethod.DestinationRedisSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
+		destinationRedisUpdateSSHTunnelMethodPasswordAuthentication = &shared.DestinationRedisUpdateSSHTunnelMethodPasswordAuthentication{
+			TunnelHost:   tunnelHost1,
+			TunnelMethod: tunnelMethod3,
+			TunnelPort:   tunnelPort1,
+			TunnelUser:   tunnelUser1,
 		}
-		if destinationRedisUpdateSSHTunnelMethodPasswordAuthentication != nil {
-			tunnelMethod = &shared.DestinationRedisUpdateSSHTunnelMethod{
-				DestinationRedisUpdateSSHTunnelMethodPasswordAuthentication: destinationRedisUpdateSSHTunnelMethodPasswordAuthentication,
-			}
+	}
+	if destinationRedisUpdateSSHTunnelMethodPasswordAuthentication != nil {
+		tunnelMethod = &shared.DestinationRedisUpdateSSHTunnelMethod{
+			DestinationRedisUpdateSSHTunnelMethodPasswordAuthentication: destinationRedisUpdateSSHTunnelMethodPasswordAuthentication,
 		}
 	}
 	username := r.Configuration.Username.ValueString()

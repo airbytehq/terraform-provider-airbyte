@@ -9,7 +9,7 @@ import (
 )
 
 func (r *SourceTypeformResourceModel) ToCreateSDKType() *shared.SourceTypeformCreateRequest {
-	var formIds []string = nil
+	formIds := make([]string, 0)
 	for _, formIdsItem := range r.Configuration.FormIds {
 		formIds = append(formIds, formIdsItem.ValueString())
 	}
@@ -45,7 +45,7 @@ func (r *SourceTypeformResourceModel) ToGetSDKType() *shared.SourceTypeformCreat
 }
 
 func (r *SourceTypeformResourceModel) ToUpdateSDKType() *shared.SourceTypeformPutRequest {
-	var formIds []string = nil
+	formIds := make([]string, 0)
 	for _, formIdsItem := range r.Configuration.FormIds {
 		formIds = append(formIds, formIdsItem.ValueString())
 	}

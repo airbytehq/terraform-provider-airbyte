@@ -54,44 +54,42 @@ func (r *DestinationAwsDatalakeResourceModel) ToCreateSDKType() *shared.Destinat
 	}
 	destinationType := shared.DestinationAwsDatalakeAwsDatalake(r.Configuration.DestinationType.ValueString())
 	var format *shared.DestinationAwsDatalakeOutputFormatWildcard
-	if r.Configuration.Format != nil {
-		var destinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON *shared.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON
-		if r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON != nil {
-			compressionCodec := new(shared.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONCompressionCodecOptional)
-			if !r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON.CompressionCodec.IsUnknown() && !r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON.CompressionCodec.IsNull() {
-				*compressionCodec = shared.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONCompressionCodecOptional(r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON.CompressionCodec.ValueString())
-			} else {
-				compressionCodec = nil
-			}
-			formatType := shared.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONFormatTypeWildcard(r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON.FormatType.ValueString())
-			destinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON = &shared.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON{
-				CompressionCodec: compressionCodec,
-				FormatType:       formatType,
-			}
+	var destinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON *shared.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON
+	if r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON != nil {
+		compressionCodec := new(shared.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONCompressionCodecOptional)
+		if !r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON.CompressionCodec.IsUnknown() && !r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON.CompressionCodec.IsNull() {
+			*compressionCodec = shared.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONCompressionCodecOptional(r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON.CompressionCodec.ValueString())
+		} else {
+			compressionCodec = nil
 		}
-		if destinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON != nil {
-			format = &shared.DestinationAwsDatalakeOutputFormatWildcard{
-				DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON: destinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON,
-			}
+		formatType := shared.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSONFormatTypeWildcard(r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON.FormatType.ValueString())
+		destinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON = &shared.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON{
+			CompressionCodec: compressionCodec,
+			FormatType:       formatType,
 		}
-		var destinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage *shared.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage
-		if r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage != nil {
-			compressionCodec1 := new(shared.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageCompressionCodecOptional)
-			if !r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage.CompressionCodec.IsUnknown() && !r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage.CompressionCodec.IsNull() {
-				*compressionCodec1 = shared.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageCompressionCodecOptional(r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage.CompressionCodec.ValueString())
-			} else {
-				compressionCodec1 = nil
-			}
-			formatType1 := shared.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageFormatTypeWildcard(r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage.FormatType.ValueString())
-			destinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage = &shared.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage{
-				CompressionCodec: compressionCodec1,
-				FormatType:       formatType1,
-			}
+	}
+	if destinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON != nil {
+		format = &shared.DestinationAwsDatalakeOutputFormatWildcard{
+			DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON: destinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON,
 		}
-		if destinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage != nil {
-			format = &shared.DestinationAwsDatalakeOutputFormatWildcard{
-				DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage: destinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage,
-			}
+	}
+	var destinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage *shared.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage
+	if r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage != nil {
+		compressionCodec1 := new(shared.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageCompressionCodecOptional)
+		if !r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage.CompressionCodec.IsUnknown() && !r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage.CompressionCodec.IsNull() {
+			*compressionCodec1 = shared.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageCompressionCodecOptional(r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage.CompressionCodec.ValueString())
+		} else {
+			compressionCodec1 = nil
+		}
+		formatType1 := shared.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorageFormatTypeWildcard(r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage.FormatType.ValueString())
+		destinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage = &shared.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage{
+			CompressionCodec: compressionCodec1,
+			FormatType:       formatType1,
+		}
+	}
+	if destinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage != nil {
+		format = &shared.DestinationAwsDatalakeOutputFormatWildcard{
+			DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage: destinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage,
 		}
 	}
 	glueCatalogFloatAsDecimal := new(bool)
@@ -202,44 +200,42 @@ func (r *DestinationAwsDatalakeResourceModel) ToUpdateSDKType() *shared.Destinat
 		}
 	}
 	var format *shared.DestinationAwsDatalakeUpdateOutputFormatWildcard
-	if r.Configuration.Format != nil {
-		var destinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSON *shared.DestinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSON
-		if r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON != nil {
-			compressionCodec := new(shared.DestinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSONCompressionCodecOptional)
-			if !r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON.CompressionCodec.IsUnknown() && !r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON.CompressionCodec.IsNull() {
-				*compressionCodec = shared.DestinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSONCompressionCodecOptional(r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON.CompressionCodec.ValueString())
-			} else {
-				compressionCodec = nil
-			}
-			formatType := shared.DestinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSONFormatTypeWildcard(r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON.FormatType.ValueString())
-			destinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSON = &shared.DestinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSON{
-				CompressionCodec: compressionCodec,
-				FormatType:       formatType,
-			}
+	var destinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSON *shared.DestinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSON
+	if r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON != nil {
+		compressionCodec := new(shared.DestinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSONCompressionCodecOptional)
+		if !r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON.CompressionCodec.IsUnknown() && !r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON.CompressionCodec.IsNull() {
+			*compressionCodec = shared.DestinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSONCompressionCodecOptional(r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON.CompressionCodec.ValueString())
+		} else {
+			compressionCodec = nil
 		}
-		if destinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSON != nil {
-			format = &shared.DestinationAwsDatalakeUpdateOutputFormatWildcard{
-				DestinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSON: destinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSON,
-			}
+		formatType := shared.DestinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSONFormatTypeWildcard(r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardJSONLinesNewlineDelimitedJSON.FormatType.ValueString())
+		destinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSON = &shared.DestinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSON{
+			CompressionCodec: compressionCodec,
+			FormatType:       formatType,
 		}
-		var destinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorage *shared.DestinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorage
-		if r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage != nil {
-			compressionCodec1 := new(shared.DestinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorageCompressionCodecOptional)
-			if !r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage.CompressionCodec.IsUnknown() && !r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage.CompressionCodec.IsNull() {
-				*compressionCodec1 = shared.DestinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorageCompressionCodecOptional(r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage.CompressionCodec.ValueString())
-			} else {
-				compressionCodec1 = nil
-			}
-			formatType1 := shared.DestinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorageFormatTypeWildcard(r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage.FormatType.ValueString())
-			destinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorage = &shared.DestinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorage{
-				CompressionCodec: compressionCodec1,
-				FormatType:       formatType1,
-			}
+	}
+	if destinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSON != nil {
+		format = &shared.DestinationAwsDatalakeUpdateOutputFormatWildcard{
+			DestinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSON: destinationAwsDatalakeUpdateOutputFormatWildcardJSONLinesNewlineDelimitedJSON,
 		}
-		if destinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorage != nil {
-			format = &shared.DestinationAwsDatalakeUpdateOutputFormatWildcard{
-				DestinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorage: destinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorage,
-			}
+	}
+	var destinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorage *shared.DestinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorage
+	if r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage != nil {
+		compressionCodec1 := new(shared.DestinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorageCompressionCodecOptional)
+		if !r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage.CompressionCodec.IsUnknown() && !r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage.CompressionCodec.IsNull() {
+			*compressionCodec1 = shared.DestinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorageCompressionCodecOptional(r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage.CompressionCodec.ValueString())
+		} else {
+			compressionCodec1 = nil
+		}
+		formatType1 := shared.DestinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorageFormatTypeWildcard(r.Configuration.Format.DestinationAwsDatalakeOutputFormatWildcardParquetColumnarStorage.FormatType.ValueString())
+		destinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorage = &shared.DestinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorage{
+			CompressionCodec: compressionCodec1,
+			FormatType:       formatType1,
+		}
+	}
+	if destinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorage != nil {
+		format = &shared.DestinationAwsDatalakeUpdateOutputFormatWildcard{
+			DestinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorage: destinationAwsDatalakeUpdateOutputFormatWildcardParquetColumnarStorage,
 		}
 	}
 	glueCatalogFloatAsDecimal := new(bool)

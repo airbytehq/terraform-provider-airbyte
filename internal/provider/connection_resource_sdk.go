@@ -10,16 +10,16 @@ import (
 func (r *ConnectionResourceModel) ToCreateSDKType() *shared.ConnectionCreateRequest {
 	var configurations *shared.StreamConfigurations
 	if r.Configurations != nil {
-		var streams []shared.StreamConfiguration = nil
+		streams := make([]shared.StreamConfiguration, 0)
 		for _, streamsItem := range r.Configurations.Streams {
-			var cursorField []string = nil
+			cursorField := make([]string, 0)
 			for _, cursorFieldItem := range streamsItem.CursorField {
 				cursorField = append(cursorField, cursorFieldItem.ValueString())
 			}
 			name := streamsItem.Name.ValueString()
-			var primaryKey [][]string = nil
+			primaryKey := make([][]string, 0)
 			for _, primaryKeyItem := range streamsItem.PrimaryKey {
-				var primaryKeyTmp []string = nil
+				primaryKeyTmp := make([]string, 0)
 				for _, item := range primaryKeyItem {
 					primaryKeyTmp = append(primaryKeyTmp, item.ValueString())
 				}
@@ -124,16 +124,16 @@ func (r *ConnectionResourceModel) ToGetSDKType() *shared.ConnectionCreateRequest
 func (r *ConnectionResourceModel) ToUpdateSDKType() *shared.ConnectionPatchRequest {
 	var configurations *shared.StreamConfigurations
 	if r.Configurations != nil {
-		var streams []shared.StreamConfiguration = nil
+		streams := make([]shared.StreamConfiguration, 0)
 		for _, streamsItem := range r.Configurations.Streams {
-			var cursorField []string = nil
+			cursorField := make([]string, 0)
 			for _, cursorFieldItem := range streamsItem.CursorField {
 				cursorField = append(cursorField, cursorFieldItem.ValueString())
 			}
 			name := streamsItem.Name.ValueString()
-			var primaryKey [][]string = nil
+			primaryKey := make([][]string, 0)
 			for _, primaryKeyItem := range streamsItem.PrimaryKey {
-				var primaryKeyTmp []string = nil
+				primaryKeyTmp := make([]string, 0)
 				for _, item := range primaryKeyItem {
 					primaryKeyTmp = append(primaryKeyTmp, item.ValueString())
 				}

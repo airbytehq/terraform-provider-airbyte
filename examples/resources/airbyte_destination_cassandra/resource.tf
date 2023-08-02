@@ -1,14 +1,14 @@
 resource "airbyte_destination_cassandra" "my_destination_cassandra" {
-  configuration = {
-    address          = "localhost,127.0.0.1"
-    datacenter       = "...my_datacenter..."
-    destination_type = "cassandra"
-    keyspace         = "...my_keyspace..."
-    password         = "...my_password..."
-    port             = 9
-    replication      = 2
-    username         = "Rachel.Lind10"
-  }
-  name         = "Elvira Herman"
-  workspace_id = "fd2ed028-921c-4ddc-a926-01fb576b0d5f"
-}
+    configuration = {
+        address = "localhost,127.0.0.1"
+        datacenter = "...my_datacenter..."
+        destination_type = "cassandra"
+        keyspace = "...my_keyspace..."
+        password = "...my_password..."
+        port = 6
+        replication = 6
+        username = "Kiley_Bartoletti"
+    }
+            name = "Tommy Kemmer"
+            workspace_id = "2516fe4c-8b71-41e5-b7fd-2ed028921cdd"
+        }

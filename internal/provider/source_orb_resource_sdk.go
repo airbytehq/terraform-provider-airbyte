@@ -15,7 +15,7 @@ func (r *SourceOrbResourceModel) ToCreateSDKType() *shared.SourceOrbCreateReques
 	} else {
 		lookbackWindowDays = nil
 	}
-	var numericEventPropertiesKeys []string = nil
+	numericEventPropertiesKeys := make([]string, 0)
 	for _, numericEventPropertiesKeysItem := range r.Configuration.NumericEventPropertiesKeys {
 		numericEventPropertiesKeys = append(numericEventPropertiesKeys, numericEventPropertiesKeysItem.ValueString())
 	}
@@ -27,7 +27,7 @@ func (r *SourceOrbResourceModel) ToCreateSDKType() *shared.SourceOrbCreateReques
 	}
 	sourceType := shared.SourceOrbOrb(r.Configuration.SourceType.ValueString())
 	startDate := r.Configuration.StartDate.ValueString()
-	var stringEventPropertiesKeys []string = nil
+	stringEventPropertiesKeys := make([]string, 0)
 	for _, stringEventPropertiesKeysItem := range r.Configuration.StringEventPropertiesKeys {
 		stringEventPropertiesKeys = append(stringEventPropertiesKeys, stringEventPropertiesKeysItem.ValueString())
 	}
@@ -77,7 +77,7 @@ func (r *SourceOrbResourceModel) ToUpdateSDKType() *shared.SourceOrbPutRequest {
 	} else {
 		lookbackWindowDays = nil
 	}
-	var numericEventPropertiesKeys []string = nil
+	numericEventPropertiesKeys := make([]string, 0)
 	for _, numericEventPropertiesKeysItem := range r.Configuration.NumericEventPropertiesKeys {
 		numericEventPropertiesKeys = append(numericEventPropertiesKeys, numericEventPropertiesKeysItem.ValueString())
 	}
@@ -88,7 +88,7 @@ func (r *SourceOrbResourceModel) ToUpdateSDKType() *shared.SourceOrbPutRequest {
 		planID = nil
 	}
 	startDate := r.Configuration.StartDate.ValueString()
-	var stringEventPropertiesKeys []string = nil
+	stringEventPropertiesKeys := make([]string, 0)
 	for _, stringEventPropertiesKeysItem := range r.Configuration.StringEventPropertiesKeys {
 		stringEventPropertiesKeys = append(stringEventPropertiesKeys, stringEventPropertiesKeysItem.ValueString())
 	}

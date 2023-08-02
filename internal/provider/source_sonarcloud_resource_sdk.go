@@ -10,7 +10,7 @@ import (
 )
 
 func (r *SourceSonarCloudResourceModel) ToCreateSDKType() *shared.SourceSonarCloudCreateRequest {
-	var componentKeys []interface{} = nil
+	componentKeys := make([]interface{}, 0)
 	for _, componentKeysItem := range r.Configuration.ComponentKeys {
 		var componentKeysTmp interface{}
 		_ = json.Unmarshal([]byte(componentKeysItem.ValueString()), &componentKeysTmp)
@@ -62,7 +62,7 @@ func (r *SourceSonarCloudResourceModel) ToGetSDKType() *shared.SourceSonarCloudC
 }
 
 func (r *SourceSonarCloudResourceModel) ToUpdateSDKType() *shared.SourceSonarCloudPutRequest {
-	var componentKeys []interface{} = nil
+	componentKeys := make([]interface{}, 0)
 	for _, componentKeysItem := range r.Configuration.ComponentKeys {
 		var componentKeysTmp interface{}
 		_ = json.Unmarshal([]byte(componentKeysItem.ValueString()), &componentKeysTmp)
