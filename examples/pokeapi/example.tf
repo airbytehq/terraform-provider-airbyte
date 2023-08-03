@@ -2,13 +2,22 @@ terraform {
   required_providers {
     airbyte = {
       source  = "airbytehq/airbyte"
-      version = "0.2.0"
+      version = "0.2.3"
     }
   }
 }
 
 provider "airbyte" {
+  # only necessary when interacting with Airbyte Cloud
   bearer_auth = var.key
+
+  # if running locally, set url to localhost be uncommenting the line below
+  # server_url = "http://localhost:8006/v1/"
+
+  # if running locally using docker compose with basic auth through the airbyte proxy,
+  # comment out bearer_auth and uncomment the lines below
+  # username = ""
+  # password = ""
 }
 
 variable "key" {
