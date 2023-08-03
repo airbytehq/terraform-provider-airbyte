@@ -1,10 +1,8 @@
 resource "airbyte_source_sftp" "my_source_sftp" {
   configuration = {
     credentials = {
-      source_sftp_authentication_wildcard_password_authentication = {
-        auth_method        = "SSH_PASSWORD_AUTH"
-        auth_user_password = "...my_auth_user_password..."
-      }
+      auth_method        = "SSH_PASSWORD_AUTH"
+      auth_user_password = "...my_auth_user_password..."
     }
     file_pattern = "log-([0-9]{4})([0-9]{2})([0-9]{2}) - This will filter files which  `log-yearmmdd`"
     file_types   = "csv"
@@ -14,7 +12,6 @@ resource "airbyte_source_sftp" "my_source_sftp" {
     source_type  = "sftp"
     user         = "...my_user..."
   }
-  name         = "Miss Cornelius Hilll III"
-  secret_id    = "...my_secretId..."
-  workspace_id = "661a1d91-36a7-4e8d-9321-3f3f658752db"
+  name         = "Earl Osinski"
+  workspace_id = "75c6c1fe-606d-407d-aa9c-87ae50c16661"
 }

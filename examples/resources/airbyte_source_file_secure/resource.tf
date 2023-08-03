@@ -1,20 +1,17 @@
 resource "airbyte_source_file_secure" "my_source_filesecure" {
   configuration = {
     dataset_name = "...my_dataset_name..."
-    format       = "yaml"
+    format       = "parquet"
     provider = {
-      source_file_secure_storage_provider_az_blob_azure_blob_storage = {
-        sas_token       = "...my_sas_token..."
-        shared_key      = "...my_shared_key..."
-        storage         = "AzBlob"
-        storage_account = "...my_storage_account..."
-      }
+      sas_token       = "...my_sas_token..."
+      shared_key      = "...my_shared_key..."
+      storage         = "AzBlob"
+      storage_account = "...my_storage_account..."
     }
-    reader_options = "{}"
+    reader_options = "{\"sep\": \"\t\", \"header\": 0, \"names\": [\"column1\", \"column2\"] }"
     source_type    = "file-secure"
-    url            = "gs://my-google-bucket/data.csv"
+    url            = "https://storage.googleapis.com/covid19-open-data/v2/latest/epidemiology.csv"
   }
-  name         = "Miss Sheri Legros"
-  secret_id    = "...my_secretId..."
-  workspace_id = "7ff334cd-df85-47a9-a618-76c6ab21d29d"
+  name         = "Lucy Lind"
+  workspace_id = "77c1ffc7-1dca-4163-b2a3-c80a97ff334c"
 }

@@ -9,40 +9,38 @@ import (
 
 func (r *SourceLinkedinPagesResourceModel) ToCreateSDKType() *shared.SourceLinkedinPagesCreateRequest {
 	var credentials *shared.SourceLinkedinPagesAuthentication
-	if r.Configuration.Credentials != nil {
-		var sourceLinkedinPagesAuthenticationOAuth20 *shared.SourceLinkedinPagesAuthenticationOAuth20
-		if r.Configuration.Credentials.SourceLinkedinPagesAuthenticationAccessToken != nil {
-			authMethod := new(shared.SourceLinkedinPagesAuthenticationOAuth20AuthMethod)
-			if !r.Configuration.Credentials.SourceLinkedinPagesAuthenticationAccessToken.AuthMethod.IsUnknown() && !r.Configuration.Credentials.SourceLinkedinPagesAuthenticationAccessToken.AuthMethod.IsNull() {
-				*authMethod = shared.SourceLinkedinPagesAuthenticationOAuth20AuthMethod(r.Configuration.Credentials.SourceLinkedinPagesAuthenticationAccessToken.AuthMethod.ValueString())
-			} else {
-				authMethod = nil
-			}
-			sourceLinkedinPagesAuthenticationOAuth20 = &shared.SourceLinkedinPagesAuthenticationOAuth20{
-				AuthMethod: authMethod,
-			}
+	var sourceLinkedinPagesAuthenticationOAuth20 *shared.SourceLinkedinPagesAuthenticationOAuth20
+	if r.Configuration.Credentials.SourceLinkedinPagesAuthenticationAccessToken != nil {
+		authMethod := new(shared.SourceLinkedinPagesAuthenticationOAuth20AuthMethod)
+		if !r.Configuration.Credentials.SourceLinkedinPagesAuthenticationAccessToken.AuthMethod.IsUnknown() && !r.Configuration.Credentials.SourceLinkedinPagesAuthenticationAccessToken.AuthMethod.IsNull() {
+			*authMethod = shared.SourceLinkedinPagesAuthenticationOAuth20AuthMethod(r.Configuration.Credentials.SourceLinkedinPagesAuthenticationAccessToken.AuthMethod.ValueString())
+		} else {
+			authMethod = nil
 		}
-		if sourceLinkedinPagesAuthenticationOAuth20 != nil {
-			credentials = &shared.SourceLinkedinPagesAuthentication{
-				SourceLinkedinPagesAuthenticationOAuth20: sourceLinkedinPagesAuthenticationOAuth20,
-			}
+		sourceLinkedinPagesAuthenticationOAuth20 = &shared.SourceLinkedinPagesAuthenticationOAuth20{
+			AuthMethod: authMethod,
 		}
-		var sourceLinkedinPagesAuthenticationAccessToken *shared.SourceLinkedinPagesAuthenticationAccessToken
-		if r.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20 != nil {
-			authMethod1 := new(shared.SourceLinkedinPagesAuthenticationAccessTokenAuthMethod)
-			if !r.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20.AuthMethod.IsUnknown() && !r.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20.AuthMethod.IsNull() {
-				*authMethod1 = shared.SourceLinkedinPagesAuthenticationAccessTokenAuthMethod(r.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20.AuthMethod.ValueString())
-			} else {
-				authMethod1 = nil
-			}
-			sourceLinkedinPagesAuthenticationAccessToken = &shared.SourceLinkedinPagesAuthenticationAccessToken{
-				AuthMethod: authMethod1,
-			}
+	}
+	if sourceLinkedinPagesAuthenticationOAuth20 != nil {
+		credentials = &shared.SourceLinkedinPagesAuthentication{
+			SourceLinkedinPagesAuthenticationOAuth20: sourceLinkedinPagesAuthenticationOAuth20,
 		}
-		if sourceLinkedinPagesAuthenticationAccessToken != nil {
-			credentials = &shared.SourceLinkedinPagesAuthentication{
-				SourceLinkedinPagesAuthenticationAccessToken: sourceLinkedinPagesAuthenticationAccessToken,
-			}
+	}
+	var sourceLinkedinPagesAuthenticationAccessToken *shared.SourceLinkedinPagesAuthenticationAccessToken
+	if r.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20 != nil {
+		authMethod1 := new(shared.SourceLinkedinPagesAuthenticationAccessTokenAuthMethod)
+		if !r.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20.AuthMethod.IsUnknown() && !r.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20.AuthMethod.IsNull() {
+			*authMethod1 = shared.SourceLinkedinPagesAuthenticationAccessTokenAuthMethod(r.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20.AuthMethod.ValueString())
+		} else {
+			authMethod1 = nil
+		}
+		sourceLinkedinPagesAuthenticationAccessToken = &shared.SourceLinkedinPagesAuthenticationAccessToken{
+			AuthMethod: authMethod1,
+		}
+	}
+	if sourceLinkedinPagesAuthenticationAccessToken != nil {
+		credentials = &shared.SourceLinkedinPagesAuthentication{
+			SourceLinkedinPagesAuthenticationAccessToken: sourceLinkedinPagesAuthenticationAccessToken,
 		}
 	}
 	orgID := r.Configuration.OrgID.ValueString()
@@ -76,40 +74,38 @@ func (r *SourceLinkedinPagesResourceModel) ToGetSDKType() *shared.SourceLinkedin
 
 func (r *SourceLinkedinPagesResourceModel) ToUpdateSDKType() *shared.SourceLinkedinPagesPutRequest {
 	var credentials *shared.SourceLinkedinPagesUpdateAuthentication
-	if r.Configuration.Credentials != nil {
-		var sourceLinkedinPagesUpdateAuthenticationOAuth20 *shared.SourceLinkedinPagesUpdateAuthenticationOAuth20
-		if r.Configuration.Credentials.SourceLinkedinPagesAuthenticationAccessToken != nil {
-			authMethod := new(shared.SourceLinkedinPagesUpdateAuthenticationOAuth20AuthMethod)
-			if !r.Configuration.Credentials.SourceLinkedinPagesAuthenticationAccessToken.AuthMethod.IsUnknown() && !r.Configuration.Credentials.SourceLinkedinPagesAuthenticationAccessToken.AuthMethod.IsNull() {
-				*authMethod = shared.SourceLinkedinPagesUpdateAuthenticationOAuth20AuthMethod(r.Configuration.Credentials.SourceLinkedinPagesAuthenticationAccessToken.AuthMethod.ValueString())
-			} else {
-				authMethod = nil
-			}
-			sourceLinkedinPagesUpdateAuthenticationOAuth20 = &shared.SourceLinkedinPagesUpdateAuthenticationOAuth20{
-				AuthMethod: authMethod,
-			}
+	var sourceLinkedinPagesUpdateAuthenticationOAuth20 *shared.SourceLinkedinPagesUpdateAuthenticationOAuth20
+	if r.Configuration.Credentials.SourceLinkedinPagesAuthenticationAccessToken != nil {
+		authMethod := new(shared.SourceLinkedinPagesUpdateAuthenticationOAuth20AuthMethod)
+		if !r.Configuration.Credentials.SourceLinkedinPagesAuthenticationAccessToken.AuthMethod.IsUnknown() && !r.Configuration.Credentials.SourceLinkedinPagesAuthenticationAccessToken.AuthMethod.IsNull() {
+			*authMethod = shared.SourceLinkedinPagesUpdateAuthenticationOAuth20AuthMethod(r.Configuration.Credentials.SourceLinkedinPagesAuthenticationAccessToken.AuthMethod.ValueString())
+		} else {
+			authMethod = nil
 		}
-		if sourceLinkedinPagesUpdateAuthenticationOAuth20 != nil {
-			credentials = &shared.SourceLinkedinPagesUpdateAuthentication{
-				SourceLinkedinPagesUpdateAuthenticationOAuth20: sourceLinkedinPagesUpdateAuthenticationOAuth20,
-			}
+		sourceLinkedinPagesUpdateAuthenticationOAuth20 = &shared.SourceLinkedinPagesUpdateAuthenticationOAuth20{
+			AuthMethod: authMethod,
 		}
-		var sourceLinkedinPagesUpdateAuthenticationAccessToken *shared.SourceLinkedinPagesUpdateAuthenticationAccessToken
-		if r.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20 != nil {
-			authMethod1 := new(shared.SourceLinkedinPagesUpdateAuthenticationAccessTokenAuthMethod)
-			if !r.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20.AuthMethod.IsUnknown() && !r.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20.AuthMethod.IsNull() {
-				*authMethod1 = shared.SourceLinkedinPagesUpdateAuthenticationAccessTokenAuthMethod(r.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20.AuthMethod.ValueString())
-			} else {
-				authMethod1 = nil
-			}
-			sourceLinkedinPagesUpdateAuthenticationAccessToken = &shared.SourceLinkedinPagesUpdateAuthenticationAccessToken{
-				AuthMethod: authMethod1,
-			}
+	}
+	if sourceLinkedinPagesUpdateAuthenticationOAuth20 != nil {
+		credentials = &shared.SourceLinkedinPagesUpdateAuthentication{
+			SourceLinkedinPagesUpdateAuthenticationOAuth20: sourceLinkedinPagesUpdateAuthenticationOAuth20,
 		}
-		if sourceLinkedinPagesUpdateAuthenticationAccessToken != nil {
-			credentials = &shared.SourceLinkedinPagesUpdateAuthentication{
-				SourceLinkedinPagesUpdateAuthenticationAccessToken: sourceLinkedinPagesUpdateAuthenticationAccessToken,
-			}
+	}
+	var sourceLinkedinPagesUpdateAuthenticationAccessToken *shared.SourceLinkedinPagesUpdateAuthenticationAccessToken
+	if r.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20 != nil {
+		authMethod1 := new(shared.SourceLinkedinPagesUpdateAuthenticationAccessTokenAuthMethod)
+		if !r.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20.AuthMethod.IsUnknown() && !r.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20.AuthMethod.IsNull() {
+			*authMethod1 = shared.SourceLinkedinPagesUpdateAuthenticationAccessTokenAuthMethod(r.Configuration.Credentials.SourceLinkedinPagesAuthenticationOAuth20.AuthMethod.ValueString())
+		} else {
+			authMethod1 = nil
+		}
+		sourceLinkedinPagesUpdateAuthenticationAccessToken = &shared.SourceLinkedinPagesUpdateAuthenticationAccessToken{
+			AuthMethod: authMethod1,
+		}
+	}
+	if sourceLinkedinPagesUpdateAuthenticationAccessToken != nil {
+		credentials = &shared.SourceLinkedinPagesUpdateAuthentication{
+			SourceLinkedinPagesUpdateAuthenticationAccessToken: sourceLinkedinPagesUpdateAuthenticationAccessToken,
 		}
 	}
 	orgID := r.Configuration.OrgID.ValueString()

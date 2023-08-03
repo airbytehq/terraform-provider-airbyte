@@ -5,7 +5,6 @@ resource "airbyte_source_orbit" "my_source_orbit" {
     start_date  = "...my_start_date..."
     workspace   = "...my_workspace..."
   }
-  name         = "Jackie Schmitt"
-  secret_id    = "...my_secretId..."
-  workspace_id = "795ee65e-076c-4c7a-bf61-6ea5c7164193"
+  name         = "Molly Parker DVM"
+  workspace_id = "6c31cc2f-1fcb-451c-9a41-ffbe9cbd795e"
 }

@@ -5,7 +5,6 @@ resource "airbyte_source_confluence" "my_source_confluence" {
     email       = "abc@example.com"
     source_type = "confluence"
   }
-  name         = "Edward Roberts"
-  secret_id    = "...my_secretId..."
-  workspace_id = "ce10873e-42b0-406d-a788-78ba8581a582"
+  name         = "Byron Ledner"
+  workspace_id = "bdfc4ccc-a99b-4c7f-80b2-dce10873e42b"
 }

@@ -21,34 +21,33 @@ resource "airbyte_source_facebook_marketing" "my_source_facebookmarketing" {
     custom_insights = [
       {
         action_breakdowns = [
-          "action_target_id",
+          "action_video_type",
         ]
         breakdowns = [
-          "image_asset",
+          "frequency_value",
         ]
         end_date = "2017-01-26T00:00:00Z"
         fields = [
-          "estimated_ad_recallers_lower_bound",
+          "cpm",
         ]
         insights_lookback_window = 5
-        level                    = "campaign"
-        name                     = "Mrs. Dolores Kertzmann"
+        level                    = "ad"
+        name                     = "Dr. Mona Ruecker"
         start_date               = "2017-01-25T00:00:00Z"
-        time_increment           = 7
+        time_increment           = 1
       },
     ]
     end_date                 = "2017-01-26T00:00:00Z"
     fetch_thumbnail_images   = false
     include_deleted          = false
     insights_lookback_window = 7
-    max_batch_size           = 4
-    page_size                = 3
+    max_batch_size           = 5
+    page_size                = 0
     source_type              = "facebook-marketing"
     start_date               = "2017-01-25T00:00:00Z"
   }
-  name         = "Dr. Dorothy Lockman"
-  secret_id    = "...my_secretId..."
-  workspace_id = "0bcacc6c-bd6b-45f3-ac90-9304f926bad2"
+  name         = "Naomi Krajcik"
+  workspace_id = "143f5a6c-98b5-4555-8080-d40bcacc6cbd"
 }
 ```
 

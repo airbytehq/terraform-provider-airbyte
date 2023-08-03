@@ -31,7 +31,7 @@ func (r *SourceSalesforceResourceModel) ToCreateSDKType() *shared.SourceSalesfor
 	} else {
 		startDate = nil
 	}
-	var streamsCriteria []shared.SourceSalesforceStreamsCriteria = nil
+	streamsCriteria := make([]shared.SourceSalesforceStreamsCriteria, 0)
 	for _, streamsCriteriaItem := range r.Configuration.StreamsCriteria {
 		criteria := shared.SourceSalesforceStreamsCriteriaSearchCriteria(streamsCriteriaItem.Criteria.ValueString())
 		value := streamsCriteriaItem.Value.ValueString()
@@ -94,7 +94,7 @@ func (r *SourceSalesforceResourceModel) ToUpdateSDKType() *shared.SourceSalesfor
 	} else {
 		startDate = nil
 	}
-	var streamsCriteria []shared.SourceSalesforceUpdateStreamsCriteria = nil
+	streamsCriteria := make([]shared.SourceSalesforceUpdateStreamsCriteria, 0)
 	for _, streamsCriteriaItem := range r.Configuration.StreamsCriteria {
 		criteria := shared.SourceSalesforceUpdateStreamsCriteriaSearchCriteria(streamsCriteriaItem.Criteria.ValueString())
 		value := streamsCriteriaItem.Value.ValueString()

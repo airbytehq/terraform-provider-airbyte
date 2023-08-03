@@ -32,7 +32,7 @@ func (r *SourceGoogleAdsResourceModel) ToCreateSDKType() *shared.SourceGoogleAds
 		DeveloperToken: developerToken,
 		RefreshToken:   refreshToken,
 	}
-	var customQueries []shared.SourceGoogleAdsCustomQueries = nil
+	customQueries := make([]shared.SourceGoogleAdsCustomQueries, 0)
 	for _, customQueriesItem := range r.Configuration.CustomQueries {
 		query := customQueriesItem.Query.ValueString()
 		tableName := customQueriesItem.TableName.ValueString()
@@ -112,7 +112,7 @@ func (r *SourceGoogleAdsResourceModel) ToUpdateSDKType() *shared.SourceGoogleAds
 		DeveloperToken: developerToken,
 		RefreshToken:   refreshToken,
 	}
-	var customQueries []shared.SourceGoogleAdsUpdateCustomQueries = nil
+	customQueries := make([]shared.SourceGoogleAdsUpdateCustomQueries, 0)
 	for _, customQueriesItem := range r.Configuration.CustomQueries {
 		query := customQueriesItem.Query.ValueString()
 		tableName := customQueriesItem.TableName.ValueString()

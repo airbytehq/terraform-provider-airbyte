@@ -2,19 +2,16 @@ resource "airbyte_source_fauna" "my_source_fauna" {
   configuration = {
     collection = {
       deletions = {
-        source_fauna_collection_deletion_mode_disabled = {
-          deletion_mode = "ignore"
-        }
+        deletion_mode = "ignore"
       }
-      page_size = 9
+      page_size = 2
     }
     domain      = "...my_domain..."
-    port        = 10
+    port        = 2
     scheme      = "...my_scheme..."
     secret      = "...my_secret..."
     source_type = "fauna"
   }
-  name         = "Mrs. Edna Abbott"
-  secret_id    = "...my_secretId..."
-  workspace_id = "78a61fa1-cf20-4688-b77c-1ffc71dca163"
+  name         = "Angel Lakin"
+  workspace_id = "cb3ecfda-8d0c-4549-af03-004978a61fa1"
 }

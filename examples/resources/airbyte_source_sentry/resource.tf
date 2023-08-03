@@ -4,12 +4,11 @@ resource "airbyte_source_sentry" "my_source_sentry" {
     discover_fields = [
       "{ \"see\": \"documentation\" }",
     ]
-    hostname     = "pesky-boon.info"
+    hostname     = "chubby-waterwheel.org"
     organization = "...my_organization..."
     project      = "...my_project..."
     source_type  = "sentry"
   }
-  name         = "Isabel Leuschke"
-  secret_id    = "...my_secretId..."
-  workspace_id = "3444eac8-b3a2-4875-86c1-fe606d07d2a9"
+  name         = "Mrs. Leland Crooks PhD"
+  workspace_id = "38dc3ce1-8547-42f9-ae69-166a8be3444e"
 }

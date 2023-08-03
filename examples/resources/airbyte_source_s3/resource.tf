@@ -2,11 +2,9 @@ resource "airbyte_source_s3" "my_source_s3" {
   configuration = {
     dataset = "...my_dataset..."
     format = {
-      source_s3_file_format_avro = {
-        filetype = "avro"
-      }
+      filetype = "avro"
     }
-    path_pattern = "**"
+    path_pattern = "myFolder/myTableFiles/*.csv|myFolder/myOtherTableFiles/*.csv"
     provider = {
       aws_access_key_id     = "...my_aws_access_key_id..."
       aws_secret_access_key = "...my_aws_secret_access_key..."
@@ -18,7 +16,6 @@ resource "airbyte_source_s3" "my_source_s3" {
     schema      = "{\"column_1\": \"number\", \"column_2\": \"string\", \"column_3\": \"array\", \"column_4\": \"object\", \"column_5\": \"boolean\"}"
     source_type = "s3"
   }
-  name         = "Sarah Feeney"
-  secret_id    = "...my_secretId..."
-  workspace_id = "c39bcd0a-6290-4f95-bf38-5189ad7ef807"
+  name         = "Lila Ferry"
+  workspace_id = "04b3d3ed-0c56-470e-b42b-d3c9f1cc503f"
 }

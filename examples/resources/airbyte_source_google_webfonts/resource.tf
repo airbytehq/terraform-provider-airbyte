@@ -6,7 +6,6 @@ resource "airbyte_source_google_webfonts" "my_source_googlewebfonts" {
     sort         = "...my_sort..."
     source_type  = "google-webfonts"
   }
-  name         = "Jean Mayert"
-  secret_id    = "...my_secretId..."
-  workspace_id = "b55410ad-c669-4af9-8a26-c7cdc981f068"
+  name         = "Sue Cole IV"
+  workspace_id = "084f7ab3-7cef-4022-a519-4db55410adc6"
 }

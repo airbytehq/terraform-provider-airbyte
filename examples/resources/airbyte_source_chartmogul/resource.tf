@@ -1,11 +1,10 @@
 resource "airbyte_source_chartmogul" "my_source_chartmogul" {
   configuration = {
     api_key     = "...my_api_key..."
-    interval    = "month"
+    interval    = "week"
     source_type = "chartmogul"
     start_date  = "2017-01-25T00:00:00Z"
   }
-  name         = "Louis Treutel V"
-  secret_id    = "...my_secretId..."
-  workspace_id = "ff8f0f81-6ff3-4477-813e-902c14125b09"
+  name         = "Miss Carroll Rutherford"
+  workspace_id = "600dec00-1ac8-402e-aec0-9ff8f0f816ff"
 }

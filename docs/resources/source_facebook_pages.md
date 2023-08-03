@@ -19,9 +19,8 @@ resource "airbyte_source_facebook_pages" "my_source_facebookpages" {
     page_id      = "...my_page_id..."
     source_type  = "facebook-pages"
   }
-  name         = "Bernice Donnelly V"
-  secret_id    = "...my_secretId..."
-  workspace_id = "b474b0ed-20e5-4624-8fff-639a910abdca"
+  name         = "Antoinette Halvorson"
+  workspace_id = "ec909304-f926-4bad-a553-819b474b0ed2"
 }
 ```
 

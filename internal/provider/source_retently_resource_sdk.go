@@ -10,58 +10,56 @@ import (
 
 func (r *SourceRetentlyResourceModel) ToCreateSDKType() *shared.SourceRetentlyCreateRequest {
 	var credentials *shared.SourceRetentlyAuthenticationMechanism
-	if r.Configuration.Credentials != nil {
-		var sourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth *shared.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth
-		if r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth != nil {
-			authType := new(shared.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuthAuthType)
-			if !r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AuthType.IsNull() {
-				*authType = shared.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuthAuthType(r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AuthType.ValueString())
-			} else {
-				authType = nil
-			}
-			clientID := r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.ClientID.ValueString()
-			clientSecret := r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.ClientSecret.ValueString()
-			refreshToken := r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.RefreshToken.ValueString()
-			var additionalProperties interface{}
-			if !r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AdditionalProperties.ValueString()), &additionalProperties)
-			}
-			sourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth = &shared.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth{
-				AuthType:             authType,
-				ClientID:             clientID,
-				ClientSecret:         clientSecret,
-				RefreshToken:         refreshToken,
-				AdditionalProperties: additionalProperties,
-			}
+	var sourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth *shared.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth
+	if r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth != nil {
+		authType := new(shared.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuthAuthType)
+		if !r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AuthType.IsNull() {
+			*authType = shared.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuthAuthType(r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AuthType.ValueString())
+		} else {
+			authType = nil
 		}
-		if sourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth != nil {
-			credentials = &shared.SourceRetentlyAuthenticationMechanism{
-				SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth: sourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth,
-			}
+		clientID := r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.ClientID.ValueString()
+		clientSecret := r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.ClientSecret.ValueString()
+		refreshToken := r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.RefreshToken.ValueString()
+		var additionalProperties interface{}
+		if !r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AdditionalProperties.ValueString()), &additionalProperties)
 		}
-		var sourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken *shared.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken
-		if r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken != nil {
-			apiKey := r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.APIKey.ValueString()
-			authType1 := new(shared.SourceRetentlyAuthenticationMechanismAuthenticateWithAPITokenAuthType)
-			if !r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AuthType.IsNull() {
-				*authType1 = shared.SourceRetentlyAuthenticationMechanismAuthenticateWithAPITokenAuthType(r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AuthType.ValueString())
-			} else {
-				authType1 = nil
-			}
-			var additionalProperties1 interface{}
-			if !r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AdditionalProperties.ValueString()), &additionalProperties1)
-			}
-			sourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken = &shared.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken{
-				APIKey:               apiKey,
-				AuthType:             authType1,
-				AdditionalProperties: additionalProperties1,
-			}
+		sourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth = &shared.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth{
+			AuthType:             authType,
+			ClientID:             clientID,
+			ClientSecret:         clientSecret,
+			RefreshToken:         refreshToken,
+			AdditionalProperties: additionalProperties,
 		}
-		if sourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken != nil {
-			credentials = &shared.SourceRetentlyAuthenticationMechanism{
-				SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken: sourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken,
-			}
+	}
+	if sourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth != nil {
+		credentials = &shared.SourceRetentlyAuthenticationMechanism{
+			SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth: sourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth,
+		}
+	}
+	var sourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken *shared.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken
+	if r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken != nil {
+		apiKey := r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.APIKey.ValueString()
+		authType1 := new(shared.SourceRetentlyAuthenticationMechanismAuthenticateWithAPITokenAuthType)
+		if !r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AuthType.IsNull() {
+			*authType1 = shared.SourceRetentlyAuthenticationMechanismAuthenticateWithAPITokenAuthType(r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AuthType.ValueString())
+		} else {
+			authType1 = nil
+		}
+		var additionalProperties1 interface{}
+		if !r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AdditionalProperties.ValueString()), &additionalProperties1)
+		}
+		sourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken = &shared.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken{
+			APIKey:               apiKey,
+			AuthType:             authType1,
+			AdditionalProperties: additionalProperties1,
+		}
+	}
+	if sourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken != nil {
+		credentials = &shared.SourceRetentlyAuthenticationMechanism{
+			SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken: sourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken,
 		}
 	}
 	sourceType := new(shared.SourceRetentlyRetently)
@@ -98,58 +96,56 @@ func (r *SourceRetentlyResourceModel) ToGetSDKType() *shared.SourceRetentlyCreat
 
 func (r *SourceRetentlyResourceModel) ToUpdateSDKType() *shared.SourceRetentlyPutRequest {
 	var credentials *shared.SourceRetentlyUpdateAuthenticationMechanism
-	if r.Configuration.Credentials != nil {
-		var sourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth *shared.SourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth
-		if r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth != nil {
-			authType := new(shared.SourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuthAuthType)
-			if !r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AuthType.IsNull() {
-				*authType = shared.SourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuthAuthType(r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AuthType.ValueString())
-			} else {
-				authType = nil
-			}
-			clientID := r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.ClientID.ValueString()
-			clientSecret := r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.ClientSecret.ValueString()
-			refreshToken := r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.RefreshToken.ValueString()
-			var additionalProperties interface{}
-			if !r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AdditionalProperties.ValueString()), &additionalProperties)
-			}
-			sourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth = &shared.SourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth{
-				AuthType:             authType,
-				ClientID:             clientID,
-				ClientSecret:         clientSecret,
-				RefreshToken:         refreshToken,
-				AdditionalProperties: additionalProperties,
-			}
+	var sourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth *shared.SourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth
+	if r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth != nil {
+		authType := new(shared.SourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuthAuthType)
+		if !r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AuthType.IsNull() {
+			*authType = shared.SourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuthAuthType(r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AuthType.ValueString())
+		} else {
+			authType = nil
 		}
-		if sourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth != nil {
-			credentials = &shared.SourceRetentlyUpdateAuthenticationMechanism{
-				SourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth: sourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth,
-			}
+		clientID := r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.ClientID.ValueString()
+		clientSecret := r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.ClientSecret.ValueString()
+		refreshToken := r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.RefreshToken.ValueString()
+		var additionalProperties interface{}
+		if !r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth.AdditionalProperties.ValueString()), &additionalProperties)
 		}
-		var sourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken *shared.SourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken
-		if r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken != nil {
-			apiKey := r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.APIKey.ValueString()
-			authType1 := new(shared.SourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPITokenAuthType)
-			if !r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AuthType.IsNull() {
-				*authType1 = shared.SourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPITokenAuthType(r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AuthType.ValueString())
-			} else {
-				authType1 = nil
-			}
-			var additionalProperties1 interface{}
-			if !r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AdditionalProperties.ValueString()), &additionalProperties1)
-			}
-			sourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken = &shared.SourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken{
-				APIKey:               apiKey,
-				AuthType:             authType1,
-				AdditionalProperties: additionalProperties1,
-			}
+		sourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth = &shared.SourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth{
+			AuthType:             authType,
+			ClientID:             clientID,
+			ClientSecret:         clientSecret,
+			RefreshToken:         refreshToken,
+			AdditionalProperties: additionalProperties,
 		}
-		if sourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken != nil {
-			credentials = &shared.SourceRetentlyUpdateAuthenticationMechanism{
-				SourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken: sourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken,
-			}
+	}
+	if sourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth != nil {
+		credentials = &shared.SourceRetentlyUpdateAuthenticationMechanism{
+			SourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth: sourceRetentlyUpdateAuthenticationMechanismAuthenticateViaRetentlyOAuth,
+		}
+	}
+	var sourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken *shared.SourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken
+	if r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken != nil {
+		apiKey := r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.APIKey.ValueString()
+		authType1 := new(shared.SourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPITokenAuthType)
+		if !r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AuthType.IsUnknown() && !r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AuthType.IsNull() {
+			*authType1 = shared.SourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPITokenAuthType(r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AuthType.ValueString())
+		} else {
+			authType1 = nil
+		}
+		var additionalProperties1 interface{}
+		if !r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AdditionalProperties.IsNull() {
+			_ = json.Unmarshal([]byte(r.Configuration.Credentials.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken.AdditionalProperties.ValueString()), &additionalProperties1)
+		}
+		sourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken = &shared.SourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken{
+			APIKey:               apiKey,
+			AuthType:             authType1,
+			AdditionalProperties: additionalProperties1,
+		}
+	}
+	if sourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken != nil {
+		credentials = &shared.SourceRetentlyUpdateAuthenticationMechanism{
+			SourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken: sourceRetentlyUpdateAuthenticationMechanismAuthenticateWithAPIToken,
 		}
 	}
 	configuration := shared.SourceRetentlyUpdate{

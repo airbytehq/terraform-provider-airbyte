@@ -18,7 +18,7 @@ func (r *SourceRedshiftResourceModel) ToCreateSDKType() *shared.SourceRedshiftCr
 	}
 	password := r.Configuration.Password.ValueString()
 	port := r.Configuration.Port.ValueInt64()
-	var schemas []string = nil
+	schemas := make([]string, 0)
 	for _, schemasItem := range r.Configuration.Schemas {
 		schemas = append(schemas, schemasItem.ValueString())
 	}
@@ -67,7 +67,7 @@ func (r *SourceRedshiftResourceModel) ToUpdateSDKType() *shared.SourceRedshiftPu
 	}
 	password := r.Configuration.Password.ValueString()
 	port := r.Configuration.Port.ValueInt64()
-	var schemas []string = nil
+	schemas := make([]string, 0)
 	for _, schemasItem := range r.Configuration.Schemas {
 		schemas = append(schemas, schemasItem.ValueString())
 	}

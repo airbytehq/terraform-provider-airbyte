@@ -5,7 +5,6 @@ resource "airbyte_source_mailgun" "my_source_mailgun" {
     source_type   = "mailgun"
     start_date    = "2020-10-01 00:00:00"
   }
-  name         = "Lois Ondricka"
-  secret_id    = "...my_secretId..."
-  workspace_id = "a37cbaaf-4452-4c48-82c9-b2ad32dafe81"
+  name         = "Irvin Treutel"
+  workspace_id = "59eb40ec-16fa-4f75-b0b5-32a4da37cbaa"
 }

@@ -3,7 +3,6 @@ resource "airbyte_source_rki_covid" "my_source_rkicovid" {
     source_type = "rki-covid"
     start_date  = "...my_start_date..."
   }
-  name         = "Patricia Kuvalis"
-  secret_id    = "...my_secretId..."
-  workspace_id = "3e9802d8-2f0d-445e-b4a8-b674ee5cfc18"
+  name         = "Andy Herzog"
+  workspace_id = "6cd02756-c354-4aa4-b2b4-7e1763c5208c"
 }

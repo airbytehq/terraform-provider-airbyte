@@ -21,13 +21,12 @@ resource "airbyte_source_bing_ads" "my_source_bingads" {
     developer_token    = "...my_developer_token..."
     lookback_window    = 10
     refresh_token      = "...my_refresh_token..."
-    reports_start_date = "2022-04-10"
+    reports_start_date = "2021-03-11"
     source_type        = "bing-ads"
     tenant_id          = "...my_tenant_id..."
   }
-  name         = "Lorraine Jacobson Sr."
-  secret_id    = "...my_secretId..."
-  workspace_id = "f6c37a51-2624-4383-9bbc-05a23a45cefc"
+  name         = "Rose Hills"
+  workspace_id = "0b36f25e-a944-4f3b-b56c-11f6c37a5126"
 }
 ```
 

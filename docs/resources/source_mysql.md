@@ -21,28 +21,21 @@ resource "airbyte_source_mysql" "my_source_mysql" {
     password        = "...my_password..."
     port            = 3306
     replication_method = {
-      source_mysql_replication_method_logical_replication_cdc_ = {
-        initial_waiting_seconds = 3
-        method                  = "CDC"
-        server_time_zone        = "...my_server_time_zone..."
-      }
+      initial_waiting_seconds = 4
+      method                  = "CDC"
+      server_time_zone        = "...my_server_time_zone..."
     }
     source_type = "mysql"
     ssl_mode = {
-      source_mysql_ssl_modes_preferred = {
-        mode = "preferred"
-      }
+      mode = "preferred"
     }
     tunnel_method = {
-      source_mysql_ssh_tunnel_method_no_tunnel = {
-        tunnel_method = "NO_TUNNEL"
-      }
+      tunnel_method = "NO_TUNNEL"
     }
-    username = "Coty77"
+    username = "Terrence.Collins20"
   }
-  name         = "Debra Ortiz"
-  secret_id    = "...my_secretId..."
-  workspace_id = "a8bf92f9-7428-4ad9-a9f8-bf8221125359"
+  name         = "Velma Sipes II"
+  workspace_id = "36d9e75c-a006-4f53-92c1-1a25a8bf92f9"
 }
 ```
 

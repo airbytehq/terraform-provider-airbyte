@@ -40,7 +40,7 @@ func (r *SourceSurveymonkeyResourceModel) ToCreateSDKType() *shared.SourceSurvey
 	}
 	sourceType := shared.SourceSurveymonkeySurveymonkey(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	var surveyIds []string = nil
+	surveyIds := make([]string, 0)
 	for _, surveyIdsItem := range r.Configuration.SurveyIds {
 		surveyIds = append(surveyIds, surveyIdsItem.ValueString())
 	}
@@ -104,7 +104,7 @@ func (r *SourceSurveymonkeyResourceModel) ToUpdateSDKType() *shared.SourceSurvey
 		origin = nil
 	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
-	var surveyIds []string = nil
+	surveyIds := make([]string, 0)
 	for _, surveyIdsItem := range r.Configuration.SurveyIds {
 		surveyIds = append(surveyIds, surveyIdsItem.ValueString())
 	}

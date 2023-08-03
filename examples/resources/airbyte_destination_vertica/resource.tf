@@ -8,12 +8,10 @@ resource "airbyte_destination_vertica" "my_destination_vertica" {
     port             = 5433
     schema           = "...my_schema..."
     tunnel_method = {
-      destination_vertica_ssh_tunnel_method_no_tunnel = {
-        tunnel_method = "NO_TUNNEL"
-      }
+      tunnel_method = "NO_TUNNEL"
     }
-    username = "Carlos_Cronin"
+    username = "Jeff16"
   }
-  name         = "Gerald Ondricka"
-  workspace_id = "a8c070e1-084c-4b06-b2d1-ad879eeb9665"
+  name         = "Anna Bergnaum"
+  workspace_id = "5e139dbc-2259-4b1a-bda8-c070e1084cb0"
 }

@@ -4,7 +4,6 @@ resource "airbyte_source_lokalise" "my_source_lokalise" {
     project_id  = "...my_project_id..."
     source_type = "lokalise"
   }
-  name         = "Marcella McKenzie Sr."
-  secret_id    = "...my_secretId..."
-  workspace_id = "f0ea930b-69f7-4ac2-b72f-885009049116"
+  name         = "Adrienne Mills"
+  workspace_id = "ddb58946-1e74-421c-be6d-9502f0ea930b"
 }

@@ -5,7 +5,6 @@ resource "airbyte_source_bigcommerce" "my_source_bigcommerce" {
     start_date   = "2021-01-01"
     store_hash   = "...my_store_hash..."
   }
-  name         = "Emma Ward"
-  secret_id    = "...my_secretId..."
-  workspace_id = "2defcce8-f197-4777-be63-562a7b408f05"
+  name         = "Adrienne Carter"
+  workspace_id = "0e115c80-bff9-4185-84ec-42defcce8f19"
 }

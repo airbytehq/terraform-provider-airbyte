@@ -17,16 +17,13 @@ resource "airbyte_source_mailchimp" "my_source_mailchimp" {
   configuration = {
     campaign_id = "...my_campaign_id..."
     credentials = {
-      source_mailchimp_authentication_api_key = {
-        apikey    = "...my_apikey..."
-        auth_type = "apikey"
-      }
+      apikey    = "...my_apikey..."
+      auth_type = "apikey"
     }
     source_type = "mailchimp"
   }
-  name         = "Ms. Tracey D'Amore"
-  secret_id    = "...my_secretId..."
-  workspace_id = "88ec6618-3bfe-4965-9eb4-0ec16faf75b0"
+  name         = "Bobbie Wolff"
+  workspace_id = "c2f72f88-5009-4049-9160-8207888ec661"
 }
 ```
 

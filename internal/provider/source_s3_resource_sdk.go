@@ -11,74 +11,72 @@ import (
 func (r *SourceS3ResourceModel) ToCreateSDKType() *shared.SourceS3CreateRequest {
 	dataset := r.Configuration.Dataset.ValueString()
 	var format *shared.SourceS3FileFormat
-	if r.Configuration.Format != nil {
-		var sourceS3FileFormatCSV *shared.SourceS3FileFormatCSV
-		if r.Configuration.Format.SourceS3FileFormatAvro != nil {
-			filetype := new(shared.SourceS3FileFormatCSVFiletype)
-			if !r.Configuration.Format.SourceS3FileFormatAvro.Filetype.IsUnknown() && !r.Configuration.Format.SourceS3FileFormatAvro.Filetype.IsNull() {
-				*filetype = shared.SourceS3FileFormatCSVFiletype(r.Configuration.Format.SourceS3FileFormatAvro.Filetype.ValueString())
-			} else {
-				filetype = nil
-			}
-			sourceS3FileFormatCSV = &shared.SourceS3FileFormatCSV{
-				Filetype: filetype,
-			}
+	var sourceS3FileFormatCSV *shared.SourceS3FileFormatCSV
+	if r.Configuration.Format.SourceS3FileFormatAvro != nil {
+		filetype := new(shared.SourceS3FileFormatCSVFiletype)
+		if !r.Configuration.Format.SourceS3FileFormatAvro.Filetype.IsUnknown() && !r.Configuration.Format.SourceS3FileFormatAvro.Filetype.IsNull() {
+			*filetype = shared.SourceS3FileFormatCSVFiletype(r.Configuration.Format.SourceS3FileFormatAvro.Filetype.ValueString())
+		} else {
+			filetype = nil
 		}
-		if sourceS3FileFormatCSV != nil {
-			format = &shared.SourceS3FileFormat{
-				SourceS3FileFormatCSV: sourceS3FileFormatCSV,
-			}
+		sourceS3FileFormatCSV = &shared.SourceS3FileFormatCSV{
+			Filetype: filetype,
 		}
-		var sourceS3FileFormatParquet *shared.SourceS3FileFormatParquet
-		if r.Configuration.Format.SourceS3FileFormatCSV != nil {
-			filetype1 := new(shared.SourceS3FileFormatParquetFiletype)
-			if !r.Configuration.Format.SourceS3FileFormatCSV.Filetype.IsUnknown() && !r.Configuration.Format.SourceS3FileFormatCSV.Filetype.IsNull() {
-				*filetype1 = shared.SourceS3FileFormatParquetFiletype(r.Configuration.Format.SourceS3FileFormatCSV.Filetype.ValueString())
-			} else {
-				filetype1 = nil
-			}
-			sourceS3FileFormatParquet = &shared.SourceS3FileFormatParquet{
-				Filetype: filetype1,
-			}
+	}
+	if sourceS3FileFormatCSV != nil {
+		format = &shared.SourceS3FileFormat{
+			SourceS3FileFormatCSV: sourceS3FileFormatCSV,
 		}
-		if sourceS3FileFormatParquet != nil {
-			format = &shared.SourceS3FileFormat{
-				SourceS3FileFormatParquet: sourceS3FileFormatParquet,
-			}
+	}
+	var sourceS3FileFormatParquet *shared.SourceS3FileFormatParquet
+	if r.Configuration.Format.SourceS3FileFormatCSV != nil {
+		filetype1 := new(shared.SourceS3FileFormatParquetFiletype)
+		if !r.Configuration.Format.SourceS3FileFormatCSV.Filetype.IsUnknown() && !r.Configuration.Format.SourceS3FileFormatCSV.Filetype.IsNull() {
+			*filetype1 = shared.SourceS3FileFormatParquetFiletype(r.Configuration.Format.SourceS3FileFormatCSV.Filetype.ValueString())
+		} else {
+			filetype1 = nil
 		}
-		var sourceS3FileFormatAvro *shared.SourceS3FileFormatAvro
-		if r.Configuration.Format.SourceS3FileFormatJsonl != nil {
-			filetype2 := new(shared.SourceS3FileFormatAvroFiletype)
-			if !r.Configuration.Format.SourceS3FileFormatJsonl.Filetype.IsUnknown() && !r.Configuration.Format.SourceS3FileFormatJsonl.Filetype.IsNull() {
-				*filetype2 = shared.SourceS3FileFormatAvroFiletype(r.Configuration.Format.SourceS3FileFormatJsonl.Filetype.ValueString())
-			} else {
-				filetype2 = nil
-			}
-			sourceS3FileFormatAvro = &shared.SourceS3FileFormatAvro{
-				Filetype: filetype2,
-			}
+		sourceS3FileFormatParquet = &shared.SourceS3FileFormatParquet{
+			Filetype: filetype1,
 		}
-		if sourceS3FileFormatAvro != nil {
-			format = &shared.SourceS3FileFormat{
-				SourceS3FileFormatAvro: sourceS3FileFormatAvro,
-			}
+	}
+	if sourceS3FileFormatParquet != nil {
+		format = &shared.SourceS3FileFormat{
+			SourceS3FileFormatParquet: sourceS3FileFormatParquet,
 		}
-		var sourceS3FileFormatJsonl *shared.SourceS3FileFormatJsonl
-		if r.Configuration.Format.SourceS3FileFormatParquet != nil {
-			filetype3 := new(shared.SourceS3FileFormatJsonlFiletype)
-			if !r.Configuration.Format.SourceS3FileFormatParquet.Filetype.IsUnknown() && !r.Configuration.Format.SourceS3FileFormatParquet.Filetype.IsNull() {
-				*filetype3 = shared.SourceS3FileFormatJsonlFiletype(r.Configuration.Format.SourceS3FileFormatParquet.Filetype.ValueString())
-			} else {
-				filetype3 = nil
-			}
-			sourceS3FileFormatJsonl = &shared.SourceS3FileFormatJsonl{
-				Filetype: filetype3,
-			}
+	}
+	var sourceS3FileFormatAvro *shared.SourceS3FileFormatAvro
+	if r.Configuration.Format.SourceS3FileFormatJsonl != nil {
+		filetype2 := new(shared.SourceS3FileFormatAvroFiletype)
+		if !r.Configuration.Format.SourceS3FileFormatJsonl.Filetype.IsUnknown() && !r.Configuration.Format.SourceS3FileFormatJsonl.Filetype.IsNull() {
+			*filetype2 = shared.SourceS3FileFormatAvroFiletype(r.Configuration.Format.SourceS3FileFormatJsonl.Filetype.ValueString())
+		} else {
+			filetype2 = nil
 		}
-		if sourceS3FileFormatJsonl != nil {
-			format = &shared.SourceS3FileFormat{
-				SourceS3FileFormatJsonl: sourceS3FileFormatJsonl,
-			}
+		sourceS3FileFormatAvro = &shared.SourceS3FileFormatAvro{
+			Filetype: filetype2,
+		}
+	}
+	if sourceS3FileFormatAvro != nil {
+		format = &shared.SourceS3FileFormat{
+			SourceS3FileFormatAvro: sourceS3FileFormatAvro,
+		}
+	}
+	var sourceS3FileFormatJsonl *shared.SourceS3FileFormatJsonl
+	if r.Configuration.Format.SourceS3FileFormatParquet != nil {
+		filetype3 := new(shared.SourceS3FileFormatJsonlFiletype)
+		if !r.Configuration.Format.SourceS3FileFormatParquet.Filetype.IsUnknown() && !r.Configuration.Format.SourceS3FileFormatParquet.Filetype.IsNull() {
+			*filetype3 = shared.SourceS3FileFormatJsonlFiletype(r.Configuration.Format.SourceS3FileFormatParquet.Filetype.ValueString())
+		} else {
+			filetype3 = nil
+		}
+		sourceS3FileFormatJsonl = &shared.SourceS3FileFormatJsonl{
+			Filetype: filetype3,
+		}
+	}
+	if sourceS3FileFormatJsonl != nil {
+		format = &shared.SourceS3FileFormat{
+			SourceS3FileFormatJsonl: sourceS3FileFormatJsonl,
 		}
 	}
 	pathPattern := r.Configuration.PathPattern.ValueString()
@@ -161,74 +159,72 @@ func (r *SourceS3ResourceModel) ToGetSDKType() *shared.SourceS3CreateRequest {
 func (r *SourceS3ResourceModel) ToUpdateSDKType() *shared.SourceS3PutRequest {
 	dataset := r.Configuration.Dataset.ValueString()
 	var format *shared.SourceS3UpdateFileFormat
-	if r.Configuration.Format != nil {
-		var sourceS3UpdateFileFormatCSV *shared.SourceS3UpdateFileFormatCSV
-		if r.Configuration.Format.SourceS3FileFormatAvro != nil {
-			filetype := new(shared.SourceS3UpdateFileFormatCSVFiletype)
-			if !r.Configuration.Format.SourceS3FileFormatAvro.Filetype.IsUnknown() && !r.Configuration.Format.SourceS3FileFormatAvro.Filetype.IsNull() {
-				*filetype = shared.SourceS3UpdateFileFormatCSVFiletype(r.Configuration.Format.SourceS3FileFormatAvro.Filetype.ValueString())
-			} else {
-				filetype = nil
-			}
-			sourceS3UpdateFileFormatCSV = &shared.SourceS3UpdateFileFormatCSV{
-				Filetype: filetype,
-			}
+	var sourceS3UpdateFileFormatCSV *shared.SourceS3UpdateFileFormatCSV
+	if r.Configuration.Format.SourceS3FileFormatAvro != nil {
+		filetype := new(shared.SourceS3UpdateFileFormatCSVFiletype)
+		if !r.Configuration.Format.SourceS3FileFormatAvro.Filetype.IsUnknown() && !r.Configuration.Format.SourceS3FileFormatAvro.Filetype.IsNull() {
+			*filetype = shared.SourceS3UpdateFileFormatCSVFiletype(r.Configuration.Format.SourceS3FileFormatAvro.Filetype.ValueString())
+		} else {
+			filetype = nil
 		}
-		if sourceS3UpdateFileFormatCSV != nil {
-			format = &shared.SourceS3UpdateFileFormat{
-				SourceS3UpdateFileFormatCSV: sourceS3UpdateFileFormatCSV,
-			}
+		sourceS3UpdateFileFormatCSV = &shared.SourceS3UpdateFileFormatCSV{
+			Filetype: filetype,
 		}
-		var sourceS3UpdateFileFormatParquet *shared.SourceS3UpdateFileFormatParquet
-		if r.Configuration.Format.SourceS3FileFormatCSV != nil {
-			filetype1 := new(shared.SourceS3UpdateFileFormatParquetFiletype)
-			if !r.Configuration.Format.SourceS3FileFormatCSV.Filetype.IsUnknown() && !r.Configuration.Format.SourceS3FileFormatCSV.Filetype.IsNull() {
-				*filetype1 = shared.SourceS3UpdateFileFormatParquetFiletype(r.Configuration.Format.SourceS3FileFormatCSV.Filetype.ValueString())
-			} else {
-				filetype1 = nil
-			}
-			sourceS3UpdateFileFormatParquet = &shared.SourceS3UpdateFileFormatParquet{
-				Filetype: filetype1,
-			}
+	}
+	if sourceS3UpdateFileFormatCSV != nil {
+		format = &shared.SourceS3UpdateFileFormat{
+			SourceS3UpdateFileFormatCSV: sourceS3UpdateFileFormatCSV,
 		}
-		if sourceS3UpdateFileFormatParquet != nil {
-			format = &shared.SourceS3UpdateFileFormat{
-				SourceS3UpdateFileFormatParquet: sourceS3UpdateFileFormatParquet,
-			}
+	}
+	var sourceS3UpdateFileFormatParquet *shared.SourceS3UpdateFileFormatParquet
+	if r.Configuration.Format.SourceS3FileFormatCSV != nil {
+		filetype1 := new(shared.SourceS3UpdateFileFormatParquetFiletype)
+		if !r.Configuration.Format.SourceS3FileFormatCSV.Filetype.IsUnknown() && !r.Configuration.Format.SourceS3FileFormatCSV.Filetype.IsNull() {
+			*filetype1 = shared.SourceS3UpdateFileFormatParquetFiletype(r.Configuration.Format.SourceS3FileFormatCSV.Filetype.ValueString())
+		} else {
+			filetype1 = nil
 		}
-		var sourceS3UpdateFileFormatAvro *shared.SourceS3UpdateFileFormatAvro
-		if r.Configuration.Format.SourceS3FileFormatJsonl != nil {
-			filetype2 := new(shared.SourceS3UpdateFileFormatAvroFiletype)
-			if !r.Configuration.Format.SourceS3FileFormatJsonl.Filetype.IsUnknown() && !r.Configuration.Format.SourceS3FileFormatJsonl.Filetype.IsNull() {
-				*filetype2 = shared.SourceS3UpdateFileFormatAvroFiletype(r.Configuration.Format.SourceS3FileFormatJsonl.Filetype.ValueString())
-			} else {
-				filetype2 = nil
-			}
-			sourceS3UpdateFileFormatAvro = &shared.SourceS3UpdateFileFormatAvro{
-				Filetype: filetype2,
-			}
+		sourceS3UpdateFileFormatParquet = &shared.SourceS3UpdateFileFormatParquet{
+			Filetype: filetype1,
 		}
-		if sourceS3UpdateFileFormatAvro != nil {
-			format = &shared.SourceS3UpdateFileFormat{
-				SourceS3UpdateFileFormatAvro: sourceS3UpdateFileFormatAvro,
-			}
+	}
+	if sourceS3UpdateFileFormatParquet != nil {
+		format = &shared.SourceS3UpdateFileFormat{
+			SourceS3UpdateFileFormatParquet: sourceS3UpdateFileFormatParquet,
 		}
-		var sourceS3UpdateFileFormatJsonl *shared.SourceS3UpdateFileFormatJsonl
-		if r.Configuration.Format.SourceS3FileFormatParquet != nil {
-			filetype3 := new(shared.SourceS3UpdateFileFormatJsonlFiletype)
-			if !r.Configuration.Format.SourceS3FileFormatParquet.Filetype.IsUnknown() && !r.Configuration.Format.SourceS3FileFormatParquet.Filetype.IsNull() {
-				*filetype3 = shared.SourceS3UpdateFileFormatJsonlFiletype(r.Configuration.Format.SourceS3FileFormatParquet.Filetype.ValueString())
-			} else {
-				filetype3 = nil
-			}
-			sourceS3UpdateFileFormatJsonl = &shared.SourceS3UpdateFileFormatJsonl{
-				Filetype: filetype3,
-			}
+	}
+	var sourceS3UpdateFileFormatAvro *shared.SourceS3UpdateFileFormatAvro
+	if r.Configuration.Format.SourceS3FileFormatJsonl != nil {
+		filetype2 := new(shared.SourceS3UpdateFileFormatAvroFiletype)
+		if !r.Configuration.Format.SourceS3FileFormatJsonl.Filetype.IsUnknown() && !r.Configuration.Format.SourceS3FileFormatJsonl.Filetype.IsNull() {
+			*filetype2 = shared.SourceS3UpdateFileFormatAvroFiletype(r.Configuration.Format.SourceS3FileFormatJsonl.Filetype.ValueString())
+		} else {
+			filetype2 = nil
 		}
-		if sourceS3UpdateFileFormatJsonl != nil {
-			format = &shared.SourceS3UpdateFileFormat{
-				SourceS3UpdateFileFormatJsonl: sourceS3UpdateFileFormatJsonl,
-			}
+		sourceS3UpdateFileFormatAvro = &shared.SourceS3UpdateFileFormatAvro{
+			Filetype: filetype2,
+		}
+	}
+	if sourceS3UpdateFileFormatAvro != nil {
+		format = &shared.SourceS3UpdateFileFormat{
+			SourceS3UpdateFileFormatAvro: sourceS3UpdateFileFormatAvro,
+		}
+	}
+	var sourceS3UpdateFileFormatJsonl *shared.SourceS3UpdateFileFormatJsonl
+	if r.Configuration.Format.SourceS3FileFormatParquet != nil {
+		filetype3 := new(shared.SourceS3UpdateFileFormatJsonlFiletype)
+		if !r.Configuration.Format.SourceS3FileFormatParquet.Filetype.IsUnknown() && !r.Configuration.Format.SourceS3FileFormatParquet.Filetype.IsNull() {
+			*filetype3 = shared.SourceS3UpdateFileFormatJsonlFiletype(r.Configuration.Format.SourceS3FileFormatParquet.Filetype.ValueString())
+		} else {
+			filetype3 = nil
+		}
+		sourceS3UpdateFileFormatJsonl = &shared.SourceS3UpdateFileFormatJsonl{
+			Filetype: filetype3,
+		}
+	}
+	if sourceS3UpdateFileFormatJsonl != nil {
+		format = &shared.SourceS3UpdateFileFormat{
+			SourceS3UpdateFileFormatJsonl: sourceS3UpdateFileFormatJsonl,
 		}
 	}
 	pathPattern := r.Configuration.PathPattern.ValueString()

@@ -4,20 +4,16 @@ resource "airbyte_destination_redis" "my_destination_redis" {
     destination_type = "redis"
     host             = "localhost,127.0.0.1"
     password         = "...my_password..."
-    port             = 10
-    ssl              = false
+    port             = 4
+    ssl              = true
     ssl_mode = {
-      destination_redis_ssl_modes_disable = {
-        mode = "disable"
-      }
+      mode = "disable"
     }
     tunnel_method = {
-      destination_redis_ssh_tunnel_method_no_tunnel = {
-        tunnel_method = "NO_TUNNEL"
-      }
+      tunnel_method = "NO_TUNNEL"
     }
-    username = "Americo_Weber"
+    username = "Joy.Swaniawski95"
   }
-  name         = "Gene Sauer"
-  workspace_id = "2ca3aed0-1179-4963-92fd-e04771778ff6"
+  name         = "Ms. Cheryl Hane"
+  workspace_id = "ebfd0e9f-e6c6-432c-a3ae-d0117996312f"
 }

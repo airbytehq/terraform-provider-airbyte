@@ -22,15 +22,12 @@ resource "airbyte_source_azure_blob_storage" "my_source_azureblobstorage" {
     azure_blob_storage_endpoint               = "blob.core.windows.net"
     azure_blob_storage_schema_inference_limit = 500
     format = {
-      source_azure_blob_storage_input_format_json_lines_newline_delimited_json = {
-        format_type = "JSONL"
-      }
+      format_type = "JSONL"
     }
     source_type = "azure-blob-storage"
   }
-  name         = "Natalie Dooley"
-  secret_id    = "...my_secretId..."
-  workspace_id = "d575f140-0e76-44ad-b334-ec1b781b36a0"
+  name         = "Lucille Funk"
+  workspace_id = "72e80285-7a5b-4404-a3a7-d575f1400e76"
 }
 ```
 

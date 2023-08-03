@@ -9,7 +9,7 @@ import (
 )
 
 func (r *SourceTrelloResourceModel) ToCreateSDKType() *shared.SourceTrelloCreateRequest {
-	var boardIds []string = nil
+	boardIds := make([]string, 0)
 	for _, boardIdsItem := range r.Configuration.BoardIds {
 		boardIds = append(boardIds, boardIdsItem.ValueString())
 	}
@@ -47,7 +47,7 @@ func (r *SourceTrelloResourceModel) ToGetSDKType() *shared.SourceTrelloCreateReq
 }
 
 func (r *SourceTrelloResourceModel) ToUpdateSDKType() *shared.SourceTrelloPutRequest {
-	var boardIds []string = nil
+	boardIds := make([]string, 0)
 	for _, boardIdsItem := range r.Configuration.BoardIds {
 		boardIds = append(boardIds, boardIdsItem.ValueString())
 	}

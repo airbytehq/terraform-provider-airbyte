@@ -20,9 +20,8 @@ resource "airbyte_source_gcs" "my_source_gcs" {
     service_account = "{ \"type\": \"service_account\", \"project_id\": YOUR_PROJECT_ID, \"private_key_id\": YOUR_PRIVATE_KEY, ... }"
     source_type     = "gcs"
   }
-  name         = "Darin Mante"
-  secret_id    = "...my_secretId..."
-  workspace_id = "c9a867bc-4242-4666-9816-ddca8ef51fcb"
+  name         = "Miranda Koelpin"
+  workspace_id = "c845e320-a319-4f4b-adf9-47c9a867bc42"
 }
 ```
 

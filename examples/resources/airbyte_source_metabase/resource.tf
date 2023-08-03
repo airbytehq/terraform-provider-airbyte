@@ -4,9 +4,8 @@ resource "airbyte_source_metabase" "my_source_metabase" {
     password         = "...my_password..."
     session_token    = "...my_session_token..."
     source_type      = "metabase"
-    username         = "Flavio_Bode98"
+    username         = "Chasity_Pfeffer33"
   }
-  name         = "Wallace Wilderman"
-  secret_id    = "...my_secretId..."
-  workspace_id = "02bfdc34-5084-41f1-b644-56379f3fb27e"
+  name         = "Nick Haag"
+  workspace_id = "861adb55-f9e5-4d75-9c9f-e8f7502bfdc3"
 }

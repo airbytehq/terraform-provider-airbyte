@@ -23,14 +23,12 @@ resource "airbyte_destination_oracle" "my_destination_oracle" {
     schema           = "airbyte"
     sid              = "...my_sid..."
     tunnel_method = {
-      destination_oracle_ssh_tunnel_method_no_tunnel = {
-        tunnel_method = "NO_TUNNEL"
-      }
+      tunnel_method = "NO_TUNNEL"
     }
-    username = "Duncan69"
+    username = "Jaiden53"
   }
-  name         = "Diane Mayer"
-  workspace_id = "8abf603a-79f9-4dfe-8ab7-da8a50ce187f"
+  name         = "Ms. Lamar Hessel"
+  workspace_id = "2065e904-f3b1-4194-b8ab-f603a79f9dfe"
 }
 ```
 
