@@ -18,7 +18,7 @@ jobs:
       force: ${{ github.event.inputs.force }}
       languages: |
         - terraform
-      mode: direct
+      mode: pr
       openapi_docs: |
         - ./airbyte.yaml
       speakeasy_version: latest
