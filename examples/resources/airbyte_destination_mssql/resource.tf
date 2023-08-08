@@ -8,13 +8,17 @@ resource "airbyte_destination_mssql" "my_destination_mssql" {
     port             = 1433
     schema           = "public"
     ssl_method = {
-      ssl_method = "encrypted_trust_server_certificate"
+      destination_mssql_ssl_method_encrypted_trust_server_certificate_ = {
+        ssl_method = "encrypted_trust_server_certificate"
+      }
     }
     tunnel_method = {
-      tunnel_method = "NO_TUNNEL"
+      destination_mssql_ssh_tunnel_method_no_tunnel = {
+        tunnel_method = "NO_TUNNEL"
+      }
     }
-    username = "Haylie37"
+    username = "Laron.Gerlach40"
   }
-  name         = "Joe Hoppe"
-  workspace_id = "1f08f429-4e36-498f-847f-603e8b445e80"
+  name         = "Isaac Wolf"
+  workspace_id = "7f603e8b-445e-480c-a55e-fd20e457e185"
 }

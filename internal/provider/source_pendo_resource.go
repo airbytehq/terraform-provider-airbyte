@@ -64,7 +64,7 @@ func (r *SourcePendoResource) Schema(ctx context.Context, req resource.SchemaReq
 								"pendo",
 							),
 						},
-						Description: `must be one of [pendo]`,
+						Description: `must be one of ["pendo"]`,
 					},
 				},
 			},

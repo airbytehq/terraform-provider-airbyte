@@ -16,20 +16,23 @@ SourceGoogleAnalyticsDataAPI Resource
 resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsdataapi" {
   configuration = {
     credentials = {
-      access_token  = "...my_access_token..."
-      auth_type     = "Client"
-      client_id     = "...my_client_id..."
-      client_secret = "...my_client_secret..."
-      refresh_token = "...my_refresh_token..."
+      source_google_analytics_data_api_credentials_authenticate_via_google_oauth_ = {
+        access_token  = "...my_access_token..."
+        auth_type     = "Client"
+        client_id     = "...my_client_id..."
+        client_secret = "...my_client_secret..."
+        refresh_token = "...my_refresh_token..."
+      }
     }
     custom_reports         = "...my_custom_reports..."
-    date_ranges_start_date = "2022-09-08"
+    date_ranges_start_date = "2022-05-22"
     property_id            = "...my_property_id..."
     source_type            = "google-analytics-data-api"
-    window_in_days         = 30
+    window_in_days         = 364
   }
-  name         = "Jose Raynor"
-  workspace_id = "c0dbbddb-4847-408f-b4e3-91e6bc158c4c"
+  name         = "Andrew Torphy"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "c158c4c4-e545-499e-a342-260e9b200ce7"
 }
 ```
 
@@ -58,7 +61,7 @@ Required:
 
 - `date_ranges_start_date` (String) The start date from which to replicate report data in the format YYYY-MM-DD. Data generated before this date will not be included in the report. Not applied to custom Cohort reports.
 - `property_id` (String) A Google Analytics GA4 property identifier whose events are tracked. Specified in the URL path and not the body such as "123...". See <a href="https://developers.google.com/analytics/devguides/reporting/data/v1/property-id#what_is_my_property_id">the docs</a> for more details.
-- `source_type` (String) must be one of [google-analytics-data-api]
+- `source_type` (String) must be one of ["google-analytics-data-api"]
 
 Optional:
 
@@ -88,7 +91,7 @@ Required:
 Optional:
 
 - `access_token` (String) Access Token for making authenticated requests.
-- `auth_type` (String) must be one of [Client]
+- `auth_type` (String) must be one of ["Client"]
 
 
 <a id="nestedatt--configuration--credentials--source_google_analytics_data_api_credentials_service_account_key_authentication"></a>
@@ -100,7 +103,7 @@ Required:
 
 Optional:
 
-- `auth_type` (String) must be one of [Service]
+- `auth_type` (String) must be one of ["Service"]
 
 
 <a id="nestedatt--configuration--credentials--source_google_analytics_data_api_update_credentials_authenticate_via_google_oauth"></a>
@@ -115,7 +118,7 @@ Required:
 Optional:
 
 - `access_token` (String) Access Token for making authenticated requests.
-- `auth_type` (String) must be one of [Client]
+- `auth_type` (String) must be one of ["Client"]
 
 
 <a id="nestedatt--configuration--credentials--source_google_analytics_data_api_update_credentials_service_account_key_authentication"></a>
@@ -127,6 +130,6 @@ Required:
 
 Optional:
 
-- `auth_type` (String) must be one of [Service]
+- `auth_type` (String) must be one of ["Service"]
 
 

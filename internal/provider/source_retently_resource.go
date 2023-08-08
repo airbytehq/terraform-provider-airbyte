@@ -68,7 +68,7 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 												"Client",
 											),
 										},
-										Description: `must be one of [Client]`,
+										Description: `must be one of ["Client"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -106,7 +106,7 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 												"Token",
 											),
 										},
-										Description: `must be one of [Token]`,
+										Description: `must be one of ["Token"]`,
 									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
@@ -128,7 +128,7 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 												"Client",
 											),
 										},
-										Description: `must be one of [Client]`,
+										Description: `must be one of ["Client"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -166,7 +166,7 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 												"Token",
 											),
 										},
-										Description: `must be one of [Token]`,
+										Description: `must be one of ["Token"]`,
 									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
@@ -191,7 +191,7 @@ func (r *SourceRetentlyResource) Schema(ctx context.Context, req resource.Schema
 								"retently",
 							),
 						},
-						Description: `must be one of [retently]`,
+						Description: `must be one of ["retently"]`,
 					},
 				},
 			},

@@ -21,33 +21,34 @@ resource "airbyte_source_facebook_marketing" "my_source_facebookmarketing" {
     custom_insights = [
       {
         action_breakdowns = [
-          "action_video_type",
+          "action_target_id",
         ]
         breakdowns = [
-          "frequency_value",
+          "image_asset",
         ]
         end_date = "2017-01-26T00:00:00Z"
         fields = [
-          "cpm",
+          "estimated_ad_recallers_lower_bound",
         ]
         insights_lookback_window = 5
-        level                    = "ad"
-        name                     = "Dr. Mona Ruecker"
+        level                    = "campaign"
+        name                     = "Mrs. Dolores Kertzmann"
         start_date               = "2017-01-25T00:00:00Z"
-        time_increment           = 1
+        time_increment           = 7
       },
     ]
     end_date                 = "2017-01-26T00:00:00Z"
     fetch_thumbnail_images   = false
     include_deleted          = false
     insights_lookback_window = 7
-    max_batch_size           = 5
-    page_size                = 0
+    max_batch_size           = 4
+    page_size                = 3
     source_type              = "facebook-marketing"
     start_date               = "2017-01-25T00:00:00Z"
   }
-  name         = "Naomi Krajcik"
-  workspace_id = "143f5a6c-98b5-4555-8080-d40bcacc6cbd"
+  name         = "Dr. Dorothy Lockman"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "0bcacc6c-bd6b-45f3-ac90-9304f926bad2"
 }
 ```
 
@@ -76,7 +77,7 @@ Required:
 
 - `access_token` (String) The value of the generated access token. From your App’s Dashboard, click on "Marketing API" then "Tools". Select permissions <b>ads_management, ads_read, read_insights, business_management</b>. Then click on "Get token". See the <a href="https://docs.airbyte.com/integrations/sources/facebook-marketing">docs</a> for more information.
 - `account_id` (String) The Facebook Ad account ID to use when pulling data from the Facebook Marketing API. Open your Meta Ads Manager. The Ad account ID number is in the account dropdown menu or in your browser's address bar. See the <a href="https://www.facebook.com/business/help/1492627900875762">docs</a> for more information.
-- `source_type` (String) must be one of [facebook-marketing]
+- `source_type` (String) must be one of ["facebook-marketing"]
 - `start_date` (String) The date from which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 
 Optional:
@@ -104,7 +105,7 @@ Optional:
 - `end_date` (String) The date until which you'd like to replicate data for this stream, in the format YYYY-MM-DDT00:00:00Z. All data generated between the start date and this end date will be replicated. Not setting this option will result in always syncing the latest data.
 - `fields` (List of String) A list of chosen fields for fields parameter
 - `insights_lookback_window` (Number) The attribution window
-- `level` (String) must be one of [ad, adset, campaign, account]
+- `level` (String) must be one of ["ad", "adset", "campaign", "account"]
 Chosen level for API
 - `start_date` (String) The date from which you'd like to replicate data for this stream, in the format YYYY-MM-DDT00:00:00Z.
 - `time_increment` (Number) Time window in days by which to aggregate statistics. The sync will be chunked into N day intervals, where N is the number of days you specified. For example, if you set this value to 7, then all statistics will be reported as 7-day aggregates by starting from the start_date. If the start and end dates are October 1st and October 30th, then the connector will output 5 records: 01 - 06, 07 - 13, 14 - 20, 21 - 27, and 28 - 30 (3 days only).

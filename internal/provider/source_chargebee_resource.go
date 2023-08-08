@@ -63,7 +63,7 @@ func (r *SourceChargebeeResource) Schema(ctx context.Context, req resource.Schem
 								"2.0",
 							),
 						},
-						MarkdownDescription: `must be one of [1.0, 2.0]` + "\n" +
+						MarkdownDescription: `must be one of ["1.0", "2.0"]` + "\n" +
 							`Product Catalog version of your Chargebee site. Instructions on how to find your version you may find <a href="https://apidocs.chargebee.com/docs/api?prod_cat_ver=2">here</a> under ` + "`" + `API Version` + "`" + ` section.`,
 					},
 					"site": schema.StringAttribute{
@@ -81,7 +81,7 @@ func (r *SourceChargebeeResource) Schema(ctx context.Context, req resource.Schem
 								"chargebee",
 							),
 						},
-						Description: `must be one of [chargebee]`,
+						Description: `must be one of ["chargebee"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

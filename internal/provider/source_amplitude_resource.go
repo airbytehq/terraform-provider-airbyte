@@ -66,7 +66,7 @@ func (r *SourceAmplitudeResource) Schema(ctx context.Context, req resource.Schem
 								"EU Residency Server",
 							),
 						},
-						MarkdownDescription: `must be one of [Standard Server, EU Residency Server]` + "\n" +
+						MarkdownDescription: `must be one of ["Standard Server", "EU Residency Server"]` + "\n" +
 							`Amplitude data region server`,
 					},
 					"request_time_range": schema.Int64Attribute{
@@ -84,7 +84,7 @@ func (r *SourceAmplitudeResource) Schema(ctx context.Context, req resource.Schem
 								"amplitude",
 							),
 						},
-						Description: `must be one of [amplitude]`,
+						Description: `must be one of ["amplitude"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required:    true,

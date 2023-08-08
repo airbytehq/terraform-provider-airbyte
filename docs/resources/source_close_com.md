@@ -19,8 +19,9 @@ resource "airbyte_source_close_com" "my_source_closecom" {
     source_type = "close-com"
     start_date  = "2021-01-01"
   }
-  name         = "Drew Nolan"
-  workspace_id = "e5ae6e0a-c184-4c2b-9c24-7c88373a40e1"
+  name         = "Kim Crist"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "c88373a4-0e19-442f-b2e5-5055756f5d56"
 }
 ```
 
@@ -48,7 +49,7 @@ resource "airbyte_source_close_com" "my_source_closecom" {
 Required:
 
 - `api_key` (String) Close.com API key (usually starts with 'api_'; find yours <a href="https://app.close.com/settings/api/">here</a>).
-- `source_type` (String) must be one of [close-com]
+- `source_type` (String) must be one of ["close-com"]
 
 Optional:
 

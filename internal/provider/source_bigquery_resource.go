@@ -73,7 +73,7 @@ func (r *SourceBigqueryResource) Schema(ctx context.Context, req resource.Schema
 								"bigquery",
 							),
 						},
-						Description: `must be one of [bigquery]`,
+						Description: `must be one of ["bigquery"]`,
 					},
 				},
 			},

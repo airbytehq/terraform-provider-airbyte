@@ -17,25 +17,29 @@ resource "airbyte_destination_s3_glue" "my_destination_s3glue" {
   configuration = {
     access_key_id     = "A012345678910EXAMPLE"
     destination_type  = "s3-glue"
-    file_name_pattern = "{date:yyyy_MM}"
+    file_name_pattern = "{date}"
     format = {
-      compression = {
-        compression_type = "GZIP"
+      destination_s3_glue_output_format_json_lines_newline_delimited_json = {
+        compression = {
+          destination_s3_glue_output_format_json_lines_newline_delimited_json_compression_gzip = {
+            compression_type = "GZIP"
+          }
+        }
+        flattening  = "No flattening"
+        format_type = "JSONL"
       }
-      flattening  = "No flattening"
-      format_type = "JSONL"
     }
     glue_database              = "airbyte_database"
     glue_serialization_library = "org.apache.hive.hcatalog.data.JsonSerDe"
     s3_bucket_name             = "airbyte_sync"
     s3_bucket_path             = "data_sync/test"
-    s3_bucket_region           = "ap-southeast-1"
+    s3_bucket_region           = "us-east-2"
     s3_endpoint                = "http://localhost:9000"
     s3_path_format             = "${NAMESPACE}/${STREAM_NAME}/${YEAR}_${MONTH}_${DAY}_${EPOCH}_"
     secret_access_key          = "a012345678910ABCDEFGH/AbCdEfGhEXAMPLEKEY"
   }
-  name         = "Jennie Gutkowski DDS"
-  workspace_id = "6c6e205e-16de-4ab3-bec9-578a64584273"
+  name         = "Teri Thiel"
+  workspace_id = "3fec9578-a645-4842-b3a8-418d162309fb"
 }
 ```
 
@@ -58,14 +62,14 @@ resource "airbyte_destination_s3_glue" "my_destination_s3glue" {
 
 Required:
 
-- `destination_type` (String) must be one of [s3-glue]
+- `destination_type` (String) must be one of ["s3-glue"]
 - `format` (Attributes) Format of the data output. See <a href="https://docs.airbyte.com/integrations/destinations/s3/#supported-output-schema">here</a> for more details (see [below for nested schema](#nestedatt--configuration--format))
 - `glue_database` (String) Name of the glue database for creating the tables, leave blank if no integration
-- `glue_serialization_library` (String) must be one of [org.openx.data.jsonserde.JsonSerDe, org.apache.hive.hcatalog.data.JsonSerDe]
+- `glue_serialization_library` (String) must be one of ["org.openx.data.jsonserde.JsonSerDe", "org.apache.hive.hcatalog.data.JsonSerDe"]
 The library that your query engine will use for reading and writing data in your lake.
 - `s3_bucket_name` (String) The name of the S3 bucket. Read more <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html">here</a>.
 - `s3_bucket_path` (String) Directory under the S3 bucket where data will be written. Read more <a href="https://docs.airbyte.com/integrations/destinations/s3#:~:text=to%20format%20the-,bucket%20path,-%3A">here</a>
-- `s3_bucket_region` (String) must be one of [, us-east-1, us-east-2, us-west-1, us-west-2, af-south-1, ap-east-1, ap-south-1, ap-northeast-1, ap-northeast-2, ap-northeast-3, ap-southeast-1, ap-southeast-2, ca-central-1, cn-north-1, cn-northwest-1, eu-central-1, eu-north-1, eu-south-1, eu-west-1, eu-west-2, eu-west-3, sa-east-1, me-south-1, us-gov-east-1, us-gov-west-1]
+- `s3_bucket_region` (String) must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]
 The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes.
 
 Optional:
@@ -89,12 +93,12 @@ Optional:
 
 Required:
 
-- `format_type` (String) must be one of [JSONL]
+- `format_type` (String) must be one of ["JSONL"]
 
 Optional:
 
 - `compression` (Attributes) Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz"). (see [below for nested schema](#nestedatt--configuration--format--destination_s3_glue_output_format_json_lines_newline_delimited_json--compression))
-- `flattening` (String) must be one of [No flattening, Root level flattening]
+- `flattening` (String) must be one of ["No flattening", "Root level flattening"]
 Whether the input json data should be normalized (flattened) in the output JSON Lines. Please refer to docs for details.
 
 <a id="nestedatt--configuration--format--destination_s3_glue_output_format_json_lines_newline_delimited_json--compression"></a>
@@ -110,7 +114,7 @@ Optional:
 
 Optional:
 
-- `compression_type` (String) must be one of [GZIP]
+- `compression_type` (String) must be one of ["GZIP"]
 
 
 <a id="nestedatt--configuration--format--destination_s3_glue_output_format_json_lines_newline_delimited_json--flattening--destination_s3_glue_output_format_json_lines_newline_delimited_json_compression_no_compression"></a>
@@ -118,7 +122,7 @@ Optional:
 
 Optional:
 
-- `compression_type` (String) must be one of [No Compression]
+- `compression_type` (String) must be one of ["No Compression"]
 
 
 
@@ -128,12 +132,12 @@ Optional:
 
 Required:
 
-- `format_type` (String) must be one of [JSONL]
+- `format_type` (String) must be one of ["JSONL"]
 
 Optional:
 
 - `compression` (Attributes) Whether the output files should be compressed. If compression is selected, the output filename will have an extra extension (GZIP: ".jsonl.gz"). (see [below for nested schema](#nestedatt--configuration--format--destination_s3_glue_update_output_format_json_lines_newline_delimited_json--compression))
-- `flattening` (String) must be one of [No flattening, Root level flattening]
+- `flattening` (String) must be one of ["No flattening", "Root level flattening"]
 Whether the input json data should be normalized (flattened) in the output JSON Lines. Please refer to docs for details.
 
 <a id="nestedatt--configuration--format--destination_s3_glue_update_output_format_json_lines_newline_delimited_json--compression"></a>
@@ -149,7 +153,7 @@ Optional:
 
 Optional:
 
-- `compression_type` (String) must be one of [GZIP]
+- `compression_type` (String) must be one of ["GZIP"]
 
 
 <a id="nestedatt--configuration--format--destination_s3_glue_update_output_format_json_lines_newline_delimited_json--flattening--destination_s3_glue_update_output_format_json_lines_newline_delimited_json_compression_no_compression"></a>
@@ -157,6 +161,6 @@ Optional:
 
 Optional:
 
-- `compression_type` (String) must be one of [No Compression]
+- `compression_type` (String) must be one of ["No Compression"]
 
 

@@ -68,7 +68,7 @@ func (r *SourceNotionResource) Schema(ctx context.Context, req resource.SchemaRe
 												"token",
 											),
 										},
-										Description: `must be one of [token]`,
+										Description: `must be one of ["token"]`,
 									},
 									"token": schema.StringAttribute{
 										Required:    true,
@@ -91,7 +91,7 @@ func (r *SourceNotionResource) Schema(ctx context.Context, req resource.SchemaRe
 												"OAuth2.0",
 											),
 										},
-										Description: `must be one of [OAuth2.0]`,
+										Description: `must be one of ["OAuth2.0"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -114,7 +114,7 @@ func (r *SourceNotionResource) Schema(ctx context.Context, req resource.SchemaRe
 												"token",
 											),
 										},
-										Description: `must be one of [token]`,
+										Description: `must be one of ["token"]`,
 									},
 									"token": schema.StringAttribute{
 										Required:    true,
@@ -137,7 +137,7 @@ func (r *SourceNotionResource) Schema(ctx context.Context, req resource.SchemaRe
 												"OAuth2.0",
 											),
 										},
-										Description: `must be one of [OAuth2.0]`,
+										Description: `must be one of ["OAuth2.0"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -163,7 +163,7 @@ func (r *SourceNotionResource) Schema(ctx context.Context, req resource.SchemaRe
 								"notion",
 							),
 						},
-						Description: `must be one of [notion]`,
+						Description: `must be one of ["notion"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

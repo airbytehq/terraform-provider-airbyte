@@ -25,52 +25,58 @@ func (r *DestinationMariadbColumnstoreResourceModel) ToCreateSDKType() *shared.D
 	}
 	port := r.Configuration.Port.ValueInt64()
 	var tunnelMethod *shared.DestinationMariadbColumnstoreSSHTunnelMethod
-	var destinationMariadbColumnstoreSSHTunnelMethodNoTunnel *shared.DestinationMariadbColumnstoreSSHTunnelMethodNoTunnel
-	if r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodNoTunnel != nil {
-		tunnelMethod1 := shared.DestinationMariadbColumnstoreSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
-		destinationMariadbColumnstoreSSHTunnelMethodNoTunnel = &shared.DestinationMariadbColumnstoreSSHTunnelMethodNoTunnel{
-			TunnelMethod: tunnelMethod1,
+	if r.Configuration.TunnelMethod != nil {
+		var destinationMariadbColumnstoreSSHTunnelMethodNoTunnel *shared.DestinationMariadbColumnstoreSSHTunnelMethodNoTunnel
+		if r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodNoTunnel != nil {
+			tunnelMethod1 := shared.DestinationMariadbColumnstoreSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
+			destinationMariadbColumnstoreSSHTunnelMethodNoTunnel = &shared.DestinationMariadbColumnstoreSSHTunnelMethodNoTunnel{
+				TunnelMethod: tunnelMethod1,
+			}
 		}
-	}
-	if destinationMariadbColumnstoreSSHTunnelMethodNoTunnel != nil {
-		tunnelMethod = &shared.DestinationMariadbColumnstoreSSHTunnelMethod{
-			DestinationMariadbColumnstoreSSHTunnelMethodNoTunnel: destinationMariadbColumnstoreSSHTunnelMethodNoTunnel,
+		if destinationMariadbColumnstoreSSHTunnelMethodNoTunnel != nil {
+			tunnelMethod = &shared.DestinationMariadbColumnstoreSSHTunnelMethod{
+				DestinationMariadbColumnstoreSSHTunnelMethodNoTunnel: destinationMariadbColumnstoreSSHTunnelMethodNoTunnel,
+			}
 		}
-	}
-	var destinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthentication *shared.DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthentication
-	if r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication != nil {
-		tunnelHost := r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
-		tunnelMethod2 := shared.DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
-		tunnelPort := r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
-		tunnelUser := r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
-		destinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthentication = &shared.DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthentication{
-			TunnelHost:   tunnelHost,
-			TunnelMethod: tunnelMethod2,
-			TunnelPort:   tunnelPort,
-			TunnelUser:   tunnelUser,
+		var destinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthentication *shared.DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthentication
+		if r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthentication != nil {
+			sshKey := r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthentication.SSHKey.ValueString()
+			tunnelHost := r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
+			tunnelMethod2 := shared.DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
+			tunnelPort := r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
+			tunnelUser := r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
+			destinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthentication = &shared.DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthentication{
+				SSHKey:       sshKey,
+				TunnelHost:   tunnelHost,
+				TunnelMethod: tunnelMethod2,
+				TunnelPort:   tunnelPort,
+				TunnelUser:   tunnelUser,
+			}
 		}
-	}
-	if destinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthentication != nil {
-		tunnelMethod = &shared.DestinationMariadbColumnstoreSSHTunnelMethod{
-			DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthentication: destinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthentication,
+		if destinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthentication != nil {
+			tunnelMethod = &shared.DestinationMariadbColumnstoreSSHTunnelMethod{
+				DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthentication: destinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthentication,
+			}
 		}
-	}
-	var destinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication *shared.DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication
-	if r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthentication != nil {
-		tunnelHost1 := r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
-		tunnelMethod3 := shared.DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
-		tunnelPort1 := r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
-		tunnelUser1 := r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
-		destinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication = &shared.DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication{
-			TunnelHost:   tunnelHost1,
-			TunnelMethod: tunnelMethod3,
-			TunnelPort:   tunnelPort1,
-			TunnelUser:   tunnelUser1,
+		var destinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication *shared.DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication
+		if r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication != nil {
+			tunnelHost1 := r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
+			tunnelMethod3 := shared.DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
+			tunnelPort1 := r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
+			tunnelUser1 := r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
+			tunnelUserPassword := r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication.TunnelUserPassword.ValueString()
+			destinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication = &shared.DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication{
+				TunnelHost:         tunnelHost1,
+				TunnelMethod:       tunnelMethod3,
+				TunnelPort:         tunnelPort1,
+				TunnelUser:         tunnelUser1,
+				TunnelUserPassword: tunnelUserPassword,
+			}
 		}
-	}
-	if destinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication != nil {
-		tunnelMethod = &shared.DestinationMariadbColumnstoreSSHTunnelMethod{
-			DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication: destinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication,
+		if destinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication != nil {
+			tunnelMethod = &shared.DestinationMariadbColumnstoreSSHTunnelMethod{
+				DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication: destinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication,
+			}
 		}
 	}
 	username := r.Configuration.Username.ValueString()
@@ -116,52 +122,58 @@ func (r *DestinationMariadbColumnstoreResourceModel) ToUpdateSDKType() *shared.D
 	}
 	port := r.Configuration.Port.ValueInt64()
 	var tunnelMethod *shared.DestinationMariadbColumnstoreUpdateSSHTunnelMethod
-	var destinationMariadbColumnstoreUpdateSSHTunnelMethodNoTunnel *shared.DestinationMariadbColumnstoreUpdateSSHTunnelMethodNoTunnel
-	if r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodNoTunnel != nil {
-		tunnelMethod1 := shared.DestinationMariadbColumnstoreUpdateSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
-		destinationMariadbColumnstoreUpdateSSHTunnelMethodNoTunnel = &shared.DestinationMariadbColumnstoreUpdateSSHTunnelMethodNoTunnel{
-			TunnelMethod: tunnelMethod1,
+	if r.Configuration.TunnelMethod != nil {
+		var destinationMariadbColumnstoreUpdateSSHTunnelMethodNoTunnel *shared.DestinationMariadbColumnstoreUpdateSSHTunnelMethodNoTunnel
+		if r.Configuration.TunnelMethod.DestinationMariadbColumnstoreUpdateSSHTunnelMethodNoTunnel != nil {
+			tunnelMethod1 := shared.DestinationMariadbColumnstoreUpdateSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.DestinationMariadbColumnstoreUpdateSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
+			destinationMariadbColumnstoreUpdateSSHTunnelMethodNoTunnel = &shared.DestinationMariadbColumnstoreUpdateSSHTunnelMethodNoTunnel{
+				TunnelMethod: tunnelMethod1,
+			}
 		}
-	}
-	if destinationMariadbColumnstoreUpdateSSHTunnelMethodNoTunnel != nil {
-		tunnelMethod = &shared.DestinationMariadbColumnstoreUpdateSSHTunnelMethod{
-			DestinationMariadbColumnstoreUpdateSSHTunnelMethodNoTunnel: destinationMariadbColumnstoreUpdateSSHTunnelMethodNoTunnel,
+		if destinationMariadbColumnstoreUpdateSSHTunnelMethodNoTunnel != nil {
+			tunnelMethod = &shared.DestinationMariadbColumnstoreUpdateSSHTunnelMethod{
+				DestinationMariadbColumnstoreUpdateSSHTunnelMethodNoTunnel: destinationMariadbColumnstoreUpdateSSHTunnelMethodNoTunnel,
+			}
 		}
-	}
-	var destinationMariadbColumnstoreUpdateSSHTunnelMethodSSHKeyAuthentication *shared.DestinationMariadbColumnstoreUpdateSSHTunnelMethodSSHKeyAuthentication
-	if r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication != nil {
-		tunnelHost := r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
-		tunnelMethod2 := shared.DestinationMariadbColumnstoreUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
-		tunnelPort := r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
-		tunnelUser := r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
-		destinationMariadbColumnstoreUpdateSSHTunnelMethodSSHKeyAuthentication = &shared.DestinationMariadbColumnstoreUpdateSSHTunnelMethodSSHKeyAuthentication{
-			TunnelHost:   tunnelHost,
-			TunnelMethod: tunnelMethod2,
-			TunnelPort:   tunnelPort,
-			TunnelUser:   tunnelUser,
+		var destinationMariadbColumnstoreUpdateSSHTunnelMethodSSHKeyAuthentication *shared.DestinationMariadbColumnstoreUpdateSSHTunnelMethodSSHKeyAuthentication
+		if r.Configuration.TunnelMethod.DestinationMariadbColumnstoreUpdateSSHTunnelMethodSSHKeyAuthentication != nil {
+			sshKey := r.Configuration.TunnelMethod.DestinationMariadbColumnstoreUpdateSSHTunnelMethodSSHKeyAuthentication.SSHKey.ValueString()
+			tunnelHost := r.Configuration.TunnelMethod.DestinationMariadbColumnstoreUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
+			tunnelMethod2 := shared.DestinationMariadbColumnstoreUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationMariadbColumnstoreUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
+			tunnelPort := r.Configuration.TunnelMethod.DestinationMariadbColumnstoreUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
+			tunnelUser := r.Configuration.TunnelMethod.DestinationMariadbColumnstoreUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
+			destinationMariadbColumnstoreUpdateSSHTunnelMethodSSHKeyAuthentication = &shared.DestinationMariadbColumnstoreUpdateSSHTunnelMethodSSHKeyAuthentication{
+				SSHKey:       sshKey,
+				TunnelHost:   tunnelHost,
+				TunnelMethod: tunnelMethod2,
+				TunnelPort:   tunnelPort,
+				TunnelUser:   tunnelUser,
+			}
 		}
-	}
-	if destinationMariadbColumnstoreUpdateSSHTunnelMethodSSHKeyAuthentication != nil {
-		tunnelMethod = &shared.DestinationMariadbColumnstoreUpdateSSHTunnelMethod{
-			DestinationMariadbColumnstoreUpdateSSHTunnelMethodSSHKeyAuthentication: destinationMariadbColumnstoreUpdateSSHTunnelMethodSSHKeyAuthentication,
+		if destinationMariadbColumnstoreUpdateSSHTunnelMethodSSHKeyAuthentication != nil {
+			tunnelMethod = &shared.DestinationMariadbColumnstoreUpdateSSHTunnelMethod{
+				DestinationMariadbColumnstoreUpdateSSHTunnelMethodSSHKeyAuthentication: destinationMariadbColumnstoreUpdateSSHTunnelMethodSSHKeyAuthentication,
+			}
 		}
-	}
-	var destinationMariadbColumnstoreUpdateSSHTunnelMethodPasswordAuthentication *shared.DestinationMariadbColumnstoreUpdateSSHTunnelMethodPasswordAuthentication
-	if r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthentication != nil {
-		tunnelHost1 := r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
-		tunnelMethod3 := shared.DestinationMariadbColumnstoreUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
-		tunnelPort1 := r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
-		tunnelUser1 := r.Configuration.TunnelMethod.DestinationMariadbColumnstoreSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
-		destinationMariadbColumnstoreUpdateSSHTunnelMethodPasswordAuthentication = &shared.DestinationMariadbColumnstoreUpdateSSHTunnelMethodPasswordAuthentication{
-			TunnelHost:   tunnelHost1,
-			TunnelMethod: tunnelMethod3,
-			TunnelPort:   tunnelPort1,
-			TunnelUser:   tunnelUser1,
+		var destinationMariadbColumnstoreUpdateSSHTunnelMethodPasswordAuthentication *shared.DestinationMariadbColumnstoreUpdateSSHTunnelMethodPasswordAuthentication
+		if r.Configuration.TunnelMethod.DestinationMariadbColumnstoreUpdateSSHTunnelMethodPasswordAuthentication != nil {
+			tunnelHost1 := r.Configuration.TunnelMethod.DestinationMariadbColumnstoreUpdateSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
+			tunnelMethod3 := shared.DestinationMariadbColumnstoreUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationMariadbColumnstoreUpdateSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
+			tunnelPort1 := r.Configuration.TunnelMethod.DestinationMariadbColumnstoreUpdateSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
+			tunnelUser1 := r.Configuration.TunnelMethod.DestinationMariadbColumnstoreUpdateSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
+			tunnelUserPassword := r.Configuration.TunnelMethod.DestinationMariadbColumnstoreUpdateSSHTunnelMethodPasswordAuthentication.TunnelUserPassword.ValueString()
+			destinationMariadbColumnstoreUpdateSSHTunnelMethodPasswordAuthentication = &shared.DestinationMariadbColumnstoreUpdateSSHTunnelMethodPasswordAuthentication{
+				TunnelHost:         tunnelHost1,
+				TunnelMethod:       tunnelMethod3,
+				TunnelPort:         tunnelPort1,
+				TunnelUser:         tunnelUser1,
+				TunnelUserPassword: tunnelUserPassword,
+			}
 		}
-	}
-	if destinationMariadbColumnstoreUpdateSSHTunnelMethodPasswordAuthentication != nil {
-		tunnelMethod = &shared.DestinationMariadbColumnstoreUpdateSSHTunnelMethod{
-			DestinationMariadbColumnstoreUpdateSSHTunnelMethodPasswordAuthentication: destinationMariadbColumnstoreUpdateSSHTunnelMethodPasswordAuthentication,
+		if destinationMariadbColumnstoreUpdateSSHTunnelMethodPasswordAuthentication != nil {
+			tunnelMethod = &shared.DestinationMariadbColumnstoreUpdateSSHTunnelMethod{
+				DestinationMariadbColumnstoreUpdateSSHTunnelMethodPasswordAuthentication: destinationMariadbColumnstoreUpdateSSHTunnelMethodPasswordAuthentication,
+			}
 		}
 	}
 	username := r.Configuration.Username.ValueString()

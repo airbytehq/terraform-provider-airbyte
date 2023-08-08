@@ -18,8 +18,9 @@ resource "airbyte_source_greenhouse" "my_source_greenhouse" {
     api_key     = "...my_api_key..."
     source_type = "greenhouse"
   }
-  name         = "Dora Watsica"
-  workspace_id = "fcf0c42b-78f1-4562-a398-a0dc766324cc"
+  name         = "Miriam Lowe PhD"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "c766324c-cb06-4c8c-a12d-02529270b8d5"
 }
 ```
 
@@ -47,6 +48,6 @@ resource "airbyte_source_greenhouse" "my_source_greenhouse" {
 Required:
 
 - `api_key` (String) Greenhouse API Key. See the <a href="https://docs.airbyte.com/integrations/sources/greenhouse">docs</a> for more information on how to generate this key.
-- `source_type` (String) must be one of [greenhouse]
+- `source_type` (String) must be one of ["greenhouse"]
 
 

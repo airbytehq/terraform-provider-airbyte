@@ -61,7 +61,7 @@ func (r *SourceAmazonAdsResource) Schema(ctx context.Context, req resource.Schem
 								"oauth2.0",
 							),
 						},
-						Description: `must be one of [oauth2.0]`,
+						Description: `must be one of ["oauth2.0"]`,
 					},
 					"client_id": schema.StringAttribute{
 						Required:    true,
@@ -93,7 +93,7 @@ func (r *SourceAmazonAdsResource) Schema(ctx context.Context, req resource.Schem
 								"FE",
 							),
 						},
-						MarkdownDescription: `must be one of [NA, EU, FE]` + "\n" +
+						MarkdownDescription: `must be one of ["NA", "EU", "FE"]` + "\n" +
 							`Region to pull data from (EU/NA/FE). See <a href="https://advertising.amazon.com/API/docs/en-us/info/api-overview#api-endpoints">docs</a> for more details.`,
 					},
 					"report_record_types": schema.ListAttribute{
@@ -108,7 +108,7 @@ func (r *SourceAmazonAdsResource) Schema(ctx context.Context, req resource.Schem
 								"amazon-ads",
 							),
 						},
-						Description: `must be one of [amazon-ads]`,
+						Description: `must be one of ["amazon-ads"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Optional:    true,

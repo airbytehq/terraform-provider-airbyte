@@ -19,8 +19,9 @@ resource "airbyte_source_iterable" "my_source_iterable" {
     source_type = "iterable"
     start_date  = "2021-04-01T00:00:00Z"
   }
-  name         = "Ralph Hermann"
-  workspace_id = "eaa7170f-445a-4ccf-a67a-af9bbad185fe"
+  name         = "Emanuel McKenzie"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "ad185fe4-31d6-4bf5-8838-fbb8c20cb67f"
 }
 ```
 
@@ -48,7 +49,7 @@ resource "airbyte_source_iterable" "my_source_iterable" {
 Required:
 
 - `api_key` (String) Iterable API Key. See the <a href="https://docs.airbyte.com/integrations/sources/iterable">docs</a> for more information on how to obtain this key.
-- `source_type` (String) must be one of [iterable]
+- `source_type` (String) must be one of ["iterable"]
 - `start_date` (String) The date from which you'd like to replicate data for Iterable, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 
 

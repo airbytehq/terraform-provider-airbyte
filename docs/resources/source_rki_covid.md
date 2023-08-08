@@ -18,8 +18,9 @@ resource "airbyte_source_rki_covid" "my_source_rkicovid" {
     source_type = "rki-covid"
     start_date  = "...my_start_date..."
   }
-  name         = "Andy Herzog"
-  workspace_id = "6cd02756-c354-4aa4-b2b4-7e1763c5208c"
+  name         = "Patricia Kuvalis"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "3e9802d8-2f0d-445e-b4a8-b674ee5cfc18"
 }
 ```
 
@@ -46,7 +47,7 @@ resource "airbyte_source_rki_covid" "my_source_rkicovid" {
 
 Required:
 
-- `source_type` (String) must be one of [rki-covid]
+- `source_type` (String) must be one of ["rki-covid"]
 - `start_date` (String) UTC date in the format 2017-01-25. Any data before this date will not be replicated.
 
 

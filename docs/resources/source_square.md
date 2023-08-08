@@ -16,16 +16,19 @@ SourceSquare Resource
 resource "airbyte_source_square" "my_source_square" {
   configuration = {
     credentials = {
-      api_key   = "...my_api_key..."
-      auth_type = "API Key"
+      source_square_authentication_api_key = {
+        api_key   = "...my_api_key..."
+        auth_type = "API Key"
+      }
     }
     include_deleted_objects = true
     is_sandbox              = false
     source_type             = "square"
-    start_date              = "2022-03-30"
+    start_date              = "2022-10-16"
   }
-  name         = "Erma Hagenes"
-  workspace_id = "d2daa784-aba3-4d23-8edf-73811a115382"
+  name         = "Mrs. Maggie Breitenberg"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "82bd7ed5-6507-4621-858f-4d7396564c20"
 }
 ```
 
@@ -53,7 +56,7 @@ resource "airbyte_source_square" "my_source_square" {
 Required:
 
 - `is_sandbox` (Boolean) Determines whether to use the sandbox or production environment.
-- `source_type` (String) must be one of [square]
+- `source_type` (String) must be one of ["square"]
 
 Optional:
 
@@ -77,7 +80,7 @@ Optional:
 Required:
 
 - `api_key` (String) The API key for a Square application
-- `auth_type` (String) must be one of [API Key]
+- `auth_type` (String) must be one of ["API Key"]
 
 
 <a id="nestedatt--configuration--credentials--source_square_authentication_oauth_authentication"></a>
@@ -85,7 +88,7 @@ Required:
 
 Required:
 
-- `auth_type` (String) must be one of [OAuth]
+- `auth_type` (String) must be one of ["OAuth"]
 - `client_id` (String) The Square-issued ID of your application
 - `client_secret` (String) The Square-issued application secret for your application
 - `refresh_token` (String) A refresh token generated using the above client ID and secret
@@ -97,7 +100,7 @@ Required:
 Required:
 
 - `api_key` (String) The API key for a Square application
-- `auth_type` (String) must be one of [API Key]
+- `auth_type` (String) must be one of ["API Key"]
 
 
 <a id="nestedatt--configuration--credentials--source_square_update_authentication_oauth_authentication"></a>
@@ -105,7 +108,7 @@ Required:
 
 Required:
 
-- `auth_type` (String) must be one of [OAuth]
+- `auth_type` (String) must be one of ["OAuth"]
 - `client_id` (String) The Square-issued ID of your application
 - `client_secret` (String) The Square-issued application secret for your application
 - `refresh_token` (String) A refresh token generated using the above client ID and secret

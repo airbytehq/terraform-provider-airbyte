@@ -65,7 +65,7 @@ func (r *SourceMailjetSmsResource) Schema(ctx context.Context, req resource.Sche
 								"mailjet-sms",
 							),
 						},
-						Description: `must be one of [mailjet-sms]`,
+						Description: `must be one of ["mailjet-sms"]`,
 					},
 					"start_date": schema.Int64Attribute{
 						Optional:    true,

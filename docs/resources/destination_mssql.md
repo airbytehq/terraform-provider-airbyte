@@ -23,15 +23,19 @@ resource "airbyte_destination_mssql" "my_destination_mssql" {
     port             = 1433
     schema           = "public"
     ssl_method = {
-      ssl_method = "encrypted_trust_server_certificate"
+      destination_mssql_ssl_method_encrypted_trust_server_certificate_ = {
+        ssl_method = "encrypted_trust_server_certificate"
+      }
     }
     tunnel_method = {
-      tunnel_method = "NO_TUNNEL"
+      destination_mssql_ssh_tunnel_method_no_tunnel = {
+        tunnel_method = "NO_TUNNEL"
+      }
     }
-    username = "Haylie37"
+    username = "Laron.Gerlach40"
   }
-  name         = "Joe Hoppe"
-  workspace_id = "1f08f429-4e36-498f-847f-603e8b445e80"
+  name         = "Isaac Wolf"
+  workspace_id = "7f603e8b-445e-480c-a55e-fd20e457e185"
 }
 ```
 
@@ -55,7 +59,7 @@ resource "airbyte_destination_mssql" "my_destination_mssql" {
 Required:
 
 - `database` (String) The name of the MSSQL database.
-- `destination_type` (String) must be one of [mssql]
+- `destination_type` (String) must be one of ["mssql"]
 - `host` (String) The host name of the MSSQL database.
 - `port` (Number) The port of the MSSQL database.
 - `schema` (String) The default schema tables are written to if the source does not specify a namespace. The usual value for this field is "public".
@@ -83,7 +87,7 @@ Optional:
 
 Required:
 
-- `ssl_method` (String) must be one of [encrypted_trust_server_certificate]
+- `ssl_method` (String) must be one of ["encrypted_trust_server_certificate"]
 
 
 <a id="nestedatt--configuration--ssl_method--destination_mssql_ssl_method_encrypted_verify_certificate"></a>
@@ -91,7 +95,7 @@ Required:
 
 Required:
 
-- `ssl_method` (String) must be one of [encrypted_verify_certificate]
+- `ssl_method` (String) must be one of ["encrypted_verify_certificate"]
 
 Optional:
 
@@ -103,7 +107,7 @@ Optional:
 
 Required:
 
-- `ssl_method` (String) must be one of [encrypted_trust_server_certificate]
+- `ssl_method` (String) must be one of ["encrypted_trust_server_certificate"]
 
 
 <a id="nestedatt--configuration--ssl_method--destination_mssql_update_ssl_method_encrypted_verify_certificate"></a>
@@ -111,7 +115,7 @@ Required:
 
 Required:
 
-- `ssl_method` (String) must be one of [encrypted_verify_certificate]
+- `ssl_method` (String) must be one of ["encrypted_verify_certificate"]
 
 Optional:
 
@@ -136,7 +140,7 @@ Optional:
 
 Required:
 
-- `tunnel_method` (String) must be one of [NO_TUNNEL]
+- `tunnel_method` (String) must be one of ["NO_TUNNEL"]
 No ssh tunnel needed to connect to database
 
 
@@ -146,7 +150,7 @@ No ssh tunnel needed to connect to database
 Required:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of [SSH_PASSWORD_AUTH]
+- `tunnel_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
 Connect through a jump server tunnel host using username and password authentication
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
@@ -160,7 +164,7 @@ Required:
 
 - `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of [SSH_KEY_AUTH]
+- `tunnel_method` (String) must be one of ["SSH_KEY_AUTH"]
 Connect through a jump server tunnel host using username and ssh key
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host.
@@ -171,7 +175,7 @@ Connect through a jump server tunnel host using username and ssh key
 
 Required:
 
-- `tunnel_method` (String) must be one of [NO_TUNNEL]
+- `tunnel_method` (String) must be one of ["NO_TUNNEL"]
 No ssh tunnel needed to connect to database
 
 
@@ -181,7 +185,7 @@ No ssh tunnel needed to connect to database
 Required:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of [SSH_PASSWORD_AUTH]
+- `tunnel_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
 Connect through a jump server tunnel host using username and password authentication
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
@@ -195,7 +199,7 @@ Required:
 
 - `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of [SSH_KEY_AUTH]
+- `tunnel_method` (String) must be one of ["SSH_KEY_AUTH"]
 Connect through a jump server tunnel host using username and ssh key
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host.

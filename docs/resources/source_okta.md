@@ -16,15 +16,18 @@ SourceOkta Resource
 resource "airbyte_source_okta" "my_source_okta" {
   configuration = {
     credentials = {
-      api_token = "...my_api_token..."
-      auth_type = "api_token"
+      source_okta_authorization_method_api_token = {
+        api_token = "...my_api_token..."
+        auth_type = "api_token"
+      }
     }
     domain      = "...my_domain..."
     source_type = "okta"
     start_date  = "2022-07-22T00:00:00Z"
   }
-  name         = "Dominick Hayes"
-  workspace_id = "d854439e-e224-4460-843b-c154188c2f56"
+  name         = "Danielle Bruen"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "c2f56e85-da78-432e-abd6-17c3b0d51a44"
 }
 ```
 
@@ -51,7 +54,7 @@ resource "airbyte_source_okta" "my_source_okta" {
 
 Required:
 
-- `source_type` (String) must be one of [okta]
+- `source_type` (String) must be one of ["okta"]
 
 Optional:
 
@@ -75,7 +78,7 @@ Optional:
 Required:
 
 - `api_token` (String) An Okta token. See the <a href="https://docs.airbyte.com/integrations/sources/okta">docs</a> for instructions on how to generate it.
-- `auth_type` (String) must be one of [api_token]
+- `auth_type` (String) must be one of ["api_token"]
 
 
 <a id="nestedatt--configuration--credentials--source_okta_authorization_method_o_auth2_0"></a>
@@ -83,7 +86,7 @@ Required:
 
 Required:
 
-- `auth_type` (String) must be one of [oauth2.0]
+- `auth_type` (String) must be one of ["oauth2.0"]
 - `client_id` (String) The Client ID of your OAuth application.
 - `client_secret` (String) The Client Secret of your OAuth application.
 - `refresh_token` (String) Refresh Token to obtain new Access Token, when it's expired.
@@ -95,7 +98,7 @@ Required:
 Required:
 
 - `api_token` (String) An Okta token. See the <a href="https://docs.airbyte.com/integrations/sources/okta">docs</a> for instructions on how to generate it.
-- `auth_type` (String) must be one of [api_token]
+- `auth_type` (String) must be one of ["api_token"]
 
 
 <a id="nestedatt--configuration--credentials--source_okta_update_authorization_method_o_auth2_0"></a>
@@ -103,7 +106,7 @@ Required:
 
 Required:
 
-- `auth_type` (String) must be one of [oauth2.0]
+- `auth_type` (String) must be one of ["oauth2.0"]
 - `client_id` (String) The Client ID of your OAuth application.
 - `client_secret` (String) The Client Secret of your OAuth application.
 - `refresh_token` (String) Refresh Token to obtain new Access Token, when it's expired.

@@ -4,6 +4,7 @@ resource "airbyte_source_freshsales" "my_source_freshsales" {
     domain_name = "mydomain.myfreshworks.com"
     source_type = "freshsales"
   }
-  name         = "Salvador Walter DVM"
-  workspace_id = "30be3e43-202d-4721-a576-506641870d9d"
+  name         = "Geraldine Kling"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "06641870-d9d2-41f9-ad03-0c4ecc11a083"
 }

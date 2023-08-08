@@ -16,15 +16,18 @@ SourceShopify Resource
 resource "airbyte_source_shopify" "my_source_shopify" {
   configuration = {
     credentials = {
-      api_password = "...my_api_password..."
-      auth_method  = "api_password"
+      source_shopify_shopify_authorization_method_api_password = {
+        api_password = "...my_api_password..."
+        auth_method  = "api_password"
+      }
     }
     shop        = "...my_shop..."
     source_type = "shopify"
     start_date  = "2021-01-01"
   }
-  name         = "Homer Kshlerin IV"
-  workspace_id = "1c956716-63c5-430b-9665-163a3638512a"
+  name         = "Alfred Hoppe"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "512ab252-1b9f-42e0-b246-7b8a40bc05fa"
 }
 ```
 
@@ -52,7 +55,7 @@ resource "airbyte_source_shopify" "my_source_shopify" {
 Required:
 
 - `shop` (String) The name of your Shopify store found in the URL. For example, if your URL was https://NAME.myshopify.com, then the name would be 'NAME'.
-- `source_type` (String) must be one of [shopify]
+- `source_type` (String) must be one of ["shopify"]
 - `start_date` (String) The date you would like to replicate data from. Format: YYYY-MM-DD. Any data before this date will not be replicated.
 
 Optional:
@@ -75,7 +78,7 @@ Optional:
 Required:
 
 - `api_password` (String) The API Password for your private application in the `Shopify` store.
-- `auth_method` (String) must be one of [api_password]
+- `auth_method` (String) must be one of ["api_password"]
 
 
 <a id="nestedatt--configuration--credentials--source_shopify_shopify_authorization_method_o_auth2_0"></a>
@@ -83,7 +86,7 @@ Required:
 
 Required:
 
-- `auth_method` (String) must be one of [oauth2.0]
+- `auth_method` (String) must be one of ["oauth2.0"]
 
 Optional:
 
@@ -98,7 +101,7 @@ Optional:
 Required:
 
 - `api_password` (String) The API Password for your private application in the `Shopify` store.
-- `auth_method` (String) must be one of [api_password]
+- `auth_method` (String) must be one of ["api_password"]
 
 
 <a id="nestedatt--configuration--credentials--source_shopify_update_shopify_authorization_method_o_auth2_0"></a>
@@ -106,7 +109,7 @@ Required:
 
 Required:
 
-- `auth_method` (String) must be one of [oauth2.0]
+- `auth_method` (String) must be one of ["oauth2.0"]
 
 Optional:
 

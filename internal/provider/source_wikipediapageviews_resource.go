@@ -85,7 +85,7 @@ func (r *SourceWikipediaPageviewsResource) Schema(ctx context.Context, req resou
 								"wikipedia-pageviews",
 							),
 						},
-						Description: `must be one of [wikipedia-pageviews]`,
+						Description: `must be one of ["wikipedia-pageviews"]`,
 					},
 					"start": schema.StringAttribute{
 						Required:    true,

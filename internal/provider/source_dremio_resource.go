@@ -69,7 +69,7 @@ func (r *SourceDremioResource) Schema(ctx context.Context, req resource.SchemaRe
 								"dremio",
 							),
 						},
-						Description: `must be one of [dremio]`,
+						Description: `must be one of ["dremio"]`,
 					},
 				},
 			},

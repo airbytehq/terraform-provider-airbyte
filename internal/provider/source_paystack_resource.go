@@ -70,7 +70,7 @@ func (r *SourcePaystackResource) Schema(ctx context.Context, req resource.Schema
 								"paystack",
 							),
 						},
-						Description: `must be one of [paystack]`,
+						Description: `must be one of ["paystack"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

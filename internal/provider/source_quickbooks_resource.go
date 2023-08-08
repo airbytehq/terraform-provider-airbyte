@@ -72,7 +72,7 @@ func (r *SourceQuickbooksResource) Schema(ctx context.Context, req resource.Sche
 												"oauth2.0",
 											),
 										},
-										Description: `must be one of [oauth2.0]`,
+										Description: `must be one of ["oauth2.0"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -113,7 +113,7 @@ func (r *SourceQuickbooksResource) Schema(ctx context.Context, req resource.Sche
 												"oauth2.0",
 											),
 										},
-										Description: `must be one of [oauth2.0]`,
+										Description: `must be one of ["oauth2.0"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -156,7 +156,7 @@ func (r *SourceQuickbooksResource) Schema(ctx context.Context, req resource.Sche
 								"quickbooks",
 							),
 						},
-						Description: `must be one of [quickbooks]`,
+						Description: `must be one of ["quickbooks"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

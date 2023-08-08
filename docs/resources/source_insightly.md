@@ -19,8 +19,9 @@ resource "airbyte_source_insightly" "my_source_insightly" {
     start_date  = "2021-03-01T00:00:00Z"
     token       = "...my_token..."
   }
-  name         = "Elmer Lind"
-  workspace_id = "a35d086b-6f66-4fef-820e-9f443b4257b9"
+  name         = "Eduardo Wolff"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "3b4257b9-92c8-4dbd-a6a6-1efa2198258f"
 }
 ```
 
@@ -47,7 +48,7 @@ resource "airbyte_source_insightly" "my_source_insightly" {
 
 Required:
 
-- `source_type` (String) must be one of [insightly]
+- `source_type` (String) must be one of ["insightly"]
 - `start_date` (String) The date from which you'd like to replicate data for Insightly in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated. Note that it will be used only for incremental streams.
 - `token` (String) Your Insightly API token.
 

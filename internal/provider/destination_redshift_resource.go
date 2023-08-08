@@ -65,7 +65,7 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 								"redshift",
 							),
 						},
-						Description: `must be one of [redshift]`,
+						Description: `must be one of ["redshift"]`,
 					},
 					"host": schema.StringAttribute{
 						Required:    true,
@@ -100,7 +100,7 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 												"NO_TUNNEL",
 											),
 										},
-										MarkdownDescription: `must be one of [NO_TUNNEL]` + "\n" +
+										MarkdownDescription: `must be one of ["NO_TUNNEL"]` + "\n" +
 											`No ssh tunnel needed to connect to database`,
 									},
 								},
@@ -120,7 +120,7 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 												"SSH_PASSWORD_AUTH",
 											),
 										},
-										MarkdownDescription: `must be one of [SSH_PASSWORD_AUTH]` + "\n" +
+										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
 											`Connect through a jump server tunnel host using username and password authentication`,
 									},
 									"tunnel_port": schema.Int64Attribute{
@@ -156,7 +156,7 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 												"SSH_KEY_AUTH",
 											),
 										},
-										MarkdownDescription: `must be one of [SSH_KEY_AUTH]` + "\n" +
+										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
 											`Connect through a jump server tunnel host using username and ssh key`,
 									},
 									"tunnel_port": schema.Int64Attribute{
@@ -180,7 +180,7 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 												"NO_TUNNEL",
 											),
 										},
-										MarkdownDescription: `must be one of [NO_TUNNEL]` + "\n" +
+										MarkdownDescription: `must be one of ["NO_TUNNEL"]` + "\n" +
 											`No ssh tunnel needed to connect to database`,
 									},
 								},
@@ -200,7 +200,7 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 												"SSH_PASSWORD_AUTH",
 											),
 										},
-										MarkdownDescription: `must be one of [SSH_PASSWORD_AUTH]` + "\n" +
+										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
 											`Connect through a jump server tunnel host using username and password authentication`,
 									},
 									"tunnel_port": schema.Int64Attribute{
@@ -236,7 +236,7 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 												"SSH_KEY_AUTH",
 											),
 										},
-										MarkdownDescription: `must be one of [SSH_KEY_AUTH]` + "\n" +
+										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
 											`Connect through a jump server tunnel host using username and ssh key`,
 									},
 									"tunnel_port": schema.Int64Attribute{
@@ -279,7 +279,7 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 																"aes_cbc_envelope",
 															),
 														},
-														Description: `must be one of [aes_cbc_envelope]`,
+														Description: `must be one of ["aes_cbc_envelope"]`,
 													},
 													"key_encrypting_key": schema.StringAttribute{
 														Optional:    true,
@@ -298,7 +298,7 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 																"none",
 															),
 														},
-														Description: `must be one of [none]`,
+														Description: `must be one of ["none"]`,
 													},
 												},
 												Description: `Staging data will be stored in plaintext.`,
@@ -324,7 +324,7 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 												"S3 Staging",
 											),
 										},
-										Description: `must be one of [S3 Staging]`,
+										Description: `must be one of ["S3 Staging"]`,
 									},
 									"purge_staging_data": schema.BoolAttribute{
 										Optional:    true,
@@ -368,7 +368,7 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 												"me-south-1",
 											),
 										},
-										MarkdownDescription: `must be one of [, us-east-1, us-east-2, us-west-1, us-west-2, af-south-1, ap-east-1, ap-south-1, ap-northeast-1, ap-northeast-2, ap-northeast-3, ap-southeast-1, ap-southeast-2, ca-central-1, cn-north-1, cn-northwest-1, eu-central-1, eu-north-1, eu-south-1, eu-west-1, eu-west-2, eu-west-3, sa-east-1, me-south-1]` + "\n" +
+										MarkdownDescription: `must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1"]` + "\n" +
 											`The region of the S3 staging bucket to use if utilising a COPY strategy. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html#:~:text=In-,Region,-%2C%20choose%20the%20AWS">AWS docs</a> for details.`,
 									},
 									"secret_access_key": schema.StringAttribute{
@@ -388,7 +388,7 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 												"Standard",
 											),
 										},
-										Description: `must be one of [Standard]`,
+										Description: `must be one of ["Standard"]`,
 									},
 								},
 								Description: `The method how the data will be uploaded to the database.`,
@@ -413,7 +413,7 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 																"none",
 															),
 														},
-														Description: `must be one of [none]`,
+														Description: `must be one of ["none"]`,
 													},
 												},
 												Description: `Staging data will be stored in plaintext.`,
@@ -428,7 +428,7 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 																"aes_cbc_envelope",
 															),
 														},
-														Description: `must be one of [aes_cbc_envelope]`,
+														Description: `must be one of ["aes_cbc_envelope"]`,
 													},
 													"key_encrypting_key": schema.StringAttribute{
 														Optional:    true,
@@ -458,7 +458,7 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 												"S3 Staging",
 											),
 										},
-										Description: `must be one of [S3 Staging]`,
+										Description: `must be one of ["S3 Staging"]`,
 									},
 									"purge_staging_data": schema.BoolAttribute{
 										Optional:    true,
@@ -502,7 +502,7 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 												"me-south-1",
 											),
 										},
-										MarkdownDescription: `must be one of [, us-east-1, us-east-2, us-west-1, us-west-2, af-south-1, ap-east-1, ap-south-1, ap-northeast-1, ap-northeast-2, ap-northeast-3, ap-southeast-1, ap-southeast-2, ca-central-1, cn-north-1, cn-northwest-1, eu-central-1, eu-north-1, eu-south-1, eu-west-1, eu-west-2, eu-west-3, sa-east-1, me-south-1]` + "\n" +
+										MarkdownDescription: `must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1"]` + "\n" +
 											`The region of the S3 staging bucket to use if utilising a COPY strategy. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html#:~:text=In-,Region,-%2C%20choose%20the%20AWS">AWS docs</a> for details.`,
 									},
 									"secret_access_key": schema.StringAttribute{
@@ -522,7 +522,7 @@ func (r *DestinationRedshiftResource) Schema(ctx context.Context, req resource.S
 												"Standard",
 											),
 										},
-										Description: `must be one of [Standard]`,
+										Description: `must be one of ["Standard"]`,
 									},
 								},
 								Description: `The method how the data will be uploaded to the database.`,

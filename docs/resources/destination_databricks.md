@@ -15,9 +15,11 @@ DestinationDatabricks Resource
 ```terraform
 resource "airbyte_destination_databricks" "my_destination_databricks" {
   configuration = {
-    accept_terms = false
+    accept_terms = true
     data_source = {
-      data_source_type = "MANAGED_TABLES_STORAGE"
+      destination_databricks_data_source_recommended_managed_tables = {
+        data_source_type = "MANAGED_TABLES_STORAGE"
+      }
     }
     database                         = "...my_database..."
     databricks_http_path             = "sql/protocolvx/o/1234567489/0000-1111111-abcd90"
@@ -25,11 +27,11 @@ resource "airbyte_destination_databricks" "my_destination_databricks" {
     databricks_port                  = "443"
     databricks_server_hostname       = "abc-12345678-wxyz.cloud.databricks.com"
     destination_type                 = "databricks"
-    purge_staging_data               = true
+    purge_staging_data               = false
     schema                           = "default"
   }
-  name         = "Joanna Kohler"
-  workspace_id = "29cdb1a8-422b-4b67-9d23-22715bf0cbb1"
+  name         = "Cesar Hyatt"
+  workspace_id = "d2322715-bf0c-4bb1-a31b-8b90f3443a11"
 }
 ```
 
@@ -57,7 +59,7 @@ Required:
 - `databricks_http_path` (String) Databricks Cluster HTTP Path.
 - `databricks_personal_access_token` (String) Databricks Personal Access Token for making authenticated requests.
 - `databricks_server_hostname` (String) Databricks Cluster Server Hostname.
-- `destination_type` (String) must be one of [databricks]
+- `destination_type` (String) must be one of ["databricks"]
 
 Optional:
 
@@ -83,11 +85,11 @@ Optional:
 
 Required:
 
-- `data_source_type` (String) must be one of [S3_STORAGE]
+- `data_source_type` (String) must be one of ["S3_STORAGE"]
 - `s3_access_key_id` (String) The Access Key Id granting allow one to access the above S3 staging bucket. Airbyte requires Read and Write permissions to the given bucket.
 - `s3_bucket_name` (String) The name of the S3 bucket to use for intermittent staging of the data.
 - `s3_bucket_path` (String) The directory under the S3 bucket where data will be written.
-- `s3_bucket_region` (String) must be one of [, us-east-1, us-east-2, us-west-1, us-west-2, af-south-1, ap-east-1, ap-south-1, ap-northeast-1, ap-northeast-2, ap-northeast-3, ap-southeast-1, ap-southeast-2, ca-central-1, cn-north-1, cn-northwest-1, eu-central-1, eu-north-1, eu-south-1, eu-west-1, eu-west-2, eu-west-3, sa-east-1, me-south-1, us-gov-east-1, us-gov-west-1]
+- `s3_bucket_region` (String) must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]
 The region of the S3 staging bucket to use if utilising a copy strategy.
 - `s3_secret_access_key` (String) The corresponding secret to the above access key id.
 
@@ -104,7 +106,7 @@ Required:
 - `azure_blob_storage_account_name` (String) The account's name of the Azure Blob Storage.
 - `azure_blob_storage_container_name` (String) The name of the Azure blob storage container.
 - `azure_blob_storage_sas_token` (String) Shared access signature (SAS) token to grant limited access to objects in your storage account.
-- `data_source_type` (String) must be one of [AZURE_BLOB_STORAGE]
+- `data_source_type` (String) must be one of ["AZURE_BLOB_STORAGE"]
 
 Optional:
 
@@ -116,7 +118,7 @@ Optional:
 
 Required:
 
-- `data_source_type` (String) must be one of [MANAGED_TABLES_STORAGE]
+- `data_source_type` (String) must be one of ["MANAGED_TABLES_STORAGE"]
 
 
 <a id="nestedatt--configuration--data_source--destination_databricks_update_data_source_amazon_s3"></a>
@@ -124,11 +126,11 @@ Required:
 
 Required:
 
-- `data_source_type` (String) must be one of [S3_STORAGE]
+- `data_source_type` (String) must be one of ["S3_STORAGE"]
 - `s3_access_key_id` (String) The Access Key Id granting allow one to access the above S3 staging bucket. Airbyte requires Read and Write permissions to the given bucket.
 - `s3_bucket_name` (String) The name of the S3 bucket to use for intermittent staging of the data.
 - `s3_bucket_path` (String) The directory under the S3 bucket where data will be written.
-- `s3_bucket_region` (String) must be one of [, us-east-1, us-east-2, us-west-1, us-west-2, af-south-1, ap-east-1, ap-south-1, ap-northeast-1, ap-northeast-2, ap-northeast-3, ap-southeast-1, ap-southeast-2, ca-central-1, cn-north-1, cn-northwest-1, eu-central-1, eu-north-1, eu-south-1, eu-west-1, eu-west-2, eu-west-3, sa-east-1, me-south-1, us-gov-east-1, us-gov-west-1]
+- `s3_bucket_region` (String) must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]
 The region of the S3 staging bucket to use if utilising a copy strategy.
 - `s3_secret_access_key` (String) The corresponding secret to the above access key id.
 
@@ -145,7 +147,7 @@ Required:
 - `azure_blob_storage_account_name` (String) The account's name of the Azure Blob Storage.
 - `azure_blob_storage_container_name` (String) The name of the Azure blob storage container.
 - `azure_blob_storage_sas_token` (String) Shared access signature (SAS) token to grant limited access to objects in your storage account.
-- `data_source_type` (String) must be one of [AZURE_BLOB_STORAGE]
+- `data_source_type` (String) must be one of ["AZURE_BLOB_STORAGE"]
 
 Optional:
 
@@ -157,6 +159,6 @@ Optional:
 
 Required:
 
-- `data_source_type` (String) must be one of [MANAGED_TABLES_STORAGE]
+- `data_source_type` (String) must be one of ["MANAGED_TABLES_STORAGE"]
 
 

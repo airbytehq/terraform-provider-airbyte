@@ -18,8 +18,9 @@ resource "airbyte_source_tempo" "my_source_tempo" {
     api_token   = "...my_api_token..."
     source_type = "tempo"
   }
-  name         = "Luis O'Connell"
-  workspace_id = "dd9dda33-dcd6-4348-be4a-7a98e4df37e4"
+  name         = "Elias Glover"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "37e45b89-55d4-413e-93a4-82310907bd35"
 }
 ```
 
@@ -47,6 +48,6 @@ resource "airbyte_source_tempo" "my_source_tempo" {
 Required:
 
 - `api_token` (String) Tempo API Token. Go to Tempo>Settings, scroll down to Data Access and select API integration.
-- `source_type` (String) must be one of [tempo]
+- `source_type` (String) must be one of ["tempo"]
 
 

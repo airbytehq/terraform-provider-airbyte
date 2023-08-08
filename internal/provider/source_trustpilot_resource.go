@@ -73,7 +73,7 @@ func (r *SourceTrustpilotResource) Schema(ctx context.Context, req resource.Sche
 												"apikey",
 											),
 										},
-										Description: `must be one of [apikey]`,
+										Description: `must be one of ["apikey"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -96,7 +96,7 @@ func (r *SourceTrustpilotResource) Schema(ctx context.Context, req resource.Sche
 												"oauth2.0",
 											),
 										},
-										Description: `must be one of [oauth2.0]`,
+										Description: `must be one of ["oauth2.0"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -129,7 +129,7 @@ func (r *SourceTrustpilotResource) Schema(ctx context.Context, req resource.Sche
 												"apikey",
 											),
 										},
-										Description: `must be one of [apikey]`,
+										Description: `must be one of ["apikey"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -152,7 +152,7 @@ func (r *SourceTrustpilotResource) Schema(ctx context.Context, req resource.Sche
 												"oauth2.0",
 											),
 										},
-										Description: `must be one of [oauth2.0]`,
+										Description: `must be one of ["oauth2.0"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -187,7 +187,7 @@ func (r *SourceTrustpilotResource) Schema(ctx context.Context, req resource.Sche
 								"trustpilot",
 							),
 						},
-						Description: `must be one of [trustpilot]`,
+						Description: `must be one of ["trustpilot"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required:    true,

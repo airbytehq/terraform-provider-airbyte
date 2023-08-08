@@ -73,7 +73,7 @@ func (r *SourceDelightedResource) Schema(ctx context.Context, req resource.Schem
 								"delighted",
 							),
 						},
-						Description: `must be one of [delighted]`,
+						Description: `must be one of ["delighted"]`,
 					},
 				},
 			},

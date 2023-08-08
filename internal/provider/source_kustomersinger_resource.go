@@ -65,7 +65,7 @@ func (r *SourceKustomerSingerResource) Schema(ctx context.Context, req resource.
 								"kustomer-singer",
 							),
 						},
-						Description: `must be one of [kustomer-singer]`,
+						Description: `must be one of ["kustomer-singer"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required:    true,

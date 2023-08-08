@@ -78,7 +78,7 @@ func (r *SourceNytimesResource) Schema(ctx context.Context, req resource.SchemaR
 								}...,
 							),
 						},
-						MarkdownDescription: `must be one of [1, 7, 30]` + "\n" +
+						MarkdownDescription: `must be one of ["1", "7", "30"]` + "\n" +
 							`Period of time (in days)`,
 					},
 					"share_type": schema.StringAttribute{
@@ -88,7 +88,7 @@ func (r *SourceNytimesResource) Schema(ctx context.Context, req resource.SchemaR
 								"facebook",
 							),
 						},
-						MarkdownDescription: `must be one of [facebook]` + "\n" +
+						MarkdownDescription: `must be one of ["facebook"]` + "\n" +
 							`Share Type`,
 					},
 					"source_type": schema.StringAttribute{
@@ -98,7 +98,7 @@ func (r *SourceNytimesResource) Schema(ctx context.Context, req resource.SchemaR
 								"nytimes",
 							),
 						},
-						Description: `must be one of [nytimes]`,
+						Description: `must be one of ["nytimes"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

@@ -65,7 +65,7 @@ func (r *SourceZoomResource) Schema(ctx context.Context, req resource.SchemaRequ
 								"zoom",
 							),
 						},
-						Description: `must be one of [zoom]`,
+						Description: `must be one of ["zoom"]`,
 					},
 				},
 			},

@@ -80,7 +80,7 @@ func (r *SourceMongodbResource) Schema(ctx context.Context, req resource.SchemaR
 												"atlas",
 											),
 										},
-										Description: `must be one of [atlas]`,
+										Description: `must be one of ["atlas"]`,
 									},
 								},
 								Description: `The MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.`,
@@ -95,7 +95,7 @@ func (r *SourceMongodbResource) Schema(ctx context.Context, req resource.SchemaR
 												"replica",
 											),
 										},
-										Description: `must be one of [replica]`,
+										Description: `must be one of ["replica"]`,
 									},
 									"replica_set": schema.StringAttribute{
 										Optional:    true,
@@ -122,7 +122,7 @@ func (r *SourceMongodbResource) Schema(ctx context.Context, req resource.SchemaR
 												"standalone",
 											),
 										},
-										Description: `must be one of [standalone]`,
+										Description: `must be one of ["standalone"]`,
 									},
 									"port": schema.Int64Attribute{
 										Required:    true,
@@ -145,7 +145,7 @@ func (r *SourceMongodbResource) Schema(ctx context.Context, req resource.SchemaR
 												"atlas",
 											),
 										},
-										Description: `must be one of [atlas]`,
+										Description: `must be one of ["atlas"]`,
 									},
 								},
 								Description: `The MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.`,
@@ -160,7 +160,7 @@ func (r *SourceMongodbResource) Schema(ctx context.Context, req resource.SchemaR
 												"replica",
 											),
 										},
-										Description: `must be one of [replica]`,
+										Description: `must be one of ["replica"]`,
 									},
 									"replica_set": schema.StringAttribute{
 										Optional:    true,
@@ -187,7 +187,7 @@ func (r *SourceMongodbResource) Schema(ctx context.Context, req resource.SchemaR
 												"standalone",
 											),
 										},
-										Description: `must be one of [standalone]`,
+										Description: `must be one of ["standalone"]`,
 									},
 									"port": schema.Int64Attribute{
 										Required:    true,
@@ -213,7 +213,7 @@ func (r *SourceMongodbResource) Schema(ctx context.Context, req resource.SchemaR
 								"mongodb",
 							),
 						},
-						Description: `must be one of [mongodb]`,
+						Description: `must be one of ["mongodb"]`,
 					},
 					"user": schema.StringAttribute{
 						Optional:    true,

@@ -61,7 +61,7 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 								"hash",
 							),
 						},
-						MarkdownDescription: `must be one of [hash]` + "\n" +
+						MarkdownDescription: `must be one of ["hash"]` + "\n" +
 							`Redis cache type to store data in.`,
 					},
 					"destination_type": schema.StringAttribute{
@@ -71,7 +71,7 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 								"redis",
 							),
 						},
-						Description: `must be one of [redis]`,
+						Description: `must be one of ["redis"]`,
 					},
 					"host": schema.StringAttribute{
 						Required:    true,
@@ -102,7 +102,7 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 												"disable",
 											),
 										},
-										Description: `must be one of [disable]`,
+										Description: `must be one of ["disable"]`,
 									},
 								},
 								Description: `Disable SSL.`,
@@ -133,7 +133,7 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 												"verify-full",
 											),
 										},
-										Description: `must be one of [verify-full]`,
+										Description: `must be one of ["verify-full"]`,
 									},
 								},
 								Description: `Verify-full SSL mode.`,
@@ -148,7 +148,7 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 												"disable",
 											),
 										},
-										Description: `must be one of [disable]`,
+										Description: `must be one of ["disable"]`,
 									},
 								},
 								Description: `Disable SSL.`,
@@ -179,7 +179,7 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 												"verify-full",
 											),
 										},
-										Description: `must be one of [verify-full]`,
+										Description: `must be one of ["verify-full"]`,
 									},
 								},
 								Description: `Verify-full SSL mode.`,
@@ -204,7 +204,7 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 												"NO_TUNNEL",
 											),
 										},
-										MarkdownDescription: `must be one of [NO_TUNNEL]` + "\n" +
+										MarkdownDescription: `must be one of ["NO_TUNNEL"]` + "\n" +
 											`No ssh tunnel needed to connect to database`,
 									},
 								},
@@ -224,7 +224,7 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 												"SSH_PASSWORD_AUTH",
 											),
 										},
-										MarkdownDescription: `must be one of [SSH_PASSWORD_AUTH]` + "\n" +
+										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
 											`Connect through a jump server tunnel host using username and password authentication`,
 									},
 									"tunnel_port": schema.Int64Attribute{
@@ -260,7 +260,7 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 												"SSH_KEY_AUTH",
 											),
 										},
-										MarkdownDescription: `must be one of [SSH_KEY_AUTH]` + "\n" +
+										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
 											`Connect through a jump server tunnel host using username and ssh key`,
 									},
 									"tunnel_port": schema.Int64Attribute{
@@ -284,7 +284,7 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 												"NO_TUNNEL",
 											),
 										},
-										MarkdownDescription: `must be one of [NO_TUNNEL]` + "\n" +
+										MarkdownDescription: `must be one of ["NO_TUNNEL"]` + "\n" +
 											`No ssh tunnel needed to connect to database`,
 									},
 								},
@@ -304,7 +304,7 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 												"SSH_PASSWORD_AUTH",
 											),
 										},
-										MarkdownDescription: `must be one of [SSH_PASSWORD_AUTH]` + "\n" +
+										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
 											`Connect through a jump server tunnel host using username and password authentication`,
 									},
 									"tunnel_port": schema.Int64Attribute{
@@ -340,7 +340,7 @@ func (r *DestinationRedisResource) Schema(ctx context.Context, req resource.Sche
 												"SSH_KEY_AUTH",
 											),
 										},
-										MarkdownDescription: `must be one of [SSH_KEY_AUTH]` + "\n" +
+										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
 											`Connect through a jump server tunnel host using username and ssh key`,
 									},
 									"tunnel_port": schema.Int64Attribute{

@@ -94,7 +94,7 @@ func (r *SourceGnewsResource) Schema(ctx context.Context, req resource.SchemaReq
 								"us",
 							),
 						},
-						MarkdownDescription: `must be one of [au, br, ca, cn, eg, fr, de, gr, hk, in, ie, il, it, jp, nl, no, pk, pe, ph, pt, ro, ru, sg, es, se, ch, tw, ua, gb, us]` + "\n" +
+						MarkdownDescription: `must be one of ["au", "br", "ca", "cn", "eg", "fr", "de", "gr", "hk", "in", "ie", "il", "it", "jp", "nl", "no", "pk", "pe", "ph", "pt", "ro", "ru", "sg", "es", "se", "ch", "tw", "ua", "gb", "us"]` + "\n" +
 							`This parameter allows you to specify the country where the news articles returned by the API were published, the contents of the articles are not necessarily related to the specified country. You have to set as value the 2 letters code of the country you want to filter.`,
 					},
 					"end_date": schema.StringAttribute{
@@ -134,7 +134,7 @@ func (r *SourceGnewsResource) Schema(ctx context.Context, req resource.SchemaReq
 								"uk",
 							),
 						},
-						Description: `must be one of [ar, zh, nl, en, fr, de, el, he, hi, it, ja, ml, mr, no, pt, ro, ru, es, sv, ta, te, uk]`,
+						Description: `must be one of ["ar", "zh", "nl", "en", "fr", "de", "el", "he", "hi", "it", "ja", "ml", "mr", "no", "pt", "ro", "ru", "es", "sv", "ta", "te", "uk"]`,
 					},
 					"nullable": schema.ListAttribute{
 						Optional:    true,
@@ -166,7 +166,7 @@ func (r *SourceGnewsResource) Schema(ctx context.Context, req resource.SchemaReq
 								"relevance",
 							),
 						},
-						MarkdownDescription: `must be one of [publishedAt, relevance]` + "\n" +
+						MarkdownDescription: `must be one of ["publishedAt", "relevance"]` + "\n" +
 							`This parameter allows you to choose with which type of sorting the articles should be returned. Two values  are possible:` + "\n" +
 							`  - publishedAt = sort by publication date, the articles with the most recent publication date are returned first` + "\n" +
 							`  - relevance = sort by best match to keywords, the articles with the best match are returned first`,
@@ -178,7 +178,7 @@ func (r *SourceGnewsResource) Schema(ctx context.Context, req resource.SchemaReq
 								"gnews",
 							),
 						},
-						Description: `must be one of [gnews]`,
+						Description: `must be one of ["gnews"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Optional:    true,
@@ -216,7 +216,7 @@ func (r *SourceGnewsResource) Schema(ctx context.Context, req resource.SchemaReq
 								"health",
 							),
 						},
-						MarkdownDescription: `must be one of [breaking-news, world, nation, business, technology, entertainment, sports, science, health]` + "\n" +
+						MarkdownDescription: `must be one of ["breaking-news", "world", "nation", "business", "technology", "entertainment", "sports", "science", "health"]` + "\n" +
 							`This parameter allows you to change the category for the request.`,
 					},
 				},

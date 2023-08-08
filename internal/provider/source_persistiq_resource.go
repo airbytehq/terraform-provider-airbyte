@@ -65,7 +65,7 @@ func (r *SourcePersistiqResource) Schema(ctx context.Context, req resource.Schem
 								"persistiq",
 							),
 						},
-						Description: `must be one of [persistiq]`,
+						Description: `must be one of ["persistiq"]`,
 					},
 				},
 			},

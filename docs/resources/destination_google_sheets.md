@@ -23,8 +23,8 @@ resource "airbyte_destination_google_sheets" "my_destination_googlesheets" {
     destination_type = "google-sheets"
     spreadsheet_id   = "https://docs.google.com/spreadsheets/d/1hLd9Qqti3UyLXZB2aFfUWDT7BG/edit"
   }
-  name         = "Jenna Kautzer"
-  workspace_id = "b95bc0ab-3c20-4c4f-b789-fd871f99dd2e"
+  name         = "Sadie Hackett"
+  workspace_id = "789fd871-f99d-4d2e-bd12-1aa6f1e674bd"
 }
 ```
 
@@ -48,7 +48,7 @@ resource "airbyte_destination_google_sheets" "my_destination_googlesheets" {
 Required:
 
 - `credentials` (Attributes) Google API Credentials for connecting to Google Sheets and Google Drive APIs (see [below for nested schema](#nestedatt--configuration--credentials))
-- `destination_type` (String) must be one of [google-sheets]
+- `destination_type` (String) must be one of ["google-sheets"]
 - `spreadsheet_id` (String) The link to your spreadsheet. See <a href='https://docs.airbyte.com/integrations/destinations/google-sheets#sheetlink'>this guide</a> for more details.
 
 <a id="nestedatt--configuration--credentials"></a>

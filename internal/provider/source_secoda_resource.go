@@ -65,7 +65,7 @@ func (r *SourceSecodaResource) Schema(ctx context.Context, req resource.SchemaRe
 								"secoda",
 							),
 						},
-						Description: `must be one of [secoda]`,
+						Description: `must be one of ["secoda"]`,
 					},
 				},
 			},

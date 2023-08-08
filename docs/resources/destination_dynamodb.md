@@ -18,12 +18,12 @@ resource "airbyte_destination_dynamodb" "my_destination_dynamodb" {
     access_key_id              = "A012345678910EXAMPLE"
     destination_type           = "dynamodb"
     dynamodb_endpoint          = "http://localhost:9000"
-    dynamodb_region            = "ap-northeast-1"
+    dynamodb_region            = "eu-west-3"
     dynamodb_table_name_prefix = "airbyte_sync"
     secret_access_key          = "a012345678910ABCDEFGH/AbCdEfGhEXAMPLEKEY"
   }
-  name         = "Dixie Klocko"
-  workspace_id = "f7fbc7ab-d74d-4d39-80f5-d2cff7c70a45"
+  name         = "Earl Mosciski DVM"
+  workspace_id = "5d2cff7c-70a4-4562-ad43-6813f16d9f5f"
 }
 ```
 
@@ -47,8 +47,8 @@ resource "airbyte_destination_dynamodb" "my_destination_dynamodb" {
 Required:
 
 - `access_key_id` (String) The access key id to access the DynamoDB. Airbyte requires Read and Write permissions to the DynamoDB.
-- `destination_type` (String) must be one of [dynamodb]
-- `dynamodb_region` (String) must be one of [, us-east-1, us-east-2, us-west-1, us-west-2, af-south-1, ap-east-1, ap-south-1, ap-northeast-1, ap-northeast-2, ap-northeast-3, ap-southeast-1, ap-southeast-2, ca-central-1, cn-north-1, cn-northwest-1, eu-central-1, eu-north-1, eu-south-1, eu-west-1, eu-west-2, eu-west-3, sa-east-1, me-south-1, us-gov-east-1, us-gov-west-1]
+- `destination_type` (String) must be one of ["dynamodb"]
+- `dynamodb_region` (String) must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]
 The region of the DynamoDB.
 - `dynamodb_table_name_prefix` (String) The prefix to use when naming DynamoDB tables.
 - `secret_access_key` (String) The corresponding secret to the access key id.

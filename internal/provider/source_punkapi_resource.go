@@ -73,7 +73,7 @@ func (r *SourcePunkAPIResource) Schema(ctx context.Context, req resource.SchemaR
 								"punk-api",
 							),
 						},
-						Description: `must be one of [punk-api]`,
+						Description: `must be one of ["punk-api"]`,
 					},
 				},
 			},

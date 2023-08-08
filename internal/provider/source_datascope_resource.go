@@ -65,7 +65,7 @@ func (r *SourceDatascopeResource) Schema(ctx context.Context, req resource.Schem
 								"datascope",
 							),
 						},
-						Description: `must be one of [datascope]`,
+						Description: `must be one of ["datascope"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required:    true,

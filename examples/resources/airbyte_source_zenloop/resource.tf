@@ -6,6 +6,7 @@ resource "airbyte_source_zenloop" "my_source_zenloop" {
     survey_group_id = "...my_survey_group_id..."
     survey_id       = "...my_survey_id..."
   }
-  name         = "Marilyn Carter"
-  workspace_id = "32a56d69-180f-4f60-ab9a-6658e69a4b84"
+  name         = "Kyle Reichert"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "3d382dbe-c75c-468c-a065-9468ce304d88"
 }

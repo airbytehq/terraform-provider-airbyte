@@ -83,8 +83,8 @@ func (r *SourceFaunaResourceModel) ToUpdateSDKType() *shared.SourceFaunaPutReque
 	if r.Configuration.Collection != nil {
 		var deletions shared.SourceFaunaUpdateCollectionDeletionMode
 		var sourceFaunaUpdateCollectionDeletionModeDisabled *shared.SourceFaunaUpdateCollectionDeletionModeDisabled
-		if r.Configuration.Collection.Deletions.SourceFaunaCollectionDeletionModeDisabled != nil {
-			deletionMode := shared.SourceFaunaUpdateCollectionDeletionModeDisabledDeletionMode(r.Configuration.Collection.Deletions.SourceFaunaCollectionDeletionModeDisabled.DeletionMode.ValueString())
+		if r.Configuration.Collection.Deletions.SourceFaunaUpdateCollectionDeletionModeDisabled != nil {
+			deletionMode := shared.SourceFaunaUpdateCollectionDeletionModeDisabledDeletionMode(r.Configuration.Collection.Deletions.SourceFaunaUpdateCollectionDeletionModeDisabled.DeletionMode.ValueString())
 			sourceFaunaUpdateCollectionDeletionModeDisabled = &shared.SourceFaunaUpdateCollectionDeletionModeDisabled{
 				DeletionMode: deletionMode,
 			}
@@ -95,9 +95,9 @@ func (r *SourceFaunaResourceModel) ToUpdateSDKType() *shared.SourceFaunaPutReque
 			}
 		}
 		var sourceFaunaUpdateCollectionDeletionModeEnabled *shared.SourceFaunaUpdateCollectionDeletionModeEnabled
-		if r.Configuration.Collection.Deletions.SourceFaunaCollectionDeletionModeEnabled != nil {
-			column := r.Configuration.Collection.Deletions.SourceFaunaCollectionDeletionModeEnabled.Column.ValueString()
-			deletionMode1 := shared.SourceFaunaUpdateCollectionDeletionModeEnabledDeletionMode(r.Configuration.Collection.Deletions.SourceFaunaCollectionDeletionModeEnabled.DeletionMode.ValueString())
+		if r.Configuration.Collection.Deletions.SourceFaunaUpdateCollectionDeletionModeEnabled != nil {
+			column := r.Configuration.Collection.Deletions.SourceFaunaUpdateCollectionDeletionModeEnabled.Column.ValueString()
+			deletionMode1 := shared.SourceFaunaUpdateCollectionDeletionModeEnabledDeletionMode(r.Configuration.Collection.Deletions.SourceFaunaUpdateCollectionDeletionModeEnabled.DeletionMode.ValueString())
 			sourceFaunaUpdateCollectionDeletionModeEnabled = &shared.SourceFaunaUpdateCollectionDeletionModeEnabled{
 				Column:       column,
 				DeletionMode: deletionMode1,

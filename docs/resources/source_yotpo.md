@@ -17,12 +17,13 @@ resource "airbyte_source_yotpo" "my_source_yotpo" {
   configuration = {
     access_token = "...my_access_token..."
     app_key      = "...my_app_key..."
-    email        = "Morton.Walter50@yahoo.com"
+    email        = "Lacy.Steuber@yahoo.com"
     source_type  = "yotpo"
     start_date   = "2022-03-01T00:00:00.000Z"
   }
-  name         = "Duane Hamill"
-  workspace_id = "7d03a148-0f8d-4e30-b069-d810618d97e1"
+  name         = "Kay Smith"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "e1522975-10da-4803-9229-2cc61c2a702b"
 }
 ```
 
@@ -52,7 +53,7 @@ Required:
 - `access_token` (String) Access token recieved as a result of API call to https://api.yotpo.com/oauth/token (Ref- https://apidocs.yotpo.com/reference/yotpo-authentication)
 - `app_key` (String) App key found at settings (Ref- https://settings.yotpo.com/#/general_settings)
 - `email` (String) Email address registered with yotpo.
-- `source_type` (String) must be one of [yotpo]
+- `source_type` (String) must be one of ["yotpo"]
 - `start_date` (String) Date time filter for incremental filter, Specify which date to extract from.
 
 

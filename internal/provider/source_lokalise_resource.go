@@ -69,7 +69,7 @@ func (r *SourceLokaliseResource) Schema(ctx context.Context, req resource.Schema
 								"lokalise",
 							),
 						},
-						Description: `must be one of [lokalise]`,
+						Description: `must be one of ["lokalise"]`,
 					},
 				},
 			},

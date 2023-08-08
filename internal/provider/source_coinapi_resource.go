@@ -73,7 +73,7 @@ func (r *SourceCoinAPIResource) Schema(ctx context.Context, req resource.SchemaR
 								"production",
 							),
 						},
-						MarkdownDescription: `must be one of [sandbox, production]` + "\n" +
+						MarkdownDescription: `must be one of ["sandbox", "production"]` + "\n" +
 							`The environment to use. Either sandbox or production.` + "\n" +
 							``,
 					},
@@ -95,7 +95,7 @@ func (r *SourceCoinAPIResource) Schema(ctx context.Context, req resource.SchemaR
 								"coin-api",
 							),
 						},
-						Description: `must be one of [coin-api]`,
+						Description: `must be one of ["coin-api"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required:    true,

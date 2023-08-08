@@ -65,7 +65,7 @@ func (r *SourceCodaResource) Schema(ctx context.Context, req resource.SchemaRequ
 								"coda",
 							),
 						},
-						Description: `must be one of [coda]`,
+						Description: `must be one of ["coda"]`,
 					},
 				},
 			},

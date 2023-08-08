@@ -65,7 +65,7 @@ func (r *SourcePokeapiResource) Schema(ctx context.Context, req resource.SchemaR
 								"pokeapi",
 							),
 						},
-						Description: `must be one of [pokeapi]`,
+						Description: `must be one of ["pokeapi"]`,
 					},
 				},
 			},

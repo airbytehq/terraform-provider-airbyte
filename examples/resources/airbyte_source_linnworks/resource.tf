@@ -3,9 +3,10 @@ resource "airbyte_source_linnworks" "my_source_linnworks" {
     application_id     = "...my_application_id..."
     application_secret = "...my_application_secret..."
     source_type        = "linnworks"
-    start_date         = "2022-03-30T06:35:02.930Z"
+    start_date         = "2022-09-01T15:55:01.348Z"
     token              = "...my_token..."
   }
-  name         = "Carole Watsica"
-  workspace_id = "15ceb4d6-e1ea-4e0f-b5ae-df2acab58b99"
+  name         = "Percy Schuster"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "acab58b9-91c9-426d-9b58-9461e7421cbe"
 }

@@ -73,7 +73,7 @@ func (r *SourceGcsResource) Schema(ctx context.Context, req resource.SchemaReque
 								"gcs",
 							),
 						},
-						Description: `must be one of [gcs]`,
+						Description: `must be one of ["gcs"]`,
 					},
 				},
 			},

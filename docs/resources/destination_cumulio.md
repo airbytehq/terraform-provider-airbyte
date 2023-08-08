@@ -20,8 +20,8 @@ resource "airbyte_destination_cumulio" "my_destination_cumulio" {
     api_token        = "...my_api_token..."
     destination_type = "cumulio"
   }
-  name         = "Allen Parisian Jr."
-  workspace_id = "0674ebf6-9280-4d1b-a77a-89ebf737ae42"
+  name         = "Miss Paul Steuber"
+  workspace_id = "77a89ebf-737a-4e42-83ce-5e6a95d8a0d4"
 }
 ```
 
@@ -47,6 +47,6 @@ Required:
 - `api_host` (String) URL of the Cumul.io API (e.g. 'https://api.cumul.io', 'https://api.us.cumul.io', or VPC-specific API url). Defaults to 'https://api.cumul.io'.
 - `api_key` (String) An API key generated in Cumul.io's platform (can be generated here: https://app.cumul.io/start/profile/integration).
 - `api_token` (String) The corresponding API token generated in Cumul.io's platform (can be generated here: https://app.cumul.io/start/profile/integration).
-- `destination_type` (String) must be one of [cumulio]
+- `destination_type` (String) must be one of ["cumulio"]
 
 

@@ -17,13 +17,14 @@ resource "airbyte_source_stripe" "my_source_stripe" {
   configuration = {
     account_id           = "...my_account_id..."
     client_secret        = "...my_client_secret..."
-    lookback_window_days = 1
-    slice_range          = 3
+    lookback_window_days = 5
+    slice_range          = 30
     source_type          = "stripe"
     start_date           = "2017-01-25T00:00:00Z"
   }
-  name         = "Wm Little"
-  workspace_id = "32d892cf-7812-4cb5-92c8-78240bf548f8"
+  name         = "Marlon Herzog"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "f88f8f1b-f0bc-48e1-b206-d5d831d00810"
 }
 ```
 
@@ -52,7 +53,7 @@ Required:
 
 - `account_id` (String) Your Stripe account ID (starts with 'acct_', find yours <a href="https://dashboard.stripe.com/settings/account">here</a>).
 - `client_secret` (String) Stripe API key (usually starts with 'sk_live_'; find yours <a href="https://dashboard.stripe.com/apikeys">here</a>).
-- `source_type` (String) must be one of [stripe]
+- `source_type` (String) must be one of ["stripe"]
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Only data generated after this date will be replicated.
 
 Optional:

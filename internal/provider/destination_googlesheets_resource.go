@@ -78,7 +78,7 @@ func (r *DestinationGoogleSheetsResource) Schema(ctx context.Context, req resour
 								"google-sheets",
 							),
 						},
-						Description: `must be one of [google-sheets]`,
+						Description: `must be one of ["google-sheets"]`,
 					},
 					"spreadsheet_id": schema.StringAttribute{
 						Required:    true,

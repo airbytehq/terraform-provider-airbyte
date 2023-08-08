@@ -17,11 +17,13 @@ resource "airbyte_destination_dev_null" "my_destination_devnull" {
   configuration = {
     destination_type = "dev-null"
     test_destination = {
-      test_destination_type = "SILENT"
+      destination_dev_null_test_destination_silent = {
+        test_destination_type = "SILENT"
+      }
     }
   }
-  name         = "Dale Boehm"
-  workspace_id = "b90f3443-a110-48e0-adcf-4b921879fce9"
+  name         = "Miss Billie Ward"
+  workspace_id = "cf4b9218-79fc-4e95-bf73-ef7fbc7abd74"
 }
 ```
 
@@ -44,7 +46,7 @@ resource "airbyte_destination_dev_null" "my_destination_devnull" {
 
 Required:
 
-- `destination_type` (String) must be one of [dev-null]
+- `destination_type` (String) must be one of ["dev-null"]
 - `test_destination` (Attributes) The type of destination to be used (see [below for nested schema](#nestedatt--configuration--test_destination))
 
 <a id="nestedatt--configuration--test_destination"></a>
@@ -60,7 +62,7 @@ Optional:
 
 Required:
 
-- `test_destination_type` (String) must be one of [SILENT]
+- `test_destination_type` (String) must be one of ["SILENT"]
 
 
 <a id="nestedatt--configuration--test_destination--destination_dev_null_update_test_destination_silent"></a>
@@ -68,6 +70,6 @@ Required:
 
 Required:
 
-- `test_destination_type` (String) must be one of [SILENT]
+- `test_destination_type` (String) must be one of ["SILENT"]
 
 

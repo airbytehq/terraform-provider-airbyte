@@ -65,7 +65,7 @@ func (r *SourceSendinblueResource) Schema(ctx context.Context, req resource.Sche
 								"sendinblue",
 							),
 						},
-						Description: `must be one of [sendinblue]`,
+						Description: `must be one of ["sendinblue"]`,
 					},
 				},
 			},

@@ -70,7 +70,7 @@ func (r *SourcePosthogResource) Schema(ctx context.Context, req resource.SchemaR
 								"posthog",
 							),
 						},
-						Description: `must be one of [posthog]`,
+						Description: `must be one of ["posthog"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

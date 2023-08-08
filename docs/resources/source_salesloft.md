@@ -16,14 +16,17 @@ SourceSalesloft Resource
 resource "airbyte_source_salesloft" "my_source_salesloft" {
   configuration = {
     credentials = {
-      api_key   = "...my_api_key..."
-      auth_type = "api_key"
+      source_salesloft_credentials_authenticate_via_api_key = {
+        api_key   = "...my_api_key..."
+        auth_type = "api_key"
+      }
     }
     source_type = "salesloft"
     start_date  = "2020-11-16T00:00:00Z"
   }
-  name         = "Mrs. Marilyn Dicki"
-  workspace_id = "edc046bc-5163-4bbc-a492-27c42c22c553"
+  name         = "Bethany Hansen"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "50495c5d-bb3c-457c-9e49-81e8aa257ddc"
 }
 ```
 
@@ -51,7 +54,7 @@ resource "airbyte_source_salesloft" "my_source_salesloft" {
 Required:
 
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `source_type` (String) must be one of [salesloft]
+- `source_type` (String) must be one of ["salesloft"]
 - `start_date` (String) The date from which you'd like to replicate data for Salesloft API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 
 <a id="nestedatt--configuration--credentials"></a>
@@ -70,7 +73,7 @@ Optional:
 Required:
 
 - `api_key` (String) API Key for making authenticated requests. More instruction on how to find this value in our <a href="https://docs.airbyte.com/integrations/sources/salesloft#setup-guide">docs</a>
-- `auth_type` (String) must be one of [api_key]
+- `auth_type` (String) must be one of ["api_key"]
 
 
 <a id="nestedatt--configuration--credentials--source_salesloft_credentials_authenticate_via_o_auth"></a>
@@ -79,7 +82,7 @@ Required:
 Required:
 
 - `access_token` (String) Access Token for making authenticated requests.
-- `auth_type` (String) must be one of [oauth2.0]
+- `auth_type` (String) must be one of ["oauth2.0"]
 - `client_id` (String) The Client ID of your Salesloft developer application.
 - `client_secret` (String) The Client Secret of your Salesloft developer application.
 - `refresh_token` (String) The token for obtaining a new access token.
@@ -92,7 +95,7 @@ Required:
 Required:
 
 - `api_key` (String) API Key for making authenticated requests. More instruction on how to find this value in our <a href="https://docs.airbyte.com/integrations/sources/salesloft#setup-guide">docs</a>
-- `auth_type` (String) must be one of [api_key]
+- `auth_type` (String) must be one of ["api_key"]
 
 
 <a id="nestedatt--configuration--credentials--source_salesloft_update_credentials_authenticate_via_o_auth"></a>
@@ -101,7 +104,7 @@ Required:
 Required:
 
 - `access_token` (String) Access Token for making authenticated requests.
-- `auth_type` (String) must be one of [oauth2.0]
+- `auth_type` (String) must be one of ["oauth2.0"]
 - `client_id` (String) The Client ID of your Salesloft developer application.
 - `client_secret` (String) The Client Secret of your Salesloft developer application.
 - `refresh_token` (String) The token for obtaining a new access token.

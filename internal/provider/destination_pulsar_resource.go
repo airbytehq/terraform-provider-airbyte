@@ -84,7 +84,7 @@ func (r *DestinationPulsarResource) Schema(ctx context.Context, req resource.Sch
 								"SNAPPY",
 							),
 						},
-						MarkdownDescription: `must be one of [NONE, LZ4, ZLIB, ZSTD, SNAPPY]` + "\n" +
+						MarkdownDescription: `must be one of ["NONE", "LZ4", "ZLIB", "ZSTD", "SNAPPY"]` + "\n" +
 							`Compression type for the producer.`,
 					},
 					"destination_type": schema.StringAttribute{
@@ -94,7 +94,7 @@ func (r *DestinationPulsarResource) Schema(ctx context.Context, req resource.Sch
 								"pulsar",
 							),
 						},
-						Description: `must be one of [pulsar]`,
+						Description: `must be one of ["pulsar"]`,
 					},
 					"max_pending_messages": schema.Int64Attribute{
 						Required:    true,
@@ -140,7 +140,7 @@ func (r *DestinationPulsarResource) Schema(ctx context.Context, req resource.Sch
 								"non-persistent",
 							),
 						},
-						MarkdownDescription: `must be one of [persistent, non-persistent]` + "\n" +
+						MarkdownDescription: `must be one of ["persistent", "non-persistent"]` + "\n" +
 							`It identifies type of topic. Pulsar supports two kind of topics: persistent and non-persistent. In persistent topic, all messages are durably persisted on disk (that means on multiple disks unless the broker is standalone), whereas non-persistent topic does not persist message into storage disk.`,
 					},
 					"use_tls": schema.BoolAttribute{

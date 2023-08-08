@@ -71,7 +71,7 @@ func (r *SourceSftpBulkResource) Schema(ctx context.Context, req resource.Schema
 								"json",
 							),
 						},
-						MarkdownDescription: `must be one of [csv, json]` + "\n" +
+						MarkdownDescription: `must be one of ["csv", "json"]` + "\n" +
 							`The file type you want to sync. Currently only 'csv' and 'json' files are supported.`,
 					},
 					"folder_path": schema.StringAttribute{
@@ -105,7 +105,7 @@ func (r *SourceSftpBulkResource) Schema(ctx context.Context, req resource.Schema
 								"sftp-bulk",
 							),
 						},
-						Description: `must be one of [sftp-bulk]`,
+						Description: `must be one of ["sftp-bulk"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

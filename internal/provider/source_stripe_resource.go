@@ -78,7 +78,7 @@ func (r *SourceStripeResource) Schema(ctx context.Context, req resource.SchemaRe
 								"stripe",
 							),
 						},
-						Description: `must be one of [stripe]`,
+						Description: `must be one of ["stripe"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

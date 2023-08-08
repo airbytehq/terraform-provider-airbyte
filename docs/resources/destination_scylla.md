@@ -15,16 +15,16 @@ DestinationScylla Resource
 ```terraform
 resource "airbyte_destination_scylla" "my_destination_scylla" {
   configuration = {
-    address          = "520 Stark Corners"
+    address          = "61561 Marques Trafficway"
     destination_type = "scylla"
     keyspace         = "...my_keyspace..."
     password         = "...my_password..."
-    port             = 4
-    replication      = 1
-    username         = "Daron_Beahan"
+    port             = 10
+    replication      = 7
+    username         = "Leola50"
   }
-  name         = "John Monahan"
-  workspace_id = "921aefb9-f58c-44d8-ae68-e4be056013f5"
+  name         = "Oscar Smith"
+  workspace_id = "e68e4be0-5601-43f5-9da7-57a59ecfef66"
 }
 ```
 
@@ -48,7 +48,7 @@ resource "airbyte_destination_scylla" "my_destination_scylla" {
 Required:
 
 - `address` (String) Address to connect to.
-- `destination_type` (String) must be one of [scylla]
+- `destination_type` (String) must be one of ["scylla"]
 - `keyspace` (String) Default Scylla keyspace to create data in.
 - `password` (String) Password associated with Scylla.
 - `port` (Number) Port of Scylla.

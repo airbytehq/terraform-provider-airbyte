@@ -16,12 +16,13 @@ SourceChartmogul Resource
 resource "airbyte_source_chartmogul" "my_source_chartmogul" {
   configuration = {
     api_key     = "...my_api_key..."
-    interval    = "week"
+    interval    = "month"
     source_type = "chartmogul"
     start_date  = "2017-01-25T00:00:00Z"
   }
-  name         = "Miss Carroll Rutherford"
-  workspace_id = "600dec00-1ac8-402e-aec0-9ff8f0f816ff"
+  name         = "Louis Treutel V"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "ff8f0f81-6ff3-4477-813e-902c14125b09"
 }
 ```
 
@@ -49,9 +50,9 @@ resource "airbyte_source_chartmogul" "my_source_chartmogul" {
 Required:
 
 - `api_key` (String) Your Chartmogul API key. See <a href="https://help.chartmogul.com/hc/en-us/articles/4407796325906-Creating-and-Managing-API-keys#creating-an-api-key"> the docs </a> for info on how to obtain this.
-- `interval` (String) must be one of [day, week, month, quarter]
+- `interval` (String) must be one of ["day", "week", "month", "quarter"]
 Some APIs such as <a href="https://dev.chartmogul.com/reference/endpoint-overview-metrics-api">Metrics</a> require intervals to cluster data.
-- `source_type` (String) must be one of [chartmogul]
+- `source_type` (String) must be one of ["chartmogul"]
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. When feasible, any data before this date will not be replicated.
 
 

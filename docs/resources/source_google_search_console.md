@@ -16,11 +16,13 @@ SourceGoogleSearchConsole Resource
 resource "airbyte_source_google_search_console" "my_source_googlesearchconsole" {
   configuration = {
     authorization = {
-      access_token  = "...my_access_token..."
-      auth_type     = "Client"
-      client_id     = "...my_client_id..."
-      client_secret = "...my_client_secret..."
-      refresh_token = "...my_refresh_token..."
+      source_google_search_console_authentication_type_o_auth = {
+        access_token  = "...my_access_token..."
+        auth_type     = "Client"
+        client_id     = "...my_client_id..."
+        client_secret = "...my_client_secret..."
+        refresh_token = "...my_refresh_token..."
+      }
     }
     custom_reports = "...my_custom_reports..."
     data_state     = "final"
@@ -31,8 +33,9 @@ resource "airbyte_source_google_search_console" "my_source_googlesearchconsole" 
     source_type = "google-search-console"
     start_date  = "2021-01-01"
   }
-  name         = "Johanna Lueilwitz DVM"
-  workspace_id = "b1bd23fd-b14d-4b6b-a5a6-85998e22ae20"
+  name         = "Glen Larson"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "98e22ae2-0da1-46fc-ab27-1a289c57e854"
 }
 ```
 
@@ -61,13 +64,13 @@ Required:
 
 - `authorization` (Attributes) (see [below for nested schema](#nestedatt--configuration--authorization))
 - `site_urls` (List of String) The URLs of the website property attached to your GSC account. Read more <a href="https://support.google.com/webmasters/answer/34592?hl=en">here</a>.
-- `source_type` (String) must be one of [google-search-console]
+- `source_type` (String) must be one of ["google-search-console"]
 - `start_date` (String) UTC date in the format 2017-01-25. Any data before this date will not be replicated.
 
 Optional:
 
 - `custom_reports` (String) A JSON array describing the custom reports you want to sync from Google Search Console. See <a href="https://docs.airbyte.com/integrations/sources/google-search-console#step-2-set-up-the-google-search-console-connector-in-airbyte">the docs</a> for more information about the exact format you can use to fill out this field.
-- `data_state` (String) must be one of [final, all]
+- `data_state` (String) must be one of ["final", "all"]
 If "final" or if this parameter is omitted, the returned data will include only finalized data. Setting this parameter to "all" should not be used with Incremental Sync mode as it may cause data loss. If "all", data will include fresh data.
 - `end_date` (String) UTC date in the format 2017-01-25. Any data after this date will not be replicated. Must be greater or equal to the start date field.
 
@@ -86,7 +89,7 @@ Optional:
 
 Required:
 
-- `auth_type` (String) must be one of [Client]
+- `auth_type` (String) must be one of ["Client"]
 - `client_id` (String) The client ID of your Google Search Console developer application. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
 - `client_secret` (String) The client secret of your Google Search Console developer application. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
 - `refresh_token` (String) The token for obtaining a new access token. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
@@ -101,7 +104,7 @@ Optional:
 
 Required:
 
-- `auth_type` (String) must be one of [Service]
+- `auth_type` (String) must be one of ["Service"]
 - `email` (String) The email of the user which has permissions to access the Google Workspace Admin APIs.
 - `service_account_info` (String) The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys">here</a>.
 
@@ -111,7 +114,7 @@ Required:
 
 Required:
 
-- `auth_type` (String) must be one of [Client]
+- `auth_type` (String) must be one of ["Client"]
 - `client_id` (String) The client ID of your Google Search Console developer application. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
 - `client_secret` (String) The client secret of your Google Search Console developer application. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
 - `refresh_token` (String) The token for obtaining a new access token. Read more <a href="https://developers.google.com/webmaster-tools/v1/how-tos/authorizing">here</a>.
@@ -126,7 +129,7 @@ Optional:
 
 Required:
 
-- `auth_type` (String) must be one of [Service]
+- `auth_type` (String) must be one of ["Service"]
 - `email` (String) The email of the user which has permissions to access the Google Workspace Admin APIs.
 - `service_account_info` (String) The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys">here</a>.
 

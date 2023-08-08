@@ -77,7 +77,7 @@ func (r *SourceGoogleWebfontsResource) Schema(ctx context.Context, req resource.
 								"google-webfonts",
 							),
 						},
-						Description: `must be one of [google-webfonts]`,
+						Description: `must be one of ["google-webfonts"]`,
 					},
 				},
 			},

@@ -23,12 +23,14 @@ resource "airbyte_destination_azure_blob_storage" "my_destination_azureblobstora
     azure_blob_storage_spill_size           = 500
     destination_type                        = "azure-blob-storage"
     format = {
-      flattening  = "Root level flattening"
-      format_type = "CSV"
+      destination_azure_blob_storage_output_format_csv_comma_separated_values = {
+        flattening  = "Root level flattening"
+        format_type = "CSV"
+      }
     }
   }
-  name         = "Geneva Klein Jr."
-  workspace_id = "74f15471-b5e6-4e13-b99d-488e1e91e450"
+  name         = "Sophia Jerde I"
+  workspace_id = "b99d488e-1e91-4e45-8ad2-abd44269802d"
 }
 ```
 
@@ -53,7 +55,7 @@ Required:
 
 - `azure_blob_storage_account_key` (String) The Azure blob storage account key.
 - `azure_blob_storage_account_name` (String) The account's name of the Azure Blob Storage.
-- `destination_type` (String) must be one of [azure-blob-storage]
+- `destination_type` (String) must be one of ["azure-blob-storage"]
 - `format` (Attributes) Output data format (see [below for nested schema](#nestedatt--configuration--format))
 
 Optional:
@@ -78,9 +80,9 @@ Optional:
 
 Required:
 
-- `flattening` (String) must be one of [No flattening, Root level flattening]
+- `flattening` (String) must be one of ["No flattening", "Root level flattening"]
 Whether the input json data should be normalized (flattened) in the output CSV. Please refer to docs for details.
-- `format_type` (String) must be one of [CSV]
+- `format_type` (String) must be one of ["CSV"]
 
 
 <a id="nestedatt--configuration--format--destination_azure_blob_storage_output_format_json_lines_newline_delimited_json"></a>
@@ -88,7 +90,7 @@ Whether the input json data should be normalized (flattened) in the output CSV. 
 
 Required:
 
-- `format_type` (String) must be one of [JSONL]
+- `format_type` (String) must be one of ["JSONL"]
 
 
 <a id="nestedatt--configuration--format--destination_azure_blob_storage_update_output_format_csv_comma_separated_values"></a>
@@ -96,9 +98,9 @@ Required:
 
 Required:
 
-- `flattening` (String) must be one of [No flattening, Root level flattening]
+- `flattening` (String) must be one of ["No flattening", "Root level flattening"]
 Whether the input json data should be normalized (flattened) in the output CSV. Please refer to docs for details.
-- `format_type` (String) must be one of [CSV]
+- `format_type` (String) must be one of ["CSV"]
 
 
 <a id="nestedatt--configuration--format--destination_azure_blob_storage_update_output_format_json_lines_newline_delimited_json"></a>
@@ -106,6 +108,6 @@ Whether the input json data should be normalized (flattened) in the output CSV. 
 
 Required:
 
-- `format_type` (String) must be one of [JSONL]
+- `format_type` (String) must be one of ["JSONL"]
 
 

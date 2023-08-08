@@ -21,8 +21,9 @@ resource "airbyte_source_aws_cloudtrail" "my_source_awscloudtrail" {
     source_type     = "aws-cloudtrail"
     start_date      = "2021-01-01"
   }
-  name         = "Jacob Sawayn"
-  workspace_id = "c73b9da3-f2ce-4da7-a23f-2257411faf4b"
+  name         = "Leigh Denesik"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "2257411f-af4b-4754-8e47-2e802857a5b4"
 }
 ```
 
@@ -52,7 +53,7 @@ Required:
 - `aws_key_id` (String) AWS CloudTrail Access Key ID. See the <a href="https://docs.airbyte.com/integrations/sources/aws-cloudtrail">docs</a> for more information on how to obtain this key.
 - `aws_region_name` (String) The default AWS Region to use, for example, us-west-1 or us-west-2. When specifying a Region inline during client initialization, this property is named region_name.
 - `aws_secret_key` (String) AWS CloudTrail Access Key ID. See the <a href="https://docs.airbyte.com/integrations/sources/aws-cloudtrail">docs</a> for more information on how to obtain this key.
-- `source_type` (String) must be one of [aws-cloudtrail]
+- `source_type` (String) must be one of ["aws-cloudtrail"]
 - `start_date` (String) The date you would like to replicate data. Data in AWS CloudTrail is available for last 90 days only. Format: YYYY-MM-DD.
 
 

@@ -66,7 +66,7 @@ func (r *SourceIterableResource) Schema(ctx context.Context, req resource.Schema
 								"iterable",
 							),
 						},
-						Description: `must be one of [iterable]`,
+						Description: `must be one of ["iterable"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

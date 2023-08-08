@@ -22,12 +22,14 @@ resource "airbyte_destination_mariadb_columnstore" "my_destination_mariadbcolumn
     password         = "...my_password..."
     port             = 3306
     tunnel_method = {
-      tunnel_method = "NO_TUNNEL"
+      destination_mariadb_columnstore_ssh_tunnel_method_no_tunnel = {
+        tunnel_method = "NO_TUNNEL"
+      }
     }
-    username = "Loyce_Schoen"
+    username = "Delaney_Nader"
   }
-  name         = "Vernon Bergnaum"
-  workspace_id = "c413aa63-aae8-4d67-864d-bb675fd5e60b"
+  name         = "Nicolas Kassulke"
+  workspace_id = "64dbb675-fd5e-460b-b75e-d4f6fbee41f3"
 }
 ```
 
@@ -51,7 +53,7 @@ resource "airbyte_destination_mariadb_columnstore" "my_destination_mariadbcolumn
 Required:
 
 - `database` (String) Name of the database.
-- `destination_type` (String) must be one of [mariadb-columnstore]
+- `destination_type` (String) must be one of ["mariadb-columnstore"]
 - `host` (String) The Hostname of the database.
 - `port` (Number) The Port of the database.
 - `username` (String) The Username which is used to access the database.
@@ -79,7 +81,7 @@ Optional:
 
 Required:
 
-- `tunnel_method` (String) must be one of [NO_TUNNEL]
+- `tunnel_method` (String) must be one of ["NO_TUNNEL"]
 No ssh tunnel needed to connect to database
 
 
@@ -89,7 +91,7 @@ No ssh tunnel needed to connect to database
 Required:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of [SSH_PASSWORD_AUTH]
+- `tunnel_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
 Connect through a jump server tunnel host using username and password authentication
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
@@ -103,7 +105,7 @@ Required:
 
 - `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of [SSH_KEY_AUTH]
+- `tunnel_method` (String) must be one of ["SSH_KEY_AUTH"]
 Connect through a jump server tunnel host using username and ssh key
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host.
@@ -114,7 +116,7 @@ Connect through a jump server tunnel host using username and ssh key
 
 Required:
 
-- `tunnel_method` (String) must be one of [NO_TUNNEL]
+- `tunnel_method` (String) must be one of ["NO_TUNNEL"]
 No ssh tunnel needed to connect to database
 
 
@@ -124,7 +126,7 @@ No ssh tunnel needed to connect to database
 Required:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of [SSH_PASSWORD_AUTH]
+- `tunnel_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
 Connect through a jump server tunnel host using username and password authentication
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
@@ -138,7 +140,7 @@ Required:
 
 - `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of [SSH_KEY_AUTH]
+- `tunnel_method` (String) must be one of ["SSH_KEY_AUTH"]
 Connect through a jump server tunnel host using username and ssh key
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host.

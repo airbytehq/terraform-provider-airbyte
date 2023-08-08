@@ -16,25 +16,29 @@ DestinationSnowflake Resource
 resource "airbyte_destination_snowflake" "my_destination_snowflake" {
   configuration = {
     credentials = {
-      auth_type            = "Key Pair Authentication"
-      private_key          = "...my_private_key..."
-      private_key_password = "...my_private_key_password..."
+      destination_snowflake_authorization_method_key_pair_authentication = {
+        auth_type            = "Key Pair Authentication"
+        private_key          = "...my_private_key..."
+        private_key_password = "...my_private_key_password..."
+      }
     }
     database          = "AIRBYTE_DATABASE"
     destination_type  = "snowflake"
     file_buffer_count = 10
-    host              = "accountname.snowflakecomputing.com"
+    host              = "accountname.us-east-2.aws.snowflakecomputing.com"
     jdbc_url_params   = "...my_jdbc_url_params..."
     loading_method = {
-      method = "Internal Staging"
+      destination_snowflake_data_staging_method_recommended_internal_staging = {
+        method = "Internal Staging"
+      }
     }
     role      = "AIRBYTE_ROLE"
     schema    = "AIRBYTE_SCHEMA"
     username  = "AIRBYTE_USER"
     warehouse = "AIRBYTE_WAREHOUSE"
   }
-  name         = "Juan Wolf"
-  workspace_id = "4310661e-9634-49e1-8f9e-06e3a437000a"
+  name         = "Miss Katrina Weber"
+  workspace_id = "9e06e3a4-3700-40ae-ab6b-c9b8f759eac5"
 }
 ```
 
@@ -58,7 +62,7 @@ resource "airbyte_destination_snowflake" "my_destination_snowflake" {
 Required:
 
 - `database` (String) Enter the name of the <a href="https://docs.snowflake.com/en/sql-reference/ddl-database.html#database-schema-share-ddl">database</a> you want to sync data into
-- `destination_type` (String) must be one of [snowflake]
+- `destination_type` (String) must be one of ["snowflake"]
 - `host` (String) Enter your Snowflake account's <a href="https://docs.snowflake.com/en/user-guide/admin-account-identifier.html#using-an-account-locator-as-an-identifier">locator</a> (in the format <account_locator>.<region>.<cloud>.snowflakecomputing.com)
 - `role` (String) Enter the <a href="https://docs.snowflake.com/en/user-guide/security-access-control-overview.html#roles">role</a> that you want to use to access Snowflake
 - `schema` (String) Enter the name of the default <a href="https://docs.snowflake.com/en/sql-reference/ddl-database.html#database-schema-share-ddl">schema</a>
@@ -93,7 +97,7 @@ Required:
 
 Optional:
 
-- `auth_type` (String) must be one of [Key Pair Authentication]
+- `auth_type` (String) must be one of ["Key Pair Authentication"]
 - `private_key_password` (String) Passphrase for private key
 
 
@@ -107,7 +111,7 @@ Required:
 
 Optional:
 
-- `auth_type` (String) must be one of [OAuth2.0]
+- `auth_type` (String) must be one of ["OAuth2.0"]
 - `client_id` (String) Enter your application's Client ID
 - `client_secret` (String) Enter your application's Client secret
 
@@ -121,7 +125,7 @@ Required:
 
 Optional:
 
-- `auth_type` (String) must be one of [Username and Password]
+- `auth_type` (String) must be one of ["Username and Password"]
 
 
 <a id="nestedatt--configuration--credentials--destination_snowflake_update_authorization_method_key_pair_authentication"></a>
@@ -133,7 +137,7 @@ Required:
 
 Optional:
 
-- `auth_type` (String) must be one of [Key Pair Authentication]
+- `auth_type` (String) must be one of ["Key Pair Authentication"]
 - `private_key_password` (String) Passphrase for private key
 
 
@@ -147,7 +151,7 @@ Required:
 
 Optional:
 
-- `auth_type` (String) must be one of [OAuth2.0]
+- `auth_type` (String) must be one of ["OAuth2.0"]
 - `client_id` (String) Enter your application's Client ID
 - `client_secret` (String) Enter your application's Client secret
 
@@ -161,7 +165,7 @@ Required:
 
 Optional:
 
-- `auth_type` (String) must be one of [Username and Password]
+- `auth_type` (String) must be one of ["Username and Password"]
 
 
 
@@ -185,7 +189,7 @@ Optional:
 Required:
 
 - `access_key_id` (String) Enter your <a href="https://docs.aws.amazon.com/powershell/latest/userguide/pstools-appendix-sign-up.html">AWS access key ID</a>. Airbyte requires Read and Write permissions on your S3 bucket
-- `method` (String) must be one of [S3 Staging]
+- `method` (String) must be one of ["S3 Staging"]
 - `s3_bucket_name` (String) Enter your S3 bucket name
 - `secret_access_key` (String) Enter your <a href="https://docs.aws.amazon.com/powershell/latest/userguide/pstools-appendix-sign-up.html">AWS secret access key</a>
 
@@ -194,7 +198,7 @@ Optional:
 - `encryption` (Attributes) Choose a data encryption method for the staging data (see [below for nested schema](#nestedatt--configuration--loading_method--destination_snowflake_data_staging_method_aws_s3_staging--encryption))
 - `file_name_pattern` (String) The pattern allows you to set the file-name format for the S3 staging file(s)
 - `purge_staging_data` (Boolean) Toggle to delete staging files from the S3 bucket after a successful sync
-- `s3_bucket_region` (String) must be one of [, us-east-1, us-east-2, us-west-1, us-west-2, af-south-1, ap-east-1, ap-south-1, ap-northeast-1, ap-northeast-2, ap-northeast-3, ap-southeast-1, ap-southeast-2, ca-central-1, cn-north-1, cn-northwest-1, eu-central-1, eu-west-1, eu-west-2, eu-west-3, eu-south-1, eu-north-1, sa-east-1, me-south-1]
+- `s3_bucket_region` (String) must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-west-1", "eu-west-2", "eu-west-3", "eu-south-1", "eu-north-1", "sa-east-1", "me-south-1"]
 Enter the region where your S3 bucket resides
 
 <a id="nestedatt--configuration--loading_method--destination_snowflake_data_staging_method_aws_s3_staging--encryption"></a>
@@ -210,7 +214,7 @@ Optional:
 
 Required:
 
-- `encryption_type` (String) must be one of [aes_cbc_envelope]
+- `encryption_type` (String) must be one of ["aes_cbc_envelope"]
 
 Optional:
 
@@ -222,7 +226,7 @@ Optional:
 
 Required:
 
-- `encryption_type` (String) must be one of [none]
+- `encryption_type` (String) must be one of ["none"]
 
 
 
@@ -234,7 +238,7 @@ Required:
 
 - `bucket_name` (String) Enter the <a href="https://cloud.google.com/storage/docs/creating-buckets">Cloud Storage bucket name</a>
 - `credentials_json` (String) Enter your <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">Google Cloud service account key</a> in the JSON format with read/write access to your Cloud Storage staging bucket
-- `method` (String) must be one of [GCS Staging]
+- `method` (String) must be one of ["GCS Staging"]
 - `project_id` (String) Enter the <a href="https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects">Google Cloud project ID</a>
 
 
@@ -243,7 +247,7 @@ Required:
 
 Required:
 
-- `method` (String) must be one of [Internal Staging]
+- `method` (String) must be one of ["Internal Staging"]
 
 
 <a id="nestedatt--configuration--loading_method--destination_snowflake_data_staging_method_select_another_option"></a>
@@ -251,7 +255,7 @@ Required:
 
 Required:
 
-- `method` (String) must be one of [Standard]
+- `method` (String) must be one of ["Standard"]
 
 
 <a id="nestedatt--configuration--loading_method--destination_snowflake_update_data_staging_method_aws_s3_staging"></a>
@@ -260,7 +264,7 @@ Required:
 Required:
 
 - `access_key_id` (String) Enter your <a href="https://docs.aws.amazon.com/powershell/latest/userguide/pstools-appendix-sign-up.html">AWS access key ID</a>. Airbyte requires Read and Write permissions on your S3 bucket
-- `method` (String) must be one of [S3 Staging]
+- `method` (String) must be one of ["S3 Staging"]
 - `s3_bucket_name` (String) Enter your S3 bucket name
 - `secret_access_key` (String) Enter your <a href="https://docs.aws.amazon.com/powershell/latest/userguide/pstools-appendix-sign-up.html">AWS secret access key</a>
 
@@ -269,7 +273,7 @@ Optional:
 - `encryption` (Attributes) Choose a data encryption method for the staging data (see [below for nested schema](#nestedatt--configuration--loading_method--destination_snowflake_update_data_staging_method_aws_s3_staging--encryption))
 - `file_name_pattern` (String) The pattern allows you to set the file-name format for the S3 staging file(s)
 - `purge_staging_data` (Boolean) Toggle to delete staging files from the S3 bucket after a successful sync
-- `s3_bucket_region` (String) must be one of [, us-east-1, us-east-2, us-west-1, us-west-2, af-south-1, ap-east-1, ap-south-1, ap-northeast-1, ap-northeast-2, ap-northeast-3, ap-southeast-1, ap-southeast-2, ca-central-1, cn-north-1, cn-northwest-1, eu-central-1, eu-west-1, eu-west-2, eu-west-3, eu-south-1, eu-north-1, sa-east-1, me-south-1]
+- `s3_bucket_region` (String) must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-west-1", "eu-west-2", "eu-west-3", "eu-south-1", "eu-north-1", "sa-east-1", "me-south-1"]
 Enter the region where your S3 bucket resides
 
 <a id="nestedatt--configuration--loading_method--destination_snowflake_update_data_staging_method_aws_s3_staging--encryption"></a>
@@ -285,7 +289,7 @@ Optional:
 
 Required:
 
-- `encryption_type` (String) must be one of [aes_cbc_envelope]
+- `encryption_type` (String) must be one of ["aes_cbc_envelope"]
 
 Optional:
 
@@ -297,7 +301,7 @@ Optional:
 
 Required:
 
-- `encryption_type` (String) must be one of [none]
+- `encryption_type` (String) must be one of ["none"]
 
 
 
@@ -309,7 +313,7 @@ Required:
 
 - `bucket_name` (String) Enter the <a href="https://cloud.google.com/storage/docs/creating-buckets">Cloud Storage bucket name</a>
 - `credentials_json` (String) Enter your <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">Google Cloud service account key</a> in the JSON format with read/write access to your Cloud Storage staging bucket
-- `method` (String) must be one of [GCS Staging]
+- `method` (String) must be one of ["GCS Staging"]
 - `project_id` (String) Enter the <a href="https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects">Google Cloud project ID</a>
 
 
@@ -318,7 +322,7 @@ Required:
 
 Required:
 
-- `method` (String) must be one of [Internal Staging]
+- `method` (String) must be one of ["Internal Staging"]
 
 
 <a id="nestedatt--configuration--loading_method--destination_snowflake_update_data_staging_method_select_another_option"></a>
@@ -326,6 +330,6 @@ Required:
 
 Required:
 
-- `method` (String) must be one of [Standard]
+- `method` (String) must be one of ["Standard"]
 
 

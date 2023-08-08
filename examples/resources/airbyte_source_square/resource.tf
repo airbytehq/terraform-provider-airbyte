@@ -1,14 +1,17 @@
 resource "airbyte_source_square" "my_source_square" {
   configuration = {
     credentials = {
-      api_key   = "...my_api_key..."
-      auth_type = "API Key"
+      source_square_authentication_api_key = {
+        api_key   = "...my_api_key..."
+        auth_type = "API Key"
+      }
     }
     include_deleted_objects = true
     is_sandbox              = false
     source_type             = "square"
-    start_date              = "2022-03-30"
+    start_date              = "2022-10-16"
   }
-  name         = "Erma Hagenes"
-  workspace_id = "d2daa784-aba3-4d23-8edf-73811a115382"
+  name         = "Mrs. Maggie Breitenberg"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "82bd7ed5-6507-4621-858f-4d7396564c20"
 }

@@ -85,7 +85,7 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 								"azure-blob-storage",
 							),
 						},
-						Description: `must be one of [azure-blob-storage]`,
+						Description: `must be one of ["azure-blob-storage"]`,
 					},
 					"format": schema.SingleNestedAttribute{
 						Required: true,
@@ -101,7 +101,7 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 												"Root level flattening",
 											),
 										},
-										MarkdownDescription: `must be one of [No flattening, Root level flattening]` + "\n" +
+										MarkdownDescription: `must be one of ["No flattening", "Root level flattening"]` + "\n" +
 											`Whether the input json data should be normalized (flattened) in the output CSV. Please refer to docs for details.`,
 									},
 									"format_type": schema.StringAttribute{
@@ -111,7 +111,7 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 												"CSV",
 											),
 										},
-										Description: `must be one of [CSV]`,
+										Description: `must be one of ["CSV"]`,
 									},
 								},
 								Description: `Output data format`,
@@ -126,7 +126,7 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 												"JSONL",
 											),
 										},
-										Description: `must be one of [JSONL]`,
+										Description: `must be one of ["JSONL"]`,
 									},
 								},
 								Description: `Output data format`,
@@ -142,7 +142,7 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 												"Root level flattening",
 											),
 										},
-										MarkdownDescription: `must be one of [No flattening, Root level flattening]` + "\n" +
+										MarkdownDescription: `must be one of ["No flattening", "Root level flattening"]` + "\n" +
 											`Whether the input json data should be normalized (flattened) in the output CSV. Please refer to docs for details.`,
 									},
 									"format_type": schema.StringAttribute{
@@ -152,7 +152,7 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 												"CSV",
 											),
 										},
-										Description: `must be one of [CSV]`,
+										Description: `must be one of ["CSV"]`,
 									},
 								},
 								Description: `Output data format`,
@@ -167,7 +167,7 @@ func (r *DestinationAzureBlobStorageResource) Schema(ctx context.Context, req re
 												"JSONL",
 											),
 										},
-										Description: `must be one of [JSONL]`,
+										Description: `must be one of ["JSONL"]`,
 									},
 								},
 								Description: `Output data format`,

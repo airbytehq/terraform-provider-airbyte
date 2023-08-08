@@ -70,7 +70,7 @@ func (r *SourceZuoraResource) Schema(ctx context.Context, req resource.SchemaReq
 								"Unlimited",
 							),
 						},
-						MarkdownDescription: `must be one of [Live, Unlimited]` + "\n" +
+						MarkdownDescription: `must be one of ["Live", "Unlimited"]` + "\n" +
 							`Choose between ` + "`" + `Live` + "`" + `, or ` + "`" + `Unlimited` + "`" + ` - the optimized, replicated database at 12 hours freshness for high volume extraction <a href="https://knowledgecenter.zuora.com/Central_Platform/Query/Data_Query/A_Overview_of_Data_Query#Query_Processing_Limitations">Link</a>`,
 					},
 					"source_type": schema.StringAttribute{
@@ -80,7 +80,7 @@ func (r *SourceZuoraResource) Schema(ctx context.Context, req resource.SchemaReq
 								"zuora",
 							),
 						},
-						Description: `must be one of [zuora]`,
+						Description: `must be one of ["zuora"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required:    true,
@@ -101,7 +101,7 @@ func (r *SourceZuoraResource) Schema(ctx context.Context, req resource.SchemaReq
 								"EU Central Sandbox",
 							),
 						},
-						MarkdownDescription: `must be one of [US Production, US Cloud Production, US API Sandbox, US Cloud API Sandbox, US Central Sandbox, US Performance Test, EU Production, EU API Sandbox, EU Central Sandbox]` + "\n" +
+						MarkdownDescription: `must be one of ["US Production", "US Cloud Production", "US API Sandbox", "US Cloud API Sandbox", "US Central Sandbox", "US Performance Test", "EU Production", "EU API Sandbox", "EU Central Sandbox"]` + "\n" +
 							`Please choose the right endpoint where your Tenant is located. More info by this <a href="https://www.zuora.com/developer/api-reference/#section/Introduction/Access-to-the-API">Link</a>`,
 					},
 					"window_in_days": schema.StringAttribute{

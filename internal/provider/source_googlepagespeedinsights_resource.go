@@ -70,7 +70,7 @@ func (r *SourceGooglePagespeedInsightsResource) Schema(ctx context.Context, req 
 								"google-pagespeed-insights",
 							),
 						},
-						Description: `must be one of [google-pagespeed-insights]`,
+						Description: `must be one of ["google-pagespeed-insights"]`,
 					},
 					"strategies": schema.ListAttribute{
 						Required:    true,

@@ -75,7 +75,7 @@ func (r *SourceZohoCrmResource) Schema(ctx context.Context, req resource.SchemaR
 								"JP",
 							),
 						},
-						MarkdownDescription: `must be one of [US, AU, EU, IN, CN, JP]` + "\n" +
+						MarkdownDescription: `must be one of ["US", "AU", "EU", "IN", "CN", "JP"]` + "\n" +
 							`Please choose the region of your Data Center location. More info by this <a href="https://www.zoho.com/crm/developer/docs/api/v2/multi-dc.html">Link</a>`,
 					},
 					"edition": schema.StringAttribute{
@@ -89,7 +89,7 @@ func (r *SourceZohoCrmResource) Schema(ctx context.Context, req resource.SchemaR
 								"Ultimate",
 							),
 						},
-						MarkdownDescription: `must be one of [Free, Standard, Professional, Enterprise, Ultimate]` + "\n" +
+						MarkdownDescription: `must be one of ["Free", "Standard", "Professional", "Enterprise", "Ultimate"]` + "\n" +
 							`Choose your Edition of Zoho CRM to determine API Concurrency Limits`,
 					},
 					"environment": schema.StringAttribute{
@@ -101,7 +101,7 @@ func (r *SourceZohoCrmResource) Schema(ctx context.Context, req resource.SchemaR
 								"Sandbox",
 							),
 						},
-						MarkdownDescription: `must be one of [Production, Developer, Sandbox]` + "\n" +
+						MarkdownDescription: `must be one of ["Production", "Developer", "Sandbox"]` + "\n" +
 							`Please choose the environment`,
 					},
 					"refresh_token": schema.StringAttribute{
@@ -115,7 +115,7 @@ func (r *SourceZohoCrmResource) Schema(ctx context.Context, req resource.SchemaR
 								"zoho-crm",
 							),
 						},
-						Description: `must be one of [zoho-crm]`,
+						Description: `must be one of ["zoho-crm"]`,
 					},
 					"start_datetime": schema.StringAttribute{
 						Optional: true,

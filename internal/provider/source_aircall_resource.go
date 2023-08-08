@@ -70,7 +70,7 @@ func (r *SourceAircallResource) Schema(ctx context.Context, req resource.SchemaR
 								"aircall",
 							),
 						},
-						Description: `must be one of [aircall]`,
+						Description: `must be one of ["aircall"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

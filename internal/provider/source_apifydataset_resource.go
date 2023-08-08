@@ -69,7 +69,7 @@ func (r *SourceApifyDatasetResource) Schema(ctx context.Context, req resource.Sc
 								"apify-dataset",
 							),
 						},
-						Description: `must be one of [apify-dataset]`,
+						Description: `must be one of ["apify-dataset"]`,
 					},
 				},
 			},

@@ -4,6 +4,6 @@ resource "airbyte_destination_convex" "my_destination_convex" {
     deployment_url   = "https://cluttered-owl-337.convex.cloud"
     destination_type = "convex"
   }
-  name         = "Alejandro Purdy DDS"
-  workspace_id = "28909b3f-e49a-48d9-8bf4-8633323f9b77"
+  name         = "Casey Stracke"
+  workspace_id = "bf486333-23f9-4b77-b3a4-100674ebf692"
 }

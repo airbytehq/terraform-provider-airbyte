@@ -74,7 +74,7 @@ func (r *SourceFreshcallerResource) Schema(ctx context.Context, req resource.Sch
 								"freshcaller",
 							),
 						},
-						Description: `must be one of [freshcaller]`,
+						Description: `must be one of ["freshcaller"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

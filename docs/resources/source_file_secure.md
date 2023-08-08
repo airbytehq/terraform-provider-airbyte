@@ -16,19 +16,22 @@ SourceFileSecure Resource
 resource "airbyte_source_file_secure" "my_source_filesecure" {
   configuration = {
     dataset_name = "...my_dataset_name..."
-    format       = "parquet"
+    format       = "yaml"
     provider = {
-      sas_token       = "...my_sas_token..."
-      shared_key      = "...my_shared_key..."
-      storage         = "AzBlob"
-      storage_account = "...my_storage_account..."
+      source_file_secure_storage_provider_az_blob_azure_blob_storage = {
+        sas_token       = "...my_sas_token..."
+        shared_key      = "...my_shared_key..."
+        storage         = "AzBlob"
+        storage_account = "...my_storage_account..."
+      }
     }
-    reader_options = "{\"sep\": \"\t\", \"header\": 0, \"names\": [\"column1\", \"column2\"] }"
+    reader_options = "{}"
     source_type    = "file-secure"
-    url            = "https://storage.googleapis.com/covid19-open-data/v2/latest/epidemiology.csv"
+    url            = "gs://my-google-bucket/data.csv"
   }
-  name         = "Lucy Lind"
-  workspace_id = "77c1ffc7-1dca-4163-b2a3-c80a97ff334c"
+  name         = "Miss Sheri Legros"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "7ff334cd-df85-47a9-a618-76c6ab21d29d"
 }
 ```
 
@@ -56,10 +59,10 @@ resource "airbyte_source_file_secure" "my_source_filesecure" {
 Required:
 
 - `dataset_name` (String) The Name of the final table to replicate this file into (should include letters, numbers dash and underscores only).
-- `format` (String) must be one of [csv, json, jsonl, excel, excel_binary, feather, parquet, yaml]
+- `format` (String) must be one of ["csv", "json", "jsonl", "excel", "excel_binary", "feather", "parquet", "yaml"]
 The Format of the file which should be replicated (Warning: some formats may be experimental, please refer to the docs).
 - `provider` (Attributes) The storage Provider or Location of the file(s) which should be replicated. (see [below for nested schema](#nestedatt--configuration--provider))
-- `source_type` (String) must be one of [file-secure]
+- `source_type` (String) must be one of ["file-secure"]
 - `url` (String) The URL path to access the file which should be replicated.
 
 Optional:
@@ -91,7 +94,7 @@ Optional:
 
 Required:
 
-- `storage` (String) must be one of [AzBlob]
+- `storage` (String) must be one of ["AzBlob"]
 - `storage_account` (String) The globally unique name of the storage account that the desired blob sits within. See <a href="https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview" target="_blank">here</a> for more details.
 
 Optional:
@@ -105,7 +108,7 @@ Optional:
 
 Required:
 
-- `storage` (String) must be one of [GCS]
+- `storage` (String) must be one of ["GCS"]
 
 Optional:
 
@@ -117,7 +120,7 @@ Optional:
 
 Required:
 
-- `storage` (String) must be one of [HTTPS]
+- `storage` (String) must be one of ["HTTPS"]
 
 Optional:
 
@@ -129,7 +132,7 @@ Optional:
 
 Required:
 
-- `storage` (String) must be one of [S3]
+- `storage` (String) must be one of ["S3"]
 
 Optional:
 
@@ -143,7 +146,7 @@ Optional:
 Required:
 
 - `host` (String)
-- `storage` (String) must be one of [SCP]
+- `storage` (String) must be one of ["SCP"]
 - `user` (String)
 
 Optional:
@@ -158,7 +161,7 @@ Optional:
 Required:
 
 - `host` (String)
-- `storage` (String) must be one of [SFTP]
+- `storage` (String) must be one of ["SFTP"]
 - `user` (String)
 
 Optional:
@@ -173,7 +176,7 @@ Optional:
 Required:
 
 - `host` (String)
-- `storage` (String) must be one of [SSH]
+- `storage` (String) must be one of ["SSH"]
 - `user` (String)
 
 Optional:
@@ -187,7 +190,7 @@ Optional:
 
 Required:
 
-- `storage` (String) must be one of [AzBlob]
+- `storage` (String) must be one of ["AzBlob"]
 - `storage_account` (String) The globally unique name of the storage account that the desired blob sits within. See <a href="https://docs.microsoft.com/en-us/azure/storage/common/storage-account-overview" target="_blank">here</a> for more details.
 
 Optional:
@@ -201,7 +204,7 @@ Optional:
 
 Required:
 
-- `storage` (String) must be one of [GCS]
+- `storage` (String) must be one of ["GCS"]
 
 Optional:
 
@@ -213,7 +216,7 @@ Optional:
 
 Required:
 
-- `storage` (String) must be one of [HTTPS]
+- `storage` (String) must be one of ["HTTPS"]
 
 Optional:
 
@@ -225,7 +228,7 @@ Optional:
 
 Required:
 
-- `storage` (String) must be one of [S3]
+- `storage` (String) must be one of ["S3"]
 
 Optional:
 
@@ -239,7 +242,7 @@ Optional:
 Required:
 
 - `host` (String)
-- `storage` (String) must be one of [SCP]
+- `storage` (String) must be one of ["SCP"]
 - `user` (String)
 
 Optional:
@@ -254,7 +257,7 @@ Optional:
 Required:
 
 - `host` (String)
-- `storage` (String) must be one of [SFTP]
+- `storage` (String) must be one of ["SFTP"]
 - `user` (String)
 
 Optional:
@@ -269,7 +272,7 @@ Optional:
 Required:
 
 - `host` (String)
-- `storage` (String) must be one of [SSH]
+- `storage` (String) must be one of ["SSH"]
 - `user` (String)
 
 Optional:

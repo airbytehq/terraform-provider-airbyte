@@ -65,7 +65,7 @@ func (r *SourceGetlagoResource) Schema(ctx context.Context, req resource.SchemaR
 								"getlago",
 							),
 						},
-						Description: `must be one of [getlago]`,
+						Description: `must be one of ["getlago"]`,
 					},
 				},
 			},

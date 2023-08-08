@@ -66,7 +66,7 @@ func (r *SourceKlaviyoResource) Schema(ctx context.Context, req resource.SchemaR
 								"klaviyo",
 							),
 						},
-						Description: `must be one of [klaviyo]`,
+						Description: `must be one of ["klaviyo"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

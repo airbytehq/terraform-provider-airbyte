@@ -91,7 +91,7 @@ func (r *SourceJiraResource) Schema(ctx context.Context, req resource.SchemaRequ
 								"jira",
 							),
 						},
-						Description: `must be one of [jira]`,
+						Description: `must be one of ["jira"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Optional: true,

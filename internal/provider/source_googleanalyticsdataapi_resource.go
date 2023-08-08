@@ -72,7 +72,7 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 												"Client",
 											),
 										},
-										Description: `must be one of [Client]`,
+										Description: `must be one of ["Client"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -99,7 +99,7 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 												"Service",
 											),
 										},
-										Description: `must be one of [Service]`,
+										Description: `must be one of ["Service"]`,
 									},
 									"credentials_json": schema.StringAttribute{
 										Required:    true,
@@ -122,7 +122,7 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 												"Client",
 											),
 										},
-										Description: `must be one of [Client]`,
+										Description: `must be one of ["Client"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -149,7 +149,7 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 												"Service",
 											),
 										},
-										Description: `must be one of [Service]`,
+										Description: `must be one of ["Service"]`,
 									},
 									"credentials_json": schema.StringAttribute{
 										Required:    true,
@@ -186,7 +186,7 @@ func (r *SourceGoogleAnalyticsDataAPIResource) Schema(ctx context.Context, req r
 								"google-analytics-data-api",
 							),
 						},
-						Description: `must be one of [google-analytics-data-api]`,
+						Description: `must be one of ["google-analytics-data-api"]`,
 					},
 					"window_in_days": schema.Int64Attribute{
 						Optional:    true,

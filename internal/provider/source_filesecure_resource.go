@@ -73,7 +73,7 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 								"yaml",
 							),
 						},
-						MarkdownDescription: `must be one of [csv, json, jsonl, excel, excel_binary, feather, parquet, yaml]` + "\n" +
+						MarkdownDescription: `must be one of ["csv", "json", "jsonl", "excel", "excel_binary", "feather", "parquet", "yaml"]` + "\n" +
 							`The Format of the file which should be replicated (Warning: some formats may be experimental, please refer to the docs).`,
 					},
 					"provider": schema.SingleNestedAttribute{
@@ -97,7 +97,7 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 												"AzBlob",
 											),
 										},
-										Description: `must be one of [AzBlob]`,
+										Description: `must be one of ["AzBlob"]`,
 									},
 									"storage_account": schema.StringAttribute{
 										Required:    true,
@@ -120,7 +120,7 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 												"GCS",
 											),
 										},
-										Description: `must be one of [GCS]`,
+										Description: `must be one of ["GCS"]`,
 									},
 								},
 								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
@@ -135,7 +135,7 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 												"HTTPS",
 											),
 										},
-										Description: `must be one of [HTTPS]`,
+										Description: `must be one of ["HTTPS"]`,
 									},
 									"user_agent": schema.BoolAttribute{
 										Optional:    true,
@@ -162,7 +162,7 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 												"S3",
 											),
 										},
-										Description: `must be one of [S3]`,
+										Description: `must be one of ["S3"]`,
 									},
 								},
 								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
@@ -186,7 +186,7 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 												"SCP",
 											),
 										},
-										Description: `must be one of [SCP]`,
+										Description: `must be one of ["SCP"]`,
 									},
 									"user": schema.StringAttribute{
 										Required: true,
@@ -213,7 +213,7 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 												"SFTP",
 											),
 										},
-										Description: `must be one of [SFTP]`,
+										Description: `must be one of ["SFTP"]`,
 									},
 									"user": schema.StringAttribute{
 										Required: true,
@@ -240,7 +240,7 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 												"SSH",
 											),
 										},
-										Description: `must be one of [SSH]`,
+										Description: `must be one of ["SSH"]`,
 									},
 									"user": schema.StringAttribute{
 										Required: true,
@@ -266,7 +266,7 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 												"AzBlob",
 											),
 										},
-										Description: `must be one of [AzBlob]`,
+										Description: `must be one of ["AzBlob"]`,
 									},
 									"storage_account": schema.StringAttribute{
 										Required:    true,
@@ -289,7 +289,7 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 												"GCS",
 											),
 										},
-										Description: `must be one of [GCS]`,
+										Description: `must be one of ["GCS"]`,
 									},
 								},
 								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
@@ -304,7 +304,7 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 												"HTTPS",
 											),
 										},
-										Description: `must be one of [HTTPS]`,
+										Description: `must be one of ["HTTPS"]`,
 									},
 									"user_agent": schema.BoolAttribute{
 										Optional:    true,
@@ -331,7 +331,7 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 												"S3",
 											),
 										},
-										Description: `must be one of [S3]`,
+										Description: `must be one of ["S3"]`,
 									},
 								},
 								Description: `The storage Provider or Location of the file(s) which should be replicated.`,
@@ -355,7 +355,7 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 												"SCP",
 											),
 										},
-										Description: `must be one of [SCP]`,
+										Description: `must be one of ["SCP"]`,
 									},
 									"user": schema.StringAttribute{
 										Required: true,
@@ -382,7 +382,7 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 												"SFTP",
 											),
 										},
-										Description: `must be one of [SFTP]`,
+										Description: `must be one of ["SFTP"]`,
 									},
 									"user": schema.StringAttribute{
 										Required: true,
@@ -409,7 +409,7 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 												"SSH",
 											),
 										},
-										Description: `must be one of [SSH]`,
+										Description: `must be one of ["SSH"]`,
 									},
 									"user": schema.StringAttribute{
 										Required: true,
@@ -434,7 +434,7 @@ func (r *SourceFileSecureResource) Schema(ctx context.Context, req resource.Sche
 								"file-secure",
 							),
 						},
-						Description: `must be one of [file-secure]`,
+						Description: `must be one of ["file-secure"]`,
 					},
 					"url": schema.StringAttribute{
 						Required:    true,

@@ -19,7 +19,7 @@ resource "airbyte_source_sftp_bulk" "my_source_sftpbulk" {
     file_pattern     = "log-([0-9]{4})([0-9]{2})([0-9]{2}) - This will filter files which  `log-yearmmdd`"
     file_type        = "csv"
     folder_path      = "/logs/2022"
-    host             = "192.0.2.1"
+    host             = "www.host.com"
     password         = "...my_password..."
     port             = 22
     private_key      = "...my_private_key..."
@@ -27,10 +27,11 @@ resource "airbyte_source_sftp_bulk" "my_source_sftpbulk" {
     source_type      = "sftp-bulk"
     start_date       = "2017-01-25T00:00:00Z"
     stream_name      = "ftp_contacts"
-    username         = "Hunter_Murazik"
+    username         = "Yasmine.Baumbach"
   }
-  name         = "Woodrow Hansen"
-  workspace_id = "13f3f658-752d-4b76-8c59-f0a56cebcada"
+  name         = "Nichole Treutel"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "ada29ca7-9181-4c95-a716-63c530b56651"
 }
 ```
 
@@ -60,7 +61,7 @@ Required:
 - `folder_path` (String) The directory to search files for sync
 - `host` (String) The server host address
 - `port` (Number) The server port
-- `source_type` (String) must be one of [sftp-bulk]
+- `source_type` (String) must be one of ["sftp-bulk"]
 - `start_date` (String) The date from which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 - `stream_name` (String) The name of the stream or table you want to create
 - `username` (String) The server user
@@ -69,7 +70,7 @@ Optional:
 
 - `file_most_recent` (Boolean) Sync only the most recent file for the configured folder path and file pattern
 - `file_pattern` (String) The regular expression to specify files for sync in a chosen Folder Path
-- `file_type` (String) must be one of [csv, json]
+- `file_type` (String) must be one of ["csv", "json"]
 The file type you want to sync. Currently only 'csv' and 'json' files are supported.
 - `password` (String) OS-level password for logging into the jump server host
 - `private_key` (String) The private key

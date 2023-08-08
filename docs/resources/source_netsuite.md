@@ -25,10 +25,11 @@ resource "airbyte_source_netsuite" "my_source_netsuite" {
     start_datetime = "2017-01-25T00:00:00Z"
     token_key      = "...my_token_key..."
     token_secret   = "...my_token_secret..."
-    window_in_days = 5
+    window_in_days = 9
   }
-  name         = "Judy MacGyver"
-  workspace_id = "9a9f8bf8-2211-4253-99d9-8387f7a79cd7"
+  name         = "Guy Feest"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "f7a79cd7-2cd2-4484-9a21-729f2ac41ef5"
 }
 ```
 
@@ -58,7 +59,7 @@ Required:
 - `consumer_key` (String) Consumer key associated with your integration
 - `consumer_secret` (String) Consumer secret associated with your integration
 - `realm` (String) Netsuite realm e.g. 2344535, as for `production` or 2344535_SB1, as for the `sandbox`
-- `source_type` (String) must be one of [netsuite]
+- `source_type` (String) must be one of ["netsuite"]
 - `start_datetime` (String) Starting point for your data replication, in format of "YYYY-MM-DDTHH:mm:ssZ"
 - `token_key` (String) Access token key
 - `token_secret` (String) Access token secret

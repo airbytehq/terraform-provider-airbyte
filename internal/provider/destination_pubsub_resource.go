@@ -80,7 +80,7 @@ func (r *DestinationPubsubResource) Schema(ctx context.Context, req resource.Sch
 								"pubsub",
 							),
 						},
-						Description: `must be one of [pubsub]`,
+						Description: `must be one of ["pubsub"]`,
 					},
 					"ordering_enabled": schema.BoolAttribute{
 						Required:    true,

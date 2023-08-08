@@ -19,8 +19,9 @@ resource "airbyte_source_datascope" "my_source_datascope" {
     source_type = "datascope"
     start_date  = "dd/mm/YYYY HH:MM"
   }
-  name         = "Sandra Keeling"
-  workspace_id = "78878ba8-581a-4582-88c5-4fefa9c95f2e"
+  name         = "Dianne Schroeder"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "fefa9c95-f2ea-4c55-a5d3-07cfee81206e"
 }
 ```
 
@@ -48,7 +49,7 @@ resource "airbyte_source_datascope" "my_source_datascope" {
 Required:
 
 - `api_key` (String) API Key
-- `source_type` (String) must be one of [datascope]
+- `source_type` (String) must be one of ["datascope"]
 - `start_date` (String) Start date for the data to be replicated
 
 

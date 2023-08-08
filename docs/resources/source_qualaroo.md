@@ -23,8 +23,9 @@ resource "airbyte_source_qualaroo" "my_source_qualaroo" {
     ]
     token = "...my_token..."
   }
-  name         = "Mr. Joel Yost"
-  workspace_id = "fb0e0bf1-f821-4797-8d0a-cca77aeb7b70"
+  name         = "Geoffrey Kling"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "021a5204-6b64-4e99-bb0e-67e094fdfed5"
 }
 ```
 
@@ -52,7 +53,7 @@ resource "airbyte_source_qualaroo" "my_source_qualaroo" {
 Required:
 
 - `key` (String) A Qualaroo token. See the <a href="https://help.qualaroo.com/hc/en-us/articles/201969438-The-REST-Reporting-API">docs</a> for instructions on how to generate it.
-- `source_type` (String) must be one of [qualaroo]
+- `source_type` (String) must be one of ["qualaroo"]
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 - `token` (String) A Qualaroo token. See the <a href="https://help.qualaroo.com/hc/en-us/articles/201969438-The-REST-Reporting-API">docs</a> for instructions on how to generate it.
 

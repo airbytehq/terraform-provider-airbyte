@@ -18,19 +18,20 @@ resource "airbyte_source_salesforce" "my_source_salesforce" {
     auth_type     = "Client"
     client_id     = "...my_client_id..."
     client_secret = "...my_client_secret..."
-    is_sandbox    = false
+    is_sandbox    = true
     refresh_token = "...my_refresh_token..."
     source_type   = "salesforce"
     start_date    = "2021-07-25T00:00:00Z"
     streams_criteria = [
       {
-        criteria = "ends not with"
+        criteria = "ends with"
         value    = "...my_value..."
       },
     ]
   }
-  name         = "Kristopher Abernathy"
-  workspace_id = "290f957f-3851-489a-97ef-807aae03f33c"
+  name         = "Leonard Fisher"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "79fb9de4-032b-4a26-bd36-8ba9216bcb41"
 }
 ```
 
@@ -60,11 +61,11 @@ Required:
 - `client_id` (String) Enter your Salesforce developer application's <a href="https://developer.salesforce.com/forums/?id=9062I000000DLgbQAG">Client ID</a>
 - `client_secret` (String) Enter your Salesforce developer application's <a href="https://developer.salesforce.com/forums/?id=9062I000000DLgbQAG">Client secret</a>
 - `refresh_token` (String) Enter your application's <a href="https://developer.salesforce.com/docs/atlas.en-us.mobile_sdk.meta/mobile_sdk/oauth_refresh_token_flow.htm">Salesforce Refresh Token</a> used for Airbyte to access your Salesforce account.
-- `source_type` (String) must be one of [salesforce]
+- `source_type` (String) must be one of ["salesforce"]
 
 Optional:
 
-- `auth_type` (String) must be one of [Client]
+- `auth_type` (String) must be one of ["Client"]
 - `is_sandbox` (Boolean) Toggle if you're using a <a href="https://help.salesforce.com/s/articleView?id=sf.deploy_sandboxes_parent.htm&type=5">Salesforce Sandbox</a>
 - `start_date` (String) Enter the date in the YYYY-MM-DD format. Airbyte will replicate the data added on and after this date. If this field is blank, Airbyte will replicate the data for last two years.
 - `streams_criteria` (Attributes List) Filter streams relevant to you (see [below for nested schema](#nestedatt--configuration--streams_criteria))
@@ -74,7 +75,7 @@ Optional:
 
 Required:
 
-- `criteria` (String) must be one of [starts with, ends with, contains, exacts, starts not with, ends not with, not contains, not exacts]
+- `criteria` (String) must be one of ["starts with", "ends with", "contains", "exacts", "starts not with", "ends not with", "not contains", "not exacts"]
 - `value` (String)
 
 

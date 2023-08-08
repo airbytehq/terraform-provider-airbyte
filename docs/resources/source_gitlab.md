@@ -17,20 +17,23 @@ resource "airbyte_source_gitlab" "my_source_gitlab" {
   configuration = {
     api_url = "gitlab.com"
     credentials = {
-      access_token      = "...my_access_token..."
-      auth_type         = "oauth2.0"
-      client_id         = "...my_client_id..."
-      client_secret     = "...my_client_secret..."
-      refresh_token     = "...my_refresh_token..."
-      token_expiry_date = "2022-01-16T05:28:22.895Z"
+      source_gitlab_authorization_method_o_auth2_0 = {
+        access_token      = "...my_access_token..."
+        auth_type         = "oauth2.0"
+        client_id         = "...my_client_id..."
+        client_secret     = "...my_client_secret..."
+        refresh_token     = "...my_refresh_token..."
+        token_expiry_date = "2020-10-08T09:18:50.076Z"
+      }
     }
     groups      = "airbyte.io"
     projects    = "airbyte.io/documentation"
     source_type = "gitlab"
     start_date  = "2021-03-01T00:00:00Z"
   }
-  name         = "Arturo Wisoky"
-  workspace_id = "079af4d3-5724-4cdb-8f4d-281187d56844"
+  name         = "Eula Daugherty Sr."
+  secret_id    = "...my_secret_id..."
+  workspace_id = "87d56844-eded-485a-9065-e628bdfc2032"
 }
 ```
 
@@ -59,7 +62,7 @@ Required:
 
 - `api_url` (String) Please enter your basic URL from GitLab instance.
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `source_type` (String) must be one of [gitlab]
+- `source_type` (String) must be one of ["gitlab"]
 - `start_date` (String) The date from which you'd like to replicate data for GitLab API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 
 Optional:
@@ -90,7 +93,7 @@ Required:
 
 Optional:
 
-- `auth_type` (String) must be one of [oauth2.0]
+- `auth_type` (String) must be one of ["oauth2.0"]
 
 
 <a id="nestedatt--configuration--credentials--source_gitlab_authorization_method_private_token"></a>
@@ -102,7 +105,7 @@ Required:
 
 Optional:
 
-- `auth_type` (String) must be one of [access_token]
+- `auth_type` (String) must be one of ["access_token"]
 
 
 <a id="nestedatt--configuration--credentials--source_gitlab_update_authorization_method_o_auth2_0"></a>
@@ -118,7 +121,7 @@ Required:
 
 Optional:
 
-- `auth_type` (String) must be one of [oauth2.0]
+- `auth_type` (String) must be one of ["oauth2.0"]
 
 
 <a id="nestedatt--configuration--credentials--source_gitlab_update_authorization_method_private_token"></a>
@@ -130,6 +133,6 @@ Required:
 
 Optional:
 
-- `auth_type` (String) must be one of [access_token]
+- `auth_type` (String) must be one of ["access_token"]
 
 

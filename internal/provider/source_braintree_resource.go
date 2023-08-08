@@ -65,7 +65,7 @@ func (r *SourceBraintreeResource) Schema(ctx context.Context, req resource.Schem
 								"Production",
 							),
 						},
-						MarkdownDescription: `must be one of [Development, Sandbox, Qa, Production]` + "\n" +
+						MarkdownDescription: `must be one of ["Development", "Sandbox", "Qa", "Production"]` + "\n" +
 							`Environment specifies where the data will come from.`,
 					},
 					"merchant_id": schema.StringAttribute{
@@ -87,7 +87,7 @@ func (r *SourceBraintreeResource) Schema(ctx context.Context, req resource.Schem
 								"braintree",
 							),
 						},
-						Description: `must be one of [braintree]`,
+						Description: `must be one of ["braintree"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Optional: true,

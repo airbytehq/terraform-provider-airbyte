@@ -61,7 +61,7 @@ func (r *SourceXkcdResource) Schema(ctx context.Context, req resource.SchemaRequ
 								"xkcd",
 							),
 						},
-						Description: `must be one of [xkcd]`,
+						Description: `must be one of ["xkcd"]`,
 					},
 				},
 			},

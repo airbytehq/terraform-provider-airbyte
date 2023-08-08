@@ -66,7 +66,7 @@ func (r *SourceInstagramResource) Schema(ctx context.Context, req resource.Schem
 								"instagram",
 							),
 						},
-						Description: `must be one of [instagram]`,
+						Description: `must be one of ["instagram"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

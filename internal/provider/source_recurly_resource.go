@@ -73,7 +73,7 @@ func (r *SourceRecurlyResource) Schema(ctx context.Context, req resource.SchemaR
 								"recurly",
 							),
 						},
-						Description: `must be one of [recurly]`,
+						Description: `must be one of ["recurly"]`,
 					},
 				},
 			},

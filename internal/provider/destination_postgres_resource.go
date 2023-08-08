@@ -65,7 +65,7 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 								"postgres",
 							),
 						},
-						Description: `must be one of [postgres]`,
+						Description: `must be one of ["postgres"]`,
 					},
 					"host": schema.StringAttribute{
 						Required:    true,
@@ -100,7 +100,7 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 												"allow",
 											),
 										},
-										Description: `must be one of [allow]`,
+										Description: `must be one of ["allow"]`,
 									},
 								},
 								Description: `Allow SSL mode.`,
@@ -115,7 +115,7 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 												"disable",
 											),
 										},
-										Description: `must be one of [disable]`,
+										Description: `must be one of ["disable"]`,
 									},
 								},
 								Description: `Disable SSL.`,
@@ -130,7 +130,7 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 												"prefer",
 											),
 										},
-										Description: `must be one of [prefer]`,
+										Description: `must be one of ["prefer"]`,
 									},
 								},
 								Description: `Prefer SSL mode.`,
@@ -145,7 +145,7 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 												"require",
 											),
 										},
-										Description: `must be one of [require]`,
+										Description: `must be one of ["require"]`,
 									},
 								},
 								Description: `Require SSL mode.`,
@@ -168,7 +168,7 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 												"verify-ca",
 											),
 										},
-										Description: `must be one of [verify-ca]`,
+										Description: `must be one of ["verify-ca"]`,
 									},
 								},
 								Description: `Verify-ca SSL mode.`,
@@ -199,7 +199,7 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 												"verify-full",
 											),
 										},
-										Description: `must be one of [verify-full]`,
+										Description: `must be one of ["verify-full"]`,
 									},
 								},
 								Description: `Verify-full SSL mode.`,
@@ -214,7 +214,7 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 												"allow",
 											),
 										},
-										Description: `must be one of [allow]`,
+										Description: `must be one of ["allow"]`,
 									},
 								},
 								Description: `Allow SSL mode.`,
@@ -229,7 +229,7 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 												"disable",
 											),
 										},
-										Description: `must be one of [disable]`,
+										Description: `must be one of ["disable"]`,
 									},
 								},
 								Description: `Disable SSL.`,
@@ -244,7 +244,7 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 												"prefer",
 											),
 										},
-										Description: `must be one of [prefer]`,
+										Description: `must be one of ["prefer"]`,
 									},
 								},
 								Description: `Prefer SSL mode.`,
@@ -259,7 +259,7 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 												"require",
 											),
 										},
-										Description: `must be one of [require]`,
+										Description: `must be one of ["require"]`,
 									},
 								},
 								Description: `Require SSL mode.`,
@@ -282,7 +282,7 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 												"verify-ca",
 											),
 										},
-										Description: `must be one of [verify-ca]`,
+										Description: `must be one of ["verify-ca"]`,
 									},
 								},
 								Description: `Verify-ca SSL mode.`,
@@ -313,7 +313,7 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 												"verify-full",
 											),
 										},
-										Description: `must be one of [verify-full]`,
+										Description: `must be one of ["verify-full"]`,
 									},
 								},
 								Description: `Verify-full SSL mode.`,
@@ -344,7 +344,7 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 												"NO_TUNNEL",
 											),
 										},
-										MarkdownDescription: `must be one of [NO_TUNNEL]` + "\n" +
+										MarkdownDescription: `must be one of ["NO_TUNNEL"]` + "\n" +
 											`No ssh tunnel needed to connect to database`,
 									},
 								},
@@ -364,7 +364,7 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 												"SSH_PASSWORD_AUTH",
 											),
 										},
-										MarkdownDescription: `must be one of [SSH_PASSWORD_AUTH]` + "\n" +
+										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
 											`Connect through a jump server tunnel host using username and password authentication`,
 									},
 									"tunnel_port": schema.Int64Attribute{
@@ -400,7 +400,7 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 												"SSH_KEY_AUTH",
 											),
 										},
-										MarkdownDescription: `must be one of [SSH_KEY_AUTH]` + "\n" +
+										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
 											`Connect through a jump server tunnel host using username and ssh key`,
 									},
 									"tunnel_port": schema.Int64Attribute{
@@ -424,7 +424,7 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 												"NO_TUNNEL",
 											),
 										},
-										MarkdownDescription: `must be one of [NO_TUNNEL]` + "\n" +
+										MarkdownDescription: `must be one of ["NO_TUNNEL"]` + "\n" +
 											`No ssh tunnel needed to connect to database`,
 									},
 								},
@@ -444,7 +444,7 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 												"SSH_PASSWORD_AUTH",
 											),
 										},
-										MarkdownDescription: `must be one of [SSH_PASSWORD_AUTH]` + "\n" +
+										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
 											`Connect through a jump server tunnel host using username and password authentication`,
 									},
 									"tunnel_port": schema.Int64Attribute{
@@ -480,7 +480,7 @@ func (r *DestinationPostgresResource) Schema(ctx context.Context, req resource.S
 												"SSH_KEY_AUTH",
 											),
 										},
-										MarkdownDescription: `must be one of [SSH_KEY_AUTH]` + "\n" +
+										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
 											`Connect through a jump server tunnel host using username and ssh key`,
 									},
 									"tunnel_port": schema.Int64Attribute{

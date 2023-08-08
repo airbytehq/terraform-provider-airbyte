@@ -16,24 +16,25 @@ SourceGnews Resource
 resource "airbyte_source_gnews" "my_source_gnews" {
   configuration = {
     api_key  = "...my_api_key..."
-    country  = "de"
+    country  = "nl"
     end_date = "2022-08-21 16:27:09"
     in = [
       "title",
     ]
-    language = "ml"
+    language = "ja"
     nullable = [
       "title",
     ]
-    query               = "Intel AND (i7 OR i9)"
+    query               = "Apple OR Microsoft"
     sortby              = "publishedAt"
     source_type         = "gnews"
     start_date          = "2022-08-21 16:27:09"
-    top_headlines_query = "(Windows 7) AND (Windows 10)"
-    top_headlines_topic = "health"
+    top_headlines_query = "Apple OR Microsoft"
+    top_headlines_topic = "nation"
   }
-  name         = "Lois Rutherford"
-  workspace_id = "91f82ce1-1571-4723-8537-7dcfa89df975"
+  name         = "Allison Streich"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "a89df975-e356-4686-892e-9c3ddc5f111d"
 }
 ```
 
@@ -75,17 +76,17 @@ Required:
   specified keywords. To use it, you need to add NOT in front of each word or phrase surrounded by quotes.
   For example the query: Apple NOT iPhone will return all articles matching the keyword Apple but not the keyword
   iPhone
-- `source_type` (String) must be one of [gnews]
+- `source_type` (String) must be one of ["gnews"]
 
 Optional:
 
-- `country` (String) must be one of [au, br, ca, cn, eg, fr, de, gr, hk, in, ie, il, it, jp, nl, no, pk, pe, ph, pt, ro, ru, sg, es, se, ch, tw, ua, gb, us]
+- `country` (String) must be one of ["au", "br", "ca", "cn", "eg", "fr", "de", "gr", "hk", "in", "ie", "il", "it", "jp", "nl", "no", "pk", "pe", "ph", "pt", "ro", "ru", "sg", "es", "se", "ch", "tw", "ua", "gb", "us"]
 This parameter allows you to specify the country where the news articles returned by the API were published, the contents of the articles are not necessarily related to the specified country. You have to set as value the 2 letters code of the country you want to filter.
 - `end_date` (String) This parameter allows you to filter the articles that have a publication date smaller than or equal to the  specified value. The date must respect the following format: YYYY-MM-DD hh:mm:ss (in UTC)
 - `in` (List of String) This parameter allows you to choose in which attributes the keywords are searched. The attributes that can be set are title, description and content. It is possible to combine several attributes.
-- `language` (String) must be one of [ar, zh, nl, en, fr, de, el, he, hi, it, ja, ml, mr, no, pt, ro, ru, es, sv, ta, te, uk]
+- `language` (String) must be one of ["ar", "zh", "nl", "en", "fr", "de", "el", "he", "hi", "it", "ja", "ml", "mr", "no", "pt", "ro", "ru", "es", "sv", "ta", "te", "uk"]
 - `nullable` (List of String) This parameter allows you to specify the attributes that you allow to return null values. The attributes that  can be set are title, description and content. It is possible to combine several attributes
-- `sortby` (String) must be one of [publishedAt, relevance]
+- `sortby` (String) must be one of ["publishedAt", "relevance"]
 This parameter allows you to choose with which type of sorting the articles should be returned. Two values  are possible:
   - publishedAt = sort by publication date, the articles with the most recent publication date are returned first
   - relevance = sort by best match to keywords, the articles with the best match are returned first
@@ -104,7 +105,7 @@ This parameter allows you to choose with which type of sorting the articles shou
   specified keywords. To use it, you need to add NOT in front of each word or phrase surrounded by quotes.
   For example the query: Apple NOT iPhone will return all articles matching the keyword Apple but not the keyword
   iPhone
-- `top_headlines_topic` (String) must be one of [breaking-news, world, nation, business, technology, entertainment, sports, science, health]
+- `top_headlines_topic` (String) must be one of ["breaking-news", "world", "nation", "business", "technology", "entertainment", "sports", "science", "health"]
 This parameter allows you to change the category for the request.
 
 

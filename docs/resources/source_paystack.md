@@ -15,13 +15,14 @@ SourcePaystack Resource
 ```terraform
 resource "airbyte_source_paystack" "my_source_paystack" {
   configuration = {
-    lookback_window_days = 3
+    lookback_window_days = 10
     secret_key           = "...my_secret_key..."
     source_type          = "paystack"
     start_date           = "2017-01-25T00:00:00Z"
   }
-  name         = "Dominic Kunde"
-  workspace_id = "7cd9222c-9ff5-4749-9aab-fa2e761f0ca4"
+  name         = "Dr. Darren Kemmer DDS"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "a4d456ef-1031-4e68-99f0-c2001e22cd55"
 }
 ```
 
@@ -49,7 +50,7 @@ resource "airbyte_source_paystack" "my_source_paystack" {
 Required:
 
 - `secret_key` (String) The Paystack API key (usually starts with 'sk_live_'; find yours <a href="https://dashboard.paystack.com/#/settings/developer">here</a>).
-- `source_type` (String) must be one of [paystack]
+- `source_type` (String) must be one of ["paystack"]
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 
 Optional:

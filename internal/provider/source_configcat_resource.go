@@ -65,7 +65,7 @@ func (r *SourceConfigcatResource) Schema(ctx context.Context, req resource.Schem
 								"configcat",
 							),
 						},
-						Description: `must be one of [configcat]`,
+						Description: `must be one of ["configcat"]`,
 					},
 					"username": schema.StringAttribute{
 						Required:    true,

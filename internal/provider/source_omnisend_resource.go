@@ -65,7 +65,7 @@ func (r *SourceOmnisendResource) Schema(ctx context.Context, req resource.Schema
 								"omnisend",
 							),
 						},
-						Description: `must be one of [omnisend]`,
+						Description: `must be one of ["omnisend"]`,
 					},
 				},
 			},

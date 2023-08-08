@@ -70,7 +70,7 @@ func (r *SourceMailgunResource) Schema(ctx context.Context, req resource.SchemaR
 								"mailgun",
 							),
 						},
-						Description: `must be one of [mailgun]`,
+						Description: `must be one of ["mailgun"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Optional: true,

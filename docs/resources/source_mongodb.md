@@ -18,15 +18,18 @@ resource "airbyte_source_mongodb" "my_source_mongodb" {
     auth_source = "admin"
     database    = "...my_database..."
     instance_type = {
-      cluster_url = "...my_cluster_url..."
-      instance    = "atlas"
+      source_mongodb_mongo_db_instance_type_mongo_db_atlas = {
+        cluster_url = "...my_cluster_url..."
+        instance    = "atlas"
+      }
     }
     password    = "...my_password..."
     source_type = "mongodb"
     user        = "...my_user..."
   }
-  name         = "Emanuel Lemke"
-  workspace_id = "9de1dd70-97b5-4da0-8c57-fa6c78a216e1"
+  name         = "Alfonso Keeling"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "8a216e19-bafe-4ca6-9914-98140b64ff8a"
 }
 ```
 
@@ -54,7 +57,7 @@ resource "airbyte_source_mongodb" "my_source_mongodb" {
 Required:
 
 - `database` (String) The database you want to replicate.
-- `source_type` (String) must be one of [mongodb]
+- `source_type` (String) must be one of ["mongodb"]
 
 Optional:
 
@@ -81,7 +84,7 @@ Optional:
 Required:
 
 - `cluster_url` (String) The URL of a cluster to connect to.
-- `instance` (String) must be one of [atlas]
+- `instance` (String) must be one of ["atlas"]
 
 
 <a id="nestedatt--configuration--instance_type--source_mongodb_mongo_db_instance_type_replica_set"></a>
@@ -89,7 +92,7 @@ Required:
 
 Required:
 
-- `instance` (String) must be one of [replica]
+- `instance` (String) must be one of ["replica"]
 - `server_addresses` (String) The members of a replica set. Please specify `host`:`port` of each member separated by comma.
 
 Optional:
@@ -103,7 +106,7 @@ Optional:
 Required:
 
 - `host` (String) The host name of the Mongo database.
-- `instance` (String) must be one of [standalone]
+- `instance` (String) must be one of ["standalone"]
 - `port` (Number) The port of the Mongo database.
 
 
@@ -113,7 +116,7 @@ Required:
 Required:
 
 - `cluster_url` (String) The URL of a cluster to connect to.
-- `instance` (String) must be one of [atlas]
+- `instance` (String) must be one of ["atlas"]
 
 
 <a id="nestedatt--configuration--instance_type--source_mongodb_update_mongo_db_instance_type_replica_set"></a>
@@ -121,7 +124,7 @@ Required:
 
 Required:
 
-- `instance` (String) must be one of [replica]
+- `instance` (String) must be one of ["replica"]
 - `server_addresses` (String) The members of a replica set. Please specify `host`:`port` of each member separated by comma.
 
 Optional:
@@ -135,7 +138,7 @@ Optional:
 Required:
 
 - `host` (String) The host name of the Mongo database.
-- `instance` (String) must be one of [standalone]
+- `instance` (String) must be one of ["standalone"]
 - `port` (Number) The port of the Mongo database.
 
 

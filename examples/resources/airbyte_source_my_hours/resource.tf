@@ -6,6 +6,7 @@ resource "airbyte_source_my_hours" "my_source_myhours" {
     source_type     = "my-hours"
     start_date      = "%Y-%m-%d"
   }
-  name         = "Sara O'Kon"
-  workspace_id = "dcb6682c-b70f-48cf-95fb-6e91b9a9f748"
+  name         = "Tracy Buckridge"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "a9f74846-e2c3-4309-9b05-36d9e75ca006"
 }

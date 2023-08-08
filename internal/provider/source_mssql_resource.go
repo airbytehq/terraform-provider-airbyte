@@ -89,7 +89,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"New Changes Only",
 											),
 										},
-										MarkdownDescription: `must be one of [Existing and New, New Changes Only]` + "\n" +
+										MarkdownDescription: `must be one of ["Existing and New", "New Changes Only"]` + "\n" +
 											`What data should be synced under the CDC. "Existing and New" will read existing data as a snapshot, and sync new changes through CDC. "New Changes Only" will skip the initial snapshot, and only sync new changes through CDC.`,
 									},
 									"initial_waiting_seconds": schema.Int64Attribute{
@@ -103,7 +103,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"CDC",
 											),
 										},
-										Description: `must be one of [CDC]`,
+										Description: `must be one of ["CDC"]`,
 									},
 									"snapshot_isolation": schema.StringAttribute{
 										Optional: true,
@@ -113,7 +113,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"Read Committed",
 											),
 										},
-										MarkdownDescription: `must be one of [Snapshot, Read Committed]` + "\n" +
+										MarkdownDescription: `must be one of ["Snapshot", "Read Committed"]` + "\n" +
 											`Existing data in the database are synced through an initial snapshot. This parameter controls the isolation level that will be used during the initial snapshotting. If you choose the "Snapshot" level, you must enable the <a href="https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/snapshot-isolation-in-sql-server">snapshot isolation mode</a> on the database.`,
 									},
 								},
@@ -129,7 +129,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"STANDARD",
 											),
 										},
-										Description: `must be one of [STANDARD]`,
+										Description: `must be one of ["STANDARD"]`,
 									},
 								},
 								Description: `Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
@@ -145,7 +145,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"New Changes Only",
 											),
 										},
-										MarkdownDescription: `must be one of [Existing and New, New Changes Only]` + "\n" +
+										MarkdownDescription: `must be one of ["Existing and New", "New Changes Only"]` + "\n" +
 											`What data should be synced under the CDC. "Existing and New" will read existing data as a snapshot, and sync new changes through CDC. "New Changes Only" will skip the initial snapshot, and only sync new changes through CDC.`,
 									},
 									"initial_waiting_seconds": schema.Int64Attribute{
@@ -159,7 +159,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"CDC",
 											),
 										},
-										Description: `must be one of [CDC]`,
+										Description: `must be one of ["CDC"]`,
 									},
 									"snapshot_isolation": schema.StringAttribute{
 										Optional: true,
@@ -169,7 +169,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"Read Committed",
 											),
 										},
-										MarkdownDescription: `must be one of [Snapshot, Read Committed]` + "\n" +
+										MarkdownDescription: `must be one of ["Snapshot", "Read Committed"]` + "\n" +
 											`Existing data in the database are synced through an initial snapshot. This parameter controls the isolation level that will be used during the initial snapshotting. If you choose the "Snapshot" level, you must enable the <a href="https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/snapshot-isolation-in-sql-server">snapshot isolation mode</a> on the database.`,
 									},
 								},
@@ -185,7 +185,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"STANDARD",
 											),
 										},
-										Description: `must be one of [STANDARD]`,
+										Description: `must be one of ["STANDARD"]`,
 									},
 								},
 								Description: `Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
@@ -208,7 +208,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								"mssql",
 							),
 						},
-						Description: `must be one of [mssql]`,
+						Description: `must be one of ["mssql"]`,
 					},
 					"ssl_method": schema.SingleNestedAttribute{
 						Optional: true,
@@ -223,7 +223,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"encrypted_trust_server_certificate",
 											),
 										},
-										Description: `must be one of [encrypted_trust_server_certificate]`,
+										Description: `must be one of ["encrypted_trust_server_certificate"]`,
 									},
 								},
 								Description: `Use the certificate provided by the server without verification. (For testing purposes only!)`,
@@ -242,7 +242,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"encrypted_verify_certificate",
 											),
 										},
-										Description: `must be one of [encrypted_verify_certificate]`,
+										Description: `must be one of ["encrypted_verify_certificate"]`,
 									},
 								},
 								Description: `Verify and use the certificate provided by the server.`,
@@ -257,7 +257,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"encrypted_trust_server_certificate",
 											),
 										},
-										Description: `must be one of [encrypted_trust_server_certificate]`,
+										Description: `must be one of ["encrypted_trust_server_certificate"]`,
 									},
 								},
 								Description: `Use the certificate provided by the server without verification. (For testing purposes only!)`,
@@ -276,7 +276,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"encrypted_verify_certificate",
 											),
 										},
-										Description: `must be one of [encrypted_verify_certificate]`,
+										Description: `must be one of ["encrypted_verify_certificate"]`,
 									},
 								},
 								Description: `Verify and use the certificate provided by the server.`,
@@ -300,7 +300,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"NO_TUNNEL",
 											),
 										},
-										MarkdownDescription: `must be one of [NO_TUNNEL]` + "\n" +
+										MarkdownDescription: `must be one of ["NO_TUNNEL"]` + "\n" +
 											`No ssh tunnel needed to connect to database`,
 									},
 								},
@@ -320,7 +320,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"SSH_PASSWORD_AUTH",
 											),
 										},
-										MarkdownDescription: `must be one of [SSH_PASSWORD_AUTH]` + "\n" +
+										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
 											`Connect through a jump server tunnel host using username and password authentication`,
 									},
 									"tunnel_port": schema.Int64Attribute{
@@ -356,7 +356,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"SSH_KEY_AUTH",
 											),
 										},
-										MarkdownDescription: `must be one of [SSH_KEY_AUTH]` + "\n" +
+										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
 											`Connect through a jump server tunnel host using username and ssh key`,
 									},
 									"tunnel_port": schema.Int64Attribute{
@@ -380,7 +380,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"NO_TUNNEL",
 											),
 										},
-										MarkdownDescription: `must be one of [NO_TUNNEL]` + "\n" +
+										MarkdownDescription: `must be one of ["NO_TUNNEL"]` + "\n" +
 											`No ssh tunnel needed to connect to database`,
 									},
 								},
@@ -400,7 +400,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"SSH_PASSWORD_AUTH",
 											),
 										},
-										MarkdownDescription: `must be one of [SSH_PASSWORD_AUTH]` + "\n" +
+										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
 											`Connect through a jump server tunnel host using username and password authentication`,
 									},
 									"tunnel_port": schema.Int64Attribute{
@@ -436,7 +436,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"SSH_KEY_AUTH",
 											),
 										},
-										MarkdownDescription: `must be one of [SSH_KEY_AUTH]` + "\n" +
+										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
 											`Connect through a jump server tunnel host using username and ssh key`,
 									},
 									"tunnel_port": schema.Int64Attribute{

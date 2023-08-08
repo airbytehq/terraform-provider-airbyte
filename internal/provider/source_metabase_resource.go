@@ -77,7 +77,7 @@ func (r *SourceMetabaseResource) Schema(ctx context.Context, req resource.Schema
 								"metabase",
 							),
 						},
-						Description: `must be one of [metabase]`,
+						Description: `must be one of ["metabase"]`,
 					},
 					"username": schema.StringAttribute{
 						Optional: true,

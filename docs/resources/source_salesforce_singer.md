@@ -15,18 +15,19 @@ SourceSalesforceSinger Resource
 ```terraform
 resource "airbyte_source_salesforce_singer" "my_source_salesforcesinger" {
   configuration = {
-    api_type              = "REST"
+    api_type              = "BULK"
     client_id             = "...my_client_id..."
     client_secret         = "...my_client_secret..."
     is_sandbox            = true
-    quota_percent_per_run = 60.36
-    quota_percent_total   = 99.22
+    quota_percent_per_run = 20.41
+    quota_percent_total   = 33.56
     refresh_token         = "...my_refresh_token..."
     source_type           = "salesforce-singer"
     start_date            = "2017-01-25T00:00:00Z"
   }
-  name         = "Rene Stehr"
-  workspace_id = "032ba26f-d368-4ba9-a16b-cb415835c736"
+  name         = "Claude Fisher"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "1723133e-dc04-46bc-9163-bbca49227c42"
 }
 ```
 
@@ -53,12 +54,12 @@ resource "airbyte_source_salesforce_singer" "my_source_salesforcesinger" {
 
 Required:
 
-- `api_type` (String) must be one of [BULK, REST]
+- `api_type` (String) must be one of ["BULK", "REST"]
 Unless you know that you are transferring a very small amount of data, prefer using the BULK API. This will help avoid using up all of your API call quota with Salesforce. Valid values are BULK or REST.
 - `client_id` (String) The Consumer Key that can be found when viewing your app in Salesforce
 - `client_secret` (String) The Consumer Secret that can be found when viewing your app in Salesforce
 - `refresh_token` (String) Salesforce Refresh Token used for Airbyte to access your Salesforce account. If you don't know what this is, follow this <a href="https://medium.com/@bpmmendis94/obtain-access-refresh-tokens-from-salesforce-rest-api-a324fe4ccd9b">guide</a> to retrieve it.
-- `source_type` (String) must be one of [salesforce-singer]
+- `source_type` (String) must be one of ["salesforce-singer"]
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 
 Optional:

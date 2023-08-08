@@ -72,7 +72,7 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 												"Client",
 											),
 										},
-										Description: `must be one of [Client]`,
+										Description: `must be one of ["Client"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -98,7 +98,7 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 												"Service",
 											),
 										},
-										Description: `must be one of [Service]`,
+										Description: `must be one of ["Service"]`,
 									},
 									"email": schema.StringAttribute{
 										Required:    true,
@@ -124,7 +124,7 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 												"Client",
 											),
 										},
-										Description: `must be one of [Client]`,
+										Description: `must be one of ["Client"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -150,7 +150,7 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 												"Service",
 											),
 										},
-										Description: `must be one of [Service]`,
+										Description: `must be one of ["Service"]`,
 									},
 									"email": schema.StringAttribute{
 										Required:    true,
@@ -179,7 +179,7 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 								"all",
 							),
 						},
-						MarkdownDescription: `must be one of [final, all]` + "\n" +
+						MarkdownDescription: `must be one of ["final", "all"]` + "\n" +
 							`If "final" or if this parameter is omitted, the returned data will include only finalized data. Setting this parameter to "all" should not be used with Incremental Sync mode as it may cause data loss. If "all", data will include fresh data.`,
 					},
 					"end_date": schema.StringAttribute{
@@ -201,7 +201,7 @@ func (r *SourceGoogleSearchConsoleResource) Schema(ctx context.Context, req reso
 								"google-search-console",
 							),
 						},
-						Description: `must be one of [google-search-console]`,
+						Description: `must be one of ["google-search-console"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

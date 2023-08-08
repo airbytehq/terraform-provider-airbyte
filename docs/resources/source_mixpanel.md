@@ -15,22 +15,25 @@ SourceMixpanel Resource
 ```terraform
 resource "airbyte_source_mixpanel" "my_source_mixpanel" {
   configuration = {
-    attribution_window = 10
+    attribution_window = 1
     credentials = {
-      api_secret   = "...my_api_secret..."
-      option_title = "Project Secret"
+      source_mixpanel_authentication_wildcard_project_secret = {
+        api_secret   = "...my_api_secret..."
+        option_title = "Project Secret"
+      }
     }
-    date_window_size             = 8
+    date_window_size             = 9
     end_date                     = "2021-11-16"
-    project_id                   = 6
-    project_timezone             = "UTC"
-    region                       = "US"
+    project_id                   = 3
+    project_timezone             = "US/Pacific"
+    region                       = "EU"
     select_properties_by_default = true
     source_type                  = "mixpanel"
     start_date                   = "2021-11-16"
   }
-  name         = "Leon Cummings"
-  workspace_id = "67641a83-12e5-4047-b4c2-1ccb423abcdc"
+  name         = "Robyn Runte"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "23abcdc9-1faa-4bdd-88e7-1f6c48252d77"
 }
 ```
 
@@ -63,10 +66,10 @@ Optional:
 - `end_date` (String) The date in the format YYYY-MM-DD. Any data after this date will not be replicated. Left empty to always sync to most recent date
 - `project_id` (Number) Your project ID number. See the <a href="https://help.mixpanel.com/hc/en-us/articles/115004490503-Project-Settings#project-id">docs</a> for more information on how to obtain this.
 - `project_timezone` (String) Time zone in which integer date times are stored. The project timezone may be found in the project settings in the <a href="https://help.mixpanel.com/hc/en-us/articles/115004547203-Manage-Timezones-for-Projects-in-Mixpanel">Mixpanel console</a>.
-- `region` (String) must be one of [US, EU]
+- `region` (String) must be one of ["US", "EU"]
 The region of mixpanel domain instance either US or EU.
 - `select_properties_by_default` (Boolean) Setting this config parameter to TRUE ensures that new properties on events and engage records are captured. Otherwise new properties will be ignored.
-- `source_type` (String) must be one of [mixpanel]
+- `source_type` (String) must be one of ["mixpanel"]
 - `start_date` (String) The date in the format YYYY-MM-DD. Any data before this date will not be replicated. If this option is not set, the connector will replicate data from up to one year ago by default.
 
 <a id="nestedatt--configuration--credentials"></a>
@@ -88,7 +91,7 @@ Required:
 
 Optional:
 
-- `option_title` (String) must be one of [Project Secret]
+- `option_title` (String) must be one of ["Project Secret"]
 
 
 <a id="nestedatt--configuration--credentials--source_mixpanel_authentication_wildcard_service_account"></a>
@@ -101,7 +104,7 @@ Required:
 
 Optional:
 
-- `option_title` (String) must be one of [Service Account]
+- `option_title` (String) must be one of ["Service Account"]
 
 
 <a id="nestedatt--configuration--credentials--source_mixpanel_update_authentication_wildcard_project_secret"></a>
@@ -113,7 +116,7 @@ Required:
 
 Optional:
 
-- `option_title` (String) must be one of [Project Secret]
+- `option_title` (String) must be one of ["Project Secret"]
 
 
 <a id="nestedatt--configuration--credentials--source_mixpanel_update_authentication_wildcard_service_account"></a>
@@ -126,6 +129,6 @@ Required:
 
 Optional:
 
-- `option_title` (String) must be one of [Service Account]
+- `option_title` (String) must be one of ["Service Account"]
 
 

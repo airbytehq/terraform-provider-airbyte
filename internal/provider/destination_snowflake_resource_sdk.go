@@ -9,57 +9,86 @@ import (
 
 func (r *DestinationSnowflakeResourceModel) ToCreateSDKType() *shared.DestinationSnowflakeCreateRequest {
 	var credentials *shared.DestinationSnowflakeAuthorizationMethod
-	var destinationSnowflakeAuthorizationMethodOAuth20 *shared.DestinationSnowflakeAuthorizationMethodOAuth20
-	if r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication != nil {
-		authType := new(shared.DestinationSnowflakeAuthorizationMethodOAuth20AuthType)
-		if !r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication.AuthType.IsUnknown() && !r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication.AuthType.IsNull() {
-			*authType = shared.DestinationSnowflakeAuthorizationMethodOAuth20AuthType(r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication.AuthType.ValueString())
-		} else {
-			authType = nil
+	if r.Configuration.Credentials != nil {
+		var destinationSnowflakeAuthorizationMethodOAuth20 *shared.DestinationSnowflakeAuthorizationMethodOAuth20
+		if r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20 != nil {
+			accessToken := r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.AccessToken.ValueString()
+			authType := new(shared.DestinationSnowflakeAuthorizationMethodOAuth20AuthType)
+			if !r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.AuthType.IsUnknown() && !r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.AuthType.IsNull() {
+				*authType = shared.DestinationSnowflakeAuthorizationMethodOAuth20AuthType(r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.AuthType.ValueString())
+			} else {
+				authType = nil
+			}
+			clientID := new(string)
+			if !r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.ClientID.IsNull() {
+				*clientID = r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.ClientID.ValueString()
+			} else {
+				clientID = nil
+			}
+			clientSecret := new(string)
+			if !r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.ClientSecret.IsUnknown() && !r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.ClientSecret.IsNull() {
+				*clientSecret = r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.ClientSecret.ValueString()
+			} else {
+				clientSecret = nil
+			}
+			refreshToken := r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.RefreshToken.ValueString()
+			destinationSnowflakeAuthorizationMethodOAuth20 = &shared.DestinationSnowflakeAuthorizationMethodOAuth20{
+				AccessToken:  accessToken,
+				AuthType:     authType,
+				ClientID:     clientID,
+				ClientSecret: clientSecret,
+				RefreshToken: refreshToken,
+			}
 		}
-		destinationSnowflakeAuthorizationMethodOAuth20 = &shared.DestinationSnowflakeAuthorizationMethodOAuth20{
-			AuthType: authType,
+		if destinationSnowflakeAuthorizationMethodOAuth20 != nil {
+			credentials = &shared.DestinationSnowflakeAuthorizationMethod{
+				DestinationSnowflakeAuthorizationMethodOAuth20: destinationSnowflakeAuthorizationMethodOAuth20,
+			}
 		}
-	}
-	if destinationSnowflakeAuthorizationMethodOAuth20 != nil {
-		credentials = &shared.DestinationSnowflakeAuthorizationMethod{
-			DestinationSnowflakeAuthorizationMethodOAuth20: destinationSnowflakeAuthorizationMethodOAuth20,
+		var destinationSnowflakeAuthorizationMethodKeyPairAuthentication *shared.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication
+		if r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication != nil {
+			authType1 := new(shared.DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthType)
+			if !r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication.AuthType.IsUnknown() && !r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication.AuthType.IsNull() {
+				*authType1 = shared.DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthType(r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication.AuthType.ValueString())
+			} else {
+				authType1 = nil
+			}
+			privateKey := r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication.PrivateKey.ValueString()
+			privateKeyPassword := new(string)
+			if !r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication.PrivateKeyPassword.IsUnknown() && !r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication.PrivateKeyPassword.IsNull() {
+				*privateKeyPassword = r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication.PrivateKeyPassword.ValueString()
+			} else {
+				privateKeyPassword = nil
+			}
+			destinationSnowflakeAuthorizationMethodKeyPairAuthentication = &shared.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication{
+				AuthType:           authType1,
+				PrivateKey:         privateKey,
+				PrivateKeyPassword: privateKeyPassword,
+			}
 		}
-	}
-	var destinationSnowflakeAuthorizationMethodKeyPairAuthentication *shared.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication
-	if r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20 != nil {
-		authType1 := new(shared.DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthType)
-		if !r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.AuthType.IsUnknown() && !r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.AuthType.IsNull() {
-			*authType1 = shared.DestinationSnowflakeAuthorizationMethodKeyPairAuthenticationAuthType(r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.AuthType.ValueString())
-		} else {
-			authType1 = nil
+		if destinationSnowflakeAuthorizationMethodKeyPairAuthentication != nil {
+			credentials = &shared.DestinationSnowflakeAuthorizationMethod{
+				DestinationSnowflakeAuthorizationMethodKeyPairAuthentication: destinationSnowflakeAuthorizationMethodKeyPairAuthentication,
+			}
 		}
-		destinationSnowflakeAuthorizationMethodKeyPairAuthentication = &shared.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication{
-			AuthType: authType1,
+		var destinationSnowflakeAuthorizationMethodUsernameAndPassword *shared.DestinationSnowflakeAuthorizationMethodUsernameAndPassword
+		if r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodUsernameAndPassword != nil {
+			authType2 := new(shared.DestinationSnowflakeAuthorizationMethodUsernameAndPasswordAuthType)
+			if !r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodUsernameAndPassword.AuthType.IsUnknown() && !r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodUsernameAndPassword.AuthType.IsNull() {
+				*authType2 = shared.DestinationSnowflakeAuthorizationMethodUsernameAndPasswordAuthType(r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodUsernameAndPassword.AuthType.ValueString())
+			} else {
+				authType2 = nil
+			}
+			password := r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodUsernameAndPassword.Password.ValueString()
+			destinationSnowflakeAuthorizationMethodUsernameAndPassword = &shared.DestinationSnowflakeAuthorizationMethodUsernameAndPassword{
+				AuthType: authType2,
+				Password: password,
+			}
 		}
-	}
-	if destinationSnowflakeAuthorizationMethodKeyPairAuthentication != nil {
-		credentials = &shared.DestinationSnowflakeAuthorizationMethod{
-			DestinationSnowflakeAuthorizationMethodKeyPairAuthentication: destinationSnowflakeAuthorizationMethodKeyPairAuthentication,
-		}
-	}
-	var destinationSnowflakeAuthorizationMethodUsernameAndPassword *shared.DestinationSnowflakeAuthorizationMethodUsernameAndPassword
-	if r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodUsernameAndPassword != nil {
-		authType2 := new(shared.DestinationSnowflakeAuthorizationMethodUsernameAndPasswordAuthType)
-		if !r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodUsernameAndPassword.AuthType.IsUnknown() && !r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodUsernameAndPassword.AuthType.IsNull() {
-			*authType2 = shared.DestinationSnowflakeAuthorizationMethodUsernameAndPasswordAuthType(r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodUsernameAndPassword.AuthType.ValueString())
-		} else {
-			authType2 = nil
-		}
-		password := r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodUsernameAndPassword.Password.ValueString()
-		destinationSnowflakeAuthorizationMethodUsernameAndPassword = &shared.DestinationSnowflakeAuthorizationMethodUsernameAndPassword{
-			AuthType: authType2,
-			Password: password,
-		}
-	}
-	if destinationSnowflakeAuthorizationMethodUsernameAndPassword != nil {
-		credentials = &shared.DestinationSnowflakeAuthorizationMethod{
-			DestinationSnowflakeAuthorizationMethodUsernameAndPassword: destinationSnowflakeAuthorizationMethodUsernameAndPassword,
+		if destinationSnowflakeAuthorizationMethodUsernameAndPassword != nil {
+			credentials = &shared.DestinationSnowflakeAuthorizationMethod{
+				DestinationSnowflakeAuthorizationMethodUsernameAndPassword: destinationSnowflakeAuthorizationMethodUsernameAndPassword,
+			}
 		}
 	}
 	database := r.Configuration.Database.ValueString()
@@ -78,52 +107,122 @@ func (r *DestinationSnowflakeResourceModel) ToCreateSDKType() *shared.Destinatio
 		jdbcURLParams = nil
 	}
 	var loadingMethod *shared.DestinationSnowflakeDataStagingMethod
-	var destinationSnowflakeDataStagingMethodSelectAnotherOption *shared.DestinationSnowflakeDataStagingMethodSelectAnotherOption
-	if r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodRecommendedInternalStaging != nil {
-		method := shared.DestinationSnowflakeDataStagingMethodSelectAnotherOptionMethod(r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodRecommendedInternalStaging.Method.ValueString())
-		destinationSnowflakeDataStagingMethodSelectAnotherOption = &shared.DestinationSnowflakeDataStagingMethodSelectAnotherOption{
-			Method: method,
+	if r.Configuration.LoadingMethod != nil {
+		var destinationSnowflakeDataStagingMethodSelectAnotherOption *shared.DestinationSnowflakeDataStagingMethodSelectAnotherOption
+		if r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodSelectAnotherOption != nil {
+			method := shared.DestinationSnowflakeDataStagingMethodSelectAnotherOptionMethod(r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodSelectAnotherOption.Method.ValueString())
+			destinationSnowflakeDataStagingMethodSelectAnotherOption = &shared.DestinationSnowflakeDataStagingMethodSelectAnotherOption{
+				Method: method,
+			}
 		}
-	}
-	if destinationSnowflakeDataStagingMethodSelectAnotherOption != nil {
-		loadingMethod = &shared.DestinationSnowflakeDataStagingMethod{
-			DestinationSnowflakeDataStagingMethodSelectAnotherOption: destinationSnowflakeDataStagingMethodSelectAnotherOption,
+		if destinationSnowflakeDataStagingMethodSelectAnotherOption != nil {
+			loadingMethod = &shared.DestinationSnowflakeDataStagingMethod{
+				DestinationSnowflakeDataStagingMethodSelectAnotherOption: destinationSnowflakeDataStagingMethodSelectAnotherOption,
+			}
 		}
-	}
-	var destinationSnowflakeDataStagingMethodRecommendedInternalStaging *shared.DestinationSnowflakeDataStagingMethodRecommendedInternalStaging
-	if r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging != nil {
-		method1 := shared.DestinationSnowflakeDataStagingMethodRecommendedInternalStagingMethod(r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging.Method.ValueString())
-		destinationSnowflakeDataStagingMethodRecommendedInternalStaging = &shared.DestinationSnowflakeDataStagingMethodRecommendedInternalStaging{
-			Method: method1,
+		var destinationSnowflakeDataStagingMethodRecommendedInternalStaging *shared.DestinationSnowflakeDataStagingMethodRecommendedInternalStaging
+		if r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodRecommendedInternalStaging != nil {
+			method1 := shared.DestinationSnowflakeDataStagingMethodRecommendedInternalStagingMethod(r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodRecommendedInternalStaging.Method.ValueString())
+			destinationSnowflakeDataStagingMethodRecommendedInternalStaging = &shared.DestinationSnowflakeDataStagingMethodRecommendedInternalStaging{
+				Method: method1,
+			}
 		}
-	}
-	if destinationSnowflakeDataStagingMethodRecommendedInternalStaging != nil {
-		loadingMethod = &shared.DestinationSnowflakeDataStagingMethod{
-			DestinationSnowflakeDataStagingMethodRecommendedInternalStaging: destinationSnowflakeDataStagingMethodRecommendedInternalStaging,
+		if destinationSnowflakeDataStagingMethodRecommendedInternalStaging != nil {
+			loadingMethod = &shared.DestinationSnowflakeDataStagingMethod{
+				DestinationSnowflakeDataStagingMethodRecommendedInternalStaging: destinationSnowflakeDataStagingMethodRecommendedInternalStaging,
+			}
 		}
-	}
-	var destinationSnowflakeDataStagingMethodAWSS3Staging *shared.DestinationSnowflakeDataStagingMethodAWSS3Staging
-	if r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodGoogleCloudStorageStaging != nil {
-		method2 := shared.DestinationSnowflakeDataStagingMethodAWSS3StagingMethod(r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodGoogleCloudStorageStaging.Method.ValueString())
-		destinationSnowflakeDataStagingMethodAWSS3Staging = &shared.DestinationSnowflakeDataStagingMethodAWSS3Staging{
-			Method: method2,
+		var destinationSnowflakeDataStagingMethodAWSS3Staging *shared.DestinationSnowflakeDataStagingMethodAWSS3Staging
+		if r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging != nil {
+			accessKeyID := r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging.AccessKeyID.ValueString()
+			var encryption *shared.DestinationSnowflakeDataStagingMethodAWSS3StagingEncryption
+			if r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging.Encryption != nil {
+				var destinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryption *shared.DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryption
+				if r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging.Encryption.DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryption != nil {
+					encryptionType := shared.DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryptionEncryptionType(r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging.Encryption.DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryption.EncryptionType.ValueString())
+					destinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryption = &shared.DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryption{
+						EncryptionType: encryptionType,
+					}
+				}
+				if destinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryption != nil {
+					encryption = &shared.DestinationSnowflakeDataStagingMethodAWSS3StagingEncryption{
+						DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryption: destinationSnowflakeDataStagingMethodAWSS3StagingEncryptionNoEncryption,
+					}
+				}
+				var destinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryption *shared.DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryption
+				if r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging.Encryption.DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryption != nil {
+					encryptionType1 := shared.DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionType(r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging.Encryption.DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryption.EncryptionType.ValueString())
+					keyEncryptingKey := new(string)
+					if !r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging.Encryption.DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryption.KeyEncryptingKey.IsUnknown() && !r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging.Encryption.DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryption.KeyEncryptingKey.IsNull() {
+						*keyEncryptingKey = r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging.Encryption.DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryption.KeyEncryptingKey.ValueString()
+					} else {
+						keyEncryptingKey = nil
+					}
+					destinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryption = &shared.DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryption{
+						EncryptionType:   encryptionType1,
+						KeyEncryptingKey: keyEncryptingKey,
+					}
+				}
+				if destinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryption != nil {
+					encryption = &shared.DestinationSnowflakeDataStagingMethodAWSS3StagingEncryption{
+						DestinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryption: destinationSnowflakeDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryption,
+					}
+				}
+			}
+			fileNamePattern := new(string)
+			if !r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging.FileNamePattern.IsUnknown() && !r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging.FileNamePattern.IsNull() {
+				*fileNamePattern = r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging.FileNamePattern.ValueString()
+			} else {
+				fileNamePattern = nil
+			}
+			method2 := shared.DestinationSnowflakeDataStagingMethodAWSS3StagingMethod(r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging.Method.ValueString())
+			purgeStagingData := new(bool)
+			if !r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging.PurgeStagingData.IsUnknown() && !r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging.PurgeStagingData.IsNull() {
+				*purgeStagingData = r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging.PurgeStagingData.ValueBool()
+			} else {
+				purgeStagingData = nil
+			}
+			s3BucketName := r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging.S3BucketName.ValueString()
+			s3BucketRegion := new(shared.DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegion)
+			if !r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging.S3BucketRegion.IsUnknown() && !r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging.S3BucketRegion.IsNull() {
+				*s3BucketRegion = shared.DestinationSnowflakeDataStagingMethodAWSS3StagingS3BucketRegion(r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging.S3BucketRegion.ValueString())
+			} else {
+				s3BucketRegion = nil
+			}
+			secretAccessKey := r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging.SecretAccessKey.ValueString()
+			destinationSnowflakeDataStagingMethodAWSS3Staging = &shared.DestinationSnowflakeDataStagingMethodAWSS3Staging{
+				AccessKeyID:      accessKeyID,
+				Encryption:       encryption,
+				FileNamePattern:  fileNamePattern,
+				Method:           method2,
+				PurgeStagingData: purgeStagingData,
+				S3BucketName:     s3BucketName,
+				S3BucketRegion:   s3BucketRegion,
+				SecretAccessKey:  secretAccessKey,
+			}
 		}
-	}
-	if destinationSnowflakeDataStagingMethodAWSS3Staging != nil {
-		loadingMethod = &shared.DestinationSnowflakeDataStagingMethod{
-			DestinationSnowflakeDataStagingMethodAWSS3Staging: destinationSnowflakeDataStagingMethodAWSS3Staging,
+		if destinationSnowflakeDataStagingMethodAWSS3Staging != nil {
+			loadingMethod = &shared.DestinationSnowflakeDataStagingMethod{
+				DestinationSnowflakeDataStagingMethodAWSS3Staging: destinationSnowflakeDataStagingMethodAWSS3Staging,
+			}
 		}
-	}
-	var destinationSnowflakeDataStagingMethodGoogleCloudStorageStaging *shared.DestinationSnowflakeDataStagingMethodGoogleCloudStorageStaging
-	if r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodSelectAnotherOption != nil {
-		method3 := shared.DestinationSnowflakeDataStagingMethodGoogleCloudStorageStagingMethod(r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodSelectAnotherOption.Method.ValueString())
-		destinationSnowflakeDataStagingMethodGoogleCloudStorageStaging = &shared.DestinationSnowflakeDataStagingMethodGoogleCloudStorageStaging{
-			Method: method3,
+		var destinationSnowflakeDataStagingMethodGoogleCloudStorageStaging *shared.DestinationSnowflakeDataStagingMethodGoogleCloudStorageStaging
+		if r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodGoogleCloudStorageStaging != nil {
+			bucketName := r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodGoogleCloudStorageStaging.BucketName.ValueString()
+			credentialsJSON := r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodGoogleCloudStorageStaging.CredentialsJSON.ValueString()
+			method3 := shared.DestinationSnowflakeDataStagingMethodGoogleCloudStorageStagingMethod(r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodGoogleCloudStorageStaging.Method.ValueString())
+			projectID := r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodGoogleCloudStorageStaging.ProjectID.ValueString()
+			destinationSnowflakeDataStagingMethodGoogleCloudStorageStaging = &shared.DestinationSnowflakeDataStagingMethodGoogleCloudStorageStaging{
+				BucketName:      bucketName,
+				CredentialsJSON: credentialsJSON,
+				Method:          method3,
+				ProjectID:       projectID,
+			}
 		}
-	}
-	if destinationSnowflakeDataStagingMethodGoogleCloudStorageStaging != nil {
-		loadingMethod = &shared.DestinationSnowflakeDataStagingMethod{
-			DestinationSnowflakeDataStagingMethodGoogleCloudStorageStaging: destinationSnowflakeDataStagingMethodGoogleCloudStorageStaging,
+		if destinationSnowflakeDataStagingMethodGoogleCloudStorageStaging != nil {
+			loadingMethod = &shared.DestinationSnowflakeDataStagingMethod{
+				DestinationSnowflakeDataStagingMethodGoogleCloudStorageStaging: destinationSnowflakeDataStagingMethodGoogleCloudStorageStaging,
+			}
 		}
 	}
 	role := r.Configuration.Role.ValueString()
@@ -160,57 +259,86 @@ func (r *DestinationSnowflakeResourceModel) ToGetSDKType() *shared.DestinationSn
 
 func (r *DestinationSnowflakeResourceModel) ToUpdateSDKType() *shared.DestinationSnowflakePutRequest {
 	var credentials *shared.DestinationSnowflakeUpdateAuthorizationMethod
-	var destinationSnowflakeUpdateAuthorizationMethodOAuth20 *shared.DestinationSnowflakeUpdateAuthorizationMethodOAuth20
-	if r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication != nil {
-		authType := new(shared.DestinationSnowflakeUpdateAuthorizationMethodOAuth20AuthType)
-		if !r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication.AuthType.IsUnknown() && !r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication.AuthType.IsNull() {
-			*authType = shared.DestinationSnowflakeUpdateAuthorizationMethodOAuth20AuthType(r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication.AuthType.ValueString())
-		} else {
-			authType = nil
+	if r.Configuration.Credentials != nil {
+		var destinationSnowflakeUpdateAuthorizationMethodOAuth20 *shared.DestinationSnowflakeUpdateAuthorizationMethodOAuth20
+		if r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodOAuth20 != nil {
+			accessToken := r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodOAuth20.AccessToken.ValueString()
+			authType := new(shared.DestinationSnowflakeUpdateAuthorizationMethodOAuth20AuthType)
+			if !r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodOAuth20.AuthType.IsUnknown() && !r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodOAuth20.AuthType.IsNull() {
+				*authType = shared.DestinationSnowflakeUpdateAuthorizationMethodOAuth20AuthType(r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodOAuth20.AuthType.ValueString())
+			} else {
+				authType = nil
+			}
+			clientID := new(string)
+			if !r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodOAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodOAuth20.ClientID.IsNull() {
+				*clientID = r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodOAuth20.ClientID.ValueString()
+			} else {
+				clientID = nil
+			}
+			clientSecret := new(string)
+			if !r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodOAuth20.ClientSecret.IsUnknown() && !r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodOAuth20.ClientSecret.IsNull() {
+				*clientSecret = r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodOAuth20.ClientSecret.ValueString()
+			} else {
+				clientSecret = nil
+			}
+			refreshToken := r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodOAuth20.RefreshToken.ValueString()
+			destinationSnowflakeUpdateAuthorizationMethodOAuth20 = &shared.DestinationSnowflakeUpdateAuthorizationMethodOAuth20{
+				AccessToken:  accessToken,
+				AuthType:     authType,
+				ClientID:     clientID,
+				ClientSecret: clientSecret,
+				RefreshToken: refreshToken,
+			}
 		}
-		destinationSnowflakeUpdateAuthorizationMethodOAuth20 = &shared.DestinationSnowflakeUpdateAuthorizationMethodOAuth20{
-			AuthType: authType,
+		if destinationSnowflakeUpdateAuthorizationMethodOAuth20 != nil {
+			credentials = &shared.DestinationSnowflakeUpdateAuthorizationMethod{
+				DestinationSnowflakeUpdateAuthorizationMethodOAuth20: destinationSnowflakeUpdateAuthorizationMethodOAuth20,
+			}
 		}
-	}
-	if destinationSnowflakeUpdateAuthorizationMethodOAuth20 != nil {
-		credentials = &shared.DestinationSnowflakeUpdateAuthorizationMethod{
-			DestinationSnowflakeUpdateAuthorizationMethodOAuth20: destinationSnowflakeUpdateAuthorizationMethodOAuth20,
+		var destinationSnowflakeUpdateAuthorizationMethodKeyPairAuthentication *shared.DestinationSnowflakeUpdateAuthorizationMethodKeyPairAuthentication
+		if r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodKeyPairAuthentication != nil {
+			authType1 := new(shared.DestinationSnowflakeUpdateAuthorizationMethodKeyPairAuthenticationAuthType)
+			if !r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodKeyPairAuthentication.AuthType.IsUnknown() && !r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodKeyPairAuthentication.AuthType.IsNull() {
+				*authType1 = shared.DestinationSnowflakeUpdateAuthorizationMethodKeyPairAuthenticationAuthType(r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodKeyPairAuthentication.AuthType.ValueString())
+			} else {
+				authType1 = nil
+			}
+			privateKey := r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodKeyPairAuthentication.PrivateKey.ValueString()
+			privateKeyPassword := new(string)
+			if !r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodKeyPairAuthentication.PrivateKeyPassword.IsUnknown() && !r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodKeyPairAuthentication.PrivateKeyPassword.IsNull() {
+				*privateKeyPassword = r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodKeyPairAuthentication.PrivateKeyPassword.ValueString()
+			} else {
+				privateKeyPassword = nil
+			}
+			destinationSnowflakeUpdateAuthorizationMethodKeyPairAuthentication = &shared.DestinationSnowflakeUpdateAuthorizationMethodKeyPairAuthentication{
+				AuthType:           authType1,
+				PrivateKey:         privateKey,
+				PrivateKeyPassword: privateKeyPassword,
+			}
 		}
-	}
-	var destinationSnowflakeUpdateAuthorizationMethodKeyPairAuthentication *shared.DestinationSnowflakeUpdateAuthorizationMethodKeyPairAuthentication
-	if r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20 != nil {
-		authType1 := new(shared.DestinationSnowflakeUpdateAuthorizationMethodKeyPairAuthenticationAuthType)
-		if !r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.AuthType.IsUnknown() && !r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.AuthType.IsNull() {
-			*authType1 = shared.DestinationSnowflakeUpdateAuthorizationMethodKeyPairAuthenticationAuthType(r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodOAuth20.AuthType.ValueString())
-		} else {
-			authType1 = nil
+		if destinationSnowflakeUpdateAuthorizationMethodKeyPairAuthentication != nil {
+			credentials = &shared.DestinationSnowflakeUpdateAuthorizationMethod{
+				DestinationSnowflakeUpdateAuthorizationMethodKeyPairAuthentication: destinationSnowflakeUpdateAuthorizationMethodKeyPairAuthentication,
+			}
 		}
-		destinationSnowflakeUpdateAuthorizationMethodKeyPairAuthentication = &shared.DestinationSnowflakeUpdateAuthorizationMethodKeyPairAuthentication{
-			AuthType: authType1,
+		var destinationSnowflakeUpdateAuthorizationMethodUsernameAndPassword *shared.DestinationSnowflakeUpdateAuthorizationMethodUsernameAndPassword
+		if r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodUsernameAndPassword != nil {
+			authType2 := new(shared.DestinationSnowflakeUpdateAuthorizationMethodUsernameAndPasswordAuthType)
+			if !r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodUsernameAndPassword.AuthType.IsUnknown() && !r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodUsernameAndPassword.AuthType.IsNull() {
+				*authType2 = shared.DestinationSnowflakeUpdateAuthorizationMethodUsernameAndPasswordAuthType(r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodUsernameAndPassword.AuthType.ValueString())
+			} else {
+				authType2 = nil
+			}
+			password := r.Configuration.Credentials.DestinationSnowflakeUpdateAuthorizationMethodUsernameAndPassword.Password.ValueString()
+			destinationSnowflakeUpdateAuthorizationMethodUsernameAndPassword = &shared.DestinationSnowflakeUpdateAuthorizationMethodUsernameAndPassword{
+				AuthType: authType2,
+				Password: password,
+			}
 		}
-	}
-	if destinationSnowflakeUpdateAuthorizationMethodKeyPairAuthentication != nil {
-		credentials = &shared.DestinationSnowflakeUpdateAuthorizationMethod{
-			DestinationSnowflakeUpdateAuthorizationMethodKeyPairAuthentication: destinationSnowflakeUpdateAuthorizationMethodKeyPairAuthentication,
-		}
-	}
-	var destinationSnowflakeUpdateAuthorizationMethodUsernameAndPassword *shared.DestinationSnowflakeUpdateAuthorizationMethodUsernameAndPassword
-	if r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodUsernameAndPassword != nil {
-		authType2 := new(shared.DestinationSnowflakeUpdateAuthorizationMethodUsernameAndPasswordAuthType)
-		if !r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodUsernameAndPassword.AuthType.IsUnknown() && !r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodUsernameAndPassword.AuthType.IsNull() {
-			*authType2 = shared.DestinationSnowflakeUpdateAuthorizationMethodUsernameAndPasswordAuthType(r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodUsernameAndPassword.AuthType.ValueString())
-		} else {
-			authType2 = nil
-		}
-		password := r.Configuration.Credentials.DestinationSnowflakeAuthorizationMethodUsernameAndPassword.Password.ValueString()
-		destinationSnowflakeUpdateAuthorizationMethodUsernameAndPassword = &shared.DestinationSnowflakeUpdateAuthorizationMethodUsernameAndPassword{
-			AuthType: authType2,
-			Password: password,
-		}
-	}
-	if destinationSnowflakeUpdateAuthorizationMethodUsernameAndPassword != nil {
-		credentials = &shared.DestinationSnowflakeUpdateAuthorizationMethod{
-			DestinationSnowflakeUpdateAuthorizationMethodUsernameAndPassword: destinationSnowflakeUpdateAuthorizationMethodUsernameAndPassword,
+		if destinationSnowflakeUpdateAuthorizationMethodUsernameAndPassword != nil {
+			credentials = &shared.DestinationSnowflakeUpdateAuthorizationMethod{
+				DestinationSnowflakeUpdateAuthorizationMethodUsernameAndPassword: destinationSnowflakeUpdateAuthorizationMethodUsernameAndPassword,
+			}
 		}
 	}
 	database := r.Configuration.Database.ValueString()
@@ -228,52 +356,122 @@ func (r *DestinationSnowflakeResourceModel) ToUpdateSDKType() *shared.Destinatio
 		jdbcURLParams = nil
 	}
 	var loadingMethod *shared.DestinationSnowflakeUpdateDataStagingMethod
-	var destinationSnowflakeUpdateDataStagingMethodSelectAnotherOption *shared.DestinationSnowflakeUpdateDataStagingMethodSelectAnotherOption
-	if r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodRecommendedInternalStaging != nil {
-		method := shared.DestinationSnowflakeUpdateDataStagingMethodSelectAnotherOptionMethod(r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodRecommendedInternalStaging.Method.ValueString())
-		destinationSnowflakeUpdateDataStagingMethodSelectAnotherOption = &shared.DestinationSnowflakeUpdateDataStagingMethodSelectAnotherOption{
-			Method: method,
+	if r.Configuration.LoadingMethod != nil {
+		var destinationSnowflakeUpdateDataStagingMethodSelectAnotherOption *shared.DestinationSnowflakeUpdateDataStagingMethodSelectAnotherOption
+		if r.Configuration.LoadingMethod.DestinationSnowflakeUpdateDataStagingMethodSelectAnotherOption != nil {
+			method := shared.DestinationSnowflakeUpdateDataStagingMethodSelectAnotherOptionMethod(r.Configuration.LoadingMethod.DestinationSnowflakeUpdateDataStagingMethodSelectAnotherOption.Method.ValueString())
+			destinationSnowflakeUpdateDataStagingMethodSelectAnotherOption = &shared.DestinationSnowflakeUpdateDataStagingMethodSelectAnotherOption{
+				Method: method,
+			}
 		}
-	}
-	if destinationSnowflakeUpdateDataStagingMethodSelectAnotherOption != nil {
-		loadingMethod = &shared.DestinationSnowflakeUpdateDataStagingMethod{
-			DestinationSnowflakeUpdateDataStagingMethodSelectAnotherOption: destinationSnowflakeUpdateDataStagingMethodSelectAnotherOption,
+		if destinationSnowflakeUpdateDataStagingMethodSelectAnotherOption != nil {
+			loadingMethod = &shared.DestinationSnowflakeUpdateDataStagingMethod{
+				DestinationSnowflakeUpdateDataStagingMethodSelectAnotherOption: destinationSnowflakeUpdateDataStagingMethodSelectAnotherOption,
+			}
 		}
-	}
-	var destinationSnowflakeUpdateDataStagingMethodRecommendedInternalStaging *shared.DestinationSnowflakeUpdateDataStagingMethodRecommendedInternalStaging
-	if r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging != nil {
-		method1 := shared.DestinationSnowflakeUpdateDataStagingMethodRecommendedInternalStagingMethod(r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodAWSS3Staging.Method.ValueString())
-		destinationSnowflakeUpdateDataStagingMethodRecommendedInternalStaging = &shared.DestinationSnowflakeUpdateDataStagingMethodRecommendedInternalStaging{
-			Method: method1,
+		var destinationSnowflakeUpdateDataStagingMethodRecommendedInternalStaging *shared.DestinationSnowflakeUpdateDataStagingMethodRecommendedInternalStaging
+		if r.Configuration.LoadingMethod.DestinationSnowflakeUpdateDataStagingMethodRecommendedInternalStaging != nil {
+			method1 := shared.DestinationSnowflakeUpdateDataStagingMethodRecommendedInternalStagingMethod(r.Configuration.LoadingMethod.DestinationSnowflakeUpdateDataStagingMethodRecommendedInternalStaging.Method.ValueString())
+			destinationSnowflakeUpdateDataStagingMethodRecommendedInternalStaging = &shared.DestinationSnowflakeUpdateDataStagingMethodRecommendedInternalStaging{
+				Method: method1,
+			}
 		}
-	}
-	if destinationSnowflakeUpdateDataStagingMethodRecommendedInternalStaging != nil {
-		loadingMethod = &shared.DestinationSnowflakeUpdateDataStagingMethod{
-			DestinationSnowflakeUpdateDataStagingMethodRecommendedInternalStaging: destinationSnowflakeUpdateDataStagingMethodRecommendedInternalStaging,
+		if destinationSnowflakeUpdateDataStagingMethodRecommendedInternalStaging != nil {
+			loadingMethod = &shared.DestinationSnowflakeUpdateDataStagingMethod{
+				DestinationSnowflakeUpdateDataStagingMethodRecommendedInternalStaging: destinationSnowflakeUpdateDataStagingMethodRecommendedInternalStaging,
+			}
 		}
-	}
-	var destinationSnowflakeUpdateDataStagingMethodAWSS3Staging *shared.DestinationSnowflakeUpdateDataStagingMethodAWSS3Staging
-	if r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodGoogleCloudStorageStaging != nil {
-		method2 := shared.DestinationSnowflakeUpdateDataStagingMethodAWSS3StagingMethod(r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodGoogleCloudStorageStaging.Method.ValueString())
-		destinationSnowflakeUpdateDataStagingMethodAWSS3Staging = &shared.DestinationSnowflakeUpdateDataStagingMethodAWSS3Staging{
-			Method: method2,
+		var destinationSnowflakeUpdateDataStagingMethodAWSS3Staging *shared.DestinationSnowflakeUpdateDataStagingMethodAWSS3Staging
+		if r.Configuration.LoadingMethod.DestinationSnowflakeUpdateDataStagingMethodAWSS3Staging != nil {
+			accessKeyID := r.Configuration.LoadingMethod.DestinationSnowflakeUpdateDataStagingMethodAWSS3Staging.AccessKeyID.ValueString()
+			var encryption *shared.DestinationSnowflakeUpdateDataStagingMethodAWSS3StagingEncryption
+			if r.Configuration.LoadingMethod.DestinationSnowflakeUpdateDataStagingMethodAWSS3Staging.Encryption != nil {
+				var destinationSnowflakeUpdateDataStagingMethodAWSS3StagingEncryptionNoEncryption *shared.DestinationSnowflakeUpdateDataStagingMethodAWSS3StagingEncryptionNoEncryption
+				if r.Configuration.LoadingMethod.DestinationSnowflakeUpdateDataStagingMethodAWSS3Staging.Encryption.DestinationSnowflakeUpdateDataStagingMethodAWSS3StagingEncryptionNoEncryption != nil {
+					encryptionType := shared.DestinationSnowflakeUpdateDataStagingMethodAWSS3StagingEncryptionNoEncryptionEncryptionType(r.Configuration.LoadingMethod.DestinationSnowflakeUpdateDataStagingMethodAWSS3Staging.Encryption.DestinationSnowflakeUpdateDataStagingMethodAWSS3StagingEncryptionNoEncryption.EncryptionType.ValueString())
+					destinationSnowflakeUpdateDataStagingMethodAWSS3StagingEncryptionNoEncryption = &shared.DestinationSnowflakeUpdateDataStagingMethodAWSS3StagingEncryptionNoEncryption{
+						EncryptionType: encryptionType,
+					}
+				}
+				if destinationSnowflakeUpdateDataStagingMethodAWSS3StagingEncryptionNoEncryption != nil {
+					encryption = &shared.DestinationSnowflakeUpdateDataStagingMethodAWSS3StagingEncryption{
+						DestinationSnowflakeUpdateDataStagingMethodAWSS3StagingEncryptionNoEncryption: destinationSnowflakeUpdateDataStagingMethodAWSS3StagingEncryptionNoEncryption,
+					}
+				}
+				var destinationSnowflakeUpdateDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryption *shared.DestinationSnowflakeUpdateDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryption
+				if r.Configuration.LoadingMethod.DestinationSnowflakeUpdateDataStagingMethodAWSS3Staging.Encryption.DestinationSnowflakeUpdateDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryption != nil {
+					encryptionType1 := shared.DestinationSnowflakeUpdateDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryptionEncryptionType(r.Configuration.LoadingMethod.DestinationSnowflakeUpdateDataStagingMethodAWSS3Staging.Encryption.DestinationSnowflakeUpdateDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryption.EncryptionType.ValueString())
+					keyEncryptingKey := new(string)
+					if !r.Configuration.LoadingMethod.DestinationSnowflakeUpdateDataStagingMethodAWSS3Staging.Encryption.DestinationSnowflakeUpdateDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryption.KeyEncryptingKey.IsUnknown() && !r.Configuration.LoadingMethod.DestinationSnowflakeUpdateDataStagingMethodAWSS3Staging.Encryption.DestinationSnowflakeUpdateDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryption.KeyEncryptingKey.IsNull() {
+						*keyEncryptingKey = r.Configuration.LoadingMethod.DestinationSnowflakeUpdateDataStagingMethodAWSS3Staging.Encryption.DestinationSnowflakeUpdateDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryption.KeyEncryptingKey.ValueString()
+					} else {
+						keyEncryptingKey = nil
+					}
+					destinationSnowflakeUpdateDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryption = &shared.DestinationSnowflakeUpdateDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryption{
+						EncryptionType:   encryptionType1,
+						KeyEncryptingKey: keyEncryptingKey,
+					}
+				}
+				if destinationSnowflakeUpdateDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryption != nil {
+					encryption = &shared.DestinationSnowflakeUpdateDataStagingMethodAWSS3StagingEncryption{
+						DestinationSnowflakeUpdateDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryption: destinationSnowflakeUpdateDataStagingMethodAWSS3StagingEncryptionAESCBCEnvelopeEncryption,
+					}
+				}
+			}
+			fileNamePattern := new(string)
+			if !r.Configuration.LoadingMethod.DestinationSnowflakeUpdateDataStagingMethodAWSS3Staging.FileNamePattern.IsUnknown() && !r.Configuration.LoadingMethod.DestinationSnowflakeUpdateDataStagingMethodAWSS3Staging.FileNamePattern.IsNull() {
+				*fileNamePattern = r.Configuration.LoadingMethod.DestinationSnowflakeUpdateDataStagingMethodAWSS3Staging.FileNamePattern.ValueString()
+			} else {
+				fileNamePattern = nil
+			}
+			method2 := shared.DestinationSnowflakeUpdateDataStagingMethodAWSS3StagingMethod(r.Configuration.LoadingMethod.DestinationSnowflakeUpdateDataStagingMethodAWSS3Staging.Method.ValueString())
+			purgeStagingData := new(bool)
+			if !r.Configuration.LoadingMethod.DestinationSnowflakeUpdateDataStagingMethodAWSS3Staging.PurgeStagingData.IsUnknown() && !r.Configuration.LoadingMethod.DestinationSnowflakeUpdateDataStagingMethodAWSS3Staging.PurgeStagingData.IsNull() {
+				*purgeStagingData = r.Configuration.LoadingMethod.DestinationSnowflakeUpdateDataStagingMethodAWSS3Staging.PurgeStagingData.ValueBool()
+			} else {
+				purgeStagingData = nil
+			}
+			s3BucketName := r.Configuration.LoadingMethod.DestinationSnowflakeUpdateDataStagingMethodAWSS3Staging.S3BucketName.ValueString()
+			s3BucketRegion := new(shared.DestinationSnowflakeUpdateDataStagingMethodAWSS3StagingS3BucketRegion)
+			if !r.Configuration.LoadingMethod.DestinationSnowflakeUpdateDataStagingMethodAWSS3Staging.S3BucketRegion.IsUnknown() && !r.Configuration.LoadingMethod.DestinationSnowflakeUpdateDataStagingMethodAWSS3Staging.S3BucketRegion.IsNull() {
+				*s3BucketRegion = shared.DestinationSnowflakeUpdateDataStagingMethodAWSS3StagingS3BucketRegion(r.Configuration.LoadingMethod.DestinationSnowflakeUpdateDataStagingMethodAWSS3Staging.S3BucketRegion.ValueString())
+			} else {
+				s3BucketRegion = nil
+			}
+			secretAccessKey := r.Configuration.LoadingMethod.DestinationSnowflakeUpdateDataStagingMethodAWSS3Staging.SecretAccessKey.ValueString()
+			destinationSnowflakeUpdateDataStagingMethodAWSS3Staging = &shared.DestinationSnowflakeUpdateDataStagingMethodAWSS3Staging{
+				AccessKeyID:      accessKeyID,
+				Encryption:       encryption,
+				FileNamePattern:  fileNamePattern,
+				Method:           method2,
+				PurgeStagingData: purgeStagingData,
+				S3BucketName:     s3BucketName,
+				S3BucketRegion:   s3BucketRegion,
+				SecretAccessKey:  secretAccessKey,
+			}
 		}
-	}
-	if destinationSnowflakeUpdateDataStagingMethodAWSS3Staging != nil {
-		loadingMethod = &shared.DestinationSnowflakeUpdateDataStagingMethod{
-			DestinationSnowflakeUpdateDataStagingMethodAWSS3Staging: destinationSnowflakeUpdateDataStagingMethodAWSS3Staging,
+		if destinationSnowflakeUpdateDataStagingMethodAWSS3Staging != nil {
+			loadingMethod = &shared.DestinationSnowflakeUpdateDataStagingMethod{
+				DestinationSnowflakeUpdateDataStagingMethodAWSS3Staging: destinationSnowflakeUpdateDataStagingMethodAWSS3Staging,
+			}
 		}
-	}
-	var destinationSnowflakeUpdateDataStagingMethodGoogleCloudStorageStaging *shared.DestinationSnowflakeUpdateDataStagingMethodGoogleCloudStorageStaging
-	if r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodSelectAnotherOption != nil {
-		method3 := shared.DestinationSnowflakeUpdateDataStagingMethodGoogleCloudStorageStagingMethod(r.Configuration.LoadingMethod.DestinationSnowflakeDataStagingMethodSelectAnotherOption.Method.ValueString())
-		destinationSnowflakeUpdateDataStagingMethodGoogleCloudStorageStaging = &shared.DestinationSnowflakeUpdateDataStagingMethodGoogleCloudStorageStaging{
-			Method: method3,
+		var destinationSnowflakeUpdateDataStagingMethodGoogleCloudStorageStaging *shared.DestinationSnowflakeUpdateDataStagingMethodGoogleCloudStorageStaging
+		if r.Configuration.LoadingMethod.DestinationSnowflakeUpdateDataStagingMethodGoogleCloudStorageStaging != nil {
+			bucketName := r.Configuration.LoadingMethod.DestinationSnowflakeUpdateDataStagingMethodGoogleCloudStorageStaging.BucketName.ValueString()
+			credentialsJSON := r.Configuration.LoadingMethod.DestinationSnowflakeUpdateDataStagingMethodGoogleCloudStorageStaging.CredentialsJSON.ValueString()
+			method3 := shared.DestinationSnowflakeUpdateDataStagingMethodGoogleCloudStorageStagingMethod(r.Configuration.LoadingMethod.DestinationSnowflakeUpdateDataStagingMethodGoogleCloudStorageStaging.Method.ValueString())
+			projectID := r.Configuration.LoadingMethod.DestinationSnowflakeUpdateDataStagingMethodGoogleCloudStorageStaging.ProjectID.ValueString()
+			destinationSnowflakeUpdateDataStagingMethodGoogleCloudStorageStaging = &shared.DestinationSnowflakeUpdateDataStagingMethodGoogleCloudStorageStaging{
+				BucketName:      bucketName,
+				CredentialsJSON: credentialsJSON,
+				Method:          method3,
+				ProjectID:       projectID,
+			}
 		}
-	}
-	if destinationSnowflakeUpdateDataStagingMethodGoogleCloudStorageStaging != nil {
-		loadingMethod = &shared.DestinationSnowflakeUpdateDataStagingMethod{
-			DestinationSnowflakeUpdateDataStagingMethodGoogleCloudStorageStaging: destinationSnowflakeUpdateDataStagingMethodGoogleCloudStorageStaging,
+		if destinationSnowflakeUpdateDataStagingMethodGoogleCloudStorageStaging != nil {
+			loadingMethod = &shared.DestinationSnowflakeUpdateDataStagingMethod{
+				DestinationSnowflakeUpdateDataStagingMethodGoogleCloudStorageStaging: destinationSnowflakeUpdateDataStagingMethodGoogleCloudStorageStaging,
+			}
 		}
 	}
 	role := r.Configuration.Role.ValueString()

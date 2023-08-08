@@ -69,7 +69,7 @@ func (r *SourceDixaResource) Schema(ctx context.Context, req resource.SchemaRequ
 								"dixa",
 							),
 						},
-						Description: `must be one of [dixa]`,
+						Description: `must be one of ["dixa"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required:    true,

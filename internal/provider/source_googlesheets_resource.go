@@ -68,7 +68,7 @@ func (r *SourceGoogleSheetsResource) Schema(ctx context.Context, req resource.Sc
 												"Client",
 											),
 										},
-										Description: `must be one of [Client]`,
+										Description: `must be one of ["Client"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -95,7 +95,7 @@ func (r *SourceGoogleSheetsResource) Schema(ctx context.Context, req resource.Sc
 												"Service",
 											),
 										},
-										Description: `must be one of [Service]`,
+										Description: `must be one of ["Service"]`,
 									},
 									"service_account_info": schema.StringAttribute{
 										Required:    true,
@@ -114,7 +114,7 @@ func (r *SourceGoogleSheetsResource) Schema(ctx context.Context, req resource.Sc
 												"Client",
 											),
 										},
-										Description: `must be one of [Client]`,
+										Description: `must be one of ["Client"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -141,7 +141,7 @@ func (r *SourceGoogleSheetsResource) Schema(ctx context.Context, req resource.Sc
 												"Service",
 											),
 										},
-										Description: `must be one of [Service]`,
+										Description: `must be one of ["Service"]`,
 									},
 									"service_account_info": schema.StringAttribute{
 										Required:    true,
@@ -167,7 +167,7 @@ func (r *SourceGoogleSheetsResource) Schema(ctx context.Context, req resource.Sc
 								"google-sheets",
 							),
 						},
-						Description: `must be one of [google-sheets]`,
+						Description: `must be one of ["google-sheets"]`,
 					},
 					"spreadsheet_id": schema.StringAttribute{
 						Required:    true,

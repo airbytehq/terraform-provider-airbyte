@@ -65,7 +65,7 @@ func (r *SourceQualarooResource) Schema(ctx context.Context, req resource.Schema
 								"qualaroo",
 							),
 						},
-						Description: `must be one of [qualaroo]`,
+						Description: `must be one of ["qualaroo"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required:    true,

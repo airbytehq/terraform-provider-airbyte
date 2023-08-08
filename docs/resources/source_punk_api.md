@@ -17,11 +17,12 @@ resource "airbyte_source_punk_api" "my_source_punkapi" {
   configuration = {
     brewed_after  = "MM-YYYY"
     brewed_before = "MM-YYYY"
-    id            = 1
+    id            = 22
     source_type   = "punk-api"
   }
-  name         = "Betty Hirthe"
-  workspace_id = "749366ac-8ee0-4f2b-b195-88d40d03f3de"
+  name         = "Faith Doyle"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "ba297be3-e90b-4c40-9f86-8fd52405cb33"
 }
 ```
 
@@ -50,7 +51,7 @@ Required:
 
 - `brewed_after` (String) To extract specific data with Unique ID
 - `brewed_before` (String) To extract specific data with Unique ID
-- `source_type` (String) must be one of [punk-api]
+- `source_type` (String) must be one of ["punk-api"]
 
 Optional:
 

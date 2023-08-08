@@ -19,24 +19,28 @@ resource "airbyte_destination_aws_datalake" "my_destination_awsdatalake" {
     bucket_name    = "...my_bucket_name..."
     bucket_prefix  = "...my_bucket_prefix..."
     credentials = {
-      credentials_title = "IAM Role"
-      role_arn          = "...my_role_arn..."
+      destination_aws_datalake_authentication_mode_iam_role = {
+        credentials_title = "IAM Role"
+        role_arn          = "...my_role_arn..."
+      }
     }
     destination_type = "aws-datalake"
     format = {
-      compression_codec = "UNCOMPRESSED"
-      format_type       = "JSONL"
+      destination_aws_datalake_output_format_wildcard_json_lines_newline_delimited_json = {
+        compression_codec = "UNCOMPRESSED"
+        format_type       = "JSONL"
+      }
     }
     glue_catalog_float_as_decimal             = false
     lakeformation_database_default_tag_key    = "pii_level"
     lakeformation_database_default_tag_values = "private,public"
     lakeformation_database_name               = "...my_lakeformation_database_name..."
-    lakeformation_governed_tables             = true
-    partitioning                              = "YEAR/MONTH/DAY"
-    region                                    = "us-gov-east-1"
+    lakeformation_governed_tables             = false
+    partitioning                              = "DAY"
+    region                                    = "us-west-2"
   }
-  name         = "Angie Durgan"
-  workspace_id = "fa946773-9251-4aa5-ac3f-5ad019da1ffe"
+  name         = "Gloria Padberg"
+  workspace_id = "2c3f5ad0-19da-41ff-a78f-097b0074f154"
 }
 ```
 
@@ -61,9 +65,9 @@ Required:
 
 - `bucket_name` (String) The name of the S3 bucket. Read more <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/create-bucket-overview.html">here</a>.
 - `credentials` (Attributes) Choose How to Authenticate to AWS. (see [below for nested schema](#nestedatt--configuration--credentials))
-- `destination_type` (String) must be one of [aws-datalake]
+- `destination_type` (String) must be one of ["aws-datalake"]
 - `lakeformation_database_name` (String) The default database this destination will use to create tables in per stream. Can be changed per connection by customizing the namespace.
-- `region` (String) must be one of [, us-east-1, us-east-2, us-west-1, us-west-2, af-south-1, ap-east-1, ap-south-1, ap-northeast-1, ap-northeast-2, ap-northeast-3, ap-southeast-1, ap-southeast-2, ca-central-1, cn-north-1, cn-northwest-1, eu-central-1, eu-north-1, eu-south-1, eu-west-1, eu-west-2, eu-west-3, sa-east-1, me-south-1, us-gov-east-1, us-gov-west-1]
+- `region` (String) must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]
 The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes.
 
 Optional:
@@ -75,7 +79,7 @@ Optional:
 - `lakeformation_database_default_tag_key` (String) Add a default tag key to databases created by this destination
 - `lakeformation_database_default_tag_values` (String) Add default values for the `Tag Key` to databases created by this destination. Comma separate for multiple values.
 - `lakeformation_governed_tables` (Boolean) Whether to create tables as LF governed tables.
-- `partitioning` (String) must be one of [NO PARTITIONING, DATE, YEAR, MONTH, DAY, YEAR/MONTH, YEAR/MONTH/DAY]
+- `partitioning` (String) must be one of ["NO PARTITIONING", "DATE", "YEAR", "MONTH", "DAY", "YEAR/MONTH", "YEAR/MONTH/DAY"]
 Partition data by cursor fields when a cursor field is a date
 
 <a id="nestedatt--configuration--credentials"></a>
@@ -93,7 +97,7 @@ Optional:
 
 Required:
 
-- `credentials_title` (String) must be one of [IAM Role]
+- `credentials_title` (String) must be one of ["IAM Role"]
 Name of the credentials
 - `role_arn` (String) Will assume this role to write data to s3
 
@@ -105,7 +109,7 @@ Required:
 
 - `aws_access_key_id` (String) AWS User Access Key Id
 - `aws_secret_access_key` (String) Secret Access Key
-- `credentials_title` (String) must be one of [IAM User]
+- `credentials_title` (String) must be one of ["IAM User"]
 Name of the credentials
 
 
@@ -114,7 +118,7 @@ Name of the credentials
 
 Required:
 
-- `credentials_title` (String) must be one of [IAM Role]
+- `credentials_title` (String) must be one of ["IAM Role"]
 Name of the credentials
 - `role_arn` (String) Will assume this role to write data to s3
 
@@ -126,7 +130,7 @@ Required:
 
 - `aws_access_key_id` (String) AWS User Access Key Id
 - `aws_secret_access_key` (String) Secret Access Key
-- `credentials_title` (String) must be one of [IAM User]
+- `credentials_title` (String) must be one of ["IAM User"]
 Name of the credentials
 
 
@@ -146,11 +150,11 @@ Optional:
 
 Required:
 
-- `format_type` (String) must be one of [JSONL]
+- `format_type` (String) must be one of ["JSONL"]
 
 Optional:
 
-- `compression_codec` (String) must be one of [UNCOMPRESSED, GZIP]
+- `compression_codec` (String) must be one of ["UNCOMPRESSED", "GZIP"]
 The compression algorithm used to compress data.
 
 
@@ -159,11 +163,11 @@ The compression algorithm used to compress data.
 
 Required:
 
-- `format_type` (String) must be one of [Parquet]
+- `format_type` (String) must be one of ["Parquet"]
 
 Optional:
 
-- `compression_codec` (String) must be one of [UNCOMPRESSED, SNAPPY, GZIP, ZSTD]
+- `compression_codec` (String) must be one of ["UNCOMPRESSED", "SNAPPY", "GZIP", "ZSTD"]
 The compression algorithm used to compress data.
 
 
@@ -172,11 +176,11 @@ The compression algorithm used to compress data.
 
 Required:
 
-- `format_type` (String) must be one of [JSONL]
+- `format_type` (String) must be one of ["JSONL"]
 
 Optional:
 
-- `compression_codec` (String) must be one of [UNCOMPRESSED, GZIP]
+- `compression_codec` (String) must be one of ["UNCOMPRESSED", "GZIP"]
 The compression algorithm used to compress data.
 
 
@@ -185,11 +189,11 @@ The compression algorithm used to compress data.
 
 Required:
 
-- `format_type` (String) must be one of [Parquet]
+- `format_type` (String) must be one of ["Parquet"]
 
 Optional:
 
-- `compression_codec` (String) must be one of [UNCOMPRESSED, SNAPPY, GZIP, ZSTD]
+- `compression_codec` (String) must be one of ["UNCOMPRESSED", "SNAPPY", "GZIP", "ZSTD"]
 The compression algorithm used to compress data.
 
 

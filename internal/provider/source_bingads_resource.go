@@ -62,7 +62,7 @@ func (r *SourceBingAdsResource) Schema(ctx context.Context, req resource.SchemaR
 								"oauth2.0",
 							),
 						},
-						Description: `must be one of [oauth2.0]`,
+						Description: `must be one of ["oauth2.0"]`,
 					},
 					"client_id": schema.StringAttribute{
 						Required:    true,
@@ -98,7 +98,7 @@ func (r *SourceBingAdsResource) Schema(ctx context.Context, req resource.SchemaR
 								"bing-ads",
 							),
 						},
-						Description: `must be one of [bing-ads]`,
+						Description: `must be one of ["bing-ads"]`,
 					},
 					"tenant_id": schema.StringAttribute{
 						Optional:    true,

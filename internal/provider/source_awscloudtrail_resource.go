@@ -74,7 +74,7 @@ func (r *SourceAwsCloudtrailResource) Schema(ctx context.Context, req resource.S
 								"aws-cloudtrail",
 							),
 						},
-						Description: `must be one of [aws-cloudtrail]`,
+						Description: `must be one of ["aws-cloudtrail"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

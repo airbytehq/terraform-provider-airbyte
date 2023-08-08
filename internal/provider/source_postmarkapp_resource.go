@@ -61,7 +61,7 @@ func (r *SourcePostmarkappResource) Schema(ctx context.Context, req resource.Sch
 								"postmarkapp",
 							),
 						},
-						Description: `must be one of [postmarkapp]`,
+						Description: `must be one of ["postmarkapp"]`,
 					},
 					"x_postmark_account_token": schema.StringAttribute{
 						Required:    true,

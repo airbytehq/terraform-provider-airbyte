@@ -17,10 +17,21 @@ func (r *SourceE2eTestCloudResourceModel) ToCreateSDKType() *shared.SourceE2eTes
 	}
 	var mockCatalog shared.SourceE2eTestCloudMockCatalog
 	var sourceE2eTestCloudMockCatalogSingleSchema *shared.SourceE2eTestCloudMockCatalogSingleSchema
-	if r.Configuration.MockCatalog.SourceE2eTestCloudMockCatalogMultiSchema != nil {
-		type1 := shared.SourceE2eTestCloudMockCatalogSingleSchemaType(r.Configuration.MockCatalog.SourceE2eTestCloudMockCatalogMultiSchema.Type.ValueString())
+	if r.Configuration.MockCatalog.SourceE2eTestCloudMockCatalogSingleSchema != nil {
+		streamDuplication := new(int64)
+		if !r.Configuration.MockCatalog.SourceE2eTestCloudMockCatalogSingleSchema.StreamDuplication.IsUnknown() && !r.Configuration.MockCatalog.SourceE2eTestCloudMockCatalogSingleSchema.StreamDuplication.IsNull() {
+			*streamDuplication = r.Configuration.MockCatalog.SourceE2eTestCloudMockCatalogSingleSchema.StreamDuplication.ValueInt64()
+		} else {
+			streamDuplication = nil
+		}
+		streamName := r.Configuration.MockCatalog.SourceE2eTestCloudMockCatalogSingleSchema.StreamName.ValueString()
+		streamSchema := r.Configuration.MockCatalog.SourceE2eTestCloudMockCatalogSingleSchema.StreamSchema.ValueString()
+		typeVar := shared.SourceE2eTestCloudMockCatalogSingleSchemaType(r.Configuration.MockCatalog.SourceE2eTestCloudMockCatalogSingleSchema.Type.ValueString())
 		sourceE2eTestCloudMockCatalogSingleSchema = &shared.SourceE2eTestCloudMockCatalogSingleSchema{
-			Type: type1,
+			StreamDuplication: streamDuplication,
+			StreamName:        streamName,
+			StreamSchema:      streamSchema,
+			Type:              typeVar,
 		}
 	}
 	if sourceE2eTestCloudMockCatalogSingleSchema != nil {
@@ -29,10 +40,12 @@ func (r *SourceE2eTestCloudResourceModel) ToCreateSDKType() *shared.SourceE2eTes
 		}
 	}
 	var sourceE2eTestCloudMockCatalogMultiSchema *shared.SourceE2eTestCloudMockCatalogMultiSchema
-	if r.Configuration.MockCatalog.SourceE2eTestCloudMockCatalogSingleSchema != nil {
-		type2 := shared.SourceE2eTestCloudMockCatalogMultiSchemaType(r.Configuration.MockCatalog.SourceE2eTestCloudMockCatalogSingleSchema.Type.ValueString())
+	if r.Configuration.MockCatalog.SourceE2eTestCloudMockCatalogMultiSchema != nil {
+		streamSchemas := r.Configuration.MockCatalog.SourceE2eTestCloudMockCatalogMultiSchema.StreamSchemas.ValueString()
+		typeVar1 := shared.SourceE2eTestCloudMockCatalogMultiSchemaType(r.Configuration.MockCatalog.SourceE2eTestCloudMockCatalogMultiSchema.Type.ValueString())
 		sourceE2eTestCloudMockCatalogMultiSchema = &shared.SourceE2eTestCloudMockCatalogMultiSchema{
-			Type: type2,
+			StreamSchemas: streamSchemas,
+			Type:          typeVar1,
 		}
 	}
 	if sourceE2eTestCloudMockCatalogMultiSchema != nil {
@@ -47,11 +60,11 @@ func (r *SourceE2eTestCloudResourceModel) ToCreateSDKType() *shared.SourceE2eTes
 		seed = nil
 	}
 	sourceType := shared.SourceE2eTestCloudE2eTestCloud(r.Configuration.SourceType.ValueString())
-	type3 := new(shared.SourceE2eTestCloudType)
+	typeVar2 := new(shared.SourceE2eTestCloudType)
 	if !r.Configuration.Type.IsUnknown() && !r.Configuration.Type.IsNull() {
-		*type3 = shared.SourceE2eTestCloudType(r.Configuration.Type.ValueString())
+		*typeVar2 = shared.SourceE2eTestCloudType(r.Configuration.Type.ValueString())
 	} else {
-		type3 = nil
+		typeVar2 = nil
 	}
 	configuration := shared.SourceE2eTestCloud{
 		MaxMessages:       maxMessages,
@@ -59,7 +72,7 @@ func (r *SourceE2eTestCloudResourceModel) ToCreateSDKType() *shared.SourceE2eTes
 		MockCatalog:       mockCatalog,
 		Seed:              seed,
 		SourceType:        sourceType,
-		Type:              type3,
+		Type:              typeVar2,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -93,10 +106,21 @@ func (r *SourceE2eTestCloudResourceModel) ToUpdateSDKType() *shared.SourceE2eTes
 	}
 	var mockCatalog shared.SourceE2eTestCloudUpdateMockCatalog
 	var sourceE2eTestCloudUpdateMockCatalogSingleSchema *shared.SourceE2eTestCloudUpdateMockCatalogSingleSchema
-	if r.Configuration.MockCatalog.SourceE2eTestCloudMockCatalogMultiSchema != nil {
-		type1 := shared.SourceE2eTestCloudUpdateMockCatalogSingleSchemaType(r.Configuration.MockCatalog.SourceE2eTestCloudMockCatalogMultiSchema.Type.ValueString())
+	if r.Configuration.MockCatalog.SourceE2eTestCloudUpdateMockCatalogSingleSchema != nil {
+		streamDuplication := new(int64)
+		if !r.Configuration.MockCatalog.SourceE2eTestCloudUpdateMockCatalogSingleSchema.StreamDuplication.IsUnknown() && !r.Configuration.MockCatalog.SourceE2eTestCloudUpdateMockCatalogSingleSchema.StreamDuplication.IsNull() {
+			*streamDuplication = r.Configuration.MockCatalog.SourceE2eTestCloudUpdateMockCatalogSingleSchema.StreamDuplication.ValueInt64()
+		} else {
+			streamDuplication = nil
+		}
+		streamName := r.Configuration.MockCatalog.SourceE2eTestCloudUpdateMockCatalogSingleSchema.StreamName.ValueString()
+		streamSchema := r.Configuration.MockCatalog.SourceE2eTestCloudUpdateMockCatalogSingleSchema.StreamSchema.ValueString()
+		typeVar := shared.SourceE2eTestCloudUpdateMockCatalogSingleSchemaType(r.Configuration.MockCatalog.SourceE2eTestCloudUpdateMockCatalogSingleSchema.Type.ValueString())
 		sourceE2eTestCloudUpdateMockCatalogSingleSchema = &shared.SourceE2eTestCloudUpdateMockCatalogSingleSchema{
-			Type: type1,
+			StreamDuplication: streamDuplication,
+			StreamName:        streamName,
+			StreamSchema:      streamSchema,
+			Type:              typeVar,
 		}
 	}
 	if sourceE2eTestCloudUpdateMockCatalogSingleSchema != nil {
@@ -105,10 +129,12 @@ func (r *SourceE2eTestCloudResourceModel) ToUpdateSDKType() *shared.SourceE2eTes
 		}
 	}
 	var sourceE2eTestCloudUpdateMockCatalogMultiSchema *shared.SourceE2eTestCloudUpdateMockCatalogMultiSchema
-	if r.Configuration.MockCatalog.SourceE2eTestCloudMockCatalogSingleSchema != nil {
-		type2 := shared.SourceE2eTestCloudUpdateMockCatalogMultiSchemaType(r.Configuration.MockCatalog.SourceE2eTestCloudMockCatalogSingleSchema.Type.ValueString())
+	if r.Configuration.MockCatalog.SourceE2eTestCloudUpdateMockCatalogMultiSchema != nil {
+		streamSchemas := r.Configuration.MockCatalog.SourceE2eTestCloudUpdateMockCatalogMultiSchema.StreamSchemas.ValueString()
+		typeVar1 := shared.SourceE2eTestCloudUpdateMockCatalogMultiSchemaType(r.Configuration.MockCatalog.SourceE2eTestCloudUpdateMockCatalogMultiSchema.Type.ValueString())
 		sourceE2eTestCloudUpdateMockCatalogMultiSchema = &shared.SourceE2eTestCloudUpdateMockCatalogMultiSchema{
-			Type: type2,
+			StreamSchemas: streamSchemas,
+			Type:          typeVar1,
 		}
 	}
 	if sourceE2eTestCloudUpdateMockCatalogMultiSchema != nil {
@@ -122,18 +148,18 @@ func (r *SourceE2eTestCloudResourceModel) ToUpdateSDKType() *shared.SourceE2eTes
 	} else {
 		seed = nil
 	}
-	type3 := new(shared.SourceE2eTestCloudUpdateType)
+	typeVar2 := new(shared.SourceE2eTestCloudUpdateType)
 	if !r.Configuration.Type.IsUnknown() && !r.Configuration.Type.IsNull() {
-		*type3 = shared.SourceE2eTestCloudUpdateType(r.Configuration.Type.ValueString())
+		*typeVar2 = shared.SourceE2eTestCloudUpdateType(r.Configuration.Type.ValueString())
 	} else {
-		type3 = nil
+		typeVar2 = nil
 	}
 	configuration := shared.SourceE2eTestCloudUpdate{
 		MaxMessages:       maxMessages,
 		MessageIntervalMs: messageIntervalMs,
 		MockCatalog:       mockCatalog,
 		Seed:              seed,
-		Type:              type3,
+		Type:              typeVar2,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()

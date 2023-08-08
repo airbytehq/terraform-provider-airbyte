@@ -23,15 +23,19 @@ resource "airbyte_destination_postgres" "my_destination_postgres" {
     port             = 5432
     schema           = "public"
     ssl_mode = {
-      mode = "allow"
+      destination_postgres_ssl_modes_allow = {
+        mode = "allow"
+      }
     }
     tunnel_method = {
-      tunnel_method = "NO_TUNNEL"
+      destination_postgres_ssh_tunnel_method_no_tunnel = {
+        tunnel_method = "NO_TUNNEL"
+      }
     }
-    username = "Marc_Predovic"
+    username = "Gerald.Powlowski46"
   }
-  name         = "Max O'Connell DDS"
-  workspace_id = "e187f86b-c173-4d68-9eee-9526f8d986e8"
+  name         = "Angelina Jenkins"
+  workspace_id = "eee9526f-8d98-46e8-81ea-d4f0e1012563"
 }
 ```
 
@@ -55,7 +59,7 @@ resource "airbyte_destination_postgres" "my_destination_postgres" {
 Required:
 
 - `database` (String) Name of the database.
-- `destination_type` (String) must be one of [postgres]
+- `destination_type` (String) must be one of ["postgres"]
 - `host` (String) Hostname of the database.
 - `port` (Number) Port of the database.
 - `schema` (String) The default schema tables are written to if the source does not specify a namespace. The usual value for this field is "public".
@@ -98,7 +102,7 @@ Optional:
 
 Required:
 
-- `mode` (String) must be one of [allow]
+- `mode` (String) must be one of ["allow"]
 
 
 <a id="nestedatt--configuration--ssl_mode--destination_postgres_ssl_modes_disable"></a>
@@ -106,7 +110,7 @@ Required:
 
 Required:
 
-- `mode` (String) must be one of [disable]
+- `mode` (String) must be one of ["disable"]
 
 
 <a id="nestedatt--configuration--ssl_mode--destination_postgres_ssl_modes_prefer"></a>
@@ -114,7 +118,7 @@ Required:
 
 Required:
 
-- `mode` (String) must be one of [prefer]
+- `mode` (String) must be one of ["prefer"]
 
 
 <a id="nestedatt--configuration--ssl_mode--destination_postgres_ssl_modes_require"></a>
@@ -122,7 +126,7 @@ Required:
 
 Required:
 
-- `mode` (String) must be one of [require]
+- `mode` (String) must be one of ["require"]
 
 
 <a id="nestedatt--configuration--ssl_mode--destination_postgres_ssl_modes_verify_ca"></a>
@@ -131,7 +135,7 @@ Required:
 Required:
 
 - `ca_certificate` (String) CA certificate
-- `mode` (String) must be one of [verify-ca]
+- `mode` (String) must be one of ["verify-ca"]
 
 Optional:
 
@@ -146,7 +150,7 @@ Required:
 - `ca_certificate` (String) CA certificate
 - `client_certificate` (String) Client certificate
 - `client_key` (String) Client key
-- `mode` (String) must be one of [verify-full]
+- `mode` (String) must be one of ["verify-full"]
 
 Optional:
 
@@ -158,7 +162,7 @@ Optional:
 
 Required:
 
-- `mode` (String) must be one of [allow]
+- `mode` (String) must be one of ["allow"]
 
 
 <a id="nestedatt--configuration--ssl_mode--destination_postgres_update_ssl_modes_disable"></a>
@@ -166,7 +170,7 @@ Required:
 
 Required:
 
-- `mode` (String) must be one of [disable]
+- `mode` (String) must be one of ["disable"]
 
 
 <a id="nestedatt--configuration--ssl_mode--destination_postgres_update_ssl_modes_prefer"></a>
@@ -174,7 +178,7 @@ Required:
 
 Required:
 
-- `mode` (String) must be one of [prefer]
+- `mode` (String) must be one of ["prefer"]
 
 
 <a id="nestedatt--configuration--ssl_mode--destination_postgres_update_ssl_modes_require"></a>
@@ -182,7 +186,7 @@ Required:
 
 Required:
 
-- `mode` (String) must be one of [require]
+- `mode` (String) must be one of ["require"]
 
 
 <a id="nestedatt--configuration--ssl_mode--destination_postgres_update_ssl_modes_verify_ca"></a>
@@ -191,7 +195,7 @@ Required:
 Required:
 
 - `ca_certificate` (String) CA certificate
-- `mode` (String) must be one of [verify-ca]
+- `mode` (String) must be one of ["verify-ca"]
 
 Optional:
 
@@ -206,7 +210,7 @@ Required:
 - `ca_certificate` (String) CA certificate
 - `client_certificate` (String) Client certificate
 - `client_key` (String) Client key
-- `mode` (String) must be one of [verify-full]
+- `mode` (String) must be one of ["verify-full"]
 
 Optional:
 
@@ -231,7 +235,7 @@ Optional:
 
 Required:
 
-- `tunnel_method` (String) must be one of [NO_TUNNEL]
+- `tunnel_method` (String) must be one of ["NO_TUNNEL"]
 No ssh tunnel needed to connect to database
 
 
@@ -241,7 +245,7 @@ No ssh tunnel needed to connect to database
 Required:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of [SSH_PASSWORD_AUTH]
+- `tunnel_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
 Connect through a jump server tunnel host using username and password authentication
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
@@ -255,7 +259,7 @@ Required:
 
 - `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of [SSH_KEY_AUTH]
+- `tunnel_method` (String) must be one of ["SSH_KEY_AUTH"]
 Connect through a jump server tunnel host using username and ssh key
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host.
@@ -266,7 +270,7 @@ Connect through a jump server tunnel host using username and ssh key
 
 Required:
 
-- `tunnel_method` (String) must be one of [NO_TUNNEL]
+- `tunnel_method` (String) must be one of ["NO_TUNNEL"]
 No ssh tunnel needed to connect to database
 
 
@@ -276,7 +280,7 @@ No ssh tunnel needed to connect to database
 Required:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of [SSH_PASSWORD_AUTH]
+- `tunnel_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
 Connect through a jump server tunnel host using username and password authentication
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
@@ -290,7 +294,7 @@ Required:
 
 - `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of [SSH_KEY_AUTH]
+- `tunnel_method` (String) must be one of ["SSH_KEY_AUTH"]
 Connect through a jump server tunnel host using username and ssh key
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host.

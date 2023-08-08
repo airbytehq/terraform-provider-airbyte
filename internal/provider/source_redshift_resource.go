@@ -86,7 +86,7 @@ func (r *SourceRedshiftResource) Schema(ctx context.Context, req resource.Schema
 								"redshift",
 							),
 						},
-						Description: `must be one of [redshift]`,
+						Description: `must be one of ["redshift"]`,
 					},
 					"username": schema.StringAttribute{
 						Required:    true,

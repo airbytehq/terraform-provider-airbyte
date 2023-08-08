@@ -69,7 +69,7 @@ func (r *SourceWebflowResource) Schema(ctx context.Context, req resource.SchemaR
 								"webflow",
 							),
 						},
-						Description: `must be one of [webflow]`,
+						Description: `must be one of ["webflow"]`,
 					},
 				},
 			},

@@ -73,7 +73,7 @@ func (r *SourceBambooHrResource) Schema(ctx context.Context, req resource.Schema
 								"bamboo-hr",
 							),
 						},
-						Description: `must be one of [bamboo-hr]`,
+						Description: `must be one of ["bamboo-hr"]`,
 					},
 					"subdomain": schema.StringAttribute{
 						Required:    true,

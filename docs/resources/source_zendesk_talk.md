@@ -16,16 +16,19 @@ SourceZendeskTalk Resource
 resource "airbyte_source_zendesk_talk" "my_source_zendesktalk" {
   configuration = {
     credentials = {
-      api_token = "...my_api_token..."
-      auth_type = "api_token"
-      email     = "Lori99@hotmail.com"
+      source_zendesk_talk_authentication_api_token = {
+        api_token = "...my_api_token..."
+        auth_type = "api_token"
+        email     = "Elliott.Feeney@yahoo.com"
+      }
     }
     source_type = "zendesk-talk"
     start_date  = "2020-10-15T00:00:00Z"
     subdomain   = "...my_subdomain..."
   }
-  name         = "Ethel Stehr"
-  workspace_id = "31da3edb-51fa-4d94-acc9-435137726d15"
+  name         = "Sara Jast II"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "321b832a-56d6-4918-8ff6-0eb9a6658e69"
 }
 ```
 
@@ -52,7 +55,7 @@ resource "airbyte_source_zendesk_talk" "my_source_zendesktalk" {
 
 Required:
 
-- `source_type` (String) must be one of [zendesk-talk]
+- `source_type` (String) must be one of ["zendesk-talk"]
 - `start_date` (String) The date from which you'd like to replicate data for Zendesk Talk API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 - `subdomain` (String) This is your Zendesk subdomain that can be found in your account URL. For example, in https://{MY_SUBDOMAIN}.zendesk.com/, where MY_SUBDOMAIN is the value of your subdomain.
 
@@ -81,7 +84,7 @@ Required:
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `auth_type` (String) must be one of [api_token]
+- `auth_type` (String) must be one of ["api_token"]
 
 
 <a id="nestedatt--configuration--credentials--source_zendesk_talk_authentication_o_auth2_0"></a>
@@ -94,7 +97,7 @@ Required:
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `auth_type` (String) must be one of [oauth2.0]
+- `auth_type` (String) must be one of ["oauth2.0"]
 
 
 <a id="nestedatt--configuration--credentials--source_zendesk_talk_update_authentication_api_token"></a>
@@ -108,7 +111,7 @@ Required:
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `auth_type` (String) must be one of [api_token]
+- `auth_type` (String) must be one of ["api_token"]
 
 
 <a id="nestedatt--configuration--credentials--source_zendesk_talk_update_authentication_o_auth2_0"></a>
@@ -121,6 +124,6 @@ Required:
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `auth_type` (String) must be one of [oauth2.0]
+- `auth_type` (String) must be one of ["oauth2.0"]
 
 

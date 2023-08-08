@@ -2,10 +2,11 @@ resource "airbyte_source_google_webfonts" "my_source_googlewebfonts" {
   configuration = {
     alt          = "...my_alt..."
     api_key      = "...my_api_key..."
-    pretty_print = "...my_prettyPrint..."
+    pretty_print = "...my_pretty_print..."
     sort         = "...my_sort..."
     source_type  = "google-webfonts"
   }
-  name         = "Sue Cole IV"
-  workspace_id = "084f7ab3-7cef-4022-a519-4db55410adc6"
+  name         = "Jean Mayert"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "b55410ad-c669-4af9-8a26-c7cdc981f068"
 }

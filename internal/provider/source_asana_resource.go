@@ -74,7 +74,7 @@ func (r *SourceAsanaResource) Schema(ctx context.Context, req resource.SchemaReq
 												"OAuth Credentials",
 											),
 										},
-										MarkdownDescription: `must be one of [OAuth Credentials]` + "\n" +
+										MarkdownDescription: `must be one of ["OAuth Credentials"]` + "\n" +
 											`OAuth Credentials`,
 									},
 									"refresh_token": schema.StringAttribute{
@@ -93,7 +93,7 @@ func (r *SourceAsanaResource) Schema(ctx context.Context, req resource.SchemaReq
 												"PAT Credentials",
 											),
 										},
-										MarkdownDescription: `must be one of [PAT Credentials]` + "\n" +
+										MarkdownDescription: `must be one of ["PAT Credentials"]` + "\n" +
 											`PAT Credentials`,
 									},
 									"personal_access_token": schema.StringAttribute{
@@ -119,7 +119,7 @@ func (r *SourceAsanaResource) Schema(ctx context.Context, req resource.SchemaReq
 												"OAuth Credentials",
 											),
 										},
-										MarkdownDescription: `must be one of [OAuth Credentials]` + "\n" +
+										MarkdownDescription: `must be one of ["OAuth Credentials"]` + "\n" +
 											`OAuth Credentials`,
 									},
 									"refresh_token": schema.StringAttribute{
@@ -138,7 +138,7 @@ func (r *SourceAsanaResource) Schema(ctx context.Context, req resource.SchemaReq
 												"PAT Credentials",
 											),
 										},
-										MarkdownDescription: `must be one of [PAT Credentials]` + "\n" +
+										MarkdownDescription: `must be one of ["PAT Credentials"]` + "\n" +
 											`PAT Credentials`,
 									},
 									"personal_access_token": schema.StringAttribute{
@@ -161,7 +161,7 @@ func (r *SourceAsanaResource) Schema(ctx context.Context, req resource.SchemaReq
 								"asana",
 							),
 						},
-						Description: `must be one of [asana]`,
+						Description: `must be one of ["asana"]`,
 					},
 				},
 			},

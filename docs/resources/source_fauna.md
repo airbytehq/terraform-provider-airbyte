@@ -17,18 +17,21 @@ resource "airbyte_source_fauna" "my_source_fauna" {
   configuration = {
     collection = {
       deletions = {
-        deletion_mode = "ignore"
+        source_fauna_collection_deletion_mode_disabled = {
+          deletion_mode = "ignore"
+        }
       }
-      page_size = 2
+      page_size = 9
     }
     domain      = "...my_domain..."
-    port        = 2
+    port        = 10
     scheme      = "...my_scheme..."
     secret      = "...my_secret..."
     source_type = "fauna"
   }
-  name         = "Angel Lakin"
-  workspace_id = "cb3ecfda-8d0c-4549-af03-004978a61fa1"
+  name         = "Mrs. Edna Abbott"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "78a61fa1-cf20-4688-b77c-1ffc71dca163"
 }
 ```
 
@@ -59,7 +62,7 @@ Required:
 - `port` (Number) Endpoint port.
 - `scheme` (String) URL scheme.
 - `secret` (String) Fauna secret, used when authenticating with the database.
-- `source_type` (String) must be one of [fauna]
+- `source_type` (String) must be one of ["fauna"]
 
 Optional:
 
@@ -105,7 +108,7 @@ Enabled - Enables this feature. When a document is deleted, the connector export
 
 Required:
 
-- `deletion_mode` (String) must be one of [ignore]
+- `deletion_mode` (String) must be one of ["ignore"]
 
 
 <a id="nestedatt--configuration--collection--deletions--source_fauna_collection_deletion_mode_enabled"></a>
@@ -114,7 +117,7 @@ Required:
 Required:
 
 - `column` (String) Name of the "deleted at" column.
-- `deletion_mode` (String) must be one of [deleted_field]
+- `deletion_mode` (String) must be one of ["deleted_field"]
 
 
 <a id="nestedatt--configuration--collection--deletions--source_fauna_update_collection_deletion_mode_disabled"></a>
@@ -122,7 +125,7 @@ Required:
 
 Required:
 
-- `deletion_mode` (String) must be one of [ignore]
+- `deletion_mode` (String) must be one of ["ignore"]
 
 
 <a id="nestedatt--configuration--collection--deletions--source_fauna_update_collection_deletion_mode_enabled"></a>
@@ -131,6 +134,6 @@ Required:
 Required:
 
 - `column` (String) Name of the "deleted at" column.
-- `deletion_mode` (String) must be one of [deleted_field]
+- `deletion_mode` (String) must be one of ["deleted_field"]
 
 

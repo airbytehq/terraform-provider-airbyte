@@ -62,7 +62,7 @@ func (r *SourceSalesforceSingerResource) Schema(ctx context.Context, req resourc
 								"REST",
 							),
 						},
-						MarkdownDescription: `must be one of [BULK, REST]` + "\n" +
+						MarkdownDescription: `must be one of ["BULK", "REST"]` + "\n" +
 							`Unless you know that you are transferring a very small amount of data, prefer using the BULK API. This will help avoid using up all of your API call quota with Salesforce. Valid values are BULK or REST.`,
 					},
 					"client_id": schema.StringAttribute{
@@ -96,7 +96,7 @@ func (r *SourceSalesforceSingerResource) Schema(ctx context.Context, req resourc
 								"salesforce-singer",
 							),
 						},
-						Description: `must be one of [salesforce-singer]`,
+						Description: `must be one of ["salesforce-singer"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required:    true,

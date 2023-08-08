@@ -65,7 +65,7 @@ func (r *SourcePypiResource) Schema(ctx context.Context, req resource.SchemaRequ
 								"pypi",
 							),
 						},
-						Description: `must be one of [pypi]`,
+						Description: `must be one of ["pypi"]`,
 					},
 					"version": schema.StringAttribute{
 						Optional:    true,

@@ -24,114 +24,145 @@ func (r *SourceMssqlResourceModel) ToCreateSDKType() *shared.SourceMssqlCreateRe
 	}
 	port := r.Configuration.Port.ValueInt64()
 	var replicationMethod *shared.SourceMssqlReplicationMethod
-	var sourceMssqlReplicationMethodStandard *shared.SourceMssqlReplicationMethodStandard
-	if r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC != nil {
-		method := shared.SourceMssqlReplicationMethodStandardMethod(r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.Method.ValueString())
-		sourceMssqlReplicationMethodStandard = &shared.SourceMssqlReplicationMethodStandard{
-			Method: method,
+	if r.Configuration.ReplicationMethod != nil {
+		var sourceMssqlReplicationMethodStandard *shared.SourceMssqlReplicationMethodStandard
+		if r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodStandard != nil {
+			method := shared.SourceMssqlReplicationMethodStandardMethod(r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodStandard.Method.ValueString())
+			sourceMssqlReplicationMethodStandard = &shared.SourceMssqlReplicationMethodStandard{
+				Method: method,
+			}
+		}
+		if sourceMssqlReplicationMethodStandard != nil {
+			replicationMethod = &shared.SourceMssqlReplicationMethod{
+				SourceMssqlReplicationMethodStandard: sourceMssqlReplicationMethodStandard,
+			}
+		}
+		var sourceMssqlReplicationMethodLogicalReplicationCDC *shared.SourceMssqlReplicationMethodLogicalReplicationCDC
+		if r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC != nil {
+			dataToSync := new(shared.SourceMssqlReplicationMethodLogicalReplicationCDCDataToSync)
+			if !r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.DataToSync.IsUnknown() && !r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.DataToSync.IsNull() {
+				*dataToSync = shared.SourceMssqlReplicationMethodLogicalReplicationCDCDataToSync(r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.DataToSync.ValueString())
+			} else {
+				dataToSync = nil
+			}
+			initialWaitingSeconds := new(int64)
+			if !r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds.IsUnknown() && !r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds.IsNull() {
+				*initialWaitingSeconds = r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds.ValueInt64()
+			} else {
+				initialWaitingSeconds = nil
+			}
+			method1 := shared.SourceMssqlReplicationMethodLogicalReplicationCDCMethod(r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.Method.ValueString())
+			snapshotIsolation := new(shared.SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevel)
+			if !r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.SnapshotIsolation.IsUnknown() && !r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.SnapshotIsolation.IsNull() {
+				*snapshotIsolation = shared.SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevel(r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.SnapshotIsolation.ValueString())
+			} else {
+				snapshotIsolation = nil
+			}
+			sourceMssqlReplicationMethodLogicalReplicationCDC = &shared.SourceMssqlReplicationMethodLogicalReplicationCDC{
+				DataToSync:            dataToSync,
+				InitialWaitingSeconds: initialWaitingSeconds,
+				Method:                method1,
+				SnapshotIsolation:     snapshotIsolation,
+			}
+		}
+		if sourceMssqlReplicationMethodLogicalReplicationCDC != nil {
+			replicationMethod = &shared.SourceMssqlReplicationMethod{
+				SourceMssqlReplicationMethodLogicalReplicationCDC: sourceMssqlReplicationMethodLogicalReplicationCDC,
+			}
 		}
 	}
-	if sourceMssqlReplicationMethodStandard != nil {
-		replicationMethod = &shared.SourceMssqlReplicationMethod{
-			SourceMssqlReplicationMethodStandard: sourceMssqlReplicationMethodStandard,
-		}
-	}
-	var sourceMssqlReplicationMethodLogicalReplicationCDC *shared.SourceMssqlReplicationMethodLogicalReplicationCDC
-	if r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodStandard != nil {
-		method1 := shared.SourceMssqlReplicationMethodLogicalReplicationCDCMethod(r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodStandard.Method.ValueString())
-		sourceMssqlReplicationMethodLogicalReplicationCDC = &shared.SourceMssqlReplicationMethodLogicalReplicationCDC{
-			Method: method1,
-		}
-	}
-	if sourceMssqlReplicationMethodLogicalReplicationCDC != nil {
-		replicationMethod = &shared.SourceMssqlReplicationMethod{
-			SourceMssqlReplicationMethodLogicalReplicationCDC: sourceMssqlReplicationMethodLogicalReplicationCDC,
-		}
-	}
-	schemas := make([]string, 0)
+	var schemas []string = nil
 	for _, schemasItem := range r.Configuration.Schemas {
 		schemas = append(schemas, schemasItem.ValueString())
 	}
 	sourceType := shared.SourceMssqlMssql(r.Configuration.SourceType.ValueString())
 	var sslMethod *shared.SourceMssqlSSLMethod
-	var sourceMssqlSSLMethodEncryptedTrustServerCertificate *shared.SourceMssqlSSLMethodEncryptedTrustServerCertificate
-	if r.Configuration.SslMethod.SourceMssqlSSLMethodEncryptedTrustServerCertificate != nil {
-		sslMethod1 := shared.SourceMssqlSSLMethodEncryptedTrustServerCertificateSSLMethod(r.Configuration.SslMethod.SourceMssqlSSLMethodEncryptedTrustServerCertificate.SslMethod.ValueString())
-		sourceMssqlSSLMethodEncryptedTrustServerCertificate = &shared.SourceMssqlSSLMethodEncryptedTrustServerCertificate{
-			SslMethod: sslMethod1,
+	if r.Configuration.SslMethod != nil {
+		var sourceMssqlSSLMethodEncryptedTrustServerCertificate *shared.SourceMssqlSSLMethodEncryptedTrustServerCertificate
+		if r.Configuration.SslMethod.SourceMssqlSSLMethodEncryptedTrustServerCertificate != nil {
+			sslMethod1 := shared.SourceMssqlSSLMethodEncryptedTrustServerCertificateSSLMethod(r.Configuration.SslMethod.SourceMssqlSSLMethodEncryptedTrustServerCertificate.SslMethod.ValueString())
+			sourceMssqlSSLMethodEncryptedTrustServerCertificate = &shared.SourceMssqlSSLMethodEncryptedTrustServerCertificate{
+				SslMethod: sslMethod1,
+			}
 		}
-	}
-	if sourceMssqlSSLMethodEncryptedTrustServerCertificate != nil {
-		sslMethod = &shared.SourceMssqlSSLMethod{
-			SourceMssqlSSLMethodEncryptedTrustServerCertificate: sourceMssqlSSLMethodEncryptedTrustServerCertificate,
+		if sourceMssqlSSLMethodEncryptedTrustServerCertificate != nil {
+			sslMethod = &shared.SourceMssqlSSLMethod{
+				SourceMssqlSSLMethodEncryptedTrustServerCertificate: sourceMssqlSSLMethodEncryptedTrustServerCertificate,
+			}
 		}
-	}
-	var sourceMssqlSSLMethodEncryptedVerifyCertificate *shared.SourceMssqlSSLMethodEncryptedVerifyCertificate
-	if r.Configuration.SslMethod.SourceMssqlSSLMethodEncryptedVerifyCertificate != nil {
-		hostNameInCertificate := new(string)
-		if !r.Configuration.SslMethod.SourceMssqlSSLMethodEncryptedVerifyCertificate.HostNameInCertificate.IsUnknown() && !r.Configuration.SslMethod.SourceMssqlSSLMethodEncryptedVerifyCertificate.HostNameInCertificate.IsNull() {
-			*hostNameInCertificate = r.Configuration.SslMethod.SourceMssqlSSLMethodEncryptedVerifyCertificate.HostNameInCertificate.ValueString()
-		} else {
-			hostNameInCertificate = nil
+		var sourceMssqlSSLMethodEncryptedVerifyCertificate *shared.SourceMssqlSSLMethodEncryptedVerifyCertificate
+		if r.Configuration.SslMethod.SourceMssqlSSLMethodEncryptedVerifyCertificate != nil {
+			hostNameInCertificate := new(string)
+			if !r.Configuration.SslMethod.SourceMssqlSSLMethodEncryptedVerifyCertificate.HostNameInCertificate.IsUnknown() && !r.Configuration.SslMethod.SourceMssqlSSLMethodEncryptedVerifyCertificate.HostNameInCertificate.IsNull() {
+				*hostNameInCertificate = r.Configuration.SslMethod.SourceMssqlSSLMethodEncryptedVerifyCertificate.HostNameInCertificate.ValueString()
+			} else {
+				hostNameInCertificate = nil
+			}
+			sslMethod2 := shared.SourceMssqlSSLMethodEncryptedVerifyCertificateSSLMethod(r.Configuration.SslMethod.SourceMssqlSSLMethodEncryptedVerifyCertificate.SslMethod.ValueString())
+			sourceMssqlSSLMethodEncryptedVerifyCertificate = &shared.SourceMssqlSSLMethodEncryptedVerifyCertificate{
+				HostNameInCertificate: hostNameInCertificate,
+				SslMethod:             sslMethod2,
+			}
 		}
-		sslMethod2 := shared.SourceMssqlSSLMethodEncryptedVerifyCertificateSSLMethod(r.Configuration.SslMethod.SourceMssqlSSLMethodEncryptedVerifyCertificate.SslMethod.ValueString())
-		sourceMssqlSSLMethodEncryptedVerifyCertificate = &shared.SourceMssqlSSLMethodEncryptedVerifyCertificate{
-			HostNameInCertificate: hostNameInCertificate,
-			SslMethod:             sslMethod2,
-		}
-	}
-	if sourceMssqlSSLMethodEncryptedVerifyCertificate != nil {
-		sslMethod = &shared.SourceMssqlSSLMethod{
-			SourceMssqlSSLMethodEncryptedVerifyCertificate: sourceMssqlSSLMethodEncryptedVerifyCertificate,
+		if sourceMssqlSSLMethodEncryptedVerifyCertificate != nil {
+			sslMethod = &shared.SourceMssqlSSLMethod{
+				SourceMssqlSSLMethodEncryptedVerifyCertificate: sourceMssqlSSLMethodEncryptedVerifyCertificate,
+			}
 		}
 	}
 	var tunnelMethod *shared.SourceMssqlSSHTunnelMethod
-	var sourceMssqlSSHTunnelMethodNoTunnel *shared.SourceMssqlSSHTunnelMethodNoTunnel
-	if r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodNoTunnel != nil {
-		tunnelMethod1 := shared.SourceMssqlSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
-		sourceMssqlSSHTunnelMethodNoTunnel = &shared.SourceMssqlSSHTunnelMethodNoTunnel{
-			TunnelMethod: tunnelMethod1,
+	if r.Configuration.TunnelMethod != nil {
+		var sourceMssqlSSHTunnelMethodNoTunnel *shared.SourceMssqlSSHTunnelMethodNoTunnel
+		if r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodNoTunnel != nil {
+			tunnelMethod1 := shared.SourceMssqlSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
+			sourceMssqlSSHTunnelMethodNoTunnel = &shared.SourceMssqlSSHTunnelMethodNoTunnel{
+				TunnelMethod: tunnelMethod1,
+			}
 		}
-	}
-	if sourceMssqlSSHTunnelMethodNoTunnel != nil {
-		tunnelMethod = &shared.SourceMssqlSSHTunnelMethod{
-			SourceMssqlSSHTunnelMethodNoTunnel: sourceMssqlSSHTunnelMethodNoTunnel,
+		if sourceMssqlSSHTunnelMethodNoTunnel != nil {
+			tunnelMethod = &shared.SourceMssqlSSHTunnelMethod{
+				SourceMssqlSSHTunnelMethodNoTunnel: sourceMssqlSSHTunnelMethodNoTunnel,
+			}
 		}
-	}
-	var sourceMssqlSSHTunnelMethodSSHKeyAuthentication *shared.SourceMssqlSSHTunnelMethodSSHKeyAuthentication
-	if r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication != nil {
-		tunnelHost := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
-		tunnelMethod2 := shared.SourceMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
-		tunnelPort := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
-		tunnelUser := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
-		sourceMssqlSSHTunnelMethodSSHKeyAuthentication = &shared.SourceMssqlSSHTunnelMethodSSHKeyAuthentication{
-			TunnelHost:   tunnelHost,
-			TunnelMethod: tunnelMethod2,
-			TunnelPort:   tunnelPort,
-			TunnelUser:   tunnelUser,
+		var sourceMssqlSSHTunnelMethodSSHKeyAuthentication *shared.SourceMssqlSSHTunnelMethodSSHKeyAuthentication
+		if r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication != nil {
+			sshKey := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.SSHKey.ValueString()
+			tunnelHost := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
+			tunnelMethod2 := shared.SourceMssqlSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
+			tunnelPort := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
+			tunnelUser := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
+			sourceMssqlSSHTunnelMethodSSHKeyAuthentication = &shared.SourceMssqlSSHTunnelMethodSSHKeyAuthentication{
+				SSHKey:       sshKey,
+				TunnelHost:   tunnelHost,
+				TunnelMethod: tunnelMethod2,
+				TunnelPort:   tunnelPort,
+				TunnelUser:   tunnelUser,
+			}
 		}
-	}
-	if sourceMssqlSSHTunnelMethodSSHKeyAuthentication != nil {
-		tunnelMethod = &shared.SourceMssqlSSHTunnelMethod{
-			SourceMssqlSSHTunnelMethodSSHKeyAuthentication: sourceMssqlSSHTunnelMethodSSHKeyAuthentication,
+		if sourceMssqlSSHTunnelMethodSSHKeyAuthentication != nil {
+			tunnelMethod = &shared.SourceMssqlSSHTunnelMethod{
+				SourceMssqlSSHTunnelMethodSSHKeyAuthentication: sourceMssqlSSHTunnelMethodSSHKeyAuthentication,
+			}
 		}
-	}
-	var sourceMssqlSSHTunnelMethodPasswordAuthentication *shared.SourceMssqlSSHTunnelMethodPasswordAuthentication
-	if r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication != nil {
-		tunnelHost1 := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
-		tunnelMethod3 := shared.SourceMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
-		tunnelPort1 := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
-		tunnelUser1 := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
-		sourceMssqlSSHTunnelMethodPasswordAuthentication = &shared.SourceMssqlSSHTunnelMethodPasswordAuthentication{
-			TunnelHost:   tunnelHost1,
-			TunnelMethod: tunnelMethod3,
-			TunnelPort:   tunnelPort1,
-			TunnelUser:   tunnelUser1,
+		var sourceMssqlSSHTunnelMethodPasswordAuthentication *shared.SourceMssqlSSHTunnelMethodPasswordAuthentication
+		if r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication != nil {
+			tunnelHost1 := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
+			tunnelMethod3 := shared.SourceMssqlSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
+			tunnelPort1 := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
+			tunnelUser1 := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
+			tunnelUserPassword := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelUserPassword.ValueString()
+			sourceMssqlSSHTunnelMethodPasswordAuthentication = &shared.SourceMssqlSSHTunnelMethodPasswordAuthentication{
+				TunnelHost:         tunnelHost1,
+				TunnelMethod:       tunnelMethod3,
+				TunnelPort:         tunnelPort1,
+				TunnelUser:         tunnelUser1,
+				TunnelUserPassword: tunnelUserPassword,
+			}
 		}
-	}
-	if sourceMssqlSSHTunnelMethodPasswordAuthentication != nil {
-		tunnelMethod = &shared.SourceMssqlSSHTunnelMethod{
-			SourceMssqlSSHTunnelMethodPasswordAuthentication: sourceMssqlSSHTunnelMethodPasswordAuthentication,
+		if sourceMssqlSSHTunnelMethodPasswordAuthentication != nil {
+			tunnelMethod = &shared.SourceMssqlSSHTunnelMethod{
+				SourceMssqlSSHTunnelMethodPasswordAuthentication: sourceMssqlSSHTunnelMethodPasswordAuthentication,
+			}
 		}
 	}
 	username := r.Configuration.Username.ValueString()
@@ -187,113 +218,144 @@ func (r *SourceMssqlResourceModel) ToUpdateSDKType() *shared.SourceMssqlPutReque
 	}
 	port := r.Configuration.Port.ValueInt64()
 	var replicationMethod *shared.SourceMssqlUpdateReplicationMethod
-	var sourceMssqlUpdateReplicationMethodStandard *shared.SourceMssqlUpdateReplicationMethodStandard
-	if r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC != nil {
-		method := shared.SourceMssqlUpdateReplicationMethodStandardMethod(r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.Method.ValueString())
-		sourceMssqlUpdateReplicationMethodStandard = &shared.SourceMssqlUpdateReplicationMethodStandard{
-			Method: method,
+	if r.Configuration.ReplicationMethod != nil {
+		var sourceMssqlUpdateReplicationMethodStandard *shared.SourceMssqlUpdateReplicationMethodStandard
+		if r.Configuration.ReplicationMethod.SourceMssqlUpdateReplicationMethodStandard != nil {
+			method := shared.SourceMssqlUpdateReplicationMethodStandardMethod(r.Configuration.ReplicationMethod.SourceMssqlUpdateReplicationMethodStandard.Method.ValueString())
+			sourceMssqlUpdateReplicationMethodStandard = &shared.SourceMssqlUpdateReplicationMethodStandard{
+				Method: method,
+			}
+		}
+		if sourceMssqlUpdateReplicationMethodStandard != nil {
+			replicationMethod = &shared.SourceMssqlUpdateReplicationMethod{
+				SourceMssqlUpdateReplicationMethodStandard: sourceMssqlUpdateReplicationMethodStandard,
+			}
+		}
+		var sourceMssqlUpdateReplicationMethodLogicalReplicationCDC *shared.SourceMssqlUpdateReplicationMethodLogicalReplicationCDC
+		if r.Configuration.ReplicationMethod.SourceMssqlUpdateReplicationMethodLogicalReplicationCDC != nil {
+			dataToSync := new(shared.SourceMssqlUpdateReplicationMethodLogicalReplicationCDCDataToSync)
+			if !r.Configuration.ReplicationMethod.SourceMssqlUpdateReplicationMethodLogicalReplicationCDC.DataToSync.IsUnknown() && !r.Configuration.ReplicationMethod.SourceMssqlUpdateReplicationMethodLogicalReplicationCDC.DataToSync.IsNull() {
+				*dataToSync = shared.SourceMssqlUpdateReplicationMethodLogicalReplicationCDCDataToSync(r.Configuration.ReplicationMethod.SourceMssqlUpdateReplicationMethodLogicalReplicationCDC.DataToSync.ValueString())
+			} else {
+				dataToSync = nil
+			}
+			initialWaitingSeconds := new(int64)
+			if !r.Configuration.ReplicationMethod.SourceMssqlUpdateReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds.IsUnknown() && !r.Configuration.ReplicationMethod.SourceMssqlUpdateReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds.IsNull() {
+				*initialWaitingSeconds = r.Configuration.ReplicationMethod.SourceMssqlUpdateReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds.ValueInt64()
+			} else {
+				initialWaitingSeconds = nil
+			}
+			method1 := shared.SourceMssqlUpdateReplicationMethodLogicalReplicationCDCMethod(r.Configuration.ReplicationMethod.SourceMssqlUpdateReplicationMethodLogicalReplicationCDC.Method.ValueString())
+			snapshotIsolation := new(shared.SourceMssqlUpdateReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevel)
+			if !r.Configuration.ReplicationMethod.SourceMssqlUpdateReplicationMethodLogicalReplicationCDC.SnapshotIsolation.IsUnknown() && !r.Configuration.ReplicationMethod.SourceMssqlUpdateReplicationMethodLogicalReplicationCDC.SnapshotIsolation.IsNull() {
+				*snapshotIsolation = shared.SourceMssqlUpdateReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevel(r.Configuration.ReplicationMethod.SourceMssqlUpdateReplicationMethodLogicalReplicationCDC.SnapshotIsolation.ValueString())
+			} else {
+				snapshotIsolation = nil
+			}
+			sourceMssqlUpdateReplicationMethodLogicalReplicationCDC = &shared.SourceMssqlUpdateReplicationMethodLogicalReplicationCDC{
+				DataToSync:            dataToSync,
+				InitialWaitingSeconds: initialWaitingSeconds,
+				Method:                method1,
+				SnapshotIsolation:     snapshotIsolation,
+			}
+		}
+		if sourceMssqlUpdateReplicationMethodLogicalReplicationCDC != nil {
+			replicationMethod = &shared.SourceMssqlUpdateReplicationMethod{
+				SourceMssqlUpdateReplicationMethodLogicalReplicationCDC: sourceMssqlUpdateReplicationMethodLogicalReplicationCDC,
+			}
 		}
 	}
-	if sourceMssqlUpdateReplicationMethodStandard != nil {
-		replicationMethod = &shared.SourceMssqlUpdateReplicationMethod{
-			SourceMssqlUpdateReplicationMethodStandard: sourceMssqlUpdateReplicationMethodStandard,
-		}
-	}
-	var sourceMssqlUpdateReplicationMethodLogicalReplicationCDC *shared.SourceMssqlUpdateReplicationMethodLogicalReplicationCDC
-	if r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodStandard != nil {
-		method1 := shared.SourceMssqlUpdateReplicationMethodLogicalReplicationCDCMethod(r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodStandard.Method.ValueString())
-		sourceMssqlUpdateReplicationMethodLogicalReplicationCDC = &shared.SourceMssqlUpdateReplicationMethodLogicalReplicationCDC{
-			Method: method1,
-		}
-	}
-	if sourceMssqlUpdateReplicationMethodLogicalReplicationCDC != nil {
-		replicationMethod = &shared.SourceMssqlUpdateReplicationMethod{
-			SourceMssqlUpdateReplicationMethodLogicalReplicationCDC: sourceMssqlUpdateReplicationMethodLogicalReplicationCDC,
-		}
-	}
-	schemas := make([]string, 0)
+	var schemas []string = nil
 	for _, schemasItem := range r.Configuration.Schemas {
 		schemas = append(schemas, schemasItem.ValueString())
 	}
 	var sslMethod *shared.SourceMssqlUpdateSSLMethod
-	var sourceMssqlUpdateSSLMethodEncryptedTrustServerCertificate *shared.SourceMssqlUpdateSSLMethodEncryptedTrustServerCertificate
-	if r.Configuration.SslMethod.SourceMssqlSSLMethodEncryptedTrustServerCertificate != nil {
-		sslMethod1 := shared.SourceMssqlUpdateSSLMethodEncryptedTrustServerCertificateSSLMethod(r.Configuration.SslMethod.SourceMssqlSSLMethodEncryptedTrustServerCertificate.SslMethod.ValueString())
-		sourceMssqlUpdateSSLMethodEncryptedTrustServerCertificate = &shared.SourceMssqlUpdateSSLMethodEncryptedTrustServerCertificate{
-			SslMethod: sslMethod1,
+	if r.Configuration.SslMethod != nil {
+		var sourceMssqlUpdateSSLMethodEncryptedTrustServerCertificate *shared.SourceMssqlUpdateSSLMethodEncryptedTrustServerCertificate
+		if r.Configuration.SslMethod.SourceMssqlUpdateSSLMethodEncryptedTrustServerCertificate != nil {
+			sslMethod1 := shared.SourceMssqlUpdateSSLMethodEncryptedTrustServerCertificateSSLMethod(r.Configuration.SslMethod.SourceMssqlUpdateSSLMethodEncryptedTrustServerCertificate.SslMethod.ValueString())
+			sourceMssqlUpdateSSLMethodEncryptedTrustServerCertificate = &shared.SourceMssqlUpdateSSLMethodEncryptedTrustServerCertificate{
+				SslMethod: sslMethod1,
+			}
 		}
-	}
-	if sourceMssqlUpdateSSLMethodEncryptedTrustServerCertificate != nil {
-		sslMethod = &shared.SourceMssqlUpdateSSLMethod{
-			SourceMssqlUpdateSSLMethodEncryptedTrustServerCertificate: sourceMssqlUpdateSSLMethodEncryptedTrustServerCertificate,
+		if sourceMssqlUpdateSSLMethodEncryptedTrustServerCertificate != nil {
+			sslMethod = &shared.SourceMssqlUpdateSSLMethod{
+				SourceMssqlUpdateSSLMethodEncryptedTrustServerCertificate: sourceMssqlUpdateSSLMethodEncryptedTrustServerCertificate,
+			}
 		}
-	}
-	var sourceMssqlUpdateSSLMethodEncryptedVerifyCertificate *shared.SourceMssqlUpdateSSLMethodEncryptedVerifyCertificate
-	if r.Configuration.SslMethod.SourceMssqlSSLMethodEncryptedVerifyCertificate != nil {
-		hostNameInCertificate := new(string)
-		if !r.Configuration.SslMethod.SourceMssqlSSLMethodEncryptedVerifyCertificate.HostNameInCertificate.IsUnknown() && !r.Configuration.SslMethod.SourceMssqlSSLMethodEncryptedVerifyCertificate.HostNameInCertificate.IsNull() {
-			*hostNameInCertificate = r.Configuration.SslMethod.SourceMssqlSSLMethodEncryptedVerifyCertificate.HostNameInCertificate.ValueString()
-		} else {
-			hostNameInCertificate = nil
+		var sourceMssqlUpdateSSLMethodEncryptedVerifyCertificate *shared.SourceMssqlUpdateSSLMethodEncryptedVerifyCertificate
+		if r.Configuration.SslMethod.SourceMssqlUpdateSSLMethodEncryptedVerifyCertificate != nil {
+			hostNameInCertificate := new(string)
+			if !r.Configuration.SslMethod.SourceMssqlUpdateSSLMethodEncryptedVerifyCertificate.HostNameInCertificate.IsUnknown() && !r.Configuration.SslMethod.SourceMssqlUpdateSSLMethodEncryptedVerifyCertificate.HostNameInCertificate.IsNull() {
+				*hostNameInCertificate = r.Configuration.SslMethod.SourceMssqlUpdateSSLMethodEncryptedVerifyCertificate.HostNameInCertificate.ValueString()
+			} else {
+				hostNameInCertificate = nil
+			}
+			sslMethod2 := shared.SourceMssqlUpdateSSLMethodEncryptedVerifyCertificateSSLMethod(r.Configuration.SslMethod.SourceMssqlUpdateSSLMethodEncryptedVerifyCertificate.SslMethod.ValueString())
+			sourceMssqlUpdateSSLMethodEncryptedVerifyCertificate = &shared.SourceMssqlUpdateSSLMethodEncryptedVerifyCertificate{
+				HostNameInCertificate: hostNameInCertificate,
+				SslMethod:             sslMethod2,
+			}
 		}
-		sslMethod2 := shared.SourceMssqlUpdateSSLMethodEncryptedVerifyCertificateSSLMethod(r.Configuration.SslMethod.SourceMssqlSSLMethodEncryptedVerifyCertificate.SslMethod.ValueString())
-		sourceMssqlUpdateSSLMethodEncryptedVerifyCertificate = &shared.SourceMssqlUpdateSSLMethodEncryptedVerifyCertificate{
-			HostNameInCertificate: hostNameInCertificate,
-			SslMethod:             sslMethod2,
-		}
-	}
-	if sourceMssqlUpdateSSLMethodEncryptedVerifyCertificate != nil {
-		sslMethod = &shared.SourceMssqlUpdateSSLMethod{
-			SourceMssqlUpdateSSLMethodEncryptedVerifyCertificate: sourceMssqlUpdateSSLMethodEncryptedVerifyCertificate,
+		if sourceMssqlUpdateSSLMethodEncryptedVerifyCertificate != nil {
+			sslMethod = &shared.SourceMssqlUpdateSSLMethod{
+				SourceMssqlUpdateSSLMethodEncryptedVerifyCertificate: sourceMssqlUpdateSSLMethodEncryptedVerifyCertificate,
+			}
 		}
 	}
 	var tunnelMethod *shared.SourceMssqlUpdateSSHTunnelMethod
-	var sourceMssqlUpdateSSHTunnelMethodNoTunnel *shared.SourceMssqlUpdateSSHTunnelMethodNoTunnel
-	if r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodNoTunnel != nil {
-		tunnelMethod1 := shared.SourceMssqlUpdateSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
-		sourceMssqlUpdateSSHTunnelMethodNoTunnel = &shared.SourceMssqlUpdateSSHTunnelMethodNoTunnel{
-			TunnelMethod: tunnelMethod1,
+	if r.Configuration.TunnelMethod != nil {
+		var sourceMssqlUpdateSSHTunnelMethodNoTunnel *shared.SourceMssqlUpdateSSHTunnelMethodNoTunnel
+		if r.Configuration.TunnelMethod.SourceMssqlUpdateSSHTunnelMethodNoTunnel != nil {
+			tunnelMethod1 := shared.SourceMssqlUpdateSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.SourceMssqlUpdateSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
+			sourceMssqlUpdateSSHTunnelMethodNoTunnel = &shared.SourceMssqlUpdateSSHTunnelMethodNoTunnel{
+				TunnelMethod: tunnelMethod1,
+			}
 		}
-	}
-	if sourceMssqlUpdateSSHTunnelMethodNoTunnel != nil {
-		tunnelMethod = &shared.SourceMssqlUpdateSSHTunnelMethod{
-			SourceMssqlUpdateSSHTunnelMethodNoTunnel: sourceMssqlUpdateSSHTunnelMethodNoTunnel,
+		if sourceMssqlUpdateSSHTunnelMethodNoTunnel != nil {
+			tunnelMethod = &shared.SourceMssqlUpdateSSHTunnelMethod{
+				SourceMssqlUpdateSSHTunnelMethodNoTunnel: sourceMssqlUpdateSSHTunnelMethodNoTunnel,
+			}
 		}
-	}
-	var sourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication *shared.SourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication
-	if r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication != nil {
-		tunnelHost := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
-		tunnelMethod2 := shared.SourceMssqlUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
-		tunnelPort := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
-		tunnelUser := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
-		sourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication = &shared.SourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication{
-			TunnelHost:   tunnelHost,
-			TunnelMethod: tunnelMethod2,
-			TunnelPort:   tunnelPort,
-			TunnelUser:   tunnelUser,
+		var sourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication *shared.SourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication
+		if r.Configuration.TunnelMethod.SourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication != nil {
+			sshKey := r.Configuration.TunnelMethod.SourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication.SSHKey.ValueString()
+			tunnelHost := r.Configuration.TunnelMethod.SourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
+			tunnelMethod2 := shared.SourceMssqlUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.SourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
+			tunnelPort := r.Configuration.TunnelMethod.SourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
+			tunnelUser := r.Configuration.TunnelMethod.SourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
+			sourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication = &shared.SourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication{
+				SSHKey:       sshKey,
+				TunnelHost:   tunnelHost,
+				TunnelMethod: tunnelMethod2,
+				TunnelPort:   tunnelPort,
+				TunnelUser:   tunnelUser,
+			}
 		}
-	}
-	if sourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication != nil {
-		tunnelMethod = &shared.SourceMssqlUpdateSSHTunnelMethod{
-			SourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication: sourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication,
+		if sourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication != nil {
+			tunnelMethod = &shared.SourceMssqlUpdateSSHTunnelMethod{
+				SourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication: sourceMssqlUpdateSSHTunnelMethodSSHKeyAuthentication,
+			}
 		}
-	}
-	var sourceMssqlUpdateSSHTunnelMethodPasswordAuthentication *shared.SourceMssqlUpdateSSHTunnelMethodPasswordAuthentication
-	if r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication != nil {
-		tunnelHost1 := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
-		tunnelMethod3 := shared.SourceMssqlUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
-		tunnelPort1 := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
-		tunnelUser1 := r.Configuration.TunnelMethod.SourceMssqlSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
-		sourceMssqlUpdateSSHTunnelMethodPasswordAuthentication = &shared.SourceMssqlUpdateSSHTunnelMethodPasswordAuthentication{
-			TunnelHost:   tunnelHost1,
-			TunnelMethod: tunnelMethod3,
-			TunnelPort:   tunnelPort1,
-			TunnelUser:   tunnelUser1,
+		var sourceMssqlUpdateSSHTunnelMethodPasswordAuthentication *shared.SourceMssqlUpdateSSHTunnelMethodPasswordAuthentication
+		if r.Configuration.TunnelMethod.SourceMssqlUpdateSSHTunnelMethodPasswordAuthentication != nil {
+			tunnelHost1 := r.Configuration.TunnelMethod.SourceMssqlUpdateSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
+			tunnelMethod3 := shared.SourceMssqlUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.SourceMssqlUpdateSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
+			tunnelPort1 := r.Configuration.TunnelMethod.SourceMssqlUpdateSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
+			tunnelUser1 := r.Configuration.TunnelMethod.SourceMssqlUpdateSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
+			tunnelUserPassword := r.Configuration.TunnelMethod.SourceMssqlUpdateSSHTunnelMethodPasswordAuthentication.TunnelUserPassword.ValueString()
+			sourceMssqlUpdateSSHTunnelMethodPasswordAuthentication = &shared.SourceMssqlUpdateSSHTunnelMethodPasswordAuthentication{
+				TunnelHost:         tunnelHost1,
+				TunnelMethod:       tunnelMethod3,
+				TunnelPort:         tunnelPort1,
+				TunnelUser:         tunnelUser1,
+				TunnelUserPassword: tunnelUserPassword,
+			}
 		}
-	}
-	if sourceMssqlUpdateSSHTunnelMethodPasswordAuthentication != nil {
-		tunnelMethod = &shared.SourceMssqlUpdateSSHTunnelMethod{
-			SourceMssqlUpdateSSHTunnelMethodPasswordAuthentication: sourceMssqlUpdateSSHTunnelMethodPasswordAuthentication,
+		if sourceMssqlUpdateSSHTunnelMethodPasswordAuthentication != nil {
+			tunnelMethod = &shared.SourceMssqlUpdateSSHTunnelMethod{
+				SourceMssqlUpdateSSHTunnelMethodPasswordAuthentication: sourceMssqlUpdateSSHTunnelMethodPasswordAuthentication,
+			}
 		}
 	}
 	username := r.Configuration.Username.ValueString()

@@ -18,8 +18,9 @@ resource "airbyte_source_k6_cloud" "my_source_k6cloud" {
     api_token   = "...my_api_token..."
     source_type = "k6-cloud"
   }
-  name         = "Rudolph Kshlerin"
-  workspace_id = "5c38d4ba-f91e-4506-af89-0a54b475f16f"
+  name         = "Lee Hegmann"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "475f16f5-6d38-45a3-84ac-631b99e26ced"
 }
 ```
 
@@ -47,6 +48,6 @@ resource "airbyte_source_k6_cloud" "my_source_k6cloud" {
 Required:
 
 - `api_token` (String) Your API Token. See <a href="https://k6.io/docs/cloud/integrations/token/">here</a>. The key is case sensitive.
-- `source_type` (String) must be one of [k6-cloud]
+- `source_type` (String) must be one of ["k6-cloud"]
 
 

@@ -87,7 +87,7 @@ func (r *SourceXeroResource) Schema(ctx context.Context, req resource.SchemaRequ
 								"xero",
 							),
 						},
-						Description: `must be one of [xero]`,
+						Description: `must be one of ["xero"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

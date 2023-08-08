@@ -8,6 +8,7 @@ resource "airbyte_source_strava" "my_source_strava" {
     source_type   = "strava"
     start_date    = "2021-03-01T00:00:00Z"
   }
-  name         = "Levi Haley"
-  workspace_id = "07621c58-f4d7-4396-964c-20a0711a961d"
+  name         = "Marie Murphy"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "1d24a7db-b8f5-432d-892c-f7812cb512c8"
 }

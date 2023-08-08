@@ -23,8 +23,9 @@ resource "airbyte_source_trello" "my_source_trello" {
     start_date  = "2021-03-01T00:00:00Z"
     token       = "...my_token..."
   }
-  name         = "Preston Carter"
-  workspace_id = "5671e9c3-2635-40a4-a714-3789ce0e9915"
+  name         = "Dr. Devin Waters"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "91594d93-a74c-4025-afe3-b4b4db8b778e"
 }
 ```
 
@@ -52,7 +53,7 @@ resource "airbyte_source_trello" "my_source_trello" {
 Required:
 
 - `key` (String) Trello API key. See the <a href="https://developer.atlassian.com/cloud/trello/guides/rest-api/authorization/#using-basic-oauth">docs</a> for instructions on how to generate it.
-- `source_type` (String) must be one of [trello]
+- `source_type` (String) must be one of ["trello"]
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 - `token` (String) Trello API token. See the <a href="https://developer.atlassian.com/cloud/trello/guides/rest-api/authorization/#using-basic-oauth">docs</a> for instructions on how to generate it.
 

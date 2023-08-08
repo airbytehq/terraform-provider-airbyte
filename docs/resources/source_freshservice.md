@@ -20,8 +20,9 @@ resource "airbyte_source_freshservice" "my_source_freshservice" {
     source_type = "freshservice"
     start_date  = "2020-10-01T00:00:00Z"
   }
-  name         = "Stephanie Wolf"
-  workspace_id = "d030c4ec-c11a-4083-a429-068b8502a55e"
+  name         = "Anita Dare III"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "8b8502a5-5e7f-473b-8845-e320a319f4ba"
 }
 ```
 
@@ -50,7 +51,7 @@ Required:
 
 - `api_key` (String) Freshservice API Key. See <a href="https://api.freshservice.com/#authentication">here</a>. The key is case sensitive.
 - `domain_name` (String) The name of your Freshservice domain
-- `source_type` (String) must be one of [freshservice]
+- `source_type` (String) must be one of ["freshservice"]
 - `start_date` (String) UTC date and time in the format 2020-10-01T00:00:00Z. Any data before this date will not be replicated.
 
 

@@ -26,8 +26,9 @@ resource "airbyte_source_xero" "my_source_xero" {
     start_date  = "2022-03-01T00:00:00Z"
     tenant_id   = "...my_tenant_id..."
   }
-  name         = "Mr. Clark O'Hara III"
-  workspace_id = "fe965b71-1d08-4cf8-8ec9-f7b99a550a65"
+  name         = "Miss Maurice Hauck"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "56ed333b-b0ce-48aa-a543-2a986eb7e14c"
 }
 ```
 
@@ -55,7 +56,7 @@ resource "airbyte_source_xero" "my_source_xero" {
 Required:
 
 - `authentication` (Attributes) (see [below for nested schema](#nestedatt--configuration--authentication))
-- `source_type` (String) must be one of [xero]
+- `source_type` (String) must be one of ["xero"]
 - `start_date` (String) UTC date and time in the format YYYY-MM-DDTHH:mm:ssZ. Any data with created_at before this data will not be synced.
 - `tenant_id` (String) Enter your Xero organization's Tenant ID
 

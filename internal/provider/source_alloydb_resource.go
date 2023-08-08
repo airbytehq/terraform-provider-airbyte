@@ -93,7 +93,7 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 												"After loading Data in the destination",
 											),
 										},
-										MarkdownDescription: `must be one of [While reading Data, After loading Data in the destination]` + "\n" +
+										MarkdownDescription: `must be one of ["While reading Data", "After loading Data in the destination"]` + "\n" +
 											`Determines when Airbtye should flush the LSN of processed WAL logs in the source database. ` + "`" + `After loading Data in the destination` + "`" + ` is default. If ` + "`" + `While reading Data` + "`" + ` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.`,
 									},
 									"method": schema.StringAttribute{
@@ -103,7 +103,7 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 												"CDC",
 											),
 										},
-										Description: `must be one of [CDC]`,
+										Description: `must be one of ["CDC"]`,
 									},
 									"plugin": schema.StringAttribute{
 										Optional: true,
@@ -112,7 +112,7 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 												"pgoutput",
 											),
 										},
-										MarkdownDescription: `must be one of [pgoutput]` + "\n" +
+										MarkdownDescription: `must be one of ["pgoutput"]` + "\n" +
 											`A logical decoding plugin installed on the PostgreSQL server.`,
 									},
 									"publication": schema.StringAttribute{
@@ -143,7 +143,7 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 												"Standard",
 											),
 										},
-										Description: `must be one of [Standard]`,
+										Description: `must be one of ["Standard"]`,
 									},
 								},
 								Description: `Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
@@ -163,7 +163,7 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 												"After loading Data in the destination",
 											),
 										},
-										MarkdownDescription: `must be one of [While reading Data, After loading Data in the destination]` + "\n" +
+										MarkdownDescription: `must be one of ["While reading Data", "After loading Data in the destination"]` + "\n" +
 											`Determines when Airbtye should flush the LSN of processed WAL logs in the source database. ` + "`" + `After loading Data in the destination` + "`" + ` is default. If ` + "`" + `While reading Data` + "`" + ` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.`,
 									},
 									"method": schema.StringAttribute{
@@ -173,7 +173,7 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 												"CDC",
 											),
 										},
-										Description: `must be one of [CDC]`,
+										Description: `must be one of ["CDC"]`,
 									},
 									"plugin": schema.StringAttribute{
 										Optional: true,
@@ -182,7 +182,7 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 												"pgoutput",
 											),
 										},
-										MarkdownDescription: `must be one of [pgoutput]` + "\n" +
+										MarkdownDescription: `must be one of ["pgoutput"]` + "\n" +
 											`A logical decoding plugin installed on the PostgreSQL server.`,
 									},
 									"publication": schema.StringAttribute{
@@ -213,7 +213,7 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 												"Standard",
 											),
 										},
-										Description: `must be one of [Standard]`,
+										Description: `must be one of ["Standard"]`,
 									},
 								},
 								Description: `Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
@@ -236,7 +236,7 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 								"alloydb",
 							),
 						},
-						Description: `must be one of [alloydb]`,
+						Description: `must be one of ["alloydb"]`,
 					},
 					"ssl_mode": schema.SingleNestedAttribute{
 						Optional: true,
@@ -251,7 +251,7 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 												"allow",
 											),
 										},
-										Description: `must be one of [allow]`,
+										Description: `must be one of ["allow"]`,
 									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
@@ -273,7 +273,7 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 												"disable",
 											),
 										},
-										Description: `must be one of [disable]`,
+										Description: `must be one of ["disable"]`,
 									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
@@ -295,7 +295,7 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 												"prefer",
 											),
 										},
-										Description: `must be one of [prefer]`,
+										Description: `must be one of ["prefer"]`,
 									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
@@ -317,7 +317,7 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 												"require",
 											),
 										},
-										Description: `must be one of [require]`,
+										Description: `must be one of ["require"]`,
 									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
@@ -355,7 +355,7 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 												"verify-ca",
 											),
 										},
-										Description: `must be one of [verify-ca]`,
+										Description: `must be one of ["verify-ca"]`,
 									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
@@ -393,7 +393,7 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 												"verify-full",
 											),
 										},
-										Description: `must be one of [verify-full]`,
+										Description: `must be one of ["verify-full"]`,
 									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
@@ -415,7 +415,7 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 												"allow",
 											),
 										},
-										Description: `must be one of [allow]`,
+										Description: `must be one of ["allow"]`,
 									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
@@ -437,7 +437,7 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 												"disable",
 											),
 										},
-										Description: `must be one of [disable]`,
+										Description: `must be one of ["disable"]`,
 									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
@@ -459,7 +459,7 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 												"prefer",
 											),
 										},
-										Description: `must be one of [prefer]`,
+										Description: `must be one of ["prefer"]`,
 									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
@@ -481,7 +481,7 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 												"require",
 											),
 										},
-										Description: `must be one of [require]`,
+										Description: `must be one of ["require"]`,
 									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
@@ -519,7 +519,7 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 												"verify-ca",
 											),
 										},
-										Description: `must be one of [verify-ca]`,
+										Description: `must be one of ["verify-ca"]`,
 									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
@@ -557,7 +557,7 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 												"verify-full",
 											),
 										},
-										Description: `must be one of [verify-full]`,
+										Description: `must be one of ["verify-full"]`,
 									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
@@ -589,7 +589,7 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 												"NO_TUNNEL",
 											),
 										},
-										MarkdownDescription: `must be one of [NO_TUNNEL]` + "\n" +
+										MarkdownDescription: `must be one of ["NO_TUNNEL"]` + "\n" +
 											`No ssh tunnel needed to connect to database`,
 									},
 								},
@@ -609,7 +609,7 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 												"SSH_PASSWORD_AUTH",
 											),
 										},
-										MarkdownDescription: `must be one of [SSH_PASSWORD_AUTH]` + "\n" +
+										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
 											`Connect through a jump server tunnel host using username and password authentication`,
 									},
 									"tunnel_port": schema.Int64Attribute{
@@ -645,7 +645,7 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 												"SSH_KEY_AUTH",
 											),
 										},
-										MarkdownDescription: `must be one of [SSH_KEY_AUTH]` + "\n" +
+										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
 											`Connect through a jump server tunnel host using username and ssh key`,
 									},
 									"tunnel_port": schema.Int64Attribute{
@@ -669,7 +669,7 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 												"NO_TUNNEL",
 											),
 										},
-										MarkdownDescription: `must be one of [NO_TUNNEL]` + "\n" +
+										MarkdownDescription: `must be one of ["NO_TUNNEL"]` + "\n" +
 											`No ssh tunnel needed to connect to database`,
 									},
 								},
@@ -689,7 +689,7 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 												"SSH_PASSWORD_AUTH",
 											),
 										},
-										MarkdownDescription: `must be one of [SSH_PASSWORD_AUTH]` + "\n" +
+										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
 											`Connect through a jump server tunnel host using username and password authentication`,
 									},
 									"tunnel_port": schema.Int64Attribute{
@@ -725,7 +725,7 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 												"SSH_KEY_AUTH",
 											),
 										},
-										MarkdownDescription: `must be one of [SSH_KEY_AUTH]` + "\n" +
+										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
 											`Connect through a jump server tunnel host using username and ssh key`,
 									},
 									"tunnel_port": schema.Int64Attribute{

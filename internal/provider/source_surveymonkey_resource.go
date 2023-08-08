@@ -69,7 +69,7 @@ func (r *SourceSurveymonkeyResource) Schema(ctx context.Context, req resource.Sc
 										"oauth2.0",
 									),
 								},
-								Description: `must be one of [oauth2.0]`,
+								Description: `must be one of ["oauth2.0"]`,
 							},
 							"client_id": schema.StringAttribute{
 								Optional:    true,
@@ -91,7 +91,7 @@ func (r *SourceSurveymonkeyResource) Schema(ctx context.Context, req resource.Sc
 								"Canada",
 							),
 						},
-						MarkdownDescription: `must be one of [USA, Europe, Canada]` + "\n" +
+						MarkdownDescription: `must be one of ["USA", "Europe", "Canada"]` + "\n" +
 							`Depending on the originating datacenter of the SurveyMonkey account, the API access URL may be different.`,
 					},
 					"source_type": schema.StringAttribute{
@@ -101,7 +101,7 @@ func (r *SourceSurveymonkeyResource) Schema(ctx context.Context, req resource.Sc
 								"surveymonkey",
 							),
 						},
-						Description: `must be one of [surveymonkey]`,
+						Description: `must be one of ["surveymonkey"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

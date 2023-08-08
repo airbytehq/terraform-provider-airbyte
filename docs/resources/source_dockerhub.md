@@ -18,8 +18,9 @@ resource "airbyte_source_dockerhub" "my_source_dockerhub" {
     docker_username = "airbyte"
     source_type     = "dockerhub"
   }
-  name         = "Rochelle Gislason"
-  workspace_id = "752c65b3-4418-4e3b-b91c-8d975e0e8419"
+  name         = "Nick Blanda"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "d975e0e8-419d-48f8-8f14-4f3e07edcc4a"
 }
 ```
 
@@ -47,6 +48,6 @@ resource "airbyte_source_dockerhub" "my_source_dockerhub" {
 Required:
 
 - `docker_username` (String) Username of DockerHub person or organization (for https://hub.docker.com/v2/repositories/USERNAME/ API call)
-- `source_type` (String) must be one of [dockerhub]
+- `source_type` (String) must be one of ["dockerhub"]
 
 

@@ -70,7 +70,7 @@ func (r *SourceTvmazeScheduleResource) Schema(ctx context.Context, req resource.
 								"tvmaze-schedule",
 							),
 						},
-						Description: `must be one of [tvmaze-schedule]`,
+						Description: `must be one of ["tvmaze-schedule"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required:    true,

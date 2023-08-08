@@ -68,7 +68,7 @@ func (r *DestinationRocksetResource) Schema(ctx context.Context, req resource.Sc
 								"rockset",
 							),
 						},
-						Description: `must be one of [rockset]`,
+						Description: `must be one of ["rockset"]`,
 					},
 					"workspace": schema.StringAttribute{
 						Required:    true,

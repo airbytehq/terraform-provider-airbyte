@@ -70,7 +70,7 @@ func (r *SourceLinnworksResource) Schema(ctx context.Context, req resource.Schem
 								"linnworks",
 							),
 						},
-						Description: `must be one of [linnworks]`,
+						Description: `must be one of ["linnworks"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

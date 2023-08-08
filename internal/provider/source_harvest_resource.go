@@ -72,7 +72,7 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 												"Client",
 											),
 										},
-										Description: `must be one of [Client]`,
+										Description: `must be one of ["Client"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -110,7 +110,7 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 												"Token",
 											),
 										},
-										Description: `must be one of [Token]`,
+										Description: `must be one of ["Token"]`,
 									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
@@ -132,7 +132,7 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 												"Client",
 											),
 										},
-										Description: `must be one of [Client]`,
+										Description: `must be one of ["Client"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -170,7 +170,7 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 												"Token",
 											),
 										},
-										Description: `must be one of [Token]`,
+										Description: `must be one of ["Token"]`,
 									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
@@ -209,7 +209,7 @@ func (r *SourceHarvestResource) Schema(ctx context.Context, req resource.SchemaR
 								"harvest",
 							),
 						},
-						Description: `must be one of [harvest]`,
+						Description: `must be one of ["harvest"]`,
 					},
 				},
 			},

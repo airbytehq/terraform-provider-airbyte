@@ -66,7 +66,7 @@ func (r *SourceIntercomResource) Schema(ctx context.Context, req resource.Schema
 								"intercom",
 							),
 						},
-						Description: `must be one of [intercom]`,
+						Description: `must be one of ["intercom"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

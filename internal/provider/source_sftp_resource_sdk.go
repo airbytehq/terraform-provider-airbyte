@@ -9,32 +9,34 @@ import (
 
 func (r *SourceSftpResourceModel) ToCreateSDKType() *shared.SourceSftpCreateRequest {
 	var credentials *shared.SourceSftpAuthenticationWildcard
-	var sourceSftpAuthenticationWildcardPasswordAuthentication *shared.SourceSftpAuthenticationWildcardPasswordAuthentication
-	if r.Configuration.Credentials.SourceSftpAuthenticationWildcardPasswordAuthentication != nil {
-		authMethod := shared.SourceSftpAuthenticationWildcardPasswordAuthenticationAuthMethod(r.Configuration.Credentials.SourceSftpAuthenticationWildcardPasswordAuthentication.AuthMethod.ValueString())
-		authUserPassword := r.Configuration.Credentials.SourceSftpAuthenticationWildcardPasswordAuthentication.AuthUserPassword.ValueString()
-		sourceSftpAuthenticationWildcardPasswordAuthentication = &shared.SourceSftpAuthenticationWildcardPasswordAuthentication{
-			AuthMethod:       authMethod,
-			AuthUserPassword: authUserPassword,
+	if r.Configuration.Credentials != nil {
+		var sourceSftpAuthenticationWildcardPasswordAuthentication *shared.SourceSftpAuthenticationWildcardPasswordAuthentication
+		if r.Configuration.Credentials.SourceSftpAuthenticationWildcardPasswordAuthentication != nil {
+			authMethod := shared.SourceSftpAuthenticationWildcardPasswordAuthenticationAuthMethod(r.Configuration.Credentials.SourceSftpAuthenticationWildcardPasswordAuthentication.AuthMethod.ValueString())
+			authUserPassword := r.Configuration.Credentials.SourceSftpAuthenticationWildcardPasswordAuthentication.AuthUserPassword.ValueString()
+			sourceSftpAuthenticationWildcardPasswordAuthentication = &shared.SourceSftpAuthenticationWildcardPasswordAuthentication{
+				AuthMethod:       authMethod,
+				AuthUserPassword: authUserPassword,
+			}
 		}
-	}
-	if sourceSftpAuthenticationWildcardPasswordAuthentication != nil {
-		credentials = &shared.SourceSftpAuthenticationWildcard{
-			SourceSftpAuthenticationWildcardPasswordAuthentication: sourceSftpAuthenticationWildcardPasswordAuthentication,
+		if sourceSftpAuthenticationWildcardPasswordAuthentication != nil {
+			credentials = &shared.SourceSftpAuthenticationWildcard{
+				SourceSftpAuthenticationWildcardPasswordAuthentication: sourceSftpAuthenticationWildcardPasswordAuthentication,
+			}
 		}
-	}
-	var sourceSftpAuthenticationWildcardSSHKeyAuthentication *shared.SourceSftpAuthenticationWildcardSSHKeyAuthentication
-	if r.Configuration.Credentials.SourceSftpAuthenticationWildcardSSHKeyAuthentication != nil {
-		authMethod1 := shared.SourceSftpAuthenticationWildcardSSHKeyAuthenticationAuthMethod(r.Configuration.Credentials.SourceSftpAuthenticationWildcardSSHKeyAuthentication.AuthMethod.ValueString())
-		authSSHKey := r.Configuration.Credentials.SourceSftpAuthenticationWildcardSSHKeyAuthentication.AuthSSHKey.ValueString()
-		sourceSftpAuthenticationWildcardSSHKeyAuthentication = &shared.SourceSftpAuthenticationWildcardSSHKeyAuthentication{
-			AuthMethod: authMethod1,
-			AuthSSHKey: authSSHKey,
+		var sourceSftpAuthenticationWildcardSSHKeyAuthentication *shared.SourceSftpAuthenticationWildcardSSHKeyAuthentication
+		if r.Configuration.Credentials.SourceSftpAuthenticationWildcardSSHKeyAuthentication != nil {
+			authMethod1 := shared.SourceSftpAuthenticationWildcardSSHKeyAuthenticationAuthMethod(r.Configuration.Credentials.SourceSftpAuthenticationWildcardSSHKeyAuthentication.AuthMethod.ValueString())
+			authSSHKey := r.Configuration.Credentials.SourceSftpAuthenticationWildcardSSHKeyAuthentication.AuthSSHKey.ValueString()
+			sourceSftpAuthenticationWildcardSSHKeyAuthentication = &shared.SourceSftpAuthenticationWildcardSSHKeyAuthentication{
+				AuthMethod: authMethod1,
+				AuthSSHKey: authSSHKey,
+			}
 		}
-	}
-	if sourceSftpAuthenticationWildcardSSHKeyAuthentication != nil {
-		credentials = &shared.SourceSftpAuthenticationWildcard{
-			SourceSftpAuthenticationWildcardSSHKeyAuthentication: sourceSftpAuthenticationWildcardSSHKeyAuthentication,
+		if sourceSftpAuthenticationWildcardSSHKeyAuthentication != nil {
+			credentials = &shared.SourceSftpAuthenticationWildcard{
+				SourceSftpAuthenticationWildcardSSHKeyAuthentication: sourceSftpAuthenticationWildcardSSHKeyAuthentication,
+			}
 		}
 	}
 	filePattern := new(string)
@@ -93,32 +95,34 @@ func (r *SourceSftpResourceModel) ToGetSDKType() *shared.SourceSftpCreateRequest
 
 func (r *SourceSftpResourceModel) ToUpdateSDKType() *shared.SourceSftpPutRequest {
 	var credentials *shared.SourceSftpUpdateAuthenticationWildcard
-	var sourceSftpUpdateAuthenticationWildcardPasswordAuthentication *shared.SourceSftpUpdateAuthenticationWildcardPasswordAuthentication
-	if r.Configuration.Credentials.SourceSftpAuthenticationWildcardPasswordAuthentication != nil {
-		authMethod := shared.SourceSftpUpdateAuthenticationWildcardPasswordAuthenticationAuthMethod(r.Configuration.Credentials.SourceSftpAuthenticationWildcardPasswordAuthentication.AuthMethod.ValueString())
-		authUserPassword := r.Configuration.Credentials.SourceSftpAuthenticationWildcardPasswordAuthentication.AuthUserPassword.ValueString()
-		sourceSftpUpdateAuthenticationWildcardPasswordAuthentication = &shared.SourceSftpUpdateAuthenticationWildcardPasswordAuthentication{
-			AuthMethod:       authMethod,
-			AuthUserPassword: authUserPassword,
+	if r.Configuration.Credentials != nil {
+		var sourceSftpUpdateAuthenticationWildcardPasswordAuthentication *shared.SourceSftpUpdateAuthenticationWildcardPasswordAuthentication
+		if r.Configuration.Credentials.SourceSftpUpdateAuthenticationWildcardPasswordAuthentication != nil {
+			authMethod := shared.SourceSftpUpdateAuthenticationWildcardPasswordAuthenticationAuthMethod(r.Configuration.Credentials.SourceSftpUpdateAuthenticationWildcardPasswordAuthentication.AuthMethod.ValueString())
+			authUserPassword := r.Configuration.Credentials.SourceSftpUpdateAuthenticationWildcardPasswordAuthentication.AuthUserPassword.ValueString()
+			sourceSftpUpdateAuthenticationWildcardPasswordAuthentication = &shared.SourceSftpUpdateAuthenticationWildcardPasswordAuthentication{
+				AuthMethod:       authMethod,
+				AuthUserPassword: authUserPassword,
+			}
 		}
-	}
-	if sourceSftpUpdateAuthenticationWildcardPasswordAuthentication != nil {
-		credentials = &shared.SourceSftpUpdateAuthenticationWildcard{
-			SourceSftpUpdateAuthenticationWildcardPasswordAuthentication: sourceSftpUpdateAuthenticationWildcardPasswordAuthentication,
+		if sourceSftpUpdateAuthenticationWildcardPasswordAuthentication != nil {
+			credentials = &shared.SourceSftpUpdateAuthenticationWildcard{
+				SourceSftpUpdateAuthenticationWildcardPasswordAuthentication: sourceSftpUpdateAuthenticationWildcardPasswordAuthentication,
+			}
 		}
-	}
-	var sourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication *shared.SourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication
-	if r.Configuration.Credentials.SourceSftpAuthenticationWildcardSSHKeyAuthentication != nil {
-		authMethod1 := shared.SourceSftpUpdateAuthenticationWildcardSSHKeyAuthenticationAuthMethod(r.Configuration.Credentials.SourceSftpAuthenticationWildcardSSHKeyAuthentication.AuthMethod.ValueString())
-		authSSHKey := r.Configuration.Credentials.SourceSftpAuthenticationWildcardSSHKeyAuthentication.AuthSSHKey.ValueString()
-		sourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication = &shared.SourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication{
-			AuthMethod: authMethod1,
-			AuthSSHKey: authSSHKey,
+		var sourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication *shared.SourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication
+		if r.Configuration.Credentials.SourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication != nil {
+			authMethod1 := shared.SourceSftpUpdateAuthenticationWildcardSSHKeyAuthenticationAuthMethod(r.Configuration.Credentials.SourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication.AuthMethod.ValueString())
+			authSSHKey := r.Configuration.Credentials.SourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication.AuthSSHKey.ValueString()
+			sourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication = &shared.SourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication{
+				AuthMethod: authMethod1,
+				AuthSSHKey: authSSHKey,
+			}
 		}
-	}
-	if sourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication != nil {
-		credentials = &shared.SourceSftpUpdateAuthenticationWildcard{
-			SourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication: sourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication,
+		if sourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication != nil {
+			credentials = &shared.SourceSftpUpdateAuthenticationWildcard{
+				SourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication: sourceSftpUpdateAuthenticationWildcardSSHKeyAuthentication,
+			}
 		}
 	}
 	filePattern := new(string)

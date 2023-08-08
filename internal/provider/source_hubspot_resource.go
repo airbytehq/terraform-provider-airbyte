@@ -76,7 +76,7 @@ func (r *SourceHubspotResource) Schema(ctx context.Context, req resource.SchemaR
 												"OAuth Credentials",
 											),
 										},
-										MarkdownDescription: `must be one of [OAuth Credentials]` + "\n" +
+										MarkdownDescription: `must be one of ["OAuth Credentials"]` + "\n" +
 											`Name of the credentials`,
 									},
 									"refresh_token": schema.StringAttribute{
@@ -100,7 +100,7 @@ func (r *SourceHubspotResource) Schema(ctx context.Context, req resource.SchemaR
 												"Private App Credentials",
 											),
 										},
-										MarkdownDescription: `must be one of [Private App Credentials]` + "\n" +
+										MarkdownDescription: `must be one of ["Private App Credentials"]` + "\n" +
 											`Name of the credentials set`,
 									},
 								},
@@ -124,7 +124,7 @@ func (r *SourceHubspotResource) Schema(ctx context.Context, req resource.SchemaR
 												"OAuth Credentials",
 											),
 										},
-										MarkdownDescription: `must be one of [OAuth Credentials]` + "\n" +
+										MarkdownDescription: `must be one of ["OAuth Credentials"]` + "\n" +
 											`Name of the credentials`,
 									},
 									"refresh_token": schema.StringAttribute{
@@ -148,7 +148,7 @@ func (r *SourceHubspotResource) Schema(ctx context.Context, req resource.SchemaR
 												"Private App Credentials",
 											),
 										},
-										MarkdownDescription: `must be one of [Private App Credentials]` + "\n" +
+										MarkdownDescription: `must be one of ["Private App Credentials"]` + "\n" +
 											`Name of the credentials set`,
 									},
 								},
@@ -167,7 +167,7 @@ func (r *SourceHubspotResource) Schema(ctx context.Context, req resource.SchemaR
 								"hubspot",
 							),
 						},
-						Description: `must be one of [hubspot]`,
+						Description: `must be one of ["hubspot"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

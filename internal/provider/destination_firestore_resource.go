@@ -64,7 +64,7 @@ func (r *DestinationFirestoreResource) Schema(ctx context.Context, req resource.
 								"firestore",
 							),
 						},
-						Description: `must be one of [firestore]`,
+						Description: `must be one of ["firestore"]`,
 					},
 					"project_id": schema.StringAttribute{
 						Required:    true,

@@ -83,7 +83,7 @@ func (r *SourceOnesignalResource) Schema(ctx context.Context, req resource.Schem
 								"onesignal",
 							),
 						},
-						Description: `must be one of [onesignal]`,
+						Description: `must be one of ["onesignal"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

@@ -10,7 +10,7 @@ import (
 func (r *SourceNetsuiteResourceModel) ToCreateSDKType() *shared.SourceNetsuiteCreateRequest {
 	consumerKey := r.Configuration.ConsumerKey.ValueString()
 	consumerSecret := r.Configuration.ConsumerSecret.ValueString()
-	objectTypes := make([]string, 0)
+	var objectTypes []string = nil
 	for _, objectTypesItem := range r.Configuration.ObjectTypes {
 		objectTypes = append(objectTypes, objectTypesItem.ValueString())
 	}
@@ -61,7 +61,7 @@ func (r *SourceNetsuiteResourceModel) ToGetSDKType() *shared.SourceNetsuiteCreat
 func (r *SourceNetsuiteResourceModel) ToUpdateSDKType() *shared.SourceNetsuitePutRequest {
 	consumerKey := r.Configuration.ConsumerKey.ValueString()
 	consumerSecret := r.Configuration.ConsumerSecret.ValueString()
-	objectTypes := make([]string, 0)
+	var objectTypes []string = nil
 	for _, objectTypesItem := range r.Configuration.ObjectTypes {
 		objectTypes = append(objectTypes, objectTypesItem.ValueString())
 	}

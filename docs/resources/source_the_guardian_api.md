@@ -21,10 +21,11 @@ resource "airbyte_source_the_guardian_api" "my_source_theguardianapi" {
     section     = "housing-network"
     source_type = "the-guardian-api"
     start_date  = "YYYY-MM-DD"
-    tag         = "environment/plasticbags"
+    tag         = "environment/recycling"
   }
-  name         = "Jerome Heaney"
-  workspace_id = "13e13a48-2310-4907-bd35-4c092bd734f0"
+  name         = "Jeremy Pfeffer"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "34f02449-d86f-44bb-a0fe-5d911cbfe749"
 }
 ```
 
@@ -52,7 +53,7 @@ resource "airbyte_source_the_guardian_api" "my_source_theguardianapi" {
 Required:
 
 - `api_key` (String) Your API Key. See <a href="https://open-platform.theguardian.com/access/">here</a>. The key is case sensitive.
-- `source_type` (String) must be one of [the-guardian-api]
+- `source_type` (String) must be one of ["the-guardian-api"]
 - `start_date` (String) Use this to set the minimum date (YYYY-MM-DD) of the results. Results older than the start_date will not be shown.
 
 Optional:

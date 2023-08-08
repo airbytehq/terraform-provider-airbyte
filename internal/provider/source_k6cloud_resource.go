@@ -65,7 +65,7 @@ func (r *SourceK6CloudResource) Schema(ctx context.Context, req resource.SchemaR
 								"k6-cloud",
 							),
 						},
-						Description: `must be one of [k6-cloud]`,
+						Description: `must be one of ["k6-cloud"]`,
 					},
 				},
 			},

@@ -19,18 +19,22 @@ resource "airbyte_destination_redis" "my_destination_redis" {
     destination_type = "redis"
     host             = "localhost,127.0.0.1"
     password         = "...my_password..."
-    port             = 4
-    ssl              = true
+    port             = 10
+    ssl              = false
     ssl_mode = {
-      mode = "disable"
+      destination_redis_ssl_modes_disable = {
+        mode = "disable"
+      }
     }
     tunnel_method = {
-      tunnel_method = "NO_TUNNEL"
+      destination_redis_ssh_tunnel_method_no_tunnel = {
+        tunnel_method = "NO_TUNNEL"
+      }
     }
-    username = "Joy.Swaniawski95"
+    username = "Americo_Weber"
   }
-  name         = "Ms. Cheryl Hane"
-  workspace_id = "ebfd0e9f-e6c6-432c-a3ae-d0117996312f"
+  name         = "Gene Sauer"
+  workspace_id = "2ca3aed0-1179-4963-92fd-e04771778ff6"
 }
 ```
 
@@ -53,9 +57,9 @@ resource "airbyte_destination_redis" "my_destination_redis" {
 
 Required:
 
-- `cache_type` (String) must be one of [hash]
+- `cache_type` (String) must be one of ["hash"]
 Redis cache type to store data in.
-- `destination_type` (String) must be one of [redis]
+- `destination_type` (String) must be one of ["redis"]
 - `host` (String) Redis host to connect to.
 - `port` (Number) Port of Redis.
 - `username` (String) Username associated with Redis.
@@ -83,7 +87,7 @@ Optional:
 
 Required:
 
-- `mode` (String) must be one of [disable]
+- `mode` (String) must be one of ["disable"]
 
 
 <a id="nestedatt--configuration--ssl_mode--destination_redis_ssl_modes_verify_full"></a>
@@ -94,7 +98,7 @@ Required:
 - `ca_certificate` (String) CA certificate
 - `client_certificate` (String) Client certificate
 - `client_key` (String) Client key
-- `mode` (String) must be one of [verify-full]
+- `mode` (String) must be one of ["verify-full"]
 
 Optional:
 
@@ -106,7 +110,7 @@ Optional:
 
 Required:
 
-- `mode` (String) must be one of [disable]
+- `mode` (String) must be one of ["disable"]
 
 
 <a id="nestedatt--configuration--ssl_mode--destination_redis_update_ssl_modes_verify_full"></a>
@@ -117,7 +121,7 @@ Required:
 - `ca_certificate` (String) CA certificate
 - `client_certificate` (String) Client certificate
 - `client_key` (String) Client key
-- `mode` (String) must be one of [verify-full]
+- `mode` (String) must be one of ["verify-full"]
 
 Optional:
 
@@ -142,7 +146,7 @@ Optional:
 
 Required:
 
-- `tunnel_method` (String) must be one of [NO_TUNNEL]
+- `tunnel_method` (String) must be one of ["NO_TUNNEL"]
 No ssh tunnel needed to connect to database
 
 
@@ -152,7 +156,7 @@ No ssh tunnel needed to connect to database
 Required:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of [SSH_PASSWORD_AUTH]
+- `tunnel_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
 Connect through a jump server tunnel host using username and password authentication
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
@@ -166,7 +170,7 @@ Required:
 
 - `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of [SSH_KEY_AUTH]
+- `tunnel_method` (String) must be one of ["SSH_KEY_AUTH"]
 Connect through a jump server tunnel host using username and ssh key
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host.
@@ -177,7 +181,7 @@ Connect through a jump server tunnel host using username and ssh key
 
 Required:
 
-- `tunnel_method` (String) must be one of [NO_TUNNEL]
+- `tunnel_method` (String) must be one of ["NO_TUNNEL"]
 No ssh tunnel needed to connect to database
 
 
@@ -187,7 +191,7 @@ No ssh tunnel needed to connect to database
 Required:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of [SSH_PASSWORD_AUTH]
+- `tunnel_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
 Connect through a jump server tunnel host using username and password authentication
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
@@ -201,7 +205,7 @@ Required:
 
 - `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of [SSH_KEY_AUTH]
+- `tunnel_method` (String) must be one of ["SSH_KEY_AUTH"]
 Connect through a jump server tunnel host using username and ssh key
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host.

@@ -8,13 +8,17 @@ resource "airbyte_destination_postgres" "my_destination_postgres" {
     port             = 5432
     schema           = "public"
     ssl_mode = {
-      mode = "allow"
+      destination_postgres_ssl_modes_allow = {
+        mode = "allow"
+      }
     }
     tunnel_method = {
-      tunnel_method = "NO_TUNNEL"
+      destination_postgres_ssh_tunnel_method_no_tunnel = {
+        tunnel_method = "NO_TUNNEL"
+      }
     }
-    username = "Marc_Predovic"
+    username = "Gerald.Powlowski46"
   }
-  name         = "Max O'Connell DDS"
-  workspace_id = "e187f86b-c173-4d68-9eee-9526f8d986e8"
+  name         = "Angelina Jenkins"
+  workspace_id = "eee9526f-8d98-46e8-81ea-d4f0e1012563"
 }

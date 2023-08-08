@@ -65,7 +65,7 @@ func (r *SourceGlassfrogResource) Schema(ctx context.Context, req resource.Schem
 								"glassfrog",
 							),
 						},
-						Description: `must be one of [glassfrog]`,
+						Description: `must be one of ["glassfrog"]`,
 					},
 				},
 			},

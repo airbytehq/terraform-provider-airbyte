@@ -22,8 +22,8 @@ resource "airbyte_destination_typesense" "my_destination_typesense" {
     port             = "...my_port..."
     protocol         = "...my_protocol..."
   }
-  name         = "Angel Pouros"
-  workspace_id = "c9b8f759-eac5-45a9-b41d-311352965bb8"
+  name         = "Jodi Mueller"
+  workspace_id = "1d311352-965b-4b8a-b202-611435e139db"
 }
 ```
 
@@ -47,7 +47,7 @@ resource "airbyte_destination_typesense" "my_destination_typesense" {
 Required:
 
 - `api_key` (String) Typesense API Key
-- `destination_type` (String) must be one of [typesense]
+- `destination_type` (String) must be one of ["typesense"]
 - `host` (String) Hostname of the Typesense instance without protocol.
 
 Optional:

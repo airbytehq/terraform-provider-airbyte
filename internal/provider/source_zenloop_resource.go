@@ -69,7 +69,7 @@ func (r *SourceZenloopResource) Schema(ctx context.Context, req resource.SchemaR
 								"zenloop",
 							),
 						},
-						Description: `must be one of [zenloop]`,
+						Description: `must be one of ["zenloop"]`,
 					},
 					"survey_group_id": schema.StringAttribute{
 						Optional:    true,

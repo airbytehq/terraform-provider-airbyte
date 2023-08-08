@@ -9,28 +9,40 @@ import (
 
 func (r *SourceZendeskSunshineResourceModel) ToCreateSDKType() *shared.SourceZendeskSunshineCreateRequest {
 	var credentials *shared.SourceZendeskSunshineAuthorizationMethod
-	var sourceZendeskSunshineAuthorizationMethodOAuth20 *shared.SourceZendeskSunshineAuthorizationMethodOAuth20
-	if r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodAPIToken != nil {
-		authMethod := shared.SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethod(r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodAPIToken.AuthMethod.ValueString())
-		sourceZendeskSunshineAuthorizationMethodOAuth20 = &shared.SourceZendeskSunshineAuthorizationMethodOAuth20{
-			AuthMethod: authMethod,
+	if r.Configuration.Credentials != nil {
+		var sourceZendeskSunshineAuthorizationMethodOAuth20 *shared.SourceZendeskSunshineAuthorizationMethodOAuth20
+		if r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20 != nil {
+			accessToken := r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20.AccessToken.ValueString()
+			authMethod := shared.SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethod(r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20.AuthMethod.ValueString())
+			clientID := r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20.ClientID.ValueString()
+			clientSecret := r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20.ClientSecret.ValueString()
+			sourceZendeskSunshineAuthorizationMethodOAuth20 = &shared.SourceZendeskSunshineAuthorizationMethodOAuth20{
+				AccessToken:  accessToken,
+				AuthMethod:   authMethod,
+				ClientID:     clientID,
+				ClientSecret: clientSecret,
+			}
 		}
-	}
-	if sourceZendeskSunshineAuthorizationMethodOAuth20 != nil {
-		credentials = &shared.SourceZendeskSunshineAuthorizationMethod{
-			SourceZendeskSunshineAuthorizationMethodOAuth20: sourceZendeskSunshineAuthorizationMethodOAuth20,
+		if sourceZendeskSunshineAuthorizationMethodOAuth20 != nil {
+			credentials = &shared.SourceZendeskSunshineAuthorizationMethod{
+				SourceZendeskSunshineAuthorizationMethodOAuth20: sourceZendeskSunshineAuthorizationMethodOAuth20,
+			}
 		}
-	}
-	var sourceZendeskSunshineAuthorizationMethodAPIToken *shared.SourceZendeskSunshineAuthorizationMethodAPIToken
-	if r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20 != nil {
-		authMethod1 := shared.SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethod(r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20.AuthMethod.ValueString())
-		sourceZendeskSunshineAuthorizationMethodAPIToken = &shared.SourceZendeskSunshineAuthorizationMethodAPIToken{
-			AuthMethod: authMethod1,
+		var sourceZendeskSunshineAuthorizationMethodAPIToken *shared.SourceZendeskSunshineAuthorizationMethodAPIToken
+		if r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodAPIToken != nil {
+			apiToken := r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodAPIToken.APIToken.ValueString()
+			authMethod1 := shared.SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethod(r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodAPIToken.AuthMethod.ValueString())
+			email := r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodAPIToken.Email.ValueString()
+			sourceZendeskSunshineAuthorizationMethodAPIToken = &shared.SourceZendeskSunshineAuthorizationMethodAPIToken{
+				APIToken:   apiToken,
+				AuthMethod: authMethod1,
+				Email:      email,
+			}
 		}
-	}
-	if sourceZendeskSunshineAuthorizationMethodAPIToken != nil {
-		credentials = &shared.SourceZendeskSunshineAuthorizationMethod{
-			SourceZendeskSunshineAuthorizationMethodAPIToken: sourceZendeskSunshineAuthorizationMethodAPIToken,
+		if sourceZendeskSunshineAuthorizationMethodAPIToken != nil {
+			credentials = &shared.SourceZendeskSunshineAuthorizationMethod{
+				SourceZendeskSunshineAuthorizationMethodAPIToken: sourceZendeskSunshineAuthorizationMethodAPIToken,
+			}
 		}
 	}
 	sourceType := shared.SourceZendeskSunshineZendeskSunshine(r.Configuration.SourceType.ValueString())
@@ -66,28 +78,40 @@ func (r *SourceZendeskSunshineResourceModel) ToGetSDKType() *shared.SourceZendes
 
 func (r *SourceZendeskSunshineResourceModel) ToUpdateSDKType() *shared.SourceZendeskSunshinePutRequest {
 	var credentials *shared.SourceZendeskSunshineUpdateAuthorizationMethod
-	var sourceZendeskSunshineUpdateAuthorizationMethodOAuth20 *shared.SourceZendeskSunshineUpdateAuthorizationMethodOAuth20
-	if r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodAPIToken != nil {
-		authMethod := shared.SourceZendeskSunshineUpdateAuthorizationMethodOAuth20AuthMethod(r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodAPIToken.AuthMethod.ValueString())
-		sourceZendeskSunshineUpdateAuthorizationMethodOAuth20 = &shared.SourceZendeskSunshineUpdateAuthorizationMethodOAuth20{
-			AuthMethod: authMethod,
+	if r.Configuration.Credentials != nil {
+		var sourceZendeskSunshineUpdateAuthorizationMethodOAuth20 *shared.SourceZendeskSunshineUpdateAuthorizationMethodOAuth20
+		if r.Configuration.Credentials.SourceZendeskSunshineUpdateAuthorizationMethodOAuth20 != nil {
+			accessToken := r.Configuration.Credentials.SourceZendeskSunshineUpdateAuthorizationMethodOAuth20.AccessToken.ValueString()
+			authMethod := shared.SourceZendeskSunshineUpdateAuthorizationMethodOAuth20AuthMethod(r.Configuration.Credentials.SourceZendeskSunshineUpdateAuthorizationMethodOAuth20.AuthMethod.ValueString())
+			clientID := r.Configuration.Credentials.SourceZendeskSunshineUpdateAuthorizationMethodOAuth20.ClientID.ValueString()
+			clientSecret := r.Configuration.Credentials.SourceZendeskSunshineUpdateAuthorizationMethodOAuth20.ClientSecret.ValueString()
+			sourceZendeskSunshineUpdateAuthorizationMethodOAuth20 = &shared.SourceZendeskSunshineUpdateAuthorizationMethodOAuth20{
+				AccessToken:  accessToken,
+				AuthMethod:   authMethod,
+				ClientID:     clientID,
+				ClientSecret: clientSecret,
+			}
 		}
-	}
-	if sourceZendeskSunshineUpdateAuthorizationMethodOAuth20 != nil {
-		credentials = &shared.SourceZendeskSunshineUpdateAuthorizationMethod{
-			SourceZendeskSunshineUpdateAuthorizationMethodOAuth20: sourceZendeskSunshineUpdateAuthorizationMethodOAuth20,
+		if sourceZendeskSunshineUpdateAuthorizationMethodOAuth20 != nil {
+			credentials = &shared.SourceZendeskSunshineUpdateAuthorizationMethod{
+				SourceZendeskSunshineUpdateAuthorizationMethodOAuth20: sourceZendeskSunshineUpdateAuthorizationMethodOAuth20,
+			}
 		}
-	}
-	var sourceZendeskSunshineUpdateAuthorizationMethodAPIToken *shared.SourceZendeskSunshineUpdateAuthorizationMethodAPIToken
-	if r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20 != nil {
-		authMethod1 := shared.SourceZendeskSunshineUpdateAuthorizationMethodAPITokenAuthMethod(r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20.AuthMethod.ValueString())
-		sourceZendeskSunshineUpdateAuthorizationMethodAPIToken = &shared.SourceZendeskSunshineUpdateAuthorizationMethodAPIToken{
-			AuthMethod: authMethod1,
+		var sourceZendeskSunshineUpdateAuthorizationMethodAPIToken *shared.SourceZendeskSunshineUpdateAuthorizationMethodAPIToken
+		if r.Configuration.Credentials.SourceZendeskSunshineUpdateAuthorizationMethodAPIToken != nil {
+			apiToken := r.Configuration.Credentials.SourceZendeskSunshineUpdateAuthorizationMethodAPIToken.APIToken.ValueString()
+			authMethod1 := shared.SourceZendeskSunshineUpdateAuthorizationMethodAPITokenAuthMethod(r.Configuration.Credentials.SourceZendeskSunshineUpdateAuthorizationMethodAPIToken.AuthMethod.ValueString())
+			email := r.Configuration.Credentials.SourceZendeskSunshineUpdateAuthorizationMethodAPIToken.Email.ValueString()
+			sourceZendeskSunshineUpdateAuthorizationMethodAPIToken = &shared.SourceZendeskSunshineUpdateAuthorizationMethodAPIToken{
+				APIToken:   apiToken,
+				AuthMethod: authMethod1,
+				Email:      email,
+			}
 		}
-	}
-	if sourceZendeskSunshineUpdateAuthorizationMethodAPIToken != nil {
-		credentials = &shared.SourceZendeskSunshineUpdateAuthorizationMethod{
-			SourceZendeskSunshineUpdateAuthorizationMethodAPIToken: sourceZendeskSunshineUpdateAuthorizationMethodAPIToken,
+		if sourceZendeskSunshineUpdateAuthorizationMethodAPIToken != nil {
+			credentials = &shared.SourceZendeskSunshineUpdateAuthorizationMethod{
+				SourceZendeskSunshineUpdateAuthorizationMethodAPIToken: sourceZendeskSunshineUpdateAuthorizationMethodAPIToken,
+			}
 		}
 	}
 	startDate := r.Configuration.StartDate.ValueString()

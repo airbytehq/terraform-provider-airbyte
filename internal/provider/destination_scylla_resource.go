@@ -64,7 +64,7 @@ func (r *DestinationScyllaResource) Schema(ctx context.Context, req resource.Sch
 								"scylla",
 							),
 						},
-						Description: `must be one of [scylla]`,
+						Description: `must be one of ["scylla"]`,
 					},
 					"keyspace": schema.StringAttribute{
 						Required:    true,

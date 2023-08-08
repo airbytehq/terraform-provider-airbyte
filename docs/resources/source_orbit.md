@@ -20,8 +20,9 @@ resource "airbyte_source_orbit" "my_source_orbit" {
     start_date  = "...my_start_date..."
     workspace   = "...my_workspace..."
   }
-  name         = "Molly Parker DVM"
-  workspace_id = "6c31cc2f-1fcb-451c-9a41-ffbe9cbd795e"
+  name         = "Jackie Schmitt"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "795ee65e-076c-4c7a-bf61-6ea5c7164193"
 }
 ```
 
@@ -49,7 +50,7 @@ resource "airbyte_source_orbit" "my_source_orbit" {
 Required:
 
 - `api_token` (String) Authorizes you to work with Orbit workspaces associated with the token.
-- `source_type` (String) must be one of [orbit]
+- `source_type` (String) must be one of ["orbit"]
 - `workspace` (String) The unique name of the workspace that your API token is associated with.
 
 Optional:

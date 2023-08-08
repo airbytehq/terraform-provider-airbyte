@@ -17,14 +17,15 @@ resource "airbyte_source_pexels_api" "my_source_pexelsapi" {
   configuration = {
     api_key     = "...my_api_key..."
     color       = "red"
-    locale      = "pt-BR"
-    orientation = "landscape"
+    locale      = "en-US"
+    orientation = "square"
     query       = "people"
-    size        = "large"
+    size        = "small"
     source_type = "pexels-api"
   }
-  name         = "Terrell Cremin"
-  workspace_id = "5dddb46a-a1cf-4d6d-828d-a01319112964"
+  name         = "Jean Denesik"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "46645c1d-81f2-4904-af56-9b7aff0ea221"
 }
 ```
 
@@ -53,7 +54,7 @@ Required:
 
 - `api_key` (String) API key is required to access pexels api, For getting your's goto https://www.pexels.com/api/documentation and create account for free.
 - `query` (String) Optional, the search query, Example Ocean, Tigers, Pears, etc.
-- `source_type` (String) must be one of [pexels-api]
+- `source_type` (String) must be one of ["pexels-api"]
 
 Optional:
 

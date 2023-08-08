@@ -65,7 +65,7 @@ func (r *SourceSapFieldglassResource) Schema(ctx context.Context, req resource.S
 								"sap-fieldglass",
 							),
 						},
-						Description: `must be one of [sap-fieldglass]`,
+						Description: `must be one of ["sap-fieldglass"]`,
 					},
 				},
 			},

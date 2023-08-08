@@ -20,8 +20,9 @@ resource "airbyte_source_smaily" "my_source_smaily" {
     api_username  = "...my_api_username..."
     source_type   = "smaily"
   }
-  name         = "Doug Marvin"
-  workspace_id = "3398dafb-42a8-4d63-b88e-4d8039ea5f9b"
+  name         = "David Dooley"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "a5f9b18a-244f-4d61-9039-dacd38ed0dc6"
 }
 ```
 
@@ -51,6 +52,6 @@ Required:
 - `api_password` (String) API user password. See https://smaily.com/help/api/general/create-api-user/
 - `api_subdomain` (String) API Subdomain. See https://smaily.com/help/api/general/create-api-user/
 - `api_username` (String) API user username. See https://smaily.com/help/api/general/create-api-user/
-- `source_type` (String) must be one of [smaily]
+- `source_type` (String) must be one of ["smaily"]
 
 

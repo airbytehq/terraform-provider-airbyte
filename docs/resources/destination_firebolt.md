@@ -21,17 +21,19 @@ resource "airbyte_destination_firebolt" "my_destination_firebolt" {
     engine           = "...my_engine..."
     host             = "api.app.firebolt.io"
     loading_method = {
-      aws_key_id     = "...my_aws_key_id..."
-      aws_key_secret = "...my_aws_key_secret..."
-      method         = "S3"
-      s3_bucket      = "...my_s3_bucket..."
-      s3_region      = "us-east-1"
+      destination_firebolt_loading_method_external_table_via_s3 = {
+        aws_key_id     = "...my_aws_key_id..."
+        aws_key_secret = "...my_aws_key_secret..."
+        method         = "S3"
+        s3_bucket      = "...my_s3_bucket..."
+        s3_region      = "us-east-1"
+      }
     }
     password = "...my_password..."
     username = "username@email.com"
   }
-  name         = "Miss Dennis Friesen"
-  workspace_id = "c366c8dd-6b14-4429-8747-4778a7bd466d"
+  name         = "Ms. Janice McLaughlin"
+  workspace_id = "74778a7b-d466-4d28-810a-b3cdca425190"
 }
 ```
 
@@ -55,7 +57,7 @@ resource "airbyte_destination_firebolt" "my_destination_firebolt" {
 Required:
 
 - `database` (String) The database to connect to.
-- `destination_type` (String) must be one of [firebolt]
+- `destination_type` (String) must be one of ["firebolt"]
 - `password` (String) Firebolt password.
 - `username` (String) Firebolt email address you use to login.
 
@@ -83,7 +85,7 @@ Required:
 
 - `aws_key_id` (String) AWS access key granting read and write access to S3.
 - `aws_key_secret` (String) Corresponding secret part of the AWS Key
-- `method` (String) must be one of [S3]
+- `method` (String) must be one of ["S3"]
 - `s3_bucket` (String) The name of the S3 bucket.
 - `s3_region` (String) Region name of the S3 bucket.
 
@@ -93,7 +95,7 @@ Required:
 
 Required:
 
-- `method` (String) must be one of [SQL]
+- `method` (String) must be one of ["SQL"]
 
 
 <a id="nestedatt--configuration--loading_method--destination_firebolt_update_loading_method_external_table_via_s3"></a>
@@ -103,7 +105,7 @@ Required:
 
 - `aws_key_id` (String) AWS access key granting read and write access to S3.
 - `aws_key_secret` (String) Corresponding secret part of the AWS Key
-- `method` (String) must be one of [S3]
+- `method` (String) must be one of ["S3"]
 - `s3_bucket` (String) The name of the S3 bucket.
 - `s3_region` (String) Region name of the S3 bucket.
 
@@ -113,6 +115,6 @@ Required:
 
 Required:
 
-- `method` (String) must be one of [SQL]
+- `method` (String) must be one of ["SQL"]
 
 

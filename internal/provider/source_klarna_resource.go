@@ -71,7 +71,7 @@ func (r *SourceKlarnaResource) Schema(ctx context.Context, req resource.SchemaRe
 								"oc",
 							),
 						},
-						MarkdownDescription: `must be one of [eu, us, oc]` + "\n" +
+						MarkdownDescription: `must be one of ["eu", "us", "oc"]` + "\n" +
 							`Base url region (For playground eu https://docs.klarna.com/klarna-payments/api/payments-api/#tag/API-URLs). Supported 'eu', 'us', 'oc'`,
 					},
 					"source_type": schema.StringAttribute{
@@ -81,7 +81,7 @@ func (r *SourceKlarnaResource) Schema(ctx context.Context, req resource.SchemaRe
 								"klarna",
 							),
 						},
-						Description: `must be one of [klarna]`,
+						Description: `must be one of ["klarna"]`,
 					},
 					"username": schema.StringAttribute{
 						Required:    true,

@@ -21,8 +21,9 @@ resource "airbyte_source_chargebee" "my_source_chargebee" {
     source_type     = "chargebee"
     start_date      = "2021-01-25T00:00:00Z"
   }
-  name         = "Kristopher Walter"
-  workspace_id = "5daea4c5-06a8-4aa9-8c02-644cf5e9d9a4"
+  name         = "Roxanne Aufderhar"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "44cf5e9d-9a45-478a-9c1a-c600dec001ac"
 }
 ```
 
@@ -49,11 +50,11 @@ resource "airbyte_source_chargebee" "my_source_chargebee" {
 
 Required:
 
-- `product_catalog` (String) must be one of [1.0, 2.0]
+- `product_catalog` (String) must be one of ["1.0", "2.0"]
 Product Catalog version of your Chargebee site. Instructions on how to find your version you may find <a href="https://apidocs.chargebee.com/docs/api?prod_cat_ver=2">here</a> under `API Version` section.
 - `site` (String) The site prefix for your Chargebee instance.
 - `site_api_key` (String) Chargebee API Key. See the <a href="https://docs.airbyte.com/integrations/sources/chargebee">docs</a> for more information on how to obtain this key.
-- `source_type` (String) must be one of [chargebee]
+- `source_type` (String) must be one of ["chargebee"]
 - `start_date` (String) UTC date and time in the format 2021-01-25T00:00:00Z. Any data before this date will not be replicated.
 
 

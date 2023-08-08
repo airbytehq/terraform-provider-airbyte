@@ -61,7 +61,7 @@ func (r *DestinationOracleResource) Schema(ctx context.Context, req resource.Sch
 								"oracle",
 							),
 						},
-						Description: `must be one of [oracle]`,
+						Description: `must be one of ["oracle"]`,
 					},
 					"host": schema.StringAttribute{
 						Required:    true,
@@ -100,7 +100,7 @@ func (r *DestinationOracleResource) Schema(ctx context.Context, req resource.Sch
 												"NO_TUNNEL",
 											),
 										},
-										MarkdownDescription: `must be one of [NO_TUNNEL]` + "\n" +
+										MarkdownDescription: `must be one of ["NO_TUNNEL"]` + "\n" +
 											`No ssh tunnel needed to connect to database`,
 									},
 								},
@@ -120,7 +120,7 @@ func (r *DestinationOracleResource) Schema(ctx context.Context, req resource.Sch
 												"SSH_PASSWORD_AUTH",
 											),
 										},
-										MarkdownDescription: `must be one of [SSH_PASSWORD_AUTH]` + "\n" +
+										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
 											`Connect through a jump server tunnel host using username and password authentication`,
 									},
 									"tunnel_port": schema.Int64Attribute{
@@ -156,7 +156,7 @@ func (r *DestinationOracleResource) Schema(ctx context.Context, req resource.Sch
 												"SSH_KEY_AUTH",
 											),
 										},
-										MarkdownDescription: `must be one of [SSH_KEY_AUTH]` + "\n" +
+										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
 											`Connect through a jump server tunnel host using username and ssh key`,
 									},
 									"tunnel_port": schema.Int64Attribute{
@@ -180,7 +180,7 @@ func (r *DestinationOracleResource) Schema(ctx context.Context, req resource.Sch
 												"NO_TUNNEL",
 											),
 										},
-										MarkdownDescription: `must be one of [NO_TUNNEL]` + "\n" +
+										MarkdownDescription: `must be one of ["NO_TUNNEL"]` + "\n" +
 											`No ssh tunnel needed to connect to database`,
 									},
 								},
@@ -200,7 +200,7 @@ func (r *DestinationOracleResource) Schema(ctx context.Context, req resource.Sch
 												"SSH_PASSWORD_AUTH",
 											),
 										},
-										MarkdownDescription: `must be one of [SSH_PASSWORD_AUTH]` + "\n" +
+										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
 											`Connect through a jump server tunnel host using username and password authentication`,
 									},
 									"tunnel_port": schema.Int64Attribute{
@@ -236,7 +236,7 @@ func (r *DestinationOracleResource) Schema(ctx context.Context, req resource.Sch
 												"SSH_KEY_AUTH",
 											),
 										},
-										MarkdownDescription: `must be one of [SSH_KEY_AUTH]` + "\n" +
+										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
 											`Connect through a jump server tunnel host using username and ssh key`,
 									},
 									"tunnel_port": schema.Int64Attribute{

@@ -61,7 +61,7 @@ func (r *SourceAzureTableResource) Schema(ctx context.Context, req resource.Sche
 								"azure-table",
 							),
 						},
-						Description: `must be one of [azure-table]`,
+						Description: `must be one of ["azure-table"]`,
 					},
 					"storage_access_key": schema.StringAttribute{
 						Required:    true,

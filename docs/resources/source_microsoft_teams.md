@@ -16,16 +16,19 @@ SourceMicrosoftTeams Resource
 resource "airbyte_source_microsoft_teams" "my_source_microsoftteams" {
   configuration = {
     credentials = {
-      auth_type     = "Token"
-      client_id     = "...my_client_id..."
-      client_secret = "...my_client_secret..."
-      tenant_id     = "...my_tenant_id..."
+      source_microsoft_teams_authentication_mechanism_authenticate_via_microsoft = {
+        auth_type     = "Token"
+        client_id     = "...my_client_id..."
+        client_secret = "...my_client_secret..."
+        tenant_id     = "...my_tenant_id..."
+      }
     }
     period      = "D7"
     source_type = "microsoft-teams"
   }
-  name         = "Veronica Abshire"
-  workspace_id = "1f176445-6379-4f3f-b27e-21f862657b36"
+  name         = "Stephanie Yundt"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "2657b36f-c6b9-4f58-bce5-25c67641a831"
 }
 ```
 
@@ -53,7 +56,7 @@ resource "airbyte_source_microsoft_teams" "my_source_microsoftteams" {
 Required:
 
 - `period` (String) Specifies the length of time over which the Team Device Report stream is aggregated. The supported values are: D7, D30, D90, and D180.
-- `source_type` (String) must be one of [microsoft-teams]
+- `source_type` (String) must be one of ["microsoft-teams"]
 
 Optional:
 
@@ -80,7 +83,7 @@ Required:
 
 Optional:
 
-- `auth_type` (String) must be one of [Token]
+- `auth_type` (String) must be one of ["Token"]
 
 
 <a id="nestedatt--configuration--credentials--source_microsoft_teams_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0"></a>
@@ -95,7 +98,7 @@ Required:
 
 Optional:
 
-- `auth_type` (String) must be one of [Client]
+- `auth_type` (String) must be one of ["Client"]
 
 
 <a id="nestedatt--configuration--credentials--source_microsoft_teams_update_authentication_mechanism_authenticate_via_microsoft"></a>
@@ -109,7 +112,7 @@ Required:
 
 Optional:
 
-- `auth_type` (String) must be one of [Token]
+- `auth_type` (String) must be one of ["Token"]
 
 
 <a id="nestedatt--configuration--credentials--source_microsoft_teams_update_authentication_mechanism_authenticate_via_microsoft_o_auth_2_0"></a>
@@ -124,6 +127,6 @@ Required:
 
 Optional:
 
-- `auth_type` (String) must be one of [Client]
+- `auth_type` (String) must be one of ["Client"]
 
 

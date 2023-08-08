@@ -71,7 +71,7 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 												"MANAGED_TABLES_STORAGE",
 											),
 										},
-										Description: `must be one of [MANAGED_TABLES_STORAGE]`,
+										Description: `must be one of ["MANAGED_TABLES_STORAGE"]`,
 									},
 								},
 								Description: `Storage on which the delta lake is built.`,
@@ -86,7 +86,7 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 												"S3_STORAGE",
 											),
 										},
-										Description: `must be one of [S3_STORAGE]`,
+										Description: `must be one of ["S3_STORAGE"]`,
 									},
 									"file_name_pattern": schema.StringAttribute{
 										Optional:    true,
@@ -136,7 +136,7 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 												"us-gov-west-1",
 											),
 										},
-										MarkdownDescription: `must be one of [, us-east-1, us-east-2, us-west-1, us-west-2, af-south-1, ap-east-1, ap-south-1, ap-northeast-1, ap-northeast-2, ap-northeast-3, ap-southeast-1, ap-southeast-2, ca-central-1, cn-north-1, cn-northwest-1, eu-central-1, eu-north-1, eu-south-1, eu-west-1, eu-west-2, eu-west-3, sa-east-1, me-south-1, us-gov-east-1, us-gov-west-1]` + "\n" +
+										MarkdownDescription: `must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]` + "\n" +
 											`The region of the S3 staging bucket to use if utilising a copy strategy.`,
 									},
 									"s3_secret_access_key": schema.StringAttribute{
@@ -172,7 +172,7 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 												"AZURE_BLOB_STORAGE",
 											),
 										},
-										Description: `must be one of [AZURE_BLOB_STORAGE]`,
+										Description: `must be one of ["AZURE_BLOB_STORAGE"]`,
 									},
 								},
 								Description: `Storage on which the delta lake is built.`,
@@ -187,7 +187,7 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 												"MANAGED_TABLES_STORAGE",
 											),
 										},
-										Description: `must be one of [MANAGED_TABLES_STORAGE]`,
+										Description: `must be one of ["MANAGED_TABLES_STORAGE"]`,
 									},
 								},
 								Description: `Storage on which the delta lake is built.`,
@@ -202,7 +202,7 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 												"S3_STORAGE",
 											),
 										},
-										Description: `must be one of [S3_STORAGE]`,
+										Description: `must be one of ["S3_STORAGE"]`,
 									},
 									"file_name_pattern": schema.StringAttribute{
 										Optional:    true,
@@ -252,7 +252,7 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 												"us-gov-west-1",
 											),
 										},
-										MarkdownDescription: `must be one of [, us-east-1, us-east-2, us-west-1, us-west-2, af-south-1, ap-east-1, ap-south-1, ap-northeast-1, ap-northeast-2, ap-northeast-3, ap-southeast-1, ap-southeast-2, ca-central-1, cn-north-1, cn-northwest-1, eu-central-1, eu-north-1, eu-south-1, eu-west-1, eu-west-2, eu-west-3, sa-east-1, me-south-1, us-gov-east-1, us-gov-west-1]` + "\n" +
+										MarkdownDescription: `must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]` + "\n" +
 											`The region of the S3 staging bucket to use if utilising a copy strategy.`,
 									},
 									"s3_secret_access_key": schema.StringAttribute{
@@ -288,7 +288,7 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 												"AZURE_BLOB_STORAGE",
 											),
 										},
-										Description: `must be one of [AZURE_BLOB_STORAGE]`,
+										Description: `must be one of ["AZURE_BLOB_STORAGE"]`,
 									},
 								},
 								Description: `Storage on which the delta lake is built.`,
@@ -326,7 +326,7 @@ func (r *DestinationDatabricksResource) Schema(ctx context.Context, req resource
 								"databricks",
 							),
 						},
-						Description: `must be one of [databricks]`,
+						Description: `must be one of ["databricks"]`,
 					},
 					"purge_staging_data": schema.BoolAttribute{
 						Optional:    true,

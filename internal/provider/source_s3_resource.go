@@ -72,7 +72,7 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 												"avro",
 											),
 										},
-										Description: `must be one of [avro]`,
+										Description: `must be one of ["avro"]`,
 									},
 								},
 								Description: `This connector utilises <a href="https://fastavro.readthedocs.io/en/latest/" target="_blank">fastavro</a> for Avro parsing.`,
@@ -115,7 +115,7 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 												"csv",
 											),
 										},
-										Description: `must be one of [csv]`,
+										Description: `must be one of ["csv"]`,
 									},
 									"infer_datatypes": schema.BoolAttribute{
 										Optional:    true,
@@ -146,7 +146,7 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 												"jsonl",
 											),
 										},
-										Description: `must be one of [jsonl]`,
+										Description: `must be one of ["jsonl"]`,
 									},
 									"newlines_in_values": schema.BoolAttribute{
 										Optional:    true,
@@ -161,7 +161,7 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 												"error",
 											),
 										},
-										MarkdownDescription: `must be one of [ignore, infer, error]` + "\n" +
+										MarkdownDescription: `must be one of ["ignore", "infer", "error"]` + "\n" +
 											`How JSON fields outside of explicit_schema (if given) are treated. Check <a href="https://arrow.apache.org/docs/python/generated/pyarrow.json.ParseOptions.html" target="_blank">PyArrow documentation</a> for details`,
 									},
 								},
@@ -190,7 +190,7 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 												"parquet",
 											),
 										},
-										Description: `must be one of [parquet]`,
+										Description: `must be one of ["parquet"]`,
 									},
 								},
 								Description: `This connector utilises <a href="https://arrow.apache.org/docs/python/generated/pyarrow.parquet.ParquetFile.html" target="_blank">PyArrow (Apache Arrow)</a> for Parquet parsing.`,
@@ -205,7 +205,7 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 												"avro",
 											),
 										},
-										Description: `must be one of [avro]`,
+										Description: `must be one of ["avro"]`,
 									},
 								},
 								Description: `This connector utilises <a href="https://fastavro.readthedocs.io/en/latest/" target="_blank">fastavro</a> for Avro parsing.`,
@@ -248,7 +248,7 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 												"csv",
 											),
 										},
-										Description: `must be one of [csv]`,
+										Description: `must be one of ["csv"]`,
 									},
 									"infer_datatypes": schema.BoolAttribute{
 										Optional:    true,
@@ -279,7 +279,7 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 												"jsonl",
 											),
 										},
-										Description: `must be one of [jsonl]`,
+										Description: `must be one of ["jsonl"]`,
 									},
 									"newlines_in_values": schema.BoolAttribute{
 										Optional:    true,
@@ -294,7 +294,7 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 												"error",
 											),
 										},
-										MarkdownDescription: `must be one of [ignore, infer, error]` + "\n" +
+										MarkdownDescription: `must be one of ["ignore", "infer", "error"]` + "\n" +
 											`How JSON fields outside of explicit_schema (if given) are treated. Check <a href="https://arrow.apache.org/docs/python/generated/pyarrow.json.ParseOptions.html" target="_blank">PyArrow documentation</a> for details`,
 									},
 								},
@@ -323,7 +323,7 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 												"parquet",
 											),
 										},
-										Description: `must be one of [parquet]`,
+										Description: `must be one of ["parquet"]`,
 									},
 								},
 								Description: `This connector utilises <a href="https://arrow.apache.org/docs/python/generated/pyarrow.parquet.ParquetFile.html" target="_blank">PyArrow (Apache Arrow)</a> for Parquet parsing.`,
@@ -382,7 +382,7 @@ func (r *SourceS3Resource) Schema(ctx context.Context, req resource.SchemaReques
 								"s3",
 							),
 						},
-						Description: `must be one of [s3]`,
+						Description: `must be one of ["s3"]`,
 					},
 				},
 			},

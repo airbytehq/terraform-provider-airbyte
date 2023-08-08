@@ -65,7 +65,7 @@ func (r *SourceOrbitResource) Schema(ctx context.Context, req resource.SchemaReq
 								"orbit",
 							),
 						},
-						Description: `must be one of [orbit]`,
+						Description: `must be one of ["orbit"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Optional:    true,

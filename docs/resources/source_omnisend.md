@@ -18,8 +18,9 @@ resource "airbyte_source_omnisend" "my_source_omnisend" {
     api_key     = "...my_api_key..."
     source_type = "omnisend"
   }
-  name         = "Everett Hills"
-  workspace_id = "7832eabd-617c-43b0-951a-44bf01bad870"
+  name         = "Miss Domingo Bahringer"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "d8706d46-082b-4fbd-841f-f5d4e2ae4fb5"
 }
 ```
 
@@ -47,6 +48,6 @@ resource "airbyte_source_omnisend" "my_source_omnisend" {
 Required:
 
 - `api_key` (String) API Key
-- `source_type` (String) must be one of [omnisend]
+- `source_type` (String) must be one of ["omnisend"]
 
 

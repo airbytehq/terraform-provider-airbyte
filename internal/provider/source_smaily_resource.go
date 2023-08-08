@@ -73,7 +73,7 @@ func (r *SourceSmailyResource) Schema(ctx context.Context, req resource.SchemaRe
 								"smaily",
 							),
 						},
-						Description: `must be one of [smaily]`,
+						Description: `must be one of ["smaily"]`,
 					},
 				},
 			},

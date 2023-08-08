@@ -21,14 +21,15 @@ resource "airbyte_source_google_pagespeed_insights" "my_source_googlepagespeedin
     ]
     source_type = "google-pagespeed-insights"
     strategies = [
-      "mobile",
+      "desktop",
     ]
     urls = [
       "...",
     ]
   }
-  name         = "Theresa Terry"
-  workspace_id = "1f849382-5fdc-442c-876c-2c2dfb4cfc1c"
+  name         = "Jeremy Schiller"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "fb4cfc1c-7623-40f8-81fb-1bd23fdb14db"
 }
 ```
 
@@ -56,7 +57,7 @@ resource "airbyte_source_google_pagespeed_insights" "my_source_googlepagespeedin
 Required:
 
 - `categories` (List of String) Defines which Lighthouse category to run. One or many of: "accessibility", "best-practices", "performance", "pwa", "seo".
-- `source_type` (String) must be one of [google-pagespeed-insights]
+- `source_type` (String) must be one of ["google-pagespeed-insights"]
 - `strategies` (List of String) The analyses strategy to use. Either "desktop" or "mobile".
 - `urls` (List of String) The URLs to retrieve pagespeed information from. The connector will attempt to sync PageSpeed reports for all the defined URLs. Format: https://(www.)url.domain
 

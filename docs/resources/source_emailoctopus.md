@@ -18,8 +18,9 @@ resource "airbyte_source_emailoctopus" "my_source_emailoctopus" {
     api_key     = "...my_api_key..."
     source_type = "emailoctopus"
   }
-  name         = "Miss Estelle Mills"
-  workspace_id = "64b7c15d-fbac-4e18-8b1c-4ee2c8c6ce61"
+  name         = "Miss Nelson Robel"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "ee2c8c6c-e611-4fee-b1c7-cbdb6eec7437"
 }
 ```
 
@@ -47,6 +48,6 @@ resource "airbyte_source_emailoctopus" "my_source_emailoctopus" {
 Required:
 
 - `api_key` (String) EmailOctopus API Key. See the <a href="https://help.emailoctopus.com/article/165-how-to-create-and-delete-api-keys">docs</a> for information on how to generate this key.
-- `source_type` (String) must be one of [emailoctopus]
+- `source_type` (String) must be one of ["emailoctopus"]
 
 

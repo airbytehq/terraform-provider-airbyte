@@ -73,7 +73,7 @@ func (r *SourceUsCensusResource) Schema(ctx context.Context, req resource.Schema
 								"us-census",
 							),
 						},
-						Description: `must be one of [us-census]`,
+						Description: `must be one of ["us-census"]`,
 					},
 				},
 			},

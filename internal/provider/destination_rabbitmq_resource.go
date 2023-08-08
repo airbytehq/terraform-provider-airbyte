@@ -60,7 +60,7 @@ func (r *DestinationRabbitmqResource) Schema(ctx context.Context, req resource.S
 								"rabbitmq",
 							),
 						},
-						Description: `must be one of [rabbitmq]`,
+						Description: `must be one of ["rabbitmq"]`,
 					},
 					"exchange": schema.StringAttribute{
 						Optional:    true,

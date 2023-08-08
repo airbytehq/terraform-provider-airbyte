@@ -24,10 +24,11 @@ resource "airbyte_source_redshift" "my_source_redshift" {
       "...",
     ]
     source_type = "redshift"
-    username    = "Miguel.Sauer"
+    username    = "Elmer.Bradtke80"
   }
-  name         = "Alberto Hyatt"
-  workspace_id = "cc74f77b-4848-4bd6-a6f0-441d2c3b8080"
+  name         = "Ms. Shelia Luettgen V"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "4373e060-459b-4ebb-ad02-f2586bcf1525"
 }
 ```
 
@@ -58,7 +59,7 @@ Required:
 - `host` (String) Host Endpoint of the Redshift Cluster (must include the cluster-id, region and end with .redshift.amazonaws.com).
 - `password` (String) Password associated with the username.
 - `port` (Number) Port of the database.
-- `source_type` (String) must be one of [redshift]
+- `source_type` (String) must be one of ["redshift"]
 - `username` (String) Username to use to access the database.
 
 Optional:

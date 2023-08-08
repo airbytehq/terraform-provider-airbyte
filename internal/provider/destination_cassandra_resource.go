@@ -68,7 +68,7 @@ func (r *DestinationCassandraResource) Schema(ctx context.Context, req resource.
 								"cassandra",
 							),
 						},
-						Description: `must be one of [cassandra]`,
+						Description: `must be one of ["cassandra"]`,
 					},
 					"keyspace": schema.StringAttribute{
 						Required:    true,

@@ -8,6 +8,7 @@ resource "airbyte_source_qualaroo" "my_source_qualaroo" {
     ]
     token = "...my_token..."
   }
-  name         = "Mr. Joel Yost"
-  workspace_id = "fb0e0bf1-f821-4797-8d0a-cca77aeb7b70"
+  name         = "Geoffrey Kling"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "021a5204-6b64-4e99-bb0e-67e094fdfed5"
 }

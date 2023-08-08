@@ -69,7 +69,7 @@ func (r *SourceTwilioTaskrouterResource) Schema(ctx context.Context, req resourc
 								"twilio-taskrouter",
 							),
 						},
-						Description: `must be one of [twilio-taskrouter]`,
+						Description: `must be one of ["twilio-taskrouter"]`,
 					},
 				},
 			},

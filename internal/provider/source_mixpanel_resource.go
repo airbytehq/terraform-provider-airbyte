@@ -76,7 +76,7 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 												"Project Secret",
 											),
 										},
-										Description: `must be one of [Project Secret]`,
+										Description: `must be one of ["Project Secret"]`,
 									},
 								},
 								Description: `Choose how to authenticate to Mixpanel`,
@@ -91,7 +91,7 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 												"Service Account",
 											),
 										},
-										Description: `must be one of [Service Account]`,
+										Description: `must be one of ["Service Account"]`,
 									},
 									"secret": schema.StringAttribute{
 										Required:    true,
@@ -118,7 +118,7 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 												"Project Secret",
 											),
 										},
-										Description: `must be one of [Project Secret]`,
+										Description: `must be one of ["Project Secret"]`,
 									},
 								},
 								Description: `Choose how to authenticate to Mixpanel`,
@@ -133,7 +133,7 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 												"Service Account",
 											),
 										},
-										Description: `must be one of [Service Account]`,
+										Description: `must be one of ["Service Account"]`,
 									},
 									"secret": schema.StringAttribute{
 										Required:    true,
@@ -179,7 +179,7 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 								"EU",
 							),
 						},
-						MarkdownDescription: `must be one of [US, EU]` + "\n" +
+						MarkdownDescription: `must be one of ["US", "EU"]` + "\n" +
 							`The region of mixpanel domain instance either US or EU.`,
 					},
 					"select_properties_by_default": schema.BoolAttribute{
@@ -193,7 +193,7 @@ func (r *SourceMixpanelResource) Schema(ctx context.Context, req resource.Schema
 								"mixpanel",
 							),
 						},
-						Description: `must be one of [mixpanel]`,
+						Description: `must be one of ["mixpanel"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Optional: true,
