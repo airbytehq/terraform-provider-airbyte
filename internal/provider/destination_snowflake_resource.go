@@ -67,7 +67,7 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 												"Key Pair Authentication",
 											),
 										},
-										Description: `must be one of [Key Pair Authentication]`,
+										Description: `must be one of ["Key Pair Authentication"]`,
 									},
 									"private_key": schema.StringAttribute{
 										Required:    true,
@@ -93,7 +93,7 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 												"OAuth2.0",
 											),
 										},
-										Description: `must be one of [OAuth2.0]`,
+										Description: `must be one of ["OAuth2.0"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Optional:    true,
@@ -119,7 +119,7 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 												"Username and Password",
 											),
 										},
-										Description: `must be one of [Username and Password]`,
+										Description: `must be one of ["Username and Password"]`,
 									},
 									"password": schema.StringAttribute{
 										Required:    true,
@@ -137,7 +137,7 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 												"Key Pair Authentication",
 											),
 										},
-										Description: `must be one of [Key Pair Authentication]`,
+										Description: `must be one of ["Key Pair Authentication"]`,
 									},
 									"private_key": schema.StringAttribute{
 										Required:    true,
@@ -163,7 +163,7 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 												"OAuth2.0",
 											),
 										},
-										Description: `must be one of [OAuth2.0]`,
+										Description: `must be one of ["OAuth2.0"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Optional:    true,
@@ -189,7 +189,7 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 												"Username and Password",
 											),
 										},
-										Description: `must be one of [Username and Password]`,
+										Description: `must be one of ["Username and Password"]`,
 									},
 									"password": schema.StringAttribute{
 										Required:    true,
@@ -213,7 +213,7 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 								"snowflake",
 							),
 						},
-						Description: `must be one of [snowflake]`,
+						Description: `must be one of ["snowflake"]`,
 					},
 					"file_buffer_count": schema.Int64Attribute{
 						Optional:    true,
@@ -240,7 +240,7 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 												"Internal Staging",
 											),
 										},
-										Description: `must be one of [Internal Staging]`,
+										Description: `must be one of ["Internal Staging"]`,
 									},
 								},
 								Description: `Recommended for large production workloads for better speed and scalability.`,
@@ -265,7 +265,7 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 																"aes_cbc_envelope",
 															),
 														},
-														Description: `must be one of [aes_cbc_envelope]`,
+														Description: `must be one of ["aes_cbc_envelope"]`,
 													},
 													"key_encrypting_key": schema.StringAttribute{
 														Optional:    true,
@@ -284,7 +284,7 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 																"none",
 															),
 														},
-														Description: `must be one of [none]`,
+														Description: `must be one of ["none"]`,
 													},
 												},
 												Description: `Staging data will be stored in plaintext.`,
@@ -306,7 +306,7 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 												"S3 Staging",
 											),
 										},
-										Description: `must be one of [S3 Staging]`,
+										Description: `must be one of ["S3 Staging"]`,
 									},
 									"purge_staging_data": schema.BoolAttribute{
 										Optional:    true,
@@ -346,7 +346,7 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 												"me-south-1",
 											),
 										},
-										MarkdownDescription: `must be one of [, us-east-1, us-east-2, us-west-1, us-west-2, af-south-1, ap-east-1, ap-south-1, ap-northeast-1, ap-northeast-2, ap-northeast-3, ap-southeast-1, ap-southeast-2, ca-central-1, cn-north-1, cn-northwest-1, eu-central-1, eu-west-1, eu-west-2, eu-west-3, eu-south-1, eu-north-1, sa-east-1, me-south-1]` + "\n" +
+										MarkdownDescription: `must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-west-1", "eu-west-2", "eu-west-3", "eu-south-1", "eu-north-1", "sa-east-1", "me-south-1"]` + "\n" +
 											`Enter the region where your S3 bucket resides`,
 									},
 									"secret_access_key": schema.StringAttribute{
@@ -374,7 +374,7 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 												"GCS Staging",
 											),
 										},
-										Description: `must be one of [GCS Staging]`,
+										Description: `must be one of ["GCS Staging"]`,
 									},
 									"project_id": schema.StringAttribute{
 										Required:    true,
@@ -393,7 +393,7 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 												"Standard",
 											),
 										},
-										Description: `must be one of [Standard]`,
+										Description: `must be one of ["Standard"]`,
 									},
 								},
 								Description: `Select another option`,
@@ -408,7 +408,7 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 												"Internal Staging",
 											),
 										},
-										Description: `must be one of [Internal Staging]`,
+										Description: `must be one of ["Internal Staging"]`,
 									},
 								},
 								Description: `Recommended for large production workloads for better speed and scalability.`,
@@ -433,7 +433,7 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 																"none",
 															),
 														},
-														Description: `must be one of [none]`,
+														Description: `must be one of ["none"]`,
 													},
 												},
 												Description: `Staging data will be stored in plaintext.`,
@@ -448,7 +448,7 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 																"aes_cbc_envelope",
 															),
 														},
-														Description: `must be one of [aes_cbc_envelope]`,
+														Description: `must be one of ["aes_cbc_envelope"]`,
 													},
 													"key_encrypting_key": schema.StringAttribute{
 														Optional:    true,
@@ -474,7 +474,7 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 												"S3 Staging",
 											),
 										},
-										Description: `must be one of [S3 Staging]`,
+										Description: `must be one of ["S3 Staging"]`,
 									},
 									"purge_staging_data": schema.BoolAttribute{
 										Optional:    true,
@@ -514,7 +514,7 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 												"me-south-1",
 											),
 										},
-										MarkdownDescription: `must be one of [, us-east-1, us-east-2, us-west-1, us-west-2, af-south-1, ap-east-1, ap-south-1, ap-northeast-1, ap-northeast-2, ap-northeast-3, ap-southeast-1, ap-southeast-2, ca-central-1, cn-north-1, cn-northwest-1, eu-central-1, eu-west-1, eu-west-2, eu-west-3, eu-south-1, eu-north-1, sa-east-1, me-south-1]` + "\n" +
+										MarkdownDescription: `must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-west-1", "eu-west-2", "eu-west-3", "eu-south-1", "eu-north-1", "sa-east-1", "me-south-1"]` + "\n" +
 											`Enter the region where your S3 bucket resides`,
 									},
 									"secret_access_key": schema.StringAttribute{
@@ -542,7 +542,7 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 												"GCS Staging",
 											),
 										},
-										Description: `must be one of [GCS Staging]`,
+										Description: `must be one of ["GCS Staging"]`,
 									},
 									"project_id": schema.StringAttribute{
 										Required:    true,
@@ -561,7 +561,7 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 												"Standard",
 											),
 										},
-										Description: `must be one of [Standard]`,
+										Description: `must be one of ["Standard"]`,
 									},
 								},
 								Description: `Select another option`,

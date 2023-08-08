@@ -66,7 +66,7 @@ func (r *SourceRechargeResource) Schema(ctx context.Context, req resource.Schema
 								"recharge",
 							),
 						},
-						Description: `must be one of [recharge]`,
+						Description: `must be one of ["recharge"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

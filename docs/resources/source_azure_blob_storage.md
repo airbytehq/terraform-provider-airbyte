@@ -22,12 +22,15 @@ resource "airbyte_source_azure_blob_storage" "my_source_azureblobstorage" {
     azure_blob_storage_endpoint               = "blob.core.windows.net"
     azure_blob_storage_schema_inference_limit = 500
     format = {
-      format_type = "JSONL"
+      source_azure_blob_storage_input_format_json_lines_newline_delimited_json = {
+        format_type = "JSONL"
+      }
     }
     source_type = "azure-blob-storage"
   }
-  name         = "Lucille Funk"
-  workspace_id = "72e80285-7a5b-4404-a3a7-d575f1400e76"
+  name         = "Natalie Dooley"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "d575f140-0e76-44ad-b334-ec1b781b36a0"
 }
 ```
 
@@ -58,7 +61,7 @@ Required:
 - `azure_blob_storage_account_name` (String) The account's name of the Azure Blob Storage.
 - `azure_blob_storage_container_name` (String) The name of the Azure blob storage container.
 - `format` (Attributes) Input data format (see [below for nested schema](#nestedatt--configuration--format))
-- `source_type` (String) must be one of [azure-blob-storage]
+- `source_type` (String) must be one of ["azure-blob-storage"]
 
 Optional:
 
@@ -79,7 +82,7 @@ Optional:
 
 Required:
 
-- `format_type` (String) must be one of [JSONL]
+- `format_type` (String) must be one of ["JSONL"]
 
 
 <a id="nestedatt--configuration--format--source_azure_blob_storage_update_input_format_json_lines_newline_delimited_json"></a>
@@ -87,6 +90,6 @@ Required:
 
 Required:
 
-- `format_type` (String) must be one of [JSONL]
+- `format_type` (String) must be one of ["JSONL"]
 
 

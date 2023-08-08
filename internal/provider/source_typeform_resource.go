@@ -67,7 +67,7 @@ func (r *SourceTypeformResource) Schema(ctx context.Context, req resource.Schema
 								"typeform",
 							),
 						},
-						Description: `must be one of [typeform]`,
+						Description: `must be one of ["typeform"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

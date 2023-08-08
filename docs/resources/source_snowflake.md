@@ -16,11 +16,13 @@ SourceSnowflake Resource
 resource "airbyte_source_snowflake" "my_source_snowflake" {
   configuration = {
     credentials = {
-      access_token  = "...my_access_token..."
-      auth_type     = "OAuth"
-      client_id     = "...my_client_id..."
-      client_secret = "...my_client_secret..."
-      refresh_token = "...my_refresh_token..."
+      source_snowflake_authorization_method_o_auth2_0 = {
+        access_token  = "...my_access_token..."
+        auth_type     = "OAuth"
+        client_id     = "...my_client_id..."
+        client_secret = "...my_client_secret..."
+        refresh_token = "...my_refresh_token..."
+      }
     }
     database        = "AIRBYTE_DATABASE"
     host            = "accountname.us-east-2.aws.snowflakecomputing.com"
@@ -30,8 +32,9 @@ resource "airbyte_source_snowflake" "my_source_snowflake" {
     source_type     = "snowflake"
     warehouse       = "AIRBYTE_WAREHOUSE"
   }
-  name         = "Shawn O'Kon"
-  workspace_id = "dcc50c8a-3512-4c73-b848-930750a00e96"
+  name         = "Miss Stella Hansen Jr."
+  secret_id    = "...my_secret_id..."
+  workspace_id = "e966ec73-6d43-4194-b98c-783c92398ed3"
 }
 ```
 
@@ -61,7 +64,7 @@ Required:
 - `database` (String) The database you created for Airbyte to access data.
 - `host` (String) The host domain of the snowflake instance (must include the account, region, cloud environment, and end with snowflakecomputing.com).
 - `role` (String) The role you created for Airbyte to access Snowflake.
-- `source_type` (String) must be one of [snowflake]
+- `source_type` (String) must be one of ["snowflake"]
 - `warehouse` (String) The warehouse you created for Airbyte to access data.
 
 Optional:
@@ -85,7 +88,7 @@ Optional:
 
 Required:
 
-- `auth_type` (String) must be one of [OAuth]
+- `auth_type` (String) must be one of ["OAuth"]
 - `client_id` (String) The Client ID of your Snowflake developer application.
 - `client_secret` (String) The Client Secret of your Snowflake developer application.
 
@@ -100,7 +103,7 @@ Optional:
 
 Required:
 
-- `auth_type` (String) must be one of [username/password]
+- `auth_type` (String) must be one of ["username/password"]
 - `password` (String) The password associated with the username.
 - `username` (String) The username you created to allow Airbyte to access the database.
 
@@ -110,7 +113,7 @@ Required:
 
 Required:
 
-- `auth_type` (String) must be one of [OAuth]
+- `auth_type` (String) must be one of ["OAuth"]
 - `client_id` (String) The Client ID of your Snowflake developer application.
 - `client_secret` (String) The Client Secret of your Snowflake developer application.
 
@@ -125,7 +128,7 @@ Optional:
 
 Required:
 
-- `auth_type` (String) must be one of [username/password]
+- `auth_type` (String) must be one of ["username/password"]
 - `password` (String) The password associated with the username.
 - `username` (String) The username you created to allow Airbyte to access the database.
 

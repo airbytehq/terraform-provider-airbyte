@@ -21,21 +21,28 @@ resource "airbyte_source_mysql" "my_source_mysql" {
     password        = "...my_password..."
     port            = 3306
     replication_method = {
-      initial_waiting_seconds = 4
-      method                  = "CDC"
-      server_time_zone        = "...my_server_time_zone..."
+      source_mysql_replication_method_logical_replication_cdc_ = {
+        initial_waiting_seconds = 3
+        method                  = "CDC"
+        server_time_zone        = "...my_server_time_zone..."
+      }
     }
     source_type = "mysql"
     ssl_mode = {
-      mode = "preferred"
+      source_mysql_ssl_modes_preferred = {
+        mode = "preferred"
+      }
     }
     tunnel_method = {
-      tunnel_method = "NO_TUNNEL"
+      source_mysql_ssh_tunnel_method_no_tunnel = {
+        tunnel_method = "NO_TUNNEL"
+      }
     }
-    username = "Terrence.Collins20"
+    username = "Coty77"
   }
-  name         = "Velma Sipes II"
-  workspace_id = "36d9e75c-a006-4f53-92c1-1a25a8bf92f9"
+  name         = "Debra Ortiz"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "a8bf92f9-7428-4ad9-a9f8-bf8221125359"
 }
 ```
 
@@ -66,7 +73,7 @@ Required:
 - `host` (String) The host name of the database.
 - `port` (Number) The port to connect to.
 - `replication_method` (Attributes) Replication method to use for extracting data from the database. (see [below for nested schema](#nestedatt--configuration--replication_method))
-- `source_type` (String) must be one of [mysql]
+- `source_type` (String) must be one of ["mysql"]
 - `username` (String) The username which is used to access the database.
 
 Optional:
@@ -91,7 +98,7 @@ Optional:
 
 Required:
 
-- `method` (String) must be one of [CDC]
+- `method` (String) must be one of ["CDC"]
 
 Optional:
 
@@ -104,7 +111,7 @@ Optional:
 
 Required:
 
-- `method` (String) must be one of [STANDARD]
+- `method` (String) must be one of ["STANDARD"]
 
 
 <a id="nestedatt--configuration--replication_method--source_mysql_update_replication_method_logical_replication_cdc"></a>
@@ -112,7 +119,7 @@ Required:
 
 Required:
 
-- `method` (String) must be one of [CDC]
+- `method` (String) must be one of ["CDC"]
 
 Optional:
 
@@ -125,7 +132,7 @@ Optional:
 
 Required:
 
-- `method` (String) must be one of [STANDARD]
+- `method` (String) must be one of ["STANDARD"]
 
 
 
@@ -148,7 +155,7 @@ Optional:
 
 Required:
 
-- `mode` (String) must be one of [preferred]
+- `mode` (String) must be one of ["preferred"]
 
 
 <a id="nestedatt--configuration--ssl_mode--source_mysql_ssl_modes_required"></a>
@@ -156,7 +163,7 @@ Required:
 
 Required:
 
-- `mode` (String) must be one of [required]
+- `mode` (String) must be one of ["required"]
 
 
 <a id="nestedatt--configuration--ssl_mode--source_mysql_ssl_modes_verify_ca"></a>
@@ -165,7 +172,7 @@ Required:
 Required:
 
 - `ca_certificate` (String) CA certificate
-- `mode` (String) must be one of [verify_ca]
+- `mode` (String) must be one of ["verify_ca"]
 
 Optional:
 
@@ -180,7 +187,7 @@ Optional:
 Required:
 
 - `ca_certificate` (String) CA certificate
-- `mode` (String) must be one of [verify_identity]
+- `mode` (String) must be one of ["verify_identity"]
 
 Optional:
 
@@ -194,7 +201,7 @@ Optional:
 
 Required:
 
-- `mode` (String) must be one of [preferred]
+- `mode` (String) must be one of ["preferred"]
 
 
 <a id="nestedatt--configuration--ssl_mode--source_mysql_update_ssl_modes_required"></a>
@@ -202,7 +209,7 @@ Required:
 
 Required:
 
-- `mode` (String) must be one of [required]
+- `mode` (String) must be one of ["required"]
 
 
 <a id="nestedatt--configuration--ssl_mode--source_mysql_update_ssl_modes_verify_ca"></a>
@@ -211,7 +218,7 @@ Required:
 Required:
 
 - `ca_certificate` (String) CA certificate
-- `mode` (String) must be one of [verify_ca]
+- `mode` (String) must be one of ["verify_ca"]
 
 Optional:
 
@@ -226,7 +233,7 @@ Optional:
 Required:
 
 - `ca_certificate` (String) CA certificate
-- `mode` (String) must be one of [verify_identity]
+- `mode` (String) must be one of ["verify_identity"]
 
 Optional:
 
@@ -253,7 +260,7 @@ Optional:
 
 Required:
 
-- `tunnel_method` (String) must be one of [NO_TUNNEL]
+- `tunnel_method` (String) must be one of ["NO_TUNNEL"]
 No ssh tunnel needed to connect to database
 
 
@@ -263,7 +270,7 @@ No ssh tunnel needed to connect to database
 Required:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of [SSH_PASSWORD_AUTH]
+- `tunnel_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
 Connect through a jump server tunnel host using username and password authentication
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
@@ -277,7 +284,7 @@ Required:
 
 - `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of [SSH_KEY_AUTH]
+- `tunnel_method` (String) must be one of ["SSH_KEY_AUTH"]
 Connect through a jump server tunnel host using username and ssh key
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host.
@@ -288,7 +295,7 @@ Connect through a jump server tunnel host using username and ssh key
 
 Required:
 
-- `tunnel_method` (String) must be one of [NO_TUNNEL]
+- `tunnel_method` (String) must be one of ["NO_TUNNEL"]
 No ssh tunnel needed to connect to database
 
 
@@ -298,7 +305,7 @@ No ssh tunnel needed to connect to database
 Required:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of [SSH_PASSWORD_AUTH]
+- `tunnel_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
 Connect through a jump server tunnel host using username and password authentication
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
@@ -312,7 +319,7 @@ Required:
 
 - `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of [SSH_KEY_AUTH]
+- `tunnel_method` (String) must be one of ["SSH_KEY_AUTH"]
 Connect through a jump server tunnel host using username and ssh key
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host.

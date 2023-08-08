@@ -69,7 +69,7 @@ func (r *SourceFreshsalesResource) Schema(ctx context.Context, req resource.Sche
 								"freshsales",
 							),
 						},
-						Description: `must be one of [freshsales]`,
+						Description: `must be one of ["freshsales"]`,
 					},
 				},
 			},

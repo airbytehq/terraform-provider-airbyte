@@ -74,7 +74,7 @@ func (r *SourceMarketoResource) Schema(ctx context.Context, req resource.SchemaR
 								"marketo",
 							),
 						},
-						Description: `must be one of [marketo]`,
+						Description: `must be one of ["marketo"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

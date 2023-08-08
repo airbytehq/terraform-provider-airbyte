@@ -62,7 +62,7 @@ func (r *SourceSalesforceResource) Schema(ctx context.Context, req resource.Sche
 								"Client",
 							),
 						},
-						Description: `must be one of [Client]`,
+						Description: `must be one of ["Client"]`,
 					},
 					"client_id": schema.StringAttribute{
 						Required:    true,
@@ -87,7 +87,7 @@ func (r *SourceSalesforceResource) Schema(ctx context.Context, req resource.Sche
 								"salesforce",
 							),
 						},
-						Description: `must be one of [salesforce]`,
+						Description: `must be one of ["salesforce"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Optional: true,
@@ -114,7 +114,7 @@ func (r *SourceSalesforceResource) Schema(ctx context.Context, req resource.Sche
 											"not exacts",
 										),
 									},
-									Description: `must be one of [starts with, ends with, contains, exacts, starts not with, ends not with, not contains, not exacts]`,
+									Description: `must be one of ["starts with", "ends with", "contains", "exacts", "starts not with", "ends not with", "not contains", "not exacts"]`,
 								},
 								"value": schema.StringAttribute{
 									Required: true,

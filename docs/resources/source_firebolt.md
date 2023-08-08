@@ -23,8 +23,9 @@ resource "airbyte_source_firebolt" "my_source_firebolt" {
     source_type = "firebolt"
     username    = "username@email.com"
   }
-  name         = "Kayla Mertz"
-  workspace_id = "1876c6ab-21d2-49df-894d-6fecd7993900"
+  name         = "Hector Yundt"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "d7993900-66a6-4d2d-8003-55338cec086f"
 }
 ```
 
@@ -53,7 +54,7 @@ Required:
 
 - `database` (String) The database to connect to.
 - `password` (String) Firebolt password.
-- `source_type` (String) must be one of [firebolt]
+- `source_type` (String) must be one of ["firebolt"]
 - `username` (String) Firebolt email address you use to login.
 
 Optional:

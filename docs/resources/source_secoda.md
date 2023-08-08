@@ -18,8 +18,9 @@ resource "airbyte_source_secoda" "my_source_secoda" {
     api_key     = "...my_api_key..."
     source_type = "secoda"
   }
-  name         = "Josh Tremblay"
-  workspace_id = "bfcc5469-d401-45df-a796-206bef2b0a3e"
+  name         = "Jason O'Kon"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "42c1aa01-0e9a-4ac2-a913-5586d18f9f97"
 }
 ```
 
@@ -47,6 +48,6 @@ resource "airbyte_source_secoda" "my_source_secoda" {
 Required:
 
 - `api_key` (String) Your API Access Key. See <a href="https://docs.secoda.co/secoda-api/authentication">here</a>. The key is case sensitive.
-- `source_type` (String) must be one of [secoda]
+- `source_type` (String) must be one of ["secoda"]
 
 

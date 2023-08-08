@@ -61,7 +61,7 @@ func (r *SourceInsightlyResource) Schema(ctx context.Context, req resource.Schem
 								"insightly",
 							),
 						},
-						Description: `must be one of [insightly]`,
+						Description: `must be one of ["insightly"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required:    true,

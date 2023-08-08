@@ -69,7 +69,7 @@ func (r *SourceFreshserviceResource) Schema(ctx context.Context, req resource.Sc
 								"freshservice",
 							),
 						},
-						Description: `must be one of [freshservice]`,
+						Description: `must be one of ["freshservice"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required:    true,

@@ -66,7 +66,7 @@ func (r *SourceStravaResource) Schema(ctx context.Context, req resource.SchemaRe
 								"Client",
 							),
 						},
-						Description: `must be one of [Client]`,
+						Description: `must be one of ["Client"]`,
 					},
 					"client_id": schema.StringAttribute{
 						Required:    true,
@@ -87,7 +87,7 @@ func (r *SourceStravaResource) Schema(ctx context.Context, req resource.SchemaRe
 								"strava",
 							),
 						},
-						Description: `must be one of [strava]`,
+						Description: `must be one of ["strava"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

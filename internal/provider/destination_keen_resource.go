@@ -64,7 +64,7 @@ func (r *DestinationKeenResource) Schema(ctx context.Context, req resource.Schem
 								"keen",
 							),
 						},
-						Description: `must be one of [keen]`,
+						Description: `must be one of ["keen"]`,
 					},
 					"infer_timestamp": schema.BoolAttribute{
 						Optional:    true,

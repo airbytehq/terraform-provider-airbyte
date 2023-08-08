@@ -61,7 +61,7 @@ func (r *SourceRssResource) Schema(ctx context.Context, req resource.SchemaReque
 								"rss",
 							),
 						},
-						Description: `must be one of [rss]`,
+						Description: `must be one of ["rss"]`,
 					},
 					"url": schema.StringAttribute{
 						Required:    true,

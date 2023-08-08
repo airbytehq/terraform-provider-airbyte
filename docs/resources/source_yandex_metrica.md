@@ -21,8 +21,9 @@ resource "airbyte_source_yandex_metrica" "my_source_yandexmetrica" {
     source_type = "yandex-metrica"
     start_date  = "2022-01-01"
   }
-  name         = "Mr. Ada Kozey"
-  workspace_id = "a48f88ec-e7bf-4904-a011-05d38908162c"
+  name         = "Nina Boyle"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "c6beb68a-0f65-47b7-903a-1480f8de30f0"
 }
 ```
 
@@ -51,7 +52,7 @@ Required:
 
 - `auth_token` (String) Your Yandex Metrica API access token
 - `counter_id` (String) Counter ID
-- `source_type` (String) must be one of [yandex-metrica]
+- `source_type` (String) must be one of ["yandex-metrica"]
 - `start_date` (String) Starting point for your data replication, in format of "YYYY-MM-DD".
 
 Optional:

@@ -65,7 +65,7 @@ func (r *SourceTempoResource) Schema(ctx context.Context, req resource.SchemaReq
 								"tempo",
 							),
 						},
-						Description: `must be one of [tempo]`,
+						Description: `must be one of ["tempo"]`,
 					},
 				},
 			},

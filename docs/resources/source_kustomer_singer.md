@@ -19,8 +19,9 @@ resource "airbyte_source_kustomer_singer" "my_source_kustomersinger" {
     source_type = "kustomer-singer"
     start_date  = "2019-01-01T00:00:00Z"
   }
-  name         = "Vivian Rolfson"
-  workspace_id = "152eab9c-d7e5-4224-a6a0-e123b7847ec5"
+  name         = "Andrew Cassin"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "7847ec59-e1f6-47f3-84cc-e4b6d7696ff3"
 }
 ```
 
@@ -48,7 +49,7 @@ resource "airbyte_source_kustomer_singer" "my_source_kustomersinger" {
 Required:
 
 - `api_token` (String) Kustomer API Token. See the <a href="https://developer.kustomer.com/kustomer-api-docs/reference/authentication">docs</a> on how to obtain this
-- `source_type` (String) must be one of [kustomer-singer]
+- `source_type` (String) must be one of ["kustomer-singer"]
 - `start_date` (String) The date from which you'd like to replicate the data
 
 

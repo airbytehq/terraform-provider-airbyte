@@ -16,20 +16,23 @@ SourceGoogleAnalyticsV4 Resource
 resource "airbyte_source_google_analytics_v4" "my_source_googleanalyticsv4" {
   configuration = {
     credentials = {
-      access_token  = "...my_access_token..."
-      auth_type     = "Client"
-      client_id     = "...my_client_id..."
-      client_secret = "...my_client_secret..."
-      refresh_token = "...my_refresh_token..."
+      source_google_analytics_v4_credentials_authenticate_via_google_oauth_ = {
+        access_token  = "...my_access_token..."
+        auth_type     = "Client"
+        client_id     = "...my_client_id..."
+        client_secret = "...my_client_secret..."
+        refresh_token = "...my_refresh_token..."
+      }
     }
     custom_reports = "...my_custom_reports..."
     source_type    = "google-analytics-v4"
     start_date     = "2020-06-01"
     view_id        = "...my_view_id..."
-    window_in_days = 60
+    window_in_days = 120
   }
-  name         = "Carrie Haley"
-  workspace_id = "ea342260-e9b2-400c-a78a-1bd8fb7a0a11"
+  name         = "Mamie Spinka"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "b7a0a116-ce72-43d4-897f-a30e9af725b2"
 }
 ```
 
@@ -56,7 +59,7 @@ resource "airbyte_source_google_analytics_v4" "my_source_googleanalyticsv4" {
 
 Required:
 
-- `source_type` (String) must be one of [google-analytics-v4]
+- `source_type` (String) must be one of ["google-analytics-v4"]
 - `start_date` (String) The date in the format YYYY-MM-DD. Any data before this date will not be replicated.
 - `view_id` (String) The ID for the Google Analytics View you want to fetch data from. This can be found from the <a href="https://ga-dev-tools.appspot.com/account-explorer/">Google Analytics Account Explorer</a>.
 
@@ -88,7 +91,7 @@ Required:
 Optional:
 
 - `access_token` (String) Access Token for making authenticated requests.
-- `auth_type` (String) must be one of [Client]
+- `auth_type` (String) must be one of ["Client"]
 
 
 <a id="nestedatt--configuration--credentials--source_google_analytics_v4_credentials_service_account_key_authentication"></a>
@@ -100,7 +103,7 @@ Required:
 
 Optional:
 
-- `auth_type` (String) must be one of [Service]
+- `auth_type` (String) must be one of ["Service"]
 
 
 <a id="nestedatt--configuration--credentials--source_google_analytics_v4_update_credentials_authenticate_via_google_oauth"></a>
@@ -115,7 +118,7 @@ Required:
 Optional:
 
 - `access_token` (String) Access Token for making authenticated requests.
-- `auth_type` (String) must be one of [Client]
+- `auth_type` (String) must be one of ["Client"]
 
 
 <a id="nestedatt--configuration--credentials--source_google_analytics_v4_update_credentials_service_account_key_authentication"></a>
@@ -127,6 +130,6 @@ Required:
 
 Optional:
 
-- `auth_type` (String) must be one of [Service]
+- `auth_type` (String) must be one of ["Service"]
 
 

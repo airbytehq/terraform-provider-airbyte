@@ -67,7 +67,7 @@ func (r *SourceSpacexAPIResource) Schema(ctx context.Context, req resource.Schem
 								"spacex-api",
 							),
 						},
-						Description: `must be one of [spacex-api]`,
+						Description: `must be one of ["spacex-api"]`,
 					},
 				},
 			},

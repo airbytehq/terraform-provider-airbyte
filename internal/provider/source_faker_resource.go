@@ -81,7 +81,7 @@ func (r *SourceFakerResource) Schema(ctx context.Context, req resource.SchemaReq
 								"faker",
 							),
 						},
-						Description: `must be one of [faker]`,
+						Description: `must be one of ["faker"]`,
 					},
 				},
 			},

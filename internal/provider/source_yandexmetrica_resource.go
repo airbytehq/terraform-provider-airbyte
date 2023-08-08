@@ -77,7 +77,7 @@ func (r *SourceYandexMetricaResource) Schema(ctx context.Context, req resource.S
 								"yandex-metrica",
 							),
 						},
-						Description: `must be one of [yandex-metrica]`,
+						Description: `must be one of ["yandex-metrica"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

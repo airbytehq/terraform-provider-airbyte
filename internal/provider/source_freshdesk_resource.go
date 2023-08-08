@@ -74,7 +74,7 @@ func (r *SourceFreshdeskResource) Schema(ctx context.Context, req resource.Schem
 								"freshdesk",
 							),
 						},
-						Description: `must be one of [freshdesk]`,
+						Description: `must be one of ["freshdesk"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Optional: true,

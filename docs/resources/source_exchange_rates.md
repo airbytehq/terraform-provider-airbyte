@@ -16,13 +16,14 @@ SourceExchangeRates Resource
 resource "airbyte_source_exchange_rates" "my_source_exchangerates" {
   configuration = {
     access_key      = "...my_access_key..."
-    base            = "EUR"
+    base            = "USD"
     ignore_weekends = true
     source_type     = "exchange-rates"
     start_date      = "YYYY-MM-DD"
   }
-  name         = "Gregory Satterfield"
-  workspace_id = "bdb6eec7-4378-4ba2-9317-747dc915ad2c"
+  name         = "Annie Breitenberg"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "47dc915a-d2ca-4f5d-9672-3dc0f5ae2f3a"
 }
 ```
 
@@ -50,7 +51,7 @@ resource "airbyte_source_exchange_rates" "my_source_exchangerates" {
 Required:
 
 - `access_key` (String) Your API Key. See <a href="https://apilayer.com/marketplace/exchangerates_data-api">here</a>. The key is case sensitive.
-- `source_type` (String) must be one of [exchange-rates]
+- `source_type` (String) must be one of ["exchange-rates"]
 - `start_date` (String) Start getting data from that date.
 
 Optional:

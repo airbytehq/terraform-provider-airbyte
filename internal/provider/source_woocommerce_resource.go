@@ -74,7 +74,7 @@ func (r *SourceWoocommerceResource) Schema(ctx context.Context, req resource.Sch
 								"woocommerce",
 							),
 						},
-						Description: `must be one of [woocommerce]`,
+						Description: `must be one of ["woocommerce"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

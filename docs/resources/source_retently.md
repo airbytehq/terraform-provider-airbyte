@@ -16,15 +16,18 @@ SourceRetently Resource
 resource "airbyte_source_retently" "my_source_retently" {
   configuration = {
     credentials = {
-      auth_type     = "Client"
-      client_id     = "...my_client_id..."
-      client_secret = "...my_client_secret..."
-      refresh_token = "...my_refresh_token..."
+      source_retently_authentication_mechanism_authenticate_via_retently_o_auth_ = {
+        auth_type     = "Client"
+        client_id     = "...my_client_id..."
+        client_secret = "...my_client_secret..."
+        refresh_token = "...my_refresh_token..."
+      }
     }
     source_type = "retently"
   }
-  name         = "Alex Douglas"
-  workspace_id = "e060459b-ebba-4d02-b258-6bcf152558da"
+  name         = "Myrtle Spinka"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "95be6cd0-2756-4c35-8aa4-32b47e1763c5"
 }
 ```
 
@@ -52,7 +55,7 @@ resource "airbyte_source_retently" "my_source_retently" {
 Optional:
 
 - `credentials` (Attributes) Choose how to authenticate to Retently (see [below for nested schema](#nestedatt--configuration--credentials))
-- `source_type` (String) must be one of [retently]
+- `source_type` (String) must be one of ["retently"]
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
@@ -76,7 +79,7 @@ Required:
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `auth_type` (String) must be one of [Client]
+- `auth_type` (String) must be one of ["Client"]
 
 
 <a id="nestedatt--configuration--credentials--source_retently_authentication_mechanism_authenticate_with_api_token"></a>
@@ -89,7 +92,7 @@ Required:
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `auth_type` (String) must be one of [Token]
+- `auth_type` (String) must be one of ["Token"]
 
 
 <a id="nestedatt--configuration--credentials--source_retently_update_authentication_mechanism_authenticate_via_retently_o_auth"></a>
@@ -104,7 +107,7 @@ Required:
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `auth_type` (String) must be one of [Client]
+- `auth_type` (String) must be one of ["Client"]
 
 
 <a id="nestedatt--configuration--credentials--source_retently_update_authentication_mechanism_authenticate_with_api_token"></a>
@@ -117,6 +120,6 @@ Required:
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `auth_type` (String) must be one of [Token]
+- `auth_type` (String) must be one of ["Token"]
 
 

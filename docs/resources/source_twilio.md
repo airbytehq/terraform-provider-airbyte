@@ -21,8 +21,9 @@ resource "airbyte_source_twilio" "my_source_twilio" {
     source_type     = "twilio"
     start_date      = "2020-10-01T00:00:00Z"
   }
-  name         = "Lucy Gutkowski"
-  workspace_id = "d7b78673-e13a-412a-ab99-2494594487f5"
+  name         = "Bradley Goodwin"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "f5c84383-6b86-4b3c-9f64-15b0449f9df1"
 }
 ```
 
@@ -51,7 +52,7 @@ Required:
 
 - `account_sid` (String) Twilio account SID
 - `auth_token` (String) Twilio Auth Token.
-- `source_type` (String) must be one of [twilio]
+- `source_type` (String) must be one of ["twilio"]
 - `start_date` (String) UTC date and time in the format 2020-10-01T00:00:00Z. Any data before this date will not be replicated.
 
 Optional:

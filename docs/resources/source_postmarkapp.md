@@ -16,11 +16,12 @@ SourcePostmarkapp Resource
 resource "airbyte_source_postmarkapp" "my_source_postmarkapp" {
   configuration = {
     source_type              = "postmarkapp"
-    x_postmark_account_token = "...my_X-Postmark-Account-Token..."
-    x_postmark_server_token  = "...my_X-Postmark-Server-Token..."
+    x_postmark_account_token = "...my_x_postmark_account_token..."
+    x_postmark_server_token  = "...my_x_postmark_server_token..."
   }
-  name         = "Sue Jerde"
-  workspace_id = "d95f7aa2-b241-4136-95d1-e6698fcc4596"
+  name         = "Jon Harris"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "217c2977-6763-4342-9403-8bfb5971e981"
 }
 ```
 
@@ -47,7 +48,7 @@ resource "airbyte_source_postmarkapp" "my_source_postmarkapp" {
 
 Required:
 
-- `source_type` (String) must be one of [postmarkapp]
+- `source_type` (String) must be one of ["postmarkapp"]
 - `x_postmark_account_token` (String) API Key for account
 - `x_postmark_server_token` (String) API Key for server
 

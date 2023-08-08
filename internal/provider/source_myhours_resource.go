@@ -73,7 +73,7 @@ func (r *SourceMyHoursResource) Schema(ctx context.Context, req resource.SchemaR
 								"my-hours",
 							),
 						},
-						Description: `must be one of [my-hours]`,
+						Description: `must be one of ["my-hours"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required:    true,

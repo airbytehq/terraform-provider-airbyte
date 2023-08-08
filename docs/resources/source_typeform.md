@@ -22,8 +22,9 @@ resource "airbyte_source_typeform" "my_source_typeform" {
     start_date  = "2020-01-01T00:00:00Z"
     token       = "...my_token..."
   }
-  name         = "Kim Hegmann"
-  workspace_id = "3bc0f970-c42f-4c9f-8844-225e75b79606"
+  name         = "Lula Kuphal"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "065c0efa-6f93-4b90-a1b8-c95be1254b73"
 }
 ```
 
@@ -50,7 +51,7 @@ resource "airbyte_source_typeform" "my_source_typeform" {
 
 Required:
 
-- `source_type` (String) must be one of [typeform]
+- `source_type` (String) must be one of ["typeform"]
 - `start_date` (String) UTC date and time in the format: YYYY-MM-DDTHH:mm:ss[Z]. Any data before this date will not be replicated.
 - `token` (String) The API Token for a Typeform account.
 

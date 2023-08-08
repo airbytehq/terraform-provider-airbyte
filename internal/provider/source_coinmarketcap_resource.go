@@ -66,7 +66,7 @@ func (r *SourceCoinmarketcapResource) Schema(ctx context.Context, req resource.S
 								"historical",
 							),
 						},
-						MarkdownDescription: `must be one of [latest, historical]` + "\n" +
+						MarkdownDescription: `must be one of ["latest", "historical"]` + "\n" +
 							`/latest: Latest market ticker quotes and averages for cryptocurrencies and exchanges. /historical: Intervals of historic market data like OHLCV data or data for use in charting libraries. See <a href="https://coinmarketcap.com/api/documentation/v1/#section/Endpoint-Overview">here</a>.`,
 					},
 					"source_type": schema.StringAttribute{
@@ -76,7 +76,7 @@ func (r *SourceCoinmarketcapResource) Schema(ctx context.Context, req resource.S
 								"coinmarketcap",
 							),
 						},
-						Description: `must be one of [coinmarketcap]`,
+						Description: `must be one of ["coinmarketcap"]`,
 					},
 					"symbols": schema.ListAttribute{
 						Optional:    true,

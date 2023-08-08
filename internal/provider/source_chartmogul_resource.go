@@ -69,7 +69,7 @@ func (r *SourceChartmogulResource) Schema(ctx context.Context, req resource.Sche
 								"quarter",
 							),
 						},
-						MarkdownDescription: `must be one of [day, week, month, quarter]` + "\n" +
+						MarkdownDescription: `must be one of ["day", "week", "month", "quarter"]` + "\n" +
 							`Some APIs such as <a href="https://dev.chartmogul.com/reference/endpoint-overview-metrics-api">Metrics</a> require intervals to cluster data.`,
 					},
 					"source_type": schema.StringAttribute{
@@ -79,7 +79,7 @@ func (r *SourceChartmogulResource) Schema(ctx context.Context, req resource.Sche
 								"chartmogul",
 							),
 						},
-						Description: `must be one of [chartmogul]`,
+						Description: `must be one of ["chartmogul"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

@@ -69,7 +69,7 @@ func (r *SourceRailzResource) Schema(ctx context.Context, req resource.SchemaReq
 								"railz",
 							),
 						},
-						Description: `must be one of [railz]`,
+						Description: `must be one of ["railz"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required:    true,

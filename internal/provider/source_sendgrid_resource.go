@@ -66,7 +66,7 @@ func (r *SourceSendgridResource) Schema(ctx context.Context, req resource.Schema
 								"sendgrid",
 							),
 						},
-						Description: `must be one of [sendgrid]`,
+						Description: `must be one of ["sendgrid"]`,
 					},
 					"start_time": schema.StringAttribute{
 						Optional: true,

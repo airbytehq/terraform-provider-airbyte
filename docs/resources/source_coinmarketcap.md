@@ -22,8 +22,9 @@ resource "airbyte_source_coinmarketcap" "my_source_coinmarketcap" {
       "...",
     ]
   }
-  name         = "Susan Wyman"
-  workspace_id = "d3d6fa18-04e5-44c8-af16-8a363c8873e4"
+  name         = "Walter Jacobs"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "363c8873-e484-4380-b1f6-b8ca275a60a0"
 }
 ```
 
@@ -51,9 +52,9 @@ resource "airbyte_source_coinmarketcap" "my_source_coinmarketcap" {
 Required:
 
 - `api_key` (String) Your API Key. See <a href="https://coinmarketcap.com/api/documentation/v1/#section/Authentication">here</a>. The token is case sensitive.
-- `data_type` (String) must be one of [latest, historical]
+- `data_type` (String) must be one of ["latest", "historical"]
 /latest: Latest market ticker quotes and averages for cryptocurrencies and exchanges. /historical: Intervals of historic market data like OHLCV data or data for use in charting libraries. See <a href="https://coinmarketcap.com/api/documentation/v1/#section/Endpoint-Overview">here</a>.
-- `source_type` (String) must be one of [coinmarketcap]
+- `source_type` (String) must be one of ["coinmarketcap"]
 
 Optional:
 

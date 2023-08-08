@@ -26,52 +26,58 @@ func (r *DestinationVerticaResourceModel) ToCreateSDKType() *shared.DestinationV
 	port := r.Configuration.Port.ValueInt64()
 	schema := r.Configuration.Schema.ValueString()
 	var tunnelMethod *shared.DestinationVerticaSSHTunnelMethod
-	var destinationVerticaSSHTunnelMethodNoTunnel *shared.DestinationVerticaSSHTunnelMethodNoTunnel
-	if r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodNoTunnel != nil {
-		tunnelMethod1 := shared.DestinationVerticaSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
-		destinationVerticaSSHTunnelMethodNoTunnel = &shared.DestinationVerticaSSHTunnelMethodNoTunnel{
-			TunnelMethod: tunnelMethod1,
+	if r.Configuration.TunnelMethod != nil {
+		var destinationVerticaSSHTunnelMethodNoTunnel *shared.DestinationVerticaSSHTunnelMethodNoTunnel
+		if r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodNoTunnel != nil {
+			tunnelMethod1 := shared.DestinationVerticaSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
+			destinationVerticaSSHTunnelMethodNoTunnel = &shared.DestinationVerticaSSHTunnelMethodNoTunnel{
+				TunnelMethod: tunnelMethod1,
+			}
 		}
-	}
-	if destinationVerticaSSHTunnelMethodNoTunnel != nil {
-		tunnelMethod = &shared.DestinationVerticaSSHTunnelMethod{
-			DestinationVerticaSSHTunnelMethodNoTunnel: destinationVerticaSSHTunnelMethodNoTunnel,
+		if destinationVerticaSSHTunnelMethodNoTunnel != nil {
+			tunnelMethod = &shared.DestinationVerticaSSHTunnelMethod{
+				DestinationVerticaSSHTunnelMethodNoTunnel: destinationVerticaSSHTunnelMethodNoTunnel,
+			}
 		}
-	}
-	var destinationVerticaSSHTunnelMethodSSHKeyAuthentication *shared.DestinationVerticaSSHTunnelMethodSSHKeyAuthentication
-	if r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodPasswordAuthentication != nil {
-		tunnelHost := r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
-		tunnelMethod2 := shared.DestinationVerticaSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
-		tunnelPort := r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
-		tunnelUser := r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
-		destinationVerticaSSHTunnelMethodSSHKeyAuthentication = &shared.DestinationVerticaSSHTunnelMethodSSHKeyAuthentication{
-			TunnelHost:   tunnelHost,
-			TunnelMethod: tunnelMethod2,
-			TunnelPort:   tunnelPort,
-			TunnelUser:   tunnelUser,
+		var destinationVerticaSSHTunnelMethodSSHKeyAuthentication *shared.DestinationVerticaSSHTunnelMethodSSHKeyAuthentication
+		if r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodSSHKeyAuthentication != nil {
+			sshKey := r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodSSHKeyAuthentication.SSHKey.ValueString()
+			tunnelHost := r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
+			tunnelMethod2 := shared.DestinationVerticaSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
+			tunnelPort := r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
+			tunnelUser := r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
+			destinationVerticaSSHTunnelMethodSSHKeyAuthentication = &shared.DestinationVerticaSSHTunnelMethodSSHKeyAuthentication{
+				SSHKey:       sshKey,
+				TunnelHost:   tunnelHost,
+				TunnelMethod: tunnelMethod2,
+				TunnelPort:   tunnelPort,
+				TunnelUser:   tunnelUser,
+			}
 		}
-	}
-	if destinationVerticaSSHTunnelMethodSSHKeyAuthentication != nil {
-		tunnelMethod = &shared.DestinationVerticaSSHTunnelMethod{
-			DestinationVerticaSSHTunnelMethodSSHKeyAuthentication: destinationVerticaSSHTunnelMethodSSHKeyAuthentication,
+		if destinationVerticaSSHTunnelMethodSSHKeyAuthentication != nil {
+			tunnelMethod = &shared.DestinationVerticaSSHTunnelMethod{
+				DestinationVerticaSSHTunnelMethodSSHKeyAuthentication: destinationVerticaSSHTunnelMethodSSHKeyAuthentication,
+			}
 		}
-	}
-	var destinationVerticaSSHTunnelMethodPasswordAuthentication *shared.DestinationVerticaSSHTunnelMethodPasswordAuthentication
-	if r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodSSHKeyAuthentication != nil {
-		tunnelHost1 := r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
-		tunnelMethod3 := shared.DestinationVerticaSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
-		tunnelPort1 := r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
-		tunnelUser1 := r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
-		destinationVerticaSSHTunnelMethodPasswordAuthentication = &shared.DestinationVerticaSSHTunnelMethodPasswordAuthentication{
-			TunnelHost:   tunnelHost1,
-			TunnelMethod: tunnelMethod3,
-			TunnelPort:   tunnelPort1,
-			TunnelUser:   tunnelUser1,
+		var destinationVerticaSSHTunnelMethodPasswordAuthentication *shared.DestinationVerticaSSHTunnelMethodPasswordAuthentication
+		if r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodPasswordAuthentication != nil {
+			tunnelHost1 := r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
+			tunnelMethod3 := shared.DestinationVerticaSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
+			tunnelPort1 := r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
+			tunnelUser1 := r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
+			tunnelUserPassword := r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodPasswordAuthentication.TunnelUserPassword.ValueString()
+			destinationVerticaSSHTunnelMethodPasswordAuthentication = &shared.DestinationVerticaSSHTunnelMethodPasswordAuthentication{
+				TunnelHost:         tunnelHost1,
+				TunnelMethod:       tunnelMethod3,
+				TunnelPort:         tunnelPort1,
+				TunnelUser:         tunnelUser1,
+				TunnelUserPassword: tunnelUserPassword,
+			}
 		}
-	}
-	if destinationVerticaSSHTunnelMethodPasswordAuthentication != nil {
-		tunnelMethod = &shared.DestinationVerticaSSHTunnelMethod{
-			DestinationVerticaSSHTunnelMethodPasswordAuthentication: destinationVerticaSSHTunnelMethodPasswordAuthentication,
+		if destinationVerticaSSHTunnelMethodPasswordAuthentication != nil {
+			tunnelMethod = &shared.DestinationVerticaSSHTunnelMethod{
+				DestinationVerticaSSHTunnelMethodPasswordAuthentication: destinationVerticaSSHTunnelMethodPasswordAuthentication,
+			}
 		}
 	}
 	username := r.Configuration.Username.ValueString()
@@ -119,52 +125,58 @@ func (r *DestinationVerticaResourceModel) ToUpdateSDKType() *shared.DestinationV
 	port := r.Configuration.Port.ValueInt64()
 	schema := r.Configuration.Schema.ValueString()
 	var tunnelMethod *shared.DestinationVerticaUpdateSSHTunnelMethod
-	var destinationVerticaUpdateSSHTunnelMethodNoTunnel *shared.DestinationVerticaUpdateSSHTunnelMethodNoTunnel
-	if r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodNoTunnel != nil {
-		tunnelMethod1 := shared.DestinationVerticaUpdateSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
-		destinationVerticaUpdateSSHTunnelMethodNoTunnel = &shared.DestinationVerticaUpdateSSHTunnelMethodNoTunnel{
-			TunnelMethod: tunnelMethod1,
+	if r.Configuration.TunnelMethod != nil {
+		var destinationVerticaUpdateSSHTunnelMethodNoTunnel *shared.DestinationVerticaUpdateSSHTunnelMethodNoTunnel
+		if r.Configuration.TunnelMethod.DestinationVerticaUpdateSSHTunnelMethodNoTunnel != nil {
+			tunnelMethod1 := shared.DestinationVerticaUpdateSSHTunnelMethodNoTunnelTunnelMethod(r.Configuration.TunnelMethod.DestinationVerticaUpdateSSHTunnelMethodNoTunnel.TunnelMethod.ValueString())
+			destinationVerticaUpdateSSHTunnelMethodNoTunnel = &shared.DestinationVerticaUpdateSSHTunnelMethodNoTunnel{
+				TunnelMethod: tunnelMethod1,
+			}
 		}
-	}
-	if destinationVerticaUpdateSSHTunnelMethodNoTunnel != nil {
-		tunnelMethod = &shared.DestinationVerticaUpdateSSHTunnelMethod{
-			DestinationVerticaUpdateSSHTunnelMethodNoTunnel: destinationVerticaUpdateSSHTunnelMethodNoTunnel,
+		if destinationVerticaUpdateSSHTunnelMethodNoTunnel != nil {
+			tunnelMethod = &shared.DestinationVerticaUpdateSSHTunnelMethod{
+				DestinationVerticaUpdateSSHTunnelMethodNoTunnel: destinationVerticaUpdateSSHTunnelMethodNoTunnel,
+			}
 		}
-	}
-	var destinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication *shared.DestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication
-	if r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodPasswordAuthentication != nil {
-		tunnelHost := r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
-		tunnelMethod2 := shared.DestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
-		tunnelPort := r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
-		tunnelUser := r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
-		destinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication = &shared.DestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication{
-			TunnelHost:   tunnelHost,
-			TunnelMethod: tunnelMethod2,
-			TunnelPort:   tunnelPort,
-			TunnelUser:   tunnelUser,
+		var destinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication *shared.DestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication
+		if r.Configuration.TunnelMethod.DestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication != nil {
+			sshKey := r.Configuration.TunnelMethod.DestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication.SSHKey.ValueString()
+			tunnelHost := r.Configuration.TunnelMethod.DestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
+			tunnelMethod2 := shared.DestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
+			tunnelPort := r.Configuration.TunnelMethod.DestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
+			tunnelUser := r.Configuration.TunnelMethod.DestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
+			destinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication = &shared.DestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication{
+				SSHKey:       sshKey,
+				TunnelHost:   tunnelHost,
+				TunnelMethod: tunnelMethod2,
+				TunnelPort:   tunnelPort,
+				TunnelUser:   tunnelUser,
+			}
 		}
-	}
-	if destinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication != nil {
-		tunnelMethod = &shared.DestinationVerticaUpdateSSHTunnelMethod{
-			DestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication: destinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication,
+		if destinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication != nil {
+			tunnelMethod = &shared.DestinationVerticaUpdateSSHTunnelMethod{
+				DestinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication: destinationVerticaUpdateSSHTunnelMethodSSHKeyAuthentication,
+			}
 		}
-	}
-	var destinationVerticaUpdateSSHTunnelMethodPasswordAuthentication *shared.DestinationVerticaUpdateSSHTunnelMethodPasswordAuthentication
-	if r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodSSHKeyAuthentication != nil {
-		tunnelHost1 := r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodSSHKeyAuthentication.TunnelHost.ValueString()
-		tunnelMethod3 := shared.DestinationVerticaUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodSSHKeyAuthentication.TunnelMethod.ValueString())
-		tunnelPort1 := r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodSSHKeyAuthentication.TunnelPort.ValueInt64()
-		tunnelUser1 := r.Configuration.TunnelMethod.DestinationVerticaSSHTunnelMethodSSHKeyAuthentication.TunnelUser.ValueString()
-		destinationVerticaUpdateSSHTunnelMethodPasswordAuthentication = &shared.DestinationVerticaUpdateSSHTunnelMethodPasswordAuthentication{
-			TunnelHost:   tunnelHost1,
-			TunnelMethod: tunnelMethod3,
-			TunnelPort:   tunnelPort1,
-			TunnelUser:   tunnelUser1,
+		var destinationVerticaUpdateSSHTunnelMethodPasswordAuthentication *shared.DestinationVerticaUpdateSSHTunnelMethodPasswordAuthentication
+		if r.Configuration.TunnelMethod.DestinationVerticaUpdateSSHTunnelMethodPasswordAuthentication != nil {
+			tunnelHost1 := r.Configuration.TunnelMethod.DestinationVerticaUpdateSSHTunnelMethodPasswordAuthentication.TunnelHost.ValueString()
+			tunnelMethod3 := shared.DestinationVerticaUpdateSSHTunnelMethodPasswordAuthenticationTunnelMethod(r.Configuration.TunnelMethod.DestinationVerticaUpdateSSHTunnelMethodPasswordAuthentication.TunnelMethod.ValueString())
+			tunnelPort1 := r.Configuration.TunnelMethod.DestinationVerticaUpdateSSHTunnelMethodPasswordAuthentication.TunnelPort.ValueInt64()
+			tunnelUser1 := r.Configuration.TunnelMethod.DestinationVerticaUpdateSSHTunnelMethodPasswordAuthentication.TunnelUser.ValueString()
+			tunnelUserPassword := r.Configuration.TunnelMethod.DestinationVerticaUpdateSSHTunnelMethodPasswordAuthentication.TunnelUserPassword.ValueString()
+			destinationVerticaUpdateSSHTunnelMethodPasswordAuthentication = &shared.DestinationVerticaUpdateSSHTunnelMethodPasswordAuthentication{
+				TunnelHost:         tunnelHost1,
+				TunnelMethod:       tunnelMethod3,
+				TunnelPort:         tunnelPort1,
+				TunnelUser:         tunnelUser1,
+				TunnelUserPassword: tunnelUserPassword,
+			}
 		}
-	}
-	if destinationVerticaUpdateSSHTunnelMethodPasswordAuthentication != nil {
-		tunnelMethod = &shared.DestinationVerticaUpdateSSHTunnelMethod{
-			DestinationVerticaUpdateSSHTunnelMethodPasswordAuthentication: destinationVerticaUpdateSSHTunnelMethodPasswordAuthentication,
+		if destinationVerticaUpdateSSHTunnelMethodPasswordAuthentication != nil {
+			tunnelMethod = &shared.DestinationVerticaUpdateSSHTunnelMethod{
+				DestinationVerticaUpdateSSHTunnelMethodPasswordAuthentication: destinationVerticaUpdateSSHTunnelMethodPasswordAuthentication,
+			}
 		}
 	}
 	username := r.Configuration.Username.ValueString()

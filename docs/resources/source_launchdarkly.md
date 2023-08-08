@@ -18,8 +18,9 @@ resource "airbyte_source_launchdarkly" "my_source_launchdarkly" {
     access_token = "...my_access_token..."
     source_type  = "launchdarkly"
   }
-  name         = "Rolando Brakus"
-  workspace_id = "7f3c4cce-4b6d-4769-aff3-c5747501357e"
+  name         = "Pedro Kovacek"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "501357e4-4f51-4f8b-884c-3197e193a245"
 }
 ```
 
@@ -47,6 +48,6 @@ resource "airbyte_source_launchdarkly" "my_source_launchdarkly" {
 Required:
 
 - `access_token` (String) Your Access token. See <a href="https://apidocs.launchdarkly.com/#section/Overview/Authentication">here</a>.
-- `source_type` (String) must be one of [launchdarkly]
+- `source_type` (String) must be one of ["launchdarkly"]
 
 

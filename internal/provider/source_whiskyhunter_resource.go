@@ -61,7 +61,7 @@ func (r *SourceWhiskyHunterResource) Schema(ctx context.Context, req resource.Sc
 								"whisky-hunter",
 							),
 						},
-						Description: `must be one of [whisky-hunter]`,
+						Description: `must be one of ["whisky-hunter"]`,
 					},
 				},
 			},

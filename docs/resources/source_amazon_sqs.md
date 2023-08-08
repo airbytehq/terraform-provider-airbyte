@@ -21,13 +21,14 @@ resource "airbyte_source_amazon_sqs" "my_source_amazonsqs" {
     max_batch_size       = 5
     max_wait_time        = 5
     queue_url            = "https://sqs.eu-west-1.amazonaws.com/1234567890/my-example-queue"
-    region               = "us-east-2"
+    region               = "ap-northeast-2"
     secret_key           = "hu+qE5exxxxT6o/ZrKsxxxxxxBhxxXLexxxxxVKz"
     source_type          = "amazon-sqs"
     visibility_timeout   = 15
   }
-  name         = "Billie Morar"
-  workspace_id = "b30fcb33-ea05-45b1-97cd-44e2f52d82d3"
+  name         = "Roger McDermott"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "d44e2f52-d82d-4351-bbb6-f48b656bcdb3"
 }
 ```
 
@@ -56,9 +57,9 @@ Required:
 
 - `delete_messages` (Boolean) If Enabled, messages will be deleted from the SQS Queue after being read. If Disabled, messages are left in the queue and can be read more than once. WARNING: Enabling this option can result in data loss in cases of failure, use with caution, see documentation for more detail.
 - `queue_url` (String) URL of the SQS Queue
-- `region` (String) must be one of [us-east-1, us-east-2, us-west-1, us-west-2, af-south-1, ap-east-1, ap-south-1, ap-northeast-1, ap-northeast-2, ap-northeast-3, ap-southeast-1, ap-southeast-2, ca-central-1, cn-north-1, cn-northwest-1, eu-central-1, eu-north-1, eu-south-1, eu-west-1, eu-west-2, eu-west-3, sa-east-1, me-south-1, us-gov-east-1, us-gov-west-1]
+- `region` (String) must be one of ["us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]
 AWS Region of the SQS Queue
-- `source_type` (String) must be one of [amazon-sqs]
+- `source_type` (String) must be one of ["amazon-sqs"]
 
 Optional:
 

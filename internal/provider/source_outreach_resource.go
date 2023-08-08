@@ -77,7 +77,7 @@ func (r *SourceOutreachResource) Schema(ctx context.Context, req resource.Schema
 								"outreach",
 							),
 						},
-						Description: `must be one of [outreach]`,
+						Description: `must be one of ["outreach"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required:    true,

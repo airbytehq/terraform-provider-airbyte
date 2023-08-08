@@ -20,8 +20,9 @@ resource "airbyte_source_bigcommerce" "my_source_bigcommerce" {
     start_date   = "2021-01-01"
     store_hash   = "...my_store_hash..."
   }
-  name         = "Adrienne Carter"
-  workspace_id = "0e115c80-bff9-4185-84ec-42defcce8f19"
+  name         = "Emma Ward"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "2defcce8-f197-4777-be63-562a7b408f05"
 }
 ```
 
@@ -49,7 +50,7 @@ resource "airbyte_source_bigcommerce" "my_source_bigcommerce" {
 Required:
 
 - `access_token` (String) Access Token for making authenticated requests.
-- `source_type` (String) must be one of [bigcommerce]
+- `source_type` (String) must be one of ["bigcommerce"]
 - `start_date` (String) The date you would like to replicate data. Format: YYYY-MM-DD.
 - `store_hash` (String) The hash code of the store. For https://api.bigcommerce.com/stores/HASH_CODE/v3/, The store's hash code is 'HASH_CODE'.
 

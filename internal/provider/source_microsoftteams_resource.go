@@ -68,7 +68,7 @@ func (r *SourceMicrosoftTeamsResource) Schema(ctx context.Context, req resource.
 												"Token",
 											),
 										},
-										Description: `must be one of [Token]`,
+										Description: `must be one of ["Token"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -95,7 +95,7 @@ func (r *SourceMicrosoftTeamsResource) Schema(ctx context.Context, req resource.
 												"Client",
 											),
 										},
-										Description: `must be one of [Client]`,
+										Description: `must be one of ["Client"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -126,7 +126,7 @@ func (r *SourceMicrosoftTeamsResource) Schema(ctx context.Context, req resource.
 												"Token",
 											),
 										},
-										Description: `must be one of [Token]`,
+										Description: `must be one of ["Token"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -153,7 +153,7 @@ func (r *SourceMicrosoftTeamsResource) Schema(ctx context.Context, req resource.
 												"Client",
 											),
 										},
-										Description: `must be one of [Client]`,
+										Description: `must be one of ["Client"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -191,7 +191,7 @@ func (r *SourceMicrosoftTeamsResource) Schema(ctx context.Context, req resource.
 								"microsoft-teams",
 							),
 						},
-						Description: `must be one of [microsoft-teams]`,
+						Description: `must be one of ["microsoft-teams"]`,
 					},
 				},
 			},

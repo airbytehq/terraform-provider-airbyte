@@ -18,8 +18,9 @@ resource "airbyte_source_hubplanner" "my_source_hubplanner" {
     api_key     = "...my_api_key..."
     source_type = "hubplanner"
   }
-  name         = "Rafael Johns"
-  workspace_id = "50a28382-ac48-43af-9231-5bba650164e0"
+  name         = "Stephanie Hansen"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "a650164e-06f5-4bf6-ae59-1bc8bdef3612"
 }
 ```
 
@@ -47,6 +48,6 @@ resource "airbyte_source_hubplanner" "my_source_hubplanner" {
 Required:
 
 - `api_key` (String) Hubplanner API key. See https://github.com/hubplanner/API#authentication for more details.
-- `source_type` (String) must be one of [hubplanner]
+- `source_type` (String) must be one of ["hubplanner"]
 
 

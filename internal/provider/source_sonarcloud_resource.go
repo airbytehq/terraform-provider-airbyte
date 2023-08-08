@@ -82,7 +82,7 @@ func (r *SourceSonarCloudResource) Schema(ctx context.Context, req resource.Sche
 								"sonar-cloud",
 							),
 						},
-						Description: `must be one of [sonar-cloud]`,
+						Description: `must be one of ["sonar-cloud"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Optional: true,

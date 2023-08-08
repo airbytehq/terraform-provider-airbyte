@@ -78,7 +78,7 @@ func (r *SourcePaypalTransactionResource) Schema(ctx context.Context, req resour
 								"paypal-transaction",
 							),
 						},
-						Description: `must be one of [paypal-transaction]`,
+						Description: `must be one of ["paypal-transaction"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

@@ -7,10 +7,12 @@ resource "airbyte_destination_clickhouse" "my_destination_clickhouse" {
     password         = "...my_password..."
     port             = 8123
     tunnel_method = {
-      tunnel_method = "NO_TUNNEL"
+      destination_clickhouse_ssh_tunnel_method_no_tunnel = {
+        tunnel_method = "NO_TUNNEL"
+      }
     }
-    username = "Hannah40"
+    username = "Russ76"
   }
-  name         = "Virginia Wunsch"
-  workspace_id = "76b0d5f0-d30c-45fb-b258-7053202c73d5"
+  name         = "Mindy Renner"
+  workspace_id = "58705320-2c73-4d5f-a9b9-0c28909b3fe4"
 }

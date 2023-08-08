@@ -18,8 +18,9 @@ resource "airbyte_source_smartengage" "my_source_smartengage" {
     api_key     = "...my_api_key..."
     source_type = "smartengage"
   }
-  name         = "Leah Murphy"
-  workspace_id = "4fd61903-9dac-4d38-ad0d-c671dc7f1e3a"
+  name         = "Catherine Smith"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "f1e3af15-920c-490d-9b49-01f2bd89c8a3"
 }
 ```
 
@@ -47,6 +48,6 @@ resource "airbyte_source_smartengage" "my_source_smartengage" {
 Required:
 
 - `api_key` (String) API Key
-- `source_type` (String) must be one of [smartengage]
+- `source_type` (String) must be one of ["smartengage"]
 
 

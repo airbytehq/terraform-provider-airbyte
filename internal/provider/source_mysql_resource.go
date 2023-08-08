@@ -92,7 +92,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"CDC",
 											),
 										},
-										Description: `must be one of [CDC]`,
+										Description: `must be one of ["CDC"]`,
 									},
 									"server_time_zone": schema.StringAttribute{
 										Optional:    true,
@@ -111,7 +111,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"STANDARD",
 											),
 										},
-										Description: `must be one of [STANDARD]`,
+										Description: `must be one of ["STANDARD"]`,
 									},
 								},
 								Description: `Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
@@ -130,7 +130,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"CDC",
 											),
 										},
-										Description: `must be one of [CDC]`,
+										Description: `must be one of ["CDC"]`,
 									},
 									"server_time_zone": schema.StringAttribute{
 										Optional:    true,
@@ -149,7 +149,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"STANDARD",
 											),
 										},
-										Description: `must be one of [STANDARD]`,
+										Description: `must be one of ["STANDARD"]`,
 									},
 								},
 								Description: `Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
@@ -167,7 +167,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 								"mysql",
 							),
 						},
-						Description: `must be one of [mysql]`,
+						Description: `must be one of ["mysql"]`,
 					},
 					"ssl_mode": schema.SingleNestedAttribute{
 						Optional: true,
@@ -182,7 +182,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"preferred",
 											),
 										},
-										Description: `must be one of [preferred]`,
+										Description: `must be one of ["preferred"]`,
 									},
 								},
 								Description: `Automatically attempt SSL connection. If the MySQL server does not support SSL, continue with a regular connection.`,
@@ -197,7 +197,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"required",
 											),
 										},
-										Description: `must be one of [required]`,
+										Description: `must be one of ["required"]`,
 									},
 								},
 								Description: `Always connect with SSL. If the MySQL server doesn’t support SSL, the connection will not be established. Certificate Authority (CA) and Hostname are not verified.`,
@@ -228,7 +228,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"verify_ca",
 											),
 										},
-										Description: `must be one of [verify_ca]`,
+										Description: `must be one of ["verify_ca"]`,
 									},
 								},
 								Description: `Always connect with SSL. Verifies CA, but allows connection even if Hostname does not match.`,
@@ -259,7 +259,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"verify_identity",
 											),
 										},
-										Description: `must be one of [verify_identity]`,
+										Description: `must be one of ["verify_identity"]`,
 									},
 								},
 								Description: `Always connect with SSL. Verify both CA and Hostname.`,
@@ -274,7 +274,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"preferred",
 											),
 										},
-										Description: `must be one of [preferred]`,
+										Description: `must be one of ["preferred"]`,
 									},
 								},
 								Description: `Automatically attempt SSL connection. If the MySQL server does not support SSL, continue with a regular connection.`,
@@ -289,7 +289,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"required",
 											),
 										},
-										Description: `must be one of [required]`,
+										Description: `must be one of ["required"]`,
 									},
 								},
 								Description: `Always connect with SSL. If the MySQL server doesn’t support SSL, the connection will not be established. Certificate Authority (CA) and Hostname are not verified.`,
@@ -320,7 +320,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"verify_ca",
 											),
 										},
-										Description: `must be one of [verify_ca]`,
+										Description: `must be one of ["verify_ca"]`,
 									},
 								},
 								Description: `Always connect with SSL. Verifies CA, but allows connection even if Hostname does not match.`,
@@ -351,7 +351,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"verify_identity",
 											),
 										},
-										Description: `must be one of [verify_identity]`,
+										Description: `must be one of ["verify_identity"]`,
 									},
 								},
 								Description: `Always connect with SSL. Verify both CA and Hostname.`,
@@ -375,7 +375,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"NO_TUNNEL",
 											),
 										},
-										MarkdownDescription: `must be one of [NO_TUNNEL]` + "\n" +
+										MarkdownDescription: `must be one of ["NO_TUNNEL"]` + "\n" +
 											`No ssh tunnel needed to connect to database`,
 									},
 								},
@@ -395,7 +395,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"SSH_PASSWORD_AUTH",
 											),
 										},
-										MarkdownDescription: `must be one of [SSH_PASSWORD_AUTH]` + "\n" +
+										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
 											`Connect through a jump server tunnel host using username and password authentication`,
 									},
 									"tunnel_port": schema.Int64Attribute{
@@ -431,7 +431,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"SSH_KEY_AUTH",
 											),
 										},
-										MarkdownDescription: `must be one of [SSH_KEY_AUTH]` + "\n" +
+										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
 											`Connect through a jump server tunnel host using username and ssh key`,
 									},
 									"tunnel_port": schema.Int64Attribute{
@@ -455,7 +455,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"NO_TUNNEL",
 											),
 										},
-										MarkdownDescription: `must be one of [NO_TUNNEL]` + "\n" +
+										MarkdownDescription: `must be one of ["NO_TUNNEL"]` + "\n" +
 											`No ssh tunnel needed to connect to database`,
 									},
 								},
@@ -475,7 +475,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"SSH_PASSWORD_AUTH",
 											),
 										},
-										MarkdownDescription: `must be one of [SSH_PASSWORD_AUTH]` + "\n" +
+										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
 											`Connect through a jump server tunnel host using username and password authentication`,
 									},
 									"tunnel_port": schema.Int64Attribute{
@@ -511,7 +511,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 												"SSH_KEY_AUTH",
 											),
 										},
-										MarkdownDescription: `must be one of [SSH_KEY_AUTH]` + "\n" +
+										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
 											`Connect through a jump server tunnel host using username and ssh key`,
 									},
 									"tunnel_port": schema.Int64Attribute{

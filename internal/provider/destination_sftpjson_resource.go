@@ -64,7 +64,7 @@ func (r *DestinationSftpJSONResource) Schema(ctx context.Context, req resource.S
 								"sftp-json",
 							),
 						},
-						Description: `must be one of [sftp-json]`,
+						Description: `must be one of ["sftp-json"]`,
 					},
 					"host": schema.StringAttribute{
 						Required:    true,

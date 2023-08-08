@@ -73,7 +73,7 @@ func (r *SourceYouniumResource) Schema(ctx context.Context, req resource.SchemaR
 								"younium",
 							),
 						},
-						Description: `must be one of [younium]`,
+						Description: `must be one of ["younium"]`,
 					},
 					"username": schema.StringAttribute{
 						Required:    true,

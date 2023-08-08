@@ -65,7 +65,7 @@ func (r *SourceVantageResource) Schema(ctx context.Context, req resource.SchemaR
 								"vantage",
 							),
 						},
-						Description: `must be one of [vantage]`,
+						Description: `must be one of ["vantage"]`,
 					},
 				},
 			},

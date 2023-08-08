@@ -78,7 +78,7 @@ func (r *SourceNetsuiteResource) Schema(ctx context.Context, req resource.Schema
 								"netsuite",
 							),
 						},
-						Description: `must be one of [netsuite]`,
+						Description: `must be one of ["netsuite"]`,
 					},
 					"start_datetime": schema.StringAttribute{
 						Required:    true,

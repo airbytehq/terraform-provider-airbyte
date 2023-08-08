@@ -69,7 +69,7 @@ func (r *SourceIp2whoisResource) Schema(ctx context.Context, req resource.Schema
 								"ip2whois",
 							),
 						},
-						Description: `must be one of [ip2whois]`,
+						Description: `must be one of ["ip2whois"]`,
 					},
 				},
 			},

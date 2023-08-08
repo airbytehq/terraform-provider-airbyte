@@ -17,19 +17,20 @@ resource "airbyte_source_pocket" "my_source_pocket" {
   configuration = {
     access_token = "...my_access_token..."
     consumer_key = "...my_consumer_key..."
-    content_type = "video"
-    detail_type  = "complete"
+    content_type = "article"
+    detail_type  = "simple"
     domain       = "...my_domain..."
     favorite     = false
     search       = "...my_search..."
     since        = "2022-10-20 14:14:14"
-    sort         = "site"
+    sort         = "title"
     source_type  = "pocket"
-    state        = "all"
+    state        = "unread"
     tag          = "...my_tag..."
   }
-  name         = "Edmund Witting"
-  workspace_id = "99bc6356-2ebf-4df5-9c29-4c060b06a128"
+  name         = "Janie Bogisich"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "7764eef6-d0c6-4d6e-99c7-3dd634571509"
 }
 ```
 
@@ -58,21 +59,21 @@ Required:
 
 - `access_token` (String) The user's Pocket access token.
 - `consumer_key` (String) Your application's Consumer Key.
-- `source_type` (String) must be one of [pocket]
+- `source_type` (String) must be one of ["pocket"]
 
 Optional:
 
-- `content_type` (String) must be one of [article, video, image]
+- `content_type` (String) must be one of ["article", "video", "image"]
 Select the content type of the items to retrieve.
-- `detail_type` (String) must be one of [simple, complete]
+- `detail_type` (String) must be one of ["simple", "complete"]
 Select the granularity of the information about each item.
 - `domain` (String) Only return items from a particular `domain`.
 - `favorite` (Boolean) Retrieve only favorited items.
 - `search` (String) Only return items whose title or url contain the `search` string.
 - `since` (String) Only return items modified since the given timestamp.
-- `sort` (String) must be one of [newest, oldest, title, site]
+- `sort` (String) must be one of ["newest", "oldest", "title", "site"]
 Sort retrieved items by the given criteria.
-- `state` (String) must be one of [unread, archive, all]
+- `state` (String) must be one of ["unread", "archive", "all"]
 Select the state of the items to retrieve.
 - `tag` (String) Return only items tagged with this tag name. Use _untagged_ for retrieving only untagged items.
 

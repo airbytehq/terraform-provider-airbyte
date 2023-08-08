@@ -4,6 +4,7 @@ resource "airbyte_source_recreation" "my_source_recreation" {
     query_campsites = "...my_query_campsites..."
     source_type     = "recreation"
   }
-  name         = "Ann Connelly III"
-  workspace_id = "d4e5b72f-0f54-4856-8a04-24e00a1d6eb9"
+  name         = "Joe Stamm"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "b9434645-d030-484f-bba5-cceff5cb01fe"
 }

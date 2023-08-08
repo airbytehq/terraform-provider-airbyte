@@ -17,13 +17,16 @@ resource "airbyte_source_mailchimp" "my_source_mailchimp" {
   configuration = {
     campaign_id = "...my_campaign_id..."
     credentials = {
-      apikey    = "...my_apikey..."
-      auth_type = "apikey"
+      source_mailchimp_authentication_api_key = {
+        apikey    = "...my_apikey..."
+        auth_type = "apikey"
+      }
     }
     source_type = "mailchimp"
   }
-  name         = "Bobbie Wolff"
-  workspace_id = "c2f72f88-5009-4049-9160-8207888ec661"
+  name         = "Ms. Tracey D'Amore"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "88ec6618-3bfe-4965-9eb4-0ec16faf75b0"
 }
 ```
 
@@ -50,7 +53,7 @@ resource "airbyte_source_mailchimp" "my_source_mailchimp" {
 
 Required:
 
-- `source_type` (String) must be one of [mailchimp]
+- `source_type` (String) must be one of ["mailchimp"]
 
 Optional:
 
@@ -73,7 +76,7 @@ Optional:
 Required:
 
 - `apikey` (String) Mailchimp API Key. See the <a href="https://docs.airbyte.com/integrations/sources/mailchimp">docs</a> for information on how to generate this key.
-- `auth_type` (String) must be one of [apikey]
+- `auth_type` (String) must be one of ["apikey"]
 
 
 <a id="nestedatt--configuration--credentials--source_mailchimp_authentication_o_auth2_0"></a>
@@ -82,7 +85,7 @@ Required:
 Required:
 
 - `access_token` (String) An access token generated using the above client ID and secret.
-- `auth_type` (String) must be one of [oauth2.0]
+- `auth_type` (String) must be one of ["oauth2.0"]
 
 Optional:
 
@@ -96,7 +99,7 @@ Optional:
 Required:
 
 - `apikey` (String) Mailchimp API Key. See the <a href="https://docs.airbyte.com/integrations/sources/mailchimp">docs</a> for information on how to generate this key.
-- `auth_type` (String) must be one of [apikey]
+- `auth_type` (String) must be one of ["apikey"]
 
 
 <a id="nestedatt--configuration--credentials--source_mailchimp_update_authentication_o_auth2_0"></a>
@@ -105,7 +108,7 @@ Required:
 Required:
 
 - `access_token` (String) An access token generated using the above client ID and secret.
-- `auth_type` (String) must be one of [oauth2.0]
+- `auth_type` (String) must be one of ["oauth2.0"]
 
 Optional:
 

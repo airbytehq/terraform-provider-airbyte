@@ -86,7 +86,7 @@ func (r *SourceYoutubeAnalyticsResource) Schema(ctx context.Context, req resourc
 								"youtube-analytics",
 							),
 						},
-						Description: `must be one of [youtube-analytics]`,
+						Description: `must be one of ["youtube-analytics"]`,
 					},
 				},
 			},

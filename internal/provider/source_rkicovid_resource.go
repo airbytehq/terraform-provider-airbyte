@@ -61,7 +61,7 @@ func (r *SourceRkiCovidResource) Schema(ctx context.Context, req resource.Schema
 								"rki-covid",
 							),
 						},
-						Description: `must be one of [rki-covid]`,
+						Description: `must be one of ["rki-covid"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required:    true,

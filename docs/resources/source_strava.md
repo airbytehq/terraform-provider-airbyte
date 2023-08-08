@@ -23,8 +23,9 @@ resource "airbyte_source_strava" "my_source_strava" {
     source_type   = "strava"
     start_date    = "2021-03-01T00:00:00Z"
   }
-  name         = "Levi Haley"
-  workspace_id = "07621c58-f4d7-4396-964c-20a0711a961d"
+  name         = "Marie Murphy"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "1d24a7db-b8f5-432d-892c-f7812cb512c8"
 }
 ```
 
@@ -55,11 +56,11 @@ Required:
 - `client_id` (String) The Client ID of your Strava developer application.
 - `client_secret` (String) The Client Secret of your Strava developer application.
 - `refresh_token` (String) The Refresh Token with the activity: read_all permissions.
-- `source_type` (String) must be one of [strava]
+- `source_type` (String) must be one of ["strava"]
 - `start_date` (String) UTC date and time. Any data before this date will not be replicated.
 
 Optional:
 
-- `auth_type` (String) must be one of [Client]
+- `auth_type` (String) must be one of ["Client"]
 
 

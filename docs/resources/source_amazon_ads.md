@@ -20,21 +20,22 @@ resource "airbyte_source_amazon_ads" "my_source_amazonads" {
     client_secret    = "...my_client_secret..."
     look_back_window = 10
     profiles = [
-      7,
+      1,
     ]
     refresh_token = "...my_refresh_token..."
-    region        = "EU"
+    region        = "FE"
     report_record_types = [
-      "asins_targets",
+      "keywords",
     ]
     source_type = "amazon-ads"
     start_date  = "2022-10-10"
     state_filter = [
-      "enabled",
+      "paused",
     ]
   }
-  name         = "Bobbie Terry"
-  workspace_id = "b1e5a2b1-2eb0-47f1-96db-99545fc95fa8"
+  name         = "Harold Boyer"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "b99545fc-95fa-4889-b0e1-89dbb30fcb33"
 }
 ```
 
@@ -64,14 +65,14 @@ Required:
 - `client_id` (String) The client ID of your Amazon Ads developer application. See the <a href="https://advertising.amazon.com/API/docs/en-us/get-started/generate-api-tokens#retrieve-your-client-id-and-client-secret">docs</a> for more information.
 - `client_secret` (String) The client secret of your Amazon Ads developer application. See the <a href="https://advertising.amazon.com/API/docs/en-us/get-started/generate-api-tokens#retrieve-your-client-id-and-client-secret">docs</a> for more information.
 - `refresh_token` (String) Amazon Ads refresh token. See the <a href="https://advertising.amazon.com/API/docs/en-us/get-started/generate-api-tokens">docs</a> for more information on how to obtain this token.
-- `source_type` (String) must be one of [amazon-ads]
+- `source_type` (String) must be one of ["amazon-ads"]
 
 Optional:
 
-- `auth_type` (String) must be one of [oauth2.0]
+- `auth_type` (String) must be one of ["oauth2.0"]
 - `look_back_window` (Number) The amount of days to go back in time to get the updated data from Amazon Ads
 - `profiles` (List of Number) Profile IDs you want to fetch data for. See <a href="https://advertising.amazon.com/API/docs/en-us/concepts/authorization/profiles">docs</a> for more details.
-- `region` (String) must be one of [NA, EU, FE]
+- `region` (String) must be one of ["NA", "EU", "FE"]
 Region to pull data from (EU/NA/FE). See <a href="https://advertising.amazon.com/API/docs/en-us/info/api-overview#api-endpoints">docs</a> for more details.
 - `report_record_types` (List of String) Optional configuration which accepts an array of string of record types. Leave blank for default behaviour to pull all report types. Use this config option only if you want to pull specific report type(s). See <a href="https://advertising.amazon.com/API/docs/en-us/reporting/v2/report-types">docs</a> for more details
 - `start_date` (String) The Start date for collecting reports, should not be more than 60 days in the past. In YYYY-MM-DD format

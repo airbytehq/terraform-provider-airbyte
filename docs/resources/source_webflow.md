@@ -19,8 +19,9 @@ resource "airbyte_source_webflow" "my_source_webflow" {
     site_id     = "a relatively long hex sequence"
     source_type = "webflow"
   }
-  name         = "Adrian Schulist"
-  workspace_id = "c9b4caa1-cfe9-4e15-9f90-3907f3783198"
+  name         = "Ms. Nina Fadel"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "3d42e54a-8546-4659-bc50-233c1471d51a"
 }
 ```
 
@@ -49,6 +50,6 @@ Required:
 
 - `api_key` (String) The API token for authenticating to Webflow. See https://university.webflow.com/lesson/intro-to-the-webflow-api
 - `site_id` (String) The id of the Webflow site you are requesting data from. See https://developers.webflow.com/#sites
-- `source_type` (String) must be one of [webflow]
+- `source_type` (String) must be one of ["webflow"]
 
 

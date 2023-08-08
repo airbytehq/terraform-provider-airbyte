@@ -22,8 +22,9 @@ resource "airbyte_source_outreach" "my_source_outreach" {
     source_type   = "outreach"
     start_date    = "2020-11-16T00:00:00Z"
   }
-  name         = "Leslie Hartmann IV"
-  workspace_id = "6cc7abf6-16ea-45c7-9641-934b90f2e09d"
+  name         = "Dr. Latoya McClure"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "e09d19d2-fc2f-49e2-a105-944b935d237a"
 }
 ```
 
@@ -54,7 +55,7 @@ Required:
 - `client_secret` (String) The Client Secret of your Outreach developer application.
 - `redirect_uri` (String) A Redirect URI is the location where the authorization server sends the user once the app has been successfully authorized and granted an authorization code or access token.
 - `refresh_token` (String) The token for obtaining the new access token.
-- `source_type` (String) must be one of [outreach]
+- `source_type` (String) must be one of ["outreach"]
 - `start_date` (String) The date from which you'd like to replicate data for Outreach API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 
 

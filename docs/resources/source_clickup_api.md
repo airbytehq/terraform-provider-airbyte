@@ -23,8 +23,9 @@ resource "airbyte_source_clickup_api" "my_source_clickupapi" {
     space_id             = "...my_space_id..."
     team_id              = "...my_team_id..."
   }
-  name         = "Dwight Frami"
-  workspace_id = "50cf876f-fb90-41c6-acbb-4e243cf789ff"
+  name         = "Lowell Rippin"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "e243cf78-9ffa-4fed-a53e-5ae6e0ac184c"
 }
 ```
 
@@ -52,7 +53,7 @@ resource "airbyte_source_clickup_api" "my_source_clickupapi" {
 Required:
 
 - `api_token` (String) Every ClickUp API call required authentication. This field is your personal API token. See <a href="https://clickup.com/api/developer-portal/authentication/#personal-token">here</a>.
-- `source_type` (String) must be one of [clickup-api]
+- `source_type` (String) must be one of ["clickup-api"]
 
 Optional:
 

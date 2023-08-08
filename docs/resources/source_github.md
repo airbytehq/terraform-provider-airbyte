@@ -17,16 +17,19 @@ resource "airbyte_source_github" "my_source_github" {
   configuration = {
     branch = "airbytehq/airbyte/master airbytehq/airbyte/my-branch"
     credentials = {
-      access_token = "...my_access_token..."
-      option_title = "OAuth Credentials"
+      source_github_authentication_o_auth = {
+        access_token = "...my_access_token..."
+        option_title = "OAuth Credentials"
+      }
     }
-    repository        = "airbytehq/airbyte"
-    requests_per_hour = 8
+    repository        = "airbytehq/airbyte airbytehq/another-repo"
+    requests_per_hour = 6
     source_type       = "github"
     start_date        = "2021-03-01T00:00:00Z"
   }
-  name         = "Bert Schultz"
-  workspace_id = "80df448a-47f9-4390-8588-80983dabf9ef"
+  name         = "Brandy Kuvalis V"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "83dabf9e-f3ff-4dd9-b7f0-79af4d35724c"
 }
 ```
 
@@ -54,7 +57,7 @@ resource "airbyte_source_github" "my_source_github" {
 Required:
 
 - `repository` (String) Space-delimited list of GitHub organizations/repositories, e.g. `airbytehq/airbyte` for single repository, `airbytehq/*` for get all repositories from organization and `airbytehq/airbyte airbytehq/another-repo` for multiple repositories.
-- `source_type` (String) must be one of [github]
+- `source_type` (String) must be one of ["github"]
 - `start_date` (String) The date from which you'd like to replicate data from GitHub in the format YYYY-MM-DDT00:00:00Z. For the streams which support this configuration, only data generated on or after the start date will be replicated. This field doesn't apply to all streams, see the <a href="https://docs.airbyte.com/integrations/sources/github">docs</a> for more info
 
 Optional:
@@ -82,7 +85,7 @@ Required:
 
 Optional:
 
-- `option_title` (String) must be one of [OAuth Credentials]
+- `option_title` (String) must be one of ["OAuth Credentials"]
 
 
 <a id="nestedatt--configuration--credentials--source_github_authentication_personal_access_token"></a>
@@ -94,7 +97,7 @@ Required:
 
 Optional:
 
-- `option_title` (String) must be one of [PAT Credentials]
+- `option_title` (String) must be one of ["PAT Credentials"]
 
 
 <a id="nestedatt--configuration--credentials--source_github_update_authentication_o_auth"></a>
@@ -106,7 +109,7 @@ Required:
 
 Optional:
 
-- `option_title` (String) must be one of [OAuth Credentials]
+- `option_title` (String) must be one of ["OAuth Credentials"]
 
 
 <a id="nestedatt--configuration--credentials--source_github_update_authentication_personal_access_token"></a>
@@ -118,6 +121,6 @@ Required:
 
 Optional:
 
-- `option_title` (String) must be one of [PAT Credentials]
+- `option_title` (String) must be one of ["PAT Credentials"]
 
 

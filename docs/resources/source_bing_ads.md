@@ -21,12 +21,13 @@ resource "airbyte_source_bing_ads" "my_source_bingads" {
     developer_token    = "...my_developer_token..."
     lookback_window    = 10
     refresh_token      = "...my_refresh_token..."
-    reports_start_date = "2021-03-11"
+    reports_start_date = "2022-04-10"
     source_type        = "bing-ads"
     tenant_id          = "...my_tenant_id..."
   }
-  name         = "Rose Hills"
-  workspace_id = "0b36f25e-a944-4f3b-b56c-11f6c37a5126"
+  name         = "Lorraine Jacobson Sr."
+  secret_id    = "...my_secret_id..."
+  workspace_id = "f6c37a51-2624-4383-9bbc-05a23a45cefc"
 }
 ```
 
@@ -57,11 +58,11 @@ Required:
 - `developer_token` (String) Developer token associated with user. See more info <a href="https://docs.microsoft.com/en-us/advertising/guides/get-started?view=bingads-13#get-developer-token"> in the docs</a>.
 - `refresh_token` (String) Refresh Token to renew the expired Access Token.
 - `reports_start_date` (String) The start date from which to begin replicating report data. Any data generated before this date will not be replicated in reports. This is a UTC date in YYYY-MM-DD format.
-- `source_type` (String) must be one of [bing-ads]
+- `source_type` (String) must be one of ["bing-ads"]
 
 Optional:
 
-- `auth_method` (String) must be one of [oauth2.0]
+- `auth_method` (String) must be one of ["oauth2.0"]
 - `client_secret` (String) The Client Secret of your Microsoft Advertising developer application.
 - `lookback_window` (Number) Also known as attribution or conversion window. How far into the past to look for records (in days). If your conversion window has an hours/minutes granularity, round it up to the number of days exceeding. Used only for performance report streams in incremental mode.
 - `tenant_id` (String) The Tenant ID of your Microsoft Advertising developer application. Set this to "common" unless you know you need a different value.

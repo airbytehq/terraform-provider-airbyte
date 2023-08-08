@@ -65,7 +65,7 @@ func (r *SourceBigcommerceResource) Schema(ctx context.Context, req resource.Sch
 								"bigcommerce",
 							),
 						},
-						Description: `must be one of [bigcommerce]`,
+						Description: `must be one of ["bigcommerce"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required:    true,

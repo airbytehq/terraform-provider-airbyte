@@ -3,6 +3,7 @@ resource "airbyte_source_sap_fieldglass" "my_source_sapfieldglass" {
     api_key     = "...my_api_key..."
     source_type = "sap-fieldglass"
   }
-  name         = "Donna Gottlieb"
-  workspace_id = "c5dbb3c5-7c1e-4498-9e8a-a257ddc1912e"
+  name         = "Bobbie Block"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "bde64bfc-c546-49d4-815d-fa796206bef2"
 }

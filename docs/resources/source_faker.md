@@ -15,15 +15,16 @@ SourceFaker Resource
 ```terraform
 resource "airbyte_source_faker" "my_source_faker" {
   configuration = {
-    count             = 0
-    parallelism       = 10
-    records_per_slice = 3
+    count             = 8
+    parallelism       = 4
+    records_per_slice = 1
     records_per_sync  = 4
-    seed              = 1
+    seed              = 4
     source_type       = "faker"
   }
-  name         = "Vickie Welch"
-  workspace_id = "639a910a-bdca-4b62-a766-96e1ec00221b"
+  name         = "Beth McKenzie"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "1ec00221-b335-4d89-acb3-ecfda8d0c549"
 }
 ```
 
@@ -51,7 +52,7 @@ resource "airbyte_source_faker" "my_source_faker" {
 Required:
 
 - `count` (Number) How many users should be generated in total.  This setting does not apply to the purchases or products stream.
-- `source_type` (String) must be one of [faker]
+- `source_type` (String) must be one of ["faker"]
 
 Optional:
 

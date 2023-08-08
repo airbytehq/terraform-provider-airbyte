@@ -17,8 +17,9 @@ resource "airbyte_source_xkcd" "my_source_xkcd" {
   configuration = {
     source_type = "xkcd"
   }
-  name         = "Tricia Senger"
-  workspace_id = "3bb0ce8a-a654-432a-986e-b7e14ca56408"
+  name         = "Roberto Jones IV"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "91500970-19a4-48f8-8ece-7bf904e01105"
 }
 ```
 
@@ -45,6 +46,6 @@ resource "airbyte_source_xkcd" "my_source_xkcd" {
 
 Optional:
 
-- `source_type` (String) must be one of [xkcd]
+- `source_type` (String) must be one of ["xkcd"]
 
 

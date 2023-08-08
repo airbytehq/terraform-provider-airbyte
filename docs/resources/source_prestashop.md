@@ -20,8 +20,9 @@ resource "airbyte_source_prestashop" "my_source_prestashop" {
     start_date  = "2022-01-01"
     url         = "...my_url..."
   }
-  name         = "Kendra D'Amore"
-  workspace_id = "76763342-5403-48bf-b597-1e9819055738"
+  name         = "Samantha Krajcik"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "9cedbac7-fda3-4959-8d66-bc2ae480632b"
 }
 ```
 
@@ -49,7 +50,7 @@ resource "airbyte_source_prestashop" "my_source_prestashop" {
 Required:
 
 - `access_key` (String) Your PrestaShop access key. See <a href="https://devdocs.prestashop.com/1.7/webservice/tutorials/creating-access/#create-an-access-key"> the docs </a> for info on how to obtain this.
-- `source_type` (String) must be one of [prestashop]
+- `source_type` (String) must be one of ["prestashop"]
 - `start_date` (String) The Start date in the format YYYY-MM-DD.
 - `url` (String) Shop URL without trailing slash.
 

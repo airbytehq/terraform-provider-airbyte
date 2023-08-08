@@ -65,7 +65,7 @@ func (r *SourceLaunchdarklyResource) Schema(ctx context.Context, req resource.Sc
 								"launchdarkly",
 							),
 						},
-						Description: `must be one of [launchdarkly]`,
+						Description: `must be one of ["launchdarkly"]`,
 					},
 				},
 			},

@@ -65,7 +65,7 @@ func (r *SourceGreenhouseResource) Schema(ctx context.Context, req resource.Sche
 								"greenhouse",
 							),
 						},
-						Description: `must be one of [greenhouse]`,
+						Description: `must be one of ["greenhouse"]`,
 					},
 				},
 			},

@@ -21,27 +21,34 @@ resource "airbyte_source_alloydb" "my_source_alloydb" {
     password        = "...my_password..."
     port            = 5432
     replication_method = {
-      initial_waiting_seconds = 10
-      lsn_commit_behaviour    = "After loading Data in the destination"
-      method                  = "CDC"
-      plugin                  = "pgoutput"
-      publication             = "...my_publication..."
-      replication_slot        = "...my_replication_slot..."
+      source_alloydb_replication_method_logical_replication_cdc_ = {
+        initial_waiting_seconds = 8
+        lsn_commit_behaviour    = "After loading Data in the destination"
+        method                  = "CDC"
+        plugin                  = "pgoutput"
+        publication             = "...my_publication..."
+        replication_slot        = "...my_replication_slot..."
+      }
     }
     schemas = [
       "...",
     ]
     source_type = "alloydb"
     ssl_mode = {
-      mode = "allow"
+      source_alloydb_ssl_modes_allow = {
+        mode = "allow"
+      }
     }
     tunnel_method = {
-      tunnel_method = "NO_TUNNEL"
+      source_alloydb_ssh_tunnel_method_no_tunnel = {
+        tunnel_method = "NO_TUNNEL"
+      }
     }
-    username = "Alvis28"
+    username = "Bruce.Zieme44"
   }
-  name         = "Sergio Hirthe"
-  workspace_id = "ca5acfbe-2fd5-4707-9779-29177deac646"
+  name         = "Viola Hane"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "929177de-ac64-46ec-b573-409e3eb1e5a2"
 }
 ```
 
@@ -71,7 +78,7 @@ Required:
 - `database` (String) Name of the database.
 - `host` (String) Hostname of the database.
 - `port` (Number) Port of the database.
-- `source_type` (String) must be one of [alloydb]
+- `source_type` (String) must be one of ["alloydb"]
 - `username` (String) Username to access the database.
 
 Optional:
@@ -99,7 +106,7 @@ Optional:
 
 Required:
 
-- `method` (String) must be one of [CDC]
+- `method` (String) must be one of ["CDC"]
 - `publication` (String) A Postgres publication used for consuming changes. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-4-create-publications-and-replication-identities-for-tables">publications and replication identities</a>.
 - `replication_slot` (String) A plugin logical replication slot. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-3-create-replication-slot">replication slots</a>.
 
@@ -107,9 +114,9 @@ Optional:
 
 - `additional_properties` (String) Parsed as JSON.
 - `initial_waiting_seconds` (Number) The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-5-optional-set-up-initial-waiting-time">initial waiting time</a>.
-- `lsn_commit_behaviour` (String) must be one of [While reading Data, After loading Data in the destination]
+- `lsn_commit_behaviour` (String) must be one of ["While reading Data", "After loading Data in the destination"]
 Determines when Airbtye should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.
-- `plugin` (String) must be one of [pgoutput]
+- `plugin` (String) must be one of ["pgoutput"]
 A logical decoding plugin installed on the PostgreSQL server.
 
 
@@ -118,7 +125,7 @@ A logical decoding plugin installed on the PostgreSQL server.
 
 Required:
 
-- `method` (String) must be one of [Standard]
+- `method` (String) must be one of ["Standard"]
 
 
 <a id="nestedatt--configuration--replication_method--source_alloydb_update_replication_method_logical_replication_cdc"></a>
@@ -126,7 +133,7 @@ Required:
 
 Required:
 
-- `method` (String) must be one of [CDC]
+- `method` (String) must be one of ["CDC"]
 - `publication` (String) A Postgres publication used for consuming changes. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-4-create-publications-and-replication-identities-for-tables">publications and replication identities</a>.
 - `replication_slot` (String) A plugin logical replication slot. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-3-create-replication-slot">replication slots</a>.
 
@@ -134,9 +141,9 @@ Optional:
 
 - `additional_properties` (String) Parsed as JSON.
 - `initial_waiting_seconds` (Number) The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-5-optional-set-up-initial-waiting-time">initial waiting time</a>.
-- `lsn_commit_behaviour` (String) must be one of [While reading Data, After loading Data in the destination]
+- `lsn_commit_behaviour` (String) must be one of ["While reading Data", "After loading Data in the destination"]
 Determines when Airbtye should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.
-- `plugin` (String) must be one of [pgoutput]
+- `plugin` (String) must be one of ["pgoutput"]
 A logical decoding plugin installed on the PostgreSQL server.
 
 
@@ -145,7 +152,7 @@ A logical decoding plugin installed on the PostgreSQL server.
 
 Required:
 
-- `method` (String) must be one of [Standard]
+- `method` (String) must be one of ["Standard"]
 
 
 
@@ -172,7 +179,7 @@ Optional:
 
 Required:
 
-- `mode` (String) must be one of [allow]
+- `mode` (String) must be one of ["allow"]
 
 Optional:
 
@@ -184,7 +191,7 @@ Optional:
 
 Required:
 
-- `mode` (String) must be one of [disable]
+- `mode` (String) must be one of ["disable"]
 
 Optional:
 
@@ -196,7 +203,7 @@ Optional:
 
 Required:
 
-- `mode` (String) must be one of [prefer]
+- `mode` (String) must be one of ["prefer"]
 
 Optional:
 
@@ -208,7 +215,7 @@ Optional:
 
 Required:
 
-- `mode` (String) must be one of [require]
+- `mode` (String) must be one of ["require"]
 
 Optional:
 
@@ -221,7 +228,7 @@ Optional:
 Required:
 
 - `ca_certificate` (String) CA certificate
-- `mode` (String) must be one of [verify-ca]
+- `mode` (String) must be one of ["verify-ca"]
 
 Optional:
 
@@ -237,7 +244,7 @@ Optional:
 Required:
 
 - `ca_certificate` (String) CA certificate
-- `mode` (String) must be one of [verify-full]
+- `mode` (String) must be one of ["verify-full"]
 
 Optional:
 
@@ -252,7 +259,7 @@ Optional:
 
 Required:
 
-- `mode` (String) must be one of [allow]
+- `mode` (String) must be one of ["allow"]
 
 Optional:
 
@@ -264,7 +271,7 @@ Optional:
 
 Required:
 
-- `mode` (String) must be one of [disable]
+- `mode` (String) must be one of ["disable"]
 
 Optional:
 
@@ -276,7 +283,7 @@ Optional:
 
 Required:
 
-- `mode` (String) must be one of [prefer]
+- `mode` (String) must be one of ["prefer"]
 
 Optional:
 
@@ -288,7 +295,7 @@ Optional:
 
 Required:
 
-- `mode` (String) must be one of [require]
+- `mode` (String) must be one of ["require"]
 
 Optional:
 
@@ -301,7 +308,7 @@ Optional:
 Required:
 
 - `ca_certificate` (String) CA certificate
-- `mode` (String) must be one of [verify-ca]
+- `mode` (String) must be one of ["verify-ca"]
 
 Optional:
 
@@ -317,7 +324,7 @@ Optional:
 Required:
 
 - `ca_certificate` (String) CA certificate
-- `mode` (String) must be one of [verify-full]
+- `mode` (String) must be one of ["verify-full"]
 
 Optional:
 
@@ -345,7 +352,7 @@ Optional:
 
 Required:
 
-- `tunnel_method` (String) must be one of [NO_TUNNEL]
+- `tunnel_method` (String) must be one of ["NO_TUNNEL"]
 No ssh tunnel needed to connect to database
 
 
@@ -355,7 +362,7 @@ No ssh tunnel needed to connect to database
 Required:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of [SSH_PASSWORD_AUTH]
+- `tunnel_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
 Connect through a jump server tunnel host using username and password authentication
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
@@ -369,7 +376,7 @@ Required:
 
 - `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of [SSH_KEY_AUTH]
+- `tunnel_method` (String) must be one of ["SSH_KEY_AUTH"]
 Connect through a jump server tunnel host using username and ssh key
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host.
@@ -380,7 +387,7 @@ Connect through a jump server tunnel host using username and ssh key
 
 Required:
 
-- `tunnel_method` (String) must be one of [NO_TUNNEL]
+- `tunnel_method` (String) must be one of ["NO_TUNNEL"]
 No ssh tunnel needed to connect to database
 
 
@@ -390,7 +397,7 @@ No ssh tunnel needed to connect to database
 Required:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of [SSH_PASSWORD_AUTH]
+- `tunnel_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
 Connect through a jump server tunnel host using username and password authentication
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
@@ -404,7 +411,7 @@ Required:
 
 - `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of [SSH_KEY_AUTH]
+- `tunnel_method` (String) must be one of ["SSH_KEY_AUTH"]
 Connect through a jump server tunnel host using username and ssh key
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host.

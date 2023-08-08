@@ -19,8 +19,9 @@ resource "airbyte_source_facebook_pages" "my_source_facebookpages" {
     page_id      = "...my_page_id..."
     source_type  = "facebook-pages"
   }
-  name         = "Antoinette Halvorson"
-  workspace_id = "ec909304-f926-4bad-a553-819b474b0ed2"
+  name         = "Bernice Donnelly V"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "b474b0ed-20e5-4624-8fff-639a910abdca"
 }
 ```
 
@@ -49,6 +50,6 @@ Required:
 
 - `access_token` (String) Facebook Page Access Token
 - `page_id` (String) Page ID
-- `source_type` (String) must be one of [facebook-pages]
+- `source_type` (String) must be one of ["facebook-pages"]
 
 

@@ -65,7 +65,7 @@ func (r *SourceInstatusResource) Schema(ctx context.Context, req resource.Schema
 								"instatus",
 							),
 						},
-						Description: `must be one of [instatus]`,
+						Description: `must be one of ["instatus"]`,
 					},
 				},
 			},

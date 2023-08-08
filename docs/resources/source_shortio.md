@@ -20,8 +20,9 @@ resource "airbyte_source_shortio" "my_source_shortio" {
     source_type = "shortio"
     start_date  = "...my_start_date..."
   }
-  name         = "Billy Heathcote MD"
-  workspace_id = "9f2e0724-67b8-4a40-bc05-fab0d650edf2"
+  name         = "Kenneth Swaniawski"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "0edf22a9-4d20-4ec9-8ea4-1d1f465e8515"
 }
 ```
 
@@ -50,7 +51,7 @@ Required:
 
 - `domain_id` (String)
 - `secret_key` (String) Short.io Secret Key
-- `source_type` (String) must be one of [shortio]
+- `source_type` (String) must be one of ["shortio"]
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 
 

@@ -69,7 +69,7 @@ func (r *SourceRecruiteeResource) Schema(ctx context.Context, req resource.Schem
 								"recruitee",
 							),
 						},
-						Description: `must be one of [recruitee]`,
+						Description: `must be one of ["recruitee"]`,
 					},
 				},
 			},

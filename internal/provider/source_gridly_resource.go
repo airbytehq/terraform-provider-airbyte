@@ -68,7 +68,7 @@ func (r *SourceGridlyResource) Schema(ctx context.Context, req resource.SchemaRe
 								"gridly",
 							),
 						},
-						Description: `must be one of [gridly]`,
+						Description: `must be one of ["gridly"]`,
 					},
 				},
 			},

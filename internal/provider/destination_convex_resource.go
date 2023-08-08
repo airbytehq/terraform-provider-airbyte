@@ -68,7 +68,7 @@ func (r *DestinationConvexResource) Schema(ctx context.Context, req resource.Sch
 								"convex",
 							),
 						},
-						Description: `must be one of [convex]`,
+						Description: `must be one of ["convex"]`,
 					},
 				},
 			},

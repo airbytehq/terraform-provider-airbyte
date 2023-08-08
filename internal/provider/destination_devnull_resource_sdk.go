@@ -44,8 +44,8 @@ func (r *DestinationDevNullResourceModel) ToGetSDKType() *shared.DestinationDevN
 func (r *DestinationDevNullResourceModel) ToUpdateSDKType() *shared.DestinationDevNullPutRequest {
 	var testDestination shared.DestinationDevNullUpdateTestDestination
 	var destinationDevNullUpdateTestDestinationSilent *shared.DestinationDevNullUpdateTestDestinationSilent
-	if r.Configuration.TestDestination.DestinationDevNullTestDestinationSilent != nil {
-		testDestinationType := shared.DestinationDevNullUpdateTestDestinationSilentTestDestinationType(r.Configuration.TestDestination.DestinationDevNullTestDestinationSilent.TestDestinationType.ValueString())
+	if r.Configuration.TestDestination.DestinationDevNullUpdateTestDestinationSilent != nil {
+		testDestinationType := shared.DestinationDevNullUpdateTestDestinationSilentTestDestinationType(r.Configuration.TestDestination.DestinationDevNullUpdateTestDestinationSilent.TestDestinationType.ValueString())
 		destinationDevNullUpdateTestDestinationSilent = &shared.DestinationDevNullUpdateTestDestinationSilent{
 			TestDestinationType: testDestinationType,
 		}

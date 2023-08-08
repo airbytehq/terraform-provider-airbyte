@@ -19,8 +19,9 @@ resource "airbyte_source_gridly" "my_source_gridly" {
     grid_id     = "...my_grid_id..."
     source_type = "gridly"
   }
-  name         = "Edward Jast"
-  workspace_id = "ca12d025-2927-40b8-9572-2dd895b8bcf2"
+  name         = "Theresa Collier"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "895b8bcf-24db-4959-a933-52f74533994d"
 }
 ```
 
@@ -49,6 +50,6 @@ Required:
 
 - `api_key` (String)
 - `grid_id` (String) ID of a grid, or can be ID of a branch
-- `source_type` (String) must be one of [gridly]
+- `source_type` (String) must be one of ["gridly"]
 
 

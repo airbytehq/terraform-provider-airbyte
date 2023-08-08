@@ -71,7 +71,7 @@ func (r *SourceTrelloResource) Schema(ctx context.Context, req resource.SchemaRe
 								"trello",
 							),
 						},
-						Description: `must be one of [trello]`,
+						Description: `must be one of ["trello"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

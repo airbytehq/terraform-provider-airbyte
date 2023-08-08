@@ -16,8 +16,10 @@ SourceSftp Resource
 resource "airbyte_source_sftp" "my_source_sftp" {
   configuration = {
     credentials = {
-      auth_method        = "SSH_PASSWORD_AUTH"
-      auth_user_password = "...my_auth_user_password..."
+      source_sftp_authentication_wildcard_password_authentication = {
+        auth_method        = "SSH_PASSWORD_AUTH"
+        auth_user_password = "...my_auth_user_password..."
+      }
     }
     file_pattern = "log-([0-9]{4})([0-9]{2})([0-9]{2}) - This will filter files which  `log-yearmmdd`"
     file_types   = "csv"
@@ -27,8 +29,9 @@ resource "airbyte_source_sftp" "my_source_sftp" {
     source_type  = "sftp"
     user         = "...my_user..."
   }
-  name         = "Earl Osinski"
-  workspace_id = "75c6c1fe-606d-407d-aa9c-87ae50c16661"
+  name         = "Miss Cornelius Hilll III"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "661a1d91-36a7-4e8d-9321-3f3f658752db"
 }
 ```
 
@@ -57,7 +60,7 @@ Required:
 
 - `host` (String) The server host address
 - `port` (Number) The server port
-- `source_type` (String) must be one of [sftp]
+- `source_type` (String) must be one of ["sftp"]
 - `user` (String) The server user
 
 Optional:
@@ -82,7 +85,7 @@ Optional:
 
 Required:
 
-- `auth_method` (String) must be one of [SSH_PASSWORD_AUTH]
+- `auth_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
 Connect through password authentication
 - `auth_user_password` (String) OS-level password for logging into the jump server host
 
@@ -92,7 +95,7 @@ Connect through password authentication
 
 Required:
 
-- `auth_method` (String) must be one of [SSH_KEY_AUTH]
+- `auth_method` (String) must be one of ["SSH_KEY_AUTH"]
 Connect through ssh key
 - `auth_ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 
@@ -102,7 +105,7 @@ Connect through ssh key
 
 Required:
 
-- `auth_method` (String) must be one of [SSH_PASSWORD_AUTH]
+- `auth_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
 Connect through password authentication
 - `auth_user_password` (String) OS-level password for logging into the jump server host
 
@@ -112,7 +115,7 @@ Connect through password authentication
 
 Required:
 
-- `auth_method` (String) must be one of [SSH_KEY_AUTH]
+- `auth_method` (String) must be one of ["SSH_KEY_AUTH"]
 Connect through ssh key
 - `auth_ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 

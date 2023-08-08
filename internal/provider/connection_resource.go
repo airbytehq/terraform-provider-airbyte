@@ -115,7 +115,7 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 											"incremental_deduped_history",
 										),
 									},
-									Description: `must be one of [full_refresh_overwrite, full_refresh_append, incremental_append, incremental_deduped_history]`,
+									Description: `must be one of ["full_refresh_overwrite", "full_refresh_append", "incremental_append", "incremental_deduped_history"]`,
 								},
 							},
 						},
@@ -142,7 +142,7 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 						"eu",
 					),
 				},
-				Description: `must be one of [auto, us, eu]`,
+				Description: `must be one of ["auto", "us", "eu"]`,
 			},
 			"destination_id": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{
@@ -171,7 +171,7 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 						"custom_format",
 					),
 				},
-				MarkdownDescription: `must be one of [source, destination, custom_format]` + "\n" +
+				MarkdownDescription: `must be one of ["source", "destination", "custom_format"]` + "\n" +
 					`Define the location where the data will be stored in the destination`,
 			},
 			"namespace_format": schema.StringAttribute{
@@ -194,7 +194,7 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 						"disable_connection",
 					),
 				},
-				MarkdownDescription: `must be one of [ignore, disable_connection]` + "\n" +
+				MarkdownDescription: `must be one of ["ignore", "disable_connection"]` + "\n" +
 					`Set how Airbyte handles syncs when it detects a non-breaking schema change in the source`,
 			},
 			"prefix": schema.StringAttribute{
@@ -236,7 +236,7 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 								"cron",
 							),
 						},
-						Description: `must be one of [manual, cron]`,
+						Description: `must be one of ["manual", "cron"]`,
 					},
 				},
 				Description: `schedule for when the the connection should run, per the schedule type`,
@@ -260,7 +260,7 @@ func (r *ConnectionResource) Schema(ctx context.Context, req resource.SchemaRequ
 						"deprecated",
 					),
 				},
-				Description: `must be one of [active, inactive, deprecated]`,
+				Description: `must be one of ["active", "inactive", "deprecated"]`,
 			},
 			"workspace_id": schema.StringAttribute{
 				Computed: true,

@@ -64,7 +64,7 @@ func (r *DestinationMeilisearchResource) Schema(ctx context.Context, req resourc
 								"meilisearch",
 							),
 						},
-						Description: `must be one of [meilisearch]`,
+						Description: `must be one of ["meilisearch"]`,
 					},
 					"host": schema.StringAttribute{
 						Required:    true,

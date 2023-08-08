@@ -16,14 +16,17 @@ SourceLinkedinPages Resource
 resource "airbyte_source_linkedin_pages" "my_source_linkedinpages" {
   configuration = {
     credentials = {
-      access_token = "...my_access_token..."
-      auth_method  = "access_token"
+      source_linkedin_pages_authentication_access_token = {
+        access_token = "...my_access_token..."
+        auth_method  = "access_token"
+      }
     }
     org_id      = "123456789"
     source_type = "linkedin-pages"
   }
-  name         = "Ms. Garrett Bradtke"
-  workspace_id = "400313b3-e504-44f6-9fe7-2dc4077d0cc3"
+  name         = "Mitchell Davis"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "4077d0cc-3f40-48ef-815c-eb4d6e1eae0f"
 }
 ```
 
@@ -51,7 +54,7 @@ resource "airbyte_source_linkedin_pages" "my_source_linkedinpages" {
 Required:
 
 - `org_id` (String) Specify the Organization ID
-- `source_type` (String) must be one of [linkedin-pages]
+- `source_type` (String) must be one of ["linkedin-pages"]
 
 Optional:
 
@@ -76,7 +79,7 @@ Required:
 
 Optional:
 
-- `auth_method` (String) must be one of [access_token]
+- `auth_method` (String) must be one of ["access_token"]
 
 
 <a id="nestedatt--configuration--credentials--source_linkedin_pages_authentication_o_auth2_0"></a>
@@ -90,7 +93,7 @@ Required:
 
 Optional:
 
-- `auth_method` (String) must be one of [oAuth2.0]
+- `auth_method` (String) must be one of ["oAuth2.0"]
 
 
 <a id="nestedatt--configuration--credentials--source_linkedin_pages_update_authentication_access_token"></a>
@@ -102,7 +105,7 @@ Required:
 
 Optional:
 
-- `auth_method` (String) must be one of [access_token]
+- `auth_method` (String) must be one of ["access_token"]
 
 
 <a id="nestedatt--configuration--credentials--source_linkedin_pages_update_authentication_o_auth2_0"></a>
@@ -116,6 +119,6 @@ Required:
 
 Optional:
 
-- `auth_method` (String) must be one of [oAuth2.0]
+- `auth_method` (String) must be one of ["oAuth2.0"]
 
 

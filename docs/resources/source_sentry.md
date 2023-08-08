@@ -19,13 +19,14 @@ resource "airbyte_source_sentry" "my_source_sentry" {
     discover_fields = [
       "{ \"see\": \"documentation\" }",
     ]
-    hostname     = "chubby-waterwheel.org"
+    hostname     = "pesky-boon.info"
     organization = "...my_organization..."
     project      = "...my_project..."
     source_type  = "sentry"
   }
-  name         = "Mrs. Leland Crooks PhD"
-  workspace_id = "38dc3ce1-8547-42f9-ae69-166a8be3444e"
+  name         = "Isabel Leuschke"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "3444eac8-b3a2-4875-86c1-fe606d07d2a9"
 }
 ```
 
@@ -55,7 +56,7 @@ Required:
 - `auth_token` (String) Log into Sentry and then <a href="https://sentry.io/settings/account/api/auth-tokens/">create authentication tokens</a>.For self-hosted, you can find or create authentication tokens by visiting "{instance_url_prefix}/settings/account/api/auth-tokens/"
 - `organization` (String) The slug of the organization the groups belong to.
 - `project` (String) The name (slug) of the Project you want to sync.
-- `source_type` (String) must be one of [sentry]
+- `source_type` (String) must be one of ["sentry"]
 
 Optional:
 

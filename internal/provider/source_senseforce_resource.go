@@ -78,7 +78,7 @@ func (r *SourceSenseforceResource) Schema(ctx context.Context, req resource.Sche
 								"senseforce",
 							),
 						},
-						Description: `must be one of [senseforce]`,
+						Description: `must be one of ["senseforce"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

@@ -17,15 +17,16 @@ resource "airbyte_source_coin_api" "my_source_coinapi" {
   configuration = {
     api_key     = "...my_api_key..."
     end_date    = "2019-01-01T00:00:00"
-    environment = "production"
-    limit       = 4
+    environment = "sandbox"
+    limit       = 6
     period      = "5SEC"
     source_type = "coin-api"
     start_date  = "2019-01-01T00:00:00"
     symbol_id   = "...my_symbol_id..."
   }
-  name         = "Dominic Pagac"
-  workspace_id = "8941aebc-0b80-4a69-a4d3-b2ecfcc8f895"
+  name         = "Marcella Ernser"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "ecfcc8f8-9501-40f5-9d3d-6fa1804e54c8"
 }
 ```
 
@@ -53,10 +54,10 @@ resource "airbyte_source_coin_api" "my_source_coinapi" {
 Required:
 
 - `api_key` (String) API Key
-- `environment` (String) must be one of [sandbox, production]
+- `environment` (String) must be one of ["sandbox", "production"]
 The environment to use. Either sandbox or production.
 - `period` (String) The period to use. See the documentation for a list. https://docs.coinapi.io/#list-all-periods-get
-- `source_type` (String) must be one of [coin-api]
+- `source_type` (String) must be one of ["coin-api"]
 - `start_date` (String) The start date in ISO 8601 format.
 - `symbol_id` (String) The symbol ID to use. See the documentation for a list.
 https://docs.coinapi.io/#list-all-symbols-get

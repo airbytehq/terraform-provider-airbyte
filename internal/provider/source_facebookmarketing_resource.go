@@ -107,7 +107,7 @@ func (r *SourceFacebookMarketingResource) Schema(ctx context.Context, req resour
 											"account",
 										),
 									},
-									MarkdownDescription: `must be one of [ad, adset, campaign, account]` + "\n" +
+									MarkdownDescription: `must be one of ["ad", "adset", "campaign", "account"]` + "\n" +
 										`Chosen level for API`,
 								},
 								"name": schema.StringAttribute{
@@ -163,7 +163,7 @@ func (r *SourceFacebookMarketingResource) Schema(ctx context.Context, req resour
 								"facebook-marketing",
 							),
 						},
-						Description: `must be one of [facebook-marketing]`,
+						Description: `must be one of ["facebook-marketing"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

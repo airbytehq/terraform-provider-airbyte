@@ -74,7 +74,7 @@ func (r *SourceYotpoResource) Schema(ctx context.Context, req resource.SchemaReq
 								"yotpo",
 							),
 						},
-						Description: `must be one of [yotpo]`,
+						Description: `must be one of ["yotpo"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

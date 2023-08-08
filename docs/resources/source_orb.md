@@ -28,8 +28,9 @@ resource "airbyte_source_orb" "my_source_orb" {
     ]
     subscription_usage_grouping_key = "...my_subscription_usage_grouping_key..."
   }
-  name         = "Nelson Hagenes V"
-  workspace_id = "53b44bd3-c431-459d-b3e5-953c00113986"
+  name         = "Mr. Traci Adams I"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "9863aa41-e6c3-41cc-af1f-cb51c9a41ffb"
 }
 ```
 
@@ -57,7 +58,7 @@ resource "airbyte_source_orb" "my_source_orb" {
 Required:
 
 - `api_key` (String) Orb API Key, issued from the Orb admin console.
-- `source_type` (String) must be one of [orb]
+- `source_type` (String) must be one of ["orb"]
 - `start_date` (String) UTC date and time in the format 2022-03-01T00:00:00Z. Any data with created_at before this data will not be synced. For Subscription Usage, this becomes the `timeframe_start` API parameter.
 
 Optional:

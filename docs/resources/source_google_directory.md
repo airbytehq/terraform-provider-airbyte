@@ -16,11 +16,12 @@ SourceGoogleDirectory Resource
 resource "airbyte_source_google_directory" "my_source_googledirectory" {
   configuration = {
     credentials_json = "...my_credentials_json..."
-    email            = "Niko.Torp@yahoo.com"
+    email            = "Blaze0@yahoo.com"
     source_type      = "google-directory"
   }
-  name         = "Miss Elena Hahn"
-  workspace_id = "fa30e9af-725b-4291-a203-0d83f5aeb779"
+  name         = "Elizabeth Stehr"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "f5aeb779-9d22-4e8c-9f84-93825fdc42c8"
 }
 ```
 
@@ -49,6 +50,6 @@ Required:
 
 - `credentials_json` (String) The contents of the JSON service account key. See the <a href="https://developers.google.com/admin-sdk/directory/v1/guides/delegation">docs</a> for more information on how to generate this key.
 - `email` (String) The email of the user, which has permissions to access the Google Workspace Admin APIs.
-- `source_type` (String) must be one of [google-directory]
+- `source_type` (String) must be one of ["google-directory"]
 
 

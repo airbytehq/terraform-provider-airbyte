@@ -65,7 +65,7 @@ func (r *SourceEmailoctopusResource) Schema(ctx context.Context, req resource.Sc
 								"emailoctopus",
 							),
 						},
-						Description: `must be one of [emailoctopus]`,
+						Description: `must be one of ["emailoctopus"]`,
 					},
 				},
 			},

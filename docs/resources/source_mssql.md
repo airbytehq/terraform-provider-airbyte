@@ -21,25 +21,32 @@ resource "airbyte_source_mssql" "my_source_mssql" {
     password        = "...my_password..."
     port            = 1433
     replication_method = {
-      data_to_sync            = "New Changes Only"
-      initial_waiting_seconds = 7
-      method                  = "CDC"
-      snapshot_isolation      = "Read Committed"
+      source_mssql_replication_method_logical_replication_cdc_ = {
+        data_to_sync            = "Existing and New"
+        initial_waiting_seconds = 4
+        method                  = "CDC"
+        snapshot_isolation      = "Snapshot"
+      }
     }
     schemas = [
       "...",
     ]
     source_type = "mssql"
     ssl_method = {
-      ssl_method = "encrypted_trust_server_certificate"
+      source_mssql_ssl_method_encrypted_trust_server_certificate_ = {
+        ssl_method = "encrypted_trust_server_certificate"
+      }
     }
     tunnel_method = {
-      tunnel_method = "NO_TUNNEL"
+      source_mssql_ssh_tunnel_method_no_tunnel = {
+        tunnel_method = "NO_TUNNEL"
+      }
     }
-    username = "Theresa.Schinner"
+    username = "Tomas22"
   }
-  name         = "Mae Boehm"
-  workspace_id = "8140b64f-f8ae-4170-af03-b5f37e4aa868"
+  name         = "Jon Wilkinson"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "e4aa8685-5596-4673-aaa5-dcb6682cb70f"
 }
 ```
 
@@ -69,7 +76,7 @@ Required:
 - `database` (String) The name of the database.
 - `host` (String) The hostname of the database.
 - `port` (Number) The port of the database.
-- `source_type` (String) must be one of [mssql]
+- `source_type` (String) must be one of ["mssql"]
 - `username` (String) The username which is used to access the database.
 
 Optional:
@@ -96,14 +103,14 @@ Optional:
 
 Required:
 
-- `method` (String) must be one of [CDC]
+- `method` (String) must be one of ["CDC"]
 
 Optional:
 
-- `data_to_sync` (String) must be one of [Existing and New, New Changes Only]
+- `data_to_sync` (String) must be one of ["Existing and New", "New Changes Only"]
 What data should be synced under the CDC. "Existing and New" will read existing data as a snapshot, and sync new changes through CDC. "New Changes Only" will skip the initial snapshot, and only sync new changes through CDC.
 - `initial_waiting_seconds` (Number) The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">initial waiting time</a>.
-- `snapshot_isolation` (String) must be one of [Snapshot, Read Committed]
+- `snapshot_isolation` (String) must be one of ["Snapshot", "Read Committed"]
 Existing data in the database are synced through an initial snapshot. This parameter controls the isolation level that will be used during the initial snapshotting. If you choose the "Snapshot" level, you must enable the <a href="https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/snapshot-isolation-in-sql-server">snapshot isolation mode</a> on the database.
 
 
@@ -112,7 +119,7 @@ Existing data in the database are synced through an initial snapshot. This param
 
 Required:
 
-- `method` (String) must be one of [STANDARD]
+- `method` (String) must be one of ["STANDARD"]
 
 
 <a id="nestedatt--configuration--replication_method--source_mssql_update_replication_method_logical_replication_cdc"></a>
@@ -120,14 +127,14 @@ Required:
 
 Required:
 
-- `method` (String) must be one of [CDC]
+- `method` (String) must be one of ["CDC"]
 
 Optional:
 
-- `data_to_sync` (String) must be one of [Existing and New, New Changes Only]
+- `data_to_sync` (String) must be one of ["Existing and New", "New Changes Only"]
 What data should be synced under the CDC. "Existing and New" will read existing data as a snapshot, and sync new changes through CDC. "New Changes Only" will skip the initial snapshot, and only sync new changes through CDC.
 - `initial_waiting_seconds` (Number) The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">initial waiting time</a>.
-- `snapshot_isolation` (String) must be one of [Snapshot, Read Committed]
+- `snapshot_isolation` (String) must be one of ["Snapshot", "Read Committed"]
 Existing data in the database are synced through an initial snapshot. This parameter controls the isolation level that will be used during the initial snapshotting. If you choose the "Snapshot" level, you must enable the <a href="https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/snapshot-isolation-in-sql-server">snapshot isolation mode</a> on the database.
 
 
@@ -136,7 +143,7 @@ Existing data in the database are synced through an initial snapshot. This param
 
 Required:
 
-- `method` (String) must be one of [STANDARD]
+- `method` (String) must be one of ["STANDARD"]
 
 
 
@@ -155,7 +162,7 @@ Optional:
 
 Required:
 
-- `ssl_method` (String) must be one of [encrypted_trust_server_certificate]
+- `ssl_method` (String) must be one of ["encrypted_trust_server_certificate"]
 
 
 <a id="nestedatt--configuration--ssl_method--source_mssql_ssl_method_encrypted_verify_certificate"></a>
@@ -163,7 +170,7 @@ Required:
 
 Required:
 
-- `ssl_method` (String) must be one of [encrypted_verify_certificate]
+- `ssl_method` (String) must be one of ["encrypted_verify_certificate"]
 
 Optional:
 
@@ -175,7 +182,7 @@ Optional:
 
 Required:
 
-- `ssl_method` (String) must be one of [encrypted_trust_server_certificate]
+- `ssl_method` (String) must be one of ["encrypted_trust_server_certificate"]
 
 
 <a id="nestedatt--configuration--ssl_method--source_mssql_update_ssl_method_encrypted_verify_certificate"></a>
@@ -183,7 +190,7 @@ Required:
 
 Required:
 
-- `ssl_method` (String) must be one of [encrypted_verify_certificate]
+- `ssl_method` (String) must be one of ["encrypted_verify_certificate"]
 
 Optional:
 
@@ -208,7 +215,7 @@ Optional:
 
 Required:
 
-- `tunnel_method` (String) must be one of [NO_TUNNEL]
+- `tunnel_method` (String) must be one of ["NO_TUNNEL"]
 No ssh tunnel needed to connect to database
 
 
@@ -218,7 +225,7 @@ No ssh tunnel needed to connect to database
 Required:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of [SSH_PASSWORD_AUTH]
+- `tunnel_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
 Connect through a jump server tunnel host using username and password authentication
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
@@ -232,7 +239,7 @@ Required:
 
 - `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of [SSH_KEY_AUTH]
+- `tunnel_method` (String) must be one of ["SSH_KEY_AUTH"]
 Connect through a jump server tunnel host using username and ssh key
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host.
@@ -243,7 +250,7 @@ Connect through a jump server tunnel host using username and ssh key
 
 Required:
 
-- `tunnel_method` (String) must be one of [NO_TUNNEL]
+- `tunnel_method` (String) must be one of ["NO_TUNNEL"]
 No ssh tunnel needed to connect to database
 
 
@@ -253,7 +260,7 @@ No ssh tunnel needed to connect to database
 Required:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of [SSH_PASSWORD_AUTH]
+- `tunnel_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
 Connect through a jump server tunnel host using username and password authentication
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
@@ -267,7 +274,7 @@ Required:
 
 - `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of [SSH_KEY_AUTH]
+- `tunnel_method` (String) must be one of ["SSH_KEY_AUTH"]
 Connect through a jump server tunnel host using username and ssh key
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host.

@@ -17,13 +17,14 @@ resource "airbyte_source_amplitude" "my_source_amplitude" {
   configuration = {
     api_key            = "...my_api_key..."
     data_region        = "Standard Server"
-    request_time_range = 0
+    request_time_range = 10
     secret_key         = "...my_secret_key..."
     source_type        = "amplitude"
     start_date         = "2021-01-25T00:00:00Z"
   }
-  name         = "Flora Renner"
-  workspace_id = "48b656bc-db35-4ff2-a4b2-7537a8cd9e73"
+  name         = "Russell Toy"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "27537a8c-d9e7-4319-8177-d525f77b114e"
 }
 ```
 
@@ -52,12 +53,12 @@ Required:
 
 - `api_key` (String) Amplitude API Key. See the <a href="https://docs.airbyte.com/integrations/sources/amplitude#setup-guide">setup guide</a> for more information on how to obtain this key.
 - `secret_key` (String) Amplitude Secret Key. See the <a href="https://docs.airbyte.com/integrations/sources/amplitude#setup-guide">setup guide</a> for more information on how to obtain this key.
-- `source_type` (String) must be one of [amplitude]
+- `source_type` (String) must be one of ["amplitude"]
 - `start_date` (String) UTC date and time in the format 2021-01-25T00:00:00Z. Any data before this date will not be replicated.
 
 Optional:
 
-- `data_region` (String) must be one of [Standard Server, EU Residency Server]
+- `data_region` (String) must be one of ["Standard Server", "EU Residency Server"]
 Amplitude data region server
 - `request_time_range` (Number) According to <a href="https://www.docs.developers.amplitude.com/analytics/apis/export-api/#considerations">Considerations</a> too big time range in request can cause a timeout error. In this case, set shorter time interval in hours.
 

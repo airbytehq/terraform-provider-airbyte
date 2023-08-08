@@ -77,7 +77,7 @@ func (r *SourceTheGuardianAPIResource) Schema(ctx context.Context, req resource.
 								"the-guardian-api",
 							),
 						},
-						Description: `must be one of [the-guardian-api]`,
+						Description: `must be one of ["the-guardian-api"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required:    true,

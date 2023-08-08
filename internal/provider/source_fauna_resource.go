@@ -71,7 +71,7 @@ func (r *SourceFaunaResource) Schema(ctx context.Context, req resource.SchemaReq
 														"ignore",
 													),
 												},
-												Description: `must be one of [ignore]`,
+												Description: `must be one of ["ignore"]`,
 											},
 										},
 										MarkdownDescription: `<b>This only applies to incremental syncs.</b> <br>` + "\n" +
@@ -93,7 +93,7 @@ func (r *SourceFaunaResource) Schema(ctx context.Context, req resource.SchemaReq
 														"deleted_field",
 													),
 												},
-												Description: `must be one of [deleted_field]`,
+												Description: `must be one of ["deleted_field"]`,
 											},
 										},
 										MarkdownDescription: `<b>This only applies to incremental syncs.</b> <br>` + "\n" +
@@ -111,7 +111,7 @@ func (r *SourceFaunaResource) Schema(ctx context.Context, req resource.SchemaReq
 														"ignore",
 													),
 												},
-												Description: `must be one of [ignore]`,
+												Description: `must be one of ["ignore"]`,
 											},
 										},
 										MarkdownDescription: `<b>This only applies to incremental syncs.</b> <br>` + "\n" +
@@ -133,7 +133,7 @@ func (r *SourceFaunaResource) Schema(ctx context.Context, req resource.SchemaReq
 														"deleted_field",
 													),
 												},
-												Description: `must be one of [deleted_field]`,
+												Description: `must be one of ["deleted_field"]`,
 											},
 										},
 										MarkdownDescription: `<b>This only applies to incremental syncs.</b> <br>` + "\n" +
@@ -182,7 +182,7 @@ func (r *SourceFaunaResource) Schema(ctx context.Context, req resource.SchemaReq
 								"fauna",
 							),
 						},
-						Description: `must be one of [fauna]`,
+						Description: `must be one of ["fauna"]`,
 					},
 				},
 			},

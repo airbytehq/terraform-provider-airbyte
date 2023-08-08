@@ -89,7 +89,7 @@ func (r *SourcePolygonStockAPIResource) Schema(ctx context.Context, req resource
 								"polygon-stock-api",
 							),
 						},
-						Description: `must be one of [polygon-stock-api]`,
+						Description: `must be one of ["polygon-stock-api"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

@@ -35,8 +35,9 @@ resource "airbyte_source_google_ads" "my_source_googleads" {
     source_type       = "google-ads"
     start_date        = "2017-01-25"
   }
-  name         = "Gilbert Bayer"
-  workspace_id = "e9c3ddc5-f111-4dea-9026-d541a4d190fe"
+  name         = "Freda Hamill MD"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "4d190feb-2178-40bc-8c0d-bbddb484708f"
 }
 ```
 
@@ -65,7 +66,7 @@ Required:
 
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
 - `customer_id` (String) Comma separated list of (client) customer IDs. Each customer ID must be specified as a 10-digit number without dashes. More instruction on how to find this value in our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">docs</a>. Metrics streams like AdGroupAdReport cannot be requested for a manager account.
-- `source_type` (String) must be one of [google-ads]
+- `source_type` (String) must be one of ["google-ads"]
 - `start_date` (String) UTC date and time in the format 2017-01-25. Any data before this date will not be replicated.
 
 Optional:

@@ -11,7 +11,7 @@ func (r *SourceQualarooResourceModel) ToCreateSDKType() *shared.SourceQualarooCr
 	key := r.Configuration.Key.ValueString()
 	sourceType := shared.SourceQualarooQualaroo(r.Configuration.SourceType.ValueString())
 	startDate := r.Configuration.StartDate.ValueString()
-	surveyIds := make([]string, 0)
+	var surveyIds []string = nil
 	for _, surveyIdsItem := range r.Configuration.SurveyIds {
 		surveyIds = append(surveyIds, surveyIdsItem.ValueString())
 	}
@@ -48,7 +48,7 @@ func (r *SourceQualarooResourceModel) ToGetSDKType() *shared.SourceQualarooCreat
 func (r *SourceQualarooResourceModel) ToUpdateSDKType() *shared.SourceQualarooPutRequest {
 	key := r.Configuration.Key.ValueString()
 	startDate := r.Configuration.StartDate.ValueString()
-	surveyIds := make([]string, 0)
+	var surveyIds []string = nil
 	for _, surveyIdsItem := range r.Configuration.SurveyIds {
 		surveyIds = append(surveyIds, surveyIdsItem.ValueString())
 	}

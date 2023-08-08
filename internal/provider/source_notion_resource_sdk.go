@@ -10,28 +10,38 @@ import (
 
 func (r *SourceNotionResourceModel) ToCreateSDKType() *shared.SourceNotionCreateRequest {
 	var credentials *shared.SourceNotionAuthenticateUsing
-	var sourceNotionAuthenticateUsingOAuth20 *shared.SourceNotionAuthenticateUsingOAuth20
-	if r.Configuration.Credentials.SourceNotionAuthenticateUsingAccessToken != nil {
-		authType := shared.SourceNotionAuthenticateUsingOAuth20AuthType(r.Configuration.Credentials.SourceNotionAuthenticateUsingAccessToken.AuthType.ValueString())
-		sourceNotionAuthenticateUsingOAuth20 = &shared.SourceNotionAuthenticateUsingOAuth20{
-			AuthType: authType,
+	if r.Configuration.Credentials != nil {
+		var sourceNotionAuthenticateUsingOAuth20 *shared.SourceNotionAuthenticateUsingOAuth20
+		if r.Configuration.Credentials.SourceNotionAuthenticateUsingOAuth20 != nil {
+			accessToken := r.Configuration.Credentials.SourceNotionAuthenticateUsingOAuth20.AccessToken.ValueString()
+			authType := shared.SourceNotionAuthenticateUsingOAuth20AuthType(r.Configuration.Credentials.SourceNotionAuthenticateUsingOAuth20.AuthType.ValueString())
+			clientID := r.Configuration.Credentials.SourceNotionAuthenticateUsingOAuth20.ClientID.ValueString()
+			clientSecret := r.Configuration.Credentials.SourceNotionAuthenticateUsingOAuth20.ClientSecret.ValueString()
+			sourceNotionAuthenticateUsingOAuth20 = &shared.SourceNotionAuthenticateUsingOAuth20{
+				AccessToken:  accessToken,
+				AuthType:     authType,
+				ClientID:     clientID,
+				ClientSecret: clientSecret,
+			}
 		}
-	}
-	if sourceNotionAuthenticateUsingOAuth20 != nil {
-		credentials = &shared.SourceNotionAuthenticateUsing{
-			SourceNotionAuthenticateUsingOAuth20: sourceNotionAuthenticateUsingOAuth20,
+		if sourceNotionAuthenticateUsingOAuth20 != nil {
+			credentials = &shared.SourceNotionAuthenticateUsing{
+				SourceNotionAuthenticateUsingOAuth20: sourceNotionAuthenticateUsingOAuth20,
+			}
 		}
-	}
-	var sourceNotionAuthenticateUsingAccessToken *shared.SourceNotionAuthenticateUsingAccessToken
-	if r.Configuration.Credentials.SourceNotionAuthenticateUsingOAuth20 != nil {
-		authType1 := shared.SourceNotionAuthenticateUsingAccessTokenAuthType(r.Configuration.Credentials.SourceNotionAuthenticateUsingOAuth20.AuthType.ValueString())
-		sourceNotionAuthenticateUsingAccessToken = &shared.SourceNotionAuthenticateUsingAccessToken{
-			AuthType: authType1,
+		var sourceNotionAuthenticateUsingAccessToken *shared.SourceNotionAuthenticateUsingAccessToken
+		if r.Configuration.Credentials.SourceNotionAuthenticateUsingAccessToken != nil {
+			authType1 := shared.SourceNotionAuthenticateUsingAccessTokenAuthType(r.Configuration.Credentials.SourceNotionAuthenticateUsingAccessToken.AuthType.ValueString())
+			token := r.Configuration.Credentials.SourceNotionAuthenticateUsingAccessToken.Token.ValueString()
+			sourceNotionAuthenticateUsingAccessToken = &shared.SourceNotionAuthenticateUsingAccessToken{
+				AuthType: authType1,
+				Token:    token,
+			}
 		}
-	}
-	if sourceNotionAuthenticateUsingAccessToken != nil {
-		credentials = &shared.SourceNotionAuthenticateUsing{
-			SourceNotionAuthenticateUsingAccessToken: sourceNotionAuthenticateUsingAccessToken,
+		if sourceNotionAuthenticateUsingAccessToken != nil {
+			credentials = &shared.SourceNotionAuthenticateUsing{
+				SourceNotionAuthenticateUsingAccessToken: sourceNotionAuthenticateUsingAccessToken,
+			}
 		}
 	}
 	sourceType := shared.SourceNotionNotion(r.Configuration.SourceType.ValueString())
@@ -65,28 +75,38 @@ func (r *SourceNotionResourceModel) ToGetSDKType() *shared.SourceNotionCreateReq
 
 func (r *SourceNotionResourceModel) ToUpdateSDKType() *shared.SourceNotionPutRequest {
 	var credentials *shared.SourceNotionUpdateAuthenticateUsing
-	var sourceNotionUpdateAuthenticateUsingOAuth20 *shared.SourceNotionUpdateAuthenticateUsingOAuth20
-	if r.Configuration.Credentials.SourceNotionAuthenticateUsingAccessToken != nil {
-		authType := shared.SourceNotionUpdateAuthenticateUsingOAuth20AuthType(r.Configuration.Credentials.SourceNotionAuthenticateUsingAccessToken.AuthType.ValueString())
-		sourceNotionUpdateAuthenticateUsingOAuth20 = &shared.SourceNotionUpdateAuthenticateUsingOAuth20{
-			AuthType: authType,
+	if r.Configuration.Credentials != nil {
+		var sourceNotionUpdateAuthenticateUsingOAuth20 *shared.SourceNotionUpdateAuthenticateUsingOAuth20
+		if r.Configuration.Credentials.SourceNotionUpdateAuthenticateUsingOAuth20 != nil {
+			accessToken := r.Configuration.Credentials.SourceNotionUpdateAuthenticateUsingOAuth20.AccessToken.ValueString()
+			authType := shared.SourceNotionUpdateAuthenticateUsingOAuth20AuthType(r.Configuration.Credentials.SourceNotionUpdateAuthenticateUsingOAuth20.AuthType.ValueString())
+			clientID := r.Configuration.Credentials.SourceNotionUpdateAuthenticateUsingOAuth20.ClientID.ValueString()
+			clientSecret := r.Configuration.Credentials.SourceNotionUpdateAuthenticateUsingOAuth20.ClientSecret.ValueString()
+			sourceNotionUpdateAuthenticateUsingOAuth20 = &shared.SourceNotionUpdateAuthenticateUsingOAuth20{
+				AccessToken:  accessToken,
+				AuthType:     authType,
+				ClientID:     clientID,
+				ClientSecret: clientSecret,
+			}
 		}
-	}
-	if sourceNotionUpdateAuthenticateUsingOAuth20 != nil {
-		credentials = &shared.SourceNotionUpdateAuthenticateUsing{
-			SourceNotionUpdateAuthenticateUsingOAuth20: sourceNotionUpdateAuthenticateUsingOAuth20,
+		if sourceNotionUpdateAuthenticateUsingOAuth20 != nil {
+			credentials = &shared.SourceNotionUpdateAuthenticateUsing{
+				SourceNotionUpdateAuthenticateUsingOAuth20: sourceNotionUpdateAuthenticateUsingOAuth20,
+			}
 		}
-	}
-	var sourceNotionUpdateAuthenticateUsingAccessToken *shared.SourceNotionUpdateAuthenticateUsingAccessToken
-	if r.Configuration.Credentials.SourceNotionAuthenticateUsingOAuth20 != nil {
-		authType1 := shared.SourceNotionUpdateAuthenticateUsingAccessTokenAuthType(r.Configuration.Credentials.SourceNotionAuthenticateUsingOAuth20.AuthType.ValueString())
-		sourceNotionUpdateAuthenticateUsingAccessToken = &shared.SourceNotionUpdateAuthenticateUsingAccessToken{
-			AuthType: authType1,
+		var sourceNotionUpdateAuthenticateUsingAccessToken *shared.SourceNotionUpdateAuthenticateUsingAccessToken
+		if r.Configuration.Credentials.SourceNotionUpdateAuthenticateUsingAccessToken != nil {
+			authType1 := shared.SourceNotionUpdateAuthenticateUsingAccessTokenAuthType(r.Configuration.Credentials.SourceNotionUpdateAuthenticateUsingAccessToken.AuthType.ValueString())
+			token := r.Configuration.Credentials.SourceNotionUpdateAuthenticateUsingAccessToken.Token.ValueString()
+			sourceNotionUpdateAuthenticateUsingAccessToken = &shared.SourceNotionUpdateAuthenticateUsingAccessToken{
+				AuthType: authType1,
+				Token:    token,
+			}
 		}
-	}
-	if sourceNotionUpdateAuthenticateUsingAccessToken != nil {
-		credentials = &shared.SourceNotionUpdateAuthenticateUsing{
-			SourceNotionUpdateAuthenticateUsingAccessToken: sourceNotionUpdateAuthenticateUsingAccessToken,
+		if sourceNotionUpdateAuthenticateUsingAccessToken != nil {
+			credentials = &shared.SourceNotionUpdateAuthenticateUsing{
+				SourceNotionUpdateAuthenticateUsingAccessToken: sourceNotionUpdateAuthenticateUsingAccessToken,
+			}
 		}
 	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())

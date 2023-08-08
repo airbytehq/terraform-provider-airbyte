@@ -68,7 +68,7 @@ func (r *SourceSftpResource) Schema(ctx context.Context, req resource.SchemaRequ
 												"SSH_PASSWORD_AUTH",
 											),
 										},
-										MarkdownDescription: `must be one of [SSH_PASSWORD_AUTH]` + "\n" +
+										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
 											`Connect through password authentication`,
 									},
 									"auth_user_password": schema.StringAttribute{
@@ -88,7 +88,7 @@ func (r *SourceSftpResource) Schema(ctx context.Context, req resource.SchemaRequ
 												"SSH_KEY_AUTH",
 											),
 										},
-										MarkdownDescription: `must be one of [SSH_KEY_AUTH]` + "\n" +
+										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
 											`Connect through ssh key`,
 									},
 									"auth_ssh_key": schema.StringAttribute{
@@ -108,7 +108,7 @@ func (r *SourceSftpResource) Schema(ctx context.Context, req resource.SchemaRequ
 												"SSH_PASSWORD_AUTH",
 											),
 										},
-										MarkdownDescription: `must be one of [SSH_PASSWORD_AUTH]` + "\n" +
+										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
 											`Connect through password authentication`,
 									},
 									"auth_user_password": schema.StringAttribute{
@@ -128,7 +128,7 @@ func (r *SourceSftpResource) Schema(ctx context.Context, req resource.SchemaRequ
 												"SSH_KEY_AUTH",
 											),
 										},
-										MarkdownDescription: `must be one of [SSH_KEY_AUTH]` + "\n" +
+										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
 											`Connect through ssh key`,
 									},
 									"auth_ssh_key": schema.StringAttribute{
@@ -171,7 +171,7 @@ func (r *SourceSftpResource) Schema(ctx context.Context, req resource.SchemaRequ
 								"sftp",
 							),
 						},
-						Description: `must be one of [sftp]`,
+						Description: `must be one of ["sftp"]`,
 					},
 					"user": schema.StringAttribute{
 						Required:    true,

@@ -24,7 +24,7 @@ func (r *SourceJiraResourceModel) ToCreateSDKType() *shared.SourceJiraCreateRequ
 	} else {
 		expandIssueChangelog = nil
 	}
-	projects := make([]string, 0)
+	var projects []string = nil
 	for _, projectsItem := range r.Configuration.Projects {
 		projects = append(projects, projectsItem.ValueString())
 	}
@@ -90,7 +90,7 @@ func (r *SourceJiraResourceModel) ToUpdateSDKType() *shared.SourceJiraPutRequest
 	} else {
 		expandIssueChangelog = nil
 	}
-	projects := make([]string, 0)
+	var projects []string = nil
 	for _, projectsItem := range r.Configuration.Projects {
 		projects = append(projects, projectsItem.ValueString())
 	}

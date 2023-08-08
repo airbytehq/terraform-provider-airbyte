@@ -17,15 +17,18 @@ resource "airbyte_source_survey_sparrow" "my_source_surveysparrow" {
   configuration = {
     access_token = "...my_access_token..."
     region = {
-      url_base = "https://eu-api.surveysparrow.com/v3"
+      source_survey_sparrow_base_url_eu_based_account = {
+        url_base = "https://eu-api.surveysparrow.com/v3"
+      }
     }
     source_type = "survey-sparrow"
     survey_id = [
       "{ \"see\": \"documentation\" }",
     ]
   }
-  name         = "Alberta Jakubowski DDS"
-  workspace_id = "5768dce7-4240-49a2-95e0-8601489a5f63"
+  name         = "Anita MacGyver"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "5f63e3af-3dd9-4dda-b3dc-d63483e4a7a9"
 }
 ```
 
@@ -53,7 +56,7 @@ resource "airbyte_source_survey_sparrow" "my_source_surveysparrow" {
 Required:
 
 - `access_token` (String) Your access token. See <a href="https://developers.surveysparrow.com/rest-apis#authentication">here</a>. The key is case sensitive.
-- `source_type` (String) must be one of [survey-sparrow]
+- `source_type` (String) must be one of ["survey-sparrow"]
 
 Optional:
 
@@ -75,7 +78,7 @@ Optional:
 
 Optional:
 
-- `url_base` (String) must be one of [https://eu-api.surveysparrow.com/v3]
+- `url_base` (String) must be one of ["https://eu-api.surveysparrow.com/v3"]
 
 
 <a id="nestedatt--configuration--region--source_survey_sparrow_base_url_global_account"></a>
@@ -83,7 +86,7 @@ Optional:
 
 Optional:
 
-- `url_base` (String) must be one of [https://api.surveysparrow.com/v3]
+- `url_base` (String) must be one of ["https://api.surveysparrow.com/v3"]
 
 
 <a id="nestedatt--configuration--region--source_survey_sparrow_update_base_url_eu_based_account"></a>
@@ -91,7 +94,7 @@ Optional:
 
 Optional:
 
-- `url_base` (String) must be one of [https://eu-api.surveysparrow.com/v3]
+- `url_base` (String) must be one of ["https://eu-api.surveysparrow.com/v3"]
 
 
 <a id="nestedatt--configuration--region--source_survey_sparrow_update_base_url_global_account"></a>
@@ -99,6 +102,6 @@ Optional:
 
 Optional:
 
-- `url_base` (String) must be one of [https://api.surveysparrow.com/v3]
+- `url_base` (String) must be one of ["https://api.surveysparrow.com/v3"]
 
 

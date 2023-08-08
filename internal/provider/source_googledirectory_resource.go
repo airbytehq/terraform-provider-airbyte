@@ -69,7 +69,7 @@ func (r *SourceGoogleDirectoryResource) Schema(ctx context.Context, req resource
 								"google-directory",
 							),
 						},
-						Description: `must be one of [google-directory]`,
+						Description: `must be one of ["google-directory"]`,
 					},
 				},
 			},

@@ -22,8 +22,9 @@ resource "airbyte_source_pipedrive" "my_source_pipedrive" {
     replication_start_date = "2017-01-25T00:00:00Z"
     source_type            = "pipedrive"
   }
-  name         = "Rochelle Cormier"
-  workspace_id = "a3b084da-9925-47d0-8f40-847a742d8449"
+  name         = "Clayton Graham"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "6cbdeecf-6b99-4bc6-b562-ebfdf55c294c"
 }
 ```
 
@@ -51,7 +52,7 @@ resource "airbyte_source_pipedrive" "my_source_pipedrive" {
 Required:
 
 - `replication_start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated. When specified and not None, then stream will behave as incremental
-- `source_type` (String) must be one of [pipedrive]
+- `source_type` (String) must be one of ["pipedrive"]
 
 Optional:
 
@@ -63,6 +64,6 @@ Optional:
 Required:
 
 - `api_token` (String) The Pipedrive API Token.
-- `auth_type` (String) must be one of [Token]
+- `auth_type` (String) must be one of ["Token"]
 
 

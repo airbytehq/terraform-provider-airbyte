@@ -17,10 +17,11 @@ resource "airbyte_source_configcat" "my_source_configcat" {
   configuration = {
     password    = "...my_password..."
     source_type = "configcat"
-    username    = "Joana53"
+    username    = "Elena61"
   }
-  name         = "Olivia Boehm"
-  workspace_id = "b8ca275a-60a0-44c4-95cc-699171b51c1b"
+  name         = "Lynne Schroeder"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "9171b51c-1bdb-41cf-8b88-8ebdfc4ccca9"
 }
 ```
 
@@ -48,7 +49,7 @@ resource "airbyte_source_configcat" "my_source_configcat" {
 Required:
 
 - `password` (String) Basic auth password. See <a href="https://api.configcat.com/docs/#section/Authentication">here</a>.
-- `source_type` (String) must be one of [configcat]
+- `source_type` (String) must be one of ["configcat"]
 - `username` (String) Basic auth user name. See <a href="https://api.configcat.com/docs/#section/Authentication">here</a>.
 
 

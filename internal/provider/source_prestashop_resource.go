@@ -66,7 +66,7 @@ func (r *SourcePrestashopResource) Schema(ctx context.Context, req resource.Sche
 								"prestashop",
 							),
 						},
-						Description: `must be one of [prestashop]`,
+						Description: `must be one of ["prestashop"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

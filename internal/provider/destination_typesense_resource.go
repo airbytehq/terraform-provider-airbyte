@@ -68,7 +68,7 @@ func (r *DestinationTypesenseResource) Schema(ctx context.Context, req resource.
 								"typesense",
 							),
 						},
-						Description: `must be one of [typesense]`,
+						Description: `must be one of ["typesense"]`,
 					},
 					"host": schema.StringAttribute{
 						Required:    true,

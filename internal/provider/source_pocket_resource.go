@@ -71,7 +71,7 @@ func (r *SourcePocketResource) Schema(ctx context.Context, req resource.SchemaRe
 								"image",
 							),
 						},
-						MarkdownDescription: `must be one of [article, video, image]` + "\n" +
+						MarkdownDescription: `must be one of ["article", "video", "image"]` + "\n" +
 							`Select the content type of the items to retrieve.`,
 					},
 					"detail_type": schema.StringAttribute{
@@ -82,7 +82,7 @@ func (r *SourcePocketResource) Schema(ctx context.Context, req resource.SchemaRe
 								"complete",
 							),
 						},
-						MarkdownDescription: `must be one of [simple, complete]` + "\n" +
+						MarkdownDescription: `must be one of ["simple", "complete"]` + "\n" +
 							`Select the granularity of the information about each item.`,
 					},
 					"domain": schema.StringAttribute{
@@ -111,7 +111,7 @@ func (r *SourcePocketResource) Schema(ctx context.Context, req resource.SchemaRe
 								"site",
 							),
 						},
-						MarkdownDescription: `must be one of [newest, oldest, title, site]` + "\n" +
+						MarkdownDescription: `must be one of ["newest", "oldest", "title", "site"]` + "\n" +
 							`Sort retrieved items by the given criteria.`,
 					},
 					"source_type": schema.StringAttribute{
@@ -121,7 +121,7 @@ func (r *SourcePocketResource) Schema(ctx context.Context, req resource.SchemaRe
 								"pocket",
 							),
 						},
-						Description: `must be one of [pocket]`,
+						Description: `must be one of ["pocket"]`,
 					},
 					"state": schema.StringAttribute{
 						Optional: true,
@@ -132,7 +132,7 @@ func (r *SourcePocketResource) Schema(ctx context.Context, req resource.SchemaRe
 								"all",
 							),
 						},
-						MarkdownDescription: `must be one of [unread, archive, all]` + "\n" +
+						MarkdownDescription: `must be one of ["unread", "archive", "all"]` + "\n" +
 							`Select the state of the items to retrieve.`,
 					},
 					"tag": schema.StringAttribute{

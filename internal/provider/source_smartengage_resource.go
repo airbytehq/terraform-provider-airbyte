@@ -65,7 +65,7 @@ func (r *SourceSmartengageResource) Schema(ctx context.Context, req resource.Sch
 								"smartengage",
 							),
 						},
-						Description: `must be one of [smartengage]`,
+						Description: `must be one of ["smartengage"]`,
 					},
 				},
 			},

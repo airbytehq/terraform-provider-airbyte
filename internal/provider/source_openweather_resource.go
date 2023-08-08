@@ -113,7 +113,7 @@ func (r *SourceOpenweatherResource) Schema(ctx context.Context, req resource.Sch
 								"zu",
 							),
 						},
-						MarkdownDescription: `must be one of [af, al, ar, az, bg, ca, cz, da, de, el, en, eu, fa, fi, fr, gl, he, hi, hr, hu, id, it, ja, kr, la, lt, mk, no, nl, pl, pt, pt_br, ro, ru, sv, se, sk, sl, sp, es, sr, th, tr, ua, uk, vi, zh_cn, zh_tw, zu]` + "\n" +
+						MarkdownDescription: `must be one of ["af", "al", "ar", "az", "bg", "ca", "cz", "da", "de", "el", "en", "eu", "fa", "fi", "fr", "gl", "he", "hi", "hr", "hu", "id", "it", "ja", "kr", "la", "lt", "mk", "no", "nl", "pl", "pt", "pt_br", "ro", "ru", "sv", "se", "sk", "sl", "sp", "es", "sr", "th", "tr", "ua", "uk", "vi", "zh_cn", "zh_tw", "zu"]` + "\n" +
 							`You can use lang parameter to get the output in your language. The contents of the description field will be translated. See <a href="https://openweathermap.org/api/one-call-api#multi">here</a> for the list of supported languages.`,
 					},
 					"lat": schema.StringAttribute{
@@ -131,7 +131,7 @@ func (r *SourceOpenweatherResource) Schema(ctx context.Context, req resource.Sch
 								"openweather",
 							),
 						},
-						Description: `must be one of [openweather]`,
+						Description: `must be one of ["openweather"]`,
 					},
 					"units": schema.StringAttribute{
 						Optional: true,
@@ -142,7 +142,7 @@ func (r *SourceOpenweatherResource) Schema(ctx context.Context, req resource.Sch
 								"imperial",
 							),
 						},
-						MarkdownDescription: `must be one of [standard, metric, imperial]` + "\n" +
+						MarkdownDescription: `must be one of ["standard", "metric", "imperial"]` + "\n" +
 							`Units of measurement. standard, metric and imperial units are available. If you do not use the units parameter, standard units will be applied by default.`,
 					},
 				},

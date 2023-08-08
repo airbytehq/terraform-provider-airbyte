@@ -31,8 +31,8 @@ func (r *DestinationGcsResourceModel) ToCreateSDKType() *shared.DestinationGcsCr
 	if r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro != nil {
 		var compressionCodec shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodec
 		var destinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompression *shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompression
-		if r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2 != nil {
-			codec := shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompressionCodec(r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2.Codec.ValueString())
+		if r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompression != nil {
+			codec := shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompressionCodec(r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompression.Codec.ValueString())
 			destinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompression = &shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompression{
 				Codec: codec,
 			}
@@ -62,8 +62,8 @@ func (r *DestinationGcsResourceModel) ToCreateSDKType() *shared.DestinationGcsCr
 			}
 		}
 		var destinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2 *shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2
-		if r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompression != nil {
-			codec2 := shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2Codec(r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompression.Codec.ValueString())
+		if r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2 != nil {
+			codec2 := shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2Codec(r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2.Codec.ValueString())
 			destinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2 = &shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2{
 				Codec: codec2,
 			}
@@ -74,10 +74,17 @@ func (r *DestinationGcsResourceModel) ToCreateSDKType() *shared.DestinationGcsCr
 			}
 		}
 		var destinationGcsOutputFormatAvroApacheAvroCompressionCodecXz *shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXz
-		if r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappy != nil {
-			codec3 := shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXzCodec(r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappy.Codec.ValueString())
+		if r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXz != nil {
+			codec3 := shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXzCodec(r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXz.Codec.ValueString())
+			compressionLevel1 := new(int64)
+			if !r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXz.CompressionLevel.IsUnknown() && !r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXz.CompressionLevel.IsNull() {
+				*compressionLevel1 = r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXz.CompressionLevel.ValueInt64()
+			} else {
+				compressionLevel1 = nil
+			}
 			destinationGcsOutputFormatAvroApacheAvroCompressionCodecXz = &shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXz{
-				Codec: codec3,
+				Codec:            codec3,
+				CompressionLevel: compressionLevel1,
 			}
 		}
 		if destinationGcsOutputFormatAvroApacheAvroCompressionCodecXz != nil {
@@ -86,17 +93,24 @@ func (r *DestinationGcsResourceModel) ToCreateSDKType() *shared.DestinationGcsCr
 			}
 		}
 		var destinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandard *shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandard
-		if r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXz != nil {
-			codec4 := shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandardCodec(r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXz.Codec.ValueString())
-			compressionLevel1 := new(int64)
-			if !r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXz.CompressionLevel.IsUnknown() && !r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXz.CompressionLevel.IsNull() {
-				*compressionLevel1 = r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXz.CompressionLevel.ValueInt64()
+		if r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandard != nil {
+			codec4 := shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandardCodec(r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandard.Codec.ValueString())
+			compressionLevel2 := new(int64)
+			if !r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandard.CompressionLevel.IsUnknown() && !r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandard.CompressionLevel.IsNull() {
+				*compressionLevel2 = r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandard.CompressionLevel.ValueInt64()
 			} else {
-				compressionLevel1 = nil
+				compressionLevel2 = nil
+			}
+			includeChecksum := new(bool)
+			if !r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandard.IncludeChecksum.IsUnknown() && !r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandard.IncludeChecksum.IsNull() {
+				*includeChecksum = r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandard.IncludeChecksum.ValueBool()
+			} else {
+				includeChecksum = nil
 			}
 			destinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandard = &shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandard{
 				Codec:            codec4,
-				CompressionLevel: compressionLevel1,
+				CompressionLevel: compressionLevel2,
+				IncludeChecksum:  includeChecksum,
 			}
 		}
 		if destinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandard != nil {
@@ -105,8 +119,8 @@ func (r *DestinationGcsResourceModel) ToCreateSDKType() *shared.DestinationGcsCr
 			}
 		}
 		var destinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappy *shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappy
-		if r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandard != nil {
-			codec5 := shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappyCodec(r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandard.Codec.ValueString())
+		if r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappy != nil {
+			codec5 := shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappyCodec(r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappy.Codec.ValueString())
 			destinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappy = &shared.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappy{
 				Codec: codec5,
 			}
@@ -130,38 +144,40 @@ func (r *DestinationGcsResourceModel) ToCreateSDKType() *shared.DestinationGcsCr
 	var destinationGcsOutputFormatCSVCommaSeparatedValues *shared.DestinationGcsOutputFormatCSVCommaSeparatedValues
 	if r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues != nil {
 		var compression *shared.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompression
-		var destinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompression *shared.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompression
-		if r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP != nil {
-			compressionType := new(shared.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionType)
-			if !r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP.CompressionType.IsUnknown() && !r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP.CompressionType.IsNull() {
-				*compressionType = shared.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionType(r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP.CompressionType.ValueString())
-			} else {
-				compressionType = nil
+		if r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression != nil {
+			var destinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompression *shared.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompression
+			if r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompression != nil {
+				compressionType := new(shared.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionType)
+				if !r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompression.CompressionType.IsUnknown() && !r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompression.CompressionType.IsNull() {
+					*compressionType = shared.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionType(r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompression.CompressionType.ValueString())
+				} else {
+					compressionType = nil
+				}
+				destinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompression = &shared.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompression{
+					CompressionType: compressionType,
+				}
 			}
-			destinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompression = &shared.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompression{
-				CompressionType: compressionType,
+			if destinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompression != nil {
+				compression = &shared.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompression{
+					DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompression: destinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompression,
+				}
 			}
-		}
-		if destinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompression != nil {
-			compression = &shared.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompression{
-				DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompression: destinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompression,
+			var destinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP *shared.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP
+			if r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP != nil {
+				compressionType1 := new(shared.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionType)
+				if !r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP.CompressionType.IsUnknown() && !r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP.CompressionType.IsNull() {
+					*compressionType1 = shared.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionType(r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP.CompressionType.ValueString())
+				} else {
+					compressionType1 = nil
+				}
+				destinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP = &shared.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP{
+					CompressionType: compressionType1,
+				}
 			}
-		}
-		var destinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP *shared.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP
-		if r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompression != nil {
-			compressionType1 := new(shared.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionType)
-			if !r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompression.CompressionType.IsUnknown() && !r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompression.CompressionType.IsNull() {
-				*compressionType1 = shared.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionType(r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompression.CompressionType.ValueString())
-			} else {
-				compressionType1 = nil
-			}
-			destinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP = &shared.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP{
-				CompressionType: compressionType1,
-			}
-		}
-		if destinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP != nil {
-			compression = &shared.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompression{
-				DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP: destinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP,
+			if destinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP != nil {
+				compression = &shared.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompression{
+					DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP: destinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP,
+				}
 			}
 		}
 		flattening := new(shared.DestinationGcsOutputFormatCSVCommaSeparatedValuesNormalization)
@@ -185,38 +201,40 @@ func (r *DestinationGcsResourceModel) ToCreateSDKType() *shared.DestinationGcsCr
 	var destinationGcsOutputFormatJSONLinesNewlineDelimitedJSON *shared.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON
 	if r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON != nil {
 		var compression1 *shared.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompression
-		var destinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression *shared.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression
-		if r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP != nil {
-			compressionType2 := new(shared.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType)
-			if !r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP.CompressionType.IsUnknown() && !r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP.CompressionType.IsNull() {
-				*compressionType2 = shared.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType(r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP.CompressionType.ValueString())
-			} else {
-				compressionType2 = nil
+		if r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression != nil {
+			var destinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression *shared.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression
+			if r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression != nil {
+				compressionType2 := new(shared.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType)
+				if !r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression.CompressionType.IsUnknown() && !r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression.CompressionType.IsNull() {
+					*compressionType2 = shared.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType(r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression.CompressionType.ValueString())
+				} else {
+					compressionType2 = nil
+				}
+				destinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression = &shared.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression{
+					CompressionType: compressionType2,
+				}
 			}
-			destinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression = &shared.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression{
-				CompressionType: compressionType2,
+			if destinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression != nil {
+				compression1 = &shared.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompression{
+					DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression: destinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression,
+				}
 			}
-		}
-		if destinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression != nil {
-			compression1 = &shared.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompression{
-				DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression: destinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression,
+			var destinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP *shared.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP
+			if r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP != nil {
+				compressionType3 := new(shared.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType)
+				if !r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP.CompressionType.IsUnknown() && !r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP.CompressionType.IsNull() {
+					*compressionType3 = shared.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType(r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP.CompressionType.ValueString())
+				} else {
+					compressionType3 = nil
+				}
+				destinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP = &shared.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP{
+					CompressionType: compressionType3,
+				}
 			}
-		}
-		var destinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP *shared.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP
-		if r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression != nil {
-			compressionType3 := new(shared.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType)
-			if !r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression.CompressionType.IsUnknown() && !r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression.CompressionType.IsNull() {
-				*compressionType3 = shared.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType(r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression.CompressionType.ValueString())
-			} else {
-				compressionType3 = nil
-			}
-			destinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP = &shared.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP{
-				CompressionType: compressionType3,
-			}
-		}
-		if destinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP != nil {
-			compression1 = &shared.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompression{
-				DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP: destinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP,
+			if destinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP != nil {
+				compression1 = &shared.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompression{
+					DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP: destinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP,
+				}
 			}
 		}
 		formatType2 := shared.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONFormatType(r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.FormatType.ValueString())
@@ -318,10 +336,10 @@ func (r *DestinationGcsResourceModel) ToGetSDKType() *shared.DestinationGcsCreat
 func (r *DestinationGcsResourceModel) ToUpdateSDKType() *shared.DestinationGcsPutRequest {
 	var credential shared.DestinationGcsUpdateAuthentication
 	var destinationGcsUpdateAuthenticationHMACKey *shared.DestinationGcsUpdateAuthenticationHMACKey
-	if r.Configuration.Credential.DestinationGcsAuthenticationHMACKey != nil {
-		credentialType := shared.DestinationGcsUpdateAuthenticationHMACKeyCredentialType(r.Configuration.Credential.DestinationGcsAuthenticationHMACKey.CredentialType.ValueString())
-		hmacKeyAccessID := r.Configuration.Credential.DestinationGcsAuthenticationHMACKey.HmacKeyAccessID.ValueString()
-		hmacKeySecret := r.Configuration.Credential.DestinationGcsAuthenticationHMACKey.HmacKeySecret.ValueString()
+	if r.Configuration.Credential.DestinationGcsUpdateAuthenticationHMACKey != nil {
+		credentialType := shared.DestinationGcsUpdateAuthenticationHMACKeyCredentialType(r.Configuration.Credential.DestinationGcsUpdateAuthenticationHMACKey.CredentialType.ValueString())
+		hmacKeyAccessID := r.Configuration.Credential.DestinationGcsUpdateAuthenticationHMACKey.HmacKeyAccessID.ValueString()
+		hmacKeySecret := r.Configuration.Credential.DestinationGcsUpdateAuthenticationHMACKey.HmacKeySecret.ValueString()
 		destinationGcsUpdateAuthenticationHMACKey = &shared.DestinationGcsUpdateAuthenticationHMACKey{
 			CredentialType:  credentialType,
 			HmacKeyAccessID: hmacKeyAccessID,
@@ -335,11 +353,11 @@ func (r *DestinationGcsResourceModel) ToUpdateSDKType() *shared.DestinationGcsPu
 	}
 	var format shared.DestinationGcsUpdateOutputFormat
 	var destinationGcsUpdateOutputFormatAvroApacheAvro *shared.DestinationGcsUpdateOutputFormatAvroApacheAvro
-	if r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro != nil {
+	if r.Configuration.Format.DestinationGcsUpdateOutputFormatAvroApacheAvro != nil {
 		var compressionCodec shared.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodec
 		var destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecNoCompression *shared.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecNoCompression
-		if r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2 != nil {
-			codec := shared.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecNoCompressionCodec(r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecBzip2.Codec.ValueString())
+		if r.Configuration.Format.DestinationGcsUpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecNoCompression != nil {
+			codec := shared.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecNoCompressionCodec(r.Configuration.Format.DestinationGcsUpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecNoCompression.Codec.ValueString())
 			destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecNoCompression = &shared.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecNoCompression{
 				Codec: codec,
 			}
@@ -350,11 +368,11 @@ func (r *DestinationGcsResourceModel) ToUpdateSDKType() *shared.DestinationGcsPu
 			}
 		}
 		var destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflate *shared.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflate
-		if r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflate != nil {
-			codec1 := shared.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflateCodec(r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflate.Codec.ValueString())
+		if r.Configuration.Format.DestinationGcsUpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflate != nil {
+			codec1 := shared.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflateCodec(r.Configuration.Format.DestinationGcsUpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflate.Codec.ValueString())
 			compressionLevel := new(int64)
-			if !r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflate.CompressionLevel.IsUnknown() && !r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflate.CompressionLevel.IsNull() {
-				*compressionLevel = r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecDeflate.CompressionLevel.ValueInt64()
+			if !r.Configuration.Format.DestinationGcsUpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflate.CompressionLevel.IsUnknown() && !r.Configuration.Format.DestinationGcsUpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflate.CompressionLevel.IsNull() {
+				*compressionLevel = r.Configuration.Format.DestinationGcsUpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflate.CompressionLevel.ValueInt64()
 			} else {
 				compressionLevel = nil
 			}
@@ -369,8 +387,8 @@ func (r *DestinationGcsResourceModel) ToUpdateSDKType() *shared.DestinationGcsPu
 			}
 		}
 		var destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecBzip2 *shared.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecBzip2
-		if r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompression != nil {
-			codec2 := shared.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecBzip2Codec(r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecNoCompression.Codec.ValueString())
+		if r.Configuration.Format.DestinationGcsUpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecBzip2 != nil {
+			codec2 := shared.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecBzip2Codec(r.Configuration.Format.DestinationGcsUpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecBzip2.Codec.ValueString())
 			destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecBzip2 = &shared.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecBzip2{
 				Codec: codec2,
 			}
@@ -381,10 +399,17 @@ func (r *DestinationGcsResourceModel) ToUpdateSDKType() *shared.DestinationGcsPu
 			}
 		}
 		var destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecXz *shared.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecXz
-		if r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappy != nil {
-			codec3 := shared.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecXzCodec(r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecSnappy.Codec.ValueString())
+		if r.Configuration.Format.DestinationGcsUpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecXz != nil {
+			codec3 := shared.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecXzCodec(r.Configuration.Format.DestinationGcsUpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecXz.Codec.ValueString())
+			compressionLevel1 := new(int64)
+			if !r.Configuration.Format.DestinationGcsUpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecXz.CompressionLevel.IsUnknown() && !r.Configuration.Format.DestinationGcsUpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecXz.CompressionLevel.IsNull() {
+				*compressionLevel1 = r.Configuration.Format.DestinationGcsUpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecXz.CompressionLevel.ValueInt64()
+			} else {
+				compressionLevel1 = nil
+			}
 			destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecXz = &shared.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecXz{
-				Codec: codec3,
+				Codec:            codec3,
+				CompressionLevel: compressionLevel1,
 			}
 		}
 		if destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecXz != nil {
@@ -393,17 +418,24 @@ func (r *DestinationGcsResourceModel) ToUpdateSDKType() *shared.DestinationGcsPu
 			}
 		}
 		var destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecZstandard *shared.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecZstandard
-		if r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXz != nil {
-			codec4 := shared.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecZstandardCodec(r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXz.Codec.ValueString())
-			compressionLevel1 := new(int64)
-			if !r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXz.CompressionLevel.IsUnknown() && !r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXz.CompressionLevel.IsNull() {
-				*compressionLevel1 = r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecXz.CompressionLevel.ValueInt64()
+		if r.Configuration.Format.DestinationGcsUpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecZstandard != nil {
+			codec4 := shared.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecZstandardCodec(r.Configuration.Format.DestinationGcsUpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecZstandard.Codec.ValueString())
+			compressionLevel2 := new(int64)
+			if !r.Configuration.Format.DestinationGcsUpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecZstandard.CompressionLevel.IsUnknown() && !r.Configuration.Format.DestinationGcsUpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecZstandard.CompressionLevel.IsNull() {
+				*compressionLevel2 = r.Configuration.Format.DestinationGcsUpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecZstandard.CompressionLevel.ValueInt64()
 			} else {
-				compressionLevel1 = nil
+				compressionLevel2 = nil
+			}
+			includeChecksum := new(bool)
+			if !r.Configuration.Format.DestinationGcsUpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecZstandard.IncludeChecksum.IsUnknown() && !r.Configuration.Format.DestinationGcsUpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecZstandard.IncludeChecksum.IsNull() {
+				*includeChecksum = r.Configuration.Format.DestinationGcsUpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecZstandard.IncludeChecksum.ValueBool()
+			} else {
+				includeChecksum = nil
 			}
 			destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecZstandard = &shared.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecZstandard{
 				Codec:            codec4,
-				CompressionLevel: compressionLevel1,
+				CompressionLevel: compressionLevel2,
+				IncludeChecksum:  includeChecksum,
 			}
 		}
 		if destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecZstandard != nil {
@@ -412,8 +444,8 @@ func (r *DestinationGcsResourceModel) ToUpdateSDKType() *shared.DestinationGcsPu
 			}
 		}
 		var destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappy *shared.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappy
-		if r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandard != nil {
-			codec5 := shared.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappyCodec(r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsOutputFormatAvroApacheAvroCompressionCodecZstandard.Codec.ValueString())
+		if r.Configuration.Format.DestinationGcsUpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappy != nil {
+			codec5 := shared.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappyCodec(r.Configuration.Format.DestinationGcsUpdateOutputFormatAvroApacheAvro.CompressionCodec.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappy.Codec.ValueString())
 			destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappy = &shared.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappy{
 				Codec: codec5,
 			}
@@ -423,7 +455,7 @@ func (r *DestinationGcsResourceModel) ToUpdateSDKType() *shared.DestinationGcsPu
 				DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappy: destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappy,
 			}
 		}
-		formatType := shared.DestinationGcsUpdateOutputFormatAvroApacheAvroFormatType(r.Configuration.Format.DestinationGcsOutputFormatAvroApacheAvro.FormatType.ValueString())
+		formatType := shared.DestinationGcsUpdateOutputFormatAvroApacheAvroFormatType(r.Configuration.Format.DestinationGcsUpdateOutputFormatAvroApacheAvro.FormatType.ValueString())
 		destinationGcsUpdateOutputFormatAvroApacheAvro = &shared.DestinationGcsUpdateOutputFormatAvroApacheAvro{
 			CompressionCodec: compressionCodec,
 			FormatType:       formatType,
@@ -435,49 +467,51 @@ func (r *DestinationGcsResourceModel) ToUpdateSDKType() *shared.DestinationGcsPu
 		}
 	}
 	var destinationGcsUpdateOutputFormatCSVCommaSeparatedValues *shared.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValues
-	if r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues != nil {
+	if r.Configuration.Format.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValues != nil {
 		var compression *shared.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompression
-		var destinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression *shared.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression
-		if r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP != nil {
-			compressionType := new(shared.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionType)
-			if !r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP.CompressionType.IsUnknown() && !r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP.CompressionType.IsNull() {
-				*compressionType = shared.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionType(r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionGZIP.CompressionType.ValueString())
-			} else {
-				compressionType = nil
+		if r.Configuration.Format.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValues.Compression != nil {
+			var destinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression *shared.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression
+			if r.Configuration.Format.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression != nil {
+				compressionType := new(shared.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionType)
+				if !r.Configuration.Format.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression.CompressionType.IsUnknown() && !r.Configuration.Format.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression.CompressionType.IsNull() {
+					*compressionType = shared.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompressionCompressionType(r.Configuration.Format.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression.CompressionType.ValueString())
+				} else {
+					compressionType = nil
+				}
+				destinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression = &shared.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression{
+					CompressionType: compressionType,
+				}
 			}
-			destinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression = &shared.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression{
-				CompressionType: compressionType,
+			if destinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression != nil {
+				compression = &shared.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompression{
+					DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression: destinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression,
+				}
 			}
-		}
-		if destinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression != nil {
-			compression = &shared.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompression{
-				DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression: destinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionNoCompression,
+			var destinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP *shared.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP
+			if r.Configuration.Format.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP != nil {
+				compressionType1 := new(shared.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionType)
+				if !r.Configuration.Format.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP.CompressionType.IsUnknown() && !r.Configuration.Format.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP.CompressionType.IsNull() {
+					*compressionType1 = shared.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionType(r.Configuration.Format.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP.CompressionType.ValueString())
+				} else {
+					compressionType1 = nil
+				}
+				destinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP = &shared.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP{
+					CompressionType: compressionType1,
+				}
 			}
-		}
-		var destinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP *shared.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP
-		if r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompression != nil {
-			compressionType1 := new(shared.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionType)
-			if !r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompression.CompressionType.IsUnknown() && !r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompression.CompressionType.IsNull() {
-				*compressionType1 = shared.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIPCompressionType(r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Compression.DestinationGcsOutputFormatCSVCommaSeparatedValuesCompressionNoCompression.CompressionType.ValueString())
-			} else {
-				compressionType1 = nil
-			}
-			destinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP = &shared.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP{
-				CompressionType: compressionType1,
-			}
-		}
-		if destinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP != nil {
-			compression = &shared.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompression{
-				DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP: destinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP,
+			if destinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP != nil {
+				compression = &shared.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompression{
+					DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP: destinationGcsUpdateOutputFormatCSVCommaSeparatedValuesCompressionGZIP,
+				}
 			}
 		}
 		flattening := new(shared.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesNormalization)
-		if !r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Flattening.IsUnknown() && !r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Flattening.IsNull() {
-			*flattening = shared.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesNormalization(r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.Flattening.ValueString())
+		if !r.Configuration.Format.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValues.Flattening.IsUnknown() && !r.Configuration.Format.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValues.Flattening.IsNull() {
+			*flattening = shared.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesNormalization(r.Configuration.Format.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValues.Flattening.ValueString())
 		} else {
 			flattening = nil
 		}
-		formatType1 := shared.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesFormatType(r.Configuration.Format.DestinationGcsOutputFormatCSVCommaSeparatedValues.FormatType.ValueString())
+		formatType1 := shared.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValuesFormatType(r.Configuration.Format.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValues.FormatType.ValueString())
 		destinationGcsUpdateOutputFormatCSVCommaSeparatedValues = &shared.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValues{
 			Compression: compression,
 			Flattening:  flattening,
@@ -490,43 +524,45 @@ func (r *DestinationGcsResourceModel) ToUpdateSDKType() *shared.DestinationGcsPu
 		}
 	}
 	var destinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON *shared.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON
-	if r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON != nil {
+	if r.Configuration.Format.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON != nil {
 		var compression1 *shared.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompression
-		var destinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression *shared.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression
-		if r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP != nil {
-			compressionType2 := new(shared.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType)
-			if !r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP.CompressionType.IsUnknown() && !r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP.CompressionType.IsNull() {
-				*compressionType2 = shared.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType(r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP.CompressionType.ValueString())
-			} else {
-				compressionType2 = nil
+		if r.Configuration.Format.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON.Compression != nil {
+			var destinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression *shared.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression
+			if r.Configuration.Format.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression != nil {
+				compressionType2 := new(shared.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType)
+				if !r.Configuration.Format.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression.CompressionType.IsUnknown() && !r.Configuration.Format.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression.CompressionType.IsNull() {
+					*compressionType2 = shared.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompressionCompressionType(r.Configuration.Format.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression.CompressionType.ValueString())
+				} else {
+					compressionType2 = nil
+				}
+				destinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression = &shared.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression{
+					CompressionType: compressionType2,
+				}
 			}
-			destinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression = &shared.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression{
-				CompressionType: compressionType2,
+			if destinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression != nil {
+				compression1 = &shared.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompression{
+					DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression: destinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression,
+				}
+			}
+			var destinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP *shared.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP
+			if r.Configuration.Format.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP != nil {
+				compressionType3 := new(shared.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType)
+				if !r.Configuration.Format.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP.CompressionType.IsUnknown() && !r.Configuration.Format.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP.CompressionType.IsNull() {
+					*compressionType3 = shared.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType(r.Configuration.Format.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP.CompressionType.ValueString())
+				} else {
+					compressionType3 = nil
+				}
+				destinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP = &shared.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP{
+					CompressionType: compressionType3,
+				}
+			}
+			if destinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP != nil {
+				compression1 = &shared.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompression{
+					DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP: destinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP,
+				}
 			}
 		}
-		if destinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression != nil {
-			compression1 = &shared.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompression{
-				DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression: destinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression,
-			}
-		}
-		var destinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP *shared.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP
-		if r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression != nil {
-			compressionType3 := new(shared.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType)
-			if !r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression.CompressionType.IsUnknown() && !r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression.CompressionType.IsNull() {
-				*compressionType3 = shared.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIPCompressionType(r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.Compression.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSONCompressionNoCompression.CompressionType.ValueString())
-			} else {
-				compressionType3 = nil
-			}
-			destinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP = &shared.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP{
-				CompressionType: compressionType3,
-			}
-		}
-		if destinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP != nil {
-			compression1 = &shared.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompression{
-				DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP: destinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONCompressionGZIP,
-			}
-		}
-		formatType2 := shared.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONFormatType(r.Configuration.Format.DestinationGcsOutputFormatJSONLinesNewlineDelimitedJSON.FormatType.ValueString())
+		formatType2 := shared.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSONFormatType(r.Configuration.Format.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON.FormatType.ValueString())
 		destinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON = &shared.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON{
 			Compression: compression1,
 			FormatType:  formatType2,
@@ -538,41 +574,41 @@ func (r *DestinationGcsResourceModel) ToUpdateSDKType() *shared.DestinationGcsPu
 		}
 	}
 	var destinationGcsUpdateOutputFormatParquetColumnarStorage *shared.DestinationGcsUpdateOutputFormatParquetColumnarStorage
-	if r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage != nil {
+	if r.Configuration.Format.DestinationGcsUpdateOutputFormatParquetColumnarStorage != nil {
 		blockSizeMb := new(int64)
-		if !r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.BlockSizeMb.IsUnknown() && !r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.BlockSizeMb.IsNull() {
-			*blockSizeMb = r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.BlockSizeMb.ValueInt64()
+		if !r.Configuration.Format.DestinationGcsUpdateOutputFormatParquetColumnarStorage.BlockSizeMb.IsUnknown() && !r.Configuration.Format.DestinationGcsUpdateOutputFormatParquetColumnarStorage.BlockSizeMb.IsNull() {
+			*blockSizeMb = r.Configuration.Format.DestinationGcsUpdateOutputFormatParquetColumnarStorage.BlockSizeMb.ValueInt64()
 		} else {
 			blockSizeMb = nil
 		}
 		compressionCodec1 := new(shared.DestinationGcsUpdateOutputFormatParquetColumnarStorageCompressionCodec)
-		if !r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.CompressionCodec.IsUnknown() && !r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.CompressionCodec.IsNull() {
-			*compressionCodec1 = shared.DestinationGcsUpdateOutputFormatParquetColumnarStorageCompressionCodec(r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.CompressionCodec.ValueString())
+		if !r.Configuration.Format.DestinationGcsUpdateOutputFormatParquetColumnarStorage.CompressionCodec.IsUnknown() && !r.Configuration.Format.DestinationGcsUpdateOutputFormatParquetColumnarStorage.CompressionCodec.IsNull() {
+			*compressionCodec1 = shared.DestinationGcsUpdateOutputFormatParquetColumnarStorageCompressionCodec(r.Configuration.Format.DestinationGcsUpdateOutputFormatParquetColumnarStorage.CompressionCodec.ValueString())
 		} else {
 			compressionCodec1 = nil
 		}
 		dictionaryEncoding := new(bool)
-		if !r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.DictionaryEncoding.IsUnknown() && !r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.DictionaryEncoding.IsNull() {
-			*dictionaryEncoding = r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.DictionaryEncoding.ValueBool()
+		if !r.Configuration.Format.DestinationGcsUpdateOutputFormatParquetColumnarStorage.DictionaryEncoding.IsUnknown() && !r.Configuration.Format.DestinationGcsUpdateOutputFormatParquetColumnarStorage.DictionaryEncoding.IsNull() {
+			*dictionaryEncoding = r.Configuration.Format.DestinationGcsUpdateOutputFormatParquetColumnarStorage.DictionaryEncoding.ValueBool()
 		} else {
 			dictionaryEncoding = nil
 		}
 		dictionaryPageSizeKb := new(int64)
-		if !r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.DictionaryPageSizeKb.IsUnknown() && !r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.DictionaryPageSizeKb.IsNull() {
-			*dictionaryPageSizeKb = r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.DictionaryPageSizeKb.ValueInt64()
+		if !r.Configuration.Format.DestinationGcsUpdateOutputFormatParquetColumnarStorage.DictionaryPageSizeKb.IsUnknown() && !r.Configuration.Format.DestinationGcsUpdateOutputFormatParquetColumnarStorage.DictionaryPageSizeKb.IsNull() {
+			*dictionaryPageSizeKb = r.Configuration.Format.DestinationGcsUpdateOutputFormatParquetColumnarStorage.DictionaryPageSizeKb.ValueInt64()
 		} else {
 			dictionaryPageSizeKb = nil
 		}
-		formatType3 := shared.DestinationGcsUpdateOutputFormatParquetColumnarStorageFormatType(r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.FormatType.ValueString())
+		formatType3 := shared.DestinationGcsUpdateOutputFormatParquetColumnarStorageFormatType(r.Configuration.Format.DestinationGcsUpdateOutputFormatParquetColumnarStorage.FormatType.ValueString())
 		maxPaddingSizeMb := new(int64)
-		if !r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.MaxPaddingSizeMb.IsUnknown() && !r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.MaxPaddingSizeMb.IsNull() {
-			*maxPaddingSizeMb = r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.MaxPaddingSizeMb.ValueInt64()
+		if !r.Configuration.Format.DestinationGcsUpdateOutputFormatParquetColumnarStorage.MaxPaddingSizeMb.IsUnknown() && !r.Configuration.Format.DestinationGcsUpdateOutputFormatParquetColumnarStorage.MaxPaddingSizeMb.IsNull() {
+			*maxPaddingSizeMb = r.Configuration.Format.DestinationGcsUpdateOutputFormatParquetColumnarStorage.MaxPaddingSizeMb.ValueInt64()
 		} else {
 			maxPaddingSizeMb = nil
 		}
 		pageSizeKb := new(int64)
-		if !r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.PageSizeKb.IsUnknown() && !r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.PageSizeKb.IsNull() {
-			*pageSizeKb = r.Configuration.Format.DestinationGcsOutputFormatParquetColumnarStorage.PageSizeKb.ValueInt64()
+		if !r.Configuration.Format.DestinationGcsUpdateOutputFormatParquetColumnarStorage.PageSizeKb.IsUnknown() && !r.Configuration.Format.DestinationGcsUpdateOutputFormatParquetColumnarStorage.PageSizeKb.IsNull() {
+			*pageSizeKb = r.Configuration.Format.DestinationGcsUpdateOutputFormatParquetColumnarStorage.PageSizeKb.ValueInt64()
 		} else {
 			pageSizeKb = nil
 		}

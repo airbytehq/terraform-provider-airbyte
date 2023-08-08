@@ -72,7 +72,7 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 												"api_token",
 											),
 										},
-										Description: `must be one of [api_token]`,
+										Description: `must be one of ["api_token"]`,
 									},
 									"email": schema.StringAttribute{
 										Required:    true,
@@ -102,7 +102,7 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 												"oauth2.0",
 											),
 										},
-										Description: `must be one of [oauth2.0]`,
+										Description: `must be one of ["oauth2.0"]`,
 									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
@@ -128,7 +128,7 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 												"api_token",
 											),
 										},
-										Description: `must be one of [api_token]`,
+										Description: `must be one of ["api_token"]`,
 									},
 									"email": schema.StringAttribute{
 										Required:    true,
@@ -158,7 +158,7 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 												"oauth2.0",
 											),
 										},
-										Description: `must be one of [oauth2.0]`,
+										Description: `must be one of ["oauth2.0"]`,
 									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
@@ -187,7 +187,7 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 								"zendesk-support",
 							),
 						},
-						Description: `must be one of [zendesk-support]`,
+						Description: `must be one of ["zendesk-support"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

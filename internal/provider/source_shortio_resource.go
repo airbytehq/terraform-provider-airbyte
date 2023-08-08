@@ -68,7 +68,7 @@ func (r *SourceShortioResource) Schema(ctx context.Context, req resource.SchemaR
 								"shortio",
 							),
 						},
-						Description: `must be one of [shortio]`,
+						Description: `must be one of ["shortio"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required:    true,

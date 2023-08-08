@@ -81,7 +81,7 @@ func (r *SourceSnapchatMarketingResource) Schema(ctx context.Context, req resour
 								"snapchat-marketing",
 							),
 						},
-						Description: `must be one of [snapchat-marketing]`,
+						Description: `must be one of ["snapchat-marketing"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Optional: true,

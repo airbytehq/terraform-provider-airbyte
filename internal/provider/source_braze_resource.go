@@ -66,7 +66,7 @@ func (r *SourceBrazeResource) Schema(ctx context.Context, req resource.SchemaReq
 								"braze",
 							),
 						},
-						Description: `must be one of [braze]`,
+						Description: `must be one of ["braze"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

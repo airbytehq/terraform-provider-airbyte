@@ -61,7 +61,7 @@ func (r *SourceTodoistResource) Schema(ctx context.Context, req resource.SchemaR
 								"todoist",
 							),
 						},
-						Description: `must be one of [todoist]`,
+						Description: `must be one of ["todoist"]`,
 					},
 					"token": schema.StringAttribute{
 						Required:    true,

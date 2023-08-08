@@ -68,7 +68,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 												"service_name",
 											),
 										},
-										Description: `must be one of [service_name]`,
+										Description: `must be one of ["service_name"]`,
 									},
 									"service_name": schema.StringAttribute{
 										Required: true,
@@ -86,7 +86,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 												"sid",
 											),
 										},
-										Description: `must be one of [sid]`,
+										Description: `must be one of ["sid"]`,
 									},
 									"sid": schema.StringAttribute{
 										Required: true,
@@ -104,7 +104,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 												"service_name",
 											),
 										},
-										Description: `must be one of [service_name]`,
+										Description: `must be one of ["service_name"]`,
 									},
 									"service_name": schema.StringAttribute{
 										Required: true,
@@ -122,7 +122,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 												"sid",
 											),
 										},
-										Description: `must be one of [sid]`,
+										Description: `must be one of ["sid"]`,
 									},
 									"sid": schema.StringAttribute{
 										Required: true,
@@ -151,7 +151,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 												"3DES168",
 											),
 										},
-										MarkdownDescription: `must be one of [AES256, RC4_56, 3DES168]` + "\n" +
+										MarkdownDescription: `must be one of ["AES256", "RC4_56", "3DES168"]` + "\n" +
 											`This parameter defines what encryption algorithm is used.`,
 									},
 									"encryption_method": schema.StringAttribute{
@@ -161,7 +161,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 												"client_nne",
 											),
 										},
-										Description: `must be one of [client_nne]`,
+										Description: `must be one of ["client_nne"]`,
 									},
 								},
 								Description: `The native network encryption gives you the ability to encrypt database connections, without the configuration overhead of TCP/IP and SSL/TLS and without the need to open and listen on different ports.`,
@@ -176,7 +176,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 												"encrypted_verify_certificate",
 											),
 										},
-										Description: `must be one of [encrypted_verify_certificate]`,
+										Description: `must be one of ["encrypted_verify_certificate"]`,
 									},
 									"ssl_certificate": schema.StringAttribute{
 										Required:    true,
@@ -197,7 +197,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 												"3DES168",
 											),
 										},
-										MarkdownDescription: `must be one of [AES256, RC4_56, 3DES168]` + "\n" +
+										MarkdownDescription: `must be one of ["AES256", "RC4_56", "3DES168"]` + "\n" +
 											`This parameter defines what encryption algorithm is used.`,
 									},
 									"encryption_method": schema.StringAttribute{
@@ -207,7 +207,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 												"client_nne",
 											),
 										},
-										Description: `must be one of [client_nne]`,
+										Description: `must be one of ["client_nne"]`,
 									},
 								},
 								Description: `The native network encryption gives you the ability to encrypt database connections, without the configuration overhead of TCP/IP and SSL/TLS and without the need to open and listen on different ports.`,
@@ -222,7 +222,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 												"encrypted_verify_certificate",
 											),
 										},
-										Description: `must be one of [encrypted_verify_certificate]`,
+										Description: `must be one of ["encrypted_verify_certificate"]`,
 									},
 									"ssl_certificate": schema.StringAttribute{
 										Required:    true,
@@ -268,7 +268,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 								"oracle",
 							),
 						},
-						Description: `must be one of [oracle]`,
+						Description: `must be one of ["oracle"]`,
 					},
 					"tunnel_method": schema.SingleNestedAttribute{
 						Optional: true,
@@ -283,7 +283,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 												"NO_TUNNEL",
 											),
 										},
-										MarkdownDescription: `must be one of [NO_TUNNEL]` + "\n" +
+										MarkdownDescription: `must be one of ["NO_TUNNEL"]` + "\n" +
 											`No ssh tunnel needed to connect to database`,
 									},
 								},
@@ -303,7 +303,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 												"SSH_PASSWORD_AUTH",
 											),
 										},
-										MarkdownDescription: `must be one of [SSH_PASSWORD_AUTH]` + "\n" +
+										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
 											`Connect through a jump server tunnel host using username and password authentication`,
 									},
 									"tunnel_port": schema.Int64Attribute{
@@ -339,7 +339,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 												"SSH_KEY_AUTH",
 											),
 										},
-										MarkdownDescription: `must be one of [SSH_KEY_AUTH]` + "\n" +
+										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
 											`Connect through a jump server tunnel host using username and ssh key`,
 									},
 									"tunnel_port": schema.Int64Attribute{
@@ -363,7 +363,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 												"NO_TUNNEL",
 											),
 										},
-										MarkdownDescription: `must be one of [NO_TUNNEL]` + "\n" +
+										MarkdownDescription: `must be one of ["NO_TUNNEL"]` + "\n" +
 											`No ssh tunnel needed to connect to database`,
 									},
 								},
@@ -383,7 +383,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 												"SSH_PASSWORD_AUTH",
 											),
 										},
-										MarkdownDescription: `must be one of [SSH_PASSWORD_AUTH]` + "\n" +
+										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
 											`Connect through a jump server tunnel host using username and password authentication`,
 									},
 									"tunnel_port": schema.Int64Attribute{
@@ -419,7 +419,7 @@ func (r *SourceOracleResource) Schema(ctx context.Context, req resource.SchemaRe
 												"SSH_KEY_AUTH",
 											),
 										},
-										MarkdownDescription: `must be one of [SSH_KEY_AUTH]` + "\n" +
+										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
 											`Connect through a jump server tunnel host using username and ssh key`,
 									},
 									"tunnel_port": schema.Int64Attribute{

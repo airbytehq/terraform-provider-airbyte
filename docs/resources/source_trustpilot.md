@@ -19,14 +19,17 @@ resource "airbyte_source_trustpilot" "my_source_trustpilot" {
       "...",
     ]
     credentials = {
-      auth_type = "apikey"
-      client_id = "...my_client_id..."
+      source_trustpilot_authorization_method_api_key = {
+        auth_type = "apikey"
+        client_id = "...my_client_id..."
+      }
     }
     source_type = "trustpilot"
     start_date  = "%Y-%m-%dT%H:%M:%S"
   }
-  name         = "Jesus Smith"
-  workspace_id = "a74c0252-fe3b-44b4-9b8b-778ebb6e1d2c"
+  name         = "Marco Hudson PhD"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "2cf502ba-fb2c-4bc4-a35d-5e65da028c3e"
 }
 ```
 
@@ -55,7 +58,7 @@ Required:
 
 - `business_units` (List of String) The names of business units which shall be synchronized. Some streams e.g. configured_business_units or private_reviews use this configuration.
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `source_type` (String) must be one of [trustpilot]
+- `source_type` (String) must be one of ["trustpilot"]
 - `start_date` (String) For streams with sync. method incremental the start date time to be used
 
 <a id="nestedatt--configuration--credentials"></a>
@@ -77,7 +80,7 @@ Required:
 
 Optional:
 
-- `auth_type` (String) must be one of [apikey]
+- `auth_type` (String) must be one of ["apikey"]
 
 
 <a id="nestedatt--configuration--credentials--source_trustpilot_authorization_method_o_auth_2_0"></a>
@@ -93,7 +96,7 @@ Required:
 
 Optional:
 
-- `auth_type` (String) must be one of [oauth2.0]
+- `auth_type` (String) must be one of ["oauth2.0"]
 
 
 <a id="nestedatt--configuration--credentials--source_trustpilot_update_authorization_method_api_key"></a>
@@ -105,7 +108,7 @@ Required:
 
 Optional:
 
-- `auth_type` (String) must be one of [apikey]
+- `auth_type` (String) must be one of ["apikey"]
 
 
 <a id="nestedatt--configuration--credentials--source_trustpilot_update_authorization_method_o_auth_2_0"></a>
@@ -121,6 +124,6 @@ Required:
 
 Optional:
 
-- `auth_type` (String) must be one of [oauth2.0]
+- `auth_type` (String) must be one of ["oauth2.0"]
 
 

@@ -17,13 +17,14 @@ resource "airbyte_source_freshcaller" "my_source_freshcaller" {
   configuration = {
     api_key             = "...my_api_key..."
     domain              = "snaptravel"
-    requests_per_minute = 4
+    requests_per_minute = 7
     source_type         = "freshcaller"
     start_date          = "2022-01-01T12:00:00Z"
-    sync_lag_minutes    = 4
+    sync_lag_minutes    = 9
   }
-  name         = "Mr. Roy Stehr I"
-  workspace_id = "55338cec-086f-4a21-a915-2cb3119167b8"
+  name         = "Keith Hills"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "b3119167-b8e3-4c8d-b034-08d6d364ffd4"
 }
 ```
 
@@ -52,7 +53,7 @@ Required:
 
 - `api_key` (String) Freshcaller API Key. See the <a href="https://docs.airbyte.com/integrations/sources/freshcaller">docs</a> for more information on how to obtain this key.
 - `domain` (String) Used to construct Base URL for the Freshcaller APIs
-- `source_type` (String) must be one of [freshcaller]
+- `source_type` (String) must be one of ["freshcaller"]
 - `start_date` (String) UTC date and time. Any data created after this date will be replicated.
 
 Optional:

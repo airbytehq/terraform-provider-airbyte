@@ -68,7 +68,7 @@ func (r *SourceRecreationResource) Schema(ctx context.Context, req resource.Sche
 								"recreation",
 							),
 						},
-						Description: `must be one of [recreation]`,
+						Description: `must be one of ["recreation"]`,
 					},
 				},
 			},

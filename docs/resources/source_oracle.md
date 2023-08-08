@@ -16,28 +16,35 @@ SourceOracle Resource
 resource "airbyte_source_oracle" "my_source_oracle" {
   configuration = {
     connection_data = {
-      connection_type = "service_name"
-      service_name    = "...my_service_name..."
+      source_oracle_connect_by_service_name = {
+        connection_type = "service_name"
+        service_name    = "...my_service_name..."
+      }
     }
     encryption = {
-      encryption_algorithm = "AES256"
-      encryption_method    = "client_nne"
+      source_oracle_encryption_native_network_encryption_nne_ = {
+        encryption_algorithm = "AES256"
+        encryption_method    = "client_nne"
+      }
     }
     host            = "...my_host..."
     jdbc_url_params = "...my_jdbc_url_params..."
     password        = "...my_password..."
-    port            = 6
+    port            = 2
     schemas = [
       "...",
     ]
     source_type = "oracle"
     tunnel_method = {
-      tunnel_method = "NO_TUNNEL"
+      source_oracle_ssh_tunnel_method_no_tunnel = {
+        tunnel_method = "NO_TUNNEL"
+      }
     }
-    username = "Jada.Runolfsson70"
+    username = "Gilda.Spencer"
   }
-  name         = "Angel Stokes"
-  workspace_id = "bce247b7-684e-4ff5-8126-d71cffbd0eb7"
+  name         = "Courtney Wiegand"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "0eb74b84-2195-43b4-8bd3-c43159d33e59"
 }
 ```
 
@@ -70,7 +77,7 @@ Required:
 Oracle Corporations recommends the following port numbers:
 1521 - Default listening port for client connections to the listener. 
 2484 - Recommended and officially registered listening port for client connections to the listener using TCP/IP with SSL
-- `source_type` (String) must be one of [oracle]
+- `source_type` (String) must be one of ["oracle"]
 - `username` (String) The username which is used to access the database.
 
 Optional:
@@ -96,11 +103,11 @@ Optional:
 
 Required:
 
-- `encryption_method` (String) must be one of [client_nne]
+- `encryption_method` (String) must be one of ["client_nne"]
 
 Optional:
 
-- `encryption_algorithm` (String) must be one of [AES256, RC4_56, 3DES168]
+- `encryption_algorithm` (String) must be one of ["AES256", "RC4_56", "3DES168"]
 This parameter defines what encryption algorithm is used.
 
 
@@ -109,7 +116,7 @@ This parameter defines what encryption algorithm is used.
 
 Required:
 
-- `encryption_method` (String) must be one of [encrypted_verify_certificate]
+- `encryption_method` (String) must be one of ["encrypted_verify_certificate"]
 - `ssl_certificate` (String) Privacy Enhanced Mail (PEM) files are concatenated certificate containers frequently used in certificate installations.
 
 
@@ -118,11 +125,11 @@ Required:
 
 Required:
 
-- `encryption_method` (String) must be one of [client_nne]
+- `encryption_method` (String) must be one of ["client_nne"]
 
 Optional:
 
-- `encryption_algorithm` (String) must be one of [AES256, RC4_56, 3DES168]
+- `encryption_algorithm` (String) must be one of ["AES256", "RC4_56", "3DES168"]
 This parameter defines what encryption algorithm is used.
 
 
@@ -131,7 +138,7 @@ This parameter defines what encryption algorithm is used.
 
 Required:
 
-- `encryption_method` (String) must be one of [encrypted_verify_certificate]
+- `encryption_method` (String) must be one of ["encrypted_verify_certificate"]
 - `ssl_certificate` (String) Privacy Enhanced Mail (PEM) files are concatenated certificate containers frequently used in certificate installations.
 
 
@@ -155,7 +162,7 @@ Required:
 
 Optional:
 
-- `connection_type` (String) must be one of [service_name]
+- `connection_type` (String) must be one of ["service_name"]
 
 
 <a id="nestedatt--configuration--connection_data--source_oracle_connect_by_system_id_sid"></a>
@@ -167,7 +174,7 @@ Required:
 
 Optional:
 
-- `connection_type` (String) must be one of [sid]
+- `connection_type` (String) must be one of ["sid"]
 
 
 <a id="nestedatt--configuration--connection_data--source_oracle_update_connect_by_service_name"></a>
@@ -179,7 +186,7 @@ Required:
 
 Optional:
 
-- `connection_type` (String) must be one of [service_name]
+- `connection_type` (String) must be one of ["service_name"]
 
 
 <a id="nestedatt--configuration--connection_data--source_oracle_update_connect_by_system_id_sid"></a>
@@ -191,7 +198,7 @@ Required:
 
 Optional:
 
-- `connection_type` (String) must be one of [sid]
+- `connection_type` (String) must be one of ["sid"]
 
 
 
@@ -212,7 +219,7 @@ Optional:
 
 Required:
 
-- `tunnel_method` (String) must be one of [NO_TUNNEL]
+- `tunnel_method` (String) must be one of ["NO_TUNNEL"]
 No ssh tunnel needed to connect to database
 
 
@@ -222,7 +229,7 @@ No ssh tunnel needed to connect to database
 Required:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of [SSH_PASSWORD_AUTH]
+- `tunnel_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
 Connect through a jump server tunnel host using username and password authentication
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
@@ -236,7 +243,7 @@ Required:
 
 - `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of [SSH_KEY_AUTH]
+- `tunnel_method` (String) must be one of ["SSH_KEY_AUTH"]
 Connect through a jump server tunnel host using username and ssh key
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host.
@@ -247,7 +254,7 @@ Connect through a jump server tunnel host using username and ssh key
 
 Required:
 
-- `tunnel_method` (String) must be one of [NO_TUNNEL]
+- `tunnel_method` (String) must be one of ["NO_TUNNEL"]
 No ssh tunnel needed to connect to database
 
 
@@ -257,7 +264,7 @@ No ssh tunnel needed to connect to database
 Required:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of [SSH_PASSWORD_AUTH]
+- `tunnel_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
 Connect through a jump server tunnel host using username and password authentication
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
@@ -271,7 +278,7 @@ Required:
 
 - `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of [SSH_KEY_AUTH]
+- `tunnel_method` (String) must be one of ["SSH_KEY_AUTH"]
 Connect through a jump server tunnel host using username and ssh key
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host.

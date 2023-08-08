@@ -65,7 +65,7 @@ func (r *DestinationMssqlResource) Schema(ctx context.Context, req resource.Sche
 								"mssql",
 							),
 						},
-						Description: `must be one of [mssql]`,
+						Description: `must be one of ["mssql"]`,
 					},
 					"host": schema.StringAttribute{
 						Required:    true,
@@ -100,7 +100,7 @@ func (r *DestinationMssqlResource) Schema(ctx context.Context, req resource.Sche
 												"encrypted_trust_server_certificate",
 											),
 										},
-										Description: `must be one of [encrypted_trust_server_certificate]`,
+										Description: `must be one of ["encrypted_trust_server_certificate"]`,
 									},
 								},
 								Description: `Use the certificate provided by the server without verification. (For testing purposes only!)`,
@@ -119,7 +119,7 @@ func (r *DestinationMssqlResource) Schema(ctx context.Context, req resource.Sche
 												"encrypted_verify_certificate",
 											),
 										},
-										Description: `must be one of [encrypted_verify_certificate]`,
+										Description: `must be one of ["encrypted_verify_certificate"]`,
 									},
 								},
 								Description: `Verify and use the certificate provided by the server.`,
@@ -134,7 +134,7 @@ func (r *DestinationMssqlResource) Schema(ctx context.Context, req resource.Sche
 												"encrypted_trust_server_certificate",
 											),
 										},
-										Description: `must be one of [encrypted_trust_server_certificate]`,
+										Description: `must be one of ["encrypted_trust_server_certificate"]`,
 									},
 								},
 								Description: `Use the certificate provided by the server without verification. (For testing purposes only!)`,
@@ -153,7 +153,7 @@ func (r *DestinationMssqlResource) Schema(ctx context.Context, req resource.Sche
 												"encrypted_verify_certificate",
 											),
 										},
-										Description: `must be one of [encrypted_verify_certificate]`,
+										Description: `must be one of ["encrypted_verify_certificate"]`,
 									},
 								},
 								Description: `Verify and use the certificate provided by the server.`,
@@ -177,7 +177,7 @@ func (r *DestinationMssqlResource) Schema(ctx context.Context, req resource.Sche
 												"NO_TUNNEL",
 											),
 										},
-										MarkdownDescription: `must be one of [NO_TUNNEL]` + "\n" +
+										MarkdownDescription: `must be one of ["NO_TUNNEL"]` + "\n" +
 											`No ssh tunnel needed to connect to database`,
 									},
 								},
@@ -197,7 +197,7 @@ func (r *DestinationMssqlResource) Schema(ctx context.Context, req resource.Sche
 												"SSH_PASSWORD_AUTH",
 											),
 										},
-										MarkdownDescription: `must be one of [SSH_PASSWORD_AUTH]` + "\n" +
+										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
 											`Connect through a jump server tunnel host using username and password authentication`,
 									},
 									"tunnel_port": schema.Int64Attribute{
@@ -233,7 +233,7 @@ func (r *DestinationMssqlResource) Schema(ctx context.Context, req resource.Sche
 												"SSH_KEY_AUTH",
 											),
 										},
-										MarkdownDescription: `must be one of [SSH_KEY_AUTH]` + "\n" +
+										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
 											`Connect through a jump server tunnel host using username and ssh key`,
 									},
 									"tunnel_port": schema.Int64Attribute{
@@ -257,7 +257,7 @@ func (r *DestinationMssqlResource) Schema(ctx context.Context, req resource.Sche
 												"NO_TUNNEL",
 											),
 										},
-										MarkdownDescription: `must be one of [NO_TUNNEL]` + "\n" +
+										MarkdownDescription: `must be one of ["NO_TUNNEL"]` + "\n" +
 											`No ssh tunnel needed to connect to database`,
 									},
 								},
@@ -277,7 +277,7 @@ func (r *DestinationMssqlResource) Schema(ctx context.Context, req resource.Sche
 												"SSH_PASSWORD_AUTH",
 											),
 										},
-										MarkdownDescription: `must be one of [SSH_PASSWORD_AUTH]` + "\n" +
+										MarkdownDescription: `must be one of ["SSH_PASSWORD_AUTH"]` + "\n" +
 											`Connect through a jump server tunnel host using username and password authentication`,
 									},
 									"tunnel_port": schema.Int64Attribute{
@@ -313,7 +313,7 @@ func (r *DestinationMssqlResource) Schema(ctx context.Context, req resource.Sche
 												"SSH_KEY_AUTH",
 											),
 										},
-										MarkdownDescription: `must be one of [SSH_KEY_AUTH]` + "\n" +
+										MarkdownDescription: `must be one of ["SSH_KEY_AUTH"]` + "\n" +
 											`Connect through a jump server tunnel host using username and ssh key`,
 									},
 									"tunnel_port": schema.Int64Attribute{

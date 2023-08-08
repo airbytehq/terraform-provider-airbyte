@@ -65,7 +65,7 @@ func (r *SourceHubplannerResource) Schema(ctx context.Context, req resource.Sche
 								"hubplanner",
 							),
 						},
-						Description: `must be one of [hubplanner]`,
+						Description: `must be one of ["hubplanner"]`,
 					},
 				},
 			},

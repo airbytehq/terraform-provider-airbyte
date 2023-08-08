@@ -20,8 +20,9 @@ resource "airbyte_source_confluence" "my_source_confluence" {
     email       = "abc@example.com"
     source_type = "confluence"
   }
-  name         = "Byron Ledner"
-  workspace_id = "bdfc4ccc-a99b-4c7f-80b2-dce10873e42b"
+  name         = "Edward Roberts"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "ce10873e-42b0-406d-a788-78ba8581a582"
 }
 ```
 
@@ -51,6 +52,6 @@ Required:
 - `api_token` (String) Please follow the Jira confluence for generating an API token: <a href="https://support.atlassian.com/atlassian-account/docs/manage-api-tokens-for-your-atlassian-account/">generating an API token</a>.
 - `domain_name` (String) Your Confluence domain name
 - `email` (String) Your Confluence login email
-- `source_type` (String) must be one of [confluence]
+- `source_type` (String) must be one of ["confluence"]
 
 

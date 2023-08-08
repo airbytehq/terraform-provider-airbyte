@@ -66,7 +66,7 @@ func (r *SourceCloseComResource) Schema(ctx context.Context, req resource.Schema
 								"close-com",
 							),
 						},
-						Description: `must be one of [close-com]`,
+						Description: `must be one of ["close-com"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Optional: true,

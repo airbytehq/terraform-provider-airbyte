@@ -72,7 +72,7 @@ func (r *SourceSnowflakeResource) Schema(ctx context.Context, req resource.Schem
 												"OAuth",
 											),
 										},
-										Description: `must be one of [OAuth]`,
+										Description: `must be one of ["OAuth"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -98,7 +98,7 @@ func (r *SourceSnowflakeResource) Schema(ctx context.Context, req resource.Schem
 												"username/password",
 											),
 										},
-										Description: `must be one of [username/password]`,
+										Description: `must be one of ["username/password"]`,
 									},
 									"password": schema.StringAttribute{
 										Required:    true,
@@ -124,7 +124,7 @@ func (r *SourceSnowflakeResource) Schema(ctx context.Context, req resource.Schem
 												"OAuth",
 											),
 										},
-										Description: `must be one of [OAuth]`,
+										Description: `must be one of ["OAuth"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -150,7 +150,7 @@ func (r *SourceSnowflakeResource) Schema(ctx context.Context, req resource.Schem
 												"username/password",
 											),
 										},
-										Description: `must be one of [username/password]`,
+										Description: `must be one of ["username/password"]`,
 									},
 									"password": schema.StringAttribute{
 										Required:    true,
@@ -194,7 +194,7 @@ func (r *SourceSnowflakeResource) Schema(ctx context.Context, req resource.Schem
 								"snowflake",
 							),
 						},
-						Description: `must be one of [snowflake]`,
+						Description: `must be one of ["snowflake"]`,
 					},
 					"warehouse": schema.StringAttribute{
 						Required:    true,

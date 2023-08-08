@@ -74,7 +74,7 @@ func (r *SourceExchangeRatesResource) Schema(ctx context.Context, req resource.S
 								"exchange-rates",
 							),
 						},
-						Description: `must be one of [exchange-rates]`,
+						Description: `must be one of ["exchange-rates"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

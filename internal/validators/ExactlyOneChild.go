@@ -15,6 +15,10 @@ type exactlyOneChild struct {
 }
 
 func (validator exactlyOneChild) ValidateObject(ctx context.Context, req validator.ObjectRequest, resp *validator.ObjectResponse) {
+	// Only validate the attribute configuration value if it is known.
+	if req.ConfigValue.IsNull() || req.ConfigValue.IsUnknown() {
+		return
+	}
 	defined := make(map[string]bool)
 	count := 0
 	for key, attr := range req.ConfigValue.Attributes() {

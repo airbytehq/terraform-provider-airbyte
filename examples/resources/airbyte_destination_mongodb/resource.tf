@@ -1,20 +1,26 @@
 resource "airbyte_destination_mongodb" "my_destination_mongodb" {
   configuration = {
     auth_type = {
-      authorization = "login/password"
-      password      = "...my_password..."
-      username      = "Garland_Hane23"
+      destination_mongodb_authorization_type_login_password = {
+        authorization = "login/password"
+        password      = "...my_password..."
+        username      = "Jimmy.Luettgen63"
+      }
     }
     database         = "...my_database..."
     destination_type = "mongodb"
     instance_type = {
-      cluster_url = "...my_cluster_url..."
-      instance    = "atlas"
+      destination_mongodb_mongo_db_instance_type_mongo_db_atlas = {
+        cluster_url = "...my_cluster_url..."
+        instance    = "atlas"
+      }
     }
     tunnel_method = {
-      tunnel_method = "NO_TUNNEL"
+      destination_mongodb_ssh_tunnel_method_no_tunnel = {
+        tunnel_method = "NO_TUNNEL"
+      }
     }
   }
-  name         = "Ernest Labadie"
-  workspace_id = "4ed53b88-f3a8-4d8f-9c0b-2f2fb7b194a2"
+  name         = "Dewey Leannon"
+  workspace_id = "c0b2f2fb-7b19-44a2-b6b2-6916fe1f08f4"
 }

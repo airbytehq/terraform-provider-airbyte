@@ -74,7 +74,7 @@ func (r *SourceTwilioResource) Schema(ctx context.Context, req resource.SchemaRe
 								"twilio",
 							),
 						},
-						Description: `must be one of [twilio]`,
+						Description: `must be one of ["twilio"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

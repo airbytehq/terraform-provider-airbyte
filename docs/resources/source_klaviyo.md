@@ -19,8 +19,9 @@ resource "airbyte_source_klaviyo" "my_source_klaviyo" {
     source_type = "klaviyo"
     start_date  = "2017-01-25T00:00:00Z"
   }
-  name         = "Mr. Nellie Reichert"
-  workspace_id = "fdd78862-4189-4eb4-8873-f5033f19dbf1"
+  name         = "Alvin Bartoletti"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "f19dbf12-5ce4-4152-aab9-cd7e5224a6a0"
 }
 ```
 
@@ -48,7 +49,7 @@ resource "airbyte_source_klaviyo" "my_source_klaviyo" {
 Required:
 
 - `api_key` (String) Klaviyo API Key. See our <a href="https://docs.airbyte.com/integrations/sources/klaviyo">docs</a> if you need help finding this key.
-- `source_type` (String) must be one of [klaviyo]
+- `source_type` (String) must be one of ["klaviyo"]
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 
 

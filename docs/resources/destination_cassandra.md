@@ -20,12 +20,12 @@ resource "airbyte_destination_cassandra" "my_destination_cassandra" {
     destination_type = "cassandra"
     keyspace         = "...my_keyspace..."
     password         = "...my_password..."
-    port             = 6
-    replication      = 6
-    username         = "Kiley_Bartoletti"
+    port             = 9
+    replication      = 2
+    username         = "Rachel.Lind10"
   }
-  name         = "Tommy Kemmer"
-  workspace_id = "2516fe4c-8b71-41e5-b7fd-2ed028921cdd"
+  name         = "Elvira Herman"
+  workspace_id = "fd2ed028-921c-4ddc-a926-01fb576b0d5f"
 }
 ```
 
@@ -49,7 +49,7 @@ resource "airbyte_destination_cassandra" "my_destination_cassandra" {
 Required:
 
 - `address` (String) Address to connect to.
-- `destination_type` (String) must be one of [cassandra]
+- `destination_type` (String) must be one of ["cassandra"]
 - `keyspace` (String) Default Cassandra keyspace to create data in.
 - `password` (String) Password associated with Cassandra.
 - `port` (Number) Port of Cassandra.

@@ -11,7 +11,7 @@ func (r *SourceCoinmarketcapResourceModel) ToCreateSDKType() *shared.SourceCoinm
 	apiKey := r.Configuration.APIKey.ValueString()
 	dataType := shared.SourceCoinmarketcapDataType(r.Configuration.DataType.ValueString())
 	sourceType := shared.SourceCoinmarketcapCoinmarketcap(r.Configuration.SourceType.ValueString())
-	symbols := make([]string, 0)
+	var symbols []string = nil
 	for _, symbolsItem := range r.Configuration.Symbols {
 		symbols = append(symbols, symbolsItem.ValueString())
 	}
@@ -46,7 +46,7 @@ func (r *SourceCoinmarketcapResourceModel) ToGetSDKType() *shared.SourceCoinmark
 func (r *SourceCoinmarketcapResourceModel) ToUpdateSDKType() *shared.SourceCoinmarketcapPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	dataType := shared.SourceCoinmarketcapUpdateDataType(r.Configuration.DataType.ValueString())
-	symbols := make([]string, 0)
+	var symbols []string = nil
 	for _, symbolsItem := range r.Configuration.Symbols {
 		symbols = append(symbols, symbolsItem.ValueString())
 	}

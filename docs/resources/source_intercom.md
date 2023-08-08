@@ -19,8 +19,9 @@ resource "airbyte_source_intercom" "my_source_intercom" {
     source_type  = "intercom"
     start_date   = "2020-11-16T00:00:00Z"
   }
-  name         = "Bobbie Rosenbaum"
-  workspace_id = "ba998678-fa3f-4696-991a-f388ce036144"
+  name         = "Randal Fadel"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "ce036144-48c7-4977-a0ef-2f536028efee"
 }
 ```
 
@@ -48,7 +49,7 @@ resource "airbyte_source_intercom" "my_source_intercom" {
 Required:
 
 - `access_token` (String) Access token for making authenticated requests. See the <a href="https://developers.intercom.com/building-apps/docs/authentication-types#how-to-get-your-access-token">Intercom docs</a> for more information.
-- `source_type` (String) must be one of [intercom]
+- `source_type` (String) must be one of ["intercom"]
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 
 

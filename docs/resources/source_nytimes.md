@@ -20,10 +20,11 @@ resource "airbyte_source_nytimes" "my_source_nytimes" {
     period      = "1"
     share_type  = "facebook"
     source_type = "nytimes"
-    start_date  = "1851-01"
+    start_date  = "2022-08"
   }
-  name         = "Allen Grant"
-  workspace_id = "dfa4a197-f6de-4922-951f-e1712099853e"
+  name         = "Mr. Willie Kirlin V"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "9853e9f5-43d8-4544-b9ee-224460443bc1"
 }
 ```
 
@@ -51,15 +52,15 @@ resource "airbyte_source_nytimes" "my_source_nytimes" {
 Required:
 
 - `api_key` (String) API Key
-- `period` (Number) must be one of [1, 7, 30]
+- `period` (Number) must be one of ["1", "7", "30"]
 Period of time (in days)
-- `source_type` (String) must be one of [nytimes]
+- `source_type` (String) must be one of ["nytimes"]
 - `start_date` (String) Start date to begin the article retrieval (format YYYY-MM)
 
 Optional:
 
 - `end_date` (String) End date to stop the article retrieval (format YYYY-MM)
-- `share_type` (String) must be one of [facebook]
+- `share_type` (String) must be one of ["facebook"]
 Share Type
 
 

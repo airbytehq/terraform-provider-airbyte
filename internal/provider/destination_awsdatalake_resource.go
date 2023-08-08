@@ -79,7 +79,7 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 												"IAM Role",
 											),
 										},
-										MarkdownDescription: `must be one of [IAM Role]` + "\n" +
+										MarkdownDescription: `must be one of ["IAM Role"]` + "\n" +
 											`Name of the credentials`,
 									},
 									"role_arn": schema.StringAttribute{
@@ -107,7 +107,7 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 												"IAM User",
 											),
 										},
-										MarkdownDescription: `must be one of [IAM User]` + "\n" +
+										MarkdownDescription: `must be one of ["IAM User"]` + "\n" +
 											`Name of the credentials`,
 									},
 								},
@@ -123,7 +123,7 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 												"IAM Role",
 											),
 										},
-										MarkdownDescription: `must be one of [IAM Role]` + "\n" +
+										MarkdownDescription: `must be one of ["IAM Role"]` + "\n" +
 											`Name of the credentials`,
 									},
 									"role_arn": schema.StringAttribute{
@@ -151,7 +151,7 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 												"IAM User",
 											),
 										},
-										MarkdownDescription: `must be one of [IAM User]` + "\n" +
+										MarkdownDescription: `must be one of ["IAM User"]` + "\n" +
 											`Name of the credentials`,
 									},
 								},
@@ -170,7 +170,7 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 								"aws-datalake",
 							),
 						},
-						Description: `must be one of [aws-datalake]`,
+						Description: `must be one of ["aws-datalake"]`,
 					},
 					"format": schema.SingleNestedAttribute{
 						Optional: true,
@@ -186,7 +186,7 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 												"GZIP",
 											),
 										},
-										MarkdownDescription: `must be one of [UNCOMPRESSED, GZIP]` + "\n" +
+										MarkdownDescription: `must be one of ["UNCOMPRESSED", "GZIP"]` + "\n" +
 											`The compression algorithm used to compress data.`,
 									},
 									"format_type": schema.StringAttribute{
@@ -196,7 +196,7 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 												"JSONL",
 											),
 										},
-										Description: `must be one of [JSONL]`,
+										Description: `must be one of ["JSONL"]`,
 									},
 								},
 								Description: `Format of the data output.`,
@@ -214,7 +214,7 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 												"ZSTD",
 											),
 										},
-										MarkdownDescription: `must be one of [UNCOMPRESSED, SNAPPY, GZIP, ZSTD]` + "\n" +
+										MarkdownDescription: `must be one of ["UNCOMPRESSED", "SNAPPY", "GZIP", "ZSTD"]` + "\n" +
 											`The compression algorithm used to compress data.`,
 									},
 									"format_type": schema.StringAttribute{
@@ -224,7 +224,7 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 												"Parquet",
 											),
 										},
-										Description: `must be one of [Parquet]`,
+										Description: `must be one of ["Parquet"]`,
 									},
 								},
 								Description: `Format of the data output.`,
@@ -240,7 +240,7 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 												"GZIP",
 											),
 										},
-										MarkdownDescription: `must be one of [UNCOMPRESSED, GZIP]` + "\n" +
+										MarkdownDescription: `must be one of ["UNCOMPRESSED", "GZIP"]` + "\n" +
 											`The compression algorithm used to compress data.`,
 									},
 									"format_type": schema.StringAttribute{
@@ -250,7 +250,7 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 												"JSONL",
 											),
 										},
-										Description: `must be one of [JSONL]`,
+										Description: `must be one of ["JSONL"]`,
 									},
 								},
 								Description: `Format of the data output.`,
@@ -268,7 +268,7 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 												"ZSTD",
 											),
 										},
-										MarkdownDescription: `must be one of [UNCOMPRESSED, SNAPPY, GZIP, ZSTD]` + "\n" +
+										MarkdownDescription: `must be one of ["UNCOMPRESSED", "SNAPPY", "GZIP", "ZSTD"]` + "\n" +
 											`The compression algorithm used to compress data.`,
 									},
 									"format_type": schema.StringAttribute{
@@ -278,7 +278,7 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 												"Parquet",
 											),
 										},
-										Description: `must be one of [Parquet]`,
+										Description: `must be one of ["Parquet"]`,
 									},
 								},
 								Description: `Format of the data output.`,
@@ -322,7 +322,7 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 								"YEAR/MONTH/DAY",
 							),
 						},
-						MarkdownDescription: `must be one of [NO PARTITIONING, DATE, YEAR, MONTH, DAY, YEAR/MONTH, YEAR/MONTH/DAY]` + "\n" +
+						MarkdownDescription: `must be one of ["NO PARTITIONING", "DATE", "YEAR", "MONTH", "DAY", "YEAR/MONTH", "YEAR/MONTH/DAY"]` + "\n" +
 							`Partition data by cursor fields when a cursor field is a date`,
 					},
 					"region": schema.StringAttribute{
@@ -357,7 +357,7 @@ func (r *DestinationAwsDatalakeResource) Schema(ctx context.Context, req resourc
 								"us-gov-west-1",
 							),
 						},
-						MarkdownDescription: `must be one of [, us-east-1, us-east-2, us-west-1, us-west-2, af-south-1, ap-east-1, ap-south-1, ap-northeast-1, ap-northeast-2, ap-northeast-3, ap-southeast-1, ap-southeast-2, ca-central-1, cn-north-1, cn-northwest-1, eu-central-1, eu-north-1, eu-south-1, eu-west-1, eu-west-2, eu-west-3, sa-east-1, me-south-1, us-gov-east-1, us-gov-west-1]` + "\n" +
+						MarkdownDescription: `must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1", "us-gov-east-1", "us-gov-west-1"]` + "\n" +
 							`The region of the S3 bucket. See <a href="https://docs.aws.amazon.com/AWSEC2/latest/UserGuide/using-regions-availability-zones.html#concepts-available-regions">here</a> for all region codes.`,
 					},
 				},

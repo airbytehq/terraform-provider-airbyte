@@ -65,7 +65,7 @@ func (r *SourceDockerhubResource) Schema(ctx context.Context, req resource.Schem
 								"dockerhub",
 							),
 						},
-						Description: `must be one of [dockerhub]`,
+						Description: `must be one of ["dockerhub"]`,
 					},
 				},
 			},

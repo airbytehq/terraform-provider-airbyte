@@ -20,8 +20,9 @@ resource "airbyte_source_posthog" "my_source_posthog" {
     source_type = "posthog"
     start_date  = "2021-01-01T00:00:00Z"
   }
-  name         = "Doyle Bradtke Sr."
-  workspace_id = "216ce223-9e8f-425c-90d1-9d959f439e39"
+  name         = "Ada Tromp"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "266cbd95-f7aa-42b2-8113-695d1e6698fc"
 }
 ```
 
@@ -49,7 +50,7 @@ resource "airbyte_source_posthog" "my_source_posthog" {
 Required:
 
 - `api_key` (String) API Key. See the <a href="https://docs.airbyte.com/integrations/sources/posthog">docs</a> for information on how to generate this key.
-- `source_type` (String) must be one of [posthog]
+- `source_type` (String) must be one of ["posthog"]
 - `start_date` (String) The date from which you'd like to replicate the data. Any data before this date will not be replicated.
 
 Optional:

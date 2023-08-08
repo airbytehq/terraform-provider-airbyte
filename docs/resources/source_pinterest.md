@@ -16,17 +16,20 @@ SourcePinterest Resource
 resource "airbyte_source_pinterest" "my_source_pinterest" {
   configuration = {
     credentials = {
-      access_token = "...my_access_token..."
-      auth_method  = "access_token"
+      source_pinterest_authorization_method_access_token = {
+        access_token = "...my_access_token..."
+        auth_method  = "access_token"
+      }
     }
     source_type = "pinterest"
     start_date  = "2022-07-28"
     status = [
-      "ACTIVE",
+      "ARCHIVED",
     ]
   }
-  name         = "Myra Bernier"
-  workspace_id = "1f29042f-569b-47af-b0ea-2216cbe071bc"
+  name         = "Miss Larry Kunde"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "163e279a-3b08-44da-9925-7d04f40847a7"
 }
 ```
 
@@ -53,7 +56,7 @@ resource "airbyte_source_pinterest" "my_source_pinterest" {
 
 Required:
 
-- `source_type` (String) must be one of [pinterest]
+- `source_type` (String) must be one of ["pinterest"]
 - `start_date` (String) A date in the format YYYY-MM-DD. If you have not set a date, it would be defaulted to latest allowed date by api (89 days from today).
 
 Optional:
@@ -77,7 +80,7 @@ Optional:
 Required:
 
 - `access_token` (String) The Access Token to make authenticated requests.
-- `auth_method` (String) must be one of [access_token]
+- `auth_method` (String) must be one of ["access_token"]
 
 
 <a id="nestedatt--configuration--credentials--source_pinterest_authorization_method_o_auth2_0"></a>
@@ -85,7 +88,7 @@ Required:
 
 Required:
 
-- `auth_method` (String) must be one of [oauth2.0]
+- `auth_method` (String) must be one of ["oauth2.0"]
 - `refresh_token` (String) Refresh Token to obtain new Access Token, when it's expired.
 
 Optional:
@@ -100,7 +103,7 @@ Optional:
 Required:
 
 - `access_token` (String) The Access Token to make authenticated requests.
-- `auth_method` (String) must be one of [access_token]
+- `auth_method` (String) must be one of ["access_token"]
 
 
 <a id="nestedatt--configuration--credentials--source_pinterest_update_authorization_method_o_auth2_0"></a>
@@ -108,7 +111,7 @@ Required:
 
 Required:
 
-- `auth_method` (String) must be one of [oauth2.0]
+- `auth_method` (String) must be one of ["oauth2.0"]
 - `refresh_token` (String) Refresh Token to obtain new Access Token, when it's expired.
 
 Optional:

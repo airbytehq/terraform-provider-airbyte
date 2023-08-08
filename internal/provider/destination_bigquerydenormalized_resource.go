@@ -112,7 +112,7 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 								"us-west4",
 							),
 						},
-						MarkdownDescription: `must be one of [US, EU, asia-east1, asia-east2, asia-northeast1, asia-northeast2, asia-northeast3, asia-south1, asia-south2, asia-southeast1, asia-southeast2, australia-southeast1, australia-southeast2, europe-central1, europe-central2, europe-north1, europe-southwest1, europe-west1, europe-west2, europe-west3, europe-west4, europe-west6, europe-west7, europe-west8, europe-west9, me-west1, northamerica-northeast1, northamerica-northeast2, southamerica-east1, southamerica-west1, us-central1, us-east1, us-east2, us-east3, us-east4, us-east5, us-west1, us-west2, us-west3, us-west4]` + "\n" +
+						MarkdownDescription: `must be one of ["US", "EU", "asia-east1", "asia-east2", "asia-northeast1", "asia-northeast2", "asia-northeast3", "asia-south1", "asia-south2", "asia-southeast1", "asia-southeast2", "australia-southeast1", "australia-southeast2", "europe-central1", "europe-central2", "europe-north1", "europe-southwest1", "europe-west1", "europe-west2", "europe-west3", "europe-west4", "europe-west6", "europe-west7", "europe-west8", "europe-west9", "me-west1", "northamerica-northeast1", "northamerica-northeast2", "southamerica-east1", "southamerica-west1", "us-central1", "us-east1", "us-east2", "us-east3", "us-east4", "us-east5", "us-west1", "us-west2", "us-west3", "us-west4"]` + "\n" +
 							`The location of the dataset. Warning: Changes made after creation will not be applied. The default "US" value is used if not set explicitly. Read more <a href="https://cloud.google.com/bigquery/docs/locations">here</a>.`,
 					},
 					"destination_type": schema.StringAttribute{
@@ -122,7 +122,7 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 								"bigquery-denormalized",
 							),
 						},
-						Description: `must be one of [bigquery-denormalized]`,
+						Description: `must be one of ["bigquery-denormalized"]`,
 					},
 					"loading_method": schema.SingleNestedAttribute{
 						Optional: true,
@@ -143,7 +143,7 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 																"HMAC_KEY",
 															),
 														},
-														Description: `must be one of [HMAC_KEY]`,
+														Description: `must be one of ["HMAC_KEY"]`,
 													},
 													"hmac_key_access_id": schema.StringAttribute{
 														Required:    true,
@@ -182,7 +182,7 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 												"Keep all tmp files in GCS",
 											),
 										},
-										MarkdownDescription: `must be one of [Delete all tmp files from GCS, Keep all tmp files in GCS]` + "\n" +
+										MarkdownDescription: `must be one of ["Delete all tmp files from GCS", "Keep all tmp files in GCS"]` + "\n" +
 											`This upload method is supposed to temporary store records in GCS bucket. By this select you can chose if these records should be removed from GCS when migration has finished. The default "Delete all tmp files from GCS" value is used if not set explicitly.`,
 									},
 									"method": schema.StringAttribute{
@@ -192,7 +192,7 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 												"GCS Staging",
 											),
 										},
-										Description: `must be one of [GCS Staging]`,
+										Description: `must be one of ["GCS Staging"]`,
 									},
 								},
 								Description: `Loading method used to send select the way data will be uploaded to BigQuery. <br/><b>Standard Inserts</b> - Direct uploading using SQL INSERT statements. This method is extremely inefficient and provided only for quick testing. In almost all cases, you should use staging. <br/><b>GCS Staging</b> - Writes large batches of records to a file, uploads the file to GCS, then uses <b>COPY INTO table</b> to upload the file. Recommended for most workloads for better speed and scalability. Read more about GCS Staging <a href="https://docs.airbyte.com/integrations/destinations/bigquery#gcs-staging">here</a>.`,
@@ -207,7 +207,7 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 												"Standard",
 											),
 										},
-										Description: `must be one of [Standard]`,
+										Description: `must be one of ["Standard"]`,
 									},
 								},
 								Description: `Loading method used to send select the way data will be uploaded to BigQuery. <br/><b>Standard Inserts</b> - Direct uploading using SQL INSERT statements. This method is extremely inefficient and provided only for quick testing. In almost all cases, you should use staging. <br/><b>GCS Staging</b> - Writes large batches of records to a file, uploads the file to GCS, then uses <b>COPY INTO table</b> to upload the file. Recommended for most workloads for better speed and scalability. Read more about GCS Staging <a href="https://docs.airbyte.com/integrations/destinations/bigquery#gcs-staging">here</a>.`,
@@ -228,7 +228,7 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 																"HMAC_KEY",
 															),
 														},
-														Description: `must be one of [HMAC_KEY]`,
+														Description: `must be one of ["HMAC_KEY"]`,
 													},
 													"hmac_key_access_id": schema.StringAttribute{
 														Required:    true,
@@ -267,7 +267,7 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 												"Keep all tmp files in GCS",
 											),
 										},
-										MarkdownDescription: `must be one of [Delete all tmp files from GCS, Keep all tmp files in GCS]` + "\n" +
+										MarkdownDescription: `must be one of ["Delete all tmp files from GCS", "Keep all tmp files in GCS"]` + "\n" +
 											`This upload method is supposed to temporary store records in GCS bucket. By this select you can chose if these records should be removed from GCS when migration has finished. The default "Delete all tmp files from GCS" value is used if not set explicitly.`,
 									},
 									"method": schema.StringAttribute{
@@ -277,7 +277,7 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 												"GCS Staging",
 											),
 										},
-										Description: `must be one of [GCS Staging]`,
+										Description: `must be one of ["GCS Staging"]`,
 									},
 								},
 								Description: `Loading method used to send select the way data will be uploaded to BigQuery. <br/><b>Standard Inserts</b> - Direct uploading using SQL INSERT statements. This method is extremely inefficient and provided only for quick testing. In almost all cases, you should use staging. <br/><b>GCS Staging</b> - Writes large batches of records to a file, uploads the file to GCS, then uses <b>COPY INTO table</b> to upload the file. Recommended for most workloads for better speed and scalability. Read more about GCS Staging <a href="https://docs.airbyte.com/integrations/destinations/bigquery#gcs-staging">here</a>.`,
@@ -292,7 +292,7 @@ func (r *DestinationBigqueryDenormalizedResource) Schema(ctx context.Context, re
 												"Standard",
 											),
 										},
-										Description: `must be one of [Standard]`,
+										Description: `must be one of ["Standard"]`,
 									},
 								},
 								Description: `Loading method used to send select the way data will be uploaded to BigQuery. <br/><b>Standard Inserts</b> - Direct uploading using SQL INSERT statements. This method is extremely inefficient and provided only for quick testing. In almost all cases, you should use staging. <br/><b>GCS Staging</b> - Writes large batches of records to a file, uploads the file to GCS, then uses <b>COPY INTO table</b> to upload the file. Recommended for most workloads for better speed and scalability. Read more about GCS Staging <a href="https://docs.airbyte.com/integrations/destinations/bigquery#gcs-staging">here</a>.`,

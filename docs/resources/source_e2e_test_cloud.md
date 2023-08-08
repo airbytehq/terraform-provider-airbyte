@@ -15,18 +15,21 @@ SourceE2eTestCloud Resource
 ```terraform
 resource "airbyte_source_e2e_test_cloud" "my_source_e2etestcloud" {
   configuration = {
-    max_messages        = 3
-    message_interval_ms = 2
+    max_messages        = 2
+    message_interval_ms = 4
     mock_catalog = {
-      stream_schemas = "...my_stream_schemas..."
-      type           = "MULTI_STREAM"
+      source_e2e_test_cloud_mock_catalog_multi_schema = {
+        stream_schemas = "...my_stream_schemas..."
+        type           = "MULTI_STREAM"
+      }
     }
     seed        = 42
     source_type = "e2e-test-cloud"
     type        = "CONTINUOUS_FEED"
   }
-  name         = "Miss Cary Howe"
-  workspace_id = "21f023b7-5d23-467f-a1a0-cc8df79f0a39"
+  name         = "Percy Buckridge DDS"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "c8df79f0-a396-4d90-8364-b7c15dfbace1"
 }
 ```
 
@@ -55,13 +58,13 @@ Required:
 
 - `max_messages` (Number) Number of records to emit per stream. Min 1. Max 100 billion.
 - `mock_catalog` (Attributes) (see [below for nested schema](#nestedatt--configuration--mock_catalog))
-- `source_type` (String) must be one of [e2e-test-cloud]
+- `source_type` (String) must be one of ["e2e-test-cloud"]
 
 Optional:
 
 - `message_interval_ms` (Number) Interval between messages in ms. Min 0 ms. Max 60000 ms (1 minute).
 - `seed` (Number) When the seed is unspecified, the current time millis will be used as the seed. Range: [0, 1000000].
-- `type` (String) must be one of [CONTINUOUS_FEED]
+- `type` (String) must be one of ["CONTINUOUS_FEED"]
 
 <a id="nestedatt--configuration--mock_catalog"></a>
 ### Nested Schema for `configuration.mock_catalog`
@@ -79,7 +82,7 @@ Optional:
 Required:
 
 - `stream_schemas` (String) A Json object specifying multiple data streams and their schemas. Each key in this object is one stream name. Each value is the schema for that stream. The schema should be compatible with <a href="https://json-schema.org/draft-07/json-schema-release-notes.html">draft-07</a>. See <a href="https://cswr.github.io/JsonSchema/spec/introduction/">this doc</a> for examples.
-- `type` (String) must be one of [MULTI_STREAM]
+- `type` (String) must be one of ["MULTI_STREAM"]
 
 
 <a id="nestedatt--configuration--mock_catalog--source_e2e_test_cloud_mock_catalog_single_schema"></a>
@@ -89,7 +92,7 @@ Required:
 
 - `stream_name` (String) Name of the data stream.
 - `stream_schema` (String) A Json schema for the stream. The schema should be compatible with <a href="https://json-schema.org/draft-07/json-schema-release-notes.html">draft-07</a>. See <a href="https://cswr.github.io/JsonSchema/spec/introduction/">this doc</a> for examples.
-- `type` (String) must be one of [SINGLE_STREAM]
+- `type` (String) must be one of ["SINGLE_STREAM"]
 
 Optional:
 
@@ -102,7 +105,7 @@ Optional:
 Required:
 
 - `stream_schemas` (String) A Json object specifying multiple data streams and their schemas. Each key in this object is one stream name. Each value is the schema for that stream. The schema should be compatible with <a href="https://json-schema.org/draft-07/json-schema-release-notes.html">draft-07</a>. See <a href="https://cswr.github.io/JsonSchema/spec/introduction/">this doc</a> for examples.
-- `type` (String) must be one of [MULTI_STREAM]
+- `type` (String) must be one of ["MULTI_STREAM"]
 
 
 <a id="nestedatt--configuration--mock_catalog--source_e2e_test_cloud_update_mock_catalog_single_schema"></a>
@@ -112,7 +115,7 @@ Required:
 
 - `stream_name` (String) Name of the data stream.
 - `stream_schema` (String) A Json schema for the stream. The schema should be compatible with <a href="https://json-schema.org/draft-07/json-schema-release-notes.html">draft-07</a>. See <a href="https://cswr.github.io/JsonSchema/spec/introduction/">this doc</a> for examples.
-- `type` (String) must be one of [SINGLE_STREAM]
+- `type` (String) must be one of ["SINGLE_STREAM"]
 
 Optional:
 

@@ -60,7 +60,7 @@ func (r *WorkspaceResource) Schema(ctx context.Context, req resource.SchemaReque
 						"eu",
 					),
 				},
-				Description: `must be one of [auto, us, eu]`,
+				Description: `must be one of ["auto", "us", "eu"]`,
 			},
 			"name": schema.StringAttribute{
 				PlanModifiers: []planmodifier.String{

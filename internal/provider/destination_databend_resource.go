@@ -64,7 +64,7 @@ func (r *DestinationDatabendResource) Schema(ctx context.Context, req resource.S
 								"databend",
 							),
 						},
-						Description: `must be one of [databend]`,
+						Description: `must be one of ["databend"]`,
 					},
 					"host": schema.StringAttribute{
 						Required:    true,

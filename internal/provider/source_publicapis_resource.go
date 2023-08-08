@@ -61,7 +61,7 @@ func (r *SourcePublicApisResource) Schema(ctx context.Context, req resource.Sche
 								"public-apis",
 							),
 						},
-						Description: `must be one of [public-apis]`,
+						Description: `must be one of ["public-apis"]`,
 					},
 				},
 			},

@@ -69,7 +69,7 @@ func (r *SourceFacebookPagesResource) Schema(ctx context.Context, req resource.S
 								"facebook-pages",
 							),
 						},
-						Description: `must be one of [facebook-pages]`,
+						Description: `must be one of ["facebook-pages"]`,
 					},
 				},
 			},

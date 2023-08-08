@@ -3,6 +3,7 @@ resource "airbyte_source_persistiq" "my_source_persistiq" {
     api_key     = "...my_api_key..."
     source_type = "persistiq"
   }
-  name         = "Lena Goyette"
-  workspace_id = "6d971fc8-20c6-45b0-b7bb-8e0cc885187e"
+  name         = "Ms. Daryl Hermiston"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "e4de04af-28c5-4ddd-b46a-a1cfd6d828da"
 }

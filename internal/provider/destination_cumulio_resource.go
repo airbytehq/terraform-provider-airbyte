@@ -72,7 +72,7 @@ func (r *DestinationCumulioResource) Schema(ctx context.Context, req resource.Sc
 								"cumulio",
 							),
 						},
-						Description: `must be one of [cumulio]`,
+						Description: `must be one of ["cumulio"]`,
 					},
 				},
 			},

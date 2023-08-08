@@ -3,7 +3,13 @@ generation:
   sdkClassName: SDK
   singleTagPerOp: false
   telemetryEnabled: true
+features:
+  terraform:
+    core: 2.83.0
+    globalSecurity: 2.81.1
+    globalServerURLs: 2.81.1
+    includes: 2.81.1
 terraform:
-  version: 0.2.3
+  version: 0.3.0
   author: airbytehq
   packageName: airbyte

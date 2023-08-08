@@ -65,7 +65,7 @@ func (r *SourceLemlistResource) Schema(ctx context.Context, req resource.SchemaR
 								"lemlist",
 							),
 						},
-						Description: `must be one of [lemlist]`,
+						Description: `must be one of ["lemlist"]`,
 					},
 				},
 			},

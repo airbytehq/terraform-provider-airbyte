@@ -81,7 +81,7 @@ func (r *SourceFireboltResource) Schema(ctx context.Context, req resource.Schema
 								"firebolt",
 							),
 						},
-						Description: `must be one of [firebolt]`,
+						Description: `must be one of ["firebolt"]`,
 					},
 					"username": schema.StringAttribute{
 						Required:    true,

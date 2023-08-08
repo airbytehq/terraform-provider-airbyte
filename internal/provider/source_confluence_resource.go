@@ -73,7 +73,7 @@ func (r *SourceConfluenceResource) Schema(ctx context.Context, req resource.Sche
 								"confluence",
 							),
 						},
-						Description: `must be one of [confluence]`,
+						Description: `must be one of ["confluence"]`,
 					},
 				},
 			},

@@ -21,10 +21,10 @@ resource "airbyte_destination_databend" "my_destination_databend" {
     password         = "...my_password..."
     port             = 443
     table            = "default"
-    username         = "Daphne.Rosenbaum90"
+    username         = "Herminia.Schmeler67"
   }
-  name         = "Rosie McKenzie"
-  workspace_id = "8a0d446c-e2af-47a7-bcf3-be453f870b32"
+  name         = "Cory Pfeffer"
+  workspace_id = "cf3be453-f870-4b32-ab5a-73429cdb1a84"
 }
 ```
 
@@ -48,7 +48,7 @@ resource "airbyte_destination_databend" "my_destination_databend" {
 Required:
 
 - `database` (String) Name of the database.
-- `destination_type` (String) must be one of [databend]
+- `destination_type` (String) must be one of ["databend"]
 - `host` (String) Hostname of the database.
 - `username` (String) Username to use to access the database.
 

@@ -4,6 +4,7 @@ resource "airbyte_source_kustomer_singer" "my_source_kustomersinger" {
     source_type = "kustomer-singer"
     start_date  = "2019-01-01T00:00:00Z"
   }
-  name         = "Vivian Rolfson"
-  workspace_id = "152eab9c-d7e5-4224-a6a0-e123b7847ec5"
+  name         = "Andrew Cassin"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "7847ec59-e1f6-47f3-84cc-e4b6d7696ff3"
 }

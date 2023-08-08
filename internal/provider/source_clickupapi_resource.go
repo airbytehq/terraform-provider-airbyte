@@ -77,7 +77,7 @@ func (r *SourceClickupAPIResource) Schema(ctx context.Context, req resource.Sche
 								"clickup-api",
 							),
 						},
-						Description: `must be one of [clickup-api]`,
+						Description: `must be one of ["clickup-api"]`,
 					},
 					"space_id": schema.StringAttribute{
 						Optional:    true,

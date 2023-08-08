@@ -9,7 +9,7 @@ import (
 )
 
 func (r *SourceOnesignalResourceModel) ToCreateSDKType() *shared.SourceOnesignalCreateRequest {
-	applications := make([]shared.SourceOnesignalApplications, 0)
+	var applications []shared.SourceOnesignalApplications = nil
 	for _, applicationsItem := range r.Configuration.Applications {
 		appAPIKey := applicationsItem.AppAPIKey.ValueString()
 		appID := applicationsItem.AppID.ValueString()
@@ -59,7 +59,7 @@ func (r *SourceOnesignalResourceModel) ToGetSDKType() *shared.SourceOnesignalCre
 }
 
 func (r *SourceOnesignalResourceModel) ToUpdateSDKType() *shared.SourceOnesignalPutRequest {
-	applications := make([]shared.SourceOnesignalUpdateApplications, 0)
+	var applications []shared.SourceOnesignalUpdateApplications = nil
 	for _, applicationsItem := range r.Configuration.Applications {
 		appAPIKey := applicationsItem.AppAPIKey.ValueString()
 		appID := applicationsItem.AppID.ValueString()

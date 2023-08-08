@@ -121,7 +121,7 @@ func (r *SourceGoogleAdsResource) Schema(ctx context.Context, req resource.Schem
 								"google-ads",
 							),
 						},
-						Description: `must be one of [google-ads]`,
+						Description: `must be one of ["google-ads"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required: true,

@@ -72,7 +72,7 @@ func (r *SourceGoogleAnalyticsV4Resource) Schema(ctx context.Context, req resour
 												"Client",
 											),
 										},
-										Description: `must be one of [Client]`,
+										Description: `must be one of ["Client"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -99,7 +99,7 @@ func (r *SourceGoogleAnalyticsV4Resource) Schema(ctx context.Context, req resour
 												"Service",
 											),
 										},
-										Description: `must be one of [Service]`,
+										Description: `must be one of ["Service"]`,
 									},
 									"credentials_json": schema.StringAttribute{
 										Required:    true,
@@ -122,7 +122,7 @@ func (r *SourceGoogleAnalyticsV4Resource) Schema(ctx context.Context, req resour
 												"Client",
 											),
 										},
-										Description: `must be one of [Client]`,
+										Description: `must be one of ["Client"]`,
 									},
 									"client_id": schema.StringAttribute{
 										Required:    true,
@@ -149,7 +149,7 @@ func (r *SourceGoogleAnalyticsV4Resource) Schema(ctx context.Context, req resour
 												"Service",
 											),
 										},
-										Description: `must be one of [Service]`,
+										Description: `must be one of ["Service"]`,
 									},
 									"credentials_json": schema.StringAttribute{
 										Required:    true,
@@ -175,7 +175,7 @@ func (r *SourceGoogleAnalyticsV4Resource) Schema(ctx context.Context, req resour
 								"google-analytics-v4",
 							),
 						},
-						Description: `must be one of [google-analytics-v4]`,
+						Description: `must be one of ["google-analytics-v4"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required:    true,

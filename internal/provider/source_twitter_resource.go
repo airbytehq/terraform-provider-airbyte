@@ -77,7 +77,7 @@ func (r *SourceTwitterResource) Schema(ctx context.Context, req resource.SchemaR
 								"twitter",
 							),
 						},
-						Description: `must be one of [twitter]`,
+						Description: `must be one of ["twitter"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Optional: true,

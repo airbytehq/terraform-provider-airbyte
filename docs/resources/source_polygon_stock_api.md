@@ -16,18 +16,19 @@ SourcePolygonStockAPI Resource
 resource "airbyte_source_polygon_stock_api" "my_source_polygonstockapi" {
   configuration = {
     adjusted      = "false"
-    api_key       = "...my_apiKey..."
+    api_key       = "...my_api_key..."
     end_date      = "2020-10-14"
     limit         = 100
     multiplier    = 1
     sort          = "desc"
     source_type   = "polygon-stock-api"
     start_date    = "2020-10-14"
-    stocks_ticker = "IBM"
+    stocks_ticker = "MSFT"
     timespan      = "day"
   }
-  name         = "Rosalie Kuhlman"
-  workspace_id = "6a1f30c7-3df5-4b67-9989-0f42a4bb438d"
+  name         = "Sylvia Lindgren"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "5b260591-d745-4e3c-a059-c9c3f567e0e2"
 }
 ```
 
@@ -57,7 +58,7 @@ Required:
 - `api_key` (String) Your API ACCESS Key
 - `end_date` (String) The target date for the aggregate window.
 - `multiplier` (Number) The size of the timespan multiplier.
-- `source_type` (String) must be one of [polygon-stock-api]
+- `source_type` (String) must be one of ["polygon-stock-api"]
 - `start_date` (String) The beginning date for the aggregate window.
 - `stocks_ticker` (String) The exchange symbol that this item is traded under.
 - `timespan` (String) The size of the time window.

@@ -23,27 +23,33 @@ resource "airbyte_destination_redshift" "my_destination_redshift" {
     port             = 5439
     schema           = "public"
     tunnel_method = {
-      tunnel_method = "NO_TUNNEL"
+      destination_redshift_ssh_tunnel_method_no_tunnel = {
+        tunnel_method = "NO_TUNNEL"
+      }
     }
     uploading_method = {
-      access_key_id = "...my_access_key_id..."
-      encryption = {
-        encryption_type    = "aes_cbc_envelope"
-        key_encrypting_key = "...my_key_encrypting_key..."
+      destination_redshift_uploading_method_s3_staging = {
+        access_key_id = "...my_access_key_id..."
+        encryption = {
+          destination_redshift_uploading_method_s3_staging_encryption_aes_cbc_envelope_encryption = {
+            encryption_type    = "aes_cbc_envelope"
+            key_encrypting_key = "...my_key_encrypting_key..."
+          }
+        }
+        file_buffer_count  = 10
+        file_name_pattern  = "{date}"
+        method             = "S3 Staging"
+        purge_staging_data = false
+        s3_bucket_name     = "airbyte.staging"
+        s3_bucket_path     = "data_sync/test"
+        s3_bucket_region   = "ap-southeast-1"
+        secret_access_key  = "...my_secret_access_key..."
       }
-      file_buffer_count  = 10
-      file_name_pattern  = "{date}"
-      method             = "S3 Staging"
-      purge_staging_data = false
-      s3_bucket_name     = "airbyte.staging"
-      s3_bucket_path     = "data_sync/test"
-      s3_bucket_region   = "ap-southeast-1"
-      secret_access_key  = "...my_secret_access_key..."
     }
-    username = "Jaqueline.Buckridge"
+    username = "Donavon.Koch"
   }
-  name         = "Emilio Wisoky PhD"
-  workspace_id = "01747636-0a15-4db6-a660-659a1adeaab5"
+  name         = "Mrs. Melissa Osinski"
+  workspace_id = "b6a66065-9a1a-4dea-ab58-51d6c645b08b"
 }
 ```
 
@@ -67,7 +73,7 @@ resource "airbyte_destination_redshift" "my_destination_redshift" {
 Required:
 
 - `database` (String) Name of the database.
-- `destination_type` (String) must be one of [redshift]
+- `destination_type` (String) must be one of ["redshift"]
 - `host` (String) Host Endpoint of the Redshift Cluster (must include the cluster-id, region and end with .redshift.amazonaws.com)
 - `password` (String) Password associated with the username.
 - `port` (Number) Port of the database.
@@ -97,7 +103,7 @@ Optional:
 
 Required:
 
-- `tunnel_method` (String) must be one of [NO_TUNNEL]
+- `tunnel_method` (String) must be one of ["NO_TUNNEL"]
 No ssh tunnel needed to connect to database
 
 
@@ -107,7 +113,7 @@ No ssh tunnel needed to connect to database
 Required:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of [SSH_PASSWORD_AUTH]
+- `tunnel_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
 Connect through a jump server tunnel host using username and password authentication
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
@@ -121,7 +127,7 @@ Required:
 
 - `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of [SSH_KEY_AUTH]
+- `tunnel_method` (String) must be one of ["SSH_KEY_AUTH"]
 Connect through a jump server tunnel host using username and ssh key
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host.
@@ -132,7 +138,7 @@ Connect through a jump server tunnel host using username and ssh key
 
 Required:
 
-- `tunnel_method` (String) must be one of [NO_TUNNEL]
+- `tunnel_method` (String) must be one of ["NO_TUNNEL"]
 No ssh tunnel needed to connect to database
 
 
@@ -142,7 +148,7 @@ No ssh tunnel needed to connect to database
 Required:
 
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of [SSH_PASSWORD_AUTH]
+- `tunnel_method` (String) must be one of ["SSH_PASSWORD_AUTH"]
 Connect through a jump server tunnel host using username and password authentication
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host
@@ -156,7 +162,7 @@ Required:
 
 - `ssh_key` (String) OS-level user account ssh key credentials in RSA PEM format ( created with ssh-keygen -t rsa -m PEM -f myuser_rsa )
 - `tunnel_host` (String) Hostname of the jump server host that allows inbound ssh tunnel.
-- `tunnel_method` (String) must be one of [SSH_KEY_AUTH]
+- `tunnel_method` (String) must be one of ["SSH_KEY_AUTH"]
 Connect through a jump server tunnel host using username and ssh key
 - `tunnel_port` (Number) Port on the proxy/jump server that accepts inbound ssh connections.
 - `tunnel_user` (String) OS-level username for logging into the jump server host.
@@ -179,9 +185,9 @@ Optional:
 Required:
 
 - `access_key_id` (String) This ID grants access to the above S3 staging bucket. Airbyte requires Read and Write permissions to the given bucket. See <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">AWS docs</a> on how to generate an access key ID and secret access key.
-- `method` (String) must be one of [S3 Staging]
+- `method` (String) must be one of ["S3 Staging"]
 - `s3_bucket_name` (String) The name of the staging S3 bucket to use if utilising a COPY strategy. COPY is recommended for production workloads for better speed and scalability. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html">AWS docs</a> for more details.
-- `s3_bucket_region` (String) must be one of [, us-east-1, us-east-2, us-west-1, us-west-2, af-south-1, ap-east-1, ap-south-1, ap-northeast-1, ap-northeast-2, ap-northeast-3, ap-southeast-1, ap-southeast-2, ca-central-1, cn-north-1, cn-northwest-1, eu-central-1, eu-north-1, eu-south-1, eu-west-1, eu-west-2, eu-west-3, sa-east-1, me-south-1]
+- `s3_bucket_region` (String) must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1"]
 The region of the S3 staging bucket to use if utilising a COPY strategy. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html#:~:text=In-,Region,-%2C%20choose%20the%20AWS">AWS docs</a> for details.
 - `secret_access_key` (String) The corresponding secret to the above access key id. See <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">AWS docs</a> on how to generate an access key ID and secret access key.
 
@@ -206,7 +212,7 @@ Optional:
 
 Required:
 
-- `encryption_type` (String) must be one of [aes_cbc_envelope]
+- `encryption_type` (String) must be one of ["aes_cbc_envelope"]
 
 Optional:
 
@@ -218,7 +224,7 @@ Optional:
 
 Required:
 
-- `encryption_type` (String) must be one of [none]
+- `encryption_type` (String) must be one of ["none"]
 
 
 
@@ -228,7 +234,7 @@ Required:
 
 Required:
 
-- `method` (String) must be one of [Standard]
+- `method` (String) must be one of ["Standard"]
 
 
 <a id="nestedatt--configuration--uploading_method--destination_redshift_uploading_method_s3_staging"></a>
@@ -237,9 +243,9 @@ Required:
 Required:
 
 - `access_key_id` (String) This ID grants access to the above S3 staging bucket. Airbyte requires Read and Write permissions to the given bucket. See <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">AWS docs</a> on how to generate an access key ID and secret access key.
-- `method` (String) must be one of [S3 Staging]
+- `method` (String) must be one of ["S3 Staging"]
 - `s3_bucket_name` (String) The name of the staging S3 bucket to use if utilising a COPY strategy. COPY is recommended for production workloads for better speed and scalability. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html">AWS docs</a> for more details.
-- `s3_bucket_region` (String) must be one of [, us-east-1, us-east-2, us-west-1, us-west-2, af-south-1, ap-east-1, ap-south-1, ap-northeast-1, ap-northeast-2, ap-northeast-3, ap-southeast-1, ap-southeast-2, ca-central-1, cn-north-1, cn-northwest-1, eu-central-1, eu-north-1, eu-south-1, eu-west-1, eu-west-2, eu-west-3, sa-east-1, me-south-1]
+- `s3_bucket_region` (String) must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-north-1", "eu-south-1", "eu-west-1", "eu-west-2", "eu-west-3", "sa-east-1", "me-south-1"]
 The region of the S3 staging bucket to use if utilising a COPY strategy. See <a href="https://docs.aws.amazon.com/AmazonS3/latest/userguide/creating-bucket.html#:~:text=In-,Region,-%2C%20choose%20the%20AWS">AWS docs</a> for details.
 - `secret_access_key` (String) The corresponding secret to the above access key id. See <a href="https://docs.aws.amazon.com/general/latest/gr/aws-sec-cred-types.html#access-keys-and-secret-access-keys">AWS docs</a> on how to generate an access key ID and secret access key.
 
@@ -264,7 +270,7 @@ Optional:
 
 Required:
 
-- `encryption_type` (String) must be one of [aes_cbc_envelope]
+- `encryption_type` (String) must be one of ["aes_cbc_envelope"]
 
 Optional:
 
@@ -276,7 +282,7 @@ Optional:
 
 Required:
 
-- `encryption_type` (String) must be one of [none]
+- `encryption_type` (String) must be one of ["none"]
 
 
 
@@ -286,6 +292,6 @@ Required:
 
 Required:
 
-- `method` (String) must be one of [Standard]
+- `method` (String) must be one of ["Standard"]
 
 

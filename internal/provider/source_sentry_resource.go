@@ -87,7 +87,7 @@ func (r *SourceSentryResource) Schema(ctx context.Context, req resource.SchemaRe
 								"sentry",
 							),
 						},
-						Description: `must be one of [sentry]`,
+						Description: `must be one of ["sentry"]`,
 					},
 				},
 			},

@@ -16,17 +16,20 @@ SourceLinkedinAds Resource
 resource "airbyte_source_linkedin_ads" "my_source_linkedinads" {
   configuration = {
     account_ids = [
-      8,
+      5,
     ]
     credentials = {
-      access_token = "...my_access_token..."
-      auth_method  = "access_token"
+      source_linkedin_ads_authentication_access_token = {
+        access_token = "...my_access_token..."
+        auth_method  = "access_token"
+      }
     }
     source_type = "linkedin-ads"
     start_date  = "2021-05-17"
   }
-  name         = "Kelly Deckow"
-  workspace_id = "3e66bd8f-e5d0-40b9-b9ef-20387320590c"
+  name         = "Martin Bahringer"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "7320590c-cc10-4964-8031-3b3e5044f65f"
 }
 ```
 
@@ -53,7 +56,7 @@ resource "airbyte_source_linkedin_ads" "my_source_linkedinads" {
 
 Required:
 
-- `source_type` (String) must be one of [linkedin-ads]
+- `source_type` (String) must be one of ["linkedin-ads"]
 - `start_date` (String) UTC date in the format 2020-09-17. Any data before this date will not be replicated.
 
 Optional:
@@ -80,7 +83,7 @@ Required:
 
 Optional:
 
-- `auth_method` (String) must be one of [access_token]
+- `auth_method` (String) must be one of ["access_token"]
 
 
 <a id="nestedatt--configuration--credentials--source_linkedin_ads_authentication_o_auth2_0"></a>
@@ -94,7 +97,7 @@ Required:
 
 Optional:
 
-- `auth_method` (String) must be one of [oAuth2.0]
+- `auth_method` (String) must be one of ["oAuth2.0"]
 
 
 <a id="nestedatt--configuration--credentials--source_linkedin_ads_update_authentication_access_token"></a>
@@ -106,7 +109,7 @@ Required:
 
 Optional:
 
-- `auth_method` (String) must be one of [access_token]
+- `auth_method` (String) must be one of ["access_token"]
 
 
 <a id="nestedatt--configuration--credentials--source_linkedin_ads_update_authentication_o_auth2_0"></a>
@@ -120,6 +123,6 @@ Required:
 
 Optional:
 
-- `auth_method` (String) must be one of [oAuth2.0]
+- `auth_method` (String) must be one of ["oAuth2.0"]
 
 

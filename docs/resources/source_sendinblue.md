@@ -18,8 +18,9 @@ resource "airbyte_source_sendinblue" "my_source_sendinblue" {
     api_key     = "...my_api_key..."
     source_type = "sendinblue"
   }
-  name         = "Nathaniel Kozey"
-  workspace_id = "84ad99b4-1d61-4243-9318-70cf68b03ad4"
+  name         = "Willis Bechtelar"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "d421bd43-d1f0-4cb0-a000-3eb22d9b3a70"
 }
 ```
 
@@ -47,6 +48,6 @@ resource "airbyte_source_sendinblue" "my_source_sendinblue" {
 Required:
 
 - `api_key` (String) Your API Key. See <a href="https://developers.sendinblue.com/docs/getting-started">here</a>.
-- `source_type` (String) must be one of [sendinblue]
+- `source_type` (String) must be one of ["sendinblue"]
 
 

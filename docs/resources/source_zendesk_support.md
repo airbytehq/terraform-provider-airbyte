@@ -16,17 +16,20 @@ SourceZendeskSupport Resource
 resource "airbyte_source_zendesk_support" "my_source_zendesksupport" {
   configuration = {
     credentials = {
-      api_token   = "...my_api_token..."
-      credentials = "api_token"
-      email       = "Urban_Bechtelar@yahoo.com"
+      source_zendesk_support_authentication_api_token = {
+        api_token   = "...my_api_token..."
+        credentials = "api_token"
+        email       = "Ignacio_Langosh@hotmail.com"
+      }
     }
-    ignore_pagination = false
+    ignore_pagination = true
     source_type       = "zendesk-support"
     start_date        = "2020-10-15T00:00:00Z"
     subdomain         = "...my_subdomain..."
   }
-  name         = "Gregg Littel"
-  workspace_id = "92386f62-c969-4c4c-86b7-8890a3fd3c81"
+  name         = "Dallas Douglas"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "1da10f8c-23df-4931-9a3e-db51fad94acc"
 }
 ```
 
@@ -53,7 +56,7 @@ resource "airbyte_source_zendesk_support" "my_source_zendesksupport" {
 
 Required:
 
-- `source_type` (String) must be one of [zendesk-support]
+- `source_type` (String) must be one of ["zendesk-support"]
 - `start_date` (String) The date from which you'd like to replicate data for Zendesk Support API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 - `subdomain` (String) This is your Zendesk subdomain that can be found in your account URL. For example, in https://{MY_SUBDOMAIN}.zendesk.com/, where MY_SUBDOMAIN is the value of your subdomain.
 
@@ -83,7 +86,7 @@ Required:
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `credentials` (String) must be one of [api_token]
+- `credentials` (String) must be one of ["api_token"]
 
 
 <a id="nestedatt--configuration--credentials--source_zendesk_support_authentication_o_auth2_0"></a>
@@ -96,7 +99,7 @@ Required:
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `credentials` (String) must be one of [oauth2.0]
+- `credentials` (String) must be one of ["oauth2.0"]
 
 
 <a id="nestedatt--configuration--credentials--source_zendesk_support_update_authentication_api_token"></a>
@@ -110,7 +113,7 @@ Required:
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `credentials` (String) must be one of [api_token]
+- `credentials` (String) must be one of ["api_token"]
 
 
 <a id="nestedatt--configuration--credentials--source_zendesk_support_update_authentication_o_auth2_0"></a>
@@ -123,6 +126,6 @@ Required:
 Optional:
 
 - `additional_properties` (String) Parsed as JSON.
-- `credentials` (String) must be one of [oauth2.0]
+- `credentials` (String) must be one of ["oauth2.0"]
 
 

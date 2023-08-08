@@ -16,12 +16,13 @@ SourceDixa Resource
 resource "airbyte_source_dixa" "my_source_dixa" {
   configuration = {
     api_token   = "...my_api_token..."
-    batch_size  = 1
+    batch_size  = 31
     source_type = "dixa"
     start_date  = "YYYY-MM-DD"
   }
-  name         = "Moses Beatty Jr."
-  workspace_id = "2d514f4c-c6f1-48bf-9621-a6a4f77a87ee"
+  name         = "Marshall Hyatt V"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "6a4f77a8-7ee3-4e4b-a752-c65b34418e3b"
 }
 ```
 
@@ -49,7 +50,7 @@ resource "airbyte_source_dixa" "my_source_dixa" {
 Required:
 
 - `api_token` (String) Dixa API token
-- `source_type` (String) must be one of [dixa]
+- `source_type` (String) must be one of ["dixa"]
 - `start_date` (String) The connector pulls records updated from this date onwards.
 
 Optional:

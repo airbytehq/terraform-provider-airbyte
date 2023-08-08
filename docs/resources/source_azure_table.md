@@ -18,10 +18,11 @@ resource "airbyte_source_azure_table" "my_source_azuretable" {
     source_type             = "azure-table"
     storage_access_key      = "...my_storage_access_key..."
     storage_account_name    = "...my_storage_account_name..."
-    storage_endpoint_suffix = "core.windows.net"
+    storage_endpoint_suffix = "core.chinacloudapi.cn"
   }
-  name         = "Woodrow Klein"
-  workspace_id = "4ec1b781-b36a-4080-88d1-00efada200ef"
+  name         = "Brandy Langosh Jr."
+  secret_id    = "...my_secret_id..."
+  workspace_id = "0efada20-0ef0-4422-ab21-64cf9ab8366c"
 }
 ```
 
@@ -48,7 +49,7 @@ resource "airbyte_source_azure_table" "my_source_azuretable" {
 
 Required:
 
-- `source_type` (String) must be one of [azure-table]
+- `source_type` (String) must be one of ["azure-table"]
 - `storage_access_key` (String) Azure Table Storage Access Key. See the <a href="https://docs.airbyte.com/integrations/sources/azure-table">docs</a> for more information on how to obtain this key.
 - `storage_account_name` (String) The name of your storage account.
 

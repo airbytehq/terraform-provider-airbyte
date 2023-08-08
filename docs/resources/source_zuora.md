@@ -17,14 +17,15 @@ resource "airbyte_source_zuora" "my_source_zuora" {
   configuration = {
     client_id       = "...my_client_id..."
     client_secret   = "...my_client_secret..."
-    data_query      = "Live"
+    data_query      = "Unlimited"
     source_type     = "zuora"
     start_date      = "...my_start_date..."
-    tenant_endpoint = "US Cloud Production"
-    window_in_days  = "364"
+    tenant_endpoint = "EU Central Sandbox"
+    window_in_days  = "60"
   }
-  name         = "Mathew Cole DVM"
-  workspace_id = "b0c58d27-b519-496b-9b4b-50eef712b7a7"
+  name         = "Christina Rice"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "7ab0344b-1710-4688-9eeb-ef897f3dd0cc"
 }
 ```
 
@@ -53,11 +54,11 @@ Required:
 
 - `client_id` (String) Your OAuth user Client ID
 - `client_secret` (String) Your OAuth user Client Secret
-- `data_query` (String) must be one of [Live, Unlimited]
+- `data_query` (String) must be one of ["Live", "Unlimited"]
 Choose between `Live`, or `Unlimited` - the optimized, replicated database at 12 hours freshness for high volume extraction <a href="https://knowledgecenter.zuora.com/Central_Platform/Query/Data_Query/A_Overview_of_Data_Query#Query_Processing_Limitations">Link</a>
-- `source_type` (String) must be one of [zuora]
+- `source_type` (String) must be one of ["zuora"]
 - `start_date` (String) Start Date in format: YYYY-MM-DD
-- `tenant_endpoint` (String) must be one of [US Production, US Cloud Production, US API Sandbox, US Cloud API Sandbox, US Central Sandbox, US Performance Test, EU Production, EU API Sandbox, EU Central Sandbox]
+- `tenant_endpoint` (String) must be one of ["US Production", "US Cloud Production", "US API Sandbox", "US Cloud API Sandbox", "US Central Sandbox", "US Performance Test", "EU Production", "EU API Sandbox", "EU Central Sandbox"]
 Please choose the right endpoint where your Tenant is located. More info by this <a href="https://www.zuora.com/developer/api-reference/#section/Introduction/Access-to-the-API">Link</a>
 
 Optional:

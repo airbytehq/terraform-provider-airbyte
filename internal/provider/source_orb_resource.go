@@ -78,7 +78,7 @@ func (r *SourceOrbResource) Schema(ctx context.Context, req resource.SchemaReque
 								"orb",
 							),
 						},
-						Description: `must be one of [orb]`,
+						Description: `must be one of ["orb"]`,
 					},
 					"start_date": schema.StringAttribute{
 						Required:    true,

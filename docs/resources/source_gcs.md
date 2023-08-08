@@ -20,8 +20,9 @@ resource "airbyte_source_gcs" "my_source_gcs" {
     service_account = "{ \"type\": \"service_account\", \"project_id\": YOUR_PROJECT_ID, \"private_key_id\": YOUR_PRIVATE_KEY, ... }"
     source_type     = "gcs"
   }
-  name         = "Miranda Koelpin"
-  workspace_id = "c845e320-a319-4f4b-adf9-47c9a867bc42"
+  name         = "Darin Mante"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "c9a867bc-4242-4666-9816-ddca8ef51fcb"
 }
 ```
 
@@ -51,6 +52,6 @@ Required:
 - `gcs_bucket` (String) GCS bucket name
 - `gcs_path` (String) GCS path to data
 - `service_account` (String) Enter your Google Cloud <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">service account key</a> in JSON format
-- `source_type` (String) must be one of [gcs]
+- `source_type` (String) must be one of ["gcs"]
 
 

@@ -85,7 +85,7 @@ func (r *SourcePexelsAPIResource) Schema(ctx context.Context, req resource.Schem
 								"pexels-api",
 							),
 						},
-						Description: `must be one of [pexels-api]`,
+						Description: `must be one of ["pexels-api"]`,
 					},
 				},
 			},

@@ -10,51 +10,53 @@ import (
 
 func (r *SourceShopifyResourceModel) ToCreateSDKType() *shared.SourceShopifyCreateRequest {
 	var credentials *shared.SourceShopifyShopifyAuthorizationMethod
-	var sourceShopifyShopifyAuthorizationMethodAPIPassword *shared.SourceShopifyShopifyAuthorizationMethodAPIPassword
-	if r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodAPIPassword != nil {
-		apiPassword := r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodAPIPassword.APIPassword.ValueString()
-		authMethod := shared.SourceShopifyShopifyAuthorizationMethodAPIPasswordAuthMethod(r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodAPIPassword.AuthMethod.ValueString())
-		sourceShopifyShopifyAuthorizationMethodAPIPassword = &shared.SourceShopifyShopifyAuthorizationMethodAPIPassword{
-			APIPassword: apiPassword,
-			AuthMethod:  authMethod,
+	if r.Configuration.Credentials != nil {
+		var sourceShopifyShopifyAuthorizationMethodAPIPassword *shared.SourceShopifyShopifyAuthorizationMethodAPIPassword
+		if r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodAPIPassword != nil {
+			apiPassword := r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodAPIPassword.APIPassword.ValueString()
+			authMethod := shared.SourceShopifyShopifyAuthorizationMethodAPIPasswordAuthMethod(r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodAPIPassword.AuthMethod.ValueString())
+			sourceShopifyShopifyAuthorizationMethodAPIPassword = &shared.SourceShopifyShopifyAuthorizationMethodAPIPassword{
+				APIPassword: apiPassword,
+				AuthMethod:  authMethod,
+			}
 		}
-	}
-	if sourceShopifyShopifyAuthorizationMethodAPIPassword != nil {
-		credentials = &shared.SourceShopifyShopifyAuthorizationMethod{
-			SourceShopifyShopifyAuthorizationMethodAPIPassword: sourceShopifyShopifyAuthorizationMethodAPIPassword,
+		if sourceShopifyShopifyAuthorizationMethodAPIPassword != nil {
+			credentials = &shared.SourceShopifyShopifyAuthorizationMethod{
+				SourceShopifyShopifyAuthorizationMethodAPIPassword: sourceShopifyShopifyAuthorizationMethodAPIPassword,
+			}
 		}
-	}
-	var sourceShopifyShopifyAuthorizationMethodOAuth20 *shared.SourceShopifyShopifyAuthorizationMethodOAuth20
-	if r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20 != nil {
-		accessToken := new(string)
-		if !r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.AccessToken.IsUnknown() && !r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.AccessToken.IsNull() {
-			*accessToken = r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.AccessToken.ValueString()
-		} else {
-			accessToken = nil
+		var sourceShopifyShopifyAuthorizationMethodOAuth20 *shared.SourceShopifyShopifyAuthorizationMethodOAuth20
+		if r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20 != nil {
+			accessToken := new(string)
+			if !r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.AccessToken.IsUnknown() && !r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.AccessToken.IsNull() {
+				*accessToken = r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.AccessToken.ValueString()
+			} else {
+				accessToken = nil
+			}
+			authMethod1 := shared.SourceShopifyShopifyAuthorizationMethodOAuth20AuthMethod(r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.AuthMethod.ValueString())
+			clientID := new(string)
+			if !r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientID.IsNull() {
+				*clientID = r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientID.ValueString()
+			} else {
+				clientID = nil
+			}
+			clientSecret := new(string)
+			if !r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientSecret.IsUnknown() && !r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientSecret.IsNull() {
+				*clientSecret = r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientSecret.ValueString()
+			} else {
+				clientSecret = nil
+			}
+			sourceShopifyShopifyAuthorizationMethodOAuth20 = &shared.SourceShopifyShopifyAuthorizationMethodOAuth20{
+				AccessToken:  accessToken,
+				AuthMethod:   authMethod1,
+				ClientID:     clientID,
+				ClientSecret: clientSecret,
+			}
 		}
-		authMethod1 := shared.SourceShopifyShopifyAuthorizationMethodOAuth20AuthMethod(r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.AuthMethod.ValueString())
-		clientID := new(string)
-		if !r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientID.IsNull() {
-			*clientID = r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientID.ValueString()
-		} else {
-			clientID = nil
-		}
-		clientSecret := new(string)
-		if !r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientSecret.IsUnknown() && !r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientSecret.IsNull() {
-			*clientSecret = r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientSecret.ValueString()
-		} else {
-			clientSecret = nil
-		}
-		sourceShopifyShopifyAuthorizationMethodOAuth20 = &shared.SourceShopifyShopifyAuthorizationMethodOAuth20{
-			AccessToken:  accessToken,
-			AuthMethod:   authMethod1,
-			ClientID:     clientID,
-			ClientSecret: clientSecret,
-		}
-	}
-	if sourceShopifyShopifyAuthorizationMethodOAuth20 != nil {
-		credentials = &shared.SourceShopifyShopifyAuthorizationMethod{
-			SourceShopifyShopifyAuthorizationMethodOAuth20: sourceShopifyShopifyAuthorizationMethodOAuth20,
+		if sourceShopifyShopifyAuthorizationMethodOAuth20 != nil {
+			credentials = &shared.SourceShopifyShopifyAuthorizationMethod{
+				SourceShopifyShopifyAuthorizationMethodOAuth20: sourceShopifyShopifyAuthorizationMethodOAuth20,
+			}
 		}
 	}
 	shop := r.Configuration.Shop.ValueString()
@@ -90,51 +92,53 @@ func (r *SourceShopifyResourceModel) ToGetSDKType() *shared.SourceShopifyCreateR
 
 func (r *SourceShopifyResourceModel) ToUpdateSDKType() *shared.SourceShopifyPutRequest {
 	var credentials *shared.SourceShopifyUpdateShopifyAuthorizationMethod
-	var sourceShopifyUpdateShopifyAuthorizationMethodAPIPassword *shared.SourceShopifyUpdateShopifyAuthorizationMethodAPIPassword
-	if r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodAPIPassword != nil {
-		apiPassword := r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodAPIPassword.APIPassword.ValueString()
-		authMethod := shared.SourceShopifyUpdateShopifyAuthorizationMethodAPIPasswordAuthMethod(r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodAPIPassword.AuthMethod.ValueString())
-		sourceShopifyUpdateShopifyAuthorizationMethodAPIPassword = &shared.SourceShopifyUpdateShopifyAuthorizationMethodAPIPassword{
-			APIPassword: apiPassword,
-			AuthMethod:  authMethod,
+	if r.Configuration.Credentials != nil {
+		var sourceShopifyUpdateShopifyAuthorizationMethodAPIPassword *shared.SourceShopifyUpdateShopifyAuthorizationMethodAPIPassword
+		if r.Configuration.Credentials.SourceShopifyUpdateShopifyAuthorizationMethodAPIPassword != nil {
+			apiPassword := r.Configuration.Credentials.SourceShopifyUpdateShopifyAuthorizationMethodAPIPassword.APIPassword.ValueString()
+			authMethod := shared.SourceShopifyUpdateShopifyAuthorizationMethodAPIPasswordAuthMethod(r.Configuration.Credentials.SourceShopifyUpdateShopifyAuthorizationMethodAPIPassword.AuthMethod.ValueString())
+			sourceShopifyUpdateShopifyAuthorizationMethodAPIPassword = &shared.SourceShopifyUpdateShopifyAuthorizationMethodAPIPassword{
+				APIPassword: apiPassword,
+				AuthMethod:  authMethod,
+			}
 		}
-	}
-	if sourceShopifyUpdateShopifyAuthorizationMethodAPIPassword != nil {
-		credentials = &shared.SourceShopifyUpdateShopifyAuthorizationMethod{
-			SourceShopifyUpdateShopifyAuthorizationMethodAPIPassword: sourceShopifyUpdateShopifyAuthorizationMethodAPIPassword,
+		if sourceShopifyUpdateShopifyAuthorizationMethodAPIPassword != nil {
+			credentials = &shared.SourceShopifyUpdateShopifyAuthorizationMethod{
+				SourceShopifyUpdateShopifyAuthorizationMethodAPIPassword: sourceShopifyUpdateShopifyAuthorizationMethodAPIPassword,
+			}
 		}
-	}
-	var sourceShopifyUpdateShopifyAuthorizationMethodOAuth20 *shared.SourceShopifyUpdateShopifyAuthorizationMethodOAuth20
-	if r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20 != nil {
-		accessToken := new(string)
-		if !r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.AccessToken.IsUnknown() && !r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.AccessToken.IsNull() {
-			*accessToken = r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.AccessToken.ValueString()
-		} else {
-			accessToken = nil
+		var sourceShopifyUpdateShopifyAuthorizationMethodOAuth20 *shared.SourceShopifyUpdateShopifyAuthorizationMethodOAuth20
+		if r.Configuration.Credentials.SourceShopifyUpdateShopifyAuthorizationMethodOAuth20 != nil {
+			accessToken := new(string)
+			if !r.Configuration.Credentials.SourceShopifyUpdateShopifyAuthorizationMethodOAuth20.AccessToken.IsUnknown() && !r.Configuration.Credentials.SourceShopifyUpdateShopifyAuthorizationMethodOAuth20.AccessToken.IsNull() {
+				*accessToken = r.Configuration.Credentials.SourceShopifyUpdateShopifyAuthorizationMethodOAuth20.AccessToken.ValueString()
+			} else {
+				accessToken = nil
+			}
+			authMethod1 := shared.SourceShopifyUpdateShopifyAuthorizationMethodOAuth20AuthMethod(r.Configuration.Credentials.SourceShopifyUpdateShopifyAuthorizationMethodOAuth20.AuthMethod.ValueString())
+			clientID := new(string)
+			if !r.Configuration.Credentials.SourceShopifyUpdateShopifyAuthorizationMethodOAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.SourceShopifyUpdateShopifyAuthorizationMethodOAuth20.ClientID.IsNull() {
+				*clientID = r.Configuration.Credentials.SourceShopifyUpdateShopifyAuthorizationMethodOAuth20.ClientID.ValueString()
+			} else {
+				clientID = nil
+			}
+			clientSecret := new(string)
+			if !r.Configuration.Credentials.SourceShopifyUpdateShopifyAuthorizationMethodOAuth20.ClientSecret.IsUnknown() && !r.Configuration.Credentials.SourceShopifyUpdateShopifyAuthorizationMethodOAuth20.ClientSecret.IsNull() {
+				*clientSecret = r.Configuration.Credentials.SourceShopifyUpdateShopifyAuthorizationMethodOAuth20.ClientSecret.ValueString()
+			} else {
+				clientSecret = nil
+			}
+			sourceShopifyUpdateShopifyAuthorizationMethodOAuth20 = &shared.SourceShopifyUpdateShopifyAuthorizationMethodOAuth20{
+				AccessToken:  accessToken,
+				AuthMethod:   authMethod1,
+				ClientID:     clientID,
+				ClientSecret: clientSecret,
+			}
 		}
-		authMethod1 := shared.SourceShopifyUpdateShopifyAuthorizationMethodOAuth20AuthMethod(r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.AuthMethod.ValueString())
-		clientID := new(string)
-		if !r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientID.IsNull() {
-			*clientID = r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientID.ValueString()
-		} else {
-			clientID = nil
-		}
-		clientSecret := new(string)
-		if !r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientSecret.IsUnknown() && !r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientSecret.IsNull() {
-			*clientSecret = r.Configuration.Credentials.SourceShopifyShopifyAuthorizationMethodOAuth20.ClientSecret.ValueString()
-		} else {
-			clientSecret = nil
-		}
-		sourceShopifyUpdateShopifyAuthorizationMethodOAuth20 = &shared.SourceShopifyUpdateShopifyAuthorizationMethodOAuth20{
-			AccessToken:  accessToken,
-			AuthMethod:   authMethod1,
-			ClientID:     clientID,
-			ClientSecret: clientSecret,
-		}
-	}
-	if sourceShopifyUpdateShopifyAuthorizationMethodOAuth20 != nil {
-		credentials = &shared.SourceShopifyUpdateShopifyAuthorizationMethod{
-			SourceShopifyUpdateShopifyAuthorizationMethodOAuth20: sourceShopifyUpdateShopifyAuthorizationMethodOAuth20,
+		if sourceShopifyUpdateShopifyAuthorizationMethodOAuth20 != nil {
+			credentials = &shared.SourceShopifyUpdateShopifyAuthorizationMethod{
+				SourceShopifyUpdateShopifyAuthorizationMethodOAuth20: sourceShopifyUpdateShopifyAuthorizationMethodOAuth20,
+			}
 		}
 	}
 	shop := r.Configuration.Shop.ValueString()

@@ -16,15 +16,18 @@ SourceSmartsheets Resource
 resource "airbyte_source_smartsheets" "my_source_smartsheets" {
   configuration = {
     credentials = {
-      access_token = "...my_access_token..."
-      auth_type    = "access_token"
+      source_smartsheets_authorization_method_api_access_token = {
+        access_token = "...my_access_token..."
+        auth_type    = "access_token"
+      }
     }
     source_type    = "smartsheets"
     spreadsheet_id = "...my_spreadsheet_id..."
-    start_datetime = "2000-01-01T13:00:00-07:00"
+    start_datetime = "2000-01-01T13:00:00"
   }
-  name         = "Carlos Armstrong"
-  workspace_id = "0d1b4901-f2bd-489c-8a32-639da5b7b690"
+  name         = "Dewey Murphy"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "7b6902b8-81a9-44f6-8366-4a8f0af8c691"
 }
 ```
 
@@ -52,7 +55,7 @@ resource "airbyte_source_smartsheets" "my_source_smartsheets" {
 Required:
 
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `source_type` (String) must be one of [smartsheets]
+- `source_type` (String) must be one of ["smartsheets"]
 - `spreadsheet_id` (String) The spreadsheet ID. Find it by opening the spreadsheet then navigating to File > Properties
 
 Optional:
@@ -78,7 +81,7 @@ Required:
 
 Optional:
 
-- `auth_type` (String) must be one of [access_token]
+- `auth_type` (String) must be one of ["access_token"]
 
 
 <a id="nestedatt--configuration--credentials--source_smartsheets_authorization_method_o_auth2_0"></a>
@@ -94,7 +97,7 @@ Required:
 
 Optional:
 
-- `auth_type` (String) must be one of [oauth2.0]
+- `auth_type` (String) must be one of ["oauth2.0"]
 
 
 <a id="nestedatt--configuration--credentials--source_smartsheets_update_authorization_method_api_access_token"></a>
@@ -106,7 +109,7 @@ Required:
 
 Optional:
 
-- `auth_type` (String) must be one of [access_token]
+- `auth_type` (String) must be one of ["access_token"]
 
 
 <a id="nestedatt--configuration--credentials--source_smartsheets_update_authorization_method_o_auth2_0"></a>
@@ -122,6 +125,6 @@ Required:
 
 Optional:
 
-- `auth_type` (String) must be one of [oauth2.0]
+- `auth_type` (String) must be one of ["oauth2.0"]
 
 

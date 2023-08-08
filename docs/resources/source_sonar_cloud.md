@@ -24,8 +24,9 @@ resource "airbyte_source_sonar_cloud" "my_source_sonarcloud" {
     start_date   = "YYYY-MM-DD"
     user_token   = "...my_user_token..."
   }
-  name         = "Natalie Schuster"
-  workspace_id = "194398c7-83c9-4239-8ed3-d3ab7ca3c5ca"
+  name         = "Chelsea Ortiz"
+  secret_id    = "...my_secret_id..."
+  workspace_id = "5ca8649a-70cf-4d5d-a989-b7206451077d"
 }
 ```
 
@@ -54,7 +55,7 @@ Required:
 
 - `component_keys` (List of String) Comma-separated list of component keys.
 - `organization` (String) Organization key. See <a href="https://docs.sonarcloud.io/appendices/project-information/#project-and-organization-keys">here</a>.
-- `source_type` (String) must be one of [sonar-cloud]
+- `source_type` (String) must be one of ["sonar-cloud"]
 - `user_token` (String) Your User Token. See <a href="https://docs.sonarcloud.io/advanced-setup/user-accounts/">here</a>. The token is case sensitive.
 
 Optional:

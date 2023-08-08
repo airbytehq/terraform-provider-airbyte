@@ -9,28 +9,38 @@ import (
 
 func (r *SourceOktaResourceModel) ToCreateSDKType() *shared.SourceOktaCreateRequest {
 	var credentials *shared.SourceOktaAuthorizationMethod
-	var sourceOktaAuthorizationMethodOAuth20 *shared.SourceOktaAuthorizationMethodOAuth20
-	if r.Configuration.Credentials.SourceOktaAuthorizationMethodAPIToken != nil {
-		authType := shared.SourceOktaAuthorizationMethodOAuth20AuthType(r.Configuration.Credentials.SourceOktaAuthorizationMethodAPIToken.AuthType.ValueString())
-		sourceOktaAuthorizationMethodOAuth20 = &shared.SourceOktaAuthorizationMethodOAuth20{
-			AuthType: authType,
+	if r.Configuration.Credentials != nil {
+		var sourceOktaAuthorizationMethodOAuth20 *shared.SourceOktaAuthorizationMethodOAuth20
+		if r.Configuration.Credentials.SourceOktaAuthorizationMethodOAuth20 != nil {
+			authType := shared.SourceOktaAuthorizationMethodOAuth20AuthType(r.Configuration.Credentials.SourceOktaAuthorizationMethodOAuth20.AuthType.ValueString())
+			clientID := r.Configuration.Credentials.SourceOktaAuthorizationMethodOAuth20.ClientID.ValueString()
+			clientSecret := r.Configuration.Credentials.SourceOktaAuthorizationMethodOAuth20.ClientSecret.ValueString()
+			refreshToken := r.Configuration.Credentials.SourceOktaAuthorizationMethodOAuth20.RefreshToken.ValueString()
+			sourceOktaAuthorizationMethodOAuth20 = &shared.SourceOktaAuthorizationMethodOAuth20{
+				AuthType:     authType,
+				ClientID:     clientID,
+				ClientSecret: clientSecret,
+				RefreshToken: refreshToken,
+			}
 		}
-	}
-	if sourceOktaAuthorizationMethodOAuth20 != nil {
-		credentials = &shared.SourceOktaAuthorizationMethod{
-			SourceOktaAuthorizationMethodOAuth20: sourceOktaAuthorizationMethodOAuth20,
+		if sourceOktaAuthorizationMethodOAuth20 != nil {
+			credentials = &shared.SourceOktaAuthorizationMethod{
+				SourceOktaAuthorizationMethodOAuth20: sourceOktaAuthorizationMethodOAuth20,
+			}
 		}
-	}
-	var sourceOktaAuthorizationMethodAPIToken *shared.SourceOktaAuthorizationMethodAPIToken
-	if r.Configuration.Credentials.SourceOktaAuthorizationMethodOAuth20 != nil {
-		authType1 := shared.SourceOktaAuthorizationMethodAPITokenAuthType(r.Configuration.Credentials.SourceOktaAuthorizationMethodOAuth20.AuthType.ValueString())
-		sourceOktaAuthorizationMethodAPIToken = &shared.SourceOktaAuthorizationMethodAPIToken{
-			AuthType: authType1,
+		var sourceOktaAuthorizationMethodAPIToken *shared.SourceOktaAuthorizationMethodAPIToken
+		if r.Configuration.Credentials.SourceOktaAuthorizationMethodAPIToken != nil {
+			apiToken := r.Configuration.Credentials.SourceOktaAuthorizationMethodAPIToken.APIToken.ValueString()
+			authType1 := shared.SourceOktaAuthorizationMethodAPITokenAuthType(r.Configuration.Credentials.SourceOktaAuthorizationMethodAPIToken.AuthType.ValueString())
+			sourceOktaAuthorizationMethodAPIToken = &shared.SourceOktaAuthorizationMethodAPIToken{
+				APIToken: apiToken,
+				AuthType: authType1,
+			}
 		}
-	}
-	if sourceOktaAuthorizationMethodAPIToken != nil {
-		credentials = &shared.SourceOktaAuthorizationMethod{
-			SourceOktaAuthorizationMethodAPIToken: sourceOktaAuthorizationMethodAPIToken,
+		if sourceOktaAuthorizationMethodAPIToken != nil {
+			credentials = &shared.SourceOktaAuthorizationMethod{
+				SourceOktaAuthorizationMethodAPIToken: sourceOktaAuthorizationMethodAPIToken,
+			}
 		}
 	}
 	domain := new(string)
@@ -76,28 +86,38 @@ func (r *SourceOktaResourceModel) ToGetSDKType() *shared.SourceOktaCreateRequest
 
 func (r *SourceOktaResourceModel) ToUpdateSDKType() *shared.SourceOktaPutRequest {
 	var credentials *shared.SourceOktaUpdateAuthorizationMethod
-	var sourceOktaUpdateAuthorizationMethodOAuth20 *shared.SourceOktaUpdateAuthorizationMethodOAuth20
-	if r.Configuration.Credentials.SourceOktaAuthorizationMethodAPIToken != nil {
-		authType := shared.SourceOktaUpdateAuthorizationMethodOAuth20AuthType(r.Configuration.Credentials.SourceOktaAuthorizationMethodAPIToken.AuthType.ValueString())
-		sourceOktaUpdateAuthorizationMethodOAuth20 = &shared.SourceOktaUpdateAuthorizationMethodOAuth20{
-			AuthType: authType,
+	if r.Configuration.Credentials != nil {
+		var sourceOktaUpdateAuthorizationMethodOAuth20 *shared.SourceOktaUpdateAuthorizationMethodOAuth20
+		if r.Configuration.Credentials.SourceOktaUpdateAuthorizationMethodOAuth20 != nil {
+			authType := shared.SourceOktaUpdateAuthorizationMethodOAuth20AuthType(r.Configuration.Credentials.SourceOktaUpdateAuthorizationMethodOAuth20.AuthType.ValueString())
+			clientID := r.Configuration.Credentials.SourceOktaUpdateAuthorizationMethodOAuth20.ClientID.ValueString()
+			clientSecret := r.Configuration.Credentials.SourceOktaUpdateAuthorizationMethodOAuth20.ClientSecret.ValueString()
+			refreshToken := r.Configuration.Credentials.SourceOktaUpdateAuthorizationMethodOAuth20.RefreshToken.ValueString()
+			sourceOktaUpdateAuthorizationMethodOAuth20 = &shared.SourceOktaUpdateAuthorizationMethodOAuth20{
+				AuthType:     authType,
+				ClientID:     clientID,
+				ClientSecret: clientSecret,
+				RefreshToken: refreshToken,
+			}
 		}
-	}
-	if sourceOktaUpdateAuthorizationMethodOAuth20 != nil {
-		credentials = &shared.SourceOktaUpdateAuthorizationMethod{
-			SourceOktaUpdateAuthorizationMethodOAuth20: sourceOktaUpdateAuthorizationMethodOAuth20,
+		if sourceOktaUpdateAuthorizationMethodOAuth20 != nil {
+			credentials = &shared.SourceOktaUpdateAuthorizationMethod{
+				SourceOktaUpdateAuthorizationMethodOAuth20: sourceOktaUpdateAuthorizationMethodOAuth20,
+			}
 		}
-	}
-	var sourceOktaUpdateAuthorizationMethodAPIToken *shared.SourceOktaUpdateAuthorizationMethodAPIToken
-	if r.Configuration.Credentials.SourceOktaAuthorizationMethodOAuth20 != nil {
-		authType1 := shared.SourceOktaUpdateAuthorizationMethodAPITokenAuthType(r.Configuration.Credentials.SourceOktaAuthorizationMethodOAuth20.AuthType.ValueString())
-		sourceOktaUpdateAuthorizationMethodAPIToken = &shared.SourceOktaUpdateAuthorizationMethodAPIToken{
-			AuthType: authType1,
+		var sourceOktaUpdateAuthorizationMethodAPIToken *shared.SourceOktaUpdateAuthorizationMethodAPIToken
+		if r.Configuration.Credentials.SourceOktaUpdateAuthorizationMethodAPIToken != nil {
+			apiToken := r.Configuration.Credentials.SourceOktaUpdateAuthorizationMethodAPIToken.APIToken.ValueString()
+			authType1 := shared.SourceOktaUpdateAuthorizationMethodAPITokenAuthType(r.Configuration.Credentials.SourceOktaUpdateAuthorizationMethodAPIToken.AuthType.ValueString())
+			sourceOktaUpdateAuthorizationMethodAPIToken = &shared.SourceOktaUpdateAuthorizationMethodAPIToken{
+				APIToken: apiToken,
+				AuthType: authType1,
+			}
 		}
-	}
-	if sourceOktaUpdateAuthorizationMethodAPIToken != nil {
-		credentials = &shared.SourceOktaUpdateAuthorizationMethod{
-			SourceOktaUpdateAuthorizationMethodAPIToken: sourceOktaUpdateAuthorizationMethodAPIToken,
+		if sourceOktaUpdateAuthorizationMethodAPIToken != nil {
+			credentials = &shared.SourceOktaUpdateAuthorizationMethod{
+				SourceOktaUpdateAuthorizationMethodAPIToken: sourceOktaUpdateAuthorizationMethodAPIToken,
+			}
 		}
 	}
 	domain := new(string)

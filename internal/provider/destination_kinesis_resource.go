@@ -68,7 +68,7 @@ func (r *DestinationKinesisResource) Schema(ctx context.Context, req resource.Sc
 								"kinesis",
 							),
 						},
-						Description: `must be one of [kinesis]`,
+						Description: `must be one of ["kinesis"]`,
 					},
 					"endpoint": schema.StringAttribute{
 						Required:    true,
