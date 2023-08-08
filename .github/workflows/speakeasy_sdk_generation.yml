@@ -20,7 +20,7 @@ jobs:
         - terraform
       mode: direct
       openapi_docs: |
-        - ./openapi.yaml
+        - ./airbyte.yaml
       speakeasy_version: latest
     secrets:
       github_access_token: ${{ secrets.GITHUB_TOKEN }}
