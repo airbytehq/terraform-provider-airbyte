@@ -140,9 +140,11 @@ func (r *ConnectionDataSource) Schema(ctx context.Context, req datasource.Schema
 					stringvalidator.OneOf(
 						"ignore",
 						"disable_connection",
+						"propagate_columns",
+						"propagate_fully",
 					),
 				},
-				MarkdownDescription: `must be one of ["ignore", "disable_connection"]` + "\n" +
+				MarkdownDescription: `must be one of ["ignore", "disable_connection", "propagate_columns", "propagate_fully"]` + "\n" +
 					`Set how Airbyte handles syncs when it detects a non-breaking schema change in the source`,
 			},
 			"prefix": schema.StringAttribute{

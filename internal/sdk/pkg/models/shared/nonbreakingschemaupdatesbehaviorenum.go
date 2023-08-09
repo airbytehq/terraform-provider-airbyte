@@ -13,6 +13,8 @@ type NonBreakingSchemaUpdatesBehaviorEnum string
 const (
 	NonBreakingSchemaUpdatesBehaviorEnumIgnore            NonBreakingSchemaUpdatesBehaviorEnum = "ignore"
 	NonBreakingSchemaUpdatesBehaviorEnumDisableConnection NonBreakingSchemaUpdatesBehaviorEnum = "disable_connection"
+	NonBreakingSchemaUpdatesBehaviorEnumPropagateColumns  NonBreakingSchemaUpdatesBehaviorEnum = "propagate_columns"
+	NonBreakingSchemaUpdatesBehaviorEnumPropagateFully    NonBreakingSchemaUpdatesBehaviorEnum = "propagate_fully"
 )
 
 func (e NonBreakingSchemaUpdatesBehaviorEnum) ToPointer() *NonBreakingSchemaUpdatesBehaviorEnum {
@@ -28,6 +30,10 @@ func (e *NonBreakingSchemaUpdatesBehaviorEnum) UnmarshalJSON(data []byte) error 
 	case "ignore":
 		fallthrough
 	case "disable_connection":
+		fallthrough
+	case "propagate_columns":
+		fallthrough
+	case "propagate_fully":
 		*e = NonBreakingSchemaUpdatesBehaviorEnum(v)
 		return nil
 	default:

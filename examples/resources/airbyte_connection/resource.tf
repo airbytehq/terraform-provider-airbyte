@@ -20,7 +20,7 @@ resource "airbyte_connection" "my_connection" {
   name                                 = "Wilfred Wolff"
   namespace_definition                 = "custom_format"
   namespace_format                     = SOURCE_NAMESPACE
-  non_breaking_schema_updates_behavior = "ignore"
+  non_breaking_schema_updates_behavior = "disable_connection"
   prefix                               = "...my_prefix..."
   schedule = {
     basic_timing    = "...my_basic_timing..."

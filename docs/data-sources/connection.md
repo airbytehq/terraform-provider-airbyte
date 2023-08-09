@@ -34,7 +34,7 @@ data "airbyte_connection" "my_connection" {
 - `namespace_definition` (String) must be one of ["source", "destination", "custom_format"]
 Define the location where the data will be stored in the destination
 - `namespace_format` (String) Used when namespaceDefinition is 'custom_format'. If blank then behaves like namespaceDefinition = 'destination'. If "${SOURCE_NAMESPACE}" then behaves like namespaceDefinition = 'source'.
-- `non_breaking_schema_updates_behavior` (String) must be one of ["ignore", "disable_connection"]
+- `non_breaking_schema_updates_behavior` (String) must be one of ["ignore", "disable_connection", "propagate_columns", "propagate_fully"]
 Set how Airbyte handles syncs when it detects a non-breaking schema change in the source
 - `prefix` (String) Prefix that will be prepended to the name of each stream when it is written to the destination (ex. “airbyte_” causes “projects” => “airbyte_projects”).
 - `schedule` (Attributes) schedule for when the the connection should run, per the schedule type (see [below for nested schema](#nestedatt--schedule))
