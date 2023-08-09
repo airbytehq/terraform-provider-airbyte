@@ -21493,6 +21493,8 @@ components:
       enum:
       - "ignore"
       - "disable_connection"
+      - "propagate_columns"
+      - "propagate_fully"
       default: "ignore"
     NamespaceDefinitionEnumNoDefault:
       type: "string"
@@ -21508,6 +21510,8 @@ components:
       enum:
       - "ignore"
       - "disable_connection"
+      - "propagate_columns"
+      - "propagate_fully"
     DestinationResponse:
       title: "Root Type for DestinationResponse"
       description: "Provides details of a single destination."
