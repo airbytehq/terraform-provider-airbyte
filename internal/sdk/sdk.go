@@ -59,7 +59,7 @@ func (c *sdkConfiguration) GetServerDetails() (string, map[string]string) {
 	return ServerList[c.ServerIndex], nil
 }
 
-// SDK - airbyte-api: Programatically control Airbyte Cloud.
+// SDK - airbyte-api: Programatically control Airbyte Cloud, OSS & Enterprise.
 type SDK struct {
 	Connections  *connections
 	Destinations *destinations

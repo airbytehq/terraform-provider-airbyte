@@ -3,12 +3,12 @@
 page_title: "airbyte Provider"
 subcategory: ""
 description: |-
-  airbyte-api: Programatically control Airbyte Cloud.
+  airbyte-api: Programatically control Airbyte Cloud, OSS & Enterprise.
 ---
 
 # airbyte Provider
 
-airbyte-api: Programatically control Airbyte Cloud.
+airbyte-api: Programatically control Airbyte Cloud, OSS & Enterprise.
 
 ## Example Usage
 

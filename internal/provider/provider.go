@@ -38,7 +38,7 @@ func (p *AirbyteProvider) Metadata(ctx context.Context, req provider.MetadataReq
 
 func (p *AirbyteProvider) Schema(ctx context.Context, req provider.SchemaRequest, resp *provider.SchemaResponse) {
 	resp.Schema = schema.Schema{
-		Description: `airbyte-api: Programatically control Airbyte Cloud.`,
+		Description: `airbyte-api: Programatically control Airbyte Cloud, OSS & Enterprise.`,
 		Attributes: map[string]schema.Attribute{
 			"server_url": schema.StringAttribute{
 				MarkdownDescription: "Server URL (defaults to https://api.airbyte.com/v1)",
