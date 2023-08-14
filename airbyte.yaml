@@ -2,7 +2,7 @@ openapi: "3.1.0"
 info:
   title: "airbyte-api"
   version: "1.0.0"
-  description: Programatically control Airbyte Cloud.
+  description: Programatically control Airbyte Cloud, OSS & Enterprise.
 servers:
 - url: "https://api.airbyte.com/v1"
   description: "Airbyte API v1"
