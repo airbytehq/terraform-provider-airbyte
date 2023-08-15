@@ -328,6 +328,9 @@ func (r *DestinationMariadbColumnstoreResource) Create(ctx context.Context, req 
 	res, err := r.client.Destinations.CreateDestinationMariadbColumnstore(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -373,6 +376,9 @@ func (r *DestinationMariadbColumnstoreResource) Read(ctx context.Context, req re
 	res, err := r.client.Destinations.GetDestinationMariadbColumnstore(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -409,6 +415,9 @@ func (r *DestinationMariadbColumnstoreResource) Update(ctx context.Context, req 
 	res, err := r.client.Destinations.PutDestinationMariadbColumnstore(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -426,6 +435,9 @@ func (r *DestinationMariadbColumnstoreResource) Update(ctx context.Context, req 
 	getResponse, err := r.client.Destinations.GetDestinationMariadbColumnstore(ctx, getRequest)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if getResponse == nil {
@@ -471,6 +483,9 @@ func (r *DestinationMariadbColumnstoreResource) Delete(ctx context.Context, req 
 	res, err := r.client.Destinations.DeleteDestinationMariadbColumnstore(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {

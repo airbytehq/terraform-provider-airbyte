@@ -198,6 +198,9 @@ func (r *SourceSftpBulkResource) Create(ctx context.Context, req resource.Create
 	res, err := r.client.Sources.CreateSourceSftpBulk(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -243,6 +246,9 @@ func (r *SourceSftpBulkResource) Read(ctx context.Context, req resource.ReadRequ
 	res, err := r.client.Sources.GetSourceSftpBulk(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -279,6 +285,9 @@ func (r *SourceSftpBulkResource) Update(ctx context.Context, req resource.Update
 	res, err := r.client.Sources.PutSourceSftpBulk(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -296,6 +305,9 @@ func (r *SourceSftpBulkResource) Update(ctx context.Context, req resource.Update
 	getResponse, err := r.client.Sources.GetSourceSftpBulk(ctx, getRequest)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if getResponse == nil {
@@ -341,6 +353,9 @@ func (r *SourceSftpBulkResource) Delete(ctx context.Context, req resource.Delete
 	res, err := r.client.Sources.DeleteSourceSftpBulk(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {

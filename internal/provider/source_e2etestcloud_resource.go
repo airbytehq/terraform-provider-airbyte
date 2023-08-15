@@ -261,6 +261,9 @@ func (r *SourceE2eTestCloudResource) Create(ctx context.Context, req resource.Cr
 	res, err := r.client.Sources.CreateSourceE2eTestCloud(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -306,6 +309,9 @@ func (r *SourceE2eTestCloudResource) Read(ctx context.Context, req resource.Read
 	res, err := r.client.Sources.GetSourceE2eTestCloud(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -342,6 +348,9 @@ func (r *SourceE2eTestCloudResource) Update(ctx context.Context, req resource.Up
 	res, err := r.client.Sources.PutSourceE2eTestCloud(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -359,6 +368,9 @@ func (r *SourceE2eTestCloudResource) Update(ctx context.Context, req resource.Up
 	getResponse, err := r.client.Sources.GetSourceE2eTestCloud(ctx, getRequest)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if getResponse == nil {
@@ -404,6 +416,9 @@ func (r *SourceE2eTestCloudResource) Delete(ctx context.Context, req resource.De
 	res, err := r.client.Sources.DeleteSourceE2eTestCloud(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {

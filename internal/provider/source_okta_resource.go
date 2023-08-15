@@ -244,6 +244,9 @@ func (r *SourceOktaResource) Create(ctx context.Context, req resource.CreateRequ
 	res, err := r.client.Sources.CreateSourceOkta(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -289,6 +292,9 @@ func (r *SourceOktaResource) Read(ctx context.Context, req resource.ReadRequest,
 	res, err := r.client.Sources.GetSourceOkta(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -325,6 +331,9 @@ func (r *SourceOktaResource) Update(ctx context.Context, req resource.UpdateRequ
 	res, err := r.client.Sources.PutSourceOkta(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -342,6 +351,9 @@ func (r *SourceOktaResource) Update(ctx context.Context, req resource.UpdateRequ
 	getResponse, err := r.client.Sources.GetSourceOkta(ctx, getRequest)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if getResponse == nil {
@@ -387,6 +399,9 @@ func (r *SourceOktaResource) Delete(ctx context.Context, req resource.DeleteRequ
 	res, err := r.client.Sources.DeleteSourceOkta(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {

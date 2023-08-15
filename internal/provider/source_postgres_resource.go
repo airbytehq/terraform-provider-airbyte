@@ -833,6 +833,9 @@ func (r *SourcePostgresResource) Create(ctx context.Context, req resource.Create
 	res, err := r.client.Sources.CreateSourcePostgres(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -878,6 +881,9 @@ func (r *SourcePostgresResource) Read(ctx context.Context, req resource.ReadRequ
 	res, err := r.client.Sources.GetSourcePostgres(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -914,6 +920,9 @@ func (r *SourcePostgresResource) Update(ctx context.Context, req resource.Update
 	res, err := r.client.Sources.PutSourcePostgres(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -931,6 +940,9 @@ func (r *SourcePostgresResource) Update(ctx context.Context, req resource.Update
 	getResponse, err := r.client.Sources.GetSourcePostgres(ctx, getRequest)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if getResponse == nil {
@@ -976,6 +988,9 @@ func (r *SourcePostgresResource) Delete(ctx context.Context, req resource.Delete
 	res, err := r.client.Sources.DeleteSourcePostgres(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {

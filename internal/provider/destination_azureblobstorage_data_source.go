@@ -236,6 +236,9 @@ func (r *DestinationAzureBlobStorageDataSource) Read(ctx context.Context, req da
 	res, err := r.client.Destinations.GetDestinationAzureBlobStorage(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {

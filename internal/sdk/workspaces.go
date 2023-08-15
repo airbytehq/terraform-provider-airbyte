@@ -42,7 +42,10 @@ func (s *workspaces) CreateOrUpdateWorkspaceOAuthCredentials(ctx context.Context
 		return nil, fmt.Errorf("request body is required")
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -65,6 +68,7 @@ func (s *workspaces) CreateOrUpdateWorkspaceOAuthCredentials(ctx context.Context
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -99,7 +103,10 @@ func (s *workspaces) CreateWorkspace(ctx context.Context, request shared.Workspa
 		return nil, fmt.Errorf("request body is required")
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -122,6 +129,7 @@ func (s *workspaces) CreateWorkspace(ctx context.Context, request shared.Workspa
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -138,7 +146,7 @@ func (s *workspaces) CreateWorkspace(ctx context.Context, request shared.Workspa
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.WorkspaceResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.WorkspaceResponse = out
@@ -246,7 +254,7 @@ func (s *workspaces) GetWorkspace(ctx context.Context, request operations.GetWor
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.WorkspaceResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.WorkspaceResponse = out
@@ -305,7 +313,7 @@ func (s *workspaces) ListWorkspaces(ctx context.Context, request operations.List
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.WorkspacesResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.WorkspacesResponse = out
@@ -334,7 +342,10 @@ func (s *workspaces) UpdateWorkspace(ctx context.Context, request operations.Upd
 		return nil, fmt.Errorf("request body is required")
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PATCH", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -357,6 +368,7 @@ func (s *workspaces) UpdateWorkspace(ctx context.Context, request operations.Upd
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -373,7 +385,7 @@ func (s *workspaces) UpdateWorkspace(ctx context.Context, request operations.Upd
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.WorkspaceResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.WorkspaceResponse = out

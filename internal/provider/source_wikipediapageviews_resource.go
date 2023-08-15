@@ -167,6 +167,9 @@ func (r *SourceWikipediaPageviewsResource) Create(ctx context.Context, req resou
 	res, err := r.client.Sources.CreateSourceWikipediaPageviews(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -212,6 +215,9 @@ func (r *SourceWikipediaPageviewsResource) Read(ctx context.Context, req resourc
 	res, err := r.client.Sources.GetSourceWikipediaPageviews(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -248,6 +254,9 @@ func (r *SourceWikipediaPageviewsResource) Update(ctx context.Context, req resou
 	res, err := r.client.Sources.PutSourceWikipediaPageviews(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -265,6 +274,9 @@ func (r *SourceWikipediaPageviewsResource) Update(ctx context.Context, req resou
 	getResponse, err := r.client.Sources.GetSourceWikipediaPageviews(ctx, getRequest)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if getResponse == nil {
@@ -310,6 +322,9 @@ func (r *SourceWikipediaPageviewsResource) Delete(ctx context.Context, req resou
 	res, err := r.client.Sources.DeleteSourceWikipediaPageviews(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {

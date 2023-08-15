@@ -395,6 +395,9 @@ func (r *DestinationMssqlDataSource) Read(ctx context.Context, req datasource.Re
 	res, err := r.client.Destinations.GetDestinationMssql(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {

@@ -206,6 +206,9 @@ func (r *SourceGoogleAdsResource) Create(ctx context.Context, req resource.Creat
 	res, err := r.client.Sources.CreateSourceGoogleAds(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -251,6 +254,9 @@ func (r *SourceGoogleAdsResource) Read(ctx context.Context, req resource.ReadReq
 	res, err := r.client.Sources.GetSourceGoogleAds(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -287,6 +293,9 @@ func (r *SourceGoogleAdsResource) Update(ctx context.Context, req resource.Updat
 	res, err := r.client.Sources.PutSourceGoogleAds(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -304,6 +313,9 @@ func (r *SourceGoogleAdsResource) Update(ctx context.Context, req resource.Updat
 	getResponse, err := r.client.Sources.GetSourceGoogleAds(ctx, getRequest)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if getResponse == nil {
@@ -349,6 +361,9 @@ func (r *SourceGoogleAdsResource) Delete(ctx context.Context, req resource.Delet
 	res, err := r.client.Sources.DeleteSourceGoogleAds(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {

@@ -379,6 +379,9 @@ func (r *DestinationBigqueryDenormalizedResource) Create(ctx context.Context, re
 	res, err := r.client.Destinations.CreateDestinationBigqueryDenormalized(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -424,6 +427,9 @@ func (r *DestinationBigqueryDenormalizedResource) Read(ctx context.Context, req 
 	res, err := r.client.Destinations.GetDestinationBigqueryDenormalized(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -460,6 +466,9 @@ func (r *DestinationBigqueryDenormalizedResource) Update(ctx context.Context, re
 	res, err := r.client.Destinations.PutDestinationBigqueryDenormalized(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -477,6 +486,9 @@ func (r *DestinationBigqueryDenormalizedResource) Update(ctx context.Context, re
 	getResponse, err := r.client.Destinations.GetDestinationBigqueryDenormalized(ctx, getRequest)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if getResponse == nil {
@@ -522,6 +534,9 @@ func (r *DestinationBigqueryDenormalizedResource) Delete(ctx context.Context, re
 	res, err := r.client.Destinations.DeleteDestinationBigqueryDenormalized(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {

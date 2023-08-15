@@ -203,6 +203,9 @@ func (r *SourceAzureBlobStorageResource) Create(ctx context.Context, req resourc
 	res, err := r.client.Sources.CreateSourceAzureBlobStorage(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -248,6 +251,9 @@ func (r *SourceAzureBlobStorageResource) Read(ctx context.Context, req resource.
 	res, err := r.client.Sources.GetSourceAzureBlobStorage(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -284,6 +290,9 @@ func (r *SourceAzureBlobStorageResource) Update(ctx context.Context, req resourc
 	res, err := r.client.Sources.PutSourceAzureBlobStorage(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -301,6 +310,9 @@ func (r *SourceAzureBlobStorageResource) Update(ctx context.Context, req resourc
 	getResponse, err := r.client.Sources.GetSourceAzureBlobStorage(ctx, getRequest)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if getResponse == nil {
@@ -346,6 +358,9 @@ func (r *SourceAzureBlobStorageResource) Delete(ctx context.Context, req resourc
 	res, err := r.client.Sources.DeleteSourceAzureBlobStorage(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {

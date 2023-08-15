@@ -37,7 +37,10 @@ func (s *connections) CreateConnection(ctx context.Context, request shared.Conne
 		return nil, fmt.Errorf("request body is required")
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -60,6 +63,7 @@ func (s *connections) CreateConnection(ctx context.Context, request shared.Conne
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -76,7 +80,7 @@ func (s *connections) CreateConnection(ctx context.Context, request shared.Conne
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.ConnectionResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.ConnectionResponse = out
@@ -184,7 +188,7 @@ func (s *connections) GetConnection(ctx context.Context, request operations.GetC
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.ConnectionResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.ConnectionResponse = out
@@ -243,7 +247,7 @@ func (s *connections) ListConnections(ctx context.Context, request operations.Li
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.ConnectionsResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.ConnectionsResponse = out
@@ -272,7 +276,10 @@ func (s *connections) PatchConnection(ctx context.Context, request operations.Pa
 		return nil, fmt.Errorf("request body is required")
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PATCH", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -295,6 +302,7 @@ func (s *connections) PatchConnection(ctx context.Context, request operations.Pa
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -311,7 +319,7 @@ func (s *connections) PatchConnection(ctx context.Context, request operations.Pa
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.ConnectionResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.ConnectionResponse = out

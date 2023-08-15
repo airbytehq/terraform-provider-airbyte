@@ -255,6 +255,9 @@ func (r *SourceZendeskChatResource) Create(ctx context.Context, req resource.Cre
 	res, err := r.client.Sources.CreateSourceZendeskChat(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -300,6 +303,9 @@ func (r *SourceZendeskChatResource) Read(ctx context.Context, req resource.ReadR
 	res, err := r.client.Sources.GetSourceZendeskChat(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -336,6 +342,9 @@ func (r *SourceZendeskChatResource) Update(ctx context.Context, req resource.Upd
 	res, err := r.client.Sources.PutSourceZendeskChat(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -353,6 +362,9 @@ func (r *SourceZendeskChatResource) Update(ctx context.Context, req resource.Upd
 	getResponse, err := r.client.Sources.GetSourceZendeskChat(ctx, getRequest)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if getResponse == nil {
@@ -398,6 +410,9 @@ func (r *SourceZendeskChatResource) Delete(ctx context.Context, req resource.Del
 	res, err := r.client.Sources.DeleteSourceZendeskChat(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {

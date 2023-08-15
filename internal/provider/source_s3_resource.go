@@ -460,6 +460,9 @@ func (r *SourceS3Resource) Create(ctx context.Context, req resource.CreateReques
 	res, err := r.client.Sources.CreateSourceS3(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -505,6 +508,9 @@ func (r *SourceS3Resource) Read(ctx context.Context, req resource.ReadRequest, r
 	res, err := r.client.Sources.GetSourceS3(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -541,6 +547,9 @@ func (r *SourceS3Resource) Update(ctx context.Context, req resource.UpdateReques
 	res, err := r.client.Sources.PutSourceS3(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -558,6 +567,9 @@ func (r *SourceS3Resource) Update(ctx context.Context, req resource.UpdateReques
 	getResponse, err := r.client.Sources.GetSourceS3(ctx, getRequest)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if getResponse == nil {
@@ -603,6 +615,9 @@ func (r *SourceS3Resource) Delete(ctx context.Context, req resource.DeleteReques
 	res, err := r.client.Sources.DeleteSourceS3(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
