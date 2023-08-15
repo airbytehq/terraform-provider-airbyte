@@ -69,7 +69,7 @@ func (s *jobs) CancelJob(ctx context.Context, request operations.CancelJobReques
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.JobResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.JobResponse = out
@@ -95,7 +95,10 @@ func (s *jobs) CreateJob(ctx context.Context, request shared.JobCreateRequest) (
 		return nil, fmt.Errorf("request body is required")
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -118,6 +121,7 @@ func (s *jobs) CreateJob(ctx context.Context, request shared.JobCreateRequest) (
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -134,7 +138,7 @@ func (s *jobs) CreateJob(ctx context.Context, request shared.JobCreateRequest) (
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.JobResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.JobResponse = out
@@ -192,7 +196,7 @@ func (s *jobs) GetJob(ctx context.Context, request operations.GetJobRequest) (*o
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.JobResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.JobResponse = out
@@ -251,7 +255,7 @@ func (s *jobs) ListJobs(ctx context.Context, request operations.ListJobsRequest)
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.JobsResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.JobsResponse = out

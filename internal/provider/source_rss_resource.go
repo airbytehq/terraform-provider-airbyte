@@ -143,6 +143,9 @@ func (r *SourceRssResource) Create(ctx context.Context, req resource.CreateReque
 	res, err := r.client.Sources.CreateSourceRss(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -188,6 +191,9 @@ func (r *SourceRssResource) Read(ctx context.Context, req resource.ReadRequest, 
 	res, err := r.client.Sources.GetSourceRss(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -224,6 +230,9 @@ func (r *SourceRssResource) Update(ctx context.Context, req resource.UpdateReque
 	res, err := r.client.Sources.PutSourceRss(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -241,6 +250,9 @@ func (r *SourceRssResource) Update(ctx context.Context, req resource.UpdateReque
 	getResponse, err := r.client.Sources.GetSourceRss(ctx, getRequest)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if getResponse == nil {
@@ -286,6 +298,9 @@ func (r *SourceRssResource) Delete(ctx context.Context, req resource.DeleteReque
 	res, err := r.client.Sources.DeleteSourceRss(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {

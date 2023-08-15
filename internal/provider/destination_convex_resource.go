@@ -142,6 +142,9 @@ func (r *DestinationConvexResource) Create(ctx context.Context, req resource.Cre
 	res, err := r.client.Destinations.CreateDestinationConvex(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -187,6 +190,9 @@ func (r *DestinationConvexResource) Read(ctx context.Context, req resource.ReadR
 	res, err := r.client.Destinations.GetDestinationConvex(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -223,6 +229,9 @@ func (r *DestinationConvexResource) Update(ctx context.Context, req resource.Upd
 	res, err := r.client.Destinations.PutDestinationConvex(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -240,6 +249,9 @@ func (r *DestinationConvexResource) Update(ctx context.Context, req resource.Upd
 	getResponse, err := r.client.Destinations.GetDestinationConvex(ctx, getRequest)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if getResponse == nil {
@@ -285,6 +297,9 @@ func (r *DestinationConvexResource) Delete(ctx context.Context, req resource.Del
 	res, err := r.client.Destinations.DeleteDestinationConvex(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {

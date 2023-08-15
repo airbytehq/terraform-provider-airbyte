@@ -163,6 +163,9 @@ func (r *SourcePaypalTransactionResource) Create(ctx context.Context, req resour
 	res, err := r.client.Sources.CreateSourcePaypalTransaction(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -208,6 +211,9 @@ func (r *SourcePaypalTransactionResource) Read(ctx context.Context, req resource
 	res, err := r.client.Sources.GetSourcePaypalTransaction(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -244,6 +250,9 @@ func (r *SourcePaypalTransactionResource) Update(ctx context.Context, req resour
 	res, err := r.client.Sources.PutSourcePaypalTransaction(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -261,6 +270,9 @@ func (r *SourcePaypalTransactionResource) Update(ctx context.Context, req resour
 	getResponse, err := r.client.Sources.GetSourcePaypalTransaction(ctx, getRequest)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if getResponse == nil {
@@ -306,6 +318,9 @@ func (r *SourcePaypalTransactionResource) Delete(ctx context.Context, req resour
 	res, err := r.client.Sources.DeleteSourcePaypalTransaction(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {

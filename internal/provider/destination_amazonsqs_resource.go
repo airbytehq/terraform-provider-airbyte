@@ -192,6 +192,9 @@ func (r *DestinationAmazonSqsResource) Create(ctx context.Context, req resource.
 	res, err := r.client.Destinations.CreateDestinationAmazonSqs(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -237,6 +240,9 @@ func (r *DestinationAmazonSqsResource) Read(ctx context.Context, req resource.Re
 	res, err := r.client.Destinations.GetDestinationAmazonSqs(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -273,6 +279,9 @@ func (r *DestinationAmazonSqsResource) Update(ctx context.Context, req resource.
 	res, err := r.client.Destinations.PutDestinationAmazonSqs(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -290,6 +299,9 @@ func (r *DestinationAmazonSqsResource) Update(ctx context.Context, req resource.
 	getResponse, err := r.client.Destinations.GetDestinationAmazonSqs(ctx, getRequest)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if getResponse == nil {
@@ -335,6 +347,9 @@ func (r *DestinationAmazonSqsResource) Delete(ctx context.Context, req resource.
 	res, err := r.client.Destinations.DeleteDestinationAmazonSqs(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {

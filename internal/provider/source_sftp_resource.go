@@ -253,6 +253,9 @@ func (r *SourceSftpResource) Create(ctx context.Context, req resource.CreateRequ
 	res, err := r.client.Sources.CreateSourceSftp(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -298,6 +301,9 @@ func (r *SourceSftpResource) Read(ctx context.Context, req resource.ReadRequest,
 	res, err := r.client.Sources.GetSourceSftp(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -334,6 +340,9 @@ func (r *SourceSftpResource) Update(ctx context.Context, req resource.UpdateRequ
 	res, err := r.client.Sources.PutSourceSftp(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -351,6 +360,9 @@ func (r *SourceSftpResource) Update(ctx context.Context, req resource.UpdateRequ
 	getResponse, err := r.client.Sources.GetSourceSftp(ctx, getRequest)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if getResponse == nil {
@@ -396,6 +408,9 @@ func (r *SourceSftpResource) Delete(ctx context.Context, req resource.DeleteRequ
 	res, err := r.client.Sources.DeleteSourceSftp(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {

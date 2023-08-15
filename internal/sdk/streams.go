@@ -70,7 +70,7 @@ func (s *streams) GetStreamProperties(ctx context.Context, request operations.Ge
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.StreamProperties
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.StreamProperties = out

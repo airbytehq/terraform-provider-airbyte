@@ -151,6 +151,9 @@ func (r *SourceGoogleWorkspaceAdminReportsResource) Create(ctx context.Context, 
 	res, err := r.client.Sources.CreateSourceGoogleWorkspaceAdminReports(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -196,6 +199,9 @@ func (r *SourceGoogleWorkspaceAdminReportsResource) Read(ctx context.Context, re
 	res, err := r.client.Sources.GetSourceGoogleWorkspaceAdminReports(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -232,6 +238,9 @@ func (r *SourceGoogleWorkspaceAdminReportsResource) Update(ctx context.Context, 
 	res, err := r.client.Sources.PutSourceGoogleWorkspaceAdminReports(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -249,6 +258,9 @@ func (r *SourceGoogleWorkspaceAdminReportsResource) Update(ctx context.Context, 
 	getResponse, err := r.client.Sources.GetSourceGoogleWorkspaceAdminReports(ctx, getRequest)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if getResponse == nil {
@@ -294,6 +306,9 @@ func (r *SourceGoogleWorkspaceAdminReportsResource) Delete(ctx context.Context, 
 	res, err := r.client.Sources.DeleteSourceGoogleWorkspaceAdminReports(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {

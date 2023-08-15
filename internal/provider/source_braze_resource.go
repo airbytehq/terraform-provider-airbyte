@@ -155,6 +155,9 @@ func (r *SourceBrazeResource) Create(ctx context.Context, req resource.CreateReq
 	res, err := r.client.Sources.CreateSourceBraze(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -200,6 +203,9 @@ func (r *SourceBrazeResource) Read(ctx context.Context, req resource.ReadRequest
 	res, err := r.client.Sources.GetSourceBraze(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -236,6 +242,9 @@ func (r *SourceBrazeResource) Update(ctx context.Context, req resource.UpdateReq
 	res, err := r.client.Sources.PutSourceBraze(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -253,6 +262,9 @@ func (r *SourceBrazeResource) Update(ctx context.Context, req resource.UpdateReq
 	getResponse, err := r.client.Sources.GetSourceBraze(ctx, getRequest)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if getResponse == nil {
@@ -298,6 +310,9 @@ func (r *SourceBrazeResource) Delete(ctx context.Context, req resource.DeleteReq
 	res, err := r.client.Sources.DeleteSourceBraze(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {

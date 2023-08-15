@@ -182,6 +182,9 @@ func (r *SourcePolygonStockAPIResource) Create(ctx context.Context, req resource
 	res, err := r.client.Sources.CreateSourcePolygonStockAPI(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -227,6 +230,9 @@ func (r *SourcePolygonStockAPIResource) Read(ctx context.Context, req resource.R
 	res, err := r.client.Sources.GetSourcePolygonStockAPI(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -263,6 +269,9 @@ func (r *SourcePolygonStockAPIResource) Update(ctx context.Context, req resource
 	res, err := r.client.Sources.PutSourcePolygonStockAPI(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -280,6 +289,9 @@ func (r *SourcePolygonStockAPIResource) Update(ctx context.Context, req resource
 	getResponse, err := r.client.Sources.GetSourcePolygonStockAPI(ctx, getRequest)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if getResponse == nil {
@@ -325,6 +337,9 @@ func (r *SourcePolygonStockAPIResource) Delete(ctx context.Context, req resource
 	res, err := r.client.Sources.DeleteSourcePolygonStockAPI(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {

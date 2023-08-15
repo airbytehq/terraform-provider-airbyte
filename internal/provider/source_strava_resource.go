@@ -172,6 +172,9 @@ func (r *SourceStravaResource) Create(ctx context.Context, req resource.CreateRe
 	res, err := r.client.Sources.CreateSourceStrava(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -217,6 +220,9 @@ func (r *SourceStravaResource) Read(ctx context.Context, req resource.ReadReques
 	res, err := r.client.Sources.GetSourceStrava(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -253,6 +259,9 @@ func (r *SourceStravaResource) Update(ctx context.Context, req resource.UpdateRe
 	res, err := r.client.Sources.PutSourceStrava(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -270,6 +279,9 @@ func (r *SourceStravaResource) Update(ctx context.Context, req resource.UpdateRe
 	getResponse, err := r.client.Sources.GetSourceStrava(ctx, getRequest)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if getResponse == nil {
@@ -315,6 +327,9 @@ func (r *SourceStravaResource) Delete(ctx context.Context, req resource.DeleteRe
 	res, err := r.client.Sources.DeleteSourceStrava(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {

@@ -286,6 +286,9 @@ func (r *SourceGoogleSearchConsoleResource) Create(ctx context.Context, req reso
 	res, err := r.client.Sources.CreateSourceGoogleSearchConsole(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -331,6 +334,9 @@ func (r *SourceGoogleSearchConsoleResource) Read(ctx context.Context, req resour
 	res, err := r.client.Sources.GetSourceGoogleSearchConsole(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -367,6 +373,9 @@ func (r *SourceGoogleSearchConsoleResource) Update(ctx context.Context, req reso
 	res, err := r.client.Sources.PutSourceGoogleSearchConsole(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -384,6 +393,9 @@ func (r *SourceGoogleSearchConsoleResource) Update(ctx context.Context, req reso
 	getResponse, err := r.client.Sources.GetSourceGoogleSearchConsole(ctx, getRequest)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if getResponse == nil {
@@ -429,6 +441,9 @@ func (r *SourceGoogleSearchConsoleResource) Delete(ctx context.Context, req reso
 	res, err := r.client.Sources.DeleteSourceGoogleSearchConsole(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {

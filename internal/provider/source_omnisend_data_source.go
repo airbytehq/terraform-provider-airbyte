@@ -129,6 +129,9 @@ func (r *SourceOmnisendDataSource) Read(ctx context.Context, req datasource.Read
 	res, err := r.client.Sources.GetSourceOmnisend(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {

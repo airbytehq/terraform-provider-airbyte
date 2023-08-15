@@ -205,6 +205,9 @@ func (r *DestinationPulsarDataSource) Read(ctx context.Context, req datasource.R
 	res, err := r.client.Destinations.GetDestinationPulsar(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {

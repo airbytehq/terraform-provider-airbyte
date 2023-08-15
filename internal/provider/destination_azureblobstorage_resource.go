@@ -250,6 +250,9 @@ func (r *DestinationAzureBlobStorageResource) Create(ctx context.Context, req re
 	res, err := r.client.Destinations.CreateDestinationAzureBlobStorage(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -295,6 +298,9 @@ func (r *DestinationAzureBlobStorageResource) Read(ctx context.Context, req reso
 	res, err := r.client.Destinations.GetDestinationAzureBlobStorage(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -331,6 +337,9 @@ func (r *DestinationAzureBlobStorageResource) Update(ctx context.Context, req re
 	res, err := r.client.Destinations.PutDestinationAzureBlobStorage(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {
@@ -348,6 +357,9 @@ func (r *DestinationAzureBlobStorageResource) Update(ctx context.Context, req re
 	getResponse, err := r.client.Destinations.GetDestinationAzureBlobStorage(ctx, getRequest)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if getResponse == nil {
@@ -393,6 +405,9 @@ func (r *DestinationAzureBlobStorageResource) Delete(ctx context.Context, req re
 	res, err := r.client.Destinations.DeleteDestinationAzureBlobStorage(ctx, request)
 	if err != nil {
 		resp.Diagnostics.AddError("failure to invoke API", err.Error())
+		if res != nil && res.RawResponse != nil {
+			resp.Diagnostics.AddError("unexpected http request/response", debugResponse(res.RawResponse))
+		}
 		return
 	}
 	if res == nil {

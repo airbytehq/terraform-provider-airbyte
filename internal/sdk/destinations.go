@@ -35,7 +35,10 @@ func (s *destinations) CreateDestination(ctx context.Context, request shared.Des
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -58,6 +61,7 @@ func (s *destinations) CreateDestination(ctx context.Context, request shared.Des
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -74,7 +78,7 @@ func (s *destinations) CreateDestination(ctx context.Context, request shared.Des
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -100,7 +104,10 @@ func (s *destinations) CreateDestinationAmazonSqs(ctx context.Context, request s
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -123,6 +130,7 @@ func (s *destinations) CreateDestinationAmazonSqs(ctx context.Context, request s
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -139,7 +147,7 @@ func (s *destinations) CreateDestinationAmazonSqs(ctx context.Context, request s
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -163,7 +171,10 @@ func (s *destinations) CreateDestinationAwsDatalake(ctx context.Context, request
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -186,6 +197,7 @@ func (s *destinations) CreateDestinationAwsDatalake(ctx context.Context, request
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -202,7 +214,7 @@ func (s *destinations) CreateDestinationAwsDatalake(ctx context.Context, request
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -226,7 +238,10 @@ func (s *destinations) CreateDestinationAzureBlobStorage(ctx context.Context, re
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -249,6 +264,7 @@ func (s *destinations) CreateDestinationAzureBlobStorage(ctx context.Context, re
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -265,7 +281,7 @@ func (s *destinations) CreateDestinationAzureBlobStorage(ctx context.Context, re
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -289,7 +305,10 @@ func (s *destinations) CreateDestinationBigquery(ctx context.Context, request sh
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -312,6 +331,7 @@ func (s *destinations) CreateDestinationBigquery(ctx context.Context, request sh
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -328,7 +348,7 @@ func (s *destinations) CreateDestinationBigquery(ctx context.Context, request sh
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -352,7 +372,10 @@ func (s *destinations) CreateDestinationBigqueryDenormalized(ctx context.Context
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -375,6 +398,7 @@ func (s *destinations) CreateDestinationBigqueryDenormalized(ctx context.Context
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -391,7 +415,7 @@ func (s *destinations) CreateDestinationBigqueryDenormalized(ctx context.Context
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -415,7 +439,10 @@ func (s *destinations) CreateDestinationCassandra(ctx context.Context, request s
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -438,6 +465,7 @@ func (s *destinations) CreateDestinationCassandra(ctx context.Context, request s
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -454,7 +482,7 @@ func (s *destinations) CreateDestinationCassandra(ctx context.Context, request s
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -478,7 +506,10 @@ func (s *destinations) CreateDestinationClickhouse(ctx context.Context, request 
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -501,6 +532,7 @@ func (s *destinations) CreateDestinationClickhouse(ctx context.Context, request 
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -517,7 +549,7 @@ func (s *destinations) CreateDestinationClickhouse(ctx context.Context, request 
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -541,7 +573,10 @@ func (s *destinations) CreateDestinationConvex(ctx context.Context, request shar
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -564,6 +599,7 @@ func (s *destinations) CreateDestinationConvex(ctx context.Context, request shar
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -580,7 +616,7 @@ func (s *destinations) CreateDestinationConvex(ctx context.Context, request shar
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -604,7 +640,10 @@ func (s *destinations) CreateDestinationCumulio(ctx context.Context, request sha
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -627,6 +666,7 @@ func (s *destinations) CreateDestinationCumulio(ctx context.Context, request sha
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -643,7 +683,7 @@ func (s *destinations) CreateDestinationCumulio(ctx context.Context, request sha
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -667,7 +707,10 @@ func (s *destinations) CreateDestinationDatabend(ctx context.Context, request sh
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -690,6 +733,7 @@ func (s *destinations) CreateDestinationDatabend(ctx context.Context, request sh
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -706,7 +750,7 @@ func (s *destinations) CreateDestinationDatabend(ctx context.Context, request sh
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -730,7 +774,10 @@ func (s *destinations) CreateDestinationDatabricks(ctx context.Context, request 
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -753,6 +800,7 @@ func (s *destinations) CreateDestinationDatabricks(ctx context.Context, request 
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -769,7 +817,7 @@ func (s *destinations) CreateDestinationDatabricks(ctx context.Context, request 
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -793,7 +841,10 @@ func (s *destinations) CreateDestinationDevNull(ctx context.Context, request sha
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -816,6 +867,7 @@ func (s *destinations) CreateDestinationDevNull(ctx context.Context, request sha
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -832,7 +884,7 @@ func (s *destinations) CreateDestinationDevNull(ctx context.Context, request sha
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -856,7 +908,10 @@ func (s *destinations) CreateDestinationDynamodb(ctx context.Context, request sh
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -879,6 +934,7 @@ func (s *destinations) CreateDestinationDynamodb(ctx context.Context, request sh
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -895,7 +951,7 @@ func (s *destinations) CreateDestinationDynamodb(ctx context.Context, request sh
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -919,7 +975,10 @@ func (s *destinations) CreateDestinationElasticsearch(ctx context.Context, reque
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -942,6 +1001,7 @@ func (s *destinations) CreateDestinationElasticsearch(ctx context.Context, reque
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -958,7 +1018,7 @@ func (s *destinations) CreateDestinationElasticsearch(ctx context.Context, reque
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -982,7 +1042,10 @@ func (s *destinations) CreateDestinationFirebolt(ctx context.Context, request sh
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -1005,6 +1068,7 @@ func (s *destinations) CreateDestinationFirebolt(ctx context.Context, request sh
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -1021,7 +1085,7 @@ func (s *destinations) CreateDestinationFirebolt(ctx context.Context, request sh
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -1045,7 +1109,10 @@ func (s *destinations) CreateDestinationFirestore(ctx context.Context, request s
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -1068,6 +1135,7 @@ func (s *destinations) CreateDestinationFirestore(ctx context.Context, request s
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -1084,7 +1152,7 @@ func (s *destinations) CreateDestinationFirestore(ctx context.Context, request s
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -1108,7 +1176,10 @@ func (s *destinations) CreateDestinationGcs(ctx context.Context, request shared.
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -1131,6 +1202,7 @@ func (s *destinations) CreateDestinationGcs(ctx context.Context, request shared.
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -1147,7 +1219,7 @@ func (s *destinations) CreateDestinationGcs(ctx context.Context, request shared.
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -1171,7 +1243,10 @@ func (s *destinations) CreateDestinationGoogleSheets(ctx context.Context, reques
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -1194,6 +1269,7 @@ func (s *destinations) CreateDestinationGoogleSheets(ctx context.Context, reques
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -1210,7 +1286,7 @@ func (s *destinations) CreateDestinationGoogleSheets(ctx context.Context, reques
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -1234,7 +1310,10 @@ func (s *destinations) CreateDestinationKeen(ctx context.Context, request shared
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -1257,6 +1336,7 @@ func (s *destinations) CreateDestinationKeen(ctx context.Context, request shared
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -1273,7 +1353,7 @@ func (s *destinations) CreateDestinationKeen(ctx context.Context, request shared
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -1297,7 +1377,10 @@ func (s *destinations) CreateDestinationKinesis(ctx context.Context, request sha
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -1320,6 +1403,7 @@ func (s *destinations) CreateDestinationKinesis(ctx context.Context, request sha
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -1336,7 +1420,7 @@ func (s *destinations) CreateDestinationKinesis(ctx context.Context, request sha
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -1360,7 +1444,10 @@ func (s *destinations) CreateDestinationMariadbColumnstore(ctx context.Context, 
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -1383,6 +1470,7 @@ func (s *destinations) CreateDestinationMariadbColumnstore(ctx context.Context, 
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -1399,7 +1487,7 @@ func (s *destinations) CreateDestinationMariadbColumnstore(ctx context.Context, 
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -1423,7 +1511,10 @@ func (s *destinations) CreateDestinationMeilisearch(ctx context.Context, request
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -1446,6 +1537,7 @@ func (s *destinations) CreateDestinationMeilisearch(ctx context.Context, request
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -1462,7 +1554,7 @@ func (s *destinations) CreateDestinationMeilisearch(ctx context.Context, request
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -1486,7 +1578,10 @@ func (s *destinations) CreateDestinationMongodb(ctx context.Context, request sha
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -1509,6 +1604,7 @@ func (s *destinations) CreateDestinationMongodb(ctx context.Context, request sha
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -1525,7 +1621,7 @@ func (s *destinations) CreateDestinationMongodb(ctx context.Context, request sha
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -1549,7 +1645,10 @@ func (s *destinations) CreateDestinationMssql(ctx context.Context, request share
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -1572,6 +1671,7 @@ func (s *destinations) CreateDestinationMssql(ctx context.Context, request share
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -1588,7 +1688,7 @@ func (s *destinations) CreateDestinationMssql(ctx context.Context, request share
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -1612,7 +1712,10 @@ func (s *destinations) CreateDestinationMysql(ctx context.Context, request share
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -1635,6 +1738,7 @@ func (s *destinations) CreateDestinationMysql(ctx context.Context, request share
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -1651,7 +1755,7 @@ func (s *destinations) CreateDestinationMysql(ctx context.Context, request share
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -1675,7 +1779,10 @@ func (s *destinations) CreateDestinationOracle(ctx context.Context, request shar
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -1698,6 +1805,7 @@ func (s *destinations) CreateDestinationOracle(ctx context.Context, request shar
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -1714,7 +1822,7 @@ func (s *destinations) CreateDestinationOracle(ctx context.Context, request shar
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -1738,7 +1846,10 @@ func (s *destinations) CreateDestinationPostgres(ctx context.Context, request sh
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -1761,6 +1872,7 @@ func (s *destinations) CreateDestinationPostgres(ctx context.Context, request sh
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -1777,7 +1889,7 @@ func (s *destinations) CreateDestinationPostgres(ctx context.Context, request sh
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -1801,7 +1913,10 @@ func (s *destinations) CreateDestinationPubsub(ctx context.Context, request shar
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -1824,6 +1939,7 @@ func (s *destinations) CreateDestinationPubsub(ctx context.Context, request shar
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -1840,7 +1956,7 @@ func (s *destinations) CreateDestinationPubsub(ctx context.Context, request shar
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -1864,7 +1980,10 @@ func (s *destinations) CreateDestinationPulsar(ctx context.Context, request shar
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -1887,6 +2006,7 @@ func (s *destinations) CreateDestinationPulsar(ctx context.Context, request shar
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -1903,7 +2023,7 @@ func (s *destinations) CreateDestinationPulsar(ctx context.Context, request shar
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -1927,7 +2047,10 @@ func (s *destinations) CreateDestinationRabbitmq(ctx context.Context, request sh
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -1950,6 +2073,7 @@ func (s *destinations) CreateDestinationRabbitmq(ctx context.Context, request sh
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -1966,7 +2090,7 @@ func (s *destinations) CreateDestinationRabbitmq(ctx context.Context, request sh
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -1990,7 +2114,10 @@ func (s *destinations) CreateDestinationRedis(ctx context.Context, request share
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -2013,6 +2140,7 @@ func (s *destinations) CreateDestinationRedis(ctx context.Context, request share
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -2029,7 +2157,7 @@ func (s *destinations) CreateDestinationRedis(ctx context.Context, request share
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -2053,7 +2181,10 @@ func (s *destinations) CreateDestinationRedshift(ctx context.Context, request sh
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -2076,6 +2207,7 @@ func (s *destinations) CreateDestinationRedshift(ctx context.Context, request sh
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -2092,7 +2224,7 @@ func (s *destinations) CreateDestinationRedshift(ctx context.Context, request sh
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -2116,7 +2248,10 @@ func (s *destinations) CreateDestinationRockset(ctx context.Context, request sha
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -2139,6 +2274,7 @@ func (s *destinations) CreateDestinationRockset(ctx context.Context, request sha
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -2155,7 +2291,7 @@ func (s *destinations) CreateDestinationRockset(ctx context.Context, request sha
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -2179,7 +2315,10 @@ func (s *destinations) CreateDestinationS3(ctx context.Context, request shared.D
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -2202,6 +2341,7 @@ func (s *destinations) CreateDestinationS3(ctx context.Context, request shared.D
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -2218,7 +2358,7 @@ func (s *destinations) CreateDestinationS3(ctx context.Context, request shared.D
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -2242,7 +2382,10 @@ func (s *destinations) CreateDestinationS3Glue(ctx context.Context, request shar
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -2265,6 +2408,7 @@ func (s *destinations) CreateDestinationS3Glue(ctx context.Context, request shar
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -2281,7 +2425,7 @@ func (s *destinations) CreateDestinationS3Glue(ctx context.Context, request shar
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -2305,7 +2449,10 @@ func (s *destinations) CreateDestinationScylla(ctx context.Context, request shar
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -2328,6 +2475,7 @@ func (s *destinations) CreateDestinationScylla(ctx context.Context, request shar
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -2344,7 +2492,7 @@ func (s *destinations) CreateDestinationScylla(ctx context.Context, request shar
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -2368,7 +2516,10 @@ func (s *destinations) CreateDestinationSftpJSON(ctx context.Context, request sh
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -2391,6 +2542,7 @@ func (s *destinations) CreateDestinationSftpJSON(ctx context.Context, request sh
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -2407,7 +2559,7 @@ func (s *destinations) CreateDestinationSftpJSON(ctx context.Context, request sh
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -2431,7 +2583,10 @@ func (s *destinations) CreateDestinationSnowflake(ctx context.Context, request s
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -2454,6 +2609,7 @@ func (s *destinations) CreateDestinationSnowflake(ctx context.Context, request s
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -2470,7 +2626,7 @@ func (s *destinations) CreateDestinationSnowflake(ctx context.Context, request s
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -2494,7 +2650,10 @@ func (s *destinations) CreateDestinationTypesense(ctx context.Context, request s
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -2517,6 +2676,7 @@ func (s *destinations) CreateDestinationTypesense(ctx context.Context, request s
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -2533,7 +2693,7 @@ func (s *destinations) CreateDestinationTypesense(ctx context.Context, request s
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -2557,7 +2717,10 @@ func (s *destinations) CreateDestinationVertica(ctx context.Context, request sha
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "POST", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "POST", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -2580,6 +2743,7 @@ func (s *destinations) CreateDestinationVertica(ctx context.Context, request sha
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -2596,7 +2760,7 @@ func (s *destinations) CreateDestinationVertica(ctx context.Context, request sha
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -4704,7 +4868,7 @@ func (s *destinations) GetDestination(ctx context.Context, request operations.Ge
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -4762,7 +4926,7 @@ func (s *destinations) GetDestinationAmazonSqs(ctx context.Context, request oper
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -4820,7 +4984,7 @@ func (s *destinations) GetDestinationAwsDatalake(ctx context.Context, request op
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -4878,7 +5042,7 @@ func (s *destinations) GetDestinationAzureBlobStorage(ctx context.Context, reque
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -4936,7 +5100,7 @@ func (s *destinations) GetDestinationBigquery(ctx context.Context, request opera
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -4994,7 +5158,7 @@ func (s *destinations) GetDestinationBigqueryDenormalized(ctx context.Context, r
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -5052,7 +5216,7 @@ func (s *destinations) GetDestinationCassandra(ctx context.Context, request oper
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -5110,7 +5274,7 @@ func (s *destinations) GetDestinationClickhouse(ctx context.Context, request ope
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -5168,7 +5332,7 @@ func (s *destinations) GetDestinationConvex(ctx context.Context, request operati
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -5226,7 +5390,7 @@ func (s *destinations) GetDestinationCumulio(ctx context.Context, request operat
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -5284,7 +5448,7 @@ func (s *destinations) GetDestinationDatabend(ctx context.Context, request opera
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -5342,7 +5506,7 @@ func (s *destinations) GetDestinationDatabricks(ctx context.Context, request ope
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -5400,7 +5564,7 @@ func (s *destinations) GetDestinationDevNull(ctx context.Context, request operat
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -5458,7 +5622,7 @@ func (s *destinations) GetDestinationDynamodb(ctx context.Context, request opera
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -5516,7 +5680,7 @@ func (s *destinations) GetDestinationElasticsearch(ctx context.Context, request 
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -5574,7 +5738,7 @@ func (s *destinations) GetDestinationFirebolt(ctx context.Context, request opera
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -5632,7 +5796,7 @@ func (s *destinations) GetDestinationFirestore(ctx context.Context, request oper
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -5690,7 +5854,7 @@ func (s *destinations) GetDestinationGcs(ctx context.Context, request operations
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -5748,7 +5912,7 @@ func (s *destinations) GetDestinationGoogleSheets(ctx context.Context, request o
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -5806,7 +5970,7 @@ func (s *destinations) GetDestinationKeen(ctx context.Context, request operation
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -5864,7 +6028,7 @@ func (s *destinations) GetDestinationKinesis(ctx context.Context, request operat
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -5922,7 +6086,7 @@ func (s *destinations) GetDestinationMariadbColumnstore(ctx context.Context, req
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -5980,7 +6144,7 @@ func (s *destinations) GetDestinationMeilisearch(ctx context.Context, request op
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -6038,7 +6202,7 @@ func (s *destinations) GetDestinationMongodb(ctx context.Context, request operat
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -6096,7 +6260,7 @@ func (s *destinations) GetDestinationMssql(ctx context.Context, request operatio
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -6154,7 +6318,7 @@ func (s *destinations) GetDestinationMysql(ctx context.Context, request operatio
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -6212,7 +6376,7 @@ func (s *destinations) GetDestinationOracle(ctx context.Context, request operati
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -6270,7 +6434,7 @@ func (s *destinations) GetDestinationPostgres(ctx context.Context, request opera
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -6328,7 +6492,7 @@ func (s *destinations) GetDestinationPubsub(ctx context.Context, request operati
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -6386,7 +6550,7 @@ func (s *destinations) GetDestinationPulsar(ctx context.Context, request operati
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -6444,7 +6608,7 @@ func (s *destinations) GetDestinationRabbitmq(ctx context.Context, request opera
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -6502,7 +6666,7 @@ func (s *destinations) GetDestinationRedis(ctx context.Context, request operatio
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -6560,7 +6724,7 @@ func (s *destinations) GetDestinationRedshift(ctx context.Context, request opera
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -6618,7 +6782,7 @@ func (s *destinations) GetDestinationRockset(ctx context.Context, request operat
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -6676,7 +6840,7 @@ func (s *destinations) GetDestinationS3(ctx context.Context, request operations.
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -6734,7 +6898,7 @@ func (s *destinations) GetDestinationS3Glue(ctx context.Context, request operati
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -6792,7 +6956,7 @@ func (s *destinations) GetDestinationScylla(ctx context.Context, request operati
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -6850,7 +7014,7 @@ func (s *destinations) GetDestinationSftpJSON(ctx context.Context, request opera
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -6908,7 +7072,7 @@ func (s *destinations) GetDestinationSnowflake(ctx context.Context, request oper
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -6966,7 +7130,7 @@ func (s *destinations) GetDestinationTypesense(ctx context.Context, request oper
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -7024,7 +7188,7 @@ func (s *destinations) GetDestinationVertica(ctx context.Context, request operat
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -7083,7 +7247,7 @@ func (s *destinations) ListDestinations(ctx context.Context, request operations.
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationsResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationsResponse = out
@@ -7109,7 +7273,10 @@ func (s *destinations) PatchDestination(ctx context.Context, request operations.
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PATCH", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PATCH", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -7132,6 +7299,7 @@ func (s *destinations) PatchDestination(ctx context.Context, request operations.
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -7148,7 +7316,7 @@ func (s *destinations) PatchDestination(ctx context.Context, request operations.
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -7174,7 +7342,10 @@ func (s *destinations) PutDestination(ctx context.Context, request operations.Pu
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -7197,6 +7368,7 @@ func (s *destinations) PutDestination(ctx context.Context, request operations.Pu
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -7213,7 +7385,7 @@ func (s *destinations) PutDestination(ctx context.Context, request operations.Pu
 		case utils.MatchContentType(contentType, `application/json`):
 			var out *shared.DestinationResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
-				return nil, err
+				return res, err
 			}
 
 			res.DestinationResponse = out
@@ -7239,7 +7411,10 @@ func (s *destinations) PutDestinationAmazonSqs(ctx context.Context, request oper
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -7262,6 +7437,7 @@ func (s *destinations) PutDestinationAmazonSqs(ctx context.Context, request oper
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -7296,7 +7472,10 @@ func (s *destinations) PutDestinationAwsDatalake(ctx context.Context, request op
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -7319,6 +7498,7 @@ func (s *destinations) PutDestinationAwsDatalake(ctx context.Context, request op
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -7353,7 +7533,10 @@ func (s *destinations) PutDestinationAzureBlobStorage(ctx context.Context, reque
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -7376,6 +7559,7 @@ func (s *destinations) PutDestinationAzureBlobStorage(ctx context.Context, reque
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -7410,7 +7594,10 @@ func (s *destinations) PutDestinationBigquery(ctx context.Context, request opera
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -7433,6 +7620,7 @@ func (s *destinations) PutDestinationBigquery(ctx context.Context, request opera
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -7467,7 +7655,10 @@ func (s *destinations) PutDestinationBigqueryDenormalized(ctx context.Context, r
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -7490,6 +7681,7 @@ func (s *destinations) PutDestinationBigqueryDenormalized(ctx context.Context, r
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -7524,7 +7716,10 @@ func (s *destinations) PutDestinationCassandra(ctx context.Context, request oper
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -7547,6 +7742,7 @@ func (s *destinations) PutDestinationCassandra(ctx context.Context, request oper
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -7581,7 +7777,10 @@ func (s *destinations) PutDestinationClickhouse(ctx context.Context, request ope
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -7604,6 +7803,7 @@ func (s *destinations) PutDestinationClickhouse(ctx context.Context, request ope
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -7638,7 +7838,10 @@ func (s *destinations) PutDestinationConvex(ctx context.Context, request operati
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -7661,6 +7864,7 @@ func (s *destinations) PutDestinationConvex(ctx context.Context, request operati
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -7695,7 +7899,10 @@ func (s *destinations) PutDestinationCumulio(ctx context.Context, request operat
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -7718,6 +7925,7 @@ func (s *destinations) PutDestinationCumulio(ctx context.Context, request operat
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -7752,7 +7960,10 @@ func (s *destinations) PutDestinationDatabend(ctx context.Context, request opera
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -7775,6 +7986,7 @@ func (s *destinations) PutDestinationDatabend(ctx context.Context, request opera
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -7809,7 +8021,10 @@ func (s *destinations) PutDestinationDatabricks(ctx context.Context, request ope
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -7832,6 +8047,7 @@ func (s *destinations) PutDestinationDatabricks(ctx context.Context, request ope
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -7866,7 +8082,10 @@ func (s *destinations) PutDestinationDevNull(ctx context.Context, request operat
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -7889,6 +8108,7 @@ func (s *destinations) PutDestinationDevNull(ctx context.Context, request operat
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -7923,7 +8143,10 @@ func (s *destinations) PutDestinationDynamodb(ctx context.Context, request opera
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -7946,6 +8169,7 @@ func (s *destinations) PutDestinationDynamodb(ctx context.Context, request opera
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -7980,7 +8204,10 @@ func (s *destinations) PutDestinationElasticsearch(ctx context.Context, request 
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -8003,6 +8230,7 @@ func (s *destinations) PutDestinationElasticsearch(ctx context.Context, request 
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -8037,7 +8265,10 @@ func (s *destinations) PutDestinationFirebolt(ctx context.Context, request opera
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -8060,6 +8291,7 @@ func (s *destinations) PutDestinationFirebolt(ctx context.Context, request opera
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -8094,7 +8326,10 @@ func (s *destinations) PutDestinationFirestore(ctx context.Context, request oper
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -8117,6 +8352,7 @@ func (s *destinations) PutDestinationFirestore(ctx context.Context, request oper
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -8151,7 +8387,10 @@ func (s *destinations) PutDestinationGcs(ctx context.Context, request operations
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -8174,6 +8413,7 @@ func (s *destinations) PutDestinationGcs(ctx context.Context, request operations
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -8208,7 +8448,10 @@ func (s *destinations) PutDestinationGoogleSheets(ctx context.Context, request o
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -8231,6 +8474,7 @@ func (s *destinations) PutDestinationGoogleSheets(ctx context.Context, request o
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -8265,7 +8509,10 @@ func (s *destinations) PutDestinationKeen(ctx context.Context, request operation
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -8288,6 +8535,7 @@ func (s *destinations) PutDestinationKeen(ctx context.Context, request operation
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -8322,7 +8570,10 @@ func (s *destinations) PutDestinationKinesis(ctx context.Context, request operat
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -8345,6 +8596,7 @@ func (s *destinations) PutDestinationKinesis(ctx context.Context, request operat
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -8379,7 +8631,10 @@ func (s *destinations) PutDestinationMariadbColumnstore(ctx context.Context, req
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -8402,6 +8657,7 @@ func (s *destinations) PutDestinationMariadbColumnstore(ctx context.Context, req
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -8436,7 +8692,10 @@ func (s *destinations) PutDestinationMeilisearch(ctx context.Context, request op
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -8459,6 +8718,7 @@ func (s *destinations) PutDestinationMeilisearch(ctx context.Context, request op
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -8493,7 +8753,10 @@ func (s *destinations) PutDestinationMongodb(ctx context.Context, request operat
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -8516,6 +8779,7 @@ func (s *destinations) PutDestinationMongodb(ctx context.Context, request operat
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -8550,7 +8814,10 @@ func (s *destinations) PutDestinationMssql(ctx context.Context, request operatio
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -8573,6 +8840,7 @@ func (s *destinations) PutDestinationMssql(ctx context.Context, request operatio
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -8607,7 +8875,10 @@ func (s *destinations) PutDestinationMysql(ctx context.Context, request operatio
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -8630,6 +8901,7 @@ func (s *destinations) PutDestinationMysql(ctx context.Context, request operatio
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -8664,7 +8936,10 @@ func (s *destinations) PutDestinationOracle(ctx context.Context, request operati
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -8687,6 +8962,7 @@ func (s *destinations) PutDestinationOracle(ctx context.Context, request operati
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -8721,7 +8997,10 @@ func (s *destinations) PutDestinationPostgres(ctx context.Context, request opera
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -8744,6 +9023,7 @@ func (s *destinations) PutDestinationPostgres(ctx context.Context, request opera
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -8778,7 +9058,10 @@ func (s *destinations) PutDestinationPubsub(ctx context.Context, request operati
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -8801,6 +9084,7 @@ func (s *destinations) PutDestinationPubsub(ctx context.Context, request operati
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -8835,7 +9119,10 @@ func (s *destinations) PutDestinationPulsar(ctx context.Context, request operati
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -8858,6 +9145,7 @@ func (s *destinations) PutDestinationPulsar(ctx context.Context, request operati
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -8892,7 +9180,10 @@ func (s *destinations) PutDestinationRabbitmq(ctx context.Context, request opera
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -8915,6 +9206,7 @@ func (s *destinations) PutDestinationRabbitmq(ctx context.Context, request opera
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -8949,7 +9241,10 @@ func (s *destinations) PutDestinationRedis(ctx context.Context, request operatio
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -8972,6 +9267,7 @@ func (s *destinations) PutDestinationRedis(ctx context.Context, request operatio
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -9006,7 +9302,10 @@ func (s *destinations) PutDestinationRedshift(ctx context.Context, request opera
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -9029,6 +9328,7 @@ func (s *destinations) PutDestinationRedshift(ctx context.Context, request opera
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -9063,7 +9363,10 @@ func (s *destinations) PutDestinationRockset(ctx context.Context, request operat
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -9086,6 +9389,7 @@ func (s *destinations) PutDestinationRockset(ctx context.Context, request operat
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -9120,7 +9424,10 @@ func (s *destinations) PutDestinationS3(ctx context.Context, request operations.
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -9143,6 +9450,7 @@ func (s *destinations) PutDestinationS3(ctx context.Context, request operations.
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -9177,7 +9485,10 @@ func (s *destinations) PutDestinationS3Glue(ctx context.Context, request operati
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -9200,6 +9511,7 @@ func (s *destinations) PutDestinationS3Glue(ctx context.Context, request operati
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -9234,7 +9546,10 @@ func (s *destinations) PutDestinationScylla(ctx context.Context, request operati
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -9257,6 +9572,7 @@ func (s *destinations) PutDestinationScylla(ctx context.Context, request operati
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -9291,7 +9607,10 @@ func (s *destinations) PutDestinationSftpJSON(ctx context.Context, request opera
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -9314,6 +9633,7 @@ func (s *destinations) PutDestinationSftpJSON(ctx context.Context, request opera
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -9348,7 +9668,10 @@ func (s *destinations) PutDestinationSnowflake(ctx context.Context, request oper
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -9371,6 +9694,7 @@ func (s *destinations) PutDestinationSnowflake(ctx context.Context, request oper
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -9405,7 +9729,10 @@ func (s *destinations) PutDestinationTypesense(ctx context.Context, request oper
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -9428,6 +9755,7 @@ func (s *destinations) PutDestinationTypesense(ctx context.Context, request oper
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
@@ -9462,7 +9790,10 @@ func (s *destinations) PutDestinationVertica(ctx context.Context, request operat
 		return nil, fmt.Errorf("error serializing request body: %w", err)
 	}
 
-	req, err := http.NewRequestWithContext(ctx, "PUT", url, bodyReader)
+	debugBody := bytes.NewBuffer([]byte{})
+	debugReader := io.TeeReader(bodyReader, debugBody)
+
+	req, err := http.NewRequestWithContext(ctx, "PUT", url, debugReader)
 	if err != nil {
 		return nil, fmt.Errorf("error creating request: %w", err)
 	}
@@ -9485,6 +9816,7 @@ func (s *destinations) PutDestinationVertica(ctx context.Context, request operat
 	if err != nil {
 		return nil, fmt.Errorf("error reading response body: %w", err)
 	}
+	httpRes.Request.Body = io.NopCloser(debugBody)
 	httpRes.Body.Close()
 	httpRes.Body = io.NopCloser(bytes.NewBuffer(rawBody))
 
