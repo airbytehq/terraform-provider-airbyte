@@ -81,6 +81,8 @@ Read-Only:
 
 - `access_token` (String) The value of the API token generated. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk-talk">docs</a> for more information.
 - `auth_type` (String) must be one of ["oauth2.0"]
+- `client_id` (String) Client ID
+- `client_secret` (String) Client Secret
 
 
 <a id="nestedatt--configuration--credentials--source_zendesk_talk_update_authentication_api_token"></a>
@@ -108,5 +110,7 @@ Read-Only:
 
 - `access_token` (String) The value of the API token generated. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk-talk">docs</a> for more information.
 - `auth_type` (String) must be one of ["oauth2.0"]
+- `client_id` (String) Client ID
+- `client_secret` (String) Client Secret
 
 

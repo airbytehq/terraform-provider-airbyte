@@ -1,6 +1,6 @@
 resource "airbyte_source_tiktok_marketing" "my_source_tiktokmarketing" {
   configuration = {
-    attribution_window = 8
+    attribution_window = 0
     credentials = {
       source_tiktok_marketing_authentication_method_o_auth2_0 = {
         access_token  = "...my_access_token..."
@@ -10,11 +10,12 @@ resource "airbyte_source_tiktok_marketing" "my_source_tiktokmarketing" {
         secret        = "...my_secret..."
       }
     }
-    end_date    = "2021-01-19"
-    source_type = "tiktok-marketing"
-    start_date  = "2022-09-08"
+    end_date        = "2022-04-16"
+    include_deleted = true
+    source_type     = "tiktok-marketing"
+    start_date      = "2020-11-25"
   }
-  name         = "Jeremy Krajcik"
+  name         = "Vicky Reichert"
   secret_id    = "...my_secret_id..."
-  workspace_id = "9e2c9e6d-10e9-4db3-ad4c-6b03108d9c33"
+  workspace_id = "635d5e65-da02-48c3-a951-a1e30fda9664"
 }

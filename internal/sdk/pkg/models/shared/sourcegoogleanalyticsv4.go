@@ -3,6 +3,7 @@
 package shared
 
 import (
+	"airbyte/internal/sdk/pkg/types"
 	"bytes"
 	"encoding/json"
 	"errors"
@@ -176,7 +177,7 @@ type SourceGoogleAnalyticsV4 struct {
 	CustomReports *string                                  `json:"custom_reports,omitempty"`
 	SourceType    SourceGoogleAnalyticsV4GoogleAnalyticsV4 `json:"sourceType"`
 	// The date in the format YYYY-MM-DD. Any data before this date will not be replicated.
-	StartDate string `json:"start_date"`
+	StartDate types.Date `json:"start_date"`
 	// The ID for the Google Analytics View you want to fetch data from. This can be found from the <a href="https://ga-dev-tools.appspot.com/account-explorer/">Google Analytics Account Explorer</a>.
 	ViewID string `json:"view_id"`
 	// The time increment used by the connector when requesting data from the Google Analytics API. More information is available in the <a href="https://docs.airbyte.com/integrations/sources/google-analytics-v4/#sampling-in-reports">the docs</a>. The bigger this value is, the faster the sync will be, but the more likely that sampling will be applied to your data, potentially causing inaccuracies in the returned results. We recommend setting this to 1 unless you have a hard requirement to make the sync faster at the expense of accuracy. The minimum allowed value for this field is 1, and the maximum is 364.

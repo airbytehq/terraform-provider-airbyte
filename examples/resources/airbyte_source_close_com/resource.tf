@@ -4,7 +4,7 @@ resource "airbyte_source_close_com" "my_source_closecom" {
     source_type = "close-com"
     start_date  = "2021-01-01"
   }
-  name         = "Kim Crist"
+  name         = "Robert Muller MD"
   secret_id    = "...my_secret_id..."
-  workspace_id = "c88373a4-0e19-442f-b2e5-5055756f5d56"
+  workspace_id = "668151a4-72af-4923-8594-9f83f350cf87"
 }

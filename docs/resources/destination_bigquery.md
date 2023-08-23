@@ -18,7 +18,7 @@ resource "airbyte_destination_bigquery" "my_destination_bigquery" {
     big_query_client_buffer_size_mb = 15
     credentials_json                = "...my_credentials_json..."
     dataset_id                      = "...my_dataset_id..."
-    dataset_location                = "US"
+    dataset_location                = "australia-southeast2"
     destination_type                = "bigquery"
     loading_method = {
       destination_bigquery_loading_method_gcs_staging = {
@@ -32,15 +32,17 @@ resource "airbyte_destination_bigquery" "my_destination_bigquery" {
         file_buffer_count        = 10
         gcs_bucket_name          = "airbyte_sync"
         gcs_bucket_path          = "data_sync/test"
-        keep_files_in_gcs_bucket = "Keep all tmp files in GCS"
+        keep_files_in_gcs_bucket = "Delete all tmp files from GCS"
         method                   = "GCS Staging"
       }
     }
     project_id              = "...my_project_id..."
+    raw_data_dataset        = "...my_raw_data_dataset..."
     transformation_priority = "batch"
+    use_1s1t_format         = false
   }
-  name         = "Olivia Rice"
-  workspace_id = "63c969e9-a3ef-4a77-9fb1-4cd66ae395ef"
+  name         = "Alison Mann"
+  workspace_id = "488e1e91-e450-4ad2-abd4-4269802d502a"
 }
 ```
 
@@ -74,8 +76,10 @@ Optional:
 - `big_query_client_buffer_size_mb` (Number) Google BigQuery client's chunk (buffer) size (MIN=1, MAX = 15) for each table. The size that will be written by a single RPC. Written data will be buffered and only flushed upon reaching this size or closing the channel. The default 15MB value is used if not set explicitly. Read more <a href="https://googleapis.dev/python/bigquery/latest/generated/google.cloud.bigquery.client.Client.html">here</a>.
 - `credentials_json` (String) The contents of the JSON service account key. Check out the <a href="https://docs.airbyte.com/integrations/destinations/bigquery#service-account-key">docs</a> if you need help generating this key. Default credentials will be used if this field is left empty.
 - `loading_method` (Attributes) Loading method used to send select the way data will be uploaded to BigQuery. <br/><b>Standard Inserts</b> - Direct uploading using SQL INSERT statements. This method is extremely inefficient and provided only for quick testing. In almost all cases, you should use staging. <br/><b>GCS Staging</b> - Writes large batches of records to a file, uploads the file to GCS, then uses <b>COPY INTO table</b> to upload the file. Recommended for most workloads for better speed and scalability. Read more about GCS Staging <a href="https://docs.airbyte.com/integrations/destinations/bigquery#gcs-staging">here</a>. (see [below for nested schema](#nestedatt--configuration--loading_method))
+- `raw_data_dataset` (String) (Early Access) The dataset to write raw tables into
 - `transformation_priority` (String) must be one of ["interactive", "batch"]
 Interactive run type means that the query is executed as soon as possible, and these queries count towards concurrent rate limit and daily limit. Read more about interactive run type <a href="https://cloud.google.com/bigquery/docs/running-queries#queries">here</a>. Batch queries are queued and started as soon as idle resources are available in the BigQuery shared resource pool, which usually occurs within a few minutes. Batch queries don’t count towards your concurrent rate limit. Read more about batch queries <a href="https://cloud.google.com/bigquery/docs/running-queries#batch">here</a>. The default "interactive" value is used if not set explicitly.
+- `use_1s1t_format` (Boolean) (Early Access) Use <a href="https://docs.airbyte.com/understanding-airbyte/typing-deduping" target="_blank">Destinations V2</a>.
 
 <a id="nestedatt--configuration--loading_method"></a>
 ### Nested Schema for `configuration.loading_method`

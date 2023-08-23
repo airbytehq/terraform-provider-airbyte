@@ -4,7 +4,7 @@ resource "airbyte_source_postmarkapp" "my_source_postmarkapp" {
     x_postmark_account_token = "...my_x_postmark_account_token..."
     x_postmark_server_token  = "...my_x_postmark_server_token..."
   }
-  name         = "Jon Harris"
+  name         = "Boyd Stoltenberg"
   secret_id    = "...my_secret_id..."
-  workspace_id = "217c2977-6763-4342-9403-8bfb5971e981"
+  workspace_id = "405cb331-d492-4f4f-927f-b0e0bf1f8217"
 }

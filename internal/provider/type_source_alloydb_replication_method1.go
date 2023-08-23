@@ -5,6 +5,8 @@ package provider
 type SourceAlloydbReplicationMethod1 struct {
 	SourceAlloydbReplicationMethodLogicalReplicationCDC       *SourceAlloydbReplicationMethodLogicalReplicationCDC1       `tfsdk:"source_alloydb_replication_method_logical_replication_cdc"`
 	SourceAlloydbReplicationMethodStandard                    *SourceAlloydbReplicationMethodStandard                     `tfsdk:"source_alloydb_replication_method_standard"`
+	SourceAlloydbReplicationMethodStandardXmin                *SourceAlloydbReplicationMethodStandardXmin                 `tfsdk:"source_alloydb_replication_method_standard_xmin"`
 	SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC *SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC1 `tfsdk:"source_alloydb_update_replication_method_logical_replication_cdc"`
 	SourceAlloydbUpdateReplicationMethodStandard              *SourceAlloydbReplicationMethodStandard                     `tfsdk:"source_alloydb_update_replication_method_standard"`
+	SourceAlloydbUpdateReplicationMethodStandardXmin          *SourceAlloydbReplicationMethodStandardXmin                 `tfsdk:"source_alloydb_update_replication_method_standard_xmin"`
 }

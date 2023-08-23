@@ -54,6 +54,10 @@ func (r *SourceFakerResource) Schema(ctx context.Context, req resource.SchemaReq
 			"configuration": schema.SingleNestedAttribute{
 				Required: true,
 				Attributes: map[string]schema.Attribute{
+					"always_updated": schema.BoolAttribute{
+						Optional:    true,
+						Description: `Should the updated_at values for every record be new each sync?  Setting this to false will case the source to stop emitting records after COUNT records have been emitted.`,
+					},
 					"count": schema.Int64Attribute{
 						Required:    true,
 						Description: `How many users should be generated in total.  This setting does not apply to the purchases or products stream.`,
@@ -65,10 +69,6 @@ func (r *SourceFakerResource) Schema(ctx context.Context, req resource.SchemaReq
 					"records_per_slice": schema.Int64Attribute{
 						Optional:    true,
 						Description: `How many fake records will be in each page (stream slice), before a state message is emitted?`,
-					},
-					"records_per_sync": schema.Int64Attribute{
-						Optional:    true,
-						Description: `How many fake records will be returned for each sync, for each stream?  By default, it will take 2 syncs to create the requested 1000 records.`,
 					},
 					"seed": schema.Int64Attribute{
 						Optional:    true,
@@ -280,7 +280,7 @@ func (r *SourceFakerResource) Update(ctx context.Context, req resource.UpdateReq
 		return
 	}
 	if getResponse.SourceResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
 		return
 	}
 	data.RefreshFromGetResponse(getResponse.SourceResponse)
@@ -323,7 +323,7 @@ func (r *SourceFakerResource) Delete(ctx context.Context, req resource.DeleteReq
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

@@ -34,9 +34,9 @@ func (e *SourcePaypalTransactionPaypalTransaction) UnmarshalJSON(data []byte) er
 
 type SourcePaypalTransaction struct {
 	// The Client ID of your Paypal developer application.
-	ClientID *string `json:"client_id,omitempty"`
+	ClientID string `json:"client_id"`
 	// The Client Secret of your Paypal developer application.
-	ClientSecret *string `json:"client_secret,omitempty"`
+	ClientSecret string `json:"client_secret"`
 	// Determines whether to use the sandbox or production environment.
 	IsSandbox bool `json:"is_sandbox"`
 	// The key to refresh the expired access token.

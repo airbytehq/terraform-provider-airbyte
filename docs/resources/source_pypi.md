@@ -19,9 +19,9 @@ resource "airbyte_source_pypi" "my_source_pypi" {
     source_type  = "pypi"
     version      = "1.2.0"
   }
-  name         = "Mercedes Fritsch"
+  name         = "Bill Reichert"
   secret_id    = "...my_secret_id..."
-  workspace_id = "f4f127fb-0e0b-4f1f-8217-978d0acca77a"
+  workspace_id = "f0f54856-8a04-424e-80a1-d6eb9434645d"
 }
 ```
 

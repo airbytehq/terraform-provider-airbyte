@@ -15,7 +15,7 @@ resource "airbyte_source_oracle" "my_source_oracle" {
     host            = "...my_host..."
     jdbc_url_params = "...my_jdbc_url_params..."
     password        = "...my_password..."
-    port            = 2
+    port            = 10
     schemas = [
       "...",
     ]
@@ -25,9 +25,9 @@ resource "airbyte_source_oracle" "my_source_oracle" {
         tunnel_method = "NO_TUNNEL"
       }
     }
-    username = "Gilda.Spencer"
+    username = "Lila92"
   }
-  name         = "Courtney Wiegand"
+  name         = "Barbara Hilll"
   secret_id    = "...my_secret_id..."
-  workspace_id = "0eb74b84-2195-43b4-8bd3-c43159d33e59"
+  workspace_id = "4b935d23-7a72-4f90-849d-6aed4aecb753"
 }

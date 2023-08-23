@@ -15,16 +15,25 @@ SourceTypeform Resource
 ```terraform
 resource "airbyte_source_typeform" "my_source_typeform" {
   configuration = {
+    credentials = {
+      source_typeform_authorization_method_o_auth2_0 = {
+        access_token      = "...my_access_token..."
+        auth_type         = "oauth2.0"
+        client_id         = "...my_client_id..."
+        client_secret     = "...my_client_secret..."
+        refresh_token     = "...my_refresh_token..."
+        token_expiry_date = "2022-05-15T15:21:36.066Z"
+      }
+    }
     form_ids = [
       "...",
     ]
     source_type = "typeform"
-    start_date  = "2020-01-01T00:00:00Z"
-    token       = "...my_token..."
+    start_date  = "2021-03-01T00:00:00Z"
   }
-  name         = "Lula Kuphal"
+  name         = "Lucy Johnson"
   secret_id    = "...my_secret_id..."
-  workspace_id = "065c0efa-6f93-4b90-a1b8-c95be1254b73"
+  workspace_id = "7c50233c-1471-4d51-aaa6-ddf5abd6487c"
 }
 ```
 
@@ -51,12 +60,77 @@ resource "airbyte_source_typeform" "my_source_typeform" {
 
 Required:
 
+- `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
 - `source_type` (String) must be one of ["typeform"]
-- `start_date` (String) UTC date and time in the format: YYYY-MM-DDTHH:mm:ss[Z]. Any data before this date will not be replicated.
-- `token` (String) The API Token for a Typeform account.
 
 Optional:
 
 - `form_ids` (List of String) When this parameter is set, the connector will replicate data only from the input forms. Otherwise, all forms in your Typeform account will be replicated. You can find form IDs in your form URLs. For example, in the URL "https://mysite.typeform.com/to/u6nXL7" the form_id is u6nXL7. You can find form URLs on Share panel
+- `start_date` (String) The date from which you'd like to replicate data for Typeform API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
+
+<a id="nestedatt--configuration--credentials"></a>
+### Nested Schema for `configuration.credentials`
+
+Optional:
+
+- `source_typeform_authorization_method_o_auth2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_typeform_authorization_method_o_auth2_0))
+- `source_typeform_authorization_method_private_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_typeform_authorization_method_private_token))
+- `source_typeform_update_authorization_method_o_auth2_0` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_typeform_update_authorization_method_o_auth2_0))
+- `source_typeform_update_authorization_method_private_token` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials--source_typeform_update_authorization_method_private_token))
+
+<a id="nestedatt--configuration--credentials--source_typeform_authorization_method_o_auth2_0"></a>
+### Nested Schema for `configuration.credentials.source_typeform_authorization_method_o_auth2_0`
+
+Required:
+
+- `access_token` (String) Access Token for making authenticated requests.
+- `client_id` (String) The Client ID of the Typeform developer application.
+- `client_secret` (String) The Client Secret the Typeform developer application.
+- `refresh_token` (String) The key to refresh the expired access_token.
+- `token_expiry_date` (String) The date-time when the access token should be refreshed.
+
+Optional:
+
+- `auth_type` (String) must be one of ["oauth2.0"]
+
+
+<a id="nestedatt--configuration--credentials--source_typeform_authorization_method_private_token"></a>
+### Nested Schema for `configuration.credentials.source_typeform_authorization_method_private_token`
+
+Required:
+
+- `access_token` (String) Log into your Typeform account and then generate a personal Access Token.
+
+Optional:
+
+- `auth_type` (String) must be one of ["access_token"]
+
+
+<a id="nestedatt--configuration--credentials--source_typeform_update_authorization_method_o_auth2_0"></a>
+### Nested Schema for `configuration.credentials.source_typeform_update_authorization_method_o_auth2_0`
+
+Required:
+
+- `access_token` (String) Access Token for making authenticated requests.
+- `client_id` (String) The Client ID of the Typeform developer application.
+- `client_secret` (String) The Client Secret the Typeform developer application.
+- `refresh_token` (String) The key to refresh the expired access_token.
+- `token_expiry_date` (String) The date-time when the access token should be refreshed.
+
+Optional:
+
+- `auth_type` (String) must be one of ["oauth2.0"]
+
+
+<a id="nestedatt--configuration--credentials--source_typeform_update_authorization_method_private_token"></a>
+### Nested Schema for `configuration.credentials.source_typeform_update_authorization_method_private_token`
+
+Required:
+
+- `access_token` (String) Log into your Typeform account and then generate a personal Access Token.
+
+Optional:
+
+- `auth_type` (String) must be one of ["access_token"]
 
 

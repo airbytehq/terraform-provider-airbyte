@@ -41,6 +41,12 @@ func (r *SourceGoogleSheetsResourceModel) ToCreateSDKType() *shared.SourceGoogle
 			SourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication: sourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication,
 		}
 	}
+	namesConversion := new(bool)
+	if !r.Configuration.NamesConversion.IsUnknown() && !r.Configuration.NamesConversion.IsNull() {
+		*namesConversion = r.Configuration.NamesConversion.ValueBool()
+	} else {
+		namesConversion = nil
+	}
 	rowBatchSize := new(int64)
 	if !r.Configuration.RowBatchSize.IsUnknown() && !r.Configuration.RowBatchSize.IsNull() {
 		*rowBatchSize = r.Configuration.RowBatchSize.ValueInt64()
@@ -50,10 +56,11 @@ func (r *SourceGoogleSheetsResourceModel) ToCreateSDKType() *shared.SourceGoogle
 	sourceType := shared.SourceGoogleSheetsGoogleSheets(r.Configuration.SourceType.ValueString())
 	spreadsheetID := r.Configuration.SpreadsheetID.ValueString()
 	configuration := shared.SourceGoogleSheets{
-		Credentials:   credentials,
-		RowBatchSize:  rowBatchSize,
-		SourceType:    sourceType,
-		SpreadsheetID: spreadsheetID,
+		Credentials:     credentials,
+		NamesConversion: namesConversion,
+		RowBatchSize:    rowBatchSize,
+		SourceType:      sourceType,
+		SpreadsheetID:   spreadsheetID,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -111,6 +118,12 @@ func (r *SourceGoogleSheetsResourceModel) ToUpdateSDKType() *shared.SourceGoogle
 			SourceGoogleSheetsUpdateAuthenticationServiceAccountKeyAuthentication: sourceGoogleSheetsUpdateAuthenticationServiceAccountKeyAuthentication,
 		}
 	}
+	namesConversion := new(bool)
+	if !r.Configuration.NamesConversion.IsUnknown() && !r.Configuration.NamesConversion.IsNull() {
+		*namesConversion = r.Configuration.NamesConversion.ValueBool()
+	} else {
+		namesConversion = nil
+	}
 	rowBatchSize := new(int64)
 	if !r.Configuration.RowBatchSize.IsUnknown() && !r.Configuration.RowBatchSize.IsNull() {
 		*rowBatchSize = r.Configuration.RowBatchSize.ValueInt64()
@@ -119,9 +132,10 @@ func (r *SourceGoogleSheetsResourceModel) ToUpdateSDKType() *shared.SourceGoogle
 	}
 	spreadsheetID := r.Configuration.SpreadsheetID.ValueString()
 	configuration := shared.SourceGoogleSheetsUpdate{
-		Credentials:   credentials,
-		RowBatchSize:  rowBatchSize,
-		SpreadsheetID: spreadsheetID,
+		Credentials:     credentials,
+		NamesConversion: namesConversion,
+		RowBatchSize:    rowBatchSize,
+		SpreadsheetID:   spreadsheetID,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()

@@ -172,7 +172,7 @@ func (e *SourceGitlabGitlab) UnmarshalJSON(data []byte) error {
 
 type SourceGitlab struct {
 	// Please enter your basic URL from GitLab instance.
-	APIURL      string                          `json:"api_url"`
+	APIURL      *string                         `json:"api_url,omitempty"`
 	Credentials SourceGitlabAuthorizationMethod `json:"credentials"`
 	// Space-delimited list of groups. e.g. airbyte.io.
 	Groups *string `json:"groups,omitempty"`

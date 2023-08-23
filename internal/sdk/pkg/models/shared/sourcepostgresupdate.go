@@ -9,6 +9,35 @@ import (
 	"fmt"
 )
 
+type SourcePostgresUpdateReplicationMethodStandardMethod string
+
+const (
+	SourcePostgresUpdateReplicationMethodStandardMethodStandard SourcePostgresUpdateReplicationMethodStandardMethod = "Standard"
+)
+
+func (e SourcePostgresUpdateReplicationMethodStandardMethod) ToPointer() *SourcePostgresUpdateReplicationMethodStandardMethod {
+	return &e
+}
+
+func (e *SourcePostgresUpdateReplicationMethodStandardMethod) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Standard":
+		*e = SourcePostgresUpdateReplicationMethodStandardMethod(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourcePostgresUpdateReplicationMethodStandardMethod: %v", v)
+	}
+}
+
+// SourcePostgresUpdateReplicationMethodStandard - Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.
+type SourcePostgresUpdateReplicationMethodStandard struct {
+	Method SourcePostgresUpdateReplicationMethodStandardMethod `json:"method"`
+}
+
 // SourcePostgresUpdateReplicationMethodLogicalReplicationCDCLSNCommitBehaviour - Determines when Airbtye should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.
 type SourcePostgresUpdateReplicationMethodLogicalReplicationCDCLSNCommitBehaviour string
 
@@ -155,54 +184,56 @@ func (c SourcePostgresUpdateReplicationMethodLogicalReplicationCDC) MarshalJSON(
 	return json.Marshal(out)
 }
 
-type SourcePostgresUpdateReplicationMethodStandardMethod string
+type SourcePostgresUpdateReplicationMethodStandardXminMethod string
 
 const (
-	SourcePostgresUpdateReplicationMethodStandardMethodStandard SourcePostgresUpdateReplicationMethodStandardMethod = "Standard"
+	SourcePostgresUpdateReplicationMethodStandardXminMethodXmin SourcePostgresUpdateReplicationMethodStandardXminMethod = "Xmin"
 )
 
-func (e SourcePostgresUpdateReplicationMethodStandardMethod) ToPointer() *SourcePostgresUpdateReplicationMethodStandardMethod {
+func (e SourcePostgresUpdateReplicationMethodStandardXminMethod) ToPointer() *SourcePostgresUpdateReplicationMethodStandardXminMethod {
 	return &e
 }
 
-func (e *SourcePostgresUpdateReplicationMethodStandardMethod) UnmarshalJSON(data []byte) error {
+func (e *SourcePostgresUpdateReplicationMethodStandardXminMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
-	case "Standard":
-		*e = SourcePostgresUpdateReplicationMethodStandardMethod(v)
+	case "Xmin":
+		*e = SourcePostgresUpdateReplicationMethodStandardXminMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresUpdateReplicationMethodStandardMethod: %v", v)
+		return fmt.Errorf("invalid value for SourcePostgresUpdateReplicationMethodStandardXminMethod: %v", v)
 	}
 }
 
-// SourcePostgresUpdateReplicationMethodStandard - Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.
-type SourcePostgresUpdateReplicationMethodStandard struct {
-	Method SourcePostgresUpdateReplicationMethodStandardMethod `json:"method"`
+// SourcePostgresUpdateReplicationMethodStandardXmin - Xmin replication requires no setup on the DB side but will not be able to represent deletions incrementally.
+type SourcePostgresUpdateReplicationMethodStandardXmin struct {
+	Method SourcePostgresUpdateReplicationMethodStandardXminMethod `json:"method"`
 }
 
 type SourcePostgresUpdateReplicationMethodType string
 
 const (
-	SourcePostgresUpdateReplicationMethodTypeSourcePostgresUpdateReplicationMethodStandard              SourcePostgresUpdateReplicationMethodType = "source-postgres-update_Replication Method_Standard"
+	SourcePostgresUpdateReplicationMethodTypeSourcePostgresUpdateReplicationMethodStandardXmin          SourcePostgresUpdateReplicationMethodType = "source-postgres-update_Replication Method_Standard (Xmin)"
 	SourcePostgresUpdateReplicationMethodTypeSourcePostgresUpdateReplicationMethodLogicalReplicationCDC SourcePostgresUpdateReplicationMethodType = "source-postgres-update_Replication Method_Logical Replication (CDC)"
+	SourcePostgresUpdateReplicationMethodTypeSourcePostgresUpdateReplicationMethodStandard              SourcePostgresUpdateReplicationMethodType = "source-postgres-update_Replication Method_Standard"
 )
 
 type SourcePostgresUpdateReplicationMethod struct {
-	SourcePostgresUpdateReplicationMethodStandard              *SourcePostgresUpdateReplicationMethodStandard
+	SourcePostgresUpdateReplicationMethodStandardXmin          *SourcePostgresUpdateReplicationMethodStandardXmin
 	SourcePostgresUpdateReplicationMethodLogicalReplicationCDC *SourcePostgresUpdateReplicationMethodLogicalReplicationCDC
+	SourcePostgresUpdateReplicationMethodStandard              *SourcePostgresUpdateReplicationMethodStandard
 
 	Type SourcePostgresUpdateReplicationMethodType
 }
 
-func CreateSourcePostgresUpdateReplicationMethodSourcePostgresUpdateReplicationMethodStandard(sourcePostgresUpdateReplicationMethodStandard SourcePostgresUpdateReplicationMethodStandard) SourcePostgresUpdateReplicationMethod {
-	typ := SourcePostgresUpdateReplicationMethodTypeSourcePostgresUpdateReplicationMethodStandard
+func CreateSourcePostgresUpdateReplicationMethodSourcePostgresUpdateReplicationMethodStandardXmin(sourcePostgresUpdateReplicationMethodStandardXmin SourcePostgresUpdateReplicationMethodStandardXmin) SourcePostgresUpdateReplicationMethod {
+	typ := SourcePostgresUpdateReplicationMethodTypeSourcePostgresUpdateReplicationMethodStandardXmin
 
 	return SourcePostgresUpdateReplicationMethod{
-		SourcePostgresUpdateReplicationMethodStandard: &sourcePostgresUpdateReplicationMethodStandard,
+		SourcePostgresUpdateReplicationMethodStandardXmin: &sourcePostgresUpdateReplicationMethodStandardXmin,
 		Type: typ,
 	}
 }
@@ -216,15 +247,24 @@ func CreateSourcePostgresUpdateReplicationMethodSourcePostgresUpdateReplicationM
 	}
 }
 
+func CreateSourcePostgresUpdateReplicationMethodSourcePostgresUpdateReplicationMethodStandard(sourcePostgresUpdateReplicationMethodStandard SourcePostgresUpdateReplicationMethodStandard) SourcePostgresUpdateReplicationMethod {
+	typ := SourcePostgresUpdateReplicationMethodTypeSourcePostgresUpdateReplicationMethodStandard
+
+	return SourcePostgresUpdateReplicationMethod{
+		SourcePostgresUpdateReplicationMethodStandard: &sourcePostgresUpdateReplicationMethodStandard,
+		Type: typ,
+	}
+}
+
 func (u *SourcePostgresUpdateReplicationMethod) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourcePostgresUpdateReplicationMethodStandard := new(SourcePostgresUpdateReplicationMethodStandard)
+	sourcePostgresUpdateReplicationMethodStandardXmin := new(SourcePostgresUpdateReplicationMethodStandardXmin)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
-	if err := d.Decode(&sourcePostgresUpdateReplicationMethodStandard); err == nil {
-		u.SourcePostgresUpdateReplicationMethodStandard = sourcePostgresUpdateReplicationMethodStandard
-		u.Type = SourcePostgresUpdateReplicationMethodTypeSourcePostgresUpdateReplicationMethodStandard
+	if err := d.Decode(&sourcePostgresUpdateReplicationMethodStandardXmin); err == nil {
+		u.SourcePostgresUpdateReplicationMethodStandardXmin = sourcePostgresUpdateReplicationMethodStandardXmin
+		u.Type = SourcePostgresUpdateReplicationMethodTypeSourcePostgresUpdateReplicationMethodStandardXmin
 		return nil
 	}
 
@@ -237,16 +277,29 @@ func (u *SourcePostgresUpdateReplicationMethod) UnmarshalJSON(data []byte) error
 		return nil
 	}
 
+	sourcePostgresUpdateReplicationMethodStandard := new(SourcePostgresUpdateReplicationMethodStandard)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourcePostgresUpdateReplicationMethodStandard); err == nil {
+		u.SourcePostgresUpdateReplicationMethodStandard = sourcePostgresUpdateReplicationMethodStandard
+		u.Type = SourcePostgresUpdateReplicationMethodTypeSourcePostgresUpdateReplicationMethodStandard
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourcePostgresUpdateReplicationMethod) MarshalJSON() ([]byte, error) {
-	if u.SourcePostgresUpdateReplicationMethodStandard != nil {
-		return json.Marshal(u.SourcePostgresUpdateReplicationMethodStandard)
+	if u.SourcePostgresUpdateReplicationMethodStandardXmin != nil {
+		return json.Marshal(u.SourcePostgresUpdateReplicationMethodStandardXmin)
 	}
 
 	if u.SourcePostgresUpdateReplicationMethodLogicalReplicationCDC != nil {
 		return json.Marshal(u.SourcePostgresUpdateReplicationMethodLogicalReplicationCDC)
+	}
+
+	if u.SourcePostgresUpdateReplicationMethodStandard != nil {
+		return json.Marshal(u.SourcePostgresUpdateReplicationMethodStandard)
 	}
 
 	return nil, nil

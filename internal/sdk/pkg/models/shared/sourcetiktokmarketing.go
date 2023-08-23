@@ -178,8 +178,10 @@ type SourceTiktokMarketing struct {
 	// Authentication method
 	Credentials *SourceTiktokMarketingAuthenticationMethod `json:"credentials,omitempty"`
 	// The date until which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DD. All data generated between start_date and this date will be replicated. Not setting this option will result in always syncing the data till the current date.
-	EndDate    *types.Date                           `json:"end_date,omitempty"`
-	SourceType *SourceTiktokMarketingTiktokMarketing `json:"sourceType,omitempty"`
+	EndDate *types.Date `json:"end_date,omitempty"`
+	// Set to active if you want to include deleted data in reports.
+	IncludeDeleted *bool                                 `json:"include_deleted,omitempty"`
+	SourceType     *SourceTiktokMarketingTiktokMarketing `json:"sourceType,omitempty"`
 	// The Start Date in format: YYYY-MM-DD. Any data before this date will not be replicated. If this parameter is not set, all data will be replicated.
 	StartDate *types.Date `json:"start_date,omitempty"`
 }

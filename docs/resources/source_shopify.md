@@ -21,13 +21,13 @@ resource "airbyte_source_shopify" "my_source_shopify" {
         auth_method  = "api_password"
       }
     }
-    shop        = "...my_shop..."
+    shop        = "my-store"
     source_type = "shopify"
     start_date  = "2021-01-01"
   }
-  name         = "Alfred Hoppe"
+  name         = "Rhonda Gislason"
   secret_id    = "...my_secret_id..."
-  workspace_id = "512ab252-1b9f-42e0-b246-7b8a40bc05fa"
+  workspace_id = "619039da-cd38-4ed0-9c67-1dc7f1e3af15"
 }
 ```
 
@@ -54,7 +54,7 @@ resource "airbyte_source_shopify" "my_source_shopify" {
 
 Required:
 
-- `shop` (String) The name of your Shopify store found in the URL. For example, if your URL was https://NAME.myshopify.com, then the name would be 'NAME'.
+- `shop` (String) The name of your Shopify store found in the URL. For example, if your URL was https://NAME.myshopify.com, then the name would be 'NAME' or 'NAME.myshopify.com'.
 - `source_type` (String) must be one of ["shopify"]
 - `start_date` (String) The date you would like to replicate data from. Format: YYYY-MM-DD. Any data before this date will not be replicated.
 

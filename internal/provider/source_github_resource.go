@@ -69,6 +69,14 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 										Required:    true,
 										Description: `OAuth access token`,
 									},
+									"client_id": schema.StringAttribute{
+										Optional:    true,
+										Description: `OAuth Client Id`,
+									},
+									"client_secret": schema.StringAttribute{
+										Optional:    true,
+										Description: `OAuth Client secret`,
+									},
 									"option_title": schema.StringAttribute{
 										Optional: true,
 										Validators: []validator.String{
@@ -106,6 +114,14 @@ func (r *SourceGithubResource) Schema(ctx context.Context, req resource.SchemaRe
 									"access_token": schema.StringAttribute{
 										Required:    true,
 										Description: `OAuth access token`,
+									},
+									"client_id": schema.StringAttribute{
+										Optional:    true,
+										Description: `OAuth Client Id`,
+									},
+									"client_secret": schema.StringAttribute{
+										Optional:    true,
+										Description: `OAuth Client secret`,
 									},
 									"option_title": schema.StringAttribute{
 										Optional: true,
@@ -365,7 +381,7 @@ func (r *SourceGithubResource) Update(ctx context.Context, req resource.UpdateRe
 		return
 	}
 	if getResponse.SourceResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
 		return
 	}
 	data.RefreshFromGetResponse(getResponse.SourceResponse)
@@ -408,7 +424,7 @@ func (r *SourceGithubResource) Delete(ctx context.Context, req resource.DeleteRe
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

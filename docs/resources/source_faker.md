@@ -15,10 +15,10 @@ SourceFaker Resource
 ```terraform
 resource "airbyte_source_faker" "my_source_faker" {
   configuration = {
-    count             = 8
-    parallelism       = 4
-    records_per_slice = 1
-    records_per_sync  = 4
+    always_updated    = false
+    count             = 4
+    parallelism       = 1
+    records_per_slice = 4
     seed              = 4
     source_type       = "faker"
   }
@@ -56,9 +56,9 @@ Required:
 
 Optional:
 
+- `always_updated` (Boolean) Should the updated_at values for every record be new each sync?  Setting this to false will case the source to stop emitting records after COUNT records have been emitted.
 - `parallelism` (Number) How many parallel workers should we use to generate fake data?  Choose a value equal to the number of CPUs you will allocate to this source.
 - `records_per_slice` (Number) How many fake records will be in each page (stream slice), before a state message is emitted?
-- `records_per_sync` (Number) How many fake records will be returned for each sync, for each stream?  By default, it will take 2 syncs to create the requested 1000 records.
 - `seed` (Number) Manually control the faker random seed to return the same values on subsequent runs (leave -1 for random)
 
 

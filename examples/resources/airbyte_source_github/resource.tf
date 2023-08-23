@@ -3,8 +3,10 @@ resource "airbyte_source_github" "my_source_github" {
     branch = "airbytehq/airbyte/master airbytehq/airbyte/my-branch"
     credentials = {
       source_github_authentication_o_auth = {
-        access_token = "...my_access_token..."
-        option_title = "OAuth Credentials"
+        access_token  = "...my_access_token..."
+        client_id     = "...my_client_id..."
+        client_secret = "...my_client_secret..."
+        option_title  = "OAuth Credentials"
       }
     }
     repository        = "airbytehq/airbyte airbytehq/another-repo"

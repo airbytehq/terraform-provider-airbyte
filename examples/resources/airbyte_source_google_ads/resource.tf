@@ -20,7 +20,7 @@ resource "airbyte_source_google_ads" "my_source_googleads" {
     source_type       = "google-ads"
     start_date        = "2017-01-25"
   }
-  name         = "Freda Hamill MD"
+  name         = "Miss Lloyd Funk"
   secret_id    = "...my_secret_id..."
-  workspace_id = "4d190feb-2178-40bc-8c0d-bbddb484708f"
+  workspace_id = "d190feb2-1780-4bcc-80db-bddb484708fb"
 }

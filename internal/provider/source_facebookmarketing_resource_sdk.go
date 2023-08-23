@@ -17,11 +17,29 @@ func (r *SourceFacebookMarketingResourceModel) ToCreateSDKType() *shared.SourceF
 	} else {
 		actionBreakdownsAllowEmpty = nil
 	}
+	clientID := new(string)
+	if !r.Configuration.ClientID.IsUnknown() && !r.Configuration.ClientID.IsNull() {
+		*clientID = r.Configuration.ClientID.ValueString()
+	} else {
+		clientID = nil
+	}
+	clientSecret := new(string)
+	if !r.Configuration.ClientSecret.IsUnknown() && !r.Configuration.ClientSecret.IsNull() {
+		*clientSecret = r.Configuration.ClientSecret.ValueString()
+	} else {
+		clientSecret = nil
+	}
 	var customInsights []shared.SourceFacebookMarketingInsightConfig = nil
 	for _, customInsightsItem := range r.Configuration.CustomInsights {
 		var actionBreakdowns []shared.SourceFacebookMarketingInsightConfigValidActionBreakdowns = nil
 		for _, actionBreakdownsItem := range customInsightsItem.ActionBreakdowns {
 			actionBreakdowns = append(actionBreakdowns, shared.SourceFacebookMarketingInsightConfigValidActionBreakdowns(actionBreakdownsItem.ValueString()))
+		}
+		actionReportTime := new(shared.SourceFacebookMarketingInsightConfigActionReportTime)
+		if !customInsightsItem.ActionReportTime.IsUnknown() && !customInsightsItem.ActionReportTime.IsNull() {
+			*actionReportTime = shared.SourceFacebookMarketingInsightConfigActionReportTime(customInsightsItem.ActionReportTime.ValueString())
+		} else {
+			actionReportTime = nil
 		}
 		var breakdowns []shared.SourceFacebookMarketingInsightConfigValidBreakdowns = nil
 		for _, breakdownsItem := range customInsightsItem.Breakdowns {
@@ -64,6 +82,7 @@ func (r *SourceFacebookMarketingResourceModel) ToCreateSDKType() *shared.SourceF
 		}
 		customInsights = append(customInsights, shared.SourceFacebookMarketingInsightConfig{
 			ActionBreakdowns:       actionBreakdowns,
+			ActionReportTime:       actionReportTime,
 			Breakdowns:             breakdowns,
 			EndDate:                endDate,
 			Fields:                 fields,
@@ -116,6 +135,8 @@ func (r *SourceFacebookMarketingResourceModel) ToCreateSDKType() *shared.SourceF
 		AccessToken:                accessToken,
 		AccountID:                  accountID,
 		ActionBreakdownsAllowEmpty: actionBreakdownsAllowEmpty,
+		ClientID:                   clientID,
+		ClientSecret:               clientSecret,
 		CustomInsights:             customInsights,
 		EndDate:                    endDate1,
 		FetchThumbnailImages:       fetchThumbnailImages,
@@ -157,11 +178,29 @@ func (r *SourceFacebookMarketingResourceModel) ToUpdateSDKType() *shared.SourceF
 	} else {
 		actionBreakdownsAllowEmpty = nil
 	}
+	clientID := new(string)
+	if !r.Configuration.ClientID.IsUnknown() && !r.Configuration.ClientID.IsNull() {
+		*clientID = r.Configuration.ClientID.ValueString()
+	} else {
+		clientID = nil
+	}
+	clientSecret := new(string)
+	if !r.Configuration.ClientSecret.IsUnknown() && !r.Configuration.ClientSecret.IsNull() {
+		*clientSecret = r.Configuration.ClientSecret.ValueString()
+	} else {
+		clientSecret = nil
+	}
 	var customInsights []shared.SourceFacebookMarketingUpdateInsightConfig = nil
 	for _, customInsightsItem := range r.Configuration.CustomInsights {
 		var actionBreakdowns []shared.SourceFacebookMarketingUpdateInsightConfigValidActionBreakdowns = nil
 		for _, actionBreakdownsItem := range customInsightsItem.ActionBreakdowns {
 			actionBreakdowns = append(actionBreakdowns, shared.SourceFacebookMarketingUpdateInsightConfigValidActionBreakdowns(actionBreakdownsItem.ValueString()))
+		}
+		actionReportTime := new(shared.SourceFacebookMarketingUpdateInsightConfigActionReportTime)
+		if !customInsightsItem.ActionReportTime.IsUnknown() && !customInsightsItem.ActionReportTime.IsNull() {
+			*actionReportTime = shared.SourceFacebookMarketingUpdateInsightConfigActionReportTime(customInsightsItem.ActionReportTime.ValueString())
+		} else {
+			actionReportTime = nil
 		}
 		var breakdowns []shared.SourceFacebookMarketingUpdateInsightConfigValidBreakdowns = nil
 		for _, breakdownsItem := range customInsightsItem.Breakdowns {
@@ -204,6 +243,7 @@ func (r *SourceFacebookMarketingResourceModel) ToUpdateSDKType() *shared.SourceF
 		}
 		customInsights = append(customInsights, shared.SourceFacebookMarketingUpdateInsightConfig{
 			ActionBreakdowns:       actionBreakdowns,
+			ActionReportTime:       actionReportTime,
 			Breakdowns:             breakdowns,
 			EndDate:                endDate,
 			Fields:                 fields,
@@ -255,6 +295,8 @@ func (r *SourceFacebookMarketingResourceModel) ToUpdateSDKType() *shared.SourceF
 		AccessToken:                accessToken,
 		AccountID:                  accountID,
 		ActionBreakdownsAllowEmpty: actionBreakdownsAllowEmpty,
+		ClientID:                   clientID,
+		ClientSecret:               clientSecret,
 		CustomInsights:             customInsights,
 		EndDate:                    endDate1,
 		FetchThumbnailImages:       fetchThumbnailImages,

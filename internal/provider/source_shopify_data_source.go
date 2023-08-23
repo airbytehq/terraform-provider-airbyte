@@ -156,7 +156,7 @@ func (r *SourceShopifyDataSource) Schema(ctx context.Context, req datasource.Sch
 					},
 					"shop": schema.StringAttribute{
 						Computed:    true,
-						Description: `The name of your Shopify store found in the URL. For example, if your URL was https://NAME.myshopify.com, then the name would be 'NAME'.`,
+						Description: `The name of your Shopify store found in the URL. For example, if your URL was https://NAME.myshopify.com, then the name would be 'NAME' or 'NAME.myshopify.com'.`,
 					},
 					"source_type": schema.StringAttribute{
 						Computed: true,

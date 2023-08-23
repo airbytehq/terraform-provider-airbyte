@@ -26,10 +26,10 @@ resource "airbyte_destination_mysql" "my_destination_mysql" {
         tunnel_method = "NO_TUNNEL"
       }
     }
-    username = "Nadia_Howe62"
+    username = "Mavis.Ullrich12"
   }
-  name         = "Rudolph Trantow"
-  workspace_id = "5aa8e482-4d0a-4b40-b508-8e51862065e9"
+  name         = "Chad Franey IV"
+  workspace_id = "fe35b60e-b1ea-4426-955b-a3c28744ed53"
 }
 ```
 

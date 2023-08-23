@@ -5,10 +5,10 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceFaker struct {
+	AlwaysUpdated   types.Bool   `tfsdk:"always_updated"`
 	Count           types.Int64  `tfsdk:"count"`
 	Parallelism     types.Int64  `tfsdk:"parallelism"`
 	RecordsPerSlice types.Int64  `tfsdk:"records_per_slice"`
-	RecordsPerSync  types.Int64  `tfsdk:"records_per_sync"`
 	Seed            types.Int64  `tfsdk:"seed"`
 	SourceType      types.String `tfsdk:"source_type"`
 }

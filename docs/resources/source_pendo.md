@@ -18,9 +18,9 @@ resource "airbyte_source_pendo" "my_source_pendo" {
     api_key     = "...my_api_key..."
     source_type = "pendo"
   }
-  name         = "Forrest Abshire"
+  name         = "Bridget Medhurst"
   secret_id    = "...my_secret_id..."
-  workspace_id = "4a184d76-d971-4fc8-a0c6-5b037bb8e0cc"
+  workspace_id = "c63562eb-fdf5-45c2-94c0-60b06a128776"
 }
 ```
 

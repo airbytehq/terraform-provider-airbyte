@@ -37,19 +37,19 @@ resource "airbyte_destination_redshift" "my_destination_redshift" {
           }
         }
         file_buffer_count  = 10
-        file_name_pattern  = "{date}"
+        file_name_pattern  = "{part_number}"
         method             = "S3 Staging"
-        purge_staging_data = false
+        purge_staging_data = true
         s3_bucket_name     = "airbyte.staging"
         s3_bucket_path     = "data_sync/test"
-        s3_bucket_region   = "ap-southeast-1"
+        s3_bucket_region   = "us-east-2"
         secret_access_key  = "...my_secret_access_key..."
       }
     }
-    username = "Donavon.Koch"
+    username = "Jairo.Farrell53"
   }
-  name         = "Mrs. Melissa Osinski"
-  workspace_id = "b6a66065-9a1a-4dea-ab58-51d6c645b08b"
+  name         = "Frankie Torphy"
+  workspace_id = "526f8d98-6e88-41ea-94f0-e1012563f94e"
 }
 ```
 

@@ -22,9 +22,9 @@ resource "airbyte_source_senseforce" "my_source_senseforce" {
     source_type  = "senseforce"
     start_date   = "2017-01-25"
   }
-  name         = "Kenny Kessler DDS"
+  name         = "Nichole Treutel"
   secret_id    = "...my_secret_id..."
-  workspace_id = "57d1fedc-2050-4d38-9c3c-e185472f9ee6"
+  workspace_id = "ada29ca7-9181-4c95-a716-63c530b56651"
 }
 ```
 

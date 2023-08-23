@@ -3,10 +3,148 @@
 package shared
 
 import (
+	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"time"
 )
+
+type SourceTypeformAuthorizationMethodPrivateTokenAuthType string
+
+const (
+	SourceTypeformAuthorizationMethodPrivateTokenAuthTypeAccessToken SourceTypeformAuthorizationMethodPrivateTokenAuthType = "access_token"
+)
+
+func (e SourceTypeformAuthorizationMethodPrivateTokenAuthType) ToPointer() *SourceTypeformAuthorizationMethodPrivateTokenAuthType {
+	return &e
+}
+
+func (e *SourceTypeformAuthorizationMethodPrivateTokenAuthType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "access_token":
+		*e = SourceTypeformAuthorizationMethodPrivateTokenAuthType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceTypeformAuthorizationMethodPrivateTokenAuthType: %v", v)
+	}
+}
+
+type SourceTypeformAuthorizationMethodPrivateToken struct {
+	// Log into your Typeform account and then generate a personal Access Token.
+	AccessToken string                                                 `json:"access_token"`
+	AuthType    *SourceTypeformAuthorizationMethodPrivateTokenAuthType `json:"auth_type,omitempty"`
+}
+
+type SourceTypeformAuthorizationMethodOAuth20AuthType string
+
+const (
+	SourceTypeformAuthorizationMethodOAuth20AuthTypeOauth20 SourceTypeformAuthorizationMethodOAuth20AuthType = "oauth2.0"
+)
+
+func (e SourceTypeformAuthorizationMethodOAuth20AuthType) ToPointer() *SourceTypeformAuthorizationMethodOAuth20AuthType {
+	return &e
+}
+
+func (e *SourceTypeformAuthorizationMethodOAuth20AuthType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "oauth2.0":
+		*e = SourceTypeformAuthorizationMethodOAuth20AuthType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceTypeformAuthorizationMethodOAuth20AuthType: %v", v)
+	}
+}
+
+type SourceTypeformAuthorizationMethodOAuth20 struct {
+	// Access Token for making authenticated requests.
+	AccessToken string                                            `json:"access_token"`
+	AuthType    *SourceTypeformAuthorizationMethodOAuth20AuthType `json:"auth_type,omitempty"`
+	// The Client ID of the Typeform developer application.
+	ClientID string `json:"client_id"`
+	// The Client Secret the Typeform developer application.
+	ClientSecret string `json:"client_secret"`
+	// The key to refresh the expired access_token.
+	RefreshToken string `json:"refresh_token"`
+	// The date-time when the access token should be refreshed.
+	TokenExpiryDate time.Time `json:"token_expiry_date"`
+}
+
+type SourceTypeformAuthorizationMethodType string
+
+const (
+	SourceTypeformAuthorizationMethodTypeSourceTypeformAuthorizationMethodOAuth20      SourceTypeformAuthorizationMethodType = "source-typeform_Authorization Method_OAuth2.0"
+	SourceTypeformAuthorizationMethodTypeSourceTypeformAuthorizationMethodPrivateToken SourceTypeformAuthorizationMethodType = "source-typeform_Authorization Method_Private Token"
+)
+
+type SourceTypeformAuthorizationMethod struct {
+	SourceTypeformAuthorizationMethodOAuth20      *SourceTypeformAuthorizationMethodOAuth20
+	SourceTypeformAuthorizationMethodPrivateToken *SourceTypeformAuthorizationMethodPrivateToken
+
+	Type SourceTypeformAuthorizationMethodType
+}
+
+func CreateSourceTypeformAuthorizationMethodSourceTypeformAuthorizationMethodOAuth20(sourceTypeformAuthorizationMethodOAuth20 SourceTypeformAuthorizationMethodOAuth20) SourceTypeformAuthorizationMethod {
+	typ := SourceTypeformAuthorizationMethodTypeSourceTypeformAuthorizationMethodOAuth20
+
+	return SourceTypeformAuthorizationMethod{
+		SourceTypeformAuthorizationMethodOAuth20: &sourceTypeformAuthorizationMethodOAuth20,
+		Type:                                     typ,
+	}
+}
+
+func CreateSourceTypeformAuthorizationMethodSourceTypeformAuthorizationMethodPrivateToken(sourceTypeformAuthorizationMethodPrivateToken SourceTypeformAuthorizationMethodPrivateToken) SourceTypeformAuthorizationMethod {
+	typ := SourceTypeformAuthorizationMethodTypeSourceTypeformAuthorizationMethodPrivateToken
+
+	return SourceTypeformAuthorizationMethod{
+		SourceTypeformAuthorizationMethodPrivateToken: &sourceTypeformAuthorizationMethodPrivateToken,
+		Type: typ,
+	}
+}
+
+func (u *SourceTypeformAuthorizationMethod) UnmarshalJSON(data []byte) error {
+	var d *json.Decoder
+
+	sourceTypeformAuthorizationMethodOAuth20 := new(SourceTypeformAuthorizationMethodOAuth20)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceTypeformAuthorizationMethodOAuth20); err == nil {
+		u.SourceTypeformAuthorizationMethodOAuth20 = sourceTypeformAuthorizationMethodOAuth20
+		u.Type = SourceTypeformAuthorizationMethodTypeSourceTypeformAuthorizationMethodOAuth20
+		return nil
+	}
+
+	sourceTypeformAuthorizationMethodPrivateToken := new(SourceTypeformAuthorizationMethodPrivateToken)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceTypeformAuthorizationMethodPrivateToken); err == nil {
+		u.SourceTypeformAuthorizationMethodPrivateToken = sourceTypeformAuthorizationMethodPrivateToken
+		u.Type = SourceTypeformAuthorizationMethodTypeSourceTypeformAuthorizationMethodPrivateToken
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u SourceTypeformAuthorizationMethod) MarshalJSON() ([]byte, error) {
+	if u.SourceTypeformAuthorizationMethodOAuth20 != nil {
+		return json.Marshal(u.SourceTypeformAuthorizationMethodOAuth20)
+	}
+
+	if u.SourceTypeformAuthorizationMethodPrivateToken != nil {
+		return json.Marshal(u.SourceTypeformAuthorizationMethodPrivateToken)
+	}
+
+	return nil, nil
+}
 
 type SourceTypeformTypeform string
 
@@ -33,11 +171,10 @@ func (e *SourceTypeformTypeform) UnmarshalJSON(data []byte) error {
 }
 
 type SourceTypeform struct {
+	Credentials SourceTypeformAuthorizationMethod `json:"credentials"`
 	// When this parameter is set, the connector will replicate data only from the input forms. Otherwise, all forms in your Typeform account will be replicated. You can find form IDs in your form URLs. For example, in the URL "https://mysite.typeform.com/to/u6nXL7" the form_id is u6nXL7. You can find form URLs on Share panel
 	FormIds    []string               `json:"form_ids,omitempty"`
 	SourceType SourceTypeformTypeform `json:"sourceType"`
-	// UTC date and time in the format: YYYY-MM-DDTHH:mm:ss[Z]. Any data before this date will not be replicated.
-	StartDate time.Time `json:"start_date"`
-	// The API Token for a Typeform account.
-	Token string `json:"token"`
+	// The date from which you'd like to replicate data for Typeform API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
+	StartDate *time.Time `json:"start_date,omitempty"`
 }

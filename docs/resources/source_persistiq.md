@@ -18,9 +18,9 @@ resource "airbyte_source_persistiq" "my_source_persistiq" {
     api_key     = "...my_api_key..."
     source_type = "persistiq"
   }
-  name         = "Ms. Daryl Hermiston"
+  name         = "Silvia Toy"
   secret_id    = "...my_secret_id..."
-  workspace_id = "e4de04af-28c5-4ddd-b46a-a1cfd6d828da"
+  workspace_id = "d0c6d6ed-9c73-4dd6-b457-1509a8e870d3"
 }
 ```
 

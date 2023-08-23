@@ -75,6 +75,12 @@ func (r *SourceTiktokMarketingResourceModel) ToCreateSDKType() *shared.SourceTik
 	} else {
 		endDate = nil
 	}
+	includeDeleted := new(bool)
+	if !r.Configuration.IncludeDeleted.IsUnknown() && !r.Configuration.IncludeDeleted.IsNull() {
+		*includeDeleted = r.Configuration.IncludeDeleted.ValueBool()
+	} else {
+		includeDeleted = nil
+	}
 	sourceType := new(shared.SourceTiktokMarketingTiktokMarketing)
 	if !r.Configuration.SourceType.IsUnknown() && !r.Configuration.SourceType.IsNull() {
 		*sourceType = shared.SourceTiktokMarketingTiktokMarketing(r.Configuration.SourceType.ValueString())
@@ -91,6 +97,7 @@ func (r *SourceTiktokMarketingResourceModel) ToCreateSDKType() *shared.SourceTik
 		AttributionWindow: attributionWindow,
 		Credentials:       credentials,
 		EndDate:           endDate,
+		IncludeDeleted:    includeDeleted,
 		SourceType:        sourceType,
 		StartDate:         startDate,
 	}
@@ -183,6 +190,12 @@ func (r *SourceTiktokMarketingResourceModel) ToUpdateSDKType() *shared.SourceTik
 	} else {
 		endDate = nil
 	}
+	includeDeleted := new(bool)
+	if !r.Configuration.IncludeDeleted.IsUnknown() && !r.Configuration.IncludeDeleted.IsNull() {
+		*includeDeleted = r.Configuration.IncludeDeleted.ValueBool()
+	} else {
+		includeDeleted = nil
+	}
 	startDate := new(customTypes.Date)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
 		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
@@ -193,6 +206,7 @@ func (r *SourceTiktokMarketingResourceModel) ToUpdateSDKType() *shared.SourceTik
 		AttributionWindow: attributionWindow,
 		Credentials:       credentials,
 		EndDate:           endDate,
+		IncludeDeleted:    includeDeleted,
 		StartDate:         startDate,
 	}
 	name := r.Name.ValueString()

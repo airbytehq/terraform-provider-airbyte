@@ -10,12 +10,26 @@ import (
 
 func (r *SourceInstagramResourceModel) ToCreateSDKType() *shared.SourceInstagramCreateRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
+	clientID := new(string)
+	if !r.Configuration.ClientID.IsUnknown() && !r.Configuration.ClientID.IsNull() {
+		*clientID = r.Configuration.ClientID.ValueString()
+	} else {
+		clientID = nil
+	}
+	clientSecret := new(string)
+	if !r.Configuration.ClientSecret.IsUnknown() && !r.Configuration.ClientSecret.IsNull() {
+		*clientSecret = r.Configuration.ClientSecret.ValueString()
+	} else {
+		clientSecret = nil
+	}
 	sourceType := shared.SourceInstagramInstagram(r.Configuration.SourceType.ValueString())
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceInstagram{
-		AccessToken: accessToken,
-		SourceType:  sourceType,
-		StartDate:   startDate,
+		AccessToken:  accessToken,
+		ClientID:     clientID,
+		ClientSecret: clientSecret,
+		SourceType:   sourceType,
+		StartDate:    startDate,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -41,10 +55,24 @@ func (r *SourceInstagramResourceModel) ToGetSDKType() *shared.SourceInstagramCre
 
 func (r *SourceInstagramResourceModel) ToUpdateSDKType() *shared.SourceInstagramPutRequest {
 	accessToken := r.Configuration.AccessToken.ValueString()
+	clientID := new(string)
+	if !r.Configuration.ClientID.IsUnknown() && !r.Configuration.ClientID.IsNull() {
+		*clientID = r.Configuration.ClientID.ValueString()
+	} else {
+		clientID = nil
+	}
+	clientSecret := new(string)
+	if !r.Configuration.ClientSecret.IsUnknown() && !r.Configuration.ClientSecret.IsNull() {
+		*clientSecret = r.Configuration.ClientSecret.ValueString()
+	} else {
+		clientSecret = nil
+	}
 	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceInstagramUpdate{
-		AccessToken: accessToken,
-		StartDate:   startDate,
+		AccessToken:  accessToken,
+		ClientID:     clientID,
+		ClientSecret: clientSecret,
+		StartDate:    startDate,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()

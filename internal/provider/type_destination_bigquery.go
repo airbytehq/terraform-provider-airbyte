@@ -12,5 +12,7 @@ type DestinationBigquery struct {
 	DestinationType            types.String                      `tfsdk:"destination_type"`
 	LoadingMethod              *DestinationBigqueryLoadingMethod `tfsdk:"loading_method"`
 	ProjectID                  types.String                      `tfsdk:"project_id"`
+	RawDataDataset             types.String                      `tfsdk:"raw_data_dataset"`
 	TransformationPriority     types.String                      `tfsdk:"transformation_priority"`
+	Use1s1tFormat              types.Bool                        `tfsdk:"use_1s1t_format"`
 }

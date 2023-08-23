@@ -9,18 +9,8 @@ import (
 )
 
 func (r *SourcePaypalTransactionResourceModel) ToCreateSDKType() *shared.SourcePaypalTransactionCreateRequest {
-	clientID := new(string)
-	if !r.Configuration.ClientID.IsUnknown() && !r.Configuration.ClientID.IsNull() {
-		*clientID = r.Configuration.ClientID.ValueString()
-	} else {
-		clientID = nil
-	}
-	clientSecret := new(string)
-	if !r.Configuration.ClientSecret.IsUnknown() && !r.Configuration.ClientSecret.IsNull() {
-		*clientSecret = r.Configuration.ClientSecret.ValueString()
-	} else {
-		clientSecret = nil
-	}
+	clientID := r.Configuration.ClientID.ValueString()
+	clientSecret := r.Configuration.ClientSecret.ValueString()
 	isSandbox := r.Configuration.IsSandbox.ValueBool()
 	refreshToken := new(string)
 	if !r.Configuration.RefreshToken.IsUnknown() && !r.Configuration.RefreshToken.IsNull() {
@@ -61,18 +51,8 @@ func (r *SourcePaypalTransactionResourceModel) ToGetSDKType() *shared.SourcePayp
 }
 
 func (r *SourcePaypalTransactionResourceModel) ToUpdateSDKType() *shared.SourcePaypalTransactionPutRequest {
-	clientID := new(string)
-	if !r.Configuration.ClientID.IsUnknown() && !r.Configuration.ClientID.IsNull() {
-		*clientID = r.Configuration.ClientID.ValueString()
-	} else {
-		clientID = nil
-	}
-	clientSecret := new(string)
-	if !r.Configuration.ClientSecret.IsUnknown() && !r.Configuration.ClientSecret.IsNull() {
-		*clientSecret = r.Configuration.ClientSecret.ValueString()
-	} else {
-		clientSecret = nil
-	}
+	clientID := r.Configuration.ClientID.ValueString()
+	clientSecret := r.Configuration.ClientSecret.ValueString()
 	isSandbox := r.Configuration.IsSandbox.ValueBool()
 	refreshToken := new(string)
 	if !r.Configuration.RefreshToken.IsUnknown() && !r.Configuration.RefreshToken.IsNull() {

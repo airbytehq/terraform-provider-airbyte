@@ -7,12 +7,12 @@ resource "airbyte_source_airtable" "my_source_airtable" {
         client_id         = "...my_client_id..."
         client_secret     = "...my_client_secret..."
         refresh_token     = "...my_refresh_token..."
-        token_expiry_date = "2022-02-16T03:38:31.705Z"
+        token_expiry_date = "2020-12-11T09:39:15.481Z"
       }
     }
     source_type = "airtable"
   }
-  name         = "Cody Rowe"
+  name         = "Vincent Frami"
   secret_id    = "...my_secret_id..."
-  workspace_id = "2b895c53-7c64-454e-bb0b-34896c3ca5ac"
+  workspace_id = "c2beb477-373c-48d7-af64-d1db1f2c4310"
 }

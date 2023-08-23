@@ -39,6 +39,10 @@ type SourceZendeskTalkAuthenticationOAuth20 struct {
 	// The value of the API token generated. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk-talk">docs</a> for more information.
 	AccessToken string                                          `json:"access_token"`
 	AuthType    *SourceZendeskTalkAuthenticationOAuth20AuthType `json:"auth_type,omitempty"`
+	// Client ID
+	ClientID *string `json:"client_id,omitempty"`
+	// Client Secret
+	ClientSecret *string `json:"client_secret,omitempty"`
 
 	AdditionalProperties interface{} `json:"-"`
 }
@@ -59,6 +63,8 @@ func (c *SourceZendeskTalkAuthenticationOAuth20) UnmarshalJSON(bs []byte) error 
 	}
 	delete(additionalFields, "access_token")
 	delete(additionalFields, "auth_type")
+	delete(additionalFields, "client_id")
+	delete(additionalFields, "client_secret")
 
 	c.AdditionalProperties = additionalFields
 

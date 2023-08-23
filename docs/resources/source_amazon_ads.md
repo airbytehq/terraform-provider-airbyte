@@ -18,24 +18,24 @@ resource "airbyte_source_amazon_ads" "my_source_amazonads" {
     auth_type        = "oauth2.0"
     client_id        = "...my_client_id..."
     client_secret    = "...my_client_secret..."
-    look_back_window = 10
+    look_back_window = 3
     profiles = [
-      1,
+      6,
     ]
     refresh_token = "...my_refresh_token..."
-    region        = "FE"
+    region        = "EU"
     report_record_types = [
-      "keywords",
+      "asins_keywords",
     ]
     source_type = "amazon-ads"
     start_date  = "2022-10-10"
     state_filter = [
-      "paused",
+      "archived",
     ]
   }
-  name         = "Harold Boyer"
+  name         = "Evelyn Bode"
   secret_id    = "...my_secret_id..."
-  workspace_id = "b99545fc-95fa-4889-b0e1-89dbb30fcb33"
+  workspace_id = "2965bb8a-7202-4611-835e-139dbc2259b1"
 }
 ```
 

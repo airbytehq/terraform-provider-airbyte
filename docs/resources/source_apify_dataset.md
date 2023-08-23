@@ -15,13 +15,13 @@ SourceApifyDataset Resource
 ```terraform
 resource "airbyte_source_apify_dataset" "my_source_apifydataset" {
   configuration = {
-    clean       = false
+    clean       = true
     dataset_id  = "...my_dataset_id..."
     source_type = "apify-dataset"
   }
-  name         = "Leo Dare"
+  name         = "Natasha Bogan"
   secret_id    = "...my_secret_id..."
-  workspace_id = "785fc378-14d4-4c98-a0c2-bb89eb75dad6"
+  workspace_id = "deac646e-cb57-4340-9e3e-b1e5a2b12eb0"
 }
 ```
 

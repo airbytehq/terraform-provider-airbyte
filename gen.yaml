@@ -5,7 +5,7 @@ generation:
   telemetryEnabled: true
 features:
   terraform:
-    core: 2.83.1
+    core: 2.83.3
     globalSecurity: 2.81.1
     globalServerURLs: 2.82.0
     includes: 2.81.1

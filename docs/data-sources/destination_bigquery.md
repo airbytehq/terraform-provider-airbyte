@@ -44,8 +44,10 @@ The location of the dataset. Warning: Changes made after creation will not be ap
 - `destination_type` (String) must be one of ["bigquery"]
 - `loading_method` (Attributes) Loading method used to send select the way data will be uploaded to BigQuery. <br/><b>Standard Inserts</b> - Direct uploading using SQL INSERT statements. This method is extremely inefficient and provided only for quick testing. In almost all cases, you should use staging. <br/><b>GCS Staging</b> - Writes large batches of records to a file, uploads the file to GCS, then uses <b>COPY INTO table</b> to upload the file. Recommended for most workloads for better speed and scalability. Read more about GCS Staging <a href="https://docs.airbyte.com/integrations/destinations/bigquery#gcs-staging">here</a>. (see [below for nested schema](#nestedatt--configuration--loading_method))
 - `project_id` (String) The GCP project ID for the project containing the target BigQuery dataset. Read more <a href="https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects">here</a>.
+- `raw_data_dataset` (String) (Early Access) The dataset to write raw tables into
 - `transformation_priority` (String) must be one of ["interactive", "batch"]
 Interactive run type means that the query is executed as soon as possible, and these queries count towards concurrent rate limit and daily limit. Read more about interactive run type <a href="https://cloud.google.com/bigquery/docs/running-queries#queries">here</a>. Batch queries are queued and started as soon as idle resources are available in the BigQuery shared resource pool, which usually occurs within a few minutes. Batch queries don’t count towards your concurrent rate limit. Read more about batch queries <a href="https://cloud.google.com/bigquery/docs/running-queries#batch">here</a>. The default "interactive" value is used if not set explicitly.
+- `use_1s1t_format` (Boolean) (Early Access) Use <a href="https://docs.airbyte.com/understanding-airbyte/typing-deduping" target="_blank">Destinations V2</a>.
 
 <a id="nestedatt--configuration--loading_method"></a>
 ### Nested Schema for `configuration.loading_method`

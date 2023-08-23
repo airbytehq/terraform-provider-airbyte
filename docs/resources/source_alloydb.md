@@ -22,11 +22,12 @@ resource "airbyte_source_alloydb" "my_source_alloydb" {
     port            = 5432
     replication_method = {
       source_alloydb_replication_method_logical_replication_cdc_ = {
-        initial_waiting_seconds = 8
-        lsn_commit_behaviour    = "After loading Data in the destination"
+        initial_waiting_seconds = 4
+        lsn_commit_behaviour    = "While reading Data"
         method                  = "CDC"
         plugin                  = "pgoutput"
         publication             = "...my_publication..."
+        queue_size              = 9
         replication_slot        = "...my_replication_slot..."
       }
     }
@@ -44,11 +45,11 @@ resource "airbyte_source_alloydb" "my_source_alloydb" {
         tunnel_method = "NO_TUNNEL"
       }
     }
-    username = "Bruce.Zieme44"
+    username = "Keon28"
   }
-  name         = "Viola Hane"
+  name         = "Merle Carroll"
   secret_id    = "...my_secret_id..."
-  workspace_id = "929177de-ac64-46ec-b573-409e3eb1e5a2"
+  workspace_id = "9e06e3a4-3700-40ae-ab6b-c9b8f759eac5"
 }
 ```
 
@@ -98,8 +99,10 @@ Optional:
 
 - `source_alloydb_replication_method_logical_replication_cdc` (Attributes) Logical replication uses the Postgres write-ahead log (WAL) to detect inserts, updates, and deletes. This needs to be configured on the source database itself. Only available on Postgres 10 and above. Read the <a href="https://docs.airbyte.com/integrations/sources/postgres">docs</a>. (see [below for nested schema](#nestedatt--configuration--replication_method--source_alloydb_replication_method_logical_replication_cdc))
 - `source_alloydb_replication_method_standard` (Attributes) Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally. (see [below for nested schema](#nestedatt--configuration--replication_method--source_alloydb_replication_method_standard))
+- `source_alloydb_replication_method_standard_xmin` (Attributes) Xmin replication requires no setup on the DB side but will not be able to represent deletions incrementally. (see [below for nested schema](#nestedatt--configuration--replication_method--source_alloydb_replication_method_standard_xmin))
 - `source_alloydb_update_replication_method_logical_replication_cdc` (Attributes) Logical replication uses the Postgres write-ahead log (WAL) to detect inserts, updates, and deletes. This needs to be configured on the source database itself. Only available on Postgres 10 and above. Read the <a href="https://docs.airbyte.com/integrations/sources/postgres">docs</a>. (see [below for nested schema](#nestedatt--configuration--replication_method--source_alloydb_update_replication_method_logical_replication_cdc))
 - `source_alloydb_update_replication_method_standard` (Attributes) Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally. (see [below for nested schema](#nestedatt--configuration--replication_method--source_alloydb_update_replication_method_standard))
+- `source_alloydb_update_replication_method_standard_xmin` (Attributes) Xmin replication requires no setup on the DB side but will not be able to represent deletions incrementally. (see [below for nested schema](#nestedatt--configuration--replication_method--source_alloydb_update_replication_method_standard_xmin))
 
 <a id="nestedatt--configuration--replication_method--source_alloydb_replication_method_logical_replication_cdc"></a>
 ### Nested Schema for `configuration.replication_method.source_alloydb_replication_method_logical_replication_cdc`
@@ -118,6 +121,7 @@ Optional:
 Determines when Airbtye should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.
 - `plugin` (String) must be one of ["pgoutput"]
 A logical decoding plugin installed on the PostgreSQL server.
+- `queue_size` (Number) The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful.
 
 
 <a id="nestedatt--configuration--replication_method--source_alloydb_replication_method_standard"></a>
@@ -126,6 +130,14 @@ A logical decoding plugin installed on the PostgreSQL server.
 Required:
 
 - `method` (String) must be one of ["Standard"]
+
+
+<a id="nestedatt--configuration--replication_method--source_alloydb_replication_method_standard_xmin"></a>
+### Nested Schema for `configuration.replication_method.source_alloydb_replication_method_standard_xmin`
+
+Required:
+
+- `method` (String) must be one of ["Xmin"]
 
 
 <a id="nestedatt--configuration--replication_method--source_alloydb_update_replication_method_logical_replication_cdc"></a>
@@ -145,6 +157,7 @@ Optional:
 Determines when Airbtye should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.
 - `plugin` (String) must be one of ["pgoutput"]
 A logical decoding plugin installed on the PostgreSQL server.
+- `queue_size` (Number) The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful.
 
 
 <a id="nestedatt--configuration--replication_method--source_alloydb_update_replication_method_standard"></a>
@@ -153,6 +166,14 @@ A logical decoding plugin installed on the PostgreSQL server.
 Required:
 
 - `method` (String) must be one of ["Standard"]
+
+
+<a id="nestedatt--configuration--replication_method--source_alloydb_update_replication_method_standard_xmin"></a>
+### Nested Schema for `configuration.replication_method.source_alloydb_update_replication_method_standard_xmin`
+
+Required:
+
+- `method` (String) must be one of ["Xmin"]
 
 
 

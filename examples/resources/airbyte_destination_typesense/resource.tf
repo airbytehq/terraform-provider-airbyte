@@ -7,6 +7,6 @@ resource "airbyte_destination_typesense" "my_destination_typesense" {
     port             = "...my_port..."
     protocol         = "...my_protocol..."
   }
-  name         = "Jodi Mueller"
-  workspace_id = "1d311352-965b-4b8a-b202-611435e139db"
+  name         = "Wm Hane"
+  workspace_id = "1d6c645b-08b6-4189-9baa-0fe1ade008e6"
 }

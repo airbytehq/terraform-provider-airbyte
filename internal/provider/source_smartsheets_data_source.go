@@ -171,6 +171,11 @@ func (r *SourceSmartsheetsDataSource) Schema(ctx context.Context, req datasource
 							validators.ExactlyOneChild(),
 						},
 					},
+					"metadata_fields": schema.ListAttribute{
+						Computed:    true,
+						ElementType: types.StringType,
+						Description: `A List of available columns which metadata can be pulled from.`,
+					},
 					"source_type": schema.StringAttribute{
 						Computed: true,
 						Validators: []validator.String{

@@ -3,21 +3,24 @@ resource "airbyte_source_facebook_marketing" "my_source_facebookmarketing" {
     access_token                  = "...my_access_token..."
     account_id                    = "111111111111111"
     action_breakdowns_allow_empty = false
+    client_id                     = "...my_client_id..."
+    client_secret                 = "...my_client_secret..."
     custom_insights = [
       {
         action_breakdowns = [
           "action_target_id",
         ]
+        action_report_time = "impression"
         breakdowns = [
-          "image_asset",
+          "age",
         ]
         end_date = "2017-01-26T00:00:00Z"
         fields = [
-          "estimated_ad_recallers_lower_bound",
+          "estimated_ad_recall_rate_lower_bound",
         ]
-        insights_lookback_window = 5
-        level                    = "campaign"
-        name                     = "Mrs. Dolores Kertzmann"
+        insights_lookback_window = 6
+        level                    = "adset"
+        name                     = "Vera Bernhard"
         start_date               = "2017-01-25T00:00:00Z"
         time_increment           = 7
       },

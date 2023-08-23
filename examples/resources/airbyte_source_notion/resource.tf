@@ -9,7 +9,7 @@ resource "airbyte_source_notion" "my_source_notion" {
     source_type = "notion"
     start_date  = "2020-11-16T00:00:00.000Z"
   }
-  name         = "Ms. Elisa Carroll"
+  name         = "Dewey Schmeler DVM"
   secret_id    = "...my_secret_id..."
-  workspace_id = "ac1e41d8-a23c-423e-b4f2-dfa4a197f6de"
+  workspace_id = "f5d4e2ae-4fb5-4cb3-9d17-638f1edb7835"
 }

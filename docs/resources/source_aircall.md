@@ -20,9 +20,9 @@ resource "airbyte_source_aircall" "my_source_aircall" {
     source_type = "aircall"
     start_date  = "2022-03-01T00:00:00.000Z"
   }
-  name         = "Cecelia Wiza"
+  name         = "Leslie Waters"
   secret_id    = "...my_secret_id..."
-  workspace_id = "02bae0be-2d78-4225-9e3e-a4b5197f9244"
+  workspace_id = "e4be0560-13f5-49da-b57a-59ecfef66ef1"
 }
 ```
 

@@ -58,6 +58,64 @@ func (r *SourceLinkedinAdsDataSource) Schema(ctx context.Context, req datasource
 						ElementType: types.Int64Type,
 						Description: `Specify the account IDs separated by a space, to pull the data from. Leave empty, if you want to pull the data from all associated accounts. See the <a href="https://www.linkedin.com/help/linkedin/answer/a424270/find-linkedin-ads-account-details?lang=en">LinkedIn Ads docs</a> for more info.`,
 					},
+					"ad_analytics_reports": schema.ListNestedAttribute{
+						Computed: true,
+						NestedObject: schema.NestedAttributeObject{
+							Attributes: map[string]schema.Attribute{
+								"name": schema.StringAttribute{
+									Computed:    true,
+									Description: `The name for the report`,
+								},
+								"pivot_by": schema.StringAttribute{
+									Computed: true,
+									Validators: []validator.String{
+										stringvalidator.OneOf(
+											"COMPANY",
+											"ACCOUNT",
+											"SHARE",
+											"CAMPAIGN",
+											"CREATIVE",
+											"CAMPAIGN_GROUP",
+											"CONVERSION",
+											"CONVERSATION_NODE",
+											"CONVERSATION_NODE_OPTION_INDEX",
+											"SERVING_LOCATION",
+											"CARD_INDEX",
+											"MEMBER_COMPANY_SIZE",
+											"MEMBER_INDUSTRY",
+											"MEMBER_SENIORITY",
+											"MEMBER_JOB_TITLE ",
+											"MEMBER_JOB_FUNCTION ",
+											"MEMBER_COUNTRY_V2 ",
+											"MEMBER_REGION_V2",
+											"MEMBER_COMPANY",
+											"PLACEMENT_NAME",
+											"IMPRESSION_DEVICE_TYPE",
+										),
+									},
+									MarkdownDescription: `must be one of ["COMPANY", "ACCOUNT", "SHARE", "CAMPAIGN", "CREATIVE", "CAMPAIGN_GROUP", "CONVERSION", "CONVERSATION_NODE", "CONVERSATION_NODE_OPTION_INDEX", "SERVING_LOCATION", "CARD_INDEX", "MEMBER_COMPANY_SIZE", "MEMBER_INDUSTRY", "MEMBER_SENIORITY", "MEMBER_JOB_TITLE ", "MEMBER_JOB_FUNCTION ", "MEMBER_COUNTRY_V2 ", "MEMBER_REGION_V2", "MEMBER_COMPANY", "PLACEMENT_NAME", "IMPRESSION_DEVICE_TYPE"]` + "\n" +
+										`Select value from list to pivot by`,
+								},
+								"time_granularity": schema.StringAttribute{
+									Computed: true,
+									Validators: []validator.String{
+										stringvalidator.OneOf(
+											"ALL",
+											"DAILY",
+											"MONTHLY",
+											"YEARLY",
+										),
+									},
+									MarkdownDescription: `must be one of ["ALL", "DAILY", "MONTHLY", "YEARLY"]` + "\n" +
+										`Set time granularity for report: ` + "\n" +
+										`ALL - Results grouped into a single result across the entire time range of the report.` + "\n" +
+										`DAILY - Results grouped by day.` + "\n" +
+										`MONTHLY - Results grouped by month.` + "\n" +
+										`YEARLY - Results grouped by year.`,
+								},
+							},
+						},
+					},
 					"credentials": schema.SingleNestedAttribute{
 						Computed: true,
 						Attributes: map[string]schema.Attribute{

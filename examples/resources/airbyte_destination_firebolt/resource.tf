@@ -17,6 +17,6 @@ resource "airbyte_destination_firebolt" "my_destination_firebolt" {
     password = "...my_password..."
     username = "username@email.com"
   }
-  name         = "Ms. Janice McLaughlin"
-  workspace_id = "74778a7b-d466-4d28-810a-b3cdca425190"
+  name         = "Jermaine Kuhic"
+  workspace_id = "d74dd39c-0f5d-42cf-b7c7-0a45626d4368"
 }

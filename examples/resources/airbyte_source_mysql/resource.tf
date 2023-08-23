@@ -6,8 +6,8 @@ resource "airbyte_source_mysql" "my_source_mysql" {
     password        = "...my_password..."
     port            = 3306
     replication_method = {
-      source_mysql_replication_method_logical_replication_cdc_ = {
-        initial_waiting_seconds = 3
+      source_mysql_update_method_read_changes_using_binary_log_cdc_ = {
+        initial_waiting_seconds = 10
         method                  = "CDC"
         server_time_zone        = "...my_server_time_zone..."
       }
@@ -23,9 +23,9 @@ resource "airbyte_source_mysql" "my_source_mysql" {
         tunnel_method = "NO_TUNNEL"
       }
     }
-    username = "Coty77"
+    username = "Eusebio86"
   }
-  name         = "Debra Ortiz"
+  name         = "Herman Greenfelder"
   secret_id    = "...my_secret_id..."
-  workspace_id = "a8bf92f9-7428-4ad9-a9f8-bf8221125359"
+  workspace_id = "9ee22446-0443-4bc1-9418-8c2f56e85da7"
 }

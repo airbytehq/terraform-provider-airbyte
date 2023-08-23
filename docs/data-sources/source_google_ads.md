@@ -41,25 +41,25 @@ data "airbyte_source_google_ads" "my_source_googleads" {
 
 Read-Only:
 
-- `conversion_window_days` (Number) A conversion window is the period of time after an ad interaction (such as an ad click or video view) during which a conversion, such as a purchase, is recorded in Google Ads. For more information, see Google's <a href="https://support.google.com/google-ads/answer/3123169?hl=en">documentation</a>.
+- `conversion_window_days` (Number) A conversion window is the number of days after an ad interaction (such as an ad click or video view) during which a conversion, such as a purchase, is recorded in Google Ads. For more information, see <a href="https://support.google.com/google-ads/answer/3123169?hl=en">Google's documentation</a>.
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
 - `custom_queries` (Attributes List) (see [below for nested schema](#nestedatt--configuration--custom_queries))
-- `customer_id` (String) Comma separated list of (client) customer IDs. Each customer ID must be specified as a 10-digit number without dashes. More instruction on how to find this value in our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">docs</a>. Metrics streams like AdGroupAdReport cannot be requested for a manager account.
-- `end_date` (String) UTC date and time in the format 2017-01-25. Any data after this date will not be replicated.
-- `login_customer_id` (String) If your access to the customer account is through a manager account, this field is required and must be set to the customer ID of the manager account (10-digit number without dashes). More information about this field you can see <a href="https://developers.google.com/google-ads/api/docs/concepts/call-structure#cid">here</a>
+- `customer_id` (String) Comma-separated list of (client) customer IDs. Each customer ID must be specified as a 10-digit number without dashes. For detailed instructions on finding this value, refer to our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">documentation</a>.
+- `end_date` (String) UTC date in the format YYYY-MM-DD. Any data after this date will not be replicated.
+- `login_customer_id` (String) If your access to the customer account is through a manager account, this field is required, and must be set to the 10-digit customer ID of the manager account. For more information about this field, refer to <a href="https://developers.google.com/google-ads/api/docs/concepts/call-structure#cid">Google's documentation</a>.
 - `source_type` (String) must be one of ["google-ads"]
-- `start_date` (String) UTC date and time in the format 2017-01-25. Any data before this date will not be replicated.
+- `start_date` (String) UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated.
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
 
 Read-Only:
 
-- `access_token` (String) Access Token for making authenticated requests. More instruction on how to find this value in our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">docs</a>
-- `client_id` (String) The Client ID of your Google Ads developer application. More instruction on how to find this value in our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">docs</a>
-- `client_secret` (String) The Client Secret of your Google Ads developer application. More instruction on how to find this value in our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">docs</a>
-- `developer_token` (String) Developer token granted by Google to use their APIs. More instruction on how to find this value in our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">docs</a>
-- `refresh_token` (String) The token for obtaining a new access token. More instruction on how to find this value in our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">docs</a>
+- `access_token` (String) The Access Token for making authenticated requests. For detailed instructions on finding this value, refer to our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">documentation</a>.
+- `client_id` (String) The Client ID of your Google Ads developer application. For detailed instructions on finding this value, refer to our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">documentation</a>.
+- `client_secret` (String) The Client Secret of your Google Ads developer application. For detailed instructions on finding this value, refer to our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">documentation</a>.
+- `developer_token` (String) The Developer Token granted by Google to use their APIs. For detailed instructions on finding this value, refer to our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">documentation</a>.
+- `refresh_token` (String) The token used to obtain a new Access Token. For detailed instructions on finding this value, refer to our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">documentation</a>.
 
 
 <a id="nestedatt--configuration--custom_queries"></a>
@@ -67,7 +67,7 @@ Read-Only:
 
 Read-Only:
 
-- `query` (String) A custom defined GAQL query for building the report. Should not contain segments.date expression because it is used by incremental streams. See Google's <a href="https://developers.google.com/google-ads/api/fields/v11/overview_query_builder">query builder</a> for more information.
-- `table_name` (String) The table name in your destination database for choosen query.
+- `query` (String) A custom defined GAQL query for building the report. Avoid including the segments.date field; wherever possible, Airbyte will automatically include it for incremental syncs. For more information, refer to <a href="https://developers.google.com/google-ads/api/fields/v11/overview_query_builder">Google's documentation</a>.
+- `table_name` (String) The table name in your destination database for the chosen query.
 
 

@@ -5,7 +5,7 @@ resource "airbyte_source_prestashop" "my_source_prestashop" {
     start_date  = "2022-01-01"
     url         = "...my_url..."
   }
-  name         = "Samantha Krajcik"
+  name         = "Drew Adams"
   secret_id    = "...my_secret_id..."
-  workspace_id = "9cedbac7-fda3-4959-8d66-bc2ae480632b"
+  workspace_id = "ca77aeb7-b702-41a5-a046-b64e99fb0e67"
 }

@@ -3,7 +3,7 @@ resource "airbyte_source_zoom" "my_source_zoom" {
     jwt_token   = "...my_jwt_token..."
     source_type = "zoom"
   }
-  name         = "Ron Padberg"
+  name         = "Charlene Abbott"
   secret_id    = "...my_secret_id..."
-  workspace_id = "62e97261-fb0c-458d-a7b5-1996b5b4b50e"
+  workspace_id = "f375b442-8282-41fd-b2f6-9e59267c71cc"
 }

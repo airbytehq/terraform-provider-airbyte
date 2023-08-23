@@ -22,9 +22,9 @@ resource "airbyte_source_coinmarketcap" "my_source_coinmarketcap" {
       "...",
     ]
   }
-  name         = "Walter Jacobs"
+  name         = "Elsie West"
   secret_id    = "...my_secret_id..."
-  workspace_id = "363c8873-e484-4380-b1f6-b8ca275a60a0"
+  workspace_id = "56d0bd0a-f2df-4e13-9b4f-62cba3f8941a"
 }
 ```
 

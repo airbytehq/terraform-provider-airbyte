@@ -32,11 +32,11 @@ type SourceMongodbDataSource struct {
 
 // SourceMongodbDataSourceModel describes the data model.
 type SourceMongodbDataSourceModel struct {
-	Configuration SourceMongodb `tfsdk:"configuration"`
-	Name          types.String  `tfsdk:"name"`
-	SecretID      types.String  `tfsdk:"secret_id"`
-	SourceID      types.String  `tfsdk:"source_id"`
-	WorkspaceID   types.String  `tfsdk:"workspace_id"`
+	Configuration SourceMongodb1 `tfsdk:"configuration"`
+	Name          types.String   `tfsdk:"name"`
+	SecretID      types.String   `tfsdk:"secret_id"`
+	SourceID      types.String   `tfsdk:"source_id"`
+	WorkspaceID   types.String   `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -79,6 +79,13 @@ func (r *SourceMongodbDataSource) Schema(ctx context.Context, req datasource.Sch
 											),
 										},
 										Description: `must be one of ["atlas"]`,
+									},
+									"additional_properties": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+										Description: `Parsed as JSON.`,
 									},
 								},
 								Description: `The MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.`,
@@ -144,6 +151,13 @@ func (r *SourceMongodbDataSource) Schema(ctx context.Context, req datasource.Sch
 											),
 										},
 										Description: `must be one of ["atlas"]`,
+									},
+									"additional_properties": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+										Description: `Parsed as JSON.`,
 									},
 								},
 								Description: `The MongoDb instance to connect to. For MongoDB Atlas and Replica Set TLS connection is used by default.`,

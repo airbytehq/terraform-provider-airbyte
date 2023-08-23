@@ -7,11 +7,12 @@ resource "airbyte_source_alloydb" "my_source_alloydb" {
     port            = 5432
     replication_method = {
       source_alloydb_replication_method_logical_replication_cdc_ = {
-        initial_waiting_seconds = 8
-        lsn_commit_behaviour    = "After loading Data in the destination"
+        initial_waiting_seconds = 4
+        lsn_commit_behaviour    = "While reading Data"
         method                  = "CDC"
         plugin                  = "pgoutput"
         publication             = "...my_publication..."
+        queue_size              = 9
         replication_slot        = "...my_replication_slot..."
       }
     }
@@ -29,9 +30,9 @@ resource "airbyte_source_alloydb" "my_source_alloydb" {
         tunnel_method = "NO_TUNNEL"
       }
     }
-    username = "Bruce.Zieme44"
+    username = "Keon28"
   }
-  name         = "Viola Hane"
+  name         = "Merle Carroll"
   secret_id    = "...my_secret_id..."
-  workspace_id = "929177de-ac64-46ec-b573-409e3eb1e5a2"
+  workspace_id = "9e06e3a4-3700-40ae-ab6b-c9b8f759eac5"
 }

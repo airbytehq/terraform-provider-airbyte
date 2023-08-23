@@ -57,30 +57,30 @@ func (r *SourceGoogleAdsResource) Schema(ctx context.Context, req resource.Schem
 				Attributes: map[string]schema.Attribute{
 					"conversion_window_days": schema.Int64Attribute{
 						Optional:    true,
-						Description: `A conversion window is the period of time after an ad interaction (such as an ad click or video view) during which a conversion, such as a purchase, is recorded in Google Ads. For more information, see Google's <a href="https://support.google.com/google-ads/answer/3123169?hl=en">documentation</a>.`,
+						Description: `A conversion window is the number of days after an ad interaction (such as an ad click or video view) during which a conversion, such as a purchase, is recorded in Google Ads. For more information, see <a href="https://support.google.com/google-ads/answer/3123169?hl=en">Google's documentation</a>.`,
 					},
 					"credentials": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
 							"access_token": schema.StringAttribute{
 								Optional:    true,
-								Description: `Access Token for making authenticated requests. More instruction on how to find this value in our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">docs</a>`,
+								Description: `The Access Token for making authenticated requests. For detailed instructions on finding this value, refer to our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">documentation</a>.`,
 							},
 							"client_id": schema.StringAttribute{
 								Required:    true,
-								Description: `The Client ID of your Google Ads developer application. More instruction on how to find this value in our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">docs</a>`,
+								Description: `The Client ID of your Google Ads developer application. For detailed instructions on finding this value, refer to our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">documentation</a>.`,
 							},
 							"client_secret": schema.StringAttribute{
 								Required:    true,
-								Description: `The Client Secret of your Google Ads developer application. More instruction on how to find this value in our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">docs</a>`,
+								Description: `The Client Secret of your Google Ads developer application. For detailed instructions on finding this value, refer to our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">documentation</a>.`,
 							},
 							"developer_token": schema.StringAttribute{
 								Required:    true,
-								Description: `Developer token granted by Google to use their APIs. More instruction on how to find this value in our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">docs</a>`,
+								Description: `The Developer Token granted by Google to use their APIs. For detailed instructions on finding this value, refer to our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">documentation</a>.`,
 							},
 							"refresh_token": schema.StringAttribute{
 								Required:    true,
-								Description: `The token for obtaining a new access token. More instruction on how to find this value in our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">docs</a>`,
+								Description: `The token used to obtain a new Access Token. For detailed instructions on finding this value, refer to our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">documentation</a>.`,
 							},
 						},
 					},
@@ -90,29 +90,29 @@ func (r *SourceGoogleAdsResource) Schema(ctx context.Context, req resource.Schem
 							Attributes: map[string]schema.Attribute{
 								"query": schema.StringAttribute{
 									Required:    true,
-									Description: `A custom defined GAQL query for building the report. Should not contain segments.date expression because it is used by incremental streams. See Google's <a href="https://developers.google.com/google-ads/api/fields/v11/overview_query_builder">query builder</a> for more information.`,
+									Description: `A custom defined GAQL query for building the report. Avoid including the segments.date field; wherever possible, Airbyte will automatically include it for incremental syncs. For more information, refer to <a href="https://developers.google.com/google-ads/api/fields/v11/overview_query_builder">Google's documentation</a>.`,
 								},
 								"table_name": schema.StringAttribute{
 									Required:    true,
-									Description: `The table name in your destination database for choosen query.`,
+									Description: `The table name in your destination database for the chosen query.`,
 								},
 							},
 						},
 					},
 					"customer_id": schema.StringAttribute{
 						Required:    true,
-						Description: `Comma separated list of (client) customer IDs. Each customer ID must be specified as a 10-digit number without dashes. More instruction on how to find this value in our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">docs</a>. Metrics streams like AdGroupAdReport cannot be requested for a manager account.`,
+						Description: `Comma-separated list of (client) customer IDs. Each customer ID must be specified as a 10-digit number without dashes. For detailed instructions on finding this value, refer to our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">documentation</a>.`,
 					},
 					"end_date": schema.StringAttribute{
 						Optional: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
-						Description: `UTC date and time in the format 2017-01-25. Any data after this date will not be replicated.`,
+						Description: `UTC date in the format YYYY-MM-DD. Any data after this date will not be replicated.`,
 					},
 					"login_customer_id": schema.StringAttribute{
 						Optional:    true,
-						Description: `If your access to the customer account is through a manager account, this field is required and must be set to the customer ID of the manager account (10-digit number without dashes). More information about this field you can see <a href="https://developers.google.com/google-ads/api/docs/concepts/call-structure#cid">here</a>`,
+						Description: `If your access to the customer account is through a manager account, this field is required, and must be set to the 10-digit customer ID of the manager account. For more information about this field, refer to <a href="https://developers.google.com/google-ads/api/docs/concepts/call-structure#cid">Google's documentation</a>.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -128,7 +128,7 @@ func (r *SourceGoogleAdsResource) Schema(ctx context.Context, req resource.Schem
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
-						Description: `UTC date and time in the format 2017-01-25. Any data before this date will not be replicated.`,
+						Description: `UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated.`,
 					},
 				},
 			},
@@ -327,7 +327,7 @@ func (r *SourceGoogleAdsResource) Update(ctx context.Context, req resource.Updat
 		return
 	}
 	if getResponse.SourceResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
 		return
 	}
 	data.RefreshFromGetResponse(getResponse.SourceResponse)
@@ -370,7 +370,7 @@ func (r *SourceGoogleAdsResource) Delete(ctx context.Context, req resource.Delet
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

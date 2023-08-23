@@ -55,6 +55,124 @@ func (r *SourceTypeformResource) Schema(ctx context.Context, req resource.Schema
 			"configuration": schema.SingleNestedAttribute{
 				Required: true,
 				Attributes: map[string]schema.Attribute{
+					"credentials": schema.SingleNestedAttribute{
+						Required: true,
+						Attributes: map[string]schema.Attribute{
+							"source_typeform_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"access_token": schema.StringAttribute{
+										Required:    true,
+										Description: `Access Token for making authenticated requests.`,
+									},
+									"auth_type": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"oauth2.0",
+											),
+										},
+										Description: `must be one of ["oauth2.0"]`,
+									},
+									"client_id": schema.StringAttribute{
+										Required:    true,
+										Description: `The Client ID of the Typeform developer application.`,
+									},
+									"client_secret": schema.StringAttribute{
+										Required:    true,
+										Description: `The Client Secret the Typeform developer application.`,
+									},
+									"refresh_token": schema.StringAttribute{
+										Required:    true,
+										Description: `The key to refresh the expired access_token.`,
+									},
+									"token_expiry_date": schema.StringAttribute{
+										Required: true,
+										Validators: []validator.String{
+											validators.IsRFC3339(),
+										},
+										Description: `The date-time when the access token should be refreshed.`,
+									},
+								},
+							},
+							"source_typeform_authorization_method_private_token": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"access_token": schema.StringAttribute{
+										Required:    true,
+										Description: `Log into your Typeform account and then generate a personal Access Token.`,
+									},
+									"auth_type": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"access_token",
+											),
+										},
+										Description: `must be one of ["access_token"]`,
+									},
+								},
+							},
+							"source_typeform_update_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"access_token": schema.StringAttribute{
+										Required:    true,
+										Description: `Access Token for making authenticated requests.`,
+									},
+									"auth_type": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"oauth2.0",
+											),
+										},
+										Description: `must be one of ["oauth2.0"]`,
+									},
+									"client_id": schema.StringAttribute{
+										Required:    true,
+										Description: `The Client ID of the Typeform developer application.`,
+									},
+									"client_secret": schema.StringAttribute{
+										Required:    true,
+										Description: `The Client Secret the Typeform developer application.`,
+									},
+									"refresh_token": schema.StringAttribute{
+										Required:    true,
+										Description: `The key to refresh the expired access_token.`,
+									},
+									"token_expiry_date": schema.StringAttribute{
+										Required: true,
+										Validators: []validator.String{
+											validators.IsRFC3339(),
+										},
+										Description: `The date-time when the access token should be refreshed.`,
+									},
+								},
+							},
+							"source_typeform_update_authorization_method_private_token": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"access_token": schema.StringAttribute{
+										Required:    true,
+										Description: `Log into your Typeform account and then generate a personal Access Token.`,
+									},
+									"auth_type": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"access_token",
+											),
+										},
+										Description: `must be one of ["access_token"]`,
+									},
+								},
+							},
+						},
+						Validators: []validator.Object{
+							validators.ExactlyOneChild(),
+						},
+					},
 					"form_ids": schema.ListAttribute{
 						Optional:    true,
 						ElementType: types.StringType,
@@ -70,15 +188,11 @@ func (r *SourceTypeformResource) Schema(ctx context.Context, req resource.Schema
 						Description: `must be one of ["typeform"]`,
 					},
 					"start_date": schema.StringAttribute{
-						Required: true,
+						Optional: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
-						Description: `UTC date and time in the format: YYYY-MM-DDTHH:mm:ss[Z]. Any data before this date will not be replicated.`,
-					},
-					"token": schema.StringAttribute{
-						Required:    true,
-						Description: `The API Token for a Typeform account.`,
+						Description: `The date from which you'd like to replicate data for Typeform API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.`,
 					},
 				},
 			},
@@ -277,7 +391,7 @@ func (r *SourceTypeformResource) Update(ctx context.Context, req resource.Update
 		return
 	}
 	if getResponse.SourceResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
 		return
 	}
 	data.RefreshFromGetResponse(getResponse.SourceResponse)
@@ -320,7 +434,7 @@ func (r *SourceTypeformResource) Delete(ctx context.Context, req resource.Delete
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

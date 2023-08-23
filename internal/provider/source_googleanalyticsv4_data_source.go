@@ -176,7 +176,10 @@ func (r *SourceGoogleAnalyticsV4DataSource) Schema(ctx context.Context, req data
 						Description: `must be one of ["google-analytics-v4"]`,
 					},
 					"start_date": schema.StringAttribute{
-						Computed:    true,
+						Computed: true,
+						Validators: []validator.String{
+							validators.IsValidDate(),
+						},
 						Description: `The date in the format YYYY-MM-DD. Any data before this date will not be replicated.`,
 					},
 					"view_id": schema.StringAttribute{

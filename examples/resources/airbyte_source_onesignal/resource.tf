@@ -12,7 +12,7 @@ resource "airbyte_source_onesignal" "my_source_onesignal" {
     start_date    = "2020-11-16T00:00:00Z"
     user_auth_key = "...my_user_auth_key..."
   }
-  name         = "Ms. Regina Steuber"
+  name         = "Laverne Jacobs"
   secret_id    = "...my_secret_id..."
-  workspace_id = "38f1edb7-8359-4ecc-9cb8-60f8cd580ba7"
+  workspace_id = "1cc2f1fc-b51c-49a4-9ffb-e9cbd795ee65"
 }

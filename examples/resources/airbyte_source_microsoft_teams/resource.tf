@@ -11,7 +11,7 @@ resource "airbyte_source_microsoft_teams" "my_source_microsoftteams" {
     period      = "D7"
     source_type = "microsoft-teams"
   }
-  name         = "Stephanie Yundt"
+  name         = "Noah Bernier"
   secret_id    = "...my_secret_id..."
-  workspace_id = "2657b36f-c6b9-4f58-bce5-25c67641a831"
+  workspace_id = "7097b5da-08c5-47fa-ac78-a216e19bafec"
 }

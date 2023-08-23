@@ -78,7 +78,7 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 					"replication_method": schema.SingleNestedAttribute{
 						Required: true,
 						Attributes: map[string]schema.Attribute{
-							"source_mysql_replication_method_logical_replication_cdc": schema.SingleNestedAttribute{
+							"source_mysql_update_method_read_changes_using_binary_log_cdc": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"initial_waiting_seconds": schema.Int64Attribute{
@@ -99,9 +99,9 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 										Description: `Enter the configured MySQL server timezone. This should only be done if the configured timezone in your MySQL instance does not conform to IANNA standard.`,
 									},
 								},
-								Description: `CDC uses the Binlog to detect inserts, updates, and deletes. This needs to be configured on the source database itself.`,
+								Description: `<i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the MySQL <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">binary log</a>. This must be enabled on your database.`,
 							},
-							"source_mysql_replication_method_standard": schema.SingleNestedAttribute{
+							"source_mysql_update_method_scan_changes_with_user_defined_cursor": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
@@ -114,9 +114,9 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 										Description: `must be one of ["STANDARD"]`,
 									},
 								},
-								Description: `Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
+								Description: `Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at).`,
 							},
-							"source_mysql_update_replication_method_logical_replication_cdc": schema.SingleNestedAttribute{
+							"source_mysql_update_update_method_read_changes_using_binary_log_cdc": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"initial_waiting_seconds": schema.Int64Attribute{
@@ -137,9 +137,9 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 										Description: `Enter the configured MySQL server timezone. This should only be done if the configured timezone in your MySQL instance does not conform to IANNA standard.`,
 									},
 								},
-								Description: `CDC uses the Binlog to detect inserts, updates, and deletes. This needs to be configured on the source database itself.`,
+								Description: `<i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the MySQL <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">binary log</a>. This must be enabled on your database.`,
 							},
-							"source_mysql_update_replication_method_standard": schema.SingleNestedAttribute{
+							"source_mysql_update_update_method_scan_changes_with_user_defined_cursor": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
@@ -152,13 +152,13 @@ func (r *SourceMysqlResource) Schema(ctx context.Context, req resource.SchemaReq
 										Description: `must be one of ["STANDARD"]`,
 									},
 								},
-								Description: `Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
+								Description: `Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at).`,
 							},
 						},
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
-						Description: `Replication method to use for extracting data from the database.`,
+						Description: `Configures how data is extracted from the database.`,
 					},
 					"source_type": schema.StringAttribute{
 						Required: true,
@@ -732,7 +732,7 @@ func (r *SourceMysqlResource) Update(ctx context.Context, req resource.UpdateReq
 		return
 	}
 	if getResponse.SourceResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
 		return
 	}
 	data.RefreshFromGetResponse(getResponse.SourceResponse)
@@ -775,7 +775,7 @@ func (r *SourceMysqlResource) Delete(ctx context.Context, req resource.DeleteReq
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

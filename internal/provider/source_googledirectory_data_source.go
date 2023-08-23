@@ -8,6 +8,7 @@ import (
 	"context"
 	"fmt"
 
+	"airbyte/internal/validators"
 	"github.com/hashicorp/terraform-plugin-framework-validators/stringvalidator"
 	"github.com/hashicorp/terraform-plugin-framework/datasource"
 	"github.com/hashicorp/terraform-plugin-framework/datasource/schema"
@@ -52,13 +53,118 @@ func (r *SourceGoogleDirectoryDataSource) Schema(ctx context.Context, req dataso
 			"configuration": schema.SingleNestedAttribute{
 				Computed: true,
 				Attributes: map[string]schema.Attribute{
-					"credentials_json": schema.StringAttribute{
-						Computed:    true,
-						Description: `The contents of the JSON service account key. See the <a href="https://developers.google.com/admin-sdk/directory/v1/guides/delegation">docs</a> for more information on how to generate this key.`,
-					},
-					"email": schema.StringAttribute{
-						Computed:    true,
-						Description: `The email of the user, which has permissions to access the Google Workspace Admin APIs.`,
+					"credentials": schema.SingleNestedAttribute{
+						Computed: true,
+						Attributes: map[string]schema.Attribute{
+							"source_google_directory_google_credentials_service_account_key": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"credentials_json": schema.StringAttribute{
+										Computed:    true,
+										Description: `The contents of the JSON service account key. See the <a href="https://developers.google.com/admin-sdk/directory/v1/guides/delegation">docs</a> for more information on how to generate this key.`,
+									},
+									"credentials_title": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Service accounts",
+											),
+										},
+										MarkdownDescription: `must be one of ["Service accounts"]` + "\n" +
+											`Authentication Scenario`,
+									},
+									"email": schema.StringAttribute{
+										Computed:    true,
+										Description: `The email of the user, which has permissions to access the Google Workspace Admin APIs.`,
+									},
+								},
+								Description: `For these scenario user should obtain service account's credentials from the Google API Console and provide delegated email.`,
+							},
+							"source_google_directory_google_credentials_sign_in_via_google_o_auth": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"client_id": schema.StringAttribute{
+										Computed:    true,
+										Description: `The Client ID of the developer application.`,
+									},
+									"client_secret": schema.StringAttribute{
+										Computed:    true,
+										Description: `The Client Secret of the developer application.`,
+									},
+									"credentials_title": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Web server app",
+											),
+										},
+										MarkdownDescription: `must be one of ["Web server app"]` + "\n" +
+											`Authentication Scenario`,
+									},
+									"refresh_token": schema.StringAttribute{
+										Computed:    true,
+										Description: `The Token for obtaining a new access token.`,
+									},
+								},
+								Description: `For these scenario user only needs to give permission to read Google Directory data.`,
+							},
+							"source_google_directory_update_google_credentials_service_account_key": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"credentials_json": schema.StringAttribute{
+										Computed:    true,
+										Description: `The contents of the JSON service account key. See the <a href="https://developers.google.com/admin-sdk/directory/v1/guides/delegation">docs</a> for more information on how to generate this key.`,
+									},
+									"credentials_title": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Service accounts",
+											),
+										},
+										MarkdownDescription: `must be one of ["Service accounts"]` + "\n" +
+											`Authentication Scenario`,
+									},
+									"email": schema.StringAttribute{
+										Computed:    true,
+										Description: `The email of the user, which has permissions to access the Google Workspace Admin APIs.`,
+									},
+								},
+								Description: `For these scenario user should obtain service account's credentials from the Google API Console and provide delegated email.`,
+							},
+							"source_google_directory_update_google_credentials_sign_in_via_google_o_auth": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"client_id": schema.StringAttribute{
+										Computed:    true,
+										Description: `The Client ID of the developer application.`,
+									},
+									"client_secret": schema.StringAttribute{
+										Computed:    true,
+										Description: `The Client Secret of the developer application.`,
+									},
+									"credentials_title": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Web server app",
+											),
+										},
+										MarkdownDescription: `must be one of ["Web server app"]` + "\n" +
+											`Authentication Scenario`,
+									},
+									"refresh_token": schema.StringAttribute{
+										Computed:    true,
+										Description: `The Token for obtaining a new access token.`,
+									},
+								},
+								Description: `For these scenario user only needs to give permission to read Google Directory data.`,
+							},
+						},
+						Validators: []validator.Object{
+							validators.ExactlyOneChild(),
+						},
+						Description: `Google APIs use the OAuth 2.0 protocol for authentication and authorization. The Source supports <a href="https://developers.google.com/identity/protocols/oauth2#webserver" target="_blank">Web server application</a> and <a href="https://developers.google.com/identity/protocols/oauth2#serviceaccount" target="_blank">Service accounts</a> scenarios.`,
 					},
 					"source_type": schema.StringAttribute{
 						Computed: true,

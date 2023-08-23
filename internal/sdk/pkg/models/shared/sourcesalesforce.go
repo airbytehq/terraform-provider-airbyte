@@ -112,13 +112,15 @@ type SourceSalesforce struct {
 	ClientID string `json:"client_id"`
 	// Enter your Salesforce developer application's <a href="https://developer.salesforce.com/forums/?id=9062I000000DLgbQAG">Client secret</a>
 	ClientSecret string `json:"client_secret"`
+	// Toggle to use Bulk API (this might cause empty fields for some streams)
+	ForceUseBulkAPI *bool `json:"force_use_bulk_api,omitempty"`
 	// Toggle if you're using a <a href="https://help.salesforce.com/s/articleView?id=sf.deploy_sandboxes_parent.htm&type=5">Salesforce Sandbox</a>
 	IsSandbox *bool `json:"is_sandbox,omitempty"`
 	// Enter your application's <a href="https://developer.salesforce.com/docs/atlas.en-us.mobile_sdk.meta/mobile_sdk/oauth_refresh_token_flow.htm">Salesforce Refresh Token</a> used for Airbyte to access your Salesforce account.
 	RefreshToken string                     `json:"refresh_token"`
 	SourceType   SourceSalesforceSalesforce `json:"sourceType"`
-	// Enter the date in the YYYY-MM-DD format. Airbyte will replicate the data added on and after this date. If this field is blank, Airbyte will replicate the data for last two years.
+	// Enter the date (or date-time) in the YYYY-MM-DD or YYYY-MM-DDTHH:mm:ssZ format. Airbyte will replicate the data updated on and after this date. If this field is blank, Airbyte will replicate the data for last two years.
 	StartDate *time.Time `json:"start_date,omitempty"`
-	// Filter streams relevant to you
+	// Add filters to select only required stream based on `SObject` name. Use this field to filter which tables are displayed by this connector. This is useful if your Salesforce account has a large number of tables (>1000), in which case you may find it easier to navigate the UI and speed up the connector's performance if you restrict the tables displayed by this connector.
 	StreamsCriteria []SourceSalesforceStreamsCriteria `json:"streams_criteria,omitempty"`
 }

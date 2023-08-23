@@ -23,8 +23,8 @@ resource "airbyte_destination_google_sheets" "my_destination_googlesheets" {
     destination_type = "google-sheets"
     spreadsheet_id   = "https://docs.google.com/spreadsheets/d/1hLd9Qqti3UyLXZB2aFfUWDT7BG/edit"
   }
-  name         = "Sadie Hackett"
-  workspace_id = "789fd871-f99d-4d2e-bd12-1aa6f1e674bd"
+  name         = "Angela Olson"
+  workspace_id = "cdca4251-904e-4523-87e0-bc7178e4796f"
 }
 ```
 

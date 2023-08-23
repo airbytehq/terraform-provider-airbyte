@@ -37,7 +37,7 @@ func (e *SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentic
 // SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication - Credentials for the service
 type SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthentication struct {
 	AuthType *SourceGoogleAnalyticsDataAPIUpdateCredentialsServiceAccountKeyAuthenticationAuthType `json:"auth_type,omitempty"`
-	// The JSON key of the service account to use for authorization
+	// The JSON key linked to the service account used for authorization. For steps on obtaining this key, refer to <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api/#setup-guide">the setup guide</a>.
 	CredentialsJSON string `json:"credentials_json"`
 }
 
@@ -149,12 +149,12 @@ func (u SourceGoogleAnalyticsDataAPIUpdateCredentials) MarshalJSON() ([]byte, er
 type SourceGoogleAnalyticsDataAPIUpdate struct {
 	// Credentials for the service
 	Credentials *SourceGoogleAnalyticsDataAPIUpdateCredentials `json:"credentials,omitempty"`
-	// A JSON array describing the custom reports you want to sync from Google Analytics. See <a href="https://docs.airbyte.com/integrations/sources/google-analytics-v4/#custom-reports">the docs</a> for more information about the exact format you can use to fill out this field.
+	// A JSON array describing the custom reports you want to sync from Google Analytics. See <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api/#custom-reports">the documentation</a> for more information about the exact format you can use to fill out this field.
 	CustomReports *string `json:"custom_reports,omitempty"`
 	// The start date from which to replicate report data in the format YYYY-MM-DD. Data generated before this date will not be included in the report. Not applied to custom Cohort reports.
 	DateRangesStartDate types.Date `json:"date_ranges_start_date"`
-	// A Google Analytics GA4 property identifier whose events are tracked. Specified in the URL path and not the body such as "123...". See <a href="https://developers.google.com/analytics/devguides/reporting/data/v1/property-id#what_is_my_property_id">the docs</a> for more details.
+	// The Property ID is a unique number assigned to each property in Google Analytics, found in your GA4 property URL. This ID allows the connector to track the specific events associated with your property. Refer to the <a href='https://developers.google.com/analytics/devguides/reporting/data/v1/property-id#what_is_my_property_id'>Google Analytics documentation</a> to locate your property ID.
 	PropertyID string `json:"property_id"`
-	// The time increment used by the connector when requesting data from the Google Analytics API. More information is available in the <a href="https://docs.airbyte.com/integrations/sources/google-analytics-v4/#sampling-in-reports">the docs</a>. The bigger this value is, the faster the sync will be, but the more likely that sampling will be applied to your data, potentially causing inaccuracies in the returned results. We recommend setting this to 1 unless you have a hard requirement to make the sync faster at the expense of accuracy. The minimum allowed value for this field is 1, and the maximum is 364. Not applied to custom Cohort reports.
+	// The interval in days for each data request made to the Google Analytics API. A larger value speeds up data sync, but increases the chance of data sampling, which may result in inaccuracies. We recommend a value of 1 to minimize sampling, unless speed is an absolute priority over accuracy. Acceptable values range from 1 to 364. Does not apply to custom Cohort reports. More information is available in <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api">the documentation</a>.
 	WindowInDays *int64 `json:"window_in_days,omitempty"`
 }

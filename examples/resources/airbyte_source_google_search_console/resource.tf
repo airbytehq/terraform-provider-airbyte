@@ -18,7 +18,7 @@ resource "airbyte_source_google_search_console" "my_source_googlesearchconsole" 
     source_type = "google-search-console"
     start_date  = "2021-01-01"
   }
-  name         = "Glen Larson"
+  name         = "Janie Swift PhD"
   secret_id    = "...my_secret_id..."
-  workspace_id = "98e22ae2-0da1-46fc-ab27-1a289c57e854"
+  workspace_id = "a16fc2b2-71a2-489c-97e8-54e90439d222"
 }

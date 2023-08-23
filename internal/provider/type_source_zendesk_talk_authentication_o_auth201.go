@@ -7,5 +7,7 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 type SourceZendeskTalkAuthenticationOAuth201 struct {
 	AccessToken          types.String `tfsdk:"access_token"`
 	AuthType             types.String `tfsdk:"auth_type"`
+	ClientID             types.String `tfsdk:"client_id"`
+	ClientSecret         types.String `tfsdk:"client_secret"`
 	AdditionalProperties types.String `tfsdk:"additional_properties"`
 }

@@ -326,6 +326,10 @@ func (r *DestinationDatabricksDataSource) Schema(ctx context.Context, req dataso
 						},
 						Description: `must be one of ["databricks"]`,
 					},
+					"enable_schema_evolution": schema.BoolAttribute{
+						Computed:    true,
+						Description: `Support schema evolution for all streams. If "false", the connector might fail when a stream's schema changes.`,
+					},
 					"purge_staging_data": schema.BoolAttribute{
 						Computed:    true,
 						Description: `Default to 'true'. Switch it to 'false' for debugging purpose.`,

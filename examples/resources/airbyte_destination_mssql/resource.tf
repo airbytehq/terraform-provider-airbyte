@@ -17,8 +17,8 @@ resource "airbyte_destination_mssql" "my_destination_mssql" {
         tunnel_method = "NO_TUNNEL"
       }
     }
-    username = "Laron.Gerlach40"
+    username = "Elwyn.Sawayn7"
   }
-  name         = "Isaac Wolf"
-  workspace_id = "7f603e8b-445e-480c-a55e-fd20e457e185"
+  name         = "Kristine Ondricka"
+  workspace_id = "aae8d678-64db-4b67-9fd5-e60b375ed4f6"
 }

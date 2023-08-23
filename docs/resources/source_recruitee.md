@@ -16,12 +16,12 @@ SourceRecruitee Resource
 resource "airbyte_source_recruitee" "my_source_recruitee" {
   configuration = {
     api_key     = "...my_api_key..."
-    company_id  = 3
+    company_id  = 9
     source_type = "recruitee"
   }
-  name         = "Eloise Hintz"
+  name         = "Dr. Sean Williamson"
   secret_id    = "...my_secret_id..."
-  workspace_id = "a45ac82b-85f8-4bc2-8aba-8da4127dd597"
+  workspace_id = "5eb4a8b6-74ee-45cf-818e-dc7f787e32e0"
 }
 ```
 

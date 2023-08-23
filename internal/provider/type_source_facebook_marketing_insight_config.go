@@ -6,6 +6,7 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceFacebookMarketingInsightConfig struct {
 	ActionBreakdowns       []types.String `tfsdk:"action_breakdowns"`
+	ActionReportTime       types.String   `tfsdk:"action_report_time"`
 	Breakdowns             []types.String `tfsdk:"breakdowns"`
 	EndDate                types.String   `tfsdk:"end_date"`
 	Fields                 []types.String `tfsdk:"fields"`

@@ -19,14 +19,14 @@ resource "airbyte_source_sentry" "my_source_sentry" {
     discover_fields = [
       "{ \"see\": \"documentation\" }",
     ]
-    hostname     = "pesky-boon.info"
+    hostname     = "imperfect-creator.name"
     organization = "...my_organization..."
     project      = "...my_project..."
     source_type  = "sentry"
   }
-  name         = "Isabel Leuschke"
+  name         = "Laurie Farrell"
   secret_id    = "...my_secret_id..."
-  workspace_id = "3444eac8-b3a2-4875-86c1-fe606d07d2a9"
+  workspace_id = "12ab2521-b9f2-4e07-a467-b8a40bc05fab"
 }
 ```
 

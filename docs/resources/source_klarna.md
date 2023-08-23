@@ -16,14 +16,14 @@ SourceKlarna Resource
 resource "airbyte_source_klarna" "my_source_klarna" {
   configuration = {
     password    = "...my_password..."
-    playground  = true
+    playground  = false
     region      = "oc"
     source_type = "klarna"
-    username    = "Lillian_Williamson56"
+    username    = "Tristin47"
   }
-  name         = "Catherine Bashirian"
+  name         = "Jacob Krajcik Sr."
   secret_id    = "...my_secret_id..."
-  workspace_id = "3bbf8178-37b0-41af-9d78-8624189eb448"
+  workspace_id = "afdd7886-2418-49eb-8487-3f5033f19dbf"
 }
 ```
 

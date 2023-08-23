@@ -20,8 +20,8 @@ resource "airbyte_destination_gcs" "my_destination_gcs" {
     }
     gcs_bucket_name   = "airbyte_sync"
     gcs_bucket_path   = "data_sync/test"
-    gcs_bucket_region = "us-east4"
+    gcs_bucket_region = "us-east1"
   }
-  name         = "Sue Corkery"
-  workspace_id = "22e9817e-e17c-4be6-9e6b-7b95bc0ab3c2"
+  name         = "Neal Schroeder"
+  workspace_id = "6c8dd6b1-4429-4074-b477-8a7bd466d28c"
 }

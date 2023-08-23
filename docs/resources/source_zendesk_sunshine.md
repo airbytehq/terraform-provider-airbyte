@@ -19,16 +19,16 @@ resource "airbyte_source_zendesk_sunshine" "my_source_zendesksunshine" {
       source_zendesk_sunshine_authorization_method_api_token = {
         api_token   = "...my_api_token..."
         auth_method = "api_token"
-        email       = "Hoyt61@yahoo.com"
+        email       = "Hollis.Mann72@hotmail.com"
       }
     }
     source_type = "zendesk-sunshine"
     start_date  = "2021-01-01T00:00:00Z"
     subdomain   = "...my_subdomain..."
   }
-  name         = "Bridget Pagac"
+  name         = "Alexander Friesen"
   secret_id    = "...my_secret_id..."
-  workspace_id = "07f06b28-ecc8-4649-a386-f62c969c4cc6"
+  workspace_id = "82dbec75-c68c-4606-9946-8ce304d8849b"
 }
 ```
 
@@ -78,9 +78,13 @@ Optional:
 
 Required:
 
-- `api_token` (String) API Token. See the <a href="https://docs.airbyte.io/integrations/sources/zendesk_sunshine">docs</a> for information on how to generate this key.
+- `api_token` (String) API Token. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk_sunshine">docs</a> for information on how to generate this key.
 - `auth_method` (String) must be one of ["api_token"]
 - `email` (String) The user email for your Zendesk account
+
+Optional:
+
+- `additional_properties` (String) Parsed as JSON.
 
 
 <a id="nestedatt--configuration--credentials--source_zendesk_sunshine_authorization_method_o_auth2_0"></a>
@@ -93,15 +97,23 @@ Required:
 - `client_id` (String) The Client ID of your OAuth application.
 - `client_secret` (String) The Client Secret of your OAuth application.
 
+Optional:
+
+- `additional_properties` (String) Parsed as JSON.
+
 
 <a id="nestedatt--configuration--credentials--source_zendesk_sunshine_update_authorization_method_api_token"></a>
 ### Nested Schema for `configuration.credentials.source_zendesk_sunshine_update_authorization_method_api_token`
 
 Required:
 
-- `api_token` (String) API Token. See the <a href="https://docs.airbyte.io/integrations/sources/zendesk_sunshine">docs</a> for information on how to generate this key.
+- `api_token` (String) API Token. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk_sunshine">docs</a> for information on how to generate this key.
 - `auth_method` (String) must be one of ["api_token"]
 - `email` (String) The user email for your Zendesk account
+
+Optional:
+
+- `additional_properties` (String) Parsed as JSON.
 
 
 <a id="nestedatt--configuration--credentials--source_zendesk_sunshine_update_authorization_method_o_auth2_0"></a>
@@ -113,5 +125,9 @@ Required:
 - `auth_method` (String) must be one of ["oauth2.0"]
 - `client_id` (String) The Client ID of your OAuth application.
 - `client_secret` (String) The Client Secret of your OAuth application.
+
+Optional:
+
+- `additional_properties` (String) Parsed as JSON.
 
 

@@ -9,7 +9,7 @@ resource "airbyte_source_sonar_cloud" "my_source_sonarcloud" {
     start_date   = "YYYY-MM-DD"
     user_token   = "...my_user_token..."
   }
-  name         = "Chelsea Ortiz"
+  name         = "Judy Bogan"
   secret_id    = "...my_secret_id..."
-  workspace_id = "5ca8649a-70cf-4d5d-a989-b7206451077d"
+  workspace_id = "8f4d7396-564c-420a-8711-a961d24a7dbb"
 }

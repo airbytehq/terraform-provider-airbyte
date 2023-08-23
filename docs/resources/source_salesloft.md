@@ -24,9 +24,9 @@ resource "airbyte_source_salesloft" "my_source_salesloft" {
     source_type = "salesloft"
     start_date  = "2020-11-16T00:00:00Z"
   }
-  name         = "Bethany Hansen"
+  name         = "Amelia Simonis"
   secret_id    = "...my_secret_id..."
-  workspace_id = "50495c5d-bb3c-457c-9e49-81e8aa257ddc"
+  workspace_id = "b41d6124-3531-4870-8f68-b03ad421bd43"
 }
 ```
 

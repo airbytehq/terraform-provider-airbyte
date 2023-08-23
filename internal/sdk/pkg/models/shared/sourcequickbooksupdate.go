@@ -98,6 +98,6 @@ type SourceQuickbooksUpdate struct {
 	Credentials SourceQuickbooksUpdateAuthorizationMethod `json:"credentials"`
 	// Determines whether to use the sandbox or production environment.
 	Sandbox bool `json:"sandbox"`
-	// The default value to use if no bookmark exists for an endpoint (rfc3339 date string). E.g, 2021-03-20T00:00:00+00:00. Any data before this date will not be replicated.
+	// The default value to use if no bookmark exists for an endpoint (rfc3339 date string). E.g, 2021-03-20T00:00:00Z. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
 }

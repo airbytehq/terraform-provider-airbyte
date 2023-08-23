@@ -19,11 +19,11 @@ resource "airbyte_source_metabase" "my_source_metabase" {
     password         = "...my_password..."
     session_token    = "...my_session_token..."
     source_type      = "metabase"
-    username         = "Flavio_Bode98"
+    username         = "Audrey_Weimann71"
   }
-  name         = "Wallace Wilderman"
+  name         = "Jody Lebsack"
   secret_id    = "...my_secret_id..."
-  workspace_id = "02bfdc34-5084-41f1-b644-56379f3fb27e"
+  workspace_id = "71f6c482-52d7-4771-a7fd-074009ef8d29"
 }
 ```
 

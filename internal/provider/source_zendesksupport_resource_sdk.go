@@ -15,6 +15,18 @@ func (r *SourceZendeskSupportResourceModel) ToCreateSDKType() *shared.SourceZend
 		var sourceZendeskSupportAuthenticationOAuth20 *shared.SourceZendeskSupportAuthenticationOAuth20
 		if r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20 != nil {
 			accessToken := r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.AccessToken.ValueString()
+			clientID := new(string)
+			if !r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.ClientID.IsNull() {
+				*clientID = r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.ClientID.ValueString()
+			} else {
+				clientID = nil
+			}
+			clientSecret := new(string)
+			if !r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.ClientSecret.IsUnknown() && !r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.ClientSecret.IsNull() {
+				*clientSecret = r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.ClientSecret.ValueString()
+			} else {
+				clientSecret = nil
+			}
 			credentials1 := new(shared.SourceZendeskSupportAuthenticationOAuth20Credentials)
 			if !r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.Credentials.IsUnknown() && !r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.Credentials.IsNull() {
 				*credentials1 = shared.SourceZendeskSupportAuthenticationOAuth20Credentials(r.Configuration.Credentials.SourceZendeskSupportAuthenticationOAuth20.Credentials.ValueString())
@@ -27,6 +39,8 @@ func (r *SourceZendeskSupportResourceModel) ToCreateSDKType() *shared.SourceZend
 			}
 			sourceZendeskSupportAuthenticationOAuth20 = &shared.SourceZendeskSupportAuthenticationOAuth20{
 				AccessToken:          accessToken,
+				ClientID:             clientID,
+				ClientSecret:         clientSecret,
 				Credentials:          credentials1,
 				AdditionalProperties: additionalProperties,
 			}
@@ -107,6 +121,18 @@ func (r *SourceZendeskSupportResourceModel) ToUpdateSDKType() *shared.SourceZend
 		var sourceZendeskSupportUpdateAuthenticationOAuth20 *shared.SourceZendeskSupportUpdateAuthenticationOAuth20
 		if r.Configuration.Credentials.SourceZendeskSupportUpdateAuthenticationOAuth20 != nil {
 			accessToken := r.Configuration.Credentials.SourceZendeskSupportUpdateAuthenticationOAuth20.AccessToken.ValueString()
+			clientID := new(string)
+			if !r.Configuration.Credentials.SourceZendeskSupportUpdateAuthenticationOAuth20.ClientID.IsUnknown() && !r.Configuration.Credentials.SourceZendeskSupportUpdateAuthenticationOAuth20.ClientID.IsNull() {
+				*clientID = r.Configuration.Credentials.SourceZendeskSupportUpdateAuthenticationOAuth20.ClientID.ValueString()
+			} else {
+				clientID = nil
+			}
+			clientSecret := new(string)
+			if !r.Configuration.Credentials.SourceZendeskSupportUpdateAuthenticationOAuth20.ClientSecret.IsUnknown() && !r.Configuration.Credentials.SourceZendeskSupportUpdateAuthenticationOAuth20.ClientSecret.IsNull() {
+				*clientSecret = r.Configuration.Credentials.SourceZendeskSupportUpdateAuthenticationOAuth20.ClientSecret.ValueString()
+			} else {
+				clientSecret = nil
+			}
 			credentials1 := new(shared.SourceZendeskSupportUpdateAuthenticationOAuth20Credentials)
 			if !r.Configuration.Credentials.SourceZendeskSupportUpdateAuthenticationOAuth20.Credentials.IsUnknown() && !r.Configuration.Credentials.SourceZendeskSupportUpdateAuthenticationOAuth20.Credentials.IsNull() {
 				*credentials1 = shared.SourceZendeskSupportUpdateAuthenticationOAuth20Credentials(r.Configuration.Credentials.SourceZendeskSupportUpdateAuthenticationOAuth20.Credentials.ValueString())
@@ -119,6 +145,8 @@ func (r *SourceZendeskSupportResourceModel) ToUpdateSDKType() *shared.SourceZend
 			}
 			sourceZendeskSupportUpdateAuthenticationOAuth20 = &shared.SourceZendeskSupportUpdateAuthenticationOAuth20{
 				AccessToken:          accessToken,
+				ClientID:             clientID,
+				ClientSecret:         clientSecret,
 				Credentials:          credentials1,
 				AdditionalProperties: additionalProperties,
 			}

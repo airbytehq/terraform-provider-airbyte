@@ -4,7 +4,8 @@ package shared
 
 // JobResponse - Provides details of a single job.
 type JobResponse struct {
-	BytesSynced *int64 `json:"bytesSynced,omitempty"`
+	BytesSynced  *int64 `json:"bytesSynced,omitempty"`
+	ConnectionID string `json:"connectionId"`
 	// Duration of a sync in ISO_8601 format
 	Duration *string `json:"duration,omitempty"`
 	JobID    int64   `json:"jobId"`

@@ -63,7 +63,7 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 								Attributes: map[string]schema.Attribute{
 									"api_token": schema.StringAttribute{
 										Required:    true,
-										Description: `The value of the API token generated. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk-support#setup-guide">docs</a> for more information.`,
+										Description: `The value of the API token generated. See our <a href="https://docs.airbyte.com/integrations/sources/zendesk-support#setup-guide">full documentation</a> for more information on generating this token.`,
 									},
 									"credentials": schema.StringAttribute{
 										Optional: true,
@@ -86,14 +86,22 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 										Description: `Parsed as JSON.`,
 									},
 								},
-								Description: `Zendesk service provides two authentication methods. Choose between: ` + "`" + `OAuth2.0` + "`" + ` or ` + "`" + `API token` + "`" + `.`,
+								Description: `Zendesk allows two authentication methods. We recommend using ` + "`" + `OAuth2.0` + "`" + ` for Airbyte Cloud users and ` + "`" + `API token` + "`" + ` for Airbyte Open Source users.`,
 							},
 							"source_zendesk_support_authentication_o_auth2_0": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Required:    true,
-										Description: `The value of the API token generated. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk-support">docs</a> for more information.`,
+										Description: `The OAuth access token. See the <a href="https://developer.zendesk.com/documentation/ticketing/working-with-oauth/creating-and-using-oauth-tokens-with-the-api/">Zendesk docs</a> for more information on generating this token.`,
+									},
+									"client_id": schema.StringAttribute{
+										Optional:    true,
+										Description: `The OAuth client's ID. See <a href="https://docs.searchunify.com/Content/Content-Sources/Zendesk-Authentication-OAuth-Client-ID-Secret.htm#:~:text=Get%20Client%20ID%20and%20Client%20Secret&text=Go%20to%20OAuth%20Clients%20and,will%20be%20displayed%20only%20once.">this guide</a> for more information.`,
+									},
+									"client_secret": schema.StringAttribute{
+										Optional:    true,
+										Description: `The OAuth client secret. See <a href="https://docs.searchunify.com/Content/Content-Sources/Zendesk-Authentication-OAuth-Client-ID-Secret.htm#:~:text=Get%20Client%20ID%20and%20Client%20Secret&text=Go%20to%20OAuth%20Clients%20and,will%20be%20displayed%20only%20once.">this guide</a> for more information.`,
 									},
 									"credentials": schema.StringAttribute{
 										Optional: true,
@@ -112,14 +120,14 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 										Description: `Parsed as JSON.`,
 									},
 								},
-								Description: `Zendesk service provides two authentication methods. Choose between: ` + "`" + `OAuth2.0` + "`" + ` or ` + "`" + `API token` + "`" + `.`,
+								Description: `Zendesk allows two authentication methods. We recommend using ` + "`" + `OAuth2.0` + "`" + ` for Airbyte Cloud users and ` + "`" + `API token` + "`" + ` for Airbyte Open Source users.`,
 							},
 							"source_zendesk_support_update_authentication_api_token": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"api_token": schema.StringAttribute{
 										Required:    true,
-										Description: `The value of the API token generated. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk-support#setup-guide">docs</a> for more information.`,
+										Description: `The value of the API token generated. See our <a href="https://docs.airbyte.com/integrations/sources/zendesk-support#setup-guide">full documentation</a> for more information on generating this token.`,
 									},
 									"credentials": schema.StringAttribute{
 										Optional: true,
@@ -142,14 +150,22 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 										Description: `Parsed as JSON.`,
 									},
 								},
-								Description: `Zendesk service provides two authentication methods. Choose between: ` + "`" + `OAuth2.0` + "`" + ` or ` + "`" + `API token` + "`" + `.`,
+								Description: `Zendesk allows two authentication methods. We recommend using ` + "`" + `OAuth2.0` + "`" + ` for Airbyte Cloud users and ` + "`" + `API token` + "`" + ` for Airbyte Open Source users.`,
 							},
 							"source_zendesk_support_update_authentication_o_auth2_0": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Required:    true,
-										Description: `The value of the API token generated. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk-support">docs</a> for more information.`,
+										Description: `The OAuth access token. See the <a href="https://developer.zendesk.com/documentation/ticketing/working-with-oauth/creating-and-using-oauth-tokens-with-the-api/">Zendesk docs</a> for more information on generating this token.`,
+									},
+									"client_id": schema.StringAttribute{
+										Optional:    true,
+										Description: `The OAuth client's ID. See <a href="https://docs.searchunify.com/Content/Content-Sources/Zendesk-Authentication-OAuth-Client-ID-Secret.htm#:~:text=Get%20Client%20ID%20and%20Client%20Secret&text=Go%20to%20OAuth%20Clients%20and,will%20be%20displayed%20only%20once.">this guide</a> for more information.`,
+									},
+									"client_secret": schema.StringAttribute{
+										Optional:    true,
+										Description: `The OAuth client secret. See <a href="https://docs.searchunify.com/Content/Content-Sources/Zendesk-Authentication-OAuth-Client-ID-Secret.htm#:~:text=Get%20Client%20ID%20and%20Client%20Secret&text=Go%20to%20OAuth%20Clients%20and,will%20be%20displayed%20only%20once.">this guide</a> for more information.`,
 									},
 									"credentials": schema.StringAttribute{
 										Optional: true,
@@ -168,13 +184,13 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 										Description: `Parsed as JSON.`,
 									},
 								},
-								Description: `Zendesk service provides two authentication methods. Choose between: ` + "`" + `OAuth2.0` + "`" + ` or ` + "`" + `API token` + "`" + `.`,
+								Description: `Zendesk allows two authentication methods. We recommend using ` + "`" + `OAuth2.0` + "`" + ` for Airbyte Cloud users and ` + "`" + `API token` + "`" + ` for Airbyte Open Source users.`,
 							},
 						},
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
-						Description: `Zendesk service provides two authentication methods. Choose between: ` + "`" + `OAuth2.0` + "`" + ` or ` + "`" + `API token` + "`" + `.`,
+						Description: `Zendesk allows two authentication methods. We recommend using ` + "`" + `OAuth2.0` + "`" + ` for Airbyte Cloud users and ` + "`" + `API token` + "`" + ` for Airbyte Open Source users.`,
 					},
 					"ignore_pagination": schema.BoolAttribute{
 						Optional:    true,
@@ -194,11 +210,11 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
-						Description: `The date from which you'd like to replicate data for Zendesk Support API, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.`,
+						Description: `The UTC date and time from which you'd like to replicate data, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.`,
 					},
 					"subdomain": schema.StringAttribute{
 						Required:    true,
-						Description: `This is your Zendesk subdomain that can be found in your account URL. For example, in https://{MY_SUBDOMAIN}.zendesk.com/, where MY_SUBDOMAIN is the value of your subdomain.`,
+						Description: `This is your unique Zendesk subdomain that can be found in your account URL. For example, in https://MY_SUBDOMAIN.zendesk.com/, MY_SUBDOMAIN is the value of your subdomain.`,
 					},
 				},
 			},
@@ -397,7 +413,7 @@ func (r *SourceZendeskSupportResource) Update(ctx context.Context, req resource.
 		return
 	}
 	if getResponse.SourceResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
 		return
 	}
 	data.RefreshFromGetResponse(getResponse.SourceResponse)
@@ -440,7 +456,7 @@ func (r *SourceZendeskSupportResource) Delete(ctx context.Context, req resource.
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

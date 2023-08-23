@@ -8,7 +8,7 @@ resource "airbyte_source_clickup_api" "my_source_clickupapi" {
     space_id             = "...my_space_id..."
     team_id              = "...my_team_id..."
   }
-  name         = "Lowell Rippin"
+  name         = "Sergio Grant Sr."
   secret_id    = "...my_secret_id..."
-  workspace_id = "e243cf78-9ffa-4fed-a53e-5ae6e0ac184c"
+  workspace_id = "644cf5e9-d9a4-4578-adc1-ac600dec001a"
 }

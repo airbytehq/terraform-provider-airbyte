@@ -15,23 +15,24 @@ SourceSalesforce Resource
 ```terraform
 resource "airbyte_source_salesforce" "my_source_salesforce" {
   configuration = {
-    auth_type     = "Client"
-    client_id     = "...my_client_id..."
-    client_secret = "...my_client_secret..."
-    is_sandbox    = true
-    refresh_token = "...my_refresh_token..."
-    source_type   = "salesforce"
-    start_date    = "2021-07-25T00:00:00Z"
+    auth_type          = "Client"
+    client_id          = "...my_client_id..."
+    client_secret      = "...my_client_secret..."
+    force_use_bulk_api = true
+    is_sandbox         = true
+    refresh_token      = "...my_refresh_token..."
+    source_type        = "salesforce"
+    start_date         = "2021-07-25T00:00:00Z"
     streams_criteria = [
       {
-        criteria = "ends with"
+        criteria = "starts with"
         value    = "...my_value..."
       },
     ]
   }
-  name         = "Leonard Fisher"
+  name         = "Andy Paucek"
   secret_id    = "...my_secret_id..."
-  workspace_id = "79fb9de4-032b-4a26-bd36-8ba9216bcb41"
+  workspace_id = "2e913558-6d18-4f9f-97a4-bfad2bf7d67c"
 }
 ```
 
@@ -66,9 +67,10 @@ Required:
 Optional:
 
 - `auth_type` (String) must be one of ["Client"]
+- `force_use_bulk_api` (Boolean) Toggle to use Bulk API (this might cause empty fields for some streams)
 - `is_sandbox` (Boolean) Toggle if you're using a <a href="https://help.salesforce.com/s/articleView?id=sf.deploy_sandboxes_parent.htm&type=5">Salesforce Sandbox</a>
-- `start_date` (String) Enter the date in the YYYY-MM-DD format. Airbyte will replicate the data added on and after this date. If this field is blank, Airbyte will replicate the data for last two years.
-- `streams_criteria` (Attributes List) Filter streams relevant to you (see [below for nested schema](#nestedatt--configuration--streams_criteria))
+- `start_date` (String) Enter the date (or date-time) in the YYYY-MM-DD or YYYY-MM-DDTHH:mm:ssZ format. Airbyte will replicate the data updated on and after this date. If this field is blank, Airbyte will replicate the data for last two years.
+- `streams_criteria` (Attributes List) Add filters to select only required stream based on `SObject` name. Use this field to filter which tables are displayed by this connector. This is useful if your Salesforce account has a large number of tables (>1000), in which case you may find it easier to navigate the UI and speed up the connector's performance if you restrict the tables displayed by this connector. (see [below for nested schema](#nestedatt--configuration--streams_criteria))
 
 <a id="nestedatt--configuration--streams_criteria"></a>
 ### Nested Schema for `configuration.streams_criteria`

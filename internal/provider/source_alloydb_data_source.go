@@ -117,6 +117,10 @@ func (r *SourceAlloydbDataSource) Schema(ctx context.Context, req datasource.Sch
 										Computed:    true,
 										Description: `A Postgres publication used for consuming changes. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-4-create-publications-and-replication-identities-for-tables">publications and replication identities</a>.`,
 									},
+									"queue_size": schema.Int64Attribute{
+										Computed:    true,
+										Description: `The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful.`,
+									},
 									"replication_slot": schema.StringAttribute{
 										Computed:    true,
 										Description: `A plugin logical replication slot. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-3-create-replication-slot">replication slots</a>.`,
@@ -145,6 +149,21 @@ func (r *SourceAlloydbDataSource) Schema(ctx context.Context, req datasource.Sch
 									},
 								},
 								Description: `Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
+							},
+							"source_alloydb_replication_method_standard_xmin": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Xmin",
+											),
+										},
+										Description: `must be one of ["Xmin"]`,
+									},
+								},
+								Description: `Xmin replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
 							},
 							"source_alloydb_update_replication_method_logical_replication_cdc": schema.SingleNestedAttribute{
 								Computed: true,
@@ -187,6 +206,10 @@ func (r *SourceAlloydbDataSource) Schema(ctx context.Context, req datasource.Sch
 										Computed:    true,
 										Description: `A Postgres publication used for consuming changes. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-4-create-publications-and-replication-identities-for-tables">publications and replication identities</a>.`,
 									},
+									"queue_size": schema.Int64Attribute{
+										Computed:    true,
+										Description: `The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful.`,
+									},
 									"replication_slot": schema.StringAttribute{
 										Computed:    true,
 										Description: `A plugin logical replication slot. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-3-create-replication-slot">replication slots</a>.`,
@@ -215,6 +238,21 @@ func (r *SourceAlloydbDataSource) Schema(ctx context.Context, req datasource.Sch
 									},
 								},
 								Description: `Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
+							},
+							"source_alloydb_update_replication_method_standard_xmin": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Xmin",
+											),
+										},
+										Description: `must be one of ["Xmin"]`,
+									},
+								},
+								Description: `Xmin replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
 							},
 						},
 						Validators: []validator.Object{

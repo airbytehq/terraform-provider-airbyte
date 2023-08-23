@@ -307,6 +307,10 @@ func (r *DestinationBigqueryResource) Schema(ctx context.Context, req resource.S
 						Required:    true,
 						Description: `The GCP project ID for the project containing the target BigQuery dataset. Read more <a href="https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects">here</a>.`,
 					},
+					"raw_data_dataset": schema.StringAttribute{
+						Optional:    true,
+						Description: `(Early Access) The dataset to write raw tables into`,
+					},
 					"transformation_priority": schema.StringAttribute{
 						Optional: true,
 						Validators: []validator.String{
@@ -317,6 +321,10 @@ func (r *DestinationBigqueryResource) Schema(ctx context.Context, req resource.S
 						},
 						MarkdownDescription: `must be one of ["interactive", "batch"]` + "\n" +
 							`Interactive run type means that the query is executed as soon as possible, and these queries count towards concurrent rate limit and daily limit. Read more about interactive run type <a href="https://cloud.google.com/bigquery/docs/running-queries#queries">here</a>. Batch queries are queued and started as soon as idle resources are available in the BigQuery shared resource pool, which usually occurs within a few minutes. Batch queries don’t count towards your concurrent rate limit. Read more about batch queries <a href="https://cloud.google.com/bigquery/docs/running-queries#batch">here</a>. The default "interactive" value is used if not set explicitly.`,
+					},
+					"use_1s1t_format": schema.BoolAttribute{
+						Optional:    true,
+						Description: `(Early Access) Use <a href="https://docs.airbyte.com/understanding-airbyte/typing-deduping" target="_blank">Destinations V2</a>.`,
 					},
 				},
 			},
@@ -511,7 +519,7 @@ func (r *DestinationBigqueryResource) Update(ctx context.Context, req resource.U
 		return
 	}
 	if getResponse.DestinationResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
 		return
 	}
 	data.RefreshFromGetResponse(getResponse.DestinationResponse)
@@ -554,7 +562,7 @@ func (r *DestinationBigqueryResource) Delete(ctx context.Context, req resource.D
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

@@ -157,7 +157,7 @@ func (r *SourceMixpanelDataSource) Schema(ctx context.Context, req datasource.Sc
 					"end_date": schema.StringAttribute{
 						Computed: true,
 						Validators: []validator.String{
-							validators.IsRFC3339(),
+							validators.IsValidDate(),
 						},
 						Description: `The date in the format YYYY-MM-DD. Any data after this date will not be replicated. Left empty to always sync to most recent date`,
 					},
@@ -196,7 +196,7 @@ func (r *SourceMixpanelDataSource) Schema(ctx context.Context, req datasource.Sc
 					"start_date": schema.StringAttribute{
 						Computed: true,
 						Validators: []validator.String{
-							validators.IsRFC3339(),
+							validators.IsValidDate(),
 						},
 						Description: `The date in the format YYYY-MM-DD. Any data before this date will not be replicated. If this option is not set, the connector will replicate data from up to one year ago by default.`,
 					},

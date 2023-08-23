@@ -3,7 +3,7 @@ resource "airbyte_source_tempo" "my_source_tempo" {
     api_token   = "...my_api_token..."
     source_type = "tempo"
   }
-  name         = "Elias Glover"
+  name         = "Alan O'Conner DVM"
   secret_id    = "...my_secret_id..."
-  workspace_id = "37e45b89-55d4-413e-93a4-82310907bd35"
+  workspace_id = "d5671e9c-3263-450a-8671-43789ce0e991"
 }

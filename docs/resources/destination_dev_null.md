@@ -22,8 +22,8 @@ resource "airbyte_destination_dev_null" "my_destination_devnull" {
       }
     }
   }
-  name         = "Miss Billie Ward"
-  workspace_id = "cf4b9218-79fc-4e95-bf73-ef7fbc7abd74"
+  name         = "Kari Leannon PhD"
+  workspace_id = "446ce2af-7a73-4cf3-be45-3f870b326b5a"
 }
 ```
 

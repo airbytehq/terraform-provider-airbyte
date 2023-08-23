@@ -20,9 +20,9 @@ resource "airbyte_source_punk_api" "my_source_punkapi" {
     id            = 22
     source_type   = "punk-api"
   }
-  name         = "Faith Doyle"
+  name         = "Santos Langosh"
   secret_id    = "...my_secret_id..."
-  workspace_id = "ba297be3-e90b-4c40-9f86-8fd52405cb33"
+  workspace_id = "51bd76ee-eb51-48c4-9a1f-ad35512f06d4"
 }
 ```
 

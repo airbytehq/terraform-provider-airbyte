@@ -27,9 +27,9 @@ resource "airbyte_source_trustpilot" "my_source_trustpilot" {
     source_type = "trustpilot"
     start_date  = "%Y-%m-%dT%H:%M:%S"
   }
-  name         = "Marco Hudson PhD"
+  name         = "Betty Jast"
   secret_id    = "...my_secret_id..."
-  workspace_id = "2cf502ba-fb2c-4bc4-a35d-5e65da028c3e"
+  workspace_id = "5894ea76-3d5c-4727-95b7-85148d6d549e"
 }
 ```
 

@@ -7,7 +7,7 @@ resource "airbyte_source_pipedrive" "my_source_pipedrive" {
     replication_start_date = "2017-01-25T00:00:00Z"
     source_type            = "pipedrive"
   }
-  name         = "Clayton Graham"
+  name         = "Albert Sipes"
   secret_id    = "...my_secret_id..."
-  workspace_id = "6cbdeecf-6b99-4bc6-b562-ebfdf55c294c"
+  workspace_id = "fcdace1f-0121-46ce-a239-e8f25cd0d19d"
 }

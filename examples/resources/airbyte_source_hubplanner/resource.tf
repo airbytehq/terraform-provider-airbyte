@@ -3,7 +3,7 @@ resource "airbyte_source_hubplanner" "my_source_hubplanner" {
     api_key     = "...my_api_key..."
     source_type = "hubplanner"
   }
-  name         = "Stephanie Hansen"
+  name         = "Scott Jast"
   secret_id    = "...my_secret_id..."
-  workspace_id = "a650164e-06f5-4bf6-ae59-1bc8bdef3612"
+  workspace_id = "bf6ae591-bc8b-4def-b612-b63c205fda84"
 }

@@ -67,6 +67,14 @@ func (r *SourceFacebookMarketingResource) Schema(ctx context.Context, req resour
 						Optional:    true,
 						Description: `Allows action_breakdowns to be an empty list`,
 					},
+					"client_id": schema.StringAttribute{
+						Optional:    true,
+						Description: `The Client Id for your OAuth app`,
+					},
+					"client_secret": schema.StringAttribute{
+						Optional:    true,
+						Description: `The Client Secret for your OAuth app`,
+					},
 					"custom_insights": schema.ListNestedAttribute{
 						Optional: true,
 						NestedObject: schema.NestedAttributeObject{
@@ -75,6 +83,18 @@ func (r *SourceFacebookMarketingResource) Schema(ctx context.Context, req resour
 									Optional:    true,
 									ElementType: types.StringType,
 									Description: `A list of chosen action_breakdowns for action_breakdowns`,
+								},
+								"action_report_time": schema.StringAttribute{
+									Optional: true,
+									Validators: []validator.String{
+										stringvalidator.OneOf(
+											"conversion",
+											"impression",
+											"mixed",
+										),
+									},
+									MarkdownDescription: `must be one of ["conversion", "impression", "mixed"]` + "\n" +
+										`Determines the report time of action stats. For example, if a person saw the ad on Jan 1st but converted on Jan 2nd, when you query the API with action_report_time=impression, you see a conversion on Jan 1st. When you query the API with action_report_time=conversion, you see a conversion on Jan 2nd.`,
 								},
 								"breakdowns": schema.ListAttribute{
 									Optional:    true,
@@ -369,7 +389,7 @@ func (r *SourceFacebookMarketingResource) Update(ctx context.Context, req resour
 		return
 	}
 	if getResponse.SourceResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
 		return
 	}
 	data.RefreshFromGetResponse(getResponse.SourceResponse)
@@ -412,7 +432,7 @@ func (r *SourceFacebookMarketingResource) Delete(ctx context.Context, req resour
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

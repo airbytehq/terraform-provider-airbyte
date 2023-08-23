@@ -42,6 +42,7 @@ data "airbyte_source_smartsheets" "my_source_smartsheets" {
 Read-Only:
 
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
+- `metadata_fields` (List of String) A List of available columns which metadata can be pulled from.
 - `source_type` (String) must be one of ["smartsheets"]
 - `spreadsheet_id` (String) The spreadsheet ID. Find it by opening the spreadsheet then navigating to File > Properties
 - `start_datetime` (String) Only rows modified after this date/time will be replicated. This should be an ISO 8601 string, for instance: `2000-01-01T13:00:00`

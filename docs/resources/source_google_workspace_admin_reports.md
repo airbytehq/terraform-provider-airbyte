@@ -16,13 +16,13 @@ SourceGoogleWorkspaceAdminReports Resource
 resource "airbyte_source_google_workspace_admin_reports" "my_source_googleworkspaceadminreports" {
   configuration = {
     credentials_json = "...my_credentials_json..."
-    email            = "Karlee.Berge73@yahoo.com"
-    lookback         = 7
+    email            = "Daron_Green@hotmail.com"
+    lookback         = 2
     source_type      = "google-workspace-admin-reports"
   }
-  name         = "Sylvia Schimmel"
+  name         = "Antoinette Wolf IV"
   secret_id    = "...my_secret_id..."
-  workspace_id = "a348c31b-f407-4ee4-bcf0-c42b78f15626"
+  workspace_id = "ee4fcf0c-42b7-48f1-9626-398a0dc76632"
 }
 ```
 

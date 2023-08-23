@@ -7,7 +7,7 @@ resource "airbyte_source_postgres" "my_source_postgres" {
     port            = 5432
     replication_method = {
       source_postgres_replication_method_logical_replication_cdc_ = {
-        initial_waiting_seconds = 1
+        initial_waiting_seconds = 4
         lsn_commit_behaviour    = "While reading Data"
         method                  = "CDC"
         plugin                  = "pgoutput"
@@ -30,9 +30,9 @@ resource "airbyte_source_postgres" "my_source_postgres" {
         tunnel_method = "NO_TUNNEL"
       }
     }
-    username = "Euna83"
+    username = "Kendrick52"
   }
-  name         = "Kathryn Windler"
+  name         = "Vivian Dietrich"
   secret_id    = "...my_secret_id..."
-  workspace_id = "ace1f012-16ce-4223-9e8f-25cd0d19d959"
+  workspace_id = "10006bef-4921-4ec2-853b-749366ac8ee0"
 }

@@ -215,10 +215,6 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 						},
 						Description: `must be one of ["snowflake"]`,
 					},
-					"file_buffer_count": schema.Int64Attribute{
-						Optional:    true,
-						Description: `Number of file buffers allocated for writing data. Increasing this number is beneficial for connections using Change Data Capture (CDC) and up to the number of streams within a connection. Increasing the number of file buffers past the maximum number of streams has deteriorating effects`,
-					},
 					"host": schema.StringAttribute{
 						Required:    true,
 						Description: `Enter your Snowflake account's <a href="https://docs.snowflake.com/en/user-guide/admin-account-identifier.html#using-an-account-locator-as-an-identifier">locator</a> (in the format <account_locator>.<region>.<cloud>.snowflakecomputing.com)`,
@@ -227,350 +223,9 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 						Optional:    true,
 						Description: `Enter the additional properties to pass to the JDBC URL string when connecting to the database (formatted as key=value pairs separated by the symbol &). Example: key1=value1&key2=value2&key3=value3`,
 					},
-					"loading_method": schema.SingleNestedAttribute{
-						Optional: true,
-						Attributes: map[string]schema.Attribute{
-							"destination_snowflake_data_staging_method_recommended_internal_staging": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Internal Staging",
-											),
-										},
-										Description: `must be one of ["Internal Staging"]`,
-									},
-								},
-								Description: `Recommended for large production workloads for better speed and scalability.`,
-							},
-							"destination_snowflake_data_staging_method_aws_s3_staging": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"access_key_id": schema.StringAttribute{
-										Required:    true,
-										Description: `Enter your <a href="https://docs.aws.amazon.com/powershell/latest/userguide/pstools-appendix-sign-up.html">AWS access key ID</a>. Airbyte requires Read and Write permissions on your S3 bucket `,
-									},
-									"encryption": schema.SingleNestedAttribute{
-										Optional: true,
-										Attributes: map[string]schema.Attribute{
-											"destination_snowflake_data_staging_method_aws_s3_staging_encryption_aes_cbc_envelope_encryption": schema.SingleNestedAttribute{
-												Optional: true,
-												Attributes: map[string]schema.Attribute{
-													"encryption_type": schema.StringAttribute{
-														Required: true,
-														Validators: []validator.String{
-															stringvalidator.OneOf(
-																"aes_cbc_envelope",
-															),
-														},
-														Description: `must be one of ["aes_cbc_envelope"]`,
-													},
-													"key_encrypting_key": schema.StringAttribute{
-														Optional:    true,
-														Description: `The key, base64-encoded. Must be either 128, 192, or 256 bits. Leave blank to have Airbyte generate an ephemeral key for each sync.`,
-													},
-												},
-												Description: `Staging data will be encrypted using AES-CBC envelope encryption.`,
-											},
-											"destination_snowflake_data_staging_method_aws_s3_staging_encryption_no_encryption": schema.SingleNestedAttribute{
-												Optional: true,
-												Attributes: map[string]schema.Attribute{
-													"encryption_type": schema.StringAttribute{
-														Required: true,
-														Validators: []validator.String{
-															stringvalidator.OneOf(
-																"none",
-															),
-														},
-														Description: `must be one of ["none"]`,
-													},
-												},
-												Description: `Staging data will be stored in plaintext.`,
-											},
-										},
-										Validators: []validator.Object{
-											validators.ExactlyOneChild(),
-										},
-										Description: `Choose a data encryption method for the staging data`,
-									},
-									"file_name_pattern": schema.StringAttribute{
-										Optional:    true,
-										Description: `The pattern allows you to set the file-name format for the S3 staging file(s)`,
-									},
-									"method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"S3 Staging",
-											),
-										},
-										Description: `must be one of ["S3 Staging"]`,
-									},
-									"purge_staging_data": schema.BoolAttribute{
-										Optional:    true,
-										Description: `Toggle to delete staging files from the S3 bucket after a successful sync`,
-									},
-									"s3_bucket_name": schema.StringAttribute{
-										Required:    true,
-										Description: `Enter your S3 bucket name`,
-									},
-									"s3_bucket_region": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"",
-												"us-east-1",
-												"us-east-2",
-												"us-west-1",
-												"us-west-2",
-												"af-south-1",
-												"ap-east-1",
-												"ap-south-1",
-												"ap-northeast-1",
-												"ap-northeast-2",
-												"ap-northeast-3",
-												"ap-southeast-1",
-												"ap-southeast-2",
-												"ca-central-1",
-												"cn-north-1",
-												"cn-northwest-1",
-												"eu-central-1",
-												"eu-west-1",
-												"eu-west-2",
-												"eu-west-3",
-												"eu-south-1",
-												"eu-north-1",
-												"sa-east-1",
-												"me-south-1",
-											),
-										},
-										MarkdownDescription: `must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-west-1", "eu-west-2", "eu-west-3", "eu-south-1", "eu-north-1", "sa-east-1", "me-south-1"]` + "\n" +
-											`Enter the region where your S3 bucket resides`,
-									},
-									"secret_access_key": schema.StringAttribute{
-										Required:    true,
-										Description: `Enter your <a href="https://docs.aws.amazon.com/powershell/latest/userguide/pstools-appendix-sign-up.html">AWS secret access key</a>`,
-									},
-								},
-								Description: `Recommended for large production workloads for better speed and scalability.`,
-							},
-							"destination_snowflake_data_staging_method_google_cloud_storage_staging": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"bucket_name": schema.StringAttribute{
-										Required:    true,
-										Description: `Enter the <a href="https://cloud.google.com/storage/docs/creating-buckets">Cloud Storage bucket name</a>`,
-									},
-									"credentials_json": schema.StringAttribute{
-										Required:    true,
-										Description: `Enter your <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">Google Cloud service account key</a> in the JSON format with read/write access to your Cloud Storage staging bucket`,
-									},
-									"method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"GCS Staging",
-											),
-										},
-										Description: `must be one of ["GCS Staging"]`,
-									},
-									"project_id": schema.StringAttribute{
-										Required:    true,
-										Description: `Enter the <a href="https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects">Google Cloud project ID</a>`,
-									},
-								},
-								Description: `Recommended for large production workloads for better speed and scalability.`,
-							},
-							"destination_snowflake_data_staging_method_select_another_option": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Standard",
-											),
-										},
-										Description: `must be one of ["Standard"]`,
-									},
-								},
-								Description: `Select another option`,
-							},
-							"destination_snowflake_update_data_staging_method_recommended_internal_staging": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Internal Staging",
-											),
-										},
-										Description: `must be one of ["Internal Staging"]`,
-									},
-								},
-								Description: `Recommended for large production workloads for better speed and scalability.`,
-							},
-							"destination_snowflake_update_data_staging_method_aws_s3_staging": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"access_key_id": schema.StringAttribute{
-										Required:    true,
-										Description: `Enter your <a href="https://docs.aws.amazon.com/powershell/latest/userguide/pstools-appendix-sign-up.html">AWS access key ID</a>. Airbyte requires Read and Write permissions on your S3 bucket `,
-									},
-									"encryption": schema.SingleNestedAttribute{
-										Optional: true,
-										Attributes: map[string]schema.Attribute{
-											"destination_snowflake_update_data_staging_method_aws_s3_staging_encryption_no_encryption": schema.SingleNestedAttribute{
-												Optional: true,
-												Attributes: map[string]schema.Attribute{
-													"encryption_type": schema.StringAttribute{
-														Required: true,
-														Validators: []validator.String{
-															stringvalidator.OneOf(
-																"none",
-															),
-														},
-														Description: `must be one of ["none"]`,
-													},
-												},
-												Description: `Staging data will be stored in plaintext.`,
-											},
-											"destination_snowflake_update_data_staging_method_aws_s3_staging_encryption_aes_cbc_envelope_encryption": schema.SingleNestedAttribute{
-												Optional: true,
-												Attributes: map[string]schema.Attribute{
-													"encryption_type": schema.StringAttribute{
-														Required: true,
-														Validators: []validator.String{
-															stringvalidator.OneOf(
-																"aes_cbc_envelope",
-															),
-														},
-														Description: `must be one of ["aes_cbc_envelope"]`,
-													},
-													"key_encrypting_key": schema.StringAttribute{
-														Optional:    true,
-														Description: `The key, base64-encoded. Must be either 128, 192, or 256 bits. Leave blank to have Airbyte generate an ephemeral key for each sync.`,
-													},
-												},
-												Description: `Staging data will be encrypted using AES-CBC envelope encryption.`,
-											},
-										},
-										Validators: []validator.Object{
-											validators.ExactlyOneChild(),
-										},
-										Description: `Choose a data encryption method for the staging data`,
-									},
-									"file_name_pattern": schema.StringAttribute{
-										Optional:    true,
-										Description: `The pattern allows you to set the file-name format for the S3 staging file(s)`,
-									},
-									"method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"S3 Staging",
-											),
-										},
-										Description: `must be one of ["S3 Staging"]`,
-									},
-									"purge_staging_data": schema.BoolAttribute{
-										Optional:    true,
-										Description: `Toggle to delete staging files from the S3 bucket after a successful sync`,
-									},
-									"s3_bucket_name": schema.StringAttribute{
-										Required:    true,
-										Description: `Enter your S3 bucket name`,
-									},
-									"s3_bucket_region": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"",
-												"us-east-1",
-												"us-east-2",
-												"us-west-1",
-												"us-west-2",
-												"af-south-1",
-												"ap-east-1",
-												"ap-south-1",
-												"ap-northeast-1",
-												"ap-northeast-2",
-												"ap-northeast-3",
-												"ap-southeast-1",
-												"ap-southeast-2",
-												"ca-central-1",
-												"cn-north-1",
-												"cn-northwest-1",
-												"eu-central-1",
-												"eu-west-1",
-												"eu-west-2",
-												"eu-west-3",
-												"eu-south-1",
-												"eu-north-1",
-												"sa-east-1",
-												"me-south-1",
-											),
-										},
-										MarkdownDescription: `must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-west-1", "eu-west-2", "eu-west-3", "eu-south-1", "eu-north-1", "sa-east-1", "me-south-1"]` + "\n" +
-											`Enter the region where your S3 bucket resides`,
-									},
-									"secret_access_key": schema.StringAttribute{
-										Required:    true,
-										Description: `Enter your <a href="https://docs.aws.amazon.com/powershell/latest/userguide/pstools-appendix-sign-up.html">AWS secret access key</a>`,
-									},
-								},
-								Description: `Recommended for large production workloads for better speed and scalability.`,
-							},
-							"destination_snowflake_update_data_staging_method_google_cloud_storage_staging": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"bucket_name": schema.StringAttribute{
-										Required:    true,
-										Description: `Enter the <a href="https://cloud.google.com/storage/docs/creating-buckets">Cloud Storage bucket name</a>`,
-									},
-									"credentials_json": schema.StringAttribute{
-										Required:    true,
-										Description: `Enter your <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">Google Cloud service account key</a> in the JSON format with read/write access to your Cloud Storage staging bucket`,
-									},
-									"method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"GCS Staging",
-											),
-										},
-										Description: `must be one of ["GCS Staging"]`,
-									},
-									"project_id": schema.StringAttribute{
-										Required:    true,
-										Description: `Enter the <a href="https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects">Google Cloud project ID</a>`,
-									},
-								},
-								Description: `Recommended for large production workloads for better speed and scalability.`,
-							},
-							"destination_snowflake_update_data_staging_method_select_another_option": schema.SingleNestedAttribute{
-								Optional: true,
-								Attributes: map[string]schema.Attribute{
-									"method": schema.StringAttribute{
-										Required: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Standard",
-											),
-										},
-										Description: `must be one of ["Standard"]`,
-									},
-								},
-								Description: `Select another option`,
-							},
-						},
-						Validators: []validator.Object{
-							validators.ExactlyOneChild(),
-						},
-						Description: `Select a data staging method`,
+					"raw_data_schema": schema.StringAttribute{
+						Optional:    true,
+						Description: `(Beta) The schema to write raw tables into`,
 					},
 					"role": schema.StringAttribute{
 						Required:    true,
@@ -579,6 +234,10 @@ func (r *DestinationSnowflakeResource) Schema(ctx context.Context, req resource.
 					"schema": schema.StringAttribute{
 						Required:    true,
 						Description: `Enter the name of the default <a href="https://docs.snowflake.com/en/sql-reference/ddl-database.html#database-schema-share-ddl">schema</a>`,
+					},
+					"use_1s1t_format": schema.BoolAttribute{
+						Optional:    true,
+						Description: `(Beta) Use <a href="https://github.com/airbytehq/airbyte/issues/26028" target="_blank">Destinations V2</a>. Contact Airbyte Support to participate in the beta program.`,
 					},
 					"username": schema.StringAttribute{
 						Required:    true,
@@ -781,7 +440,7 @@ func (r *DestinationSnowflakeResource) Update(ctx context.Context, req resource.
 		return
 	}
 	if getResponse.DestinationResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
 		return
 	}
 	data.RefreshFromGetResponse(getResponse.DestinationResponse)
@@ -824,7 +483,7 @@ func (r *DestinationSnowflakeResource) Delete(ctx context.Context, req resource.
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

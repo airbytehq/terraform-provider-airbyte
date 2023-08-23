@@ -18,21 +18,24 @@ resource "airbyte_source_facebook_marketing" "my_source_facebookmarketing" {
     access_token                  = "...my_access_token..."
     account_id                    = "111111111111111"
     action_breakdowns_allow_empty = false
+    client_id                     = "...my_client_id..."
+    client_secret                 = "...my_client_secret..."
     custom_insights = [
       {
         action_breakdowns = [
           "action_target_id",
         ]
+        action_report_time = "impression"
         breakdowns = [
-          "image_asset",
+          "age",
         ]
         end_date = "2017-01-26T00:00:00Z"
         fields = [
-          "estimated_ad_recallers_lower_bound",
+          "estimated_ad_recall_rate_lower_bound",
         ]
-        insights_lookback_window = 5
-        level                    = "campaign"
-        name                     = "Mrs. Dolores Kertzmann"
+        insights_lookback_window = 6
+        level                    = "adset"
+        name                     = "Vera Bernhard"
         start_date               = "2017-01-25T00:00:00Z"
         time_increment           = 7
       },
@@ -83,6 +86,8 @@ Required:
 Optional:
 
 - `action_breakdowns_allow_empty` (Boolean) Allows action_breakdowns to be an empty list
+- `client_id` (String) The Client Id for your OAuth app
+- `client_secret` (String) The Client Secret for your OAuth app
 - `custom_insights` (Attributes List) A list which contains ad statistics entries, each entry must have a name and can contains fields, breakdowns or action_breakdowns. Click on "add" to fill this field. (see [below for nested schema](#nestedatt--configuration--custom_insights))
 - `end_date` (String) The date until which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DDT00:00:00Z. All data generated between the start date and this end date will be replicated. Not setting this option will result in always syncing the latest data.
 - `fetch_thumbnail_images` (Boolean) Set to active if you want to fetch the thumbnail_url and store the result in thumbnail_data_url for each Ad Creative.
@@ -101,6 +106,8 @@ Required:
 Optional:
 
 - `action_breakdowns` (List of String) A list of chosen action_breakdowns for action_breakdowns
+- `action_report_time` (String) must be one of ["conversion", "impression", "mixed"]
+Determines the report time of action stats. For example, if a person saw the ad on Jan 1st but converted on Jan 2nd, when you query the API with action_report_time=impression, you see a conversion on Jan 1st. When you query the API with action_report_time=conversion, you see a conversion on Jan 2nd.
 - `breakdowns` (List of String) A list of chosen breakdowns for breakdowns
 - `end_date` (String) The date until which you'd like to replicate data for this stream, in the format YYYY-MM-DDT00:00:00Z. All data generated between the start date and this end date will be replicated. Not setting this option will result in always syncing the latest data.
 - `fields` (List of String) A list of chosen fields for fields parameter

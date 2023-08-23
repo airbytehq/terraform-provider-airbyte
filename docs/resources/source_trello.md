@@ -23,9 +23,9 @@ resource "airbyte_source_trello" "my_source_trello" {
     start_date  = "2021-03-01T00:00:00Z"
     token       = "...my_token..."
   }
-  name         = "Dr. Devin Waters"
+  name         = "Rosemary Rice"
   secret_id    = "...my_secret_id..."
-  workspace_id = "91594d93-a74c-4025-afe3-b4b4db8b778e"
+  workspace_id = "b3cdf641-5b04-449f-9df1-3f4eedbe78bf"
 }
 ```
 

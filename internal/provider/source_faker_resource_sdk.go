@@ -8,6 +8,12 @@ import (
 )
 
 func (r *SourceFakerResourceModel) ToCreateSDKType() *shared.SourceFakerCreateRequest {
+	alwaysUpdated := new(bool)
+	if !r.Configuration.AlwaysUpdated.IsUnknown() && !r.Configuration.AlwaysUpdated.IsNull() {
+		*alwaysUpdated = r.Configuration.AlwaysUpdated.ValueBool()
+	} else {
+		alwaysUpdated = nil
+	}
 	count := r.Configuration.Count.ValueInt64()
 	parallelism := new(int64)
 	if !r.Configuration.Parallelism.IsUnknown() && !r.Configuration.Parallelism.IsNull() {
@@ -21,12 +27,6 @@ func (r *SourceFakerResourceModel) ToCreateSDKType() *shared.SourceFakerCreateRe
 	} else {
 		recordsPerSlice = nil
 	}
-	recordsPerSync := new(int64)
-	if !r.Configuration.RecordsPerSync.IsUnknown() && !r.Configuration.RecordsPerSync.IsNull() {
-		*recordsPerSync = r.Configuration.RecordsPerSync.ValueInt64()
-	} else {
-		recordsPerSync = nil
-	}
 	seed := new(int64)
 	if !r.Configuration.Seed.IsUnknown() && !r.Configuration.Seed.IsNull() {
 		*seed = r.Configuration.Seed.ValueInt64()
@@ -35,10 +35,10 @@ func (r *SourceFakerResourceModel) ToCreateSDKType() *shared.SourceFakerCreateRe
 	}
 	sourceType := shared.SourceFakerFaker(r.Configuration.SourceType.ValueString())
 	configuration := shared.SourceFaker{
+		AlwaysUpdated:   alwaysUpdated,
 		Count:           count,
 		Parallelism:     parallelism,
 		RecordsPerSlice: recordsPerSlice,
-		RecordsPerSync:  recordsPerSync,
 		Seed:            seed,
 		SourceType:      sourceType,
 	}
@@ -65,6 +65,12 @@ func (r *SourceFakerResourceModel) ToGetSDKType() *shared.SourceFakerCreateReque
 }
 
 func (r *SourceFakerResourceModel) ToUpdateSDKType() *shared.SourceFakerPutRequest {
+	alwaysUpdated := new(bool)
+	if !r.Configuration.AlwaysUpdated.IsUnknown() && !r.Configuration.AlwaysUpdated.IsNull() {
+		*alwaysUpdated = r.Configuration.AlwaysUpdated.ValueBool()
+	} else {
+		alwaysUpdated = nil
+	}
 	count := r.Configuration.Count.ValueInt64()
 	parallelism := new(int64)
 	if !r.Configuration.Parallelism.IsUnknown() && !r.Configuration.Parallelism.IsNull() {
@@ -78,12 +84,6 @@ func (r *SourceFakerResourceModel) ToUpdateSDKType() *shared.SourceFakerPutReque
 	} else {
 		recordsPerSlice = nil
 	}
-	recordsPerSync := new(int64)
-	if !r.Configuration.RecordsPerSync.IsUnknown() && !r.Configuration.RecordsPerSync.IsNull() {
-		*recordsPerSync = r.Configuration.RecordsPerSync.ValueInt64()
-	} else {
-		recordsPerSync = nil
-	}
 	seed := new(int64)
 	if !r.Configuration.Seed.IsUnknown() && !r.Configuration.Seed.IsNull() {
 		*seed = r.Configuration.Seed.ValueInt64()
@@ -91,10 +91,10 @@ func (r *SourceFakerResourceModel) ToUpdateSDKType() *shared.SourceFakerPutReque
 		seed = nil
 	}
 	configuration := shared.SourceFakerUpdate{
+		AlwaysUpdated:   alwaysUpdated,
 		Count:           count,
 		Parallelism:     parallelism,
 		RecordsPerSlice: recordsPerSlice,
-		RecordsPerSync:  recordsPerSync,
 		Seed:            seed,
 	}
 	name := r.Name.ValueString()

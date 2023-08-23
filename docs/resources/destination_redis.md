@@ -19,7 +19,7 @@ resource "airbyte_destination_redis" "my_destination_redis" {
     destination_type = "redis"
     host             = "localhost,127.0.0.1"
     password         = "...my_password..."
-    port             = 10
+    port             = 6
     ssl              = false
     ssl_mode = {
       destination_redis_ssl_modes_disable = {
@@ -31,10 +31,10 @@ resource "airbyte_destination_redis" "my_destination_redis" {
         tunnel_method = "NO_TUNNEL"
       }
     }
-    username = "Americo_Weber"
+    username = "Duncan69"
   }
-  name         = "Gene Sauer"
-  workspace_id = "2ca3aed0-1179-4963-92fd-e04771778ff6"
+  name         = "Diane Mayer"
+  workspace_id = "8abf603a-79f9-4dfe-8ab7-da8a50ce187f"
 }
 ```
 

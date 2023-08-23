@@ -20,10 +20,10 @@ resource "airbyte_destination_sftp_json" "my_destination_sftpjson" {
     host             = "...my_host..."
     password         = "...my_password..."
     port             = 22
-    username         = "Virginie_Bergnaum67"
+    username         = "Lane.Schuster"
   }
-  name         = "Shannon Lind"
-  workspace_id = "2beb4773-73c8-4d72-b64d-1db1f2c43106"
+  name         = "Ruth Zulauf"
+  workspace_id = "7bfaad4f-9efc-41b4-912c-1032648dc2f6"
 }
 ```
 

@@ -6,7 +6,7 @@ resource "airbyte_source_aws_cloudtrail" "my_source_awscloudtrail" {
     source_type     = "aws-cloudtrail"
     start_date      = "2021-01-01"
   }
-  name         = "Leigh Denesik"
+  name         = "Gregory Bernhard"
   secret_id    = "...my_secret_id..."
-  workspace_id = "2257411f-af4b-4754-8e47-2e802857a5b4"
+  workspace_id = "eb52ff78-5fc3-4781-8d4c-98e0c2bb89eb"
 }

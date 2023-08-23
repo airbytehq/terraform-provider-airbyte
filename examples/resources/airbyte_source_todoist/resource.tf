@@ -3,7 +3,7 @@ resource "airbyte_source_todoist" "my_source_todoist" {
     source_type = "todoist"
     token       = "...my_token..."
   }
-  name         = "Pauline Kozey IV"
+  name         = "Tracy Senger"
   secret_id    = "...my_secret_id..."
-  workspace_id = "2b94f2ab-1fd5-4671-a9c3-26350a467143"
+  workspace_id = "78673e13-a12a-46b9-9249-4594487f5c84"
 }

@@ -38,6 +38,53 @@ type SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas struct {
 	// The URL of a cluster to connect to.
 	ClusterURL string                                                     `json:"cluster_url"`
 	Instance   SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlasInstance `json:"instance"`
+
+	AdditionalProperties interface{} `json:"-"`
+}
+type _SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas
+
+func (c *SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas) UnmarshalJSON(bs []byte) error {
+	data := _SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "cluster_url")
+	delete(additionalFields, "instance")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type SourceMongodbUpdateMongoDbInstanceTypeReplicaSetInstance string

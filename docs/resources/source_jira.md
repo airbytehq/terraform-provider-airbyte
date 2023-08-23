@@ -16,10 +16,10 @@ SourceJira Resource
 resource "airbyte_source_jira" "my_source_jira" {
   configuration = {
     api_token                   = "...my_api_token..."
-    domain                      = "jira.<your-domain>.com"
-    email                       = "Michele33@gmail.com"
-    enable_experimental_streams = true
-    expand_issue_changelog      = false
+    domain                      = "<your-domain>.atlassian.net"
+    email                       = "Ottilie.McCullough73@gmail.com"
+    enable_experimental_streams = false
+    expand_issue_changelog      = true
     projects = [
       "...",
     ]
@@ -27,9 +27,9 @@ resource "airbyte_source_jira" "my_source_jira" {
     source_type   = "jira"
     start_date    = "2021-03-01T00:00:00Z"
   }
-  name         = "Grace Goyette"
+  name         = "Mathew Klocko"
   secret_id    = "...my_secret_id..."
-  workspace_id = "f7b79dfe-b77a-45c3-8d4b-af91e506ef89"
+  workspace_id = "c38d4baf-91e5-406e-b890-a54b475f16f5"
 }
 ```
 

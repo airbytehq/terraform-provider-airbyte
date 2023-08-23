@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	customTypes "airbyte/internal/sdk/pkg/types"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -67,7 +68,7 @@ func (r *SourceGoogleAnalyticsV4ResourceModel) ToCreateSDKType() *shared.SourceG
 		customReports = nil
 	}
 	sourceType := shared.SourceGoogleAnalyticsV4GoogleAnalyticsV4(r.Configuration.SourceType.ValueString())
-	startDate := r.Configuration.StartDate.ValueString()
+	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	viewID := r.Configuration.ViewID.ValueString()
 	windowInDays := new(int64)
 	if !r.Configuration.WindowInDays.IsUnknown() && !r.Configuration.WindowInDays.IsNull() {
@@ -164,7 +165,7 @@ func (r *SourceGoogleAnalyticsV4ResourceModel) ToUpdateSDKType() *shared.SourceG
 	} else {
 		customReports = nil
 	}
-	startDate := r.Configuration.StartDate.ValueString()
+	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	viewID := r.Configuration.ViewID.ValueString()
 	windowInDays := new(int64)
 	if !r.Configuration.WindowInDays.IsUnknown() && !r.Configuration.WindowInDays.IsNull() {

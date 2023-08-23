@@ -22,9 +22,9 @@ resource "airbyte_source_youtube_analytics" "my_source_youtubeanalytics" {
     }
     source_type = "youtube-analytics"
   }
-  name         = "Clark McGlynn"
+  name         = "Dr. Kara Lowe"
   secret_id    = "...my_secret_id..."
-  workspace_id = "61aae5eb-5f0c-4492-b574-4d08a2267aae"
+  workspace_id = "10f8c23d-f931-4da3-adb5-1fad94acc943"
 }
 ```
 

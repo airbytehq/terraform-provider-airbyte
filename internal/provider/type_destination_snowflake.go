@@ -8,12 +8,12 @@ type DestinationSnowflake struct {
 	Credentials     *DestinationSnowflakeAuthorizationMethod `tfsdk:"credentials"`
 	Database        types.String                             `tfsdk:"database"`
 	DestinationType types.String                             `tfsdk:"destination_type"`
-	FileBufferCount types.Int64                              `tfsdk:"file_buffer_count"`
 	Host            types.String                             `tfsdk:"host"`
 	JdbcURLParams   types.String                             `tfsdk:"jdbc_url_params"`
-	LoadingMethod   *DestinationSnowflakeDataStagingMethod   `tfsdk:"loading_method"`
+	RawDataSchema   types.String                             `tfsdk:"raw_data_schema"`
 	Role            types.String                             `tfsdk:"role"`
 	Schema          types.String                             `tfsdk:"schema"`
+	Use1s1tFormat   types.Bool                               `tfsdk:"use_1s1t_format"`
 	Username        types.String                             `tfsdk:"username"`
 	Warehouse       types.String                             `tfsdk:"warehouse"`
 }

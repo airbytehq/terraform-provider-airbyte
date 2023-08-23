@@ -22,7 +22,7 @@ resource "airbyte_source_postgres" "my_source_postgres" {
     port            = 5432
     replication_method = {
       source_postgres_replication_method_logical_replication_cdc_ = {
-        initial_waiting_seconds = 1
+        initial_waiting_seconds = 4
         lsn_commit_behaviour    = "While reading Data"
         method                  = "CDC"
         plugin                  = "pgoutput"
@@ -45,11 +45,11 @@ resource "airbyte_source_postgres" "my_source_postgres" {
         tunnel_method = "NO_TUNNEL"
       }
     }
-    username = "Euna83"
+    username = "Kendrick52"
   }
-  name         = "Kathryn Windler"
+  name         = "Vivian Dietrich"
   secret_id    = "...my_secret_id..."
-  workspace_id = "ace1f012-16ce-4223-9e8f-25cd0d19d959"
+  workspace_id = "10006bef-4921-4ec2-853b-749366ac8ee0"
 }
 ```
 
@@ -99,8 +99,10 @@ Optional:
 
 - `source_postgres_replication_method_logical_replication_cdc` (Attributes) Logical replication uses the Postgres write-ahead log (WAL) to detect inserts, updates, and deletes. This needs to be configured on the source database itself. Only available on Postgres 10 and above. Read the <a href="https://docs.airbyte.com/integrations/sources/postgres">docs</a>. (see [below for nested schema](#nestedatt--configuration--replication_method--source_postgres_replication_method_logical_replication_cdc))
 - `source_postgres_replication_method_standard` (Attributes) Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally. (see [below for nested schema](#nestedatt--configuration--replication_method--source_postgres_replication_method_standard))
+- `source_postgres_replication_method_standard_xmin` (Attributes) Xmin replication requires no setup on the DB side but will not be able to represent deletions incrementally. (see [below for nested schema](#nestedatt--configuration--replication_method--source_postgres_replication_method_standard_xmin))
 - `source_postgres_update_replication_method_logical_replication_cdc` (Attributes) Logical replication uses the Postgres write-ahead log (WAL) to detect inserts, updates, and deletes. This needs to be configured on the source database itself. Only available on Postgres 10 and above. Read the <a href="https://docs.airbyte.com/integrations/sources/postgres">docs</a>. (see [below for nested schema](#nestedatt--configuration--replication_method--source_postgres_update_replication_method_logical_replication_cdc))
 - `source_postgres_update_replication_method_standard` (Attributes) Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally. (see [below for nested schema](#nestedatt--configuration--replication_method--source_postgres_update_replication_method_standard))
+- `source_postgres_update_replication_method_standard_xmin` (Attributes) Xmin replication requires no setup on the DB side but will not be able to represent deletions incrementally. (see [below for nested schema](#nestedatt--configuration--replication_method--source_postgres_update_replication_method_standard_xmin))
 
 <a id="nestedatt--configuration--replication_method--source_postgres_replication_method_logical_replication_cdc"></a>
 ### Nested Schema for `configuration.replication_method.source_postgres_replication_method_logical_replication_cdc`
@@ -130,6 +132,14 @@ Required:
 - `method` (String) must be one of ["Standard"]
 
 
+<a id="nestedatt--configuration--replication_method--source_postgres_replication_method_standard_xmin"></a>
+### Nested Schema for `configuration.replication_method.source_postgres_replication_method_standard_xmin`
+
+Required:
+
+- `method` (String) must be one of ["Xmin"]
+
+
 <a id="nestedatt--configuration--replication_method--source_postgres_update_replication_method_logical_replication_cdc"></a>
 ### Nested Schema for `configuration.replication_method.source_postgres_update_replication_method_logical_replication_cdc`
 
@@ -156,6 +166,14 @@ A logical decoding plugin installed on the PostgreSQL server.
 Required:
 
 - `method` (String) must be one of ["Standard"]
+
+
+<a id="nestedatt--configuration--replication_method--source_postgres_update_replication_method_standard_xmin"></a>
+### Nested Schema for `configuration.replication_method.source_postgres_update_replication_method_standard_xmin`
+
+Required:
+
+- `method` (String) must be one of ["Xmin"]
 
 
 

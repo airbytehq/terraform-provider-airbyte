@@ -61,8 +61,10 @@ Read-Only:
 
 - `source_postgres_replication_method_logical_replication_cdc` (Attributes) Logical replication uses the Postgres write-ahead log (WAL) to detect inserts, updates, and deletes. This needs to be configured on the source database itself. Only available on Postgres 10 and above. Read the <a href="https://docs.airbyte.com/integrations/sources/postgres">docs</a>. (see [below for nested schema](#nestedatt--configuration--replication_method--source_postgres_replication_method_logical_replication_cdc))
 - `source_postgres_replication_method_standard` (Attributes) Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally. (see [below for nested schema](#nestedatt--configuration--replication_method--source_postgres_replication_method_standard))
+- `source_postgres_replication_method_standard_xmin` (Attributes) Xmin replication requires no setup on the DB side but will not be able to represent deletions incrementally. (see [below for nested schema](#nestedatt--configuration--replication_method--source_postgres_replication_method_standard_xmin))
 - `source_postgres_update_replication_method_logical_replication_cdc` (Attributes) Logical replication uses the Postgres write-ahead log (WAL) to detect inserts, updates, and deletes. This needs to be configured on the source database itself. Only available on Postgres 10 and above. Read the <a href="https://docs.airbyte.com/integrations/sources/postgres">docs</a>. (see [below for nested schema](#nestedatt--configuration--replication_method--source_postgres_update_replication_method_logical_replication_cdc))
 - `source_postgres_update_replication_method_standard` (Attributes) Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally. (see [below for nested schema](#nestedatt--configuration--replication_method--source_postgres_update_replication_method_standard))
+- `source_postgres_update_replication_method_standard_xmin` (Attributes) Xmin replication requires no setup on the DB side but will not be able to represent deletions incrementally. (see [below for nested schema](#nestedatt--configuration--replication_method--source_postgres_update_replication_method_standard_xmin))
 
 <a id="nestedatt--configuration--replication_method--source_postgres_replication_method_logical_replication_cdc"></a>
 ### Nested Schema for `configuration.replication_method.source_postgres_replication_method_logical_replication_cdc`
@@ -92,6 +94,14 @@ Read-Only:
 - `method` (String) must be one of ["Standard"]
 
 
+<a id="nestedatt--configuration--replication_method--source_postgres_replication_method_standard_xmin"></a>
+### Nested Schema for `configuration.replication_method.source_postgres_replication_method_standard_xmin`
+
+Read-Only:
+
+- `method` (String) must be one of ["Xmin"]
+
+
 <a id="nestedatt--configuration--replication_method--source_postgres_update_replication_method_logical_replication_cdc"></a>
 ### Nested Schema for `configuration.replication_method.source_postgres_update_replication_method_logical_replication_cdc`
 
@@ -118,6 +128,14 @@ A logical decoding plugin installed on the PostgreSQL server.
 Read-Only:
 
 - `method` (String) must be one of ["Standard"]
+
+
+<a id="nestedatt--configuration--replication_method--source_postgres_update_replication_method_standard_xmin"></a>
+### Nested Schema for `configuration.replication_method.source_postgres_update_replication_method_standard_xmin`
+
+Read-Only:
+
+- `method` (String) must be one of ["Xmin"]
 
 
 

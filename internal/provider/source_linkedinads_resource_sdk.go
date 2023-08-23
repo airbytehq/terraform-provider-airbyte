@@ -13,6 +13,17 @@ func (r *SourceLinkedinAdsResourceModel) ToCreateSDKType() *shared.SourceLinkedi
 	for _, accountIdsItem := range r.Configuration.AccountIds {
 		accountIds = append(accountIds, accountIdsItem.ValueInt64())
 	}
+	var adAnalyticsReports []shared.SourceLinkedinAdsAdAnalyticsReportConfiguration = nil
+	for _, adAnalyticsReportsItem := range r.Configuration.AdAnalyticsReports {
+		name := adAnalyticsReportsItem.Name.ValueString()
+		pivotBy := shared.SourceLinkedinAdsAdAnalyticsReportConfigurationPivotBy(adAnalyticsReportsItem.PivotBy.ValueString())
+		timeGranularity := shared.SourceLinkedinAdsAdAnalyticsReportConfigurationTimeGranularity(adAnalyticsReportsItem.TimeGranularity.ValueString())
+		adAnalyticsReports = append(adAnalyticsReports, shared.SourceLinkedinAdsAdAnalyticsReportConfiguration{
+			Name:            name,
+			PivotBy:         pivotBy,
+			TimeGranularity: timeGranularity,
+		})
+	}
 	var credentials *shared.SourceLinkedinAdsAuthentication
 	if r.Configuration.Credentials != nil {
 		var sourceLinkedinAdsAuthenticationOAuth20 *shared.SourceLinkedinAdsAuthenticationOAuth20
@@ -61,12 +72,13 @@ func (r *SourceLinkedinAdsResourceModel) ToCreateSDKType() *shared.SourceLinkedi
 	sourceType := shared.SourceLinkedinAdsLinkedinAds(r.Configuration.SourceType.ValueString())
 	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceLinkedinAds{
-		AccountIds:  accountIds,
-		Credentials: credentials,
-		SourceType:  sourceType,
-		StartDate:   startDate,
+		AccountIds:         accountIds,
+		AdAnalyticsReports: adAnalyticsReports,
+		Credentials:        credentials,
+		SourceType:         sourceType,
+		StartDate:          startDate,
 	}
-	name := r.Name.ValueString()
+	name1 := r.Name.ValueString()
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
 		*secretID = r.SecretID.ValueString()
@@ -76,7 +88,7 @@ func (r *SourceLinkedinAdsResourceModel) ToCreateSDKType() *shared.SourceLinkedi
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceLinkedinAdsCreateRequest{
 		Configuration: configuration,
-		Name:          name,
+		Name:          name1,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,
 	}
@@ -92,6 +104,17 @@ func (r *SourceLinkedinAdsResourceModel) ToUpdateSDKType() *shared.SourceLinkedi
 	var accountIds []int64 = nil
 	for _, accountIdsItem := range r.Configuration.AccountIds {
 		accountIds = append(accountIds, accountIdsItem.ValueInt64())
+	}
+	var adAnalyticsReports []shared.SourceLinkedinAdsUpdateAdAnalyticsReportConfiguration = nil
+	for _, adAnalyticsReportsItem := range r.Configuration.AdAnalyticsReports {
+		name := adAnalyticsReportsItem.Name.ValueString()
+		pivotBy := shared.SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotBy(adAnalyticsReportsItem.PivotBy.ValueString())
+		timeGranularity := shared.SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationTimeGranularity(adAnalyticsReportsItem.TimeGranularity.ValueString())
+		adAnalyticsReports = append(adAnalyticsReports, shared.SourceLinkedinAdsUpdateAdAnalyticsReportConfiguration{
+			Name:            name,
+			PivotBy:         pivotBy,
+			TimeGranularity: timeGranularity,
+		})
 	}
 	var credentials *shared.SourceLinkedinAdsUpdateAuthentication
 	if r.Configuration.Credentials != nil {
@@ -140,15 +163,16 @@ func (r *SourceLinkedinAdsResourceModel) ToUpdateSDKType() *shared.SourceLinkedi
 	}
 	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
 	configuration := shared.SourceLinkedinAdsUpdate{
-		AccountIds:  accountIds,
-		Credentials: credentials,
-		StartDate:   startDate,
+		AccountIds:         accountIds,
+		AdAnalyticsReports: adAnalyticsReports,
+		Credentials:        credentials,
+		StartDate:          startDate,
 	}
-	name := r.Name.ValueString()
+	name1 := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceLinkedinAdsPutRequest{
 		Configuration: configuration,
-		Name:          name,
+		Name:          name1,
 		WorkspaceID:   workspaceID,
 	}
 	return &out
