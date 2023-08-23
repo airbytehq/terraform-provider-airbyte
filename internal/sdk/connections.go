@@ -133,7 +133,7 @@ func (s *connections) DeleteConnection(ctx context.Context, request operations.D
 		RawResponse: httpRes,
 	}
 	switch {
-	case httpRes.StatusCode == 204:
+	case httpRes.StatusCode >= 200 && httpRes.StatusCode < 300:
 		fallthrough
 	case httpRes.StatusCode == 403:
 		fallthrough

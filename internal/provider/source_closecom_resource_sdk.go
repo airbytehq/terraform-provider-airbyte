@@ -4,16 +4,16 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	customTypes "airbyte/internal/sdk/pkg/types"
 	"github.com/hashicorp/terraform-plugin-framework/types"
-	"time"
 )
 
 func (r *SourceCloseComResourceModel) ToCreateSDKType() *shared.SourceCloseComCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
 	sourceType := shared.SourceCloseComCloseCom(r.Configuration.SourceType.ValueString())
-	startDate := new(time.Time)
+	startDate := new(customTypes.Date)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
 	} else {
 		startDate = nil
 	}
@@ -46,9 +46,9 @@ func (r *SourceCloseComResourceModel) ToGetSDKType() *shared.SourceCloseComCreat
 
 func (r *SourceCloseComResourceModel) ToUpdateSDKType() *shared.SourceCloseComPutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	startDate := new(time.Time)
+	startDate := new(customTypes.Date)
 	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
-		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
 	} else {
 		startDate = nil
 	}

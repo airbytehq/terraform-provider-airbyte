@@ -119,6 +119,10 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 										Required:    true,
 										Description: `A Postgres publication used for consuming changes. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-4-create-publications-and-replication-identities-for-tables">publications and replication identities</a>.`,
 									},
+									"queue_size": schema.Int64Attribute{
+										Optional:    true,
+										Description: `The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful.`,
+									},
 									"replication_slot": schema.StringAttribute{
 										Required:    true,
 										Description: `A plugin logical replication slot. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-3-create-replication-slot">replication slots</a>.`,
@@ -147,6 +151,21 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 									},
 								},
 								Description: `Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
+							},
+							"source_alloydb_replication_method_standard_xmin": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"method": schema.StringAttribute{
+										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Xmin",
+											),
+										},
+										Description: `must be one of ["Xmin"]`,
+									},
+								},
+								Description: `Xmin replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
 							},
 							"source_alloydb_update_replication_method_logical_replication_cdc": schema.SingleNestedAttribute{
 								Optional: true,
@@ -189,6 +208,10 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 										Required:    true,
 										Description: `A Postgres publication used for consuming changes. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-4-create-publications-and-replication-identities-for-tables">publications and replication identities</a>.`,
 									},
+									"queue_size": schema.Int64Attribute{
+										Optional:    true,
+										Description: `The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful.`,
+									},
 									"replication_slot": schema.StringAttribute{
 										Required:    true,
 										Description: `A plugin logical replication slot. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-3-create-replication-slot">replication slots</a>.`,
@@ -217,6 +240,21 @@ func (r *SourceAlloydbResource) Schema(ctx context.Context, req resource.SchemaR
 									},
 								},
 								Description: `Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
+							},
+							"source_alloydb_update_replication_method_standard_xmin": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"method": schema.StringAttribute{
+										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Xmin",
+											),
+										},
+										Description: `must be one of ["Xmin"]`,
+									},
+								},
+								Description: `Xmin replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
 							},
 						},
 						Validators: []validator.Object{
@@ -946,7 +984,7 @@ func (r *SourceAlloydbResource) Update(ctx context.Context, req resource.UpdateR
 		return
 	}
 	if getResponse.SourceResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
 		return
 	}
 	data.RefreshFromGetResponse(getResponse.SourceResponse)
@@ -989,7 +1027,7 @@ func (r *SourceAlloydbResource) Delete(ctx context.Context, req resource.DeleteR
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

@@ -17,9 +17,9 @@ resource "airbyte_source_whisky_hunter" "my_source_whiskyhunter" {
   configuration = {
     source_type = "whisky-hunter"
   }
-  name         = "Shaun Johnston"
+  name         = "Curtis Dickens"
   secret_id    = "...my_secret_id..."
-  workspace_id = "f5abd648-7c5f-4c2b-862a-00bef69e1001"
+  workspace_id = "b0ce8aa6-5432-4a98-aeb7-e14ca5640891"
 }
 ```
 

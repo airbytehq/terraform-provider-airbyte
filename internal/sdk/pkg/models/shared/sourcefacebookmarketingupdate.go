@@ -8,9 +8,7 @@ import (
 	"time"
 )
 
-// SourceFacebookMarketingUpdateInsightConfigValidActionBreakdowns - Generic enumeration.
-//
-// Derive from this class to define new enumerations.
+// SourceFacebookMarketingUpdateInsightConfigValidActionBreakdowns - An enumeration.
 type SourceFacebookMarketingUpdateInsightConfigValidActionBreakdowns string
 
 const (
@@ -62,9 +60,38 @@ func (e *SourceFacebookMarketingUpdateInsightConfigValidActionBreakdowns) Unmars
 	}
 }
 
-// SourceFacebookMarketingUpdateInsightConfigValidBreakdowns - Generic enumeration.
-//
-// Derive from this class to define new enumerations.
+// SourceFacebookMarketingUpdateInsightConfigActionReportTime - Determines the report time of action stats. For example, if a person saw the ad on Jan 1st but converted on Jan 2nd, when you query the API with action_report_time=impression, you see a conversion on Jan 1st. When you query the API with action_report_time=conversion, you see a conversion on Jan 2nd.
+type SourceFacebookMarketingUpdateInsightConfigActionReportTime string
+
+const (
+	SourceFacebookMarketingUpdateInsightConfigActionReportTimeConversion SourceFacebookMarketingUpdateInsightConfigActionReportTime = "conversion"
+	SourceFacebookMarketingUpdateInsightConfigActionReportTimeImpression SourceFacebookMarketingUpdateInsightConfigActionReportTime = "impression"
+	SourceFacebookMarketingUpdateInsightConfigActionReportTimeMixed      SourceFacebookMarketingUpdateInsightConfigActionReportTime = "mixed"
+)
+
+func (e SourceFacebookMarketingUpdateInsightConfigActionReportTime) ToPointer() *SourceFacebookMarketingUpdateInsightConfigActionReportTime {
+	return &e
+}
+
+func (e *SourceFacebookMarketingUpdateInsightConfigActionReportTime) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "conversion":
+		fallthrough
+	case "impression":
+		fallthrough
+	case "mixed":
+		*e = SourceFacebookMarketingUpdateInsightConfigActionReportTime(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceFacebookMarketingUpdateInsightConfigActionReportTime: %v", v)
+	}
+}
+
+// SourceFacebookMarketingUpdateInsightConfigValidBreakdowns - An enumeration.
 type SourceFacebookMarketingUpdateInsightConfigValidBreakdowns string
 
 const (
@@ -73,14 +100,17 @@ const (
 	SourceFacebookMarketingUpdateInsightConfigValidBreakdownsAppID                                     SourceFacebookMarketingUpdateInsightConfigValidBreakdowns = "app_id"
 	SourceFacebookMarketingUpdateInsightConfigValidBreakdownsBodyAsset                                 SourceFacebookMarketingUpdateInsightConfigValidBreakdowns = "body_asset"
 	SourceFacebookMarketingUpdateInsightConfigValidBreakdownsCallToActionAsset                         SourceFacebookMarketingUpdateInsightConfigValidBreakdowns = "call_to_action_asset"
+	SourceFacebookMarketingUpdateInsightConfigValidBreakdownsCoarseConversionValue                     SourceFacebookMarketingUpdateInsightConfigValidBreakdowns = "coarse_conversion_value"
 	SourceFacebookMarketingUpdateInsightConfigValidBreakdownsCountry                                   SourceFacebookMarketingUpdateInsightConfigValidBreakdowns = "country"
 	SourceFacebookMarketingUpdateInsightConfigValidBreakdownsDescriptionAsset                          SourceFacebookMarketingUpdateInsightConfigValidBreakdowns = "description_asset"
 	SourceFacebookMarketingUpdateInsightConfigValidBreakdownsDevicePlatform                            SourceFacebookMarketingUpdateInsightConfigValidBreakdowns = "device_platform"
 	SourceFacebookMarketingUpdateInsightConfigValidBreakdownsDma                                       SourceFacebookMarketingUpdateInsightConfigValidBreakdowns = "dma"
+	SourceFacebookMarketingUpdateInsightConfigValidBreakdownsFidelityType                              SourceFacebookMarketingUpdateInsightConfigValidBreakdowns = "fidelity_type"
 	SourceFacebookMarketingUpdateInsightConfigValidBreakdownsFrequencyValue                            SourceFacebookMarketingUpdateInsightConfigValidBreakdowns = "frequency_value"
 	SourceFacebookMarketingUpdateInsightConfigValidBreakdownsGender                                    SourceFacebookMarketingUpdateInsightConfigValidBreakdowns = "gender"
 	SourceFacebookMarketingUpdateInsightConfigValidBreakdownsHourlyStatsAggregatedByAdvertiserTimeZone SourceFacebookMarketingUpdateInsightConfigValidBreakdowns = "hourly_stats_aggregated_by_advertiser_time_zone"
 	SourceFacebookMarketingUpdateInsightConfigValidBreakdownsHourlyStatsAggregatedByAudienceTimeZone   SourceFacebookMarketingUpdateInsightConfigValidBreakdowns = "hourly_stats_aggregated_by_audience_time_zone"
+	SourceFacebookMarketingUpdateInsightConfigValidBreakdownsHsid                                      SourceFacebookMarketingUpdateInsightConfigValidBreakdowns = "hsid"
 	SourceFacebookMarketingUpdateInsightConfigValidBreakdownsImageAsset                                SourceFacebookMarketingUpdateInsightConfigValidBreakdowns = "image_asset"
 	SourceFacebookMarketingUpdateInsightConfigValidBreakdownsImpressionDevice                          SourceFacebookMarketingUpdateInsightConfigValidBreakdowns = "impression_device"
 	SourceFacebookMarketingUpdateInsightConfigValidBreakdownsIsConversionIDModeled                     SourceFacebookMarketingUpdateInsightConfigValidBreakdowns = "is_conversion_id_modeled"
@@ -88,8 +118,10 @@ const (
 	SourceFacebookMarketingUpdateInsightConfigValidBreakdownsMmm                                       SourceFacebookMarketingUpdateInsightConfigValidBreakdowns = "mmm"
 	SourceFacebookMarketingUpdateInsightConfigValidBreakdownsPlacePageID                               SourceFacebookMarketingUpdateInsightConfigValidBreakdowns = "place_page_id"
 	SourceFacebookMarketingUpdateInsightConfigValidBreakdownsPlatformPosition                          SourceFacebookMarketingUpdateInsightConfigValidBreakdowns = "platform_position"
+	SourceFacebookMarketingUpdateInsightConfigValidBreakdownsPostbackSequenceIndex                     SourceFacebookMarketingUpdateInsightConfigValidBreakdowns = "postback_sequence_index"
 	SourceFacebookMarketingUpdateInsightConfigValidBreakdownsProductID                                 SourceFacebookMarketingUpdateInsightConfigValidBreakdowns = "product_id"
 	SourceFacebookMarketingUpdateInsightConfigValidBreakdownsPublisherPlatform                         SourceFacebookMarketingUpdateInsightConfigValidBreakdowns = "publisher_platform"
+	SourceFacebookMarketingUpdateInsightConfigValidBreakdownsRedownload                                SourceFacebookMarketingUpdateInsightConfigValidBreakdowns = "redownload"
 	SourceFacebookMarketingUpdateInsightConfigValidBreakdownsRegion                                    SourceFacebookMarketingUpdateInsightConfigValidBreakdowns = "region"
 	SourceFacebookMarketingUpdateInsightConfigValidBreakdownsSkanCampaignID                            SourceFacebookMarketingUpdateInsightConfigValidBreakdowns = "skan_campaign_id"
 	SourceFacebookMarketingUpdateInsightConfigValidBreakdownsSkanConversionID                          SourceFacebookMarketingUpdateInsightConfigValidBreakdowns = "skan_conversion_id"
@@ -117,6 +149,8 @@ func (e *SourceFacebookMarketingUpdateInsightConfigValidBreakdowns) UnmarshalJSO
 		fallthrough
 	case "call_to_action_asset":
 		fallthrough
+	case "coarse_conversion_value":
+		fallthrough
 	case "country":
 		fallthrough
 	case "description_asset":
@@ -125,6 +159,8 @@ func (e *SourceFacebookMarketingUpdateInsightConfigValidBreakdowns) UnmarshalJSO
 		fallthrough
 	case "dma":
 		fallthrough
+	case "fidelity_type":
+		fallthrough
 	case "frequency_value":
 		fallthrough
 	case "gender":
@@ -132,6 +168,8 @@ func (e *SourceFacebookMarketingUpdateInsightConfigValidBreakdowns) UnmarshalJSO
 	case "hourly_stats_aggregated_by_advertiser_time_zone":
 		fallthrough
 	case "hourly_stats_aggregated_by_audience_time_zone":
+		fallthrough
+	case "hsid":
 		fallthrough
 	case "image_asset":
 		fallthrough
@@ -147,9 +185,13 @@ func (e *SourceFacebookMarketingUpdateInsightConfigValidBreakdowns) UnmarshalJSO
 		fallthrough
 	case "platform_position":
 		fallthrough
+	case "postback_sequence_index":
+		fallthrough
 	case "product_id":
 		fallthrough
 	case "publisher_platform":
+		fallthrough
+	case "redownload":
 		fallthrough
 	case "region":
 		fallthrough
@@ -167,9 +209,7 @@ func (e *SourceFacebookMarketingUpdateInsightConfigValidBreakdowns) UnmarshalJSO
 	}
 }
 
-// SourceFacebookMarketingUpdateInsightConfigValidEnums - Generic enumeration.
-//
-// Derive from this class to define new enumerations.
+// SourceFacebookMarketingUpdateInsightConfigValidEnums - An enumeration.
 type SourceFacebookMarketingUpdateInsightConfigValidEnums string
 
 const (
@@ -178,12 +218,10 @@ const (
 	SourceFacebookMarketingUpdateInsightConfigValidEnumsAccountName                             SourceFacebookMarketingUpdateInsightConfigValidEnums = "account_name"
 	SourceFacebookMarketingUpdateInsightConfigValidEnumsActionValues                            SourceFacebookMarketingUpdateInsightConfigValidEnums = "action_values"
 	SourceFacebookMarketingUpdateInsightConfigValidEnumsActions                                 SourceFacebookMarketingUpdateInsightConfigValidEnums = "actions"
-	SourceFacebookMarketingUpdateInsightConfigValidEnumsAdBidValue                              SourceFacebookMarketingUpdateInsightConfigValidEnums = "ad_bid_value"
 	SourceFacebookMarketingUpdateInsightConfigValidEnumsAdClickActions                          SourceFacebookMarketingUpdateInsightConfigValidEnums = "ad_click_actions"
 	SourceFacebookMarketingUpdateInsightConfigValidEnumsAdID                                    SourceFacebookMarketingUpdateInsightConfigValidEnums = "ad_id"
 	SourceFacebookMarketingUpdateInsightConfigValidEnumsAdImpressionActions                     SourceFacebookMarketingUpdateInsightConfigValidEnums = "ad_impression_actions"
 	SourceFacebookMarketingUpdateInsightConfigValidEnumsAdName                                  SourceFacebookMarketingUpdateInsightConfigValidEnums = "ad_name"
-	SourceFacebookMarketingUpdateInsightConfigValidEnumsAdsetBidValue                           SourceFacebookMarketingUpdateInsightConfigValidEnums = "adset_bid_value"
 	SourceFacebookMarketingUpdateInsightConfigValidEnumsAdsetEnd                                SourceFacebookMarketingUpdateInsightConfigValidEnums = "adset_end"
 	SourceFacebookMarketingUpdateInsightConfigValidEnumsAdsetID                                 SourceFacebookMarketingUpdateInsightConfigValidEnums = "adset_id"
 	SourceFacebookMarketingUpdateInsightConfigValidEnumsAdsetName                               SourceFacebookMarketingUpdateInsightConfigValidEnums = "adset_name"
@@ -230,6 +268,7 @@ const (
 	SourceFacebookMarketingUpdateInsightConfigValidEnumsCpm                                     SourceFacebookMarketingUpdateInsightConfigValidEnums = "cpm"
 	SourceFacebookMarketingUpdateInsightConfigValidEnumsCpp                                     SourceFacebookMarketingUpdateInsightConfigValidEnums = "cpp"
 	SourceFacebookMarketingUpdateInsightConfigValidEnumsCreatedTime                             SourceFacebookMarketingUpdateInsightConfigValidEnums = "created_time"
+	SourceFacebookMarketingUpdateInsightConfigValidEnumsCreativeMediaType                       SourceFacebookMarketingUpdateInsightConfigValidEnums = "creative_media_type"
 	SourceFacebookMarketingUpdateInsightConfigValidEnumsCtr                                     SourceFacebookMarketingUpdateInsightConfigValidEnums = "ctr"
 	SourceFacebookMarketingUpdateInsightConfigValidEnumsDateStart                               SourceFacebookMarketingUpdateInsightConfigValidEnums = "date_start"
 	SourceFacebookMarketingUpdateInsightConfigValidEnumsDateStop                                SourceFacebookMarketingUpdateInsightConfigValidEnums = "date_stop"
@@ -250,6 +289,7 @@ const (
 	SourceFacebookMarketingUpdateInsightConfigValidEnumsInlineLinkClickCtr                      SourceFacebookMarketingUpdateInsightConfigValidEnums = "inline_link_click_ctr"
 	SourceFacebookMarketingUpdateInsightConfigValidEnumsInlineLinkClicks                        SourceFacebookMarketingUpdateInsightConfigValidEnums = "inline_link_clicks"
 	SourceFacebookMarketingUpdateInsightConfigValidEnumsInlinePostEngagement                    SourceFacebookMarketingUpdateInsightConfigValidEnums = "inline_post_engagement"
+	SourceFacebookMarketingUpdateInsightConfigValidEnumsInstagramUpcomingEventRemindersSet      SourceFacebookMarketingUpdateInsightConfigValidEnums = "instagram_upcoming_event_reminders_set"
 	SourceFacebookMarketingUpdateInsightConfigValidEnumsInstantExperienceClicksToOpen           SourceFacebookMarketingUpdateInsightConfigValidEnums = "instant_experience_clicks_to_open"
 	SourceFacebookMarketingUpdateInsightConfigValidEnumsInstantExperienceClicksToStart          SourceFacebookMarketingUpdateInsightConfigValidEnums = "instant_experience_clicks_to_start"
 	SourceFacebookMarketingUpdateInsightConfigValidEnumsInstantExperienceOutboundClicks         SourceFacebookMarketingUpdateInsightConfigValidEnums = "instant_experience_outbound_clicks"
@@ -273,6 +313,7 @@ const (
 	SourceFacebookMarketingUpdateInsightConfigValidEnumsSpend                                   SourceFacebookMarketingUpdateInsightConfigValidEnums = "spend"
 	SourceFacebookMarketingUpdateInsightConfigValidEnumsTotalPostbacks                          SourceFacebookMarketingUpdateInsightConfigValidEnums = "total_postbacks"
 	SourceFacebookMarketingUpdateInsightConfigValidEnumsTotalPostbacksDetailed                  SourceFacebookMarketingUpdateInsightConfigValidEnums = "total_postbacks_detailed"
+	SourceFacebookMarketingUpdateInsightConfigValidEnumsTotalPostbacksDetailedV4                SourceFacebookMarketingUpdateInsightConfigValidEnums = "total_postbacks_detailed_v4"
 	SourceFacebookMarketingUpdateInsightConfigValidEnumsUniqueActions                           SourceFacebookMarketingUpdateInsightConfigValidEnums = "unique_actions"
 	SourceFacebookMarketingUpdateInsightConfigValidEnumsUniqueClicks                            SourceFacebookMarketingUpdateInsightConfigValidEnums = "unique_clicks"
 	SourceFacebookMarketingUpdateInsightConfigValidEnumsUniqueConversions                       SourceFacebookMarketingUpdateInsightConfigValidEnums = "unique_conversions"
@@ -326,8 +367,6 @@ func (e *SourceFacebookMarketingUpdateInsightConfigValidEnums) UnmarshalJSON(dat
 		fallthrough
 	case "actions":
 		fallthrough
-	case "ad_bid_value":
-		fallthrough
 	case "ad_click_actions":
 		fallthrough
 	case "ad_id":
@@ -335,8 +374,6 @@ func (e *SourceFacebookMarketingUpdateInsightConfigValidEnums) UnmarshalJSON(dat
 	case "ad_impression_actions":
 		fallthrough
 	case "ad_name":
-		fallthrough
-	case "adset_bid_value":
 		fallthrough
 	case "adset_end":
 		fallthrough
@@ -430,6 +467,8 @@ func (e *SourceFacebookMarketingUpdateInsightConfigValidEnums) UnmarshalJSON(dat
 		fallthrough
 	case "created_time":
 		fallthrough
+	case "creative_media_type":
+		fallthrough
 	case "ctr":
 		fallthrough
 	case "date_start":
@@ -469,6 +508,8 @@ func (e *SourceFacebookMarketingUpdateInsightConfigValidEnums) UnmarshalJSON(dat
 	case "inline_link_clicks":
 		fallthrough
 	case "inline_post_engagement":
+		fallthrough
+	case "instagram_upcoming_event_reminders_set":
 		fallthrough
 	case "instant_experience_clicks_to_open":
 		fallthrough
@@ -515,6 +556,8 @@ func (e *SourceFacebookMarketingUpdateInsightConfigValidEnums) UnmarshalJSON(dat
 	case "total_postbacks":
 		fallthrough
 	case "total_postbacks_detailed":
+		fallthrough
+	case "total_postbacks_detailed_v4":
 		fallthrough
 	case "unique_actions":
 		fallthrough
@@ -622,6 +665,8 @@ func (e *SourceFacebookMarketingUpdateInsightConfigLevel) UnmarshalJSON(data []b
 type SourceFacebookMarketingUpdateInsightConfig struct {
 	// A list of chosen action_breakdowns for action_breakdowns
 	ActionBreakdowns []SourceFacebookMarketingUpdateInsightConfigValidActionBreakdowns `json:"action_breakdowns,omitempty"`
+	// Determines the report time of action stats. For example, if a person saw the ad on Jan 1st but converted on Jan 2nd, when you query the API with action_report_time=impression, you see a conversion on Jan 1st. When you query the API with action_report_time=conversion, you see a conversion on Jan 2nd.
+	ActionReportTime *SourceFacebookMarketingUpdateInsightConfigActionReportTime `json:"action_report_time,omitempty"`
 	// A list of chosen breakdowns for breakdowns
 	Breakdowns []SourceFacebookMarketingUpdateInsightConfigValidBreakdowns `json:"breakdowns,omitempty"`
 	// The date until which you'd like to replicate data for this stream, in the format YYYY-MM-DDT00:00:00Z. All data generated between the start date and this end date will be replicated. Not setting this option will result in always syncing the latest data.
@@ -647,6 +692,10 @@ type SourceFacebookMarketingUpdate struct {
 	AccountID string `json:"account_id"`
 	// Allows action_breakdowns to be an empty list
 	ActionBreakdownsAllowEmpty *bool `json:"action_breakdowns_allow_empty,omitempty"`
+	// The Client Id for your OAuth app
+	ClientID *string `json:"client_id,omitempty"`
+	// The Client Secret for your OAuth app
+	ClientSecret *string `json:"client_secret,omitempty"`
 	// A list which contains ad statistics entries, each entry must have a name and can contains fields, breakdowns or action_breakdowns. Click on "add" to fill this field.
 	CustomInsights []SourceFacebookMarketingUpdateInsightConfig `json:"custom_insights,omitempty"`
 	// The date until which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DDT00:00:00Z. All data generated between the start date and this end date will be replicated. Not setting this option will result in always syncing the latest data.

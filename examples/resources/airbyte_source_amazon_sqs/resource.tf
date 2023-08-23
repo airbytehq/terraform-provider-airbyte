@@ -6,12 +6,12 @@ resource "airbyte_source_amazon_sqs" "my_source_amazonsqs" {
     max_batch_size       = 5
     max_wait_time        = 5
     queue_url            = "https://sqs.eu-west-1.amazonaws.com/1234567890/my-example-queue"
-    region               = "ap-northeast-2"
+    region               = "eu-south-1"
     secret_key           = "hu+qE5exxxxT6o/ZrKsxxxxxxBhxxXLexxxxxVKz"
     source_type          = "amazon-sqs"
     visibility_timeout   = 15
   }
-  name         = "Roger McDermott"
+  name         = "Rosemarie Kub"
   secret_id    = "...my_secret_id..."
-  workspace_id = "d44e2f52-d82d-4351-bbb6-f48b656bcdb3"
+  workspace_id = "259e3ea4-b519-47f9-a443-da7ce52b895c"
 }

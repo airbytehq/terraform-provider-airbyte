@@ -72,6 +72,10 @@ func (r *SourceSalesforceResource) Schema(ctx context.Context, req resource.Sche
 						Required:    true,
 						Description: `Enter your Salesforce developer application's <a href="https://developer.salesforce.com/forums/?id=9062I000000DLgbQAG">Client secret</a>`,
 					},
+					"force_use_bulk_api": schema.BoolAttribute{
+						Optional:    true,
+						Description: `Toggle to use Bulk API (this might cause empty fields for some streams)`,
+					},
 					"is_sandbox": schema.BoolAttribute{
 						Optional:    true,
 						Description: `Toggle if you're using a <a href="https://help.salesforce.com/s/articleView?id=sf.deploy_sandboxes_parent.htm&type=5">Salesforce Sandbox</a>`,
@@ -94,7 +98,7 @@ func (r *SourceSalesforceResource) Schema(ctx context.Context, req resource.Sche
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
-						Description: `Enter the date in the YYYY-MM-DD format. Airbyte will replicate the data added on and after this date. If this field is blank, Airbyte will replicate the data for last two years.`,
+						Description: `Enter the date (or date-time) in the YYYY-MM-DD or YYYY-MM-DDTHH:mm:ssZ format. Airbyte will replicate the data updated on and after this date. If this field is blank, Airbyte will replicate the data for last two years.`,
 					},
 					"streams_criteria": schema.ListNestedAttribute{
 						Optional: true,
@@ -121,7 +125,7 @@ func (r *SourceSalesforceResource) Schema(ctx context.Context, req resource.Sche
 								},
 							},
 						},
-						Description: `Filter streams relevant to you`,
+						Description: `Add filters to select only required stream based on ` + "`" + `SObject` + "`" + ` name. Use this field to filter which tables are displayed by this connector. This is useful if your Salesforce account has a large number of tables (>1000), in which case you may find it easier to navigate the UI and speed up the connector's performance if you restrict the tables displayed by this connector.`,
 					},
 				},
 			},
@@ -320,7 +324,7 @@ func (r *SourceSalesforceResource) Update(ctx context.Context, req resource.Upda
 		return
 	}
 	if getResponse.SourceResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
 		return
 	}
 	data.RefreshFromGetResponse(getResponse.SourceResponse)
@@ -363,7 +367,7 @@ func (r *SourceSalesforceResource) Delete(ctx context.Context, req resource.Dele
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

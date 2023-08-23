@@ -20,9 +20,9 @@ resource "airbyte_source_railz" "my_source_railz" {
     source_type = "railz"
     start_date  = "...my_start_date..."
   }
-  name         = "Elaine Cummerata PhD"
+  name         = "Myron Kunze"
   secret_id    = "...my_secret_id..."
-  workspace_id = "336561ec-a16e-4f89-851b-d76eeeb518c4"
+  workspace_id = "77b4848b-d6a6-4f04-81d2-c3b808094373"
 }
 ```
 

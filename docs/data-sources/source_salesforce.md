@@ -44,11 +44,12 @@ Read-Only:
 - `auth_type` (String) must be one of ["Client"]
 - `client_id` (String) Enter your Salesforce developer application's <a href="https://developer.salesforce.com/forums/?id=9062I000000DLgbQAG">Client ID</a>
 - `client_secret` (String) Enter your Salesforce developer application's <a href="https://developer.salesforce.com/forums/?id=9062I000000DLgbQAG">Client secret</a>
+- `force_use_bulk_api` (Boolean) Toggle to use Bulk API (this might cause empty fields for some streams)
 - `is_sandbox` (Boolean) Toggle if you're using a <a href="https://help.salesforce.com/s/articleView?id=sf.deploy_sandboxes_parent.htm&type=5">Salesforce Sandbox</a>
 - `refresh_token` (String) Enter your application's <a href="https://developer.salesforce.com/docs/atlas.en-us.mobile_sdk.meta/mobile_sdk/oauth_refresh_token_flow.htm">Salesforce Refresh Token</a> used for Airbyte to access your Salesforce account.
 - `source_type` (String) must be one of ["salesforce"]
-- `start_date` (String) Enter the date in the YYYY-MM-DD format. Airbyte will replicate the data added on and after this date. If this field is blank, Airbyte will replicate the data for last two years.
-- `streams_criteria` (Attributes List) Filter streams relevant to you (see [below for nested schema](#nestedatt--configuration--streams_criteria))
+- `start_date` (String) Enter the date (or date-time) in the YYYY-MM-DD or YYYY-MM-DDTHH:mm:ssZ format. Airbyte will replicate the data updated on and after this date. If this field is blank, Airbyte will replicate the data for last two years.
+- `streams_criteria` (Attributes List) Add filters to select only required stream based on `SObject` name. Use this field to filter which tables are displayed by this connector. This is useful if your Salesforce account has a large number of tables (>1000), in which case you may find it easier to navigate the UI and speed up the connector's performance if you restrict the tables displayed by this connector. (see [below for nested schema](#nestedatt--configuration--streams_criteria))
 
 <a id="nestedatt--configuration--streams_criteria"></a>
 ### Nested Schema for `configuration.streams_criteria`

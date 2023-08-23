@@ -21,5 +21,5 @@ type GetStreamPropertiesResponse struct {
 	StatusCode  int
 	RawResponse *http.Response
 	// Get the available streams properties for a source/destination pair.
-	StreamProperties *shared.StreamProperties
+	StreamPropertiesResponse *shared.StreamPropertiesResponse
 }

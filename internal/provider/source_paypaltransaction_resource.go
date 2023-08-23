@@ -56,11 +56,11 @@ func (r *SourcePaypalTransactionResource) Schema(ctx context.Context, req resour
 				Required: true,
 				Attributes: map[string]schema.Attribute{
 					"client_id": schema.StringAttribute{
-						Optional:    true,
+						Required:    true,
 						Description: `The Client ID of your Paypal developer application.`,
 					},
 					"client_secret": schema.StringAttribute{
-						Optional:    true,
+						Required:    true,
 						Description: `The Client Secret of your Paypal developer application.`,
 					},
 					"is_sandbox": schema.BoolAttribute{
@@ -284,7 +284,7 @@ func (r *SourcePaypalTransactionResource) Update(ctx context.Context, req resour
 		return
 	}
 	if getResponse.SourceResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
 		return
 	}
 	data.RefreshFromGetResponse(getResponse.SourceResponse)
@@ -327,7 +327,7 @@ func (r *SourcePaypalTransactionResource) Delete(ctx context.Context, req resour
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

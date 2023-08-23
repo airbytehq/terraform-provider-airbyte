@@ -10,9 +10,9 @@ resource "airbyte_source_clickhouse" "my_source_clickhouse" {
         tunnel_method = "NO_TUNNEL"
       }
     }
-    username = "Alfonzo.OReilly"
+    username = "Toni.Hudson"
   }
-  name         = "Miss Peter Hermiston"
+  name         = "Irvin Rippin"
   secret_id    = "...my_secret_id..."
-  workspace_id = "72af923c-5949-4f83-b350-cf876ffb901c"
+  workspace_id = "b4ecae6c-3d5d-4b3a-9ebd-5daea4c506a8"
 }

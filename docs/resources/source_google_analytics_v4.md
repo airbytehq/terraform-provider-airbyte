@@ -30,9 +30,9 @@ resource "airbyte_source_google_analytics_v4" "my_source_googleanalyticsv4" {
     view_id        = "...my_view_id..."
     window_in_days = 120
   }
-  name         = "Mamie Spinka"
+  name         = "Miss Harvey Nicolas Sr."
   secret_id    = "...my_secret_id..."
-  workspace_id = "b7a0a116-ce72-43d4-897f-a30e9af725b2"
+  workspace_id = "6ce723d4-097f-4a30-a9af-725b29122030"
 }
 ```
 

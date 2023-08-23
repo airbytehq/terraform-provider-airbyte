@@ -27,9 +27,9 @@ resource "airbyte_source_mongodb" "my_source_mongodb" {
     source_type = "mongodb"
     user        = "...my_user..."
   }
-  name         = "Alfonso Keeling"
+  name         = "Elvira Collins"
   secret_id    = "...my_secret_id..."
-  workspace_id = "8a216e19-bafe-4ca6-9914-98140b64ff8a"
+  workspace_id = "309db053-6d9e-475c-a006-f5392c11a25a"
 }
 ```
 
@@ -86,6 +86,10 @@ Required:
 - `cluster_url` (String) The URL of a cluster to connect to.
 - `instance` (String) must be one of ["atlas"]
 
+Optional:
+
+- `additional_properties` (String) Parsed as JSON.
+
 
 <a id="nestedatt--configuration--instance_type--source_mongodb_mongo_db_instance_type_replica_set"></a>
 ### Nested Schema for `configuration.instance_type.source_mongodb_mongo_db_instance_type_replica_set`
@@ -117,6 +121,10 @@ Required:
 
 - `cluster_url` (String) The URL of a cluster to connect to.
 - `instance` (String) must be one of ["atlas"]
+
+Optional:
+
+- `additional_properties` (String) Parsed as JSON.
 
 
 <a id="nestedatt--configuration--instance_type--source_mongodb_update_mongo_db_instance_type_replica_set"></a>

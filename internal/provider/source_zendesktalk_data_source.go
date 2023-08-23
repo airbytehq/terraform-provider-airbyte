@@ -102,6 +102,14 @@ func (r *SourceZendeskTalkDataSource) Schema(ctx context.Context, req datasource
 										},
 										Description: `must be one of ["oauth2.0"]`,
 									},
+									"client_id": schema.StringAttribute{
+										Computed:    true,
+										Description: `Client ID`,
+									},
+									"client_secret": schema.StringAttribute{
+										Computed:    true,
+										Description: `Client Secret`,
+									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
 										Validators: []validator.String{
@@ -157,6 +165,14 @@ func (r *SourceZendeskTalkDataSource) Schema(ctx context.Context, req datasource
 											),
 										},
 										Description: `must be one of ["oauth2.0"]`,
+									},
+									"client_id": schema.StringAttribute{
+										Computed:    true,
+										Description: `Client ID`,
+									},
+									"client_secret": schema.StringAttribute{
+										Computed:    true,
+										Description: `Client Secret`,
 									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,

@@ -5,7 +5,6 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceGoogleDirectory struct {
-	CredentialsJSON types.String `tfsdk:"credentials_json"`
-	Email           types.String `tfsdk:"email"`
-	SourceType      types.String `tfsdk:"source_type"`
+	Credentials *SourceGoogleDirectoryGoogleCredentials `tfsdk:"credentials"`
+	SourceType  types.String                            `tfsdk:"source_type"`
 }

@@ -173,6 +173,11 @@ func (r *SourceSmartsheetsResource) Schema(ctx context.Context, req resource.Sch
 							validators.ExactlyOneChild(),
 						},
 					},
+					"metadata_fields": schema.ListAttribute{
+						Optional:    true,
+						ElementType: types.StringType,
+						Description: `A List of available columns which metadata can be pulled from.`,
+					},
 					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -390,7 +395,7 @@ func (r *SourceSmartsheetsResource) Update(ctx context.Context, req resource.Upd
 		return
 	}
 	if getResponse.SourceResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
 		return
 	}
 	data.RefreshFromGetResponse(getResponse.SourceResponse)
@@ -433,7 +438,7 @@ func (r *SourceSmartsheetsResource) Delete(ctx context.Context, req resource.Del
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

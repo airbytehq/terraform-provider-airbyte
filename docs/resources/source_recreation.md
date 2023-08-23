@@ -19,9 +19,9 @@ resource "airbyte_source_recreation" "my_source_recreation" {
     query_campsites = "...my_query_campsites..."
     source_type     = "recreation"
   }
-  name         = "Joe Stamm"
+  name         = "David Deckow"
   secret_id    = "...my_secret_id..."
-  workspace_id = "b9434645-d030-484f-bba5-cceff5cb01fe"
+  workspace_id = "6c354aa4-32b4-47e1-b63c-5208c23e9802"
 }
 ```
 

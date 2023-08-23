@@ -6,7 +6,7 @@ type SourceMongodbMongoDbInstanceType struct {
 	SourceMongodbMongoDBInstanceTypeMongoDBAtlas                    *SourceMongodbMongoDBInstanceTypeMongoDBAtlas              `tfsdk:"source_mongodb_mongo_db_instance_type_mongo_db_atlas"`
 	SourceMongodbMongoDbInstanceTypeReplicaSet                      *SourceMongodbMongoDbInstanceTypeReplicaSet                `tfsdk:"source_mongodb_mongo_db_instance_type_replica_set"`
 	SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance       *SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance `tfsdk:"source_mongodb_mongo_db_instance_type_standalone_mongo_db_instance"`
-	SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas              *SourceMongodbMongoDBInstanceTypeMongoDBAtlas              `tfsdk:"source_mongodb_update_mongo_db_instance_type_mongo_db_atlas"`
+	SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas              *SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas        `tfsdk:"source_mongodb_update_mongo_db_instance_type_mongo_db_atlas"`
 	SourceMongodbUpdateMongoDbInstanceTypeReplicaSet                *SourceMongodbMongoDbInstanceTypeReplicaSet                `tfsdk:"source_mongodb_update_mongo_db_instance_type_replica_set"`
 	SourceMongodbUpdateMongoDbInstanceTypeStandaloneMongoDbInstance *SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance `tfsdk:"source_mongodb_update_mongo_db_instance_type_standalone_mongo_db_instance"`
 }

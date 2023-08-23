@@ -18,9 +18,9 @@ resource "airbyte_source_omnisend" "my_source_omnisend" {
     api_key     = "...my_api_key..."
     source_type = "omnisend"
   }
-  name         = "Miss Domingo Bahringer"
+  name         = "Virginia Mitchell"
   secret_id    = "...my_secret_id..."
-  workspace_id = "d8706d46-082b-4fbd-841f-f5d4e2ae4fb5"
+  workspace_id = "b44bd3c4-3159-4d33-a595-3c001139863a"
 }
 ```
 

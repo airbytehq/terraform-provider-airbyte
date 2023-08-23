@@ -64,6 +64,8 @@ Read-Only:
 Read-Only:
 
 - `access_token` (String) OAuth access token
+- `client_id` (String) OAuth Client Id
+- `client_secret` (String) OAuth Client secret
 - `option_title` (String) must be one of ["OAuth Credentials"]
 
 
@@ -82,6 +84,8 @@ Read-Only:
 Read-Only:
 
 - `access_token` (String) OAuth access token
+- `client_id` (String) OAuth Client Id
+- `client_secret` (String) OAuth Client secret
 - `option_title` (String) must be one of ["OAuth Credentials"]
 
 

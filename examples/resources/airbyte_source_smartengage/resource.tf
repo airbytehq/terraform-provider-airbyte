@@ -3,7 +3,7 @@ resource "airbyte_source_smartengage" "my_source_smartengage" {
     api_key     = "...my_api_key..."
     source_type = "smartengage"
   }
-  name         = "Catherine Smith"
+  name         = "Guillermo Kunze"
   secret_id    = "...my_secret_id..."
-  workspace_id = "f1e3af15-920c-490d-9b49-01f2bd89c8a3"
+  workspace_id = "d4319439-8c78-43c9-a398-ed3d3ab7ca3c"
 }

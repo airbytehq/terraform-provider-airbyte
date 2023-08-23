@@ -9,7 +9,7 @@ resource "airbyte_source_mailchimp" "my_source_mailchimp" {
     }
     source_type = "mailchimp"
   }
-  name         = "Ms. Tracey D'Amore"
+  name         = "Faye Dicki"
   secret_id    = "...my_secret_id..."
-  workspace_id = "88ec6618-3bfe-4965-9eb4-0ec16faf75b0"
+  workspace_id = "aa69cd5f-bcf7-49da-98a7-822bf95894e6"
 }

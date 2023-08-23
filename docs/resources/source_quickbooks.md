@@ -23,16 +23,16 @@ resource "airbyte_source_quickbooks" "my_source_quickbooks" {
         client_secret     = "...my_client_secret..."
         realm_id          = "...my_realm_id..."
         refresh_token     = "...my_refresh_token..."
-        token_expiry_date = "2022-09-15T16:38:10.985Z"
+        token_expiry_date = "2022-04-17T11:28:41.720Z"
       }
     }
     sandbox     = false
     source_type = "quickbooks"
-    start_date  = "2021-03-20T00:00:00+00:00"
+    start_date  = "2021-03-20T00:00:00Z"
   }
-  name         = "Gladys O'Hara"
+  name         = "Nicholas Schroeder"
   secret_id    = "...my_secret_id..."
-  workspace_id = "a1b8fe99-731a-4dc0-9d85-ae2dfb70fb38"
+  workspace_id = "a8da4127-dd59-47ff-8711-aa1bc74b86ce"
 }
 ```
 
@@ -62,7 +62,7 @@ Required:
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
 - `sandbox` (Boolean) Determines whether to use the sandbox or production environment.
 - `source_type` (String) must be one of ["quickbooks"]
-- `start_date` (String) The default value to use if no bookmark exists for an endpoint (rfc3339 date string). E.g, 2021-03-20T00:00:00+00:00. Any data before this date will not be replicated.
+- `start_date` (String) The default value to use if no bookmark exists for an endpoint (rfc3339 date string). E.g, 2021-03-20T00:00:00Z. Any data before this date will not be replicated.
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`

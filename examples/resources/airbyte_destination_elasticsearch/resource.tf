@@ -12,6 +12,6 @@ resource "airbyte_destination_elasticsearch" "my_destination_elasticsearch" {
     endpoint         = "...my_endpoint..."
     upsert           = false
   }
-  name         = "Nathaniel Ryan"
-  workspace_id = "6146c3e2-50fb-4008-842e-141aac366c8d"
+  name         = "Dr. Randolph McDermott"
+  workspace_id = "443a1108-e0ad-4cf4-b921-879fce953f73"
 }

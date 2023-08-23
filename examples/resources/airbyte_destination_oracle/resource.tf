@@ -12,8 +12,8 @@ resource "airbyte_destination_oracle" "my_destination_oracle" {
         tunnel_method = "NO_TUNNEL"
       }
     }
-    username = "Duncan69"
+    username = "Jimmy.Luettgen63"
   }
-  name         = "Diane Mayer"
-  workspace_id = "8abf603a-79f9-4dfe-8ab7-da8a50ce187f"
+  name         = "Dewey Leannon"
+  workspace_id = "c0b2f2fb-7b19-44a2-b6b2-6916fe1f08f4"
 }

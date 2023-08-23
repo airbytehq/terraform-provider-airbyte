@@ -24,12 +24,12 @@ resource "airbyte_source_pinterest" "my_source_pinterest" {
     source_type = "pinterest"
     start_date  = "2022-07-28"
     status = [
-      "ARCHIVED",
+      "PAUSED",
     ]
   }
-  name         = "Miss Larry Kunde"
+  name         = "Jordan Hegmann"
   secret_id    = "...my_secret_id..."
-  workspace_id = "163e279a-3b08-44da-9925-7d04f40847a7"
+  workspace_id = "60591d74-5e3c-4205-9c9c-3f567e0e2527"
 }
 ```
 

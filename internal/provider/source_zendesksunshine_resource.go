@@ -63,7 +63,7 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 								Attributes: map[string]schema.Attribute{
 									"api_token": schema.StringAttribute{
 										Required:    true,
-										Description: `API Token. See the <a href="https://docs.airbyte.io/integrations/sources/zendesk_sunshine">docs</a> for information on how to generate this key.`,
+										Description: `API Token. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk_sunshine">docs</a> for information on how to generate this key.`,
 									},
 									"auth_method": schema.StringAttribute{
 										Required: true,
@@ -77,6 +77,13 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 									"email": schema.StringAttribute{
 										Required:    true,
 										Description: `The user email for your Zendesk account`,
+									},
+									"additional_properties": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+										Description: `Parsed as JSON.`,
 									},
 								},
 							},
@@ -104,6 +111,13 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 										Required:    true,
 										Description: `The Client Secret of your OAuth application.`,
 									},
+									"additional_properties": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+										Description: `Parsed as JSON.`,
+									},
 								},
 							},
 							"source_zendesk_sunshine_update_authorization_method_api_token": schema.SingleNestedAttribute{
@@ -111,7 +125,7 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 								Attributes: map[string]schema.Attribute{
 									"api_token": schema.StringAttribute{
 										Required:    true,
-										Description: `API Token. See the <a href="https://docs.airbyte.io/integrations/sources/zendesk_sunshine">docs</a> for information on how to generate this key.`,
+										Description: `API Token. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk_sunshine">docs</a> for information on how to generate this key.`,
 									},
 									"auth_method": schema.StringAttribute{
 										Required: true,
@@ -125,6 +139,13 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 									"email": schema.StringAttribute{
 										Required:    true,
 										Description: `The user email for your Zendesk account`,
+									},
+									"additional_properties": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+										Description: `Parsed as JSON.`,
 									},
 								},
 							},
@@ -151,6 +172,13 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 									"client_secret": schema.StringAttribute{
 										Required:    true,
 										Description: `The Client Secret of your OAuth application.`,
+									},
+									"additional_properties": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+										Description: `Parsed as JSON.`,
 									},
 								},
 							},
@@ -373,7 +401,7 @@ func (r *SourceZendeskSunshineResource) Update(ctx context.Context, req resource
 		return
 	}
 	if getResponse.SourceResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
 		return
 	}
 	data.RefreshFromGetResponse(getResponse.SourceResponse)
@@ -416,7 +444,7 @@ func (r *SourceZendeskSunshineResource) Delete(ctx context.Context, req resource
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

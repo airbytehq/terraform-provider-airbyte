@@ -1,12 +1,12 @@
 resource "airbyte_source_twitter" "my_source_twitter" {
   configuration = {
     api_key     = "...my_api_key..."
-    end_date    = "2022-04-23T00:58:34.496Z"
+    end_date    = "2020-12-31T16:49:13.658Z"
     query       = "...my_query..."
     source_type = "twitter"
-    start_date  = "2022-09-13T06:52:49.792Z"
+    start_date  = "2021-05-21T04:49:52.479Z"
   }
-  name         = "Drew Kemmer"
+  name         = "Marco Gleichner"
   secret_id    = "...my_secret_id..."
-  workspace_id = "49e5635b-33bc-40f9-b0c4-2fc9f4844225"
+  workspace_id = "a1cfe9e1-5df9-4039-87f3-7831983d42e5"
 }

@@ -67,6 +67,14 @@ func (r *SourceGithubDataSource) Schema(ctx context.Context, req datasource.Sche
 										Computed:    true,
 										Description: `OAuth access token`,
 									},
+									"client_id": schema.StringAttribute{
+										Computed:    true,
+										Description: `OAuth Client Id`,
+									},
+									"client_secret": schema.StringAttribute{
+										Computed:    true,
+										Description: `OAuth Client secret`,
+									},
 									"option_title": schema.StringAttribute{
 										Computed: true,
 										Validators: []validator.String{
@@ -104,6 +112,14 @@ func (r *SourceGithubDataSource) Schema(ctx context.Context, req datasource.Sche
 									"access_token": schema.StringAttribute{
 										Computed:    true,
 										Description: `OAuth access token`,
+									},
+									"client_id": schema.StringAttribute{
+										Computed:    true,
+										Description: `OAuth Client Id`,
+									},
+									"client_secret": schema.StringAttribute{
+										Computed:    true,
+										Description: `OAuth Client secret`,
 									},
 									"option_title": schema.StringAttribute{
 										Computed: true,

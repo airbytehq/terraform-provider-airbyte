@@ -4,7 +4,7 @@ resource "airbyte_source_gridly" "my_source_gridly" {
     grid_id     = "...my_grid_id..."
     source_type = "gridly"
   }
-  name         = "Theresa Collier"
+  name         = "Ernest Grimes"
   secret_id    = "...my_secret_id..."
-  workspace_id = "895b8bcf-24db-4959-a933-52f74533994d"
+  workspace_id = "95969335-2f74-4533-994d-78de3b6e9389"
 }

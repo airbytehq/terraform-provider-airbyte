@@ -13,6 +13,7 @@ type DestinationDatabricks struct {
 	DatabricksPort                types.String                     `tfsdk:"databricks_port"`
 	DatabricksServerHostname      types.String                     `tfsdk:"databricks_server_hostname"`
 	DestinationType               types.String                     `tfsdk:"destination_type"`
+	EnableSchemaEvolution         types.Bool                       `tfsdk:"enable_schema_evolution"`
 	PurgeStagingData              types.Bool                       `tfsdk:"purge_staging_data"`
 	Schema                        types.String                     `tfsdk:"schema"`
 }

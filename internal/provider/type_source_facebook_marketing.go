@@ -8,6 +8,8 @@ type SourceFacebookMarketing struct {
 	AccessToken                types.String                           `tfsdk:"access_token"`
 	AccountID                  types.String                           `tfsdk:"account_id"`
 	ActionBreakdownsAllowEmpty types.Bool                             `tfsdk:"action_breakdowns_allow_empty"`
+	ClientID                   types.String                           `tfsdk:"client_id"`
+	ClientSecret               types.String                           `tfsdk:"client_secret"`
 	CustomInsights             []SourceFacebookMarketingInsightConfig `tfsdk:"custom_insights"`
 	EndDate                    types.String                           `tfsdk:"end_date"`
 	FetchThumbnailImages       types.Bool                             `tfsdk:"fetch_thumbnail_images"`

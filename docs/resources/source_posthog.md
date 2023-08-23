@@ -20,9 +20,9 @@ resource "airbyte_source_posthog" "my_source_posthog" {
     source_type = "posthog"
     start_date  = "2021-01-01T00:00:00Z"
   }
-  name         = "Ada Tromp"
+  name         = "Darrin Bogisich"
   secret_id    = "...my_secret_id..."
-  workspace_id = "266cbd95-f7aa-42b2-8113-695d1e6698fc"
+  workspace_id = "88d40d03-f3de-4ba2-97be-3e90bc40df86"
 }
 ```
 

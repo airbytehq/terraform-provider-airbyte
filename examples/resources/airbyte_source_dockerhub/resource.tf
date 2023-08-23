@@ -3,7 +3,7 @@ resource "airbyte_source_dockerhub" "my_source_dockerhub" {
     docker_username = "airbyte"
     source_type     = "dockerhub"
   }
-  name         = "Nick Blanda"
+  name         = "Kristy Renner DDS"
   secret_id    = "...my_secret_id..."
-  workspace_id = "d975e0e8-419d-48f8-8f14-4f3e07edcc4a"
+  workspace_id = "8d975e0e-8419-4d8f-84f1-44f3e07edcc4"
 }

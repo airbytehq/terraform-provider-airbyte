@@ -26,9 +26,9 @@ resource "airbyte_source_survey_sparrow" "my_source_surveysparrow" {
       "{ \"see\": \"documentation\" }",
     ]
   }
-  name         = "Anita MacGyver"
+  name         = "Merle Keebler Jr."
   secret_id    = "...my_secret_id..."
-  workspace_id = "5f63e3af-3dd9-4dda-b3dc-d63483e4a7a9"
+  workspace_id = "e9db3ad4-c6b0-4310-8d9c-337473082b94"
 }
 ```
 

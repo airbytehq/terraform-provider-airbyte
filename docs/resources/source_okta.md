@@ -25,9 +25,9 @@ resource "airbyte_source_okta" "my_source_okta" {
     source_type = "okta"
     start_date  = "2022-07-22T00:00:00Z"
   }
-  name         = "Danielle Bruen"
+  name         = "Randolph Russel"
   secret_id    = "...my_secret_id..."
-  workspace_id = "c2f56e85-da78-432e-abd6-17c3b0d51a44"
+  workspace_id = "47b7684e-ff50-4126-971c-ffbd0eb74b84"
 }
 ```
 

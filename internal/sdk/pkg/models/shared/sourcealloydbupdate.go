@@ -9,6 +9,35 @@ import (
 	"fmt"
 )
 
+type SourceAlloydbUpdateReplicationMethodStandardMethod string
+
+const (
+	SourceAlloydbUpdateReplicationMethodStandardMethodStandard SourceAlloydbUpdateReplicationMethodStandardMethod = "Standard"
+)
+
+func (e SourceAlloydbUpdateReplicationMethodStandardMethod) ToPointer() *SourceAlloydbUpdateReplicationMethodStandardMethod {
+	return &e
+}
+
+func (e *SourceAlloydbUpdateReplicationMethodStandardMethod) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Standard":
+		*e = SourceAlloydbUpdateReplicationMethodStandardMethod(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceAlloydbUpdateReplicationMethodStandardMethod: %v", v)
+	}
+}
+
+// SourceAlloydbUpdateReplicationMethodStandard - Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.
+type SourceAlloydbUpdateReplicationMethodStandard struct {
+	Method SourceAlloydbUpdateReplicationMethodStandardMethod `json:"method"`
+}
+
 // SourceAlloydbUpdateReplicationMethodLogicalReplicationCDCLSNCommitBehaviour - Determines when Airbtye should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.
 type SourceAlloydbUpdateReplicationMethodLogicalReplicationCDCLSNCommitBehaviour string
 
@@ -97,6 +126,8 @@ type SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC struct {
 	Plugin *SourceAlloydbUpdateReplicationMethodLogicalReplicationCDCPlugin `json:"plugin,omitempty"`
 	// A Postgres publication used for consuming changes. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-4-create-publications-and-replication-identities-for-tables">publications and replication identities</a>.
 	Publication string `json:"publication"`
+	// The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful.
+	QueueSize *int64 `json:"queue_size,omitempty"`
 	// A plugin logical replication slot. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-3-create-replication-slot">replication slots</a>.
 	ReplicationSlot string `json:"replication_slot"`
 
@@ -122,6 +153,7 @@ func (c *SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC) UnmarshalJSO
 	delete(additionalFields, "method")
 	delete(additionalFields, "plugin")
 	delete(additionalFields, "publication")
+	delete(additionalFields, "queue_size")
 	delete(additionalFields, "replication_slot")
 
 	c.AdditionalProperties = additionalFields
@@ -152,54 +184,56 @@ func (c SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC) MarshalJSON()
 	return json.Marshal(out)
 }
 
-type SourceAlloydbUpdateReplicationMethodStandardMethod string
+type SourceAlloydbUpdateReplicationMethodStandardXminMethod string
 
 const (
-	SourceAlloydbUpdateReplicationMethodStandardMethodStandard SourceAlloydbUpdateReplicationMethodStandardMethod = "Standard"
+	SourceAlloydbUpdateReplicationMethodStandardXminMethodXmin SourceAlloydbUpdateReplicationMethodStandardXminMethod = "Xmin"
 )
 
-func (e SourceAlloydbUpdateReplicationMethodStandardMethod) ToPointer() *SourceAlloydbUpdateReplicationMethodStandardMethod {
+func (e SourceAlloydbUpdateReplicationMethodStandardXminMethod) ToPointer() *SourceAlloydbUpdateReplicationMethodStandardXminMethod {
 	return &e
 }
 
-func (e *SourceAlloydbUpdateReplicationMethodStandardMethod) UnmarshalJSON(data []byte) error {
+func (e *SourceAlloydbUpdateReplicationMethodStandardXminMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
-	case "Standard":
-		*e = SourceAlloydbUpdateReplicationMethodStandardMethod(v)
+	case "Xmin":
+		*e = SourceAlloydbUpdateReplicationMethodStandardXminMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceAlloydbUpdateReplicationMethodStandardMethod: %v", v)
+		return fmt.Errorf("invalid value for SourceAlloydbUpdateReplicationMethodStandardXminMethod: %v", v)
 	}
 }
 
-// SourceAlloydbUpdateReplicationMethodStandard - Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.
-type SourceAlloydbUpdateReplicationMethodStandard struct {
-	Method SourceAlloydbUpdateReplicationMethodStandardMethod `json:"method"`
+// SourceAlloydbUpdateReplicationMethodStandardXmin - Xmin replication requires no setup on the DB side but will not be able to represent deletions incrementally.
+type SourceAlloydbUpdateReplicationMethodStandardXmin struct {
+	Method SourceAlloydbUpdateReplicationMethodStandardXminMethod `json:"method"`
 }
 
 type SourceAlloydbUpdateReplicationMethodType string
 
 const (
-	SourceAlloydbUpdateReplicationMethodTypeSourceAlloydbUpdateReplicationMethodStandard              SourceAlloydbUpdateReplicationMethodType = "source-alloydb-update_Replication Method_Standard"
+	SourceAlloydbUpdateReplicationMethodTypeSourceAlloydbUpdateReplicationMethodStandardXmin          SourceAlloydbUpdateReplicationMethodType = "source-alloydb-update_Replication Method_Standard (Xmin)"
 	SourceAlloydbUpdateReplicationMethodTypeSourceAlloydbUpdateReplicationMethodLogicalReplicationCDC SourceAlloydbUpdateReplicationMethodType = "source-alloydb-update_Replication Method_Logical Replication (CDC)"
+	SourceAlloydbUpdateReplicationMethodTypeSourceAlloydbUpdateReplicationMethodStandard              SourceAlloydbUpdateReplicationMethodType = "source-alloydb-update_Replication Method_Standard"
 )
 
 type SourceAlloydbUpdateReplicationMethod struct {
-	SourceAlloydbUpdateReplicationMethodStandard              *SourceAlloydbUpdateReplicationMethodStandard
+	SourceAlloydbUpdateReplicationMethodStandardXmin          *SourceAlloydbUpdateReplicationMethodStandardXmin
 	SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC *SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC
+	SourceAlloydbUpdateReplicationMethodStandard              *SourceAlloydbUpdateReplicationMethodStandard
 
 	Type SourceAlloydbUpdateReplicationMethodType
 }
 
-func CreateSourceAlloydbUpdateReplicationMethodSourceAlloydbUpdateReplicationMethodStandard(sourceAlloydbUpdateReplicationMethodStandard SourceAlloydbUpdateReplicationMethodStandard) SourceAlloydbUpdateReplicationMethod {
-	typ := SourceAlloydbUpdateReplicationMethodTypeSourceAlloydbUpdateReplicationMethodStandard
+func CreateSourceAlloydbUpdateReplicationMethodSourceAlloydbUpdateReplicationMethodStandardXmin(sourceAlloydbUpdateReplicationMethodStandardXmin SourceAlloydbUpdateReplicationMethodStandardXmin) SourceAlloydbUpdateReplicationMethod {
+	typ := SourceAlloydbUpdateReplicationMethodTypeSourceAlloydbUpdateReplicationMethodStandardXmin
 
 	return SourceAlloydbUpdateReplicationMethod{
-		SourceAlloydbUpdateReplicationMethodStandard: &sourceAlloydbUpdateReplicationMethodStandard,
+		SourceAlloydbUpdateReplicationMethodStandardXmin: &sourceAlloydbUpdateReplicationMethodStandardXmin,
 		Type: typ,
 	}
 }
@@ -213,15 +247,24 @@ func CreateSourceAlloydbUpdateReplicationMethodSourceAlloydbUpdateReplicationMet
 	}
 }
 
+func CreateSourceAlloydbUpdateReplicationMethodSourceAlloydbUpdateReplicationMethodStandard(sourceAlloydbUpdateReplicationMethodStandard SourceAlloydbUpdateReplicationMethodStandard) SourceAlloydbUpdateReplicationMethod {
+	typ := SourceAlloydbUpdateReplicationMethodTypeSourceAlloydbUpdateReplicationMethodStandard
+
+	return SourceAlloydbUpdateReplicationMethod{
+		SourceAlloydbUpdateReplicationMethodStandard: &sourceAlloydbUpdateReplicationMethodStandard,
+		Type: typ,
+	}
+}
+
 func (u *SourceAlloydbUpdateReplicationMethod) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceAlloydbUpdateReplicationMethodStandard := new(SourceAlloydbUpdateReplicationMethodStandard)
+	sourceAlloydbUpdateReplicationMethodStandardXmin := new(SourceAlloydbUpdateReplicationMethodStandardXmin)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceAlloydbUpdateReplicationMethodStandard); err == nil {
-		u.SourceAlloydbUpdateReplicationMethodStandard = sourceAlloydbUpdateReplicationMethodStandard
-		u.Type = SourceAlloydbUpdateReplicationMethodTypeSourceAlloydbUpdateReplicationMethodStandard
+	if err := d.Decode(&sourceAlloydbUpdateReplicationMethodStandardXmin); err == nil {
+		u.SourceAlloydbUpdateReplicationMethodStandardXmin = sourceAlloydbUpdateReplicationMethodStandardXmin
+		u.Type = SourceAlloydbUpdateReplicationMethodTypeSourceAlloydbUpdateReplicationMethodStandardXmin
 		return nil
 	}
 
@@ -234,16 +277,29 @@ func (u *SourceAlloydbUpdateReplicationMethod) UnmarshalJSON(data []byte) error 
 		return nil
 	}
 
+	sourceAlloydbUpdateReplicationMethodStandard := new(SourceAlloydbUpdateReplicationMethodStandard)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceAlloydbUpdateReplicationMethodStandard); err == nil {
+		u.SourceAlloydbUpdateReplicationMethodStandard = sourceAlloydbUpdateReplicationMethodStandard
+		u.Type = SourceAlloydbUpdateReplicationMethodTypeSourceAlloydbUpdateReplicationMethodStandard
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceAlloydbUpdateReplicationMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceAlloydbUpdateReplicationMethodStandard != nil {
-		return json.Marshal(u.SourceAlloydbUpdateReplicationMethodStandard)
+	if u.SourceAlloydbUpdateReplicationMethodStandardXmin != nil {
+		return json.Marshal(u.SourceAlloydbUpdateReplicationMethodStandardXmin)
 	}
 
 	if u.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC != nil {
 		return json.Marshal(u.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC)
+	}
+
+	if u.SourceAlloydbUpdateReplicationMethodStandard != nil {
+		return json.Marshal(u.SourceAlloydbUpdateReplicationMethodStandard)
 	}
 
 	return nil, nil

@@ -6,7 +6,7 @@ resource "airbyte_source_woocommerce" "my_source_woocommerce" {
     source_type = "woocommerce"
     start_date  = "2021-01-01"
   }
-  name         = "Katherine Ondricka"
+  name         = "Dr. Mattie Nader"
   secret_id    = "...my_secret_id..."
-  workspace_id = "46bca110-6fe9-465b-b11d-08cf88ec9f7b"
+  workspace_id = "57b7d03a-1480-4f8d-a30f-069d810618d9"
 }

@@ -24,9 +24,9 @@ resource "airbyte_source_auth0" "my_source_auth0" {
     }
     source_type = "auth0"
   }
-  name         = "Sandra Frami DVM"
+  name         = "Roosevelt Schultz"
   secret_id    = "...my_secret_id..."
-  workspace_id = "3981d4c7-00b6-407f-bc93-c73b9da3f2ce"
+  workspace_id = "5ff2e4b2-7537-4a8c-99e7-319c177d525f"
 }
 ```
 

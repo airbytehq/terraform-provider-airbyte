@@ -15,14 +15,14 @@ SourcePaystack Resource
 ```terraform
 resource "airbyte_source_paystack" "my_source_paystack" {
   configuration = {
-    lookback_window_days = 10
+    lookback_window_days = 7
     secret_key           = "...my_secret_key..."
     source_type          = "paystack"
     start_date           = "2017-01-25T00:00:00Z"
   }
-  name         = "Dr. Darren Kemmer DDS"
+  name         = "Mattie Gutkowski"
   secret_id    = "...my_secret_id..."
-  workspace_id = "a4d456ef-1031-4e68-99f0-c2001e22cd55"
+  workspace_id = "99257d04-f408-447a-b42d-84496cbdeecf"
 }
 ```
 

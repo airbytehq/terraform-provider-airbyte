@@ -26,16 +26,16 @@ func (r *SourcePostgresResourceModel) ToCreateSDKType() *shared.SourcePostgresCr
 	port := r.Configuration.Port.ValueInt64()
 	var replicationMethod *shared.SourcePostgresReplicationMethod
 	if r.Configuration.ReplicationMethod != nil {
-		var sourcePostgresReplicationMethodStandard *shared.SourcePostgresReplicationMethodStandard
-		if r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodStandard != nil {
-			method := shared.SourcePostgresReplicationMethodStandardMethod(r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodStandard.Method.ValueString())
-			sourcePostgresReplicationMethodStandard = &shared.SourcePostgresReplicationMethodStandard{
+		var sourcePostgresReplicationMethodStandardXmin *shared.SourcePostgresReplicationMethodStandardXmin
+		if r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodStandardXmin != nil {
+			method := shared.SourcePostgresReplicationMethodStandardXminMethod(r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodStandardXmin.Method.ValueString())
+			sourcePostgresReplicationMethodStandardXmin = &shared.SourcePostgresReplicationMethodStandardXmin{
 				Method: method,
 			}
 		}
-		if sourcePostgresReplicationMethodStandard != nil {
+		if sourcePostgresReplicationMethodStandardXmin != nil {
 			replicationMethod = &shared.SourcePostgresReplicationMethod{
-				SourcePostgresReplicationMethodStandard: sourcePostgresReplicationMethodStandard,
+				SourcePostgresReplicationMethodStandardXmin: sourcePostgresReplicationMethodStandardXmin,
 			}
 		}
 		var sourcePostgresReplicationMethodLogicalReplicationCDC *shared.SourcePostgresReplicationMethodLogicalReplicationCDC
@@ -85,6 +85,18 @@ func (r *SourcePostgresResourceModel) ToCreateSDKType() *shared.SourcePostgresCr
 		if sourcePostgresReplicationMethodLogicalReplicationCDC != nil {
 			replicationMethod = &shared.SourcePostgresReplicationMethod{
 				SourcePostgresReplicationMethodLogicalReplicationCDC: sourcePostgresReplicationMethodLogicalReplicationCDC,
+			}
+		}
+		var sourcePostgresReplicationMethodStandard *shared.SourcePostgresReplicationMethodStandard
+		if r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodStandard != nil {
+			method2 := shared.SourcePostgresReplicationMethodStandardMethod(r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodStandard.Method.ValueString())
+			sourcePostgresReplicationMethodStandard = &shared.SourcePostgresReplicationMethodStandard{
+				Method: method2,
+			}
+		}
+		if sourcePostgresReplicationMethodStandard != nil {
+			replicationMethod = &shared.SourcePostgresReplicationMethod{
+				SourcePostgresReplicationMethodStandard: sourcePostgresReplicationMethodStandard,
 			}
 		}
 	}
@@ -353,16 +365,16 @@ func (r *SourcePostgresResourceModel) ToUpdateSDKType() *shared.SourcePostgresPu
 	port := r.Configuration.Port.ValueInt64()
 	var replicationMethod *shared.SourcePostgresUpdateReplicationMethod
 	if r.Configuration.ReplicationMethod != nil {
-		var sourcePostgresUpdateReplicationMethodStandard *shared.SourcePostgresUpdateReplicationMethodStandard
-		if r.Configuration.ReplicationMethod.SourcePostgresUpdateReplicationMethodStandard != nil {
-			method := shared.SourcePostgresUpdateReplicationMethodStandardMethod(r.Configuration.ReplicationMethod.SourcePostgresUpdateReplicationMethodStandard.Method.ValueString())
-			sourcePostgresUpdateReplicationMethodStandard = &shared.SourcePostgresUpdateReplicationMethodStandard{
+		var sourcePostgresUpdateReplicationMethodStandardXmin *shared.SourcePostgresUpdateReplicationMethodStandardXmin
+		if r.Configuration.ReplicationMethod.SourcePostgresUpdateReplicationMethodStandardXmin != nil {
+			method := shared.SourcePostgresUpdateReplicationMethodStandardXminMethod(r.Configuration.ReplicationMethod.SourcePostgresUpdateReplicationMethodStandardXmin.Method.ValueString())
+			sourcePostgresUpdateReplicationMethodStandardXmin = &shared.SourcePostgresUpdateReplicationMethodStandardXmin{
 				Method: method,
 			}
 		}
-		if sourcePostgresUpdateReplicationMethodStandard != nil {
+		if sourcePostgresUpdateReplicationMethodStandardXmin != nil {
 			replicationMethod = &shared.SourcePostgresUpdateReplicationMethod{
-				SourcePostgresUpdateReplicationMethodStandard: sourcePostgresUpdateReplicationMethodStandard,
+				SourcePostgresUpdateReplicationMethodStandardXmin: sourcePostgresUpdateReplicationMethodStandardXmin,
 			}
 		}
 		var sourcePostgresUpdateReplicationMethodLogicalReplicationCDC *shared.SourcePostgresUpdateReplicationMethodLogicalReplicationCDC
@@ -412,6 +424,18 @@ func (r *SourcePostgresResourceModel) ToUpdateSDKType() *shared.SourcePostgresPu
 		if sourcePostgresUpdateReplicationMethodLogicalReplicationCDC != nil {
 			replicationMethod = &shared.SourcePostgresUpdateReplicationMethod{
 				SourcePostgresUpdateReplicationMethodLogicalReplicationCDC: sourcePostgresUpdateReplicationMethodLogicalReplicationCDC,
+			}
+		}
+		var sourcePostgresUpdateReplicationMethodStandard *shared.SourcePostgresUpdateReplicationMethodStandard
+		if r.Configuration.ReplicationMethod.SourcePostgresUpdateReplicationMethodStandard != nil {
+			method2 := shared.SourcePostgresUpdateReplicationMethodStandardMethod(r.Configuration.ReplicationMethod.SourcePostgresUpdateReplicationMethodStandard.Method.ValueString())
+			sourcePostgresUpdateReplicationMethodStandard = &shared.SourcePostgresUpdateReplicationMethodStandard{
+				Method: method2,
+			}
+		}
+		if sourcePostgresUpdateReplicationMethodStandard != nil {
+			replicationMethod = &shared.SourcePostgresUpdateReplicationMethod{
+				SourcePostgresUpdateReplicationMethodStandard: sourcePostgresUpdateReplicationMethodStandard,
 			}
 		}
 	}

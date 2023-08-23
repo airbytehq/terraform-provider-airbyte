@@ -4,7 +4,7 @@ resource "airbyte_source_dremio" "my_source_dremio" {
     base_url    = "...my_base_url..."
     source_type = "dremio"
   }
-  name         = "Lloyd Witting"
+  name         = "Doug Hammes"
   secret_id    = "...my_secret_id..."
-  workspace_id = "abd905a9-72e0-4567-a822-7b2d309470bf"
+  workspace_id = "cabd905a-972e-4056-b282-27b2d309470b"
 }

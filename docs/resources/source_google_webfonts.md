@@ -21,9 +21,9 @@ resource "airbyte_source_google_webfonts" "my_source_googlewebfonts" {
     sort         = "...my_sort..."
     source_type  = "google-webfonts"
   }
-  name         = "Jean Mayert"
+  name         = "Garrett Hoeger"
   secret_id    = "...my_secret_id..."
-  workspace_id = "b55410ad-c669-4af9-8a26-c7cdc981f068"
+  workspace_id = "af90a26c-7cdc-4981-b068-981d6bb33cfa"
 }
 ```
 

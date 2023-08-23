@@ -17,7 +17,7 @@ resource "airbyte_source_snowflake" "my_source_snowflake" {
     source_type     = "snowflake"
     warehouse       = "AIRBYTE_WAREHOUSE"
   }
-  name         = "Miss Stella Hansen Jr."
+  name         = "Betsy Osinski"
   secret_id    = "...my_secret_id..."
-  workspace_id = "e966ec73-6d43-4194-b98c-783c92398ed3"
+  workspace_id = "84aba3d2-30ed-4f73-811a-115382bd7ed5"
 }

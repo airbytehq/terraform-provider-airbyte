@@ -87,11 +87,23 @@ func (r *DestinationBigqueryResourceModel) ToCreateSDKType() *shared.Destination
 		}
 	}
 	projectID := r.Configuration.ProjectID.ValueString()
+	rawDataDataset := new(string)
+	if !r.Configuration.RawDataDataset.IsUnknown() && !r.Configuration.RawDataDataset.IsNull() {
+		*rawDataDataset = r.Configuration.RawDataDataset.ValueString()
+	} else {
+		rawDataDataset = nil
+	}
 	transformationPriority := new(shared.DestinationBigqueryTransformationQueryRunType)
 	if !r.Configuration.TransformationPriority.IsUnknown() && !r.Configuration.TransformationPriority.IsNull() {
 		*transformationPriority = shared.DestinationBigqueryTransformationQueryRunType(r.Configuration.TransformationPriority.ValueString())
 	} else {
 		transformationPriority = nil
+	}
+	use1s1tFormat := new(bool)
+	if !r.Configuration.Use1s1tFormat.IsUnknown() && !r.Configuration.Use1s1tFormat.IsNull() {
+		*use1s1tFormat = r.Configuration.Use1s1tFormat.ValueBool()
+	} else {
+		use1s1tFormat = nil
 	}
 	configuration := shared.DestinationBigquery{
 		BigQueryClientBufferSizeMb: bigQueryClientBufferSizeMb,
@@ -101,7 +113,9 @@ func (r *DestinationBigqueryResourceModel) ToCreateSDKType() *shared.Destination
 		DestinationType:            destinationType,
 		LoadingMethod:              loadingMethod,
 		ProjectID:                  projectID,
+		RawDataDataset:             rawDataDataset,
 		TransformationPriority:     transformationPriority,
+		Use1s1tFormat:              use1s1tFormat,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
@@ -197,11 +211,23 @@ func (r *DestinationBigqueryResourceModel) ToUpdateSDKType() *shared.Destination
 		}
 	}
 	projectID := r.Configuration.ProjectID.ValueString()
+	rawDataDataset := new(string)
+	if !r.Configuration.RawDataDataset.IsUnknown() && !r.Configuration.RawDataDataset.IsNull() {
+		*rawDataDataset = r.Configuration.RawDataDataset.ValueString()
+	} else {
+		rawDataDataset = nil
+	}
 	transformationPriority := new(shared.DestinationBigqueryUpdateTransformationQueryRunType)
 	if !r.Configuration.TransformationPriority.IsUnknown() && !r.Configuration.TransformationPriority.IsNull() {
 		*transformationPriority = shared.DestinationBigqueryUpdateTransformationQueryRunType(r.Configuration.TransformationPriority.ValueString())
 	} else {
 		transformationPriority = nil
+	}
+	use1s1tFormat := new(bool)
+	if !r.Configuration.Use1s1tFormat.IsUnknown() && !r.Configuration.Use1s1tFormat.IsNull() {
+		*use1s1tFormat = r.Configuration.Use1s1tFormat.ValueBool()
+	} else {
+		use1s1tFormat = nil
 	}
 	configuration := shared.DestinationBigqueryUpdate{
 		BigQueryClientBufferSizeMb: bigQueryClientBufferSizeMb,
@@ -210,7 +236,9 @@ func (r *DestinationBigqueryResourceModel) ToUpdateSDKType() *shared.Destination
 		DatasetLocation:            datasetLocation,
 		LoadingMethod:              loadingMethod,
 		ProjectID:                  projectID,
+		RawDataDataset:             rawDataDataset,
 		TransformationPriority:     transformationPriority,
+		Use1s1tFormat:              use1s1tFormat,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()

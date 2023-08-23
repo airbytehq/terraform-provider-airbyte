@@ -10,6 +10,143 @@ import (
 	"fmt"
 )
 
+// SourceLinkedinAdsAdAnalyticsReportConfigurationPivotBy - Select value from list to pivot by
+type SourceLinkedinAdsAdAnalyticsReportConfigurationPivotBy string
+
+const (
+	SourceLinkedinAdsAdAnalyticsReportConfigurationPivotByCompany                     SourceLinkedinAdsAdAnalyticsReportConfigurationPivotBy = "COMPANY"
+	SourceLinkedinAdsAdAnalyticsReportConfigurationPivotByAccount                     SourceLinkedinAdsAdAnalyticsReportConfigurationPivotBy = "ACCOUNT"
+	SourceLinkedinAdsAdAnalyticsReportConfigurationPivotByShare                       SourceLinkedinAdsAdAnalyticsReportConfigurationPivotBy = "SHARE"
+	SourceLinkedinAdsAdAnalyticsReportConfigurationPivotByCampaign                    SourceLinkedinAdsAdAnalyticsReportConfigurationPivotBy = "CAMPAIGN"
+	SourceLinkedinAdsAdAnalyticsReportConfigurationPivotByCreative                    SourceLinkedinAdsAdAnalyticsReportConfigurationPivotBy = "CREATIVE"
+	SourceLinkedinAdsAdAnalyticsReportConfigurationPivotByCampaignGroup               SourceLinkedinAdsAdAnalyticsReportConfigurationPivotBy = "CAMPAIGN_GROUP"
+	SourceLinkedinAdsAdAnalyticsReportConfigurationPivotByConversion                  SourceLinkedinAdsAdAnalyticsReportConfigurationPivotBy = "CONVERSION"
+	SourceLinkedinAdsAdAnalyticsReportConfigurationPivotByConversationNode            SourceLinkedinAdsAdAnalyticsReportConfigurationPivotBy = "CONVERSATION_NODE"
+	SourceLinkedinAdsAdAnalyticsReportConfigurationPivotByConversationNodeOptionIndex SourceLinkedinAdsAdAnalyticsReportConfigurationPivotBy = "CONVERSATION_NODE_OPTION_INDEX"
+	SourceLinkedinAdsAdAnalyticsReportConfigurationPivotByServingLocation             SourceLinkedinAdsAdAnalyticsReportConfigurationPivotBy = "SERVING_LOCATION"
+	SourceLinkedinAdsAdAnalyticsReportConfigurationPivotByCardIndex                   SourceLinkedinAdsAdAnalyticsReportConfigurationPivotBy = "CARD_INDEX"
+	SourceLinkedinAdsAdAnalyticsReportConfigurationPivotByMemberCompanySize           SourceLinkedinAdsAdAnalyticsReportConfigurationPivotBy = "MEMBER_COMPANY_SIZE"
+	SourceLinkedinAdsAdAnalyticsReportConfigurationPivotByMemberIndustry              SourceLinkedinAdsAdAnalyticsReportConfigurationPivotBy = "MEMBER_INDUSTRY"
+	SourceLinkedinAdsAdAnalyticsReportConfigurationPivotByMemberSeniority             SourceLinkedinAdsAdAnalyticsReportConfigurationPivotBy = "MEMBER_SENIORITY"
+	SourceLinkedinAdsAdAnalyticsReportConfigurationPivotByMemberJobTitle              SourceLinkedinAdsAdAnalyticsReportConfigurationPivotBy = "MEMBER_JOB_TITLE "
+	SourceLinkedinAdsAdAnalyticsReportConfigurationPivotByMemberJobFunction           SourceLinkedinAdsAdAnalyticsReportConfigurationPivotBy = "MEMBER_JOB_FUNCTION "
+	SourceLinkedinAdsAdAnalyticsReportConfigurationPivotByMemberCountryV2             SourceLinkedinAdsAdAnalyticsReportConfigurationPivotBy = "MEMBER_COUNTRY_V2 "
+	SourceLinkedinAdsAdAnalyticsReportConfigurationPivotByMemberRegionV2              SourceLinkedinAdsAdAnalyticsReportConfigurationPivotBy = "MEMBER_REGION_V2"
+	SourceLinkedinAdsAdAnalyticsReportConfigurationPivotByMemberCompany               SourceLinkedinAdsAdAnalyticsReportConfigurationPivotBy = "MEMBER_COMPANY"
+	SourceLinkedinAdsAdAnalyticsReportConfigurationPivotByPlacementName               SourceLinkedinAdsAdAnalyticsReportConfigurationPivotBy = "PLACEMENT_NAME"
+	SourceLinkedinAdsAdAnalyticsReportConfigurationPivotByImpressionDeviceType        SourceLinkedinAdsAdAnalyticsReportConfigurationPivotBy = "IMPRESSION_DEVICE_TYPE"
+)
+
+func (e SourceLinkedinAdsAdAnalyticsReportConfigurationPivotBy) ToPointer() *SourceLinkedinAdsAdAnalyticsReportConfigurationPivotBy {
+	return &e
+}
+
+func (e *SourceLinkedinAdsAdAnalyticsReportConfigurationPivotBy) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "COMPANY":
+		fallthrough
+	case "ACCOUNT":
+		fallthrough
+	case "SHARE":
+		fallthrough
+	case "CAMPAIGN":
+		fallthrough
+	case "CREATIVE":
+		fallthrough
+	case "CAMPAIGN_GROUP":
+		fallthrough
+	case "CONVERSION":
+		fallthrough
+	case "CONVERSATION_NODE":
+		fallthrough
+	case "CONVERSATION_NODE_OPTION_INDEX":
+		fallthrough
+	case "SERVING_LOCATION":
+		fallthrough
+	case "CARD_INDEX":
+		fallthrough
+	case "MEMBER_COMPANY_SIZE":
+		fallthrough
+	case "MEMBER_INDUSTRY":
+		fallthrough
+	case "MEMBER_SENIORITY":
+		fallthrough
+	case "MEMBER_JOB_TITLE ":
+		fallthrough
+	case "MEMBER_JOB_FUNCTION ":
+		fallthrough
+	case "MEMBER_COUNTRY_V2 ":
+		fallthrough
+	case "MEMBER_REGION_V2":
+		fallthrough
+	case "MEMBER_COMPANY":
+		fallthrough
+	case "PLACEMENT_NAME":
+		fallthrough
+	case "IMPRESSION_DEVICE_TYPE":
+		*e = SourceLinkedinAdsAdAnalyticsReportConfigurationPivotBy(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceLinkedinAdsAdAnalyticsReportConfigurationPivotBy: %v", v)
+	}
+}
+
+// SourceLinkedinAdsAdAnalyticsReportConfigurationTimeGranularity - Set time granularity for report:
+// ALL - Results grouped into a single result across the entire time range of the report.
+// DAILY - Results grouped by day.
+// MONTHLY - Results grouped by month.
+// YEARLY - Results grouped by year.
+type SourceLinkedinAdsAdAnalyticsReportConfigurationTimeGranularity string
+
+const (
+	SourceLinkedinAdsAdAnalyticsReportConfigurationTimeGranularityAll     SourceLinkedinAdsAdAnalyticsReportConfigurationTimeGranularity = "ALL"
+	SourceLinkedinAdsAdAnalyticsReportConfigurationTimeGranularityDaily   SourceLinkedinAdsAdAnalyticsReportConfigurationTimeGranularity = "DAILY"
+	SourceLinkedinAdsAdAnalyticsReportConfigurationTimeGranularityMonthly SourceLinkedinAdsAdAnalyticsReportConfigurationTimeGranularity = "MONTHLY"
+	SourceLinkedinAdsAdAnalyticsReportConfigurationTimeGranularityYearly  SourceLinkedinAdsAdAnalyticsReportConfigurationTimeGranularity = "YEARLY"
+)
+
+func (e SourceLinkedinAdsAdAnalyticsReportConfigurationTimeGranularity) ToPointer() *SourceLinkedinAdsAdAnalyticsReportConfigurationTimeGranularity {
+	return &e
+}
+
+func (e *SourceLinkedinAdsAdAnalyticsReportConfigurationTimeGranularity) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "ALL":
+		fallthrough
+	case "DAILY":
+		fallthrough
+	case "MONTHLY":
+		fallthrough
+	case "YEARLY":
+		*e = SourceLinkedinAdsAdAnalyticsReportConfigurationTimeGranularity(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceLinkedinAdsAdAnalyticsReportConfigurationTimeGranularity: %v", v)
+	}
+}
+
+// SourceLinkedinAdsAdAnalyticsReportConfiguration - Config for custom ad Analytics Report
+type SourceLinkedinAdsAdAnalyticsReportConfiguration struct {
+	// The name for the report
+	Name string `json:"name"`
+	// Select value from list to pivot by
+	PivotBy SourceLinkedinAdsAdAnalyticsReportConfigurationPivotBy `json:"pivot_by"`
+	// Set time granularity for report:
+	// ALL - Results grouped into a single result across the entire time range of the report.
+	// DAILY - Results grouped by day.
+	// MONTHLY - Results grouped by month.
+	// YEARLY - Results grouped by year.
+	TimeGranularity SourceLinkedinAdsAdAnalyticsReportConfigurationTimeGranularity `json:"time_granularity"`
+}
+
 type SourceLinkedinAdsAuthenticationAccessTokenAuthMethod string
 
 const (
@@ -168,9 +305,10 @@ func (e *SourceLinkedinAdsLinkedinAds) UnmarshalJSON(data []byte) error {
 
 type SourceLinkedinAds struct {
 	// Specify the account IDs separated by a space, to pull the data from. Leave empty, if you want to pull the data from all associated accounts. See the <a href="https://www.linkedin.com/help/linkedin/answer/a424270/find-linkedin-ads-account-details?lang=en">LinkedIn Ads docs</a> for more info.
-	AccountIds  []int64                          `json:"account_ids,omitempty"`
-	Credentials *SourceLinkedinAdsAuthentication `json:"credentials,omitempty"`
-	SourceType  SourceLinkedinAdsLinkedinAds     `json:"sourceType"`
+	AccountIds         []int64                                           `json:"account_ids,omitempty"`
+	AdAnalyticsReports []SourceLinkedinAdsAdAnalyticsReportConfiguration `json:"ad_analytics_reports,omitempty"`
+	Credentials        *SourceLinkedinAdsAuthentication                  `json:"credentials,omitempty"`
+	SourceType         SourceLinkedinAdsLinkedinAds                      `json:"sourceType"`
 	// UTC date in the format 2020-09-17. Any data before this date will not be replicated.
 	StartDate types.Date `json:"start_date"`
 }

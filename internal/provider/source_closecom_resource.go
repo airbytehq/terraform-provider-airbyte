@@ -71,9 +71,9 @@ func (r *SourceCloseComResource) Schema(ctx context.Context, req resource.Schema
 					"start_date": schema.StringAttribute{
 						Optional: true,
 						Validators: []validator.String{
-							validators.IsRFC3339(),
+							validators.IsValidDate(),
 						},
-						Description: `The start date to sync data. Leave blank for full sync. Format: YYYY-MM-DD.`,
+						Description: `The start date to sync data; all data after this date will be replicated. Leave blank to retrieve all the data available in the account. Format: YYYY-MM-DD.`,
 					},
 				},
 			},
@@ -272,7 +272,7 @@ func (r *SourceCloseComResource) Update(ctx context.Context, req resource.Update
 		return
 	}
 	if getResponse.SourceResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
 		return
 	}
 	data.RefreshFromGetResponse(getResponse.SourceResponse)
@@ -315,7 +315,7 @@ func (r *SourceCloseComResource) Delete(ctx context.Context, req resource.Delete
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

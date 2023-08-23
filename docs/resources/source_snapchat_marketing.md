@@ -22,9 +22,9 @@ resource "airbyte_source_snapchat_marketing" "my_source_snapchatmarketing" {
     source_type   = "snapchat-marketing"
     start_date    = "2022-01-01"
   }
-  name         = "Seth Wyman"
+  name         = "Hannah MacGyver"
   secret_id    = "...my_secret_id..."
-  workspace_id = "f9476a2a-e8dc-4c50-88a3-512c73784893"
+  workspace_id = "c1954545-e955-4dcc-985e-a4901c7c43ad"
 }
 ```
 

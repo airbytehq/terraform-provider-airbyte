@@ -10,7 +10,7 @@ resource "airbyte_source_asana" "my_source_asana" {
     }
     source_type = "asana"
   }
-  name         = "Gertrude Russel Jr."
+  name         = "Doug Baumbach"
   secret_id    = "...my_secret_id..."
-  workspace_id = "503d8bb3-1180-4f73-9ae9-e057eb809e28"
+  workspace_id = "b197cd44-e2f5-42d8-ad35-13bb6f48b656"
 }

@@ -42,6 +42,8 @@ data "airbyte_source_instagram" "my_source_instagram" {
 Read-Only:
 
 - `access_token` (String) The value of the access token generated with <b>instagram_basic, instagram_manage_insights, pages_show_list, pages_read_engagement, Instagram Public Content Access</b> permissions. See the <a href="https://docs.airbyte.com/integrations/sources/instagram/#step-1-set-up-instagram">docs</a> for more information
+- `client_id` (String) The Client ID for your Oauth application
+- `client_secret` (String) The Client Secret for your Oauth application
 - `source_type` (String) must be one of ["instagram"]
 - `start_date` (String) The date from which you'd like to replicate data for User Insights, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 

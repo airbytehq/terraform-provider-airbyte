@@ -32,11 +32,11 @@ type SourceZendeskSunshineDataSource struct {
 
 // SourceZendeskSunshineDataSourceModel describes the data model.
 type SourceZendeskSunshineDataSourceModel struct {
-	Configuration SourceZendeskSunshine `tfsdk:"configuration"`
-	Name          types.String          `tfsdk:"name"`
-	SecretID      types.String          `tfsdk:"secret_id"`
-	SourceID      types.String          `tfsdk:"source_id"`
-	WorkspaceID   types.String          `tfsdk:"workspace_id"`
+	Configuration SourceZendeskSunshine1 `tfsdk:"configuration"`
+	Name          types.String           `tfsdk:"name"`
+	SecretID      types.String           `tfsdk:"secret_id"`
+	SourceID      types.String           `tfsdk:"source_id"`
+	WorkspaceID   types.String           `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -61,7 +61,7 @@ func (r *SourceZendeskSunshineDataSource) Schema(ctx context.Context, req dataso
 								Attributes: map[string]schema.Attribute{
 									"api_token": schema.StringAttribute{
 										Computed:    true,
-										Description: `API Token. See the <a href="https://docs.airbyte.io/integrations/sources/zendesk_sunshine">docs</a> for information on how to generate this key.`,
+										Description: `API Token. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk_sunshine">docs</a> for information on how to generate this key.`,
 									},
 									"auth_method": schema.StringAttribute{
 										Computed: true,
@@ -75,6 +75,13 @@ func (r *SourceZendeskSunshineDataSource) Schema(ctx context.Context, req dataso
 									"email": schema.StringAttribute{
 										Computed:    true,
 										Description: `The user email for your Zendesk account`,
+									},
+									"additional_properties": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+										Description: `Parsed as JSON.`,
 									},
 								},
 							},
@@ -102,6 +109,13 @@ func (r *SourceZendeskSunshineDataSource) Schema(ctx context.Context, req dataso
 										Computed:    true,
 										Description: `The Client Secret of your OAuth application.`,
 									},
+									"additional_properties": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+										Description: `Parsed as JSON.`,
+									},
 								},
 							},
 							"source_zendesk_sunshine_update_authorization_method_api_token": schema.SingleNestedAttribute{
@@ -109,7 +123,7 @@ func (r *SourceZendeskSunshineDataSource) Schema(ctx context.Context, req dataso
 								Attributes: map[string]schema.Attribute{
 									"api_token": schema.StringAttribute{
 										Computed:    true,
-										Description: `API Token. See the <a href="https://docs.airbyte.io/integrations/sources/zendesk_sunshine">docs</a> for information on how to generate this key.`,
+										Description: `API Token. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk_sunshine">docs</a> for information on how to generate this key.`,
 									},
 									"auth_method": schema.StringAttribute{
 										Computed: true,
@@ -123,6 +137,13 @@ func (r *SourceZendeskSunshineDataSource) Schema(ctx context.Context, req dataso
 									"email": schema.StringAttribute{
 										Computed:    true,
 										Description: `The user email for your Zendesk account`,
+									},
+									"additional_properties": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+										Description: `Parsed as JSON.`,
 									},
 								},
 							},
@@ -149,6 +170,13 @@ func (r *SourceZendeskSunshineDataSource) Schema(ctx context.Context, req dataso
 									"client_secret": schema.StringAttribute{
 										Computed:    true,
 										Description: `The Client Secret of your OAuth application.`,
+									},
+									"additional_properties": schema.StringAttribute{
+										Optional: true,
+										Validators: []validator.String{
+											validators.IsValidJSON(),
+										},
+										Description: `Parsed as JSON.`,
 									},
 								},
 							},

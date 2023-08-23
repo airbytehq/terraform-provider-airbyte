@@ -25,14 +25,14 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
       }
     }
     custom_reports         = "...my_custom_reports..."
-    date_ranges_start_date = "2022-05-22"
-    property_id            = "...my_property_id..."
+    date_ranges_start_date = "2021-01-01"
+    property_id            = "1738294"
     source_type            = "google-analytics-data-api"
-    window_in_days         = 364
+    window_in_days         = 120
   }
-  name         = "Andrew Torphy"
+  name         = "Duane Prohaska II"
   secret_id    = "...my_secret_id..."
-  workspace_id = "c158c4c4-e545-499e-a342-260e9b200ce7"
+  workspace_id = "8c4c4e54-599e-4a34-a260-e9b200ce78a1"
 }
 ```
 
@@ -60,14 +60,14 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
 Required:
 
 - `date_ranges_start_date` (String) The start date from which to replicate report data in the format YYYY-MM-DD. Data generated before this date will not be included in the report. Not applied to custom Cohort reports.
-- `property_id` (String) A Google Analytics GA4 property identifier whose events are tracked. Specified in the URL path and not the body such as "123...". See <a href="https://developers.google.com/analytics/devguides/reporting/data/v1/property-id#what_is_my_property_id">the docs</a> for more details.
+- `property_id` (String) The Property ID is a unique number assigned to each property in Google Analytics, found in your GA4 property URL. This ID allows the connector to track the specific events associated with your property. Refer to the <a href='https://developers.google.com/analytics/devguides/reporting/data/v1/property-id#what_is_my_property_id'>Google Analytics documentation</a> to locate your property ID.
 - `source_type` (String) must be one of ["google-analytics-data-api"]
 
 Optional:
 
 - `credentials` (Attributes) Credentials for the service (see [below for nested schema](#nestedatt--configuration--credentials))
-- `custom_reports` (String) A JSON array describing the custom reports you want to sync from Google Analytics. See <a href="https://docs.airbyte.com/integrations/sources/google-analytics-v4/#custom-reports">the docs</a> for more information about the exact format you can use to fill out this field.
-- `window_in_days` (Number) The time increment used by the connector when requesting data from the Google Analytics API. More information is available in the <a href="https://docs.airbyte.com/integrations/sources/google-analytics-v4/#sampling-in-reports">the docs</a>. The bigger this value is, the faster the sync will be, but the more likely that sampling will be applied to your data, potentially causing inaccuracies in the returned results. We recommend setting this to 1 unless you have a hard requirement to make the sync faster at the expense of accuracy. The minimum allowed value for this field is 1, and the maximum is 364. Not applied to custom Cohort reports.
+- `custom_reports` (String) A JSON array describing the custom reports you want to sync from Google Analytics. See <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api/#custom-reports">the documentation</a> for more information about the exact format you can use to fill out this field.
+- `window_in_days` (Number) The interval in days for each data request made to the Google Analytics API. A larger value speeds up data sync, but increases the chance of data sampling, which may result in inaccuracies. We recommend a value of 1 to minimize sampling, unless speed is an absolute priority over accuracy. Acceptable values range from 1 to 364. Does not apply to custom Cohort reports. More information is available in <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api">the documentation</a>.
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
@@ -99,7 +99,7 @@ Optional:
 
 Required:
 
-- `credentials_json` (String) The JSON key of the service account to use for authorization
+- `credentials_json` (String) The JSON key linked to the service account used for authorization. For steps on obtaining this key, refer to <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api/#setup-guide">the setup guide</a>.
 
 Optional:
 
@@ -126,7 +126,7 @@ Optional:
 
 Required:
 
-- `credentials_json` (String) The JSON key of the service account to use for authorization
+- `credentials_json` (String) The JSON key linked to the service account used for authorization. For steps on obtaining this key, refer to <a href="https://docs.airbyte.com/integrations/sources/google-analytics-data-api/#setup-guide">the setup guide</a>.
 
 Optional:
 

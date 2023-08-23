@@ -9,11 +9,11 @@ resource "airbyte_destination_azure_blob_storage" "my_destination_azureblobstora
     destination_type                        = "azure-blob-storage"
     format = {
       destination_azure_blob_storage_output_format_csv_comma_separated_values = {
-        flattening  = "Root level flattening"
+        flattening  = "No flattening"
         format_type = "CSV"
       }
     }
   }
-  name         = "Sophia Jerde I"
-  workspace_id = "b99d488e-1e91-4e45-8ad2-abd44269802d"
+  name         = "Matt Hamill"
+  workspace_id = "3f5ad019-da1f-4fe7-8f09-7b0074f15471"
 }

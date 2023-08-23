@@ -52,6 +52,10 @@ func (r *SourceFakerDataSource) Schema(ctx context.Context, req datasource.Schem
 			"configuration": schema.SingleNestedAttribute{
 				Computed: true,
 				Attributes: map[string]schema.Attribute{
+					"always_updated": schema.BoolAttribute{
+						Computed:    true,
+						Description: `Should the updated_at values for every record be new each sync?  Setting this to false will case the source to stop emitting records after COUNT records have been emitted.`,
+					},
 					"count": schema.Int64Attribute{
 						Computed:    true,
 						Description: `How many users should be generated in total.  This setting does not apply to the purchases or products stream.`,
@@ -63,10 +67,6 @@ func (r *SourceFakerDataSource) Schema(ctx context.Context, req datasource.Schem
 					"records_per_slice": schema.Int64Attribute{
 						Computed:    true,
 						Description: `How many fake records will be in each page (stream slice), before a state message is emitted?`,
-					},
-					"records_per_sync": schema.Int64Attribute{
-						Computed:    true,
-						Description: `How many fake records will be returned for each sync, for each stream?  By default, it will take 2 syncs to create the requested 1000 records.`,
 					},
 					"seed": schema.Int64Attribute{
 						Computed:    true,

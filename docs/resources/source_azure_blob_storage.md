@@ -28,9 +28,9 @@ resource "airbyte_source_azure_blob_storage" "my_source_azureblobstorage" {
     }
     source_type = "azure-blob-storage"
   }
-  name         = "Natalie Dooley"
+  name         = "Cristina Murphy"
   secret_id    = "...my_secret_id..."
-  workspace_id = "d575f140-0e76-44ad-b334-ec1b781b36a0"
+  workspace_id = "36c60050-3d8b-4b31-980f-739ae9e057eb"
 }
 ```
 

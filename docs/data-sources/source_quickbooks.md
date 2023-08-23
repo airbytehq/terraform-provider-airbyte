@@ -44,7 +44,7 @@ Read-Only:
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
 - `sandbox` (Boolean) Determines whether to use the sandbox or production environment.
 - `source_type` (String) must be one of ["quickbooks"]
-- `start_date` (String) The default value to use if no bookmark exists for an endpoint (rfc3339 date string). E.g, 2021-03-20T00:00:00+00:00. Any data before this date will not be replicated.
+- `start_date` (String) The default value to use if no bookmark exists for an endpoint (rfc3339 date string). E.g, 2021-03-20T00:00:00Z. Any data before this date will not be replicated.
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`

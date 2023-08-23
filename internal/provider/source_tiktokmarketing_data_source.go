@@ -181,6 +181,10 @@ func (r *SourceTiktokMarketingDataSource) Schema(ctx context.Context, req dataso
 						},
 						Description: `The date until which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DD. All data generated between start_date and this date will be replicated. Not setting this option will result in always syncing the data till the current date.`,
 					},
+					"include_deleted": schema.BoolAttribute{
+						Computed:    true,
+						Description: `Set to active if you want to include deleted data in reports.`,
+					},
 					"source_type": schema.StringAttribute{
 						Computed: true,
 						Validators: []validator.String{

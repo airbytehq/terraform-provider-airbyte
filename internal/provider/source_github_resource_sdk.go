@@ -20,6 +20,18 @@ func (r *SourceGithubResourceModel) ToCreateSDKType() *shared.SourceGithubCreate
 		var sourceGithubAuthenticationOAuth *shared.SourceGithubAuthenticationOAuth
 		if r.Configuration.Credentials.SourceGithubAuthenticationOAuth != nil {
 			accessToken := r.Configuration.Credentials.SourceGithubAuthenticationOAuth.AccessToken.ValueString()
+			clientID := new(string)
+			if !r.Configuration.Credentials.SourceGithubAuthenticationOAuth.ClientID.IsUnknown() && !r.Configuration.Credentials.SourceGithubAuthenticationOAuth.ClientID.IsNull() {
+				*clientID = r.Configuration.Credentials.SourceGithubAuthenticationOAuth.ClientID.ValueString()
+			} else {
+				clientID = nil
+			}
+			clientSecret := new(string)
+			if !r.Configuration.Credentials.SourceGithubAuthenticationOAuth.ClientSecret.IsUnknown() && !r.Configuration.Credentials.SourceGithubAuthenticationOAuth.ClientSecret.IsNull() {
+				*clientSecret = r.Configuration.Credentials.SourceGithubAuthenticationOAuth.ClientSecret.ValueString()
+			} else {
+				clientSecret = nil
+			}
 			optionTitle := new(shared.SourceGithubAuthenticationOAuthOptionTitle)
 			if !r.Configuration.Credentials.SourceGithubAuthenticationOAuth.OptionTitle.IsUnknown() && !r.Configuration.Credentials.SourceGithubAuthenticationOAuth.OptionTitle.IsNull() {
 				*optionTitle = shared.SourceGithubAuthenticationOAuthOptionTitle(r.Configuration.Credentials.SourceGithubAuthenticationOAuth.OptionTitle.ValueString())
@@ -27,8 +39,10 @@ func (r *SourceGithubResourceModel) ToCreateSDKType() *shared.SourceGithubCreate
 				optionTitle = nil
 			}
 			sourceGithubAuthenticationOAuth = &shared.SourceGithubAuthenticationOAuth{
-				AccessToken: accessToken,
-				OptionTitle: optionTitle,
+				AccessToken:  accessToken,
+				ClientID:     clientID,
+				ClientSecret: clientSecret,
+				OptionTitle:  optionTitle,
 			}
 		}
 		if sourceGithubAuthenticationOAuth != nil {
@@ -107,6 +121,18 @@ func (r *SourceGithubResourceModel) ToUpdateSDKType() *shared.SourceGithubPutReq
 		var sourceGithubUpdateAuthenticationOAuth *shared.SourceGithubUpdateAuthenticationOAuth
 		if r.Configuration.Credentials.SourceGithubUpdateAuthenticationOAuth != nil {
 			accessToken := r.Configuration.Credentials.SourceGithubUpdateAuthenticationOAuth.AccessToken.ValueString()
+			clientID := new(string)
+			if !r.Configuration.Credentials.SourceGithubUpdateAuthenticationOAuth.ClientID.IsUnknown() && !r.Configuration.Credentials.SourceGithubUpdateAuthenticationOAuth.ClientID.IsNull() {
+				*clientID = r.Configuration.Credentials.SourceGithubUpdateAuthenticationOAuth.ClientID.ValueString()
+			} else {
+				clientID = nil
+			}
+			clientSecret := new(string)
+			if !r.Configuration.Credentials.SourceGithubUpdateAuthenticationOAuth.ClientSecret.IsUnknown() && !r.Configuration.Credentials.SourceGithubUpdateAuthenticationOAuth.ClientSecret.IsNull() {
+				*clientSecret = r.Configuration.Credentials.SourceGithubUpdateAuthenticationOAuth.ClientSecret.ValueString()
+			} else {
+				clientSecret = nil
+			}
 			optionTitle := new(shared.SourceGithubUpdateAuthenticationOAuthOptionTitle)
 			if !r.Configuration.Credentials.SourceGithubUpdateAuthenticationOAuth.OptionTitle.IsUnknown() && !r.Configuration.Credentials.SourceGithubUpdateAuthenticationOAuth.OptionTitle.IsNull() {
 				*optionTitle = shared.SourceGithubUpdateAuthenticationOAuthOptionTitle(r.Configuration.Credentials.SourceGithubUpdateAuthenticationOAuth.OptionTitle.ValueString())
@@ -114,8 +140,10 @@ func (r *SourceGithubResourceModel) ToUpdateSDKType() *shared.SourceGithubPutReq
 				optionTitle = nil
 			}
 			sourceGithubUpdateAuthenticationOAuth = &shared.SourceGithubUpdateAuthenticationOAuth{
-				AccessToken: accessToken,
-				OptionTitle: optionTitle,
+				AccessToken:  accessToken,
+				ClientID:     clientID,
+				ClientSecret: clientSecret,
+				OptionTitle:  optionTitle,
 			}
 		}
 		if sourceGithubUpdateAuthenticationOAuth != nil {

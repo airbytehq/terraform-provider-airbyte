@@ -4,6 +4,7 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
+	"encoding/json"
 	"github.com/hashicorp/terraform-plugin-framework/types"
 )
 
@@ -58,9 +59,14 @@ func (r *SourceMongodbResourceModel) ToCreateSDKType() *shared.SourceMongodbCrea
 		if r.Configuration.InstanceType.SourceMongodbMongoDBInstanceTypeMongoDBAtlas != nil {
 			clusterURL := r.Configuration.InstanceType.SourceMongodbMongoDBInstanceTypeMongoDBAtlas.ClusterURL.ValueString()
 			instance2 := shared.SourceMongodbMongoDBInstanceTypeMongoDBAtlasInstance(r.Configuration.InstanceType.SourceMongodbMongoDBInstanceTypeMongoDBAtlas.Instance.ValueString())
+			var additionalProperties interface{}
+			if !r.Configuration.InstanceType.SourceMongodbMongoDBInstanceTypeMongoDBAtlas.AdditionalProperties.IsUnknown() && !r.Configuration.InstanceType.SourceMongodbMongoDBInstanceTypeMongoDBAtlas.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.InstanceType.SourceMongodbMongoDBInstanceTypeMongoDBAtlas.AdditionalProperties.ValueString()), &additionalProperties)
+			}
 			sourceMongodbMongoDBInstanceTypeMongoDBAtlas = &shared.SourceMongodbMongoDBInstanceTypeMongoDBAtlas{
-				ClusterURL: clusterURL,
-				Instance:   instance2,
+				ClusterURL:           clusterURL,
+				Instance:             instance2,
+				AdditionalProperties: additionalProperties,
 			}
 		}
 		if sourceMongodbMongoDBInstanceTypeMongoDBAtlas != nil {
@@ -163,9 +169,14 @@ func (r *SourceMongodbResourceModel) ToUpdateSDKType() *shared.SourceMongodbPutR
 		if r.Configuration.InstanceType.SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas != nil {
 			clusterURL := r.Configuration.InstanceType.SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas.ClusterURL.ValueString()
 			instance2 := shared.SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlasInstance(r.Configuration.InstanceType.SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas.Instance.ValueString())
+			var additionalProperties interface{}
+			if !r.Configuration.InstanceType.SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas.AdditionalProperties.IsUnknown() && !r.Configuration.InstanceType.SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.InstanceType.SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas.AdditionalProperties.ValueString()), &additionalProperties)
+			}
 			sourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas = &shared.SourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas{
-				ClusterURL: clusterURL,
-				Instance:   instance2,
+				ClusterURL:           clusterURL,
+				Instance:             instance2,
+				AdditionalProperties: additionalProperties,
 			}
 		}
 		if sourceMongodbUpdateMongoDBInstanceTypeMongoDBAtlas != nil {

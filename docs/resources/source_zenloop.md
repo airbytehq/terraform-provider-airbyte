@@ -21,9 +21,9 @@ resource "airbyte_source_zenloop" "my_source_zenloop" {
     survey_group_id = "...my_survey_group_id..."
     survey_id       = "...my_survey_id..."
   }
-  name         = "Kyle Reichert"
+  name         = "Ms. Emma Rodriguez Jr."
   secret_id    = "...my_secret_id..."
-  workspace_id = "3d382dbe-c75c-468c-a065-9468ce304d88"
+  workspace_id = "688deebe-f897-4f3d-90cc-d33f11b3e4e0"
 }
 ```
 

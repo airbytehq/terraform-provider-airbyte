@@ -323,6 +323,8 @@ type DestinationDatabricksUpdate struct {
 	DatabricksPort *string `json:"databricks_port,omitempty"`
 	// Databricks Cluster Server Hostname.
 	DatabricksServerHostname string `json:"databricks_server_hostname"`
+	// Support schema evolution for all streams. If "false", the connector might fail when a stream's schema changes.
+	EnableSchemaEvolution *bool `json:"enable_schema_evolution,omitempty"`
 	// Default to 'true'. Switch it to 'false' for debugging purpose.
 	PurgeStagingData *bool `json:"purge_staging_data,omitempty"`
 	// The default schema tables are written. If not specified otherwise, the "default" will be used.

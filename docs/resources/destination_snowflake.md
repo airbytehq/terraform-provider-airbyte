@@ -22,23 +22,19 @@ resource "airbyte_destination_snowflake" "my_destination_snowflake" {
         private_key_password = "...my_private_key_password..."
       }
     }
-    database          = "AIRBYTE_DATABASE"
-    destination_type  = "snowflake"
-    file_buffer_count = 10
-    host              = "accountname.us-east-2.aws.snowflakecomputing.com"
-    jdbc_url_params   = "...my_jdbc_url_params..."
-    loading_method = {
-      destination_snowflake_data_staging_method_recommended_internal_staging = {
-        method = "Internal Staging"
-      }
-    }
-    role      = "AIRBYTE_ROLE"
-    schema    = "AIRBYTE_SCHEMA"
-    username  = "AIRBYTE_USER"
-    warehouse = "AIRBYTE_WAREHOUSE"
+    database         = "AIRBYTE_DATABASE"
+    destination_type = "snowflake"
+    host             = "accountname.us-east-2.aws.snowflakecomputing.com"
+    jdbc_url_params  = "...my_jdbc_url_params..."
+    raw_data_schema  = "...my_raw_data_schema..."
+    role             = "AIRBYTE_ROLE"
+    schema           = "AIRBYTE_SCHEMA"
+    use_1s1t_format  = true
+    username         = "AIRBYTE_USER"
+    warehouse        = "AIRBYTE_WAREHOUSE"
   }
-  name         = "Miss Katrina Weber"
-  workspace_id = "9e06e3a4-3700-40ae-ab6b-c9b8f759eac5"
+  name         = "Dr. Terrell Stanton"
+  workspace_id = "fe6c632c-a3ae-4d01-9799-6312fde04771"
 }
 ```
 
@@ -72,9 +68,9 @@ Required:
 Optional:
 
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
-- `file_buffer_count` (Number) Number of file buffers allocated for writing data. Increasing this number is beneficial for connections using Change Data Capture (CDC) and up to the number of streams within a connection. Increasing the number of file buffers past the maximum number of streams has deteriorating effects
 - `jdbc_url_params` (String) Enter the additional properties to pass to the JDBC URL string when connecting to the database (formatted as key=value pairs separated by the symbol &). Example: key1=value1&key2=value2&key3=value3
-- `loading_method` (Attributes) Select a data staging method (see [below for nested schema](#nestedatt--configuration--loading_method))
+- `raw_data_schema` (String) (Beta) The schema to write raw tables into
+- `use_1s1t_format` (Boolean) (Beta) Use <a href="https://github.com/airbytehq/airbyte/issues/26028" target="_blank">Destinations V2</a>. Contact Airbyte Support to participate in the beta program.
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`
@@ -166,170 +162,5 @@ Required:
 Optional:
 
 - `auth_type` (String) must be one of ["Username and Password"]
-
-
-
-<a id="nestedatt--configuration--loading_method"></a>
-### Nested Schema for `configuration.loading_method`
-
-Optional:
-
-- `destination_snowflake_data_staging_method_aws_s3_staging` (Attributes) Recommended for large production workloads for better speed and scalability. (see [below for nested schema](#nestedatt--configuration--loading_method--destination_snowflake_data_staging_method_aws_s3_staging))
-- `destination_snowflake_data_staging_method_google_cloud_storage_staging` (Attributes) Recommended for large production workloads for better speed and scalability. (see [below for nested schema](#nestedatt--configuration--loading_method--destination_snowflake_data_staging_method_google_cloud_storage_staging))
-- `destination_snowflake_data_staging_method_recommended_internal_staging` (Attributes) Recommended for large production workloads for better speed and scalability. (see [below for nested schema](#nestedatt--configuration--loading_method--destination_snowflake_data_staging_method_recommended_internal_staging))
-- `destination_snowflake_data_staging_method_select_another_option` (Attributes) Select another option (see [below for nested schema](#nestedatt--configuration--loading_method--destination_snowflake_data_staging_method_select_another_option))
-- `destination_snowflake_update_data_staging_method_aws_s3_staging` (Attributes) Recommended for large production workloads for better speed and scalability. (see [below for nested schema](#nestedatt--configuration--loading_method--destination_snowflake_update_data_staging_method_aws_s3_staging))
-- `destination_snowflake_update_data_staging_method_google_cloud_storage_staging` (Attributes) Recommended for large production workloads for better speed and scalability. (see [below for nested schema](#nestedatt--configuration--loading_method--destination_snowflake_update_data_staging_method_google_cloud_storage_staging))
-- `destination_snowflake_update_data_staging_method_recommended_internal_staging` (Attributes) Recommended for large production workloads for better speed and scalability. (see [below for nested schema](#nestedatt--configuration--loading_method--destination_snowflake_update_data_staging_method_recommended_internal_staging))
-- `destination_snowflake_update_data_staging_method_select_another_option` (Attributes) Select another option (see [below for nested schema](#nestedatt--configuration--loading_method--destination_snowflake_update_data_staging_method_select_another_option))
-
-<a id="nestedatt--configuration--loading_method--destination_snowflake_data_staging_method_aws_s3_staging"></a>
-### Nested Schema for `configuration.loading_method.destination_snowflake_data_staging_method_aws_s3_staging`
-
-Required:
-
-- `access_key_id` (String) Enter your <a href="https://docs.aws.amazon.com/powershell/latest/userguide/pstools-appendix-sign-up.html">AWS access key ID</a>. Airbyte requires Read and Write permissions on your S3 bucket
-- `method` (String) must be one of ["S3 Staging"]
-- `s3_bucket_name` (String) Enter your S3 bucket name
-- `secret_access_key` (String) Enter your <a href="https://docs.aws.amazon.com/powershell/latest/userguide/pstools-appendix-sign-up.html">AWS secret access key</a>
-
-Optional:
-
-- `encryption` (Attributes) Choose a data encryption method for the staging data (see [below for nested schema](#nestedatt--configuration--loading_method--destination_snowflake_data_staging_method_aws_s3_staging--encryption))
-- `file_name_pattern` (String) The pattern allows you to set the file-name format for the S3 staging file(s)
-- `purge_staging_data` (Boolean) Toggle to delete staging files from the S3 bucket after a successful sync
-- `s3_bucket_region` (String) must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-west-1", "eu-west-2", "eu-west-3", "eu-south-1", "eu-north-1", "sa-east-1", "me-south-1"]
-Enter the region where your S3 bucket resides
-
-<a id="nestedatt--configuration--loading_method--destination_snowflake_data_staging_method_aws_s3_staging--encryption"></a>
-### Nested Schema for `configuration.loading_method.destination_snowflake_data_staging_method_aws_s3_staging.s3_bucket_region`
-
-Optional:
-
-- `destination_snowflake_data_staging_method_aws_s3_staging_encryption_aes_cbc_envelope_encryption` (Attributes) Staging data will be encrypted using AES-CBC envelope encryption. (see [below for nested schema](#nestedatt--configuration--loading_method--destination_snowflake_data_staging_method_aws_s3_staging--s3_bucket_region--destination_snowflake_data_staging_method_aws_s3_staging_encryption_aes_cbc_envelope_encryption))
-- `destination_snowflake_data_staging_method_aws_s3_staging_encryption_no_encryption` (Attributes) Staging data will be stored in plaintext. (see [below for nested schema](#nestedatt--configuration--loading_method--destination_snowflake_data_staging_method_aws_s3_staging--s3_bucket_region--destination_snowflake_data_staging_method_aws_s3_staging_encryption_no_encryption))
-
-<a id="nestedatt--configuration--loading_method--destination_snowflake_data_staging_method_aws_s3_staging--s3_bucket_region--destination_snowflake_data_staging_method_aws_s3_staging_encryption_aes_cbc_envelope_encryption"></a>
-### Nested Schema for `configuration.loading_method.destination_snowflake_data_staging_method_aws_s3_staging.s3_bucket_region.destination_snowflake_data_staging_method_aws_s3_staging_encryption_aes_cbc_envelope_encryption`
-
-Required:
-
-- `encryption_type` (String) must be one of ["aes_cbc_envelope"]
-
-Optional:
-
-- `key_encrypting_key` (String) The key, base64-encoded. Must be either 128, 192, or 256 bits. Leave blank to have Airbyte generate an ephemeral key for each sync.
-
-
-<a id="nestedatt--configuration--loading_method--destination_snowflake_data_staging_method_aws_s3_staging--s3_bucket_region--destination_snowflake_data_staging_method_aws_s3_staging_encryption_no_encryption"></a>
-### Nested Schema for `configuration.loading_method.destination_snowflake_data_staging_method_aws_s3_staging.s3_bucket_region.destination_snowflake_data_staging_method_aws_s3_staging_encryption_no_encryption`
-
-Required:
-
-- `encryption_type` (String) must be one of ["none"]
-
-
-
-
-<a id="nestedatt--configuration--loading_method--destination_snowflake_data_staging_method_google_cloud_storage_staging"></a>
-### Nested Schema for `configuration.loading_method.destination_snowflake_data_staging_method_google_cloud_storage_staging`
-
-Required:
-
-- `bucket_name` (String) Enter the <a href="https://cloud.google.com/storage/docs/creating-buckets">Cloud Storage bucket name</a>
-- `credentials_json` (String) Enter your <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">Google Cloud service account key</a> in the JSON format with read/write access to your Cloud Storage staging bucket
-- `method` (String) must be one of ["GCS Staging"]
-- `project_id` (String) Enter the <a href="https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects">Google Cloud project ID</a>
-
-
-<a id="nestedatt--configuration--loading_method--destination_snowflake_data_staging_method_recommended_internal_staging"></a>
-### Nested Schema for `configuration.loading_method.destination_snowflake_data_staging_method_recommended_internal_staging`
-
-Required:
-
-- `method` (String) must be one of ["Internal Staging"]
-
-
-<a id="nestedatt--configuration--loading_method--destination_snowflake_data_staging_method_select_another_option"></a>
-### Nested Schema for `configuration.loading_method.destination_snowflake_data_staging_method_select_another_option`
-
-Required:
-
-- `method` (String) must be one of ["Standard"]
-
-
-<a id="nestedatt--configuration--loading_method--destination_snowflake_update_data_staging_method_aws_s3_staging"></a>
-### Nested Schema for `configuration.loading_method.destination_snowflake_update_data_staging_method_aws_s3_staging`
-
-Required:
-
-- `access_key_id` (String) Enter your <a href="https://docs.aws.amazon.com/powershell/latest/userguide/pstools-appendix-sign-up.html">AWS access key ID</a>. Airbyte requires Read and Write permissions on your S3 bucket
-- `method` (String) must be one of ["S3 Staging"]
-- `s3_bucket_name` (String) Enter your S3 bucket name
-- `secret_access_key` (String) Enter your <a href="https://docs.aws.amazon.com/powershell/latest/userguide/pstools-appendix-sign-up.html">AWS secret access key</a>
-
-Optional:
-
-- `encryption` (Attributes) Choose a data encryption method for the staging data (see [below for nested schema](#nestedatt--configuration--loading_method--destination_snowflake_update_data_staging_method_aws_s3_staging--encryption))
-- `file_name_pattern` (String) The pattern allows you to set the file-name format for the S3 staging file(s)
-- `purge_staging_data` (Boolean) Toggle to delete staging files from the S3 bucket after a successful sync
-- `s3_bucket_region` (String) must be one of ["", "us-east-1", "us-east-2", "us-west-1", "us-west-2", "af-south-1", "ap-east-1", "ap-south-1", "ap-northeast-1", "ap-northeast-2", "ap-northeast-3", "ap-southeast-1", "ap-southeast-2", "ca-central-1", "cn-north-1", "cn-northwest-1", "eu-central-1", "eu-west-1", "eu-west-2", "eu-west-3", "eu-south-1", "eu-north-1", "sa-east-1", "me-south-1"]
-Enter the region where your S3 bucket resides
-
-<a id="nestedatt--configuration--loading_method--destination_snowflake_update_data_staging_method_aws_s3_staging--encryption"></a>
-### Nested Schema for `configuration.loading_method.destination_snowflake_update_data_staging_method_aws_s3_staging.s3_bucket_region`
-
-Optional:
-
-- `destination_snowflake_update_data_staging_method_aws_s3_staging_encryption_aes_cbc_envelope_encryption` (Attributes) Staging data will be encrypted using AES-CBC envelope encryption. (see [below for nested schema](#nestedatt--configuration--loading_method--destination_snowflake_update_data_staging_method_aws_s3_staging--s3_bucket_region--destination_snowflake_update_data_staging_method_aws_s3_staging_encryption_aes_cbc_envelope_encryption))
-- `destination_snowflake_update_data_staging_method_aws_s3_staging_encryption_no_encryption` (Attributes) Staging data will be stored in plaintext. (see [below for nested schema](#nestedatt--configuration--loading_method--destination_snowflake_update_data_staging_method_aws_s3_staging--s3_bucket_region--destination_snowflake_update_data_staging_method_aws_s3_staging_encryption_no_encryption))
-
-<a id="nestedatt--configuration--loading_method--destination_snowflake_update_data_staging_method_aws_s3_staging--s3_bucket_region--destination_snowflake_update_data_staging_method_aws_s3_staging_encryption_aes_cbc_envelope_encryption"></a>
-### Nested Schema for `configuration.loading_method.destination_snowflake_update_data_staging_method_aws_s3_staging.s3_bucket_region.destination_snowflake_update_data_staging_method_aws_s3_staging_encryption_aes_cbc_envelope_encryption`
-
-Required:
-
-- `encryption_type` (String) must be one of ["aes_cbc_envelope"]
-
-Optional:
-
-- `key_encrypting_key` (String) The key, base64-encoded. Must be either 128, 192, or 256 bits. Leave blank to have Airbyte generate an ephemeral key for each sync.
-
-
-<a id="nestedatt--configuration--loading_method--destination_snowflake_update_data_staging_method_aws_s3_staging--s3_bucket_region--destination_snowflake_update_data_staging_method_aws_s3_staging_encryption_no_encryption"></a>
-### Nested Schema for `configuration.loading_method.destination_snowflake_update_data_staging_method_aws_s3_staging.s3_bucket_region.destination_snowflake_update_data_staging_method_aws_s3_staging_encryption_no_encryption`
-
-Required:
-
-- `encryption_type` (String) must be one of ["none"]
-
-
-
-
-<a id="nestedatt--configuration--loading_method--destination_snowflake_update_data_staging_method_google_cloud_storage_staging"></a>
-### Nested Schema for `configuration.loading_method.destination_snowflake_update_data_staging_method_google_cloud_storage_staging`
-
-Required:
-
-- `bucket_name` (String) Enter the <a href="https://cloud.google.com/storage/docs/creating-buckets">Cloud Storage bucket name</a>
-- `credentials_json` (String) Enter your <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">Google Cloud service account key</a> in the JSON format with read/write access to your Cloud Storage staging bucket
-- `method` (String) must be one of ["GCS Staging"]
-- `project_id` (String) Enter the <a href="https://cloud.google.com/resource-manager/docs/creating-managing-projects#identifying_projects">Google Cloud project ID</a>
-
-
-<a id="nestedatt--configuration--loading_method--destination_snowflake_update_data_staging_method_recommended_internal_staging"></a>
-### Nested Schema for `configuration.loading_method.destination_snowflake_update_data_staging_method_recommended_internal_staging`
-
-Required:
-
-- `method` (String) must be one of ["Internal Staging"]
-
-
-<a id="nestedatt--configuration--loading_method--destination_snowflake_update_data_staging_method_select_another_option"></a>
-### Nested Schema for `configuration.loading_method.destination_snowflake_update_data_staging_method_select_another_option`
-
-Required:
-
-- `method` (String) must be one of ["Standard"]
 
 

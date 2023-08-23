@@ -5,7 +5,8 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceZendeskSunshineAuthorizationMethodAPIToken struct {
-	APIToken   types.String `tfsdk:"api_token"`
-	AuthMethod types.String `tfsdk:"auth_method"`
-	Email      types.String `tfsdk:"email"`
+	APIToken             types.String `tfsdk:"api_token"`
+	AuthMethod           types.String `tfsdk:"auth_method"`
+	Email                types.String `tfsdk:"email"`
+	AdditionalProperties types.String `tfsdk:"additional_properties"`
 }

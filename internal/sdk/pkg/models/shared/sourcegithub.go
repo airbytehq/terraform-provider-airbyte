@@ -68,8 +68,12 @@ func (e *SourceGithubAuthenticationOAuthOptionTitle) UnmarshalJSON(data []byte) 
 // SourceGithubAuthenticationOAuth - Choose how to authenticate to GitHub
 type SourceGithubAuthenticationOAuth struct {
 	// OAuth access token
-	AccessToken string                                      `json:"access_token"`
-	OptionTitle *SourceGithubAuthenticationOAuthOptionTitle `json:"option_title,omitempty"`
+	AccessToken string `json:"access_token"`
+	// OAuth Client Id
+	ClientID *string `json:"client_id,omitempty"`
+	// OAuth Client secret
+	ClientSecret *string                                     `json:"client_secret,omitempty"`
+	OptionTitle  *SourceGithubAuthenticationOAuthOptionTitle `json:"option_title,omitempty"`
 }
 
 type SourceGithubAuthenticationType string

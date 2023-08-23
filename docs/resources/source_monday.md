@@ -23,9 +23,9 @@ resource "airbyte_source_monday" "my_source_monday" {
     }
     source_type = "monday"
   }
-  name         = "Frances Vandervort"
+  name         = "Lynda Padberg"
   secret_id    = "...my_secret_id..."
-  workspace_id = "d074009e-f8d2-49de-9dd7-097b5da08c57"
+  workspace_id = "cb6682cb-70f8-4cfd-9fb6-e91b9a9f7484"
 }
 ```
 

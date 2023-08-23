@@ -27,20 +27,20 @@ resource "airbyte_destination_aws_datalake" "my_destination_awsdatalake" {
     destination_type = "aws-datalake"
     format = {
       destination_aws_datalake_output_format_wildcard_json_lines_newline_delimited_json = {
-        compression_codec = "UNCOMPRESSED"
+        compression_codec = "GZIP"
         format_type       = "JSONL"
       }
     }
-    glue_catalog_float_as_decimal             = false
+    glue_catalog_float_as_decimal             = true
     lakeformation_database_default_tag_key    = "pii_level"
     lakeformation_database_default_tag_values = "private,public"
     lakeformation_database_name               = "...my_lakeformation_database_name..."
-    lakeformation_governed_tables             = false
+    lakeformation_governed_tables             = true
     partitioning                              = "DAY"
-    region                                    = "us-west-2"
+    region                                    = "ap-southeast-1"
   }
-  name         = "Gloria Padberg"
-  workspace_id = "2c3f5ad0-19da-41ff-a78f-097b0074f154"
+  name         = "Dr. Rickey Boyle"
+  workspace_id = "aa2352c5-9559-407a-bf1a-3a2fa9467739"
 }
 ```
 

@@ -26,9 +26,9 @@ resource "airbyte_source_hubspot" "my_source_hubspot" {
     source_type = "hubspot"
     start_date  = "2017-01-25T00:00:00Z"
   }
-  name         = "Mrs. Sadie Dare"
+  name         = "Pauline Paucek"
   secret_id    = "...my_secret_id..."
-  workspace_id = "da840774-a68a-49a3-9d08-6b6f66fef020"
+  workspace_id = "a9a35d08-6b6f-466f-af02-0e9f443b4257"
 }
 ```
 

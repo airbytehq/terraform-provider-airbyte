@@ -44,6 +44,7 @@ Read-Only:
 - `databricks_port` (String) Databricks Cluster Port.
 - `databricks_server_hostname` (String) Databricks Cluster Server Hostname.
 - `destination_type` (String) must be one of ["databricks"]
+- `enable_schema_evolution` (Boolean) Support schema evolution for all streams. If "false", the connector might fail when a stream's schema changes.
 - `purge_staging_data` (Boolean) Default to 'true'. Switch it to 'false' for debugging purpose.
 - `schema` (String) The default schema tables are written. If not specified otherwise, the "default" will be used.
 

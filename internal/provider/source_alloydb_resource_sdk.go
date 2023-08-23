@@ -26,16 +26,16 @@ func (r *SourceAlloydbResourceModel) ToCreateSDKType() *shared.SourceAlloydbCrea
 	port := r.Configuration.Port.ValueInt64()
 	var replicationMethod *shared.SourceAlloydbReplicationMethod
 	if r.Configuration.ReplicationMethod != nil {
-		var sourceAlloydbReplicationMethodStandard *shared.SourceAlloydbReplicationMethodStandard
-		if r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodStandard != nil {
-			method := shared.SourceAlloydbReplicationMethodStandardMethod(r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodStandard.Method.ValueString())
-			sourceAlloydbReplicationMethodStandard = &shared.SourceAlloydbReplicationMethodStandard{
+		var sourceAlloydbReplicationMethodStandardXmin *shared.SourceAlloydbReplicationMethodStandardXmin
+		if r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodStandardXmin != nil {
+			method := shared.SourceAlloydbReplicationMethodStandardXminMethod(r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodStandardXmin.Method.ValueString())
+			sourceAlloydbReplicationMethodStandardXmin = &shared.SourceAlloydbReplicationMethodStandardXmin{
 				Method: method,
 			}
 		}
-		if sourceAlloydbReplicationMethodStandard != nil {
+		if sourceAlloydbReplicationMethodStandardXmin != nil {
 			replicationMethod = &shared.SourceAlloydbReplicationMethod{
-				SourceAlloydbReplicationMethodStandard: sourceAlloydbReplicationMethodStandard,
+				SourceAlloydbReplicationMethodStandardXmin: sourceAlloydbReplicationMethodStandardXmin,
 			}
 		}
 		var sourceAlloydbReplicationMethodLogicalReplicationCDC *shared.SourceAlloydbReplicationMethodLogicalReplicationCDC
@@ -60,6 +60,12 @@ func (r *SourceAlloydbResourceModel) ToCreateSDKType() *shared.SourceAlloydbCrea
 				plugin = nil
 			}
 			publication := r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.Publication.ValueString()
+			queueSize := new(int64)
+			if !r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.QueueSize.IsUnknown() && !r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.QueueSize.IsNull() {
+				*queueSize = r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.QueueSize.ValueInt64()
+			} else {
+				queueSize = nil
+			}
 			replicationSlot := r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.ReplicationSlot.ValueString()
 			var additionalProperties interface{}
 			if !r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.AdditionalProperties.IsUnknown() && !r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodLogicalReplicationCDC.AdditionalProperties.IsNull() {
@@ -71,6 +77,7 @@ func (r *SourceAlloydbResourceModel) ToCreateSDKType() *shared.SourceAlloydbCrea
 				Method:                method1,
 				Plugin:                plugin,
 				Publication:           publication,
+				QueueSize:             queueSize,
 				ReplicationSlot:       replicationSlot,
 				AdditionalProperties:  additionalProperties,
 			}
@@ -78,6 +85,18 @@ func (r *SourceAlloydbResourceModel) ToCreateSDKType() *shared.SourceAlloydbCrea
 		if sourceAlloydbReplicationMethodLogicalReplicationCDC != nil {
 			replicationMethod = &shared.SourceAlloydbReplicationMethod{
 				SourceAlloydbReplicationMethodLogicalReplicationCDC: sourceAlloydbReplicationMethodLogicalReplicationCDC,
+			}
+		}
+		var sourceAlloydbReplicationMethodStandard *shared.SourceAlloydbReplicationMethodStandard
+		if r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodStandard != nil {
+			method2 := shared.SourceAlloydbReplicationMethodStandardMethod(r.Configuration.ReplicationMethod.SourceAlloydbReplicationMethodStandard.Method.ValueString())
+			sourceAlloydbReplicationMethodStandard = &shared.SourceAlloydbReplicationMethodStandard{
+				Method: method2,
+			}
+		}
+		if sourceAlloydbReplicationMethodStandard != nil {
+			replicationMethod = &shared.SourceAlloydbReplicationMethod{
+				SourceAlloydbReplicationMethodStandard: sourceAlloydbReplicationMethodStandard,
 			}
 		}
 	}
@@ -346,16 +365,16 @@ func (r *SourceAlloydbResourceModel) ToUpdateSDKType() *shared.SourceAlloydbPutR
 	port := r.Configuration.Port.ValueInt64()
 	var replicationMethod *shared.SourceAlloydbUpdateReplicationMethod
 	if r.Configuration.ReplicationMethod != nil {
-		var sourceAlloydbUpdateReplicationMethodStandard *shared.SourceAlloydbUpdateReplicationMethodStandard
-		if r.Configuration.ReplicationMethod.SourceAlloydbUpdateReplicationMethodStandard != nil {
-			method := shared.SourceAlloydbUpdateReplicationMethodStandardMethod(r.Configuration.ReplicationMethod.SourceAlloydbUpdateReplicationMethodStandard.Method.ValueString())
-			sourceAlloydbUpdateReplicationMethodStandard = &shared.SourceAlloydbUpdateReplicationMethodStandard{
+		var sourceAlloydbUpdateReplicationMethodStandardXmin *shared.SourceAlloydbUpdateReplicationMethodStandardXmin
+		if r.Configuration.ReplicationMethod.SourceAlloydbUpdateReplicationMethodStandardXmin != nil {
+			method := shared.SourceAlloydbUpdateReplicationMethodStandardXminMethod(r.Configuration.ReplicationMethod.SourceAlloydbUpdateReplicationMethodStandardXmin.Method.ValueString())
+			sourceAlloydbUpdateReplicationMethodStandardXmin = &shared.SourceAlloydbUpdateReplicationMethodStandardXmin{
 				Method: method,
 			}
 		}
-		if sourceAlloydbUpdateReplicationMethodStandard != nil {
+		if sourceAlloydbUpdateReplicationMethodStandardXmin != nil {
 			replicationMethod = &shared.SourceAlloydbUpdateReplicationMethod{
-				SourceAlloydbUpdateReplicationMethodStandard: sourceAlloydbUpdateReplicationMethodStandard,
+				SourceAlloydbUpdateReplicationMethodStandardXmin: sourceAlloydbUpdateReplicationMethodStandardXmin,
 			}
 		}
 		var sourceAlloydbUpdateReplicationMethodLogicalReplicationCDC *shared.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC
@@ -380,6 +399,12 @@ func (r *SourceAlloydbResourceModel) ToUpdateSDKType() *shared.SourceAlloydbPutR
 				plugin = nil
 			}
 			publication := r.Configuration.ReplicationMethod.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC.Publication.ValueString()
+			queueSize := new(int64)
+			if !r.Configuration.ReplicationMethod.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC.QueueSize.IsUnknown() && !r.Configuration.ReplicationMethod.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC.QueueSize.IsNull() {
+				*queueSize = r.Configuration.ReplicationMethod.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC.QueueSize.ValueInt64()
+			} else {
+				queueSize = nil
+			}
 			replicationSlot := r.Configuration.ReplicationMethod.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC.ReplicationSlot.ValueString()
 			var additionalProperties interface{}
 			if !r.Configuration.ReplicationMethod.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC.AdditionalProperties.IsUnknown() && !r.Configuration.ReplicationMethod.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC.AdditionalProperties.IsNull() {
@@ -391,6 +416,7 @@ func (r *SourceAlloydbResourceModel) ToUpdateSDKType() *shared.SourceAlloydbPutR
 				Method:                method1,
 				Plugin:                plugin,
 				Publication:           publication,
+				QueueSize:             queueSize,
 				ReplicationSlot:       replicationSlot,
 				AdditionalProperties:  additionalProperties,
 			}
@@ -398,6 +424,18 @@ func (r *SourceAlloydbResourceModel) ToUpdateSDKType() *shared.SourceAlloydbPutR
 		if sourceAlloydbUpdateReplicationMethodLogicalReplicationCDC != nil {
 			replicationMethod = &shared.SourceAlloydbUpdateReplicationMethod{
 				SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC: sourceAlloydbUpdateReplicationMethodLogicalReplicationCDC,
+			}
+		}
+		var sourceAlloydbUpdateReplicationMethodStandard *shared.SourceAlloydbUpdateReplicationMethodStandard
+		if r.Configuration.ReplicationMethod.SourceAlloydbUpdateReplicationMethodStandard != nil {
+			method2 := shared.SourceAlloydbUpdateReplicationMethodStandardMethod(r.Configuration.ReplicationMethod.SourceAlloydbUpdateReplicationMethodStandard.Method.ValueString())
+			sourceAlloydbUpdateReplicationMethodStandard = &shared.SourceAlloydbUpdateReplicationMethodStandard{
+				Method: method2,
+			}
+		}
+		if sourceAlloydbUpdateReplicationMethodStandard != nil {
+			replicationMethod = &shared.SourceAlloydbUpdateReplicationMethod{
+				SourceAlloydbUpdateReplicationMethodStandard: sourceAlloydbUpdateReplicationMethodStandard,
 			}
 		}
 	}

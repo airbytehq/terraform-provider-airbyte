@@ -18,9 +18,9 @@ resource "airbyte_source_vantage" "my_source_vantage" {
     access_token = "...my_access_token..."
     source_type  = "vantage"
   }
-  name         = "Mrs. Gerard Walter"
+  name         = "Veronica Pagac Sr."
   secret_id    = "...my_secret_id..."
-  workspace_id = "dd7caac9-b4ca-4a1c-be9e-15df903907f3"
+  workspace_id = "38e1a735-ac26-4ae3-bbef-971a8f46bca1"
 }
 ```
 

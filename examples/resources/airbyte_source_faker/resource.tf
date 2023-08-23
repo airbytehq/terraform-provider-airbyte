@@ -1,9 +1,9 @@
 resource "airbyte_source_faker" "my_source_faker" {
   configuration = {
-    count             = 8
-    parallelism       = 4
-    records_per_slice = 1
-    records_per_sync  = 4
+    always_updated    = false
+    count             = 4
+    parallelism       = 1
+    records_per_slice = 4
     seed              = 4
     source_type       = "faker"
   }

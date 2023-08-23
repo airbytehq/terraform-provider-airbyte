@@ -2,7 +2,7 @@ resource "airbyte_source_public_apis" "my_source_publicapis" {
   configuration = {
     source_type = "public-apis"
   }
-  name         = "Marion Hamill"
+  name         = "James McLaughlin"
   secret_id    = "...my_secret_id..."
-  workspace_id = "6fa22063-6982-4855-bcb1-0006bef4921e"
+  workspace_id = "dfed5540-ef53-4a34-a1b8-fe99731adc05"
 }

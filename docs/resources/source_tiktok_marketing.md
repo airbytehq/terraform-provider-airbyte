@@ -15,7 +15,7 @@ SourceTiktokMarketing Resource
 ```terraform
 resource "airbyte_source_tiktok_marketing" "my_source_tiktokmarketing" {
   configuration = {
-    attribution_window = 8
+    attribution_window = 0
     credentials = {
       source_tiktok_marketing_authentication_method_o_auth2_0 = {
         access_token  = "...my_access_token..."
@@ -25,13 +25,14 @@ resource "airbyte_source_tiktok_marketing" "my_source_tiktokmarketing" {
         secret        = "...my_secret..."
       }
     }
-    end_date    = "2021-01-19"
-    source_type = "tiktok-marketing"
-    start_date  = "2022-09-08"
+    end_date        = "2022-04-16"
+    include_deleted = true
+    source_type     = "tiktok-marketing"
+    start_date      = "2020-11-25"
   }
-  name         = "Jeremy Krajcik"
+  name         = "Vicky Reichert"
   secret_id    = "...my_secret_id..."
-  workspace_id = "9e2c9e6d-10e9-4db3-ad4c-6b03108d9c33"
+  workspace_id = "635d5e65-da02-48c3-a951-a1e30fda9664"
 }
 ```
 
@@ -61,6 +62,7 @@ Optional:
 - `attribution_window` (Number) The attribution window in days.
 - `credentials` (Attributes) Authentication method (see [below for nested schema](#nestedatt--configuration--credentials))
 - `end_date` (String) The date until which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DD. All data generated between start_date and this date will be replicated. Not setting this option will result in always syncing the data till the current date.
+- `include_deleted` (Boolean) Set to active if you want to include deleted data in reports.
 - `source_type` (String) must be one of ["tiktok-marketing"]
 - `start_date` (String) The Start Date in format: YYYY-MM-DD. Any data before this date will not be replicated. If this parameter is not set, all data will be replicated.
 

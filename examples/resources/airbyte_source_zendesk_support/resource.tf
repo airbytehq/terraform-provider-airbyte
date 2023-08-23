@@ -4,15 +4,15 @@ resource "airbyte_source_zendesk_support" "my_source_zendesksupport" {
       source_zendesk_support_authentication_api_token = {
         api_token   = "...my_api_token..."
         credentials = "api_token"
-        email       = "Ignacio_Langosh@hotmail.com"
+        email       = "Kacie27@hotmail.com"
       }
     }
-    ignore_pagination = true
+    ignore_pagination = false
     source_type       = "zendesk-support"
     start_date        = "2020-10-15T00:00:00Z"
     subdomain         = "...my_subdomain..."
   }
-  name         = "Dallas Douglas"
+  name         = "May McClure"
   secret_id    = "...my_secret_id..."
-  workspace_id = "1da10f8c-23df-4931-9a3e-db51fad94acc"
+  workspace_id = "b0c69e37-2db1-4344-ba9f-78a5c0ed7aab"
 }

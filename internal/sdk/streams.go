@@ -68,12 +68,12 @@ func (s *streams) GetStreamProperties(ctx context.Context, request operations.Ge
 	case httpRes.StatusCode == 200:
 		switch {
 		case utils.MatchContentType(contentType, `application/json`):
-			var out *shared.StreamProperties
+			var out *shared.StreamPropertiesResponse
 			if err := utils.UnmarshalJsonFromResponseBody(bytes.NewBuffer(rawBody), &out); err != nil {
 				return res, err
 			}
 
-			res.StreamProperties = out
+			res.StreamPropertiesResponse = out
 		}
 	case httpRes.StatusCode == 400:
 		fallthrough

@@ -146,8 +146,82 @@ func (u SourceSmartsheetsUpdateAuthorizationMethod) MarshalJSON() ([]byte, error
 	return nil, nil
 }
 
+type SourceSmartsheetsUpdateValidenums string
+
+const (
+	SourceSmartsheetsUpdateValidenumsSheetcreatedAt   SourceSmartsheetsUpdateValidenums = "sheetcreatedAt"
+	SourceSmartsheetsUpdateValidenumsSheetid          SourceSmartsheetsUpdateValidenums = "sheetid"
+	SourceSmartsheetsUpdateValidenumsSheetmodifiedAt  SourceSmartsheetsUpdateValidenums = "sheetmodifiedAt"
+	SourceSmartsheetsUpdateValidenumsSheetname        SourceSmartsheetsUpdateValidenums = "sheetname"
+	SourceSmartsheetsUpdateValidenumsSheetpermalink   SourceSmartsheetsUpdateValidenums = "sheetpermalink"
+	SourceSmartsheetsUpdateValidenumsSheetversion     SourceSmartsheetsUpdateValidenums = "sheetversion"
+	SourceSmartsheetsUpdateValidenumsSheetaccessLevel SourceSmartsheetsUpdateValidenums = "sheetaccess_level"
+	SourceSmartsheetsUpdateValidenumsRowID            SourceSmartsheetsUpdateValidenums = "row_id"
+	SourceSmartsheetsUpdateValidenumsRowAccessLevel   SourceSmartsheetsUpdateValidenums = "row_access_level"
+	SourceSmartsheetsUpdateValidenumsRowCreatedAt     SourceSmartsheetsUpdateValidenums = "row_created_at"
+	SourceSmartsheetsUpdateValidenumsRowCreatedBy     SourceSmartsheetsUpdateValidenums = "row_created_by"
+	SourceSmartsheetsUpdateValidenumsRowExpanded      SourceSmartsheetsUpdateValidenums = "row_expanded"
+	SourceSmartsheetsUpdateValidenumsRowModifiedBy    SourceSmartsheetsUpdateValidenums = "row_modified_by"
+	SourceSmartsheetsUpdateValidenumsRowParentID      SourceSmartsheetsUpdateValidenums = "row_parent_id"
+	SourceSmartsheetsUpdateValidenumsRowPermalink     SourceSmartsheetsUpdateValidenums = "row_permalink"
+	SourceSmartsheetsUpdateValidenumsRowNumber        SourceSmartsheetsUpdateValidenums = "row_number"
+	SourceSmartsheetsUpdateValidenumsRowVersion       SourceSmartsheetsUpdateValidenums = "row_version"
+)
+
+func (e SourceSmartsheetsUpdateValidenums) ToPointer() *SourceSmartsheetsUpdateValidenums {
+	return &e
+}
+
+func (e *SourceSmartsheetsUpdateValidenums) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "sheetcreatedAt":
+		fallthrough
+	case "sheetid":
+		fallthrough
+	case "sheetmodifiedAt":
+		fallthrough
+	case "sheetname":
+		fallthrough
+	case "sheetpermalink":
+		fallthrough
+	case "sheetversion":
+		fallthrough
+	case "sheetaccess_level":
+		fallthrough
+	case "row_id":
+		fallthrough
+	case "row_access_level":
+		fallthrough
+	case "row_created_at":
+		fallthrough
+	case "row_created_by":
+		fallthrough
+	case "row_expanded":
+		fallthrough
+	case "row_modified_by":
+		fallthrough
+	case "row_parent_id":
+		fallthrough
+	case "row_permalink":
+		fallthrough
+	case "row_number":
+		fallthrough
+	case "row_version":
+		*e = SourceSmartsheetsUpdateValidenums(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceSmartsheetsUpdateValidenums: %v", v)
+	}
+}
+
 type SourceSmartsheetsUpdate struct {
 	Credentials SourceSmartsheetsUpdateAuthorizationMethod `json:"credentials"`
+	// A List of available columns which metadata can be pulled from.
+	MetadataFields []SourceSmartsheetsUpdateValidenums `json:"metadata_fields,omitempty"`
 	// The spreadsheet ID. Find it by opening the spreadsheet then navigating to File > Properties
 	SpreadsheetID string `json:"spreadsheet_id"`
 	// Only rows modified after this date/time will be replicated. This should be an ISO 8601 string, for instance: `2000-01-01T13:00:00`

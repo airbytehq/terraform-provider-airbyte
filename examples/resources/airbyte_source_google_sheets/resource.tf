@@ -8,11 +8,12 @@ resource "airbyte_source_google_sheets" "my_source_googlesheets" {
         refresh_token = "...my_refresh_token..."
       }
     }
-    row_batch_size = 10
-    source_type    = "google-sheets"
-    spreadsheet_id = "https://docs.google.com/spreadsheets/d/1hLd9Qqti3UyLXZB2aFfUWDT7BG-arw2xy4HR3D-dwUb/edit"
+    names_conversion = true
+    row_batch_size   = 100
+    source_type      = "google-sheets"
+    spreadsheet_id   = "https://docs.google.com/spreadsheets/d/1hLd9Qqti3UyLXZB2aFfUWDT7BG-arw2xy4HR3D-dwUb/edit"
   }
-  name         = "Jeffrey Gutmann"
+  name         = "Mae Gleichner"
   secret_id    = "...my_secret_id..."
-  workspace_id = "d2224656-9462-4407-884f-7ab37cef0222"
+  workspace_id = "407084f7-ab37-4cef-8222-5194db55410a"
 }

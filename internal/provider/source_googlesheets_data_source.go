@@ -70,15 +70,15 @@ func (r *SourceGoogleSheetsDataSource) Schema(ctx context.Context, req datasourc
 									},
 									"client_id": schema.StringAttribute{
 										Computed:    true,
-										Description: `Enter your Google application's Client ID`,
+										Description: `Enter your Google application's Client ID. See <a href='https://developers.google.com/identity/protocols/oauth2'>Google's documentation</a> for more information.`,
 									},
 									"client_secret": schema.StringAttribute{
 										Computed:    true,
-										Description: `Enter your Google application's Client Secret`,
+										Description: `Enter your Google application's Client Secret. See <a href='https://developers.google.com/identity/protocols/oauth2'>Google's documentation</a> for more information.`,
 									},
 									"refresh_token": schema.StringAttribute{
 										Computed:    true,
-										Description: `Enter your Google application's refresh token`,
+										Description: `Enter your Google application's refresh token. See <a href='https://developers.google.com/identity/protocols/oauth2'>Google's documentation</a> for more information.`,
 									},
 								},
 								Description: `Credentials for connecting to the Google Sheets API`,
@@ -97,7 +97,7 @@ func (r *SourceGoogleSheetsDataSource) Schema(ctx context.Context, req datasourc
 									},
 									"service_account_info": schema.StringAttribute{
 										Computed:    true,
-										Description: `Enter your Google Cloud <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">service account key</a> in JSON format`,
+										Description: `The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">here</a>.`,
 									},
 								},
 								Description: `Credentials for connecting to the Google Sheets API`,
@@ -116,15 +116,15 @@ func (r *SourceGoogleSheetsDataSource) Schema(ctx context.Context, req datasourc
 									},
 									"client_id": schema.StringAttribute{
 										Computed:    true,
-										Description: `Enter your Google application's Client ID`,
+										Description: `Enter your Google application's Client ID. See <a href='https://developers.google.com/identity/protocols/oauth2'>Google's documentation</a> for more information.`,
 									},
 									"client_secret": schema.StringAttribute{
 										Computed:    true,
-										Description: `Enter your Google application's Client Secret`,
+										Description: `Enter your Google application's Client Secret. See <a href='https://developers.google.com/identity/protocols/oauth2'>Google's documentation</a> for more information.`,
 									},
 									"refresh_token": schema.StringAttribute{
 										Computed:    true,
-										Description: `Enter your Google application's refresh token`,
+										Description: `Enter your Google application's refresh token. See <a href='https://developers.google.com/identity/protocols/oauth2'>Google's documentation</a> for more information.`,
 									},
 								},
 								Description: `Credentials for connecting to the Google Sheets API`,
@@ -143,7 +143,7 @@ func (r *SourceGoogleSheetsDataSource) Schema(ctx context.Context, req datasourc
 									},
 									"service_account_info": schema.StringAttribute{
 										Computed:    true,
-										Description: `Enter your Google Cloud <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">service account key</a> in JSON format`,
+										Description: `The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">here</a>.`,
 									},
 								},
 								Description: `Credentials for connecting to the Google Sheets API`,
@@ -154,9 +154,13 @@ func (r *SourceGoogleSheetsDataSource) Schema(ctx context.Context, req datasourc
 						},
 						Description: `Credentials for connecting to the Google Sheets API`,
 					},
+					"names_conversion": schema.BoolAttribute{
+						Computed:    true,
+						Description: `Enables the conversion of column names to a standardized, SQL-compliant format. For example, 'My Name' -> 'my_name'. Enable this option if your destination is SQL-based.`,
+					},
 					"row_batch_size": schema.Int64Attribute{
 						Computed:    true,
-						Description: `Number of rows fetched when making a Google Sheet API call. Defaults to 200.`,
+						Description: `The number of rows fetched when making a Google Sheet API call. Defaults to 200.`,
 					},
 					"source_type": schema.StringAttribute{
 						Computed: true,
@@ -169,7 +173,7 @@ func (r *SourceGoogleSheetsDataSource) Schema(ctx context.Context, req datasourc
 					},
 					"spreadsheet_id": schema.StringAttribute{
 						Computed:    true,
-						Description: `Enter the link to the Google spreadsheet you want to sync`,
+						Description: `Enter the link to the Google spreadsheet you want to sync. To copy the link, click the 'Share' button in the top-right corner of the spreadsheet, then click 'Copy link'.`,
 					},
 				},
 			},

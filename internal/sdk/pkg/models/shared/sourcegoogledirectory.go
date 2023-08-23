@@ -3,9 +3,151 @@
 package shared
 
 import (
+	"bytes"
 	"encoding/json"
+	"errors"
 	"fmt"
 )
+
+// SourceGoogleDirectoryGoogleCredentialsServiceAccountKeyCredentialsTitle - Authentication Scenario
+type SourceGoogleDirectoryGoogleCredentialsServiceAccountKeyCredentialsTitle string
+
+const (
+	SourceGoogleDirectoryGoogleCredentialsServiceAccountKeyCredentialsTitleServiceAccounts SourceGoogleDirectoryGoogleCredentialsServiceAccountKeyCredentialsTitle = "Service accounts"
+)
+
+func (e SourceGoogleDirectoryGoogleCredentialsServiceAccountKeyCredentialsTitle) ToPointer() *SourceGoogleDirectoryGoogleCredentialsServiceAccountKeyCredentialsTitle {
+	return &e
+}
+
+func (e *SourceGoogleDirectoryGoogleCredentialsServiceAccountKeyCredentialsTitle) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Service accounts":
+		*e = SourceGoogleDirectoryGoogleCredentialsServiceAccountKeyCredentialsTitle(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceGoogleDirectoryGoogleCredentialsServiceAccountKeyCredentialsTitle: %v", v)
+	}
+}
+
+// SourceGoogleDirectoryGoogleCredentialsServiceAccountKey - For these scenario user should obtain service account's credentials from the Google API Console and provide delegated email.
+type SourceGoogleDirectoryGoogleCredentialsServiceAccountKey struct {
+	// The contents of the JSON service account key. See the <a href="https://developers.google.com/admin-sdk/directory/v1/guides/delegation">docs</a> for more information on how to generate this key.
+	CredentialsJSON string `json:"credentials_json"`
+	// Authentication Scenario
+	CredentialsTitle *SourceGoogleDirectoryGoogleCredentialsServiceAccountKeyCredentialsTitle `json:"credentials_title,omitempty"`
+	// The email of the user, which has permissions to access the Google Workspace Admin APIs.
+	Email string `json:"email"`
+}
+
+// SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuthCredentialsTitle - Authentication Scenario
+type SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuthCredentialsTitle string
+
+const (
+	SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuthCredentialsTitleWebServerApp SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuthCredentialsTitle = "Web server app"
+)
+
+func (e SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuthCredentialsTitle) ToPointer() *SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuthCredentialsTitle {
+	return &e
+}
+
+func (e *SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuthCredentialsTitle) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Web server app":
+		*e = SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuthCredentialsTitle(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuthCredentialsTitle: %v", v)
+	}
+}
+
+// SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth - For these scenario user only needs to give permission to read Google Directory data.
+type SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth struct {
+	// The Client ID of the developer application.
+	ClientID string `json:"client_id"`
+	// The Client Secret of the developer application.
+	ClientSecret string `json:"client_secret"`
+	// Authentication Scenario
+	CredentialsTitle *SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuthCredentialsTitle `json:"credentials_title,omitempty"`
+	// The Token for obtaining a new access token.
+	RefreshToken string `json:"refresh_token"`
+}
+
+type SourceGoogleDirectoryGoogleCredentialsType string
+
+const (
+	SourceGoogleDirectoryGoogleCredentialsTypeSourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth SourceGoogleDirectoryGoogleCredentialsType = "source-google-directory_Google Credentials_Sign in via Google (OAuth)"
+	SourceGoogleDirectoryGoogleCredentialsTypeSourceGoogleDirectoryGoogleCredentialsServiceAccountKey    SourceGoogleDirectoryGoogleCredentialsType = "source-google-directory_Google Credentials_Service Account Key"
+)
+
+type SourceGoogleDirectoryGoogleCredentials struct {
+	SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth *SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth
+	SourceGoogleDirectoryGoogleCredentialsServiceAccountKey    *SourceGoogleDirectoryGoogleCredentialsServiceAccountKey
+
+	Type SourceGoogleDirectoryGoogleCredentialsType
+}
+
+func CreateSourceGoogleDirectoryGoogleCredentialsSourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth(sourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth) SourceGoogleDirectoryGoogleCredentials {
+	typ := SourceGoogleDirectoryGoogleCredentialsTypeSourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth
+
+	return SourceGoogleDirectoryGoogleCredentials{
+		SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth: &sourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth,
+		Type: typ,
+	}
+}
+
+func CreateSourceGoogleDirectoryGoogleCredentialsSourceGoogleDirectoryGoogleCredentialsServiceAccountKey(sourceGoogleDirectoryGoogleCredentialsServiceAccountKey SourceGoogleDirectoryGoogleCredentialsServiceAccountKey) SourceGoogleDirectoryGoogleCredentials {
+	typ := SourceGoogleDirectoryGoogleCredentialsTypeSourceGoogleDirectoryGoogleCredentialsServiceAccountKey
+
+	return SourceGoogleDirectoryGoogleCredentials{
+		SourceGoogleDirectoryGoogleCredentialsServiceAccountKey: &sourceGoogleDirectoryGoogleCredentialsServiceAccountKey,
+		Type: typ,
+	}
+}
+
+func (u *SourceGoogleDirectoryGoogleCredentials) UnmarshalJSON(data []byte) error {
+	var d *json.Decoder
+
+	sourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth := new(SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth); err == nil {
+		u.SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth = sourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth
+		u.Type = SourceGoogleDirectoryGoogleCredentialsTypeSourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth
+		return nil
+	}
+
+	sourceGoogleDirectoryGoogleCredentialsServiceAccountKey := new(SourceGoogleDirectoryGoogleCredentialsServiceAccountKey)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceGoogleDirectoryGoogleCredentialsServiceAccountKey); err == nil {
+		u.SourceGoogleDirectoryGoogleCredentialsServiceAccountKey = sourceGoogleDirectoryGoogleCredentialsServiceAccountKey
+		u.Type = SourceGoogleDirectoryGoogleCredentialsTypeSourceGoogleDirectoryGoogleCredentialsServiceAccountKey
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u SourceGoogleDirectoryGoogleCredentials) MarshalJSON() ([]byte, error) {
+	if u.SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth != nil {
+		return json.Marshal(u.SourceGoogleDirectoryGoogleCredentialsSignInViaGoogleOAuth)
+	}
+
+	if u.SourceGoogleDirectoryGoogleCredentialsServiceAccountKey != nil {
+		return json.Marshal(u.SourceGoogleDirectoryGoogleCredentialsServiceAccountKey)
+	}
+
+	return nil, nil
+}
 
 type SourceGoogleDirectoryGoogleDirectory string
 
@@ -32,9 +174,7 @@ func (e *SourceGoogleDirectoryGoogleDirectory) UnmarshalJSON(data []byte) error 
 }
 
 type SourceGoogleDirectory struct {
-	// The contents of the JSON service account key. See the <a href="https://developers.google.com/admin-sdk/directory/v1/guides/delegation">docs</a> for more information on how to generate this key.
-	CredentialsJSON string `json:"credentials_json"`
-	// The email of the user, which has permissions to access the Google Workspace Admin APIs.
-	Email      string                               `json:"email"`
-	SourceType SourceGoogleDirectoryGoogleDirectory `json:"sourceType"`
+	// Google APIs use the OAuth 2.0 protocol for authentication and authorization. The Source supports <a href="https://developers.google.com/identity/protocols/oauth2#webserver" target="_blank">Web server application</a> and <a href="https://developers.google.com/identity/protocols/oauth2#serviceaccount" target="_blank">Service accounts</a> scenarios.
+	Credentials *SourceGoogleDirectoryGoogleCredentials `json:"credentials,omitempty"`
+	SourceType  SourceGoogleDirectoryGoogleDirectory    `json:"sourceType"`
 }

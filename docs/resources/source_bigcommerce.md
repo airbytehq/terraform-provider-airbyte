@@ -20,9 +20,9 @@ resource "airbyte_source_bigcommerce" "my_source_bigcommerce" {
     start_date   = "2021-01-01"
     store_hash   = "...my_store_hash..."
   }
-  name         = "Emma Ward"
+  name         = "Bill Kling"
   secret_id    = "...my_secret_id..."
-  workspace_id = "2defcce8-f197-4777-be63-562a7b408f05"
+  workspace_id = "b40463a7-d575-4f14-80e7-64ad7334ec1b"
 }
 ```
 

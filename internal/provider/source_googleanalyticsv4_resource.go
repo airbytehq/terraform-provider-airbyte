@@ -178,7 +178,10 @@ func (r *SourceGoogleAnalyticsV4Resource) Schema(ctx context.Context, req resour
 						Description: `must be one of ["google-analytics-v4"]`,
 					},
 					"start_date": schema.StringAttribute{
-						Required:    true,
+						Required: true,
+						Validators: []validator.String{
+							validators.IsValidDate(),
+						},
 						Description: `The date in the format YYYY-MM-DD. Any data before this date will not be replicated.`,
 					},
 					"view_id": schema.StringAttribute{
@@ -386,7 +389,7 @@ func (r *SourceGoogleAnalyticsV4Resource) Update(ctx context.Context, req resour
 		return
 	}
 	if getResponse.SourceResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
 		return
 	}
 	data.RefreshFromGetResponse(getResponse.SourceResponse)
@@ -429,7 +432,7 @@ func (r *SourceGoogleAnalyticsV4Resource) Delete(ctx context.Context, req resour
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

@@ -23,43 +23,43 @@ func (r *SourceMysqlResourceModel) ToCreateSDKType() *shared.SourceMysqlCreateRe
 		password = nil
 	}
 	port := r.Configuration.Port.ValueInt64()
-	var replicationMethod shared.SourceMysqlReplicationMethod
-	var sourceMysqlReplicationMethodStandard *shared.SourceMysqlReplicationMethodStandard
-	if r.Configuration.ReplicationMethod.SourceMysqlReplicationMethodStandard != nil {
-		method := shared.SourceMysqlReplicationMethodStandardMethod(r.Configuration.ReplicationMethod.SourceMysqlReplicationMethodStandard.Method.ValueString())
-		sourceMysqlReplicationMethodStandard = &shared.SourceMysqlReplicationMethodStandard{
-			Method: method,
-		}
-	}
-	if sourceMysqlReplicationMethodStandard != nil {
-		replicationMethod = shared.SourceMysqlReplicationMethod{
-			SourceMysqlReplicationMethodStandard: sourceMysqlReplicationMethodStandard,
-		}
-	}
-	var sourceMysqlReplicationMethodLogicalReplicationCDC *shared.SourceMysqlReplicationMethodLogicalReplicationCDC
-	if r.Configuration.ReplicationMethod.SourceMysqlReplicationMethodLogicalReplicationCDC != nil {
+	var replicationMethod shared.SourceMysqlUpdateMethod
+	var sourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC *shared.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC
+	if r.Configuration.ReplicationMethod.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC != nil {
 		initialWaitingSeconds := new(int64)
-		if !r.Configuration.ReplicationMethod.SourceMysqlReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds.IsUnknown() && !r.Configuration.ReplicationMethod.SourceMysqlReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds.IsNull() {
-			*initialWaitingSeconds = r.Configuration.ReplicationMethod.SourceMysqlReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds.ValueInt64()
+		if !r.Configuration.ReplicationMethod.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC.InitialWaitingSeconds.IsUnknown() && !r.Configuration.ReplicationMethod.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC.InitialWaitingSeconds.IsNull() {
+			*initialWaitingSeconds = r.Configuration.ReplicationMethod.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC.InitialWaitingSeconds.ValueInt64()
 		} else {
 			initialWaitingSeconds = nil
 		}
-		method1 := shared.SourceMysqlReplicationMethodLogicalReplicationCDCMethod(r.Configuration.ReplicationMethod.SourceMysqlReplicationMethodLogicalReplicationCDC.Method.ValueString())
+		method := shared.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDCMethod(r.Configuration.ReplicationMethod.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC.Method.ValueString())
 		serverTimeZone := new(string)
-		if !r.Configuration.ReplicationMethod.SourceMysqlReplicationMethodLogicalReplicationCDC.ServerTimeZone.IsUnknown() && !r.Configuration.ReplicationMethod.SourceMysqlReplicationMethodLogicalReplicationCDC.ServerTimeZone.IsNull() {
-			*serverTimeZone = r.Configuration.ReplicationMethod.SourceMysqlReplicationMethodLogicalReplicationCDC.ServerTimeZone.ValueString()
+		if !r.Configuration.ReplicationMethod.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC.ServerTimeZone.IsUnknown() && !r.Configuration.ReplicationMethod.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC.ServerTimeZone.IsNull() {
+			*serverTimeZone = r.Configuration.ReplicationMethod.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC.ServerTimeZone.ValueString()
 		} else {
 			serverTimeZone = nil
 		}
-		sourceMysqlReplicationMethodLogicalReplicationCDC = &shared.SourceMysqlReplicationMethodLogicalReplicationCDC{
+		sourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC = &shared.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC{
 			InitialWaitingSeconds: initialWaitingSeconds,
-			Method:                method1,
+			Method:                method,
 			ServerTimeZone:        serverTimeZone,
 		}
 	}
-	if sourceMysqlReplicationMethodLogicalReplicationCDC != nil {
-		replicationMethod = shared.SourceMysqlReplicationMethod{
-			SourceMysqlReplicationMethodLogicalReplicationCDC: sourceMysqlReplicationMethodLogicalReplicationCDC,
+	if sourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC != nil {
+		replicationMethod = shared.SourceMysqlUpdateMethod{
+			SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC: sourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC,
+		}
+	}
+	var sourceMysqlUpdateMethodScanChangesWithUserDefinedCursor *shared.SourceMysqlUpdateMethodScanChangesWithUserDefinedCursor
+	if r.Configuration.ReplicationMethod.SourceMysqlUpdateMethodScanChangesWithUserDefinedCursor != nil {
+		method1 := shared.SourceMysqlUpdateMethodScanChangesWithUserDefinedCursorMethod(r.Configuration.ReplicationMethod.SourceMysqlUpdateMethodScanChangesWithUserDefinedCursor.Method.ValueString())
+		sourceMysqlUpdateMethodScanChangesWithUserDefinedCursor = &shared.SourceMysqlUpdateMethodScanChangesWithUserDefinedCursor{
+			Method: method1,
+		}
+	}
+	if sourceMysqlUpdateMethodScanChangesWithUserDefinedCursor != nil {
+		replicationMethod = shared.SourceMysqlUpdateMethod{
+			SourceMysqlUpdateMethodScanChangesWithUserDefinedCursor: sourceMysqlUpdateMethodScanChangesWithUserDefinedCursor,
 		}
 	}
 	sourceType := shared.SourceMysqlMysql(r.Configuration.SourceType.ValueString())
@@ -266,43 +266,43 @@ func (r *SourceMysqlResourceModel) ToUpdateSDKType() *shared.SourceMysqlPutReque
 		password = nil
 	}
 	port := r.Configuration.Port.ValueInt64()
-	var replicationMethod shared.SourceMysqlUpdateReplicationMethod
-	var sourceMysqlUpdateReplicationMethodStandard *shared.SourceMysqlUpdateReplicationMethodStandard
-	if r.Configuration.ReplicationMethod.SourceMysqlUpdateReplicationMethodStandard != nil {
-		method := shared.SourceMysqlUpdateReplicationMethodStandardMethod(r.Configuration.ReplicationMethod.SourceMysqlUpdateReplicationMethodStandard.Method.ValueString())
-		sourceMysqlUpdateReplicationMethodStandard = &shared.SourceMysqlUpdateReplicationMethodStandard{
-			Method: method,
-		}
-	}
-	if sourceMysqlUpdateReplicationMethodStandard != nil {
-		replicationMethod = shared.SourceMysqlUpdateReplicationMethod{
-			SourceMysqlUpdateReplicationMethodStandard: sourceMysqlUpdateReplicationMethodStandard,
-		}
-	}
-	var sourceMysqlUpdateReplicationMethodLogicalReplicationCDC *shared.SourceMysqlUpdateReplicationMethodLogicalReplicationCDC
-	if r.Configuration.ReplicationMethod.SourceMysqlUpdateReplicationMethodLogicalReplicationCDC != nil {
+	var replicationMethod shared.SourceMysqlUpdateUpdateMethod
+	var sourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC *shared.SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC
+	if r.Configuration.ReplicationMethod.SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC != nil {
 		initialWaitingSeconds := new(int64)
-		if !r.Configuration.ReplicationMethod.SourceMysqlUpdateReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds.IsUnknown() && !r.Configuration.ReplicationMethod.SourceMysqlUpdateReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds.IsNull() {
-			*initialWaitingSeconds = r.Configuration.ReplicationMethod.SourceMysqlUpdateReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds.ValueInt64()
+		if !r.Configuration.ReplicationMethod.SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC.InitialWaitingSeconds.IsUnknown() && !r.Configuration.ReplicationMethod.SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC.InitialWaitingSeconds.IsNull() {
+			*initialWaitingSeconds = r.Configuration.ReplicationMethod.SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC.InitialWaitingSeconds.ValueInt64()
 		} else {
 			initialWaitingSeconds = nil
 		}
-		method1 := shared.SourceMysqlUpdateReplicationMethodLogicalReplicationCDCMethod(r.Configuration.ReplicationMethod.SourceMysqlUpdateReplicationMethodLogicalReplicationCDC.Method.ValueString())
+		method := shared.SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDCMethod(r.Configuration.ReplicationMethod.SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC.Method.ValueString())
 		serverTimeZone := new(string)
-		if !r.Configuration.ReplicationMethod.SourceMysqlUpdateReplicationMethodLogicalReplicationCDC.ServerTimeZone.IsUnknown() && !r.Configuration.ReplicationMethod.SourceMysqlUpdateReplicationMethodLogicalReplicationCDC.ServerTimeZone.IsNull() {
-			*serverTimeZone = r.Configuration.ReplicationMethod.SourceMysqlUpdateReplicationMethodLogicalReplicationCDC.ServerTimeZone.ValueString()
+		if !r.Configuration.ReplicationMethod.SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC.ServerTimeZone.IsUnknown() && !r.Configuration.ReplicationMethod.SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC.ServerTimeZone.IsNull() {
+			*serverTimeZone = r.Configuration.ReplicationMethod.SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC.ServerTimeZone.ValueString()
 		} else {
 			serverTimeZone = nil
 		}
-		sourceMysqlUpdateReplicationMethodLogicalReplicationCDC = &shared.SourceMysqlUpdateReplicationMethodLogicalReplicationCDC{
+		sourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC = &shared.SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC{
 			InitialWaitingSeconds: initialWaitingSeconds,
-			Method:                method1,
+			Method:                method,
 			ServerTimeZone:        serverTimeZone,
 		}
 	}
-	if sourceMysqlUpdateReplicationMethodLogicalReplicationCDC != nil {
-		replicationMethod = shared.SourceMysqlUpdateReplicationMethod{
-			SourceMysqlUpdateReplicationMethodLogicalReplicationCDC: sourceMysqlUpdateReplicationMethodLogicalReplicationCDC,
+	if sourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC != nil {
+		replicationMethod = shared.SourceMysqlUpdateUpdateMethod{
+			SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC: sourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC,
+		}
+	}
+	var sourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor *shared.SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor
+	if r.Configuration.ReplicationMethod.SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor != nil {
+		method1 := shared.SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursorMethod(r.Configuration.ReplicationMethod.SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor.Method.ValueString())
+		sourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor = &shared.SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor{
+			Method: method1,
+		}
+	}
+	if sourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor != nil {
+		replicationMethod = shared.SourceMysqlUpdateUpdateMethod{
+			SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor: sourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor,
 		}
 	}
 	var sslMode *shared.SourceMysqlUpdateSSLModes

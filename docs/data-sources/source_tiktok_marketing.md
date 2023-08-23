@@ -44,6 +44,7 @@ Read-Only:
 - `attribution_window` (Number) The attribution window in days.
 - `credentials` (Attributes) Authentication method (see [below for nested schema](#nestedatt--configuration--credentials))
 - `end_date` (String) The date until which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DD. All data generated between start_date and this date will be replicated. Not setting this option will result in always syncing the data till the current date.
+- `include_deleted` (Boolean) Set to active if you want to include deleted data in reports.
 - `source_type` (String) must be one of ["tiktok-marketing"]
 - `start_date` (String) The Start Date in format: YYYY-MM-DD. Any data before this date will not be replicated. If this parameter is not set, all data will be replicated.
 

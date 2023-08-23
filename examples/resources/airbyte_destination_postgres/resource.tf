@@ -17,8 +17,8 @@ resource "airbyte_destination_postgres" "my_destination_postgres" {
         tunnel_method = "NO_TUNNEL"
       }
     }
-    username = "Gerald.Powlowski46"
+    username = "Laron.Gerlach40"
   }
-  name         = "Angelina Jenkins"
-  workspace_id = "eee9526f-8d98-46e8-81ea-d4f0e1012563"
+  name         = "Isaac Wolf"
+  workspace_id = "7f603e8b-445e-480c-a55e-fd20e457e185"
 }

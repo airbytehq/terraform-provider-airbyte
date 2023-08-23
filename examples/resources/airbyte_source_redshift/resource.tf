@@ -9,9 +9,9 @@ resource "airbyte_source_redshift" "my_source_redshift" {
       "...",
     ]
     source_type = "redshift"
-    username    = "Elmer.Bradtke80"
+    username    = "Abdullah.Oberbrunner"
   }
-  name         = "Ms. Shelia Luettgen V"
+  name         = "Edward Wolf"
   secret_id    = "...my_secret_id..."
-  workspace_id = "4373e060-459b-4ebb-ad02-f2586bcf1525"
+  workspace_id = "7f385189-ad7e-4f80-baae-03f33ca79fb9"
 }

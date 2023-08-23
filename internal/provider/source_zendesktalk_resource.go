@@ -104,6 +104,14 @@ func (r *SourceZendeskTalkResource) Schema(ctx context.Context, req resource.Sch
 										},
 										Description: `must be one of ["oauth2.0"]`,
 									},
+									"client_id": schema.StringAttribute{
+										Optional:    true,
+										Description: `Client ID`,
+									},
+									"client_secret": schema.StringAttribute{
+										Optional:    true,
+										Description: `Client Secret`,
+									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
 										Validators: []validator.String{
@@ -159,6 +167,14 @@ func (r *SourceZendeskTalkResource) Schema(ctx context.Context, req resource.Sch
 											),
 										},
 										Description: `must be one of ["oauth2.0"]`,
+									},
+									"client_id": schema.StringAttribute{
+										Optional:    true,
+										Description: `Client ID`,
+									},
+									"client_secret": schema.StringAttribute{
+										Optional:    true,
+										Description: `Client Secret`,
 									},
 									"additional_properties": schema.StringAttribute{
 										Optional: true,
@@ -393,7 +409,7 @@ func (r *SourceZendeskTalkResource) Update(ctx context.Context, req resource.Upd
 		return
 	}
 	if getResponse.SourceResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
 		return
 	}
 	data.RefreshFromGetResponse(getResponse.SourceResponse)
@@ -436,7 +452,7 @@ func (r *SourceZendeskTalkResource) Delete(ctx context.Context, req resource.Del
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

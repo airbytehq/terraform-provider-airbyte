@@ -25,9 +25,9 @@ resource "airbyte_source_retently" "my_source_retently" {
     }
     source_type = "retently"
   }
-  name         = "Myrtle Spinka"
+  name         = "Mrs. Lamar Fritsch"
   secret_id    = "...my_secret_id..."
-  workspace_id = "95be6cd0-2756-4c35-8aa4-32b47e1763c5"
+  workspace_id = "ba26fd36-8ba9-4216-bcb4-15835c736417"
 }
 ```
 

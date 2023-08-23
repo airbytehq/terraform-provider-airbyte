@@ -16,7 +16,14 @@ SourceLinkedinAds Resource
 resource "airbyte_source_linkedin_ads" "my_source_linkedinads" {
   configuration = {
     account_ids = [
-      5,
+      1,
+    ]
+    ad_analytics_reports = [
+      {
+        name             = "Mable Stroman"
+        pivot_by         = "MEMBER_COMPANY_SIZE"
+        time_granularity = "MONTHLY"
+      },
     ]
     credentials = {
       source_linkedin_ads_authentication_access_token = {
@@ -27,9 +34,9 @@ resource "airbyte_source_linkedin_ads" "my_source_linkedinads" {
     source_type = "linkedin-ads"
     start_date  = "2021-05-17"
   }
-  name         = "Martin Bahringer"
+  name         = "Leigh Kuhic"
   secret_id    = "...my_secret_id..."
-  workspace_id = "7320590c-cc10-4964-8031-3b3e5044f65f"
+  workspace_id = "1cbe6d95-02f0-4ea9-b0b6-9f7ac2f72f88"
 }
 ```
 
@@ -62,7 +69,24 @@ Required:
 Optional:
 
 - `account_ids` (List of Number) Specify the account IDs separated by a space, to pull the data from. Leave empty, if you want to pull the data from all associated accounts. See the <a href="https://www.linkedin.com/help/linkedin/answer/a424270/find-linkedin-ads-account-details?lang=en">LinkedIn Ads docs</a> for more info.
+- `ad_analytics_reports` (Attributes List) (see [below for nested schema](#nestedatt--configuration--ad_analytics_reports))
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
+
+<a id="nestedatt--configuration--ad_analytics_reports"></a>
+### Nested Schema for `configuration.ad_analytics_reports`
+
+Required:
+
+- `name` (String) The name for the report
+- `pivot_by` (String) must be one of ["COMPANY", "ACCOUNT", "SHARE", "CAMPAIGN", "CREATIVE", "CAMPAIGN_GROUP", "CONVERSION", "CONVERSATION_NODE", "CONVERSATION_NODE_OPTION_INDEX", "SERVING_LOCATION", "CARD_INDEX", "MEMBER_COMPANY_SIZE", "MEMBER_INDUSTRY", "MEMBER_SENIORITY", "MEMBER_JOB_TITLE ", "MEMBER_JOB_FUNCTION ", "MEMBER_COUNTRY_V2 ", "MEMBER_REGION_V2", "MEMBER_COMPANY", "PLACEMENT_NAME", "IMPRESSION_DEVICE_TYPE"]
+Select value from list to pivot by
+- `time_granularity` (String) must be one of ["ALL", "DAILY", "MONTHLY", "YEARLY"]
+Set time granularity for report: 
+ALL - Results grouped into a single result across the entire time range of the report.
+DAILY - Results grouped by day.
+MONTHLY - Results grouped by month.
+YEARLY - Results grouped by year.
+
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`

@@ -146,6 +146,78 @@ func (u SourceSmartsheetsAuthorizationMethod) MarshalJSON() ([]byte, error) {
 	return nil, nil
 }
 
+type SourceSmartsheetsValidenums string
+
+const (
+	SourceSmartsheetsValidenumsSheetcreatedAt   SourceSmartsheetsValidenums = "sheetcreatedAt"
+	SourceSmartsheetsValidenumsSheetid          SourceSmartsheetsValidenums = "sheetid"
+	SourceSmartsheetsValidenumsSheetmodifiedAt  SourceSmartsheetsValidenums = "sheetmodifiedAt"
+	SourceSmartsheetsValidenumsSheetname        SourceSmartsheetsValidenums = "sheetname"
+	SourceSmartsheetsValidenumsSheetpermalink   SourceSmartsheetsValidenums = "sheetpermalink"
+	SourceSmartsheetsValidenumsSheetversion     SourceSmartsheetsValidenums = "sheetversion"
+	SourceSmartsheetsValidenumsSheetaccessLevel SourceSmartsheetsValidenums = "sheetaccess_level"
+	SourceSmartsheetsValidenumsRowID            SourceSmartsheetsValidenums = "row_id"
+	SourceSmartsheetsValidenumsRowAccessLevel   SourceSmartsheetsValidenums = "row_access_level"
+	SourceSmartsheetsValidenumsRowCreatedAt     SourceSmartsheetsValidenums = "row_created_at"
+	SourceSmartsheetsValidenumsRowCreatedBy     SourceSmartsheetsValidenums = "row_created_by"
+	SourceSmartsheetsValidenumsRowExpanded      SourceSmartsheetsValidenums = "row_expanded"
+	SourceSmartsheetsValidenumsRowModifiedBy    SourceSmartsheetsValidenums = "row_modified_by"
+	SourceSmartsheetsValidenumsRowParentID      SourceSmartsheetsValidenums = "row_parent_id"
+	SourceSmartsheetsValidenumsRowPermalink     SourceSmartsheetsValidenums = "row_permalink"
+	SourceSmartsheetsValidenumsRowNumber        SourceSmartsheetsValidenums = "row_number"
+	SourceSmartsheetsValidenumsRowVersion       SourceSmartsheetsValidenums = "row_version"
+)
+
+func (e SourceSmartsheetsValidenums) ToPointer() *SourceSmartsheetsValidenums {
+	return &e
+}
+
+func (e *SourceSmartsheetsValidenums) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "sheetcreatedAt":
+		fallthrough
+	case "sheetid":
+		fallthrough
+	case "sheetmodifiedAt":
+		fallthrough
+	case "sheetname":
+		fallthrough
+	case "sheetpermalink":
+		fallthrough
+	case "sheetversion":
+		fallthrough
+	case "sheetaccess_level":
+		fallthrough
+	case "row_id":
+		fallthrough
+	case "row_access_level":
+		fallthrough
+	case "row_created_at":
+		fallthrough
+	case "row_created_by":
+		fallthrough
+	case "row_expanded":
+		fallthrough
+	case "row_modified_by":
+		fallthrough
+	case "row_parent_id":
+		fallthrough
+	case "row_permalink":
+		fallthrough
+	case "row_number":
+		fallthrough
+	case "row_version":
+		*e = SourceSmartsheetsValidenums(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceSmartsheetsValidenums: %v", v)
+	}
+}
+
 type SourceSmartsheetsSmartsheets string
 
 const (
@@ -172,7 +244,9 @@ func (e *SourceSmartsheetsSmartsheets) UnmarshalJSON(data []byte) error {
 
 type SourceSmartsheets struct {
 	Credentials SourceSmartsheetsAuthorizationMethod `json:"credentials"`
-	SourceType  SourceSmartsheetsSmartsheets         `json:"sourceType"`
+	// A List of available columns which metadata can be pulled from.
+	MetadataFields []SourceSmartsheetsValidenums `json:"metadata_fields,omitempty"`
+	SourceType     SourceSmartsheetsSmartsheets  `json:"sourceType"`
 	// The spreadsheet ID. Find it by opening the spreadsheet then navigating to File > Properties
 	SpreadsheetID string `json:"spreadsheet_id"`
 	// Only rows modified after this date/time will be replicated. This should be an ISO 8601 string, for instance: `2000-01-01T13:00:00`

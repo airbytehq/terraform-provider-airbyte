@@ -152,6 +152,21 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 								},
 								Description: `Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
 							},
+							"source_postgres_replication_method_standard_xmin": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"method": schema.StringAttribute{
+										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Xmin",
+											),
+										},
+										Description: `must be one of ["Xmin"]`,
+									},
+								},
+								Description: `Xmin replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
+							},
 							"source_postgres_update_replication_method_logical_replication_cdc": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
@@ -225,6 +240,21 @@ func (r *SourcePostgresResource) Schema(ctx context.Context, req resource.Schema
 									},
 								},
 								Description: `Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
+							},
+							"source_postgres_update_replication_method_standard_xmin": schema.SingleNestedAttribute{
+								Optional: true,
+								Attributes: map[string]schema.Attribute{
+									"method": schema.StringAttribute{
+										Required: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Xmin",
+											),
+										},
+										Description: `must be one of ["Xmin"]`,
+									},
+								},
+								Description: `Xmin replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
 							},
 						},
 						Validators: []validator.Object{
@@ -954,7 +984,7 @@ func (r *SourcePostgresResource) Update(ctx context.Context, req resource.Update
 		return
 	}
 	if getResponse.SourceResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
 		return
 	}
 	data.RefreshFromGetResponse(getResponse.SourceResponse)
@@ -997,7 +1027,7 @@ func (r *SourcePostgresResource) Delete(ctx context.Context, req resource.Delete
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

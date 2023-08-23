@@ -18,15 +18,15 @@ resource "airbyte_source_coin_api" "my_source_coinapi" {
     api_key     = "...my_api_key..."
     end_date    = "2019-01-01T00:00:00"
     environment = "sandbox"
-    limit       = 6
+    limit       = 10
     period      = "5SEC"
     source_type = "coin-api"
     start_date  = "2019-01-01T00:00:00"
     symbol_id   = "...my_symbol_id..."
   }
-  name         = "Marcella Ernser"
+  name         = "Myron Boyle"
   secret_id    = "...my_secret_id..."
-  workspace_id = "ecfcc8f8-9501-40f5-9d3d-6fa1804e54c8"
+  workspace_id = "c2b9c247-c883-473a-80e1-942f32e55055"
 }
 ```
 

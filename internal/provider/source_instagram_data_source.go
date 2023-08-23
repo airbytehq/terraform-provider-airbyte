@@ -57,6 +57,14 @@ func (r *SourceInstagramDataSource) Schema(ctx context.Context, req datasource.S
 						Computed:    true,
 						Description: `The value of the access token generated with <b>instagram_basic, instagram_manage_insights, pages_show_list, pages_read_engagement, Instagram Public Content Access</b> permissions. See the <a href="https://docs.airbyte.com/integrations/sources/instagram/#step-1-set-up-instagram">docs</a> for more information`,
 					},
+					"client_id": schema.StringAttribute{
+						Computed:    true,
+						Description: `The Client ID for your Oauth application`,
+					},
+					"client_secret": schema.StringAttribute{
+						Computed:    true,
+						Description: `The Client Secret for your Oauth application`,
+					},
 					"source_type": schema.StringAttribute{
 						Computed: true,
 						Validators: []validator.String{

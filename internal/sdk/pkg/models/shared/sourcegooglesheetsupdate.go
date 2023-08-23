@@ -36,7 +36,7 @@ func (e *SourceGoogleSheetsUpdateAuthenticationServiceAccountKeyAuthenticationAu
 // SourceGoogleSheetsUpdateAuthenticationServiceAccountKeyAuthentication - Credentials for connecting to the Google Sheets API
 type SourceGoogleSheetsUpdateAuthenticationServiceAccountKeyAuthentication struct {
 	AuthType SourceGoogleSheetsUpdateAuthenticationServiceAccountKeyAuthenticationAuthType `json:"auth_type"`
-	// Enter your Google Cloud <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">service account key</a> in JSON format
+	// The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys#creating_service_account_keys">here</a>.
 	ServiceAccountInfo string `json:"service_account_info"`
 }
 
@@ -67,11 +67,11 @@ func (e *SourceGoogleSheetsUpdateAuthenticationAuthenticateViaGoogleOAuthAuthTyp
 // SourceGoogleSheetsUpdateAuthenticationAuthenticateViaGoogleOAuth - Credentials for connecting to the Google Sheets API
 type SourceGoogleSheetsUpdateAuthenticationAuthenticateViaGoogleOAuth struct {
 	AuthType SourceGoogleSheetsUpdateAuthenticationAuthenticateViaGoogleOAuthAuthType `json:"auth_type"`
-	// Enter your Google application's Client ID
+	// Enter your Google application's Client ID. See <a href='https://developers.google.com/identity/protocols/oauth2'>Google's documentation</a> for more information.
 	ClientID string `json:"client_id"`
-	// Enter your Google application's Client Secret
+	// Enter your Google application's Client Secret. See <a href='https://developers.google.com/identity/protocols/oauth2'>Google's documentation</a> for more information.
 	ClientSecret string `json:"client_secret"`
-	// Enter your Google application's refresh token
+	// Enter your Google application's refresh token. See <a href='https://developers.google.com/identity/protocols/oauth2'>Google's documentation</a> for more information.
 	RefreshToken string `json:"refresh_token"`
 }
 
@@ -146,8 +146,10 @@ func (u SourceGoogleSheetsUpdateAuthentication) MarshalJSON() ([]byte, error) {
 type SourceGoogleSheetsUpdate struct {
 	// Credentials for connecting to the Google Sheets API
 	Credentials SourceGoogleSheetsUpdateAuthentication `json:"credentials"`
-	// Number of rows fetched when making a Google Sheet API call. Defaults to 200.
+	// Enables the conversion of column names to a standardized, SQL-compliant format. For example, 'My Name' -> 'my_name'. Enable this option if your destination is SQL-based.
+	NamesConversion *bool `json:"names_conversion,omitempty"`
+	// The number of rows fetched when making a Google Sheet API call. Defaults to 200.
 	RowBatchSize *int64 `json:"row_batch_size,omitempty"`
-	// Enter the link to the Google spreadsheet you want to sync
+	// Enter the link to the Google spreadsheet you want to sync. To copy the link, click the 'Share' button in the top-right corner of the spreadsheet, then click 'Copy link'.
 	SpreadsheetID string `json:"spreadsheet_id"`
 }

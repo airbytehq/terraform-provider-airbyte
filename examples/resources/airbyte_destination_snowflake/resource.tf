@@ -7,21 +7,17 @@ resource "airbyte_destination_snowflake" "my_destination_snowflake" {
         private_key_password = "...my_private_key_password..."
       }
     }
-    database          = "AIRBYTE_DATABASE"
-    destination_type  = "snowflake"
-    file_buffer_count = 10
-    host              = "accountname.us-east-2.aws.snowflakecomputing.com"
-    jdbc_url_params   = "...my_jdbc_url_params..."
-    loading_method = {
-      destination_snowflake_data_staging_method_recommended_internal_staging = {
-        method = "Internal Staging"
-      }
-    }
-    role      = "AIRBYTE_ROLE"
-    schema    = "AIRBYTE_SCHEMA"
-    username  = "AIRBYTE_USER"
-    warehouse = "AIRBYTE_WAREHOUSE"
+    database         = "AIRBYTE_DATABASE"
+    destination_type = "snowflake"
+    host             = "accountname.us-east-2.aws.snowflakecomputing.com"
+    jdbc_url_params  = "...my_jdbc_url_params..."
+    raw_data_schema  = "...my_raw_data_schema..."
+    role             = "AIRBYTE_ROLE"
+    schema           = "AIRBYTE_SCHEMA"
+    use_1s1t_format  = true
+    username         = "AIRBYTE_USER"
+    warehouse        = "AIRBYTE_WAREHOUSE"
   }
-  name         = "Miss Katrina Weber"
-  workspace_id = "9e06e3a4-3700-40ae-ab6b-c9b8f759eac5"
+  name         = "Dr. Terrell Stanton"
+  workspace_id = "fe6c632c-a3ae-4d01-9799-6312fde04771"
 }

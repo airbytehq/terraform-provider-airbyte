@@ -150,6 +150,21 @@ func (r *SourcePostgresDataSource) Schema(ctx context.Context, req datasource.Sc
 								},
 								Description: `Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
 							},
+							"source_postgres_replication_method_standard_xmin": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Xmin",
+											),
+										},
+										Description: `must be one of ["Xmin"]`,
+									},
+								},
+								Description: `Xmin replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
+							},
 							"source_postgres_update_replication_method_logical_replication_cdc": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
@@ -223,6 +238,21 @@ func (r *SourcePostgresDataSource) Schema(ctx context.Context, req datasource.Sc
 									},
 								},
 								Description: `Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
+							},
+							"source_postgres_update_replication_method_standard_xmin": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Xmin",
+											),
+										},
+										Description: `must be one of ["Xmin"]`,
+									},
+								},
+								Description: `Xmin replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
 							},
 						},
 						Validators: []validator.Object{

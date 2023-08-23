@@ -70,6 +70,10 @@ func (r *SourceSalesforceDataSource) Schema(ctx context.Context, req datasource.
 						Computed:    true,
 						Description: `Enter your Salesforce developer application's <a href="https://developer.salesforce.com/forums/?id=9062I000000DLgbQAG">Client secret</a>`,
 					},
+					"force_use_bulk_api": schema.BoolAttribute{
+						Computed:    true,
+						Description: `Toggle to use Bulk API (this might cause empty fields for some streams)`,
+					},
 					"is_sandbox": schema.BoolAttribute{
 						Computed:    true,
 						Description: `Toggle if you're using a <a href="https://help.salesforce.com/s/articleView?id=sf.deploy_sandboxes_parent.htm&type=5">Salesforce Sandbox</a>`,
@@ -92,7 +96,7 @@ func (r *SourceSalesforceDataSource) Schema(ctx context.Context, req datasource.
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},
-						Description: `Enter the date in the YYYY-MM-DD format. Airbyte will replicate the data added on and after this date. If this field is blank, Airbyte will replicate the data for last two years.`,
+						Description: `Enter the date (or date-time) in the YYYY-MM-DD or YYYY-MM-DDTHH:mm:ssZ format. Airbyte will replicate the data updated on and after this date. If this field is blank, Airbyte will replicate the data for last two years.`,
 					},
 					"streams_criteria": schema.ListNestedAttribute{
 						Computed: true,
@@ -119,7 +123,7 @@ func (r *SourceSalesforceDataSource) Schema(ctx context.Context, req datasource.
 								},
 							},
 						},
-						Description: `Filter streams relevant to you`,
+						Description: `Add filters to select only required stream based on ` + "`" + `SObject` + "`" + ` name. Use this field to filter which tables are displayed by this connector. This is useful if your Salesforce account has a large number of tables (>1000), in which case you may find it easier to navigate the UI and speed up the connector's performance if you restrict the tables displayed by this connector.`,
 					},
 				},
 			},

@@ -44,6 +44,8 @@ Read-Only:
 - `access_token` (String) The value of the generated access token. From your App’s Dashboard, click on "Marketing API" then "Tools". Select permissions <b>ads_management, ads_read, read_insights, business_management</b>. Then click on "Get token". See the <a href="https://docs.airbyte.com/integrations/sources/facebook-marketing">docs</a> for more information.
 - `account_id` (String) The Facebook Ad account ID to use when pulling data from the Facebook Marketing API. Open your Meta Ads Manager. The Ad account ID number is in the account dropdown menu or in your browser's address bar. See the <a href="https://www.facebook.com/business/help/1492627900875762">docs</a> for more information.
 - `action_breakdowns_allow_empty` (Boolean) Allows action_breakdowns to be an empty list
+- `client_id` (String) The Client Id for your OAuth app
+- `client_secret` (String) The Client Secret for your OAuth app
 - `custom_insights` (Attributes List) A list which contains ad statistics entries, each entry must have a name and can contains fields, breakdowns or action_breakdowns. Click on "add" to fill this field. (see [below for nested schema](#nestedatt--configuration--custom_insights))
 - `end_date` (String) The date until which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DDT00:00:00Z. All data generated between the start date and this end date will be replicated. Not setting this option will result in always syncing the latest data.
 - `fetch_thumbnail_images` (Boolean) Set to active if you want to fetch the thumbnail_url and store the result in thumbnail_data_url for each Ad Creative.
@@ -60,6 +62,8 @@ Read-Only:
 Read-Only:
 
 - `action_breakdowns` (List of String) A list of chosen action_breakdowns for action_breakdowns
+- `action_report_time` (String) must be one of ["conversion", "impression", "mixed"]
+Determines the report time of action stats. For example, if a person saw the ad on Jan 1st but converted on Jan 2nd, when you query the API with action_report_time=impression, you see a conversion on Jan 1st. When you query the API with action_report_time=conversion, you see a conversion on Jan 2nd.
 - `breakdowns` (List of String) A list of chosen breakdowns for breakdowns
 - `end_date` (String) The date until which you'd like to replicate data for this stream, in the format YYYY-MM-DDT00:00:00Z. All data generated between the start date and this end date will be replicated. Not setting this option will result in always syncing the latest data.
 - `fields` (List of String) A list of chosen fields for fields parameter

@@ -21,9 +21,9 @@ resource "airbyte_source_my_hours" "my_source_myhours" {
     source_type     = "my-hours"
     start_date      = "%Y-%m-%d"
   }
-  name         = "Tracy Buckridge"
+  name         = "Allen Grant"
   secret_id    = "...my_secret_id..."
-  workspace_id = "a9f74846-e2c3-4309-9b05-36d9e75ca006"
+  workspace_id = "dfa4a197-f6de-4922-951f-e1712099853e"
 }
 ```
 

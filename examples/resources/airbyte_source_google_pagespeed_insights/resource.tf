@@ -2,7 +2,7 @@ resource "airbyte_source_google_pagespeed_insights" "my_source_googlepagespeedin
   configuration = {
     api_key = "...my_api_key..."
     categories = [
-      "performance",
+      "pwa",
     ]
     source_type = "google-pagespeed-insights"
     strategies = [
@@ -12,7 +12,7 @@ resource "airbyte_source_google_pagespeed_insights" "my_source_googlepagespeedin
       "...",
     ]
   }
-  name         = "Jeremy Schiller"
+  name         = "Miss Terrell Satterfield"
   secret_id    = "...my_secret_id..."
-  workspace_id = "fb4cfc1c-7623-40f8-81fb-1bd23fdb14db"
+  workspace_id = "6230f841-fb1b-4d23-bdb1-4db6be5a6859"
 }

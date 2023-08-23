@@ -21,9 +21,9 @@ resource "airbyte_source_twilio" "my_source_twilio" {
     source_type     = "twilio"
     start_date      = "2020-10-01T00:00:00Z"
   }
-  name         = "Bradley Goodwin"
+  name         = "Oliver Kautzer"
   secret_id    = "...my_secret_id..."
-  workspace_id = "f5c84383-6b86-4b3c-9f64-15b0449f9df1"
+  workspace_id = "3b90a1b8-c95b-4e12-94b7-39f4fe77210d"
 }
 ```
 

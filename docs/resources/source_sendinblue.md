@@ -18,9 +18,9 @@ resource "airbyte_source_sendinblue" "my_source_sendinblue" {
     api_key     = "...my_api_key..."
     source_type = "sendinblue"
   }
-  name         = "Willis Bechtelar"
+  name         = "Miss Loretta Howell PhD"
   secret_id    = "...my_secret_id..."
-  workspace_id = "d421bd43-d1f0-4cb0-a000-3eb22d9b3a70"
+  workspace_id = "9136a7e8-d532-413f-bf65-8752db764c59"
 }
 ```
 

@@ -1,7 +1,7 @@
 resource "airbyte_source_orb" "my_source_orb" {
   configuration = {
     api_key              = "...my_api_key..."
-    lookback_window_days = 3
+    lookback_window_days = 5
     numeric_event_properties_keys = [
       "...",
     ]
@@ -13,7 +13,7 @@ resource "airbyte_source_orb" "my_source_orb" {
     ]
     subscription_usage_grouping_key = "...my_subscription_usage_grouping_key..."
   }
-  name         = "Mr. Traci Adams I"
+  name         = "Josh Mante"
   secret_id    = "...my_secret_id..."
-  workspace_id = "9863aa41-e6c3-41cc-af1f-cb51c9a41ffb"
+  workspace_id = "2c9ff574-91aa-4bfa-ae76-1f0ca4d456ef"
 }

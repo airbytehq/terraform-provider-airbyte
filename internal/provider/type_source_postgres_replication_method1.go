@@ -5,6 +5,8 @@ package provider
 type SourcePostgresReplicationMethod1 struct {
 	SourcePostgresReplicationMethodLogicalReplicationCDC       *SourcePostgresReplicationMethodLogicalReplicationCDC1       `tfsdk:"source_postgres_replication_method_logical_replication_cdc"`
 	SourcePostgresReplicationMethodStandard                    *SourceAlloydbReplicationMethodStandard                      `tfsdk:"source_postgres_replication_method_standard"`
+	SourcePostgresReplicationMethodStandardXmin                *SourceAlloydbReplicationMethodStandardXmin                  `tfsdk:"source_postgres_replication_method_standard_xmin"`
 	SourcePostgresUpdateReplicationMethodLogicalReplicationCDC *SourcePostgresUpdateReplicationMethodLogicalReplicationCDC1 `tfsdk:"source_postgres_update_replication_method_logical_replication_cdc"`
 	SourcePostgresUpdateReplicationMethodStandard              *SourceAlloydbReplicationMethodStandard                      `tfsdk:"source_postgres_update_replication_method_standard"`
+	SourcePostgresUpdateReplicationMethodStandardXmin          *SourceAlloydbReplicationMethodStandardXmin                  `tfsdk:"source_postgres_update_replication_method_standard_xmin"`
 }

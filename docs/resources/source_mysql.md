@@ -21,8 +21,8 @@ resource "airbyte_source_mysql" "my_source_mysql" {
     password        = "...my_password..."
     port            = 3306
     replication_method = {
-      source_mysql_replication_method_logical_replication_cdc_ = {
-        initial_waiting_seconds = 3
+      source_mysql_update_method_read_changes_using_binary_log_cdc_ = {
+        initial_waiting_seconds = 10
         method                  = "CDC"
         server_time_zone        = "...my_server_time_zone..."
       }
@@ -38,11 +38,11 @@ resource "airbyte_source_mysql" "my_source_mysql" {
         tunnel_method = "NO_TUNNEL"
       }
     }
-    username = "Coty77"
+    username = "Eusebio86"
   }
-  name         = "Debra Ortiz"
+  name         = "Herman Greenfelder"
   secret_id    = "...my_secret_id..."
-  workspace_id = "a8bf92f9-7428-4ad9-a9f8-bf8221125359"
+  workspace_id = "9ee22446-0443-4bc1-9418-8c2f56e85da7"
 }
 ```
 
@@ -72,7 +72,7 @@ Required:
 - `database` (String) The database name.
 - `host` (String) The host name of the database.
 - `port` (Number) The port to connect to.
-- `replication_method` (Attributes) Replication method to use for extracting data from the database. (see [below for nested schema](#nestedatt--configuration--replication_method))
+- `replication_method` (Attributes) Configures how data is extracted from the database. (see [below for nested schema](#nestedatt--configuration--replication_method))
 - `source_type` (String) must be one of ["mysql"]
 - `username` (String) The username which is used to access the database.
 
@@ -88,13 +88,13 @@ Optional:
 
 Optional:
 
-- `source_mysql_replication_method_logical_replication_cdc` (Attributes) CDC uses the Binlog to detect inserts, updates, and deletes. This needs to be configured on the source database itself. (see [below for nested schema](#nestedatt--configuration--replication_method--source_mysql_replication_method_logical_replication_cdc))
-- `source_mysql_replication_method_standard` (Attributes) Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally. (see [below for nested schema](#nestedatt--configuration--replication_method--source_mysql_replication_method_standard))
-- `source_mysql_update_replication_method_logical_replication_cdc` (Attributes) CDC uses the Binlog to detect inserts, updates, and deletes. This needs to be configured on the source database itself. (see [below for nested schema](#nestedatt--configuration--replication_method--source_mysql_update_replication_method_logical_replication_cdc))
-- `source_mysql_update_replication_method_standard` (Attributes) Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally. (see [below for nested schema](#nestedatt--configuration--replication_method--source_mysql_update_replication_method_standard))
+- `source_mysql_update_method_read_changes_using_binary_log_cdc` (Attributes) <i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the MySQL <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">binary log</a>. This must be enabled on your database. (see [below for nested schema](#nestedatt--configuration--replication_method--source_mysql_update_method_read_changes_using_binary_log_cdc))
+- `source_mysql_update_method_scan_changes_with_user_defined_cursor` (Attributes) Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at). (see [below for nested schema](#nestedatt--configuration--replication_method--source_mysql_update_method_scan_changes_with_user_defined_cursor))
+- `source_mysql_update_update_method_read_changes_using_binary_log_cdc` (Attributes) <i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the MySQL <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">binary log</a>. This must be enabled on your database. (see [below for nested schema](#nestedatt--configuration--replication_method--source_mysql_update_update_method_read_changes_using_binary_log_cdc))
+- `source_mysql_update_update_method_scan_changes_with_user_defined_cursor` (Attributes) Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at). (see [below for nested schema](#nestedatt--configuration--replication_method--source_mysql_update_update_method_scan_changes_with_user_defined_cursor))
 
-<a id="nestedatt--configuration--replication_method--source_mysql_replication_method_logical_replication_cdc"></a>
-### Nested Schema for `configuration.replication_method.source_mysql_replication_method_logical_replication_cdc`
+<a id="nestedatt--configuration--replication_method--source_mysql_update_method_read_changes_using_binary_log_cdc"></a>
+### Nested Schema for `configuration.replication_method.source_mysql_update_method_read_changes_using_binary_log_cdc`
 
 Required:
 
@@ -106,16 +106,16 @@ Optional:
 - `server_time_zone` (String) Enter the configured MySQL server timezone. This should only be done if the configured timezone in your MySQL instance does not conform to IANNA standard.
 
 
-<a id="nestedatt--configuration--replication_method--source_mysql_replication_method_standard"></a>
-### Nested Schema for `configuration.replication_method.source_mysql_replication_method_standard`
+<a id="nestedatt--configuration--replication_method--source_mysql_update_method_scan_changes_with_user_defined_cursor"></a>
+### Nested Schema for `configuration.replication_method.source_mysql_update_method_scan_changes_with_user_defined_cursor`
 
 Required:
 
 - `method` (String) must be one of ["STANDARD"]
 
 
-<a id="nestedatt--configuration--replication_method--source_mysql_update_replication_method_logical_replication_cdc"></a>
-### Nested Schema for `configuration.replication_method.source_mysql_update_replication_method_logical_replication_cdc`
+<a id="nestedatt--configuration--replication_method--source_mysql_update_update_method_read_changes_using_binary_log_cdc"></a>
+### Nested Schema for `configuration.replication_method.source_mysql_update_update_method_read_changes_using_binary_log_cdc`
 
 Required:
 
@@ -127,8 +127,8 @@ Optional:
 - `server_time_zone` (String) Enter the configured MySQL server timezone. This should only be done if the configured timezone in your MySQL instance does not conform to IANNA standard.
 
 
-<a id="nestedatt--configuration--replication_method--source_mysql_update_replication_method_standard"></a>
-### Nested Schema for `configuration.replication_method.source_mysql_update_replication_method_standard`
+<a id="nestedatt--configuration--replication_method--source_mysql_update_update_method_scan_changes_with_user_defined_cursor"></a>
+### Nested Schema for `configuration.replication_method.source_mysql_update_update_method_scan_changes_with_user_defined_cursor`
 
 Required:
 

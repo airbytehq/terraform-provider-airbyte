@@ -23,9 +23,9 @@ resource "airbyte_source_mssql" "my_source_mssql" {
     replication_method = {
       source_mssql_replication_method_logical_replication_cdc_ = {
         data_to_sync            = "Existing and New"
-        initial_waiting_seconds = 4
+        initial_waiting_seconds = 6
         method                  = "CDC"
-        snapshot_isolation      = "Snapshot"
+        snapshot_isolation      = "Read Committed"
       }
     }
     schemas = [
@@ -42,11 +42,11 @@ resource "airbyte_source_mssql" "my_source_mssql" {
         tunnel_method = "NO_TUNNEL"
       }
     }
-    username = "Tomas22"
+    username = "Rhianna75"
   }
-  name         = "Jon Wilkinson"
+  name         = "Victor Gleason"
   secret_id    = "...my_secret_id..."
-  workspace_id = "e4aa8685-5596-4673-aaa5-dcb6682cb70f"
+  workspace_id = "da21729f-2ac4-41ef-9725-f1169ac1e41d"
 }
 ```
 

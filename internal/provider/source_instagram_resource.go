@@ -59,6 +59,14 @@ func (r *SourceInstagramResource) Schema(ctx context.Context, req resource.Schem
 						Required:    true,
 						Description: `The value of the access token generated with <b>instagram_basic, instagram_manage_insights, pages_show_list, pages_read_engagement, Instagram Public Content Access</b> permissions. See the <a href="https://docs.airbyte.com/integrations/sources/instagram/#step-1-set-up-instagram">docs</a> for more information`,
 					},
+					"client_id": schema.StringAttribute{
+						Optional:    true,
+						Description: `The Client ID for your Oauth application`,
+					},
+					"client_secret": schema.StringAttribute{
+						Optional:    true,
+						Description: `The Client Secret for your Oauth application`,
+					},
 					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{
@@ -272,7 +280,7 @@ func (r *SourceInstagramResource) Update(ctx context.Context, req resource.Updat
 		return
 	}
 	if getResponse.SourceResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
 		return
 	}
 	data.RefreshFromGetResponse(getResponse.SourceResponse)
@@ -315,7 +323,7 @@ func (r *SourceInstagramResource) Delete(ctx context.Context, req resource.Delet
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

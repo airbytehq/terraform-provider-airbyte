@@ -63,6 +63,10 @@ Read-Only:
 <a id="nestedatt--configuration--instance_type--source_mongodb_mongo_db_instance_type_mongo_db_atlas"></a>
 ### Nested Schema for `configuration.instance_type.source_mongodb_mongo_db_instance_type_mongo_db_atlas`
 
+Optional:
+
+- `additional_properties` (String) Parsed as JSON.
+
 Read-Only:
 
 - `cluster_url` (String) The URL of a cluster to connect to.
@@ -91,6 +95,10 @@ Read-Only:
 
 <a id="nestedatt--configuration--instance_type--source_mongodb_update_mongo_db_instance_type_mongo_db_atlas"></a>
 ### Nested Schema for `configuration.instance_type.source_mongodb_update_mongo_db_instance_type_mongo_db_atlas`
+
+Optional:
+
+- `additional_properties` (String) Parsed as JSON.
 
 Read-Only:
 

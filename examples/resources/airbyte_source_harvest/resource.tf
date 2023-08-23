@@ -13,7 +13,7 @@ resource "airbyte_source_harvest" "my_source_harvest" {
     replication_start_date = "2017-01-25T00:00:00Z"
     source_type            = "harvest"
   }
-  name         = "Verna Kautzer"
+  name         = "Harvey Wisoky"
   secret_id    = "...my_secret_id..."
-  workspace_id = "389f5abb-7f66-4255-8a28-382ac483afd2"
+  workspace_id = "2550a283-82ac-4483-afd2-315bba650164"
 }

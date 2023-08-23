@@ -34,11 +34,59 @@ func (e *SourceZendeskSunshineUpdateAuthorizationMethodAPITokenAuthMethod) Unmar
 }
 
 type SourceZendeskSunshineUpdateAuthorizationMethodAPIToken struct {
-	// API Token. See the <a href="https://docs.airbyte.io/integrations/sources/zendesk_sunshine">docs</a> for information on how to generate this key.
+	// API Token. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk_sunshine">docs</a> for information on how to generate this key.
 	APIToken   string                                                           `json:"api_token"`
 	AuthMethod SourceZendeskSunshineUpdateAuthorizationMethodAPITokenAuthMethod `json:"auth_method"`
 	// The user email for your Zendesk account
 	Email string `json:"email"`
+
+	AdditionalProperties interface{} `json:"-"`
+}
+type _SourceZendeskSunshineUpdateAuthorizationMethodAPIToken SourceZendeskSunshineUpdateAuthorizationMethodAPIToken
+
+func (c *SourceZendeskSunshineUpdateAuthorizationMethodAPIToken) UnmarshalJSON(bs []byte) error {
+	data := _SourceZendeskSunshineUpdateAuthorizationMethodAPIToken{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = SourceZendeskSunshineUpdateAuthorizationMethodAPIToken(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "api_token")
+	delete(additionalFields, "auth_method")
+	delete(additionalFields, "email")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c SourceZendeskSunshineUpdateAuthorizationMethodAPIToken) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_SourceZendeskSunshineUpdateAuthorizationMethodAPIToken(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type SourceZendeskSunshineUpdateAuthorizationMethodOAuth20AuthMethod string
@@ -73,6 +121,55 @@ type SourceZendeskSunshineUpdateAuthorizationMethodOAuth20 struct {
 	ClientID string `json:"client_id"`
 	// The Client Secret of your OAuth application.
 	ClientSecret string `json:"client_secret"`
+
+	AdditionalProperties interface{} `json:"-"`
+}
+type _SourceZendeskSunshineUpdateAuthorizationMethodOAuth20 SourceZendeskSunshineUpdateAuthorizationMethodOAuth20
+
+func (c *SourceZendeskSunshineUpdateAuthorizationMethodOAuth20) UnmarshalJSON(bs []byte) error {
+	data := _SourceZendeskSunshineUpdateAuthorizationMethodOAuth20{}
+
+	if err := json.Unmarshal(bs, &data); err != nil {
+		return err
+	}
+	*c = SourceZendeskSunshineUpdateAuthorizationMethodOAuth20(data)
+
+	additionalFields := make(map[string]interface{})
+
+	if err := json.Unmarshal(bs, &additionalFields); err != nil {
+		return err
+	}
+	delete(additionalFields, "access_token")
+	delete(additionalFields, "auth_method")
+	delete(additionalFields, "client_id")
+	delete(additionalFields, "client_secret")
+
+	c.AdditionalProperties = additionalFields
+
+	return nil
+}
+
+func (c SourceZendeskSunshineUpdateAuthorizationMethodOAuth20) MarshalJSON() ([]byte, error) {
+	out := map[string]interface{}{}
+	bs, err := json.Marshal(_SourceZendeskSunshineUpdateAuthorizationMethodOAuth20(c))
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	bs, err = json.Marshal(c.AdditionalProperties)
+	if err != nil {
+		return nil, err
+	}
+
+	if err := json.Unmarshal([]byte(bs), &out); err != nil {
+		return nil, err
+	}
+
+	return json.Marshal(out)
 }
 
 type SourceZendeskSunshineUpdateAuthorizationMethodType string

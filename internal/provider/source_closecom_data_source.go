@@ -69,9 +69,9 @@ func (r *SourceCloseComDataSource) Schema(ctx context.Context, req datasource.Sc
 					"start_date": schema.StringAttribute{
 						Computed: true,
 						Validators: []validator.String{
-							validators.IsRFC3339(),
+							validators.IsValidDate(),
 						},
-						Description: `The start date to sync data. Leave blank for full sync. Format: YYYY-MM-DD.`,
+						Description: `The start date to sync data; all data after this date will be replicated. Leave blank to retrieve all the data available in the account. Format: YYYY-MM-DD.`,
 					},
 				},
 			},

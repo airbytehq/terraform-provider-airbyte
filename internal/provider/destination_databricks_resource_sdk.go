@@ -92,6 +92,12 @@ func (r *DestinationDatabricksResourceModel) ToCreateSDKType() *shared.Destinati
 	}
 	databricksServerHostname := r.Configuration.DatabricksServerHostname.ValueString()
 	destinationType := shared.DestinationDatabricksDatabricks(r.Configuration.DestinationType.ValueString())
+	enableSchemaEvolution := new(bool)
+	if !r.Configuration.EnableSchemaEvolution.IsUnknown() && !r.Configuration.EnableSchemaEvolution.IsNull() {
+		*enableSchemaEvolution = r.Configuration.EnableSchemaEvolution.ValueBool()
+	} else {
+		enableSchemaEvolution = nil
+	}
 	purgeStagingData := new(bool)
 	if !r.Configuration.PurgeStagingData.IsUnknown() && !r.Configuration.PurgeStagingData.IsNull() {
 		*purgeStagingData = r.Configuration.PurgeStagingData.ValueBool()
@@ -113,6 +119,7 @@ func (r *DestinationDatabricksResourceModel) ToCreateSDKType() *shared.Destinati
 		DatabricksPort:                databricksPort,
 		DatabricksServerHostname:      databricksServerHostname,
 		DestinationType:               destinationType,
+		EnableSchemaEvolution:         enableSchemaEvolution,
 		PurgeStagingData:              purgeStagingData,
 		Schema:                        schema,
 	}
@@ -215,6 +222,12 @@ func (r *DestinationDatabricksResourceModel) ToUpdateSDKType() *shared.Destinati
 		databricksPort = nil
 	}
 	databricksServerHostname := r.Configuration.DatabricksServerHostname.ValueString()
+	enableSchemaEvolution := new(bool)
+	if !r.Configuration.EnableSchemaEvolution.IsUnknown() && !r.Configuration.EnableSchemaEvolution.IsNull() {
+		*enableSchemaEvolution = r.Configuration.EnableSchemaEvolution.ValueBool()
+	} else {
+		enableSchemaEvolution = nil
+	}
 	purgeStagingData := new(bool)
 	if !r.Configuration.PurgeStagingData.IsUnknown() && !r.Configuration.PurgeStagingData.IsNull() {
 		*purgeStagingData = r.Configuration.PurgeStagingData.ValueBool()
@@ -235,6 +248,7 @@ func (r *DestinationDatabricksResourceModel) ToUpdateSDKType() *shared.Destinati
 		DatabricksPersonalAccessToken: databricksPersonalAccessToken,
 		DatabricksPort:                databricksPort,
 		DatabricksServerHostname:      databricksServerHostname,
+		EnableSchemaEvolution:         enableSchemaEvolution,
 		PurgeStagingData:              purgeStagingData,
 		Schema:                        schema,
 	}

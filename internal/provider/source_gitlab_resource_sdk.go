@@ -9,7 +9,12 @@ import (
 )
 
 func (r *SourceGitlabResourceModel) ToCreateSDKType() *shared.SourceGitlabCreateRequest {
-	apiURL := r.Configuration.APIURL.ValueString()
+	apiURL := new(string)
+	if !r.Configuration.APIURL.IsUnknown() && !r.Configuration.APIURL.IsNull() {
+		*apiURL = r.Configuration.APIURL.ValueString()
+	} else {
+		apiURL = nil
+	}
 	var credentials shared.SourceGitlabAuthorizationMethod
 	var sourceGitlabAuthorizationMethodOAuth20 *shared.SourceGitlabAuthorizationMethodOAuth20
 	if r.Configuration.Credentials.SourceGitlabAuthorizationMethodOAuth20 != nil {
@@ -102,7 +107,12 @@ func (r *SourceGitlabResourceModel) ToGetSDKType() *shared.SourceGitlabCreateReq
 }
 
 func (r *SourceGitlabResourceModel) ToUpdateSDKType() *shared.SourceGitlabPutRequest {
-	apiURL := r.Configuration.APIURL.ValueString()
+	apiURL := new(string)
+	if !r.Configuration.APIURL.IsUnknown() && !r.Configuration.APIURL.IsNull() {
+		*apiURL = r.Configuration.APIURL.ValueString()
+	} else {
+		apiURL = nil
+	}
 	var credentials shared.SourceGitlabUpdateAuthorizationMethod
 	var sourceGitlabUpdateAuthorizationMethodOAuth20 *shared.SourceGitlabUpdateAuthorizationMethodOAuth20
 	if r.Configuration.Credentials.SourceGitlabUpdateAuthorizationMethodOAuth20 != nil {

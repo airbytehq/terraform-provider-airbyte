@@ -147,7 +147,7 @@ func (u SourceShopifyUpdateShopifyAuthorizationMethod) MarshalJSON() ([]byte, er
 type SourceShopifyUpdate struct {
 	// The authorization method to use to retrieve data from Shopify
 	Credentials *SourceShopifyUpdateShopifyAuthorizationMethod `json:"credentials,omitempty"`
-	// The name of your Shopify store found in the URL. For example, if your URL was https://NAME.myshopify.com, then the name would be 'NAME'.
+	// The name of your Shopify store found in the URL. For example, if your URL was https://NAME.myshopify.com, then the name would be 'NAME' or 'NAME.myshopify.com'.
 	Shop string `json:"shop"`
 	// The date you would like to replicate data from. Format: YYYY-MM-DD. Any data before this date will not be replicated.
 	StartDate types.Date `json:"start_date"`

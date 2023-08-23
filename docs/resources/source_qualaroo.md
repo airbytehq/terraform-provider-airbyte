@@ -23,9 +23,9 @@ resource "airbyte_source_qualaroo" "my_source_qualaroo" {
     ]
     token = "...my_token..."
   }
-  name         = "Geoffrey Kling"
+  name         = "Grace Ankunding"
   secret_id    = "...my_secret_id..."
-  workspace_id = "021a5204-6b64-4e99-bb0e-67e094fdfed5"
+  workspace_id = "fbba5cce-ff5c-4b01-be51-e528a45ac82b"
 }
 ```
 

@@ -15,7 +15,7 @@ DestinationDatabricks Resource
 ```terraform
 resource "airbyte_destination_databricks" "my_destination_databricks" {
   configuration = {
-    accept_terms = true
+    accept_terms = false
     data_source = {
       destination_databricks_data_source_recommended_managed_tables = {
         data_source_type = "MANAGED_TABLES_STORAGE"
@@ -27,11 +27,12 @@ resource "airbyte_destination_databricks" "my_destination_databricks" {
     databricks_port                  = "443"
     databricks_server_hostname       = "abc-12345678-wxyz.cloud.databricks.com"
     destination_type                 = "databricks"
-    purge_staging_data               = false
+    enable_schema_evolution          = true
+    purge_staging_data               = true
     schema                           = "default"
   }
-  name         = "Cesar Hyatt"
-  workspace_id = "d2322715-bf0c-4bb1-a31b-8b90f3443a11"
+  name         = "Rickey Wolf"
+  workspace_id = "280d1ba7-7a89-4ebf-b37a-e4203ce5e6a9"
 }
 ```
 
@@ -65,6 +66,7 @@ Optional:
 
 - `database` (String) The name of the catalog. If not specified otherwise, the "hive_metastore" will be used.
 - `databricks_port` (String) Databricks Cluster Port.
+- `enable_schema_evolution` (Boolean) Support schema evolution for all streams. If "false", the connector might fail when a stream's schema changes.
 - `purge_staging_data` (Boolean) Default to 'true'. Switch it to 'false' for debugging purpose.
 - `schema` (String) The default schema tables are written. If not specified otherwise, the "default" will be used.
 

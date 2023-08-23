@@ -17,6 +17,12 @@ func (r *SourceSalesforceResourceModel) ToCreateSDKType() *shared.SourceSalesfor
 	}
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
+	forceUseBulkAPI := new(bool)
+	if !r.Configuration.ForceUseBulkAPI.IsUnknown() && !r.Configuration.ForceUseBulkAPI.IsNull() {
+		*forceUseBulkAPI = r.Configuration.ForceUseBulkAPI.ValueBool()
+	} else {
+		forceUseBulkAPI = nil
+	}
 	isSandbox := new(bool)
 	if !r.Configuration.IsSandbox.IsUnknown() && !r.Configuration.IsSandbox.IsNull() {
 		*isSandbox = r.Configuration.IsSandbox.ValueBool()
@@ -44,6 +50,7 @@ func (r *SourceSalesforceResourceModel) ToCreateSDKType() *shared.SourceSalesfor
 		AuthType:        authType,
 		ClientID:        clientID,
 		ClientSecret:    clientSecret,
+		ForceUseBulkAPI: forceUseBulkAPI,
 		IsSandbox:       isSandbox,
 		RefreshToken:    refreshToken,
 		SourceType:      sourceType,
@@ -81,6 +88,12 @@ func (r *SourceSalesforceResourceModel) ToUpdateSDKType() *shared.SourceSalesfor
 	}
 	clientID := r.Configuration.ClientID.ValueString()
 	clientSecret := r.Configuration.ClientSecret.ValueString()
+	forceUseBulkAPI := new(bool)
+	if !r.Configuration.ForceUseBulkAPI.IsUnknown() && !r.Configuration.ForceUseBulkAPI.IsNull() {
+		*forceUseBulkAPI = r.Configuration.ForceUseBulkAPI.ValueBool()
+	} else {
+		forceUseBulkAPI = nil
+	}
 	isSandbox := new(bool)
 	if !r.Configuration.IsSandbox.IsUnknown() && !r.Configuration.IsSandbox.IsNull() {
 		*isSandbox = r.Configuration.IsSandbox.ValueBool()
@@ -107,6 +120,7 @@ func (r *SourceSalesforceResourceModel) ToUpdateSDKType() *shared.SourceSalesfor
 		AuthType:        authType,
 		ClientID:        clientID,
 		ClientSecret:    clientSecret,
+		ForceUseBulkAPI: forceUseBulkAPI,
 		IsSandbox:       isSandbox,
 		RefreshToken:    refreshToken,
 		StartDate:       startDate,

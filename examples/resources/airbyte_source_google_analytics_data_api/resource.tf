@@ -10,12 +10,12 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
       }
     }
     custom_reports         = "...my_custom_reports..."
-    date_ranges_start_date = "2022-05-22"
-    property_id            = "...my_property_id..."
+    date_ranges_start_date = "2021-01-01"
+    property_id            = "1738294"
     source_type            = "google-analytics-data-api"
-    window_in_days         = 364
+    window_in_days         = 120
   }
-  name         = "Andrew Torphy"
+  name         = "Duane Prohaska II"
   secret_id    = "...my_secret_id..."
-  workspace_id = "c158c4c4-e545-499e-a342-260e9b200ce7"
+  workspace_id = "8c4c4e54-599e-4a34-a260-e9b200ce78a1"
 }

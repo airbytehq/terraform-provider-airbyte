@@ -16,16 +16,16 @@ SourcePexelsAPI Resource
 resource "airbyte_source_pexels_api" "my_source_pexelsapi" {
   configuration = {
     api_key     = "...my_api_key..."
-    color       = "red"
+    color       = "orange"
     locale      = "en-US"
-    orientation = "square"
+    orientation = "landscape"
     query       = "people"
     size        = "small"
     source_type = "pexels-api"
   }
-  name         = "Jean Denesik"
+  name         = "Wilbert Cummings"
   secret_id    = "...my_secret_id..."
-  workspace_id = "46645c1d-81f2-4904-af56-9b7aff0ea221"
+  workspace_id = "c7b66a1f-30c7-43df-9b67-19890f42a4bb"
 }
 ```
 

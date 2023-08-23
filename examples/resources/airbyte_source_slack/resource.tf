@@ -9,12 +9,12 @@ resource "airbyte_source_slack" "my_source_slack" {
         option_title = "API Token Credentials"
       }
     }
-    join_channels   = false
+    join_channels   = true
     lookback_window = 14
     source_type     = "slack"
     start_date      = "2017-01-25T00:00:00Z"
   }
-  name         = "Camille Smith"
+  name         = "Eduardo Gottlieb"
   secret_id    = "...my_secret_id..."
-  workspace_id = "4fdd5ea9-5433-498d-afb4-2a8d63388e4d"
+  workspace_id = "43664a8f-0af8-4c69-9d73-2d9fbaf9476a"
 }

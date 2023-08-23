@@ -183,6 +183,10 @@ func (r *SourceTiktokMarketingResource) Schema(ctx context.Context, req resource
 						},
 						Description: `The date until which you'd like to replicate data for all incremental streams, in the format YYYY-MM-DD. All data generated between start_date and this date will be replicated. Not setting this option will result in always syncing the data till the current date.`,
 					},
+					"include_deleted": schema.BoolAttribute{
+						Optional:    true,
+						Description: `Set to active if you want to include deleted data in reports.`,
+					},
 					"source_type": schema.StringAttribute{
 						Optional: true,
 						Validators: []validator.String{
@@ -396,7 +400,7 @@ func (r *SourceTiktokMarketingResource) Update(ctx context.Context, req resource
 		return
 	}
 	if getResponse.SourceResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
 		return
 	}
 	data.RefreshFromGetResponse(getResponse.SourceResponse)
@@ -439,7 +443,7 @@ func (r *SourceTiktokMarketingResource) Delete(ctx context.Context, req resource
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

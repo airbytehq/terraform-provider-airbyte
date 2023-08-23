@@ -9,131 +9,131 @@ import (
 	"fmt"
 )
 
-type SourceMysqlUpdateReplicationMethodLogicalReplicationCDCMethod string
+type SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursorMethod string
 
 const (
-	SourceMysqlUpdateReplicationMethodLogicalReplicationCDCMethodCdc SourceMysqlUpdateReplicationMethodLogicalReplicationCDCMethod = "CDC"
+	SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursorMethodStandard SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursorMethod = "STANDARD"
 )
 
-func (e SourceMysqlUpdateReplicationMethodLogicalReplicationCDCMethod) ToPointer() *SourceMysqlUpdateReplicationMethodLogicalReplicationCDCMethod {
+func (e SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursorMethod) ToPointer() *SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursorMethod {
 	return &e
 }
 
-func (e *SourceMysqlUpdateReplicationMethodLogicalReplicationCDCMethod) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "CDC":
-		*e = SourceMysqlUpdateReplicationMethodLogicalReplicationCDCMethod(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceMysqlUpdateReplicationMethodLogicalReplicationCDCMethod: %v", v)
-	}
-}
-
-// SourceMysqlUpdateReplicationMethodLogicalReplicationCDC - CDC uses the Binlog to detect inserts, updates, and deletes. This needs to be configured on the source database itself.
-type SourceMysqlUpdateReplicationMethodLogicalReplicationCDC struct {
-	// The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">initial waiting time</a>.
-	InitialWaitingSeconds *int64                                                        `json:"initial_waiting_seconds,omitempty"`
-	Method                SourceMysqlUpdateReplicationMethodLogicalReplicationCDCMethod `json:"method"`
-	// Enter the configured MySQL server timezone. This should only be done if the configured timezone in your MySQL instance does not conform to IANNA standard.
-	ServerTimeZone *string `json:"server_time_zone,omitempty"`
-}
-
-type SourceMysqlUpdateReplicationMethodStandardMethod string
-
-const (
-	SourceMysqlUpdateReplicationMethodStandardMethodStandard SourceMysqlUpdateReplicationMethodStandardMethod = "STANDARD"
-)
-
-func (e SourceMysqlUpdateReplicationMethodStandardMethod) ToPointer() *SourceMysqlUpdateReplicationMethodStandardMethod {
-	return &e
-}
-
-func (e *SourceMysqlUpdateReplicationMethodStandardMethod) UnmarshalJSON(data []byte) error {
+func (e *SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursorMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "STANDARD":
-		*e = SourceMysqlUpdateReplicationMethodStandardMethod(v)
+		*e = SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursorMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMysqlUpdateReplicationMethodStandardMethod: %v", v)
+		return fmt.Errorf("invalid value for SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursorMethod: %v", v)
 	}
 }
 
-// SourceMysqlUpdateReplicationMethodStandard - Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.
-type SourceMysqlUpdateReplicationMethodStandard struct {
-	Method SourceMysqlUpdateReplicationMethodStandardMethod `json:"method"`
+// SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor - Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at).
+type SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor struct {
+	Method SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursorMethod `json:"method"`
 }
 
-type SourceMysqlUpdateReplicationMethodType string
+type SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDCMethod string
 
 const (
-	SourceMysqlUpdateReplicationMethodTypeSourceMysqlUpdateReplicationMethodStandard              SourceMysqlUpdateReplicationMethodType = "source-mysql-update_Replication Method_Standard"
-	SourceMysqlUpdateReplicationMethodTypeSourceMysqlUpdateReplicationMethodLogicalReplicationCDC SourceMysqlUpdateReplicationMethodType = "source-mysql-update_Replication Method_Logical Replication (CDC)"
+	SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDCMethodCdc SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDCMethod = "CDC"
 )
 
-type SourceMysqlUpdateReplicationMethod struct {
-	SourceMysqlUpdateReplicationMethodStandard              *SourceMysqlUpdateReplicationMethodStandard
-	SourceMysqlUpdateReplicationMethodLogicalReplicationCDC *SourceMysqlUpdateReplicationMethodLogicalReplicationCDC
-
-	Type SourceMysqlUpdateReplicationMethodType
+func (e SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDCMethod) ToPointer() *SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDCMethod {
+	return &e
 }
 
-func CreateSourceMysqlUpdateReplicationMethodSourceMysqlUpdateReplicationMethodStandard(sourceMysqlUpdateReplicationMethodStandard SourceMysqlUpdateReplicationMethodStandard) SourceMysqlUpdateReplicationMethod {
-	typ := SourceMysqlUpdateReplicationMethodTypeSourceMysqlUpdateReplicationMethodStandard
+func (e *SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDCMethod) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "CDC":
+		*e = SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDCMethod(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDCMethod: %v", v)
+	}
+}
 
-	return SourceMysqlUpdateReplicationMethod{
-		SourceMysqlUpdateReplicationMethodStandard: &sourceMysqlUpdateReplicationMethodStandard,
+// SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC - <i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the MySQL <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">binary log</a>. This must be enabled on your database.
+type SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC struct {
+	// The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">initial waiting time</a>.
+	InitialWaitingSeconds *int64                                                          `json:"initial_waiting_seconds,omitempty"`
+	Method                SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDCMethod `json:"method"`
+	// Enter the configured MySQL server timezone. This should only be done if the configured timezone in your MySQL instance does not conform to IANNA standard.
+	ServerTimeZone *string `json:"server_time_zone,omitempty"`
+}
+
+type SourceMysqlUpdateUpdateMethodType string
+
+const (
+	SourceMysqlUpdateUpdateMethodTypeSourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC     SourceMysqlUpdateUpdateMethodType = "source-mysql-update_Update Method_Read Changes using Binary Log (CDC)"
+	SourceMysqlUpdateUpdateMethodTypeSourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor SourceMysqlUpdateUpdateMethodType = "source-mysql-update_Update Method_Scan Changes with User Defined Cursor"
+)
+
+type SourceMysqlUpdateUpdateMethod struct {
+	SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC     *SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC
+	SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor *SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor
+
+	Type SourceMysqlUpdateUpdateMethodType
+}
+
+func CreateSourceMysqlUpdateUpdateMethodSourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC(sourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC) SourceMysqlUpdateUpdateMethod {
+	typ := SourceMysqlUpdateUpdateMethodTypeSourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC
+
+	return SourceMysqlUpdateUpdateMethod{
+		SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC: &sourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC,
 		Type: typ,
 	}
 }
 
-func CreateSourceMysqlUpdateReplicationMethodSourceMysqlUpdateReplicationMethodLogicalReplicationCDC(sourceMysqlUpdateReplicationMethodLogicalReplicationCDC SourceMysqlUpdateReplicationMethodLogicalReplicationCDC) SourceMysqlUpdateReplicationMethod {
-	typ := SourceMysqlUpdateReplicationMethodTypeSourceMysqlUpdateReplicationMethodLogicalReplicationCDC
+func CreateSourceMysqlUpdateUpdateMethodSourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor(sourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor) SourceMysqlUpdateUpdateMethod {
+	typ := SourceMysqlUpdateUpdateMethodTypeSourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor
 
-	return SourceMysqlUpdateReplicationMethod{
-		SourceMysqlUpdateReplicationMethodLogicalReplicationCDC: &sourceMysqlUpdateReplicationMethodLogicalReplicationCDC,
+	return SourceMysqlUpdateUpdateMethod{
+		SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor: &sourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor,
 		Type: typ,
 	}
 }
 
-func (u *SourceMysqlUpdateReplicationMethod) UnmarshalJSON(data []byte) error {
+func (u *SourceMysqlUpdateUpdateMethod) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceMysqlUpdateReplicationMethodStandard := new(SourceMysqlUpdateReplicationMethodStandard)
+	sourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC := new(SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMysqlUpdateReplicationMethodStandard); err == nil {
-		u.SourceMysqlUpdateReplicationMethodStandard = sourceMysqlUpdateReplicationMethodStandard
-		u.Type = SourceMysqlUpdateReplicationMethodTypeSourceMysqlUpdateReplicationMethodStandard
+	if err := d.Decode(&sourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC); err == nil {
+		u.SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC = sourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC
+		u.Type = SourceMysqlUpdateUpdateMethodTypeSourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC
 		return nil
 	}
 
-	sourceMysqlUpdateReplicationMethodLogicalReplicationCDC := new(SourceMysqlUpdateReplicationMethodLogicalReplicationCDC)
+	sourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor := new(SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMysqlUpdateReplicationMethodLogicalReplicationCDC); err == nil {
-		u.SourceMysqlUpdateReplicationMethodLogicalReplicationCDC = sourceMysqlUpdateReplicationMethodLogicalReplicationCDC
-		u.Type = SourceMysqlUpdateReplicationMethodTypeSourceMysqlUpdateReplicationMethodLogicalReplicationCDC
+	if err := d.Decode(&sourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor); err == nil {
+		u.SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor = sourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor
+		u.Type = SourceMysqlUpdateUpdateMethodTypeSourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u SourceMysqlUpdateReplicationMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceMysqlUpdateReplicationMethodStandard != nil {
-		return json.Marshal(u.SourceMysqlUpdateReplicationMethodStandard)
+func (u SourceMysqlUpdateUpdateMethod) MarshalJSON() ([]byte, error) {
+	if u.SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC != nil {
+		return json.Marshal(u.SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC)
 	}
 
-	if u.SourceMysqlUpdateReplicationMethodLogicalReplicationCDC != nil {
-		return json.Marshal(u.SourceMysqlUpdateReplicationMethodLogicalReplicationCDC)
+	if u.SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor != nil {
+		return json.Marshal(u.SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor)
 	}
 
 	return nil, nil
@@ -599,8 +599,8 @@ type SourceMysqlUpdate struct {
 	Password *string `json:"password,omitempty"`
 	// The port to connect to.
 	Port int64 `json:"port"`
-	// Replication method to use for extracting data from the database.
-	ReplicationMethod SourceMysqlUpdateReplicationMethod `json:"replication_method"`
+	// Configures how data is extracted from the database.
+	ReplicationMethod SourceMysqlUpdateUpdateMethod `json:"replication_method"`
 	// SSL connection modes. Read more <a href="https://dev.mysql.com/doc/connector-j/8.0/en/connector-j-reference-using-ssl.html"> in the docs</a>.
 	SslMode *SourceMysqlUpdateSSLModes `json:"ssl_mode,omitempty"`
 	// Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use.

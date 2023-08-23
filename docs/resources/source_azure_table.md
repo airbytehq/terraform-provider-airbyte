@@ -20,9 +20,9 @@ resource "airbyte_source_azure_table" "my_source_azuretable" {
     storage_account_name    = "...my_storage_account_name..."
     storage_endpoint_suffix = "core.chinacloudapi.cn"
   }
-  name         = "Brandy Langosh Jr."
+  name         = "Bobbie Thompson"
   secret_id    = "...my_secret_id..."
-  workspace_id = "0efada20-0ef0-4422-ab21-64cf9ab8366c"
+  workspace_id = "10331f39-81d4-4c70-8b60-7f3c93c73b9d"
 }
 ```
 

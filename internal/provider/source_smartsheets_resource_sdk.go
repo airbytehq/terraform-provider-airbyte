@@ -56,6 +56,10 @@ func (r *SourceSmartsheetsResourceModel) ToCreateSDKType() *shared.SourceSmartsh
 			SourceSmartsheetsAuthorizationMethodAPIAccessToken: sourceSmartsheetsAuthorizationMethodAPIAccessToken,
 		}
 	}
+	var metadataFields []shared.SourceSmartsheetsValidenums = nil
+	for _, metadataFieldsItem := range r.Configuration.MetadataFields {
+		metadataFields = append(metadataFields, shared.SourceSmartsheetsValidenums(metadataFieldsItem.ValueString()))
+	}
 	sourceType := shared.SourceSmartsheetsSmartsheets(r.Configuration.SourceType.ValueString())
 	spreadsheetID := r.Configuration.SpreadsheetID.ValueString()
 	startDatetime := new(time.Time)
@@ -65,10 +69,11 @@ func (r *SourceSmartsheetsResourceModel) ToCreateSDKType() *shared.SourceSmartsh
 		startDatetime = nil
 	}
 	configuration := shared.SourceSmartsheets{
-		Credentials:   credentials,
-		SourceType:    sourceType,
-		SpreadsheetID: spreadsheetID,
-		StartDatetime: startDatetime,
+		Credentials:    credentials,
+		MetadataFields: metadataFields,
+		SourceType:     sourceType,
+		SpreadsheetID:  spreadsheetID,
+		StartDatetime:  startDatetime,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -140,6 +145,10 @@ func (r *SourceSmartsheetsResourceModel) ToUpdateSDKType() *shared.SourceSmartsh
 			SourceSmartsheetsUpdateAuthorizationMethodAPIAccessToken: sourceSmartsheetsUpdateAuthorizationMethodAPIAccessToken,
 		}
 	}
+	var metadataFields []shared.SourceSmartsheetsUpdateValidenums = nil
+	for _, metadataFieldsItem := range r.Configuration.MetadataFields {
+		metadataFields = append(metadataFields, shared.SourceSmartsheetsUpdateValidenums(metadataFieldsItem.ValueString()))
+	}
 	spreadsheetID := r.Configuration.SpreadsheetID.ValueString()
 	startDatetime := new(time.Time)
 	if !r.Configuration.StartDatetime.IsUnknown() && !r.Configuration.StartDatetime.IsNull() {
@@ -148,9 +157,10 @@ func (r *SourceSmartsheetsResourceModel) ToUpdateSDKType() *shared.SourceSmartsh
 		startDatetime = nil
 	}
 	configuration := shared.SourceSmartsheetsUpdate{
-		Credentials:   credentials,
-		SpreadsheetID: spreadsheetID,
-		StartDatetime: startDatetime,
+		Credentials:    credentials,
+		MetadataFields: metadataFields,
+		SpreadsheetID:  spreadsheetID,
+		StartDatetime:  startDatetime,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()

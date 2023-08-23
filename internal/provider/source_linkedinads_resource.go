@@ -60,6 +60,64 @@ func (r *SourceLinkedinAdsResource) Schema(ctx context.Context, req resource.Sch
 						ElementType: types.Int64Type,
 						Description: `Specify the account IDs separated by a space, to pull the data from. Leave empty, if you want to pull the data from all associated accounts. See the <a href="https://www.linkedin.com/help/linkedin/answer/a424270/find-linkedin-ads-account-details?lang=en">LinkedIn Ads docs</a> for more info.`,
 					},
+					"ad_analytics_reports": schema.ListNestedAttribute{
+						Optional: true,
+						NestedObject: schema.NestedAttributeObject{
+							Attributes: map[string]schema.Attribute{
+								"name": schema.StringAttribute{
+									Required:    true,
+									Description: `The name for the report`,
+								},
+								"pivot_by": schema.StringAttribute{
+									Required: true,
+									Validators: []validator.String{
+										stringvalidator.OneOf(
+											"COMPANY",
+											"ACCOUNT",
+											"SHARE",
+											"CAMPAIGN",
+											"CREATIVE",
+											"CAMPAIGN_GROUP",
+											"CONVERSION",
+											"CONVERSATION_NODE",
+											"CONVERSATION_NODE_OPTION_INDEX",
+											"SERVING_LOCATION",
+											"CARD_INDEX",
+											"MEMBER_COMPANY_SIZE",
+											"MEMBER_INDUSTRY",
+											"MEMBER_SENIORITY",
+											"MEMBER_JOB_TITLE ",
+											"MEMBER_JOB_FUNCTION ",
+											"MEMBER_COUNTRY_V2 ",
+											"MEMBER_REGION_V2",
+											"MEMBER_COMPANY",
+											"PLACEMENT_NAME",
+											"IMPRESSION_DEVICE_TYPE",
+										),
+									},
+									MarkdownDescription: `must be one of ["COMPANY", "ACCOUNT", "SHARE", "CAMPAIGN", "CREATIVE", "CAMPAIGN_GROUP", "CONVERSION", "CONVERSATION_NODE", "CONVERSATION_NODE_OPTION_INDEX", "SERVING_LOCATION", "CARD_INDEX", "MEMBER_COMPANY_SIZE", "MEMBER_INDUSTRY", "MEMBER_SENIORITY", "MEMBER_JOB_TITLE ", "MEMBER_JOB_FUNCTION ", "MEMBER_COUNTRY_V2 ", "MEMBER_REGION_V2", "MEMBER_COMPANY", "PLACEMENT_NAME", "IMPRESSION_DEVICE_TYPE"]` + "\n" +
+										`Select value from list to pivot by`,
+								},
+								"time_granularity": schema.StringAttribute{
+									Required: true,
+									Validators: []validator.String{
+										stringvalidator.OneOf(
+											"ALL",
+											"DAILY",
+											"MONTHLY",
+											"YEARLY",
+										),
+									},
+									MarkdownDescription: `must be one of ["ALL", "DAILY", "MONTHLY", "YEARLY"]` + "\n" +
+										`Set time granularity for report: ` + "\n" +
+										`ALL - Results grouped into a single result across the entire time range of the report.` + "\n" +
+										`DAILY - Results grouped by day.` + "\n" +
+										`MONTHLY - Results grouped by month.` + "\n" +
+										`YEARLY - Results grouped by year.`,
+								},
+							},
+						},
+					},
 					"credentials": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
@@ -369,7 +427,7 @@ func (r *SourceLinkedinAdsResource) Update(ctx context.Context, req resource.Upd
 		return
 	}
 	if getResponse.SourceResponse == nil {
-		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(res.RawResponse))
+		resp.Diagnostics.AddError("unexpected response from API. No response body", debugResponse(getResponse.RawResponse))
 		return
 	}
 	data.RefreshFromGetResponse(getResponse.SourceResponse)
@@ -412,7 +470,7 @@ func (r *SourceLinkedinAdsResource) Delete(ctx context.Context, req resource.Del
 		resp.Diagnostics.AddError("unexpected response from API", fmt.Sprintf("%v", res))
 		return
 	}
-	if res.StatusCode != 204 {
+	if fmt.Sprintf("%v", res.StatusCode)[0] != '2' {
 		resp.Diagnostics.AddError(fmt.Sprintf("unexpected response from API. Got an unexpected response code %v", res.StatusCode), debugResponse(res.RawResponse))
 		return
 	}

@@ -21,9 +21,9 @@ resource "airbyte_source_bamboo_hr" "my_source_bamboohr" {
     source_type                           = "bamboo-hr"
     subdomain                             = "...my_subdomain..."
   }
-  name         = "Thelma Wisoky"
+  name         = "Mandy Collier"
   secret_id    = "...my_secret_id..."
-  workspace_id = "a9e06bee-4825-4c1f-80e1-15c80bff9185"
+  workspace_id = "da7e23f2-2574-411f-af4b-7544e472e802"
 }
 ```
 

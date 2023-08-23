@@ -3,7 +3,7 @@ resource "airbyte_source_k6_cloud" "my_source_k6cloud" {
     api_token   = "...my_api_token..."
     source_type = "k6-cloud"
   }
-  name         = "Lee Hegmann"
+  name         = "Marcella Dooley"
   secret_id    = "...my_secret_id..."
-  workspace_id = "475f16f5-6d38-45a3-84ac-631b99e26ced"
+  workspace_id = "a3c4ac63-1b99-4e26-8ed8-f9fdb9410f63"
 }
