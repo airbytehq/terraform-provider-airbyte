@@ -11,11 +11,11 @@ resource "airbyte_source_google_analytics_data_api" "my_source_googleanalyticsda
     }
     custom_reports         = "...my_custom_reports..."
     date_ranges_start_date = "2021-01-01"
-    property_id            = "1738294"
+    property_id            = "5729978930"
     source_type            = "google-analytics-data-api"
-    window_in_days         = 120
+    window_in_days         = 364
   }
-  name         = "Duane Prohaska II"
+  name         = "Juanita Collier"
   secret_id    = "...my_secret_id..."
-  workspace_id = "8c4c4e54-599e-4a34-a260-e9b200ce78a1"
+  workspace_id = "0e9b200c-e78a-41bd-8fb7-a0a116ce723d"
 }

@@ -20,9 +20,9 @@ resource "airbyte_source_smaily" "my_source_smaily" {
     api_username  = "...my_api_username..."
     source_type   = "smaily"
   }
-  name         = "Lynda Thiel"
+  name         = "Donnie Hauck"
   secret_id    = "...my_secret_id..."
-  workspace_id = "cc50c8a3-512c-4737-8489-30750a00e966"
+  workspace_id = "b6902b88-1a94-4f64-b664-a8f0af8c691d"
 }
 ```
 

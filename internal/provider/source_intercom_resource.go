@@ -59,6 +59,14 @@ func (r *SourceIntercomResource) Schema(ctx context.Context, req resource.Schema
 						Required:    true,
 						Description: `Access token for making authenticated requests. See the <a href="https://developers.intercom.com/building-apps/docs/authentication-types#how-to-get-your-access-token">Intercom docs</a> for more information.`,
 					},
+					"client_id": schema.StringAttribute{
+						Optional:    true,
+						Description: `Client Id for your Intercom application.`,
+					},
+					"client_secret": schema.StringAttribute{
+						Optional:    true,
+						Description: `Client Secret for your Intercom application.`,
+					},
 					"source_type": schema.StringAttribute{
 						Required: true,
 						Validators: []validator.String{

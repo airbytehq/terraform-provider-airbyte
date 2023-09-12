@@ -23,51 +23,51 @@ func (r *SourceMssqlResourceModel) ToCreateSDKType() *shared.SourceMssqlCreateRe
 		password = nil
 	}
 	port := r.Configuration.Port.ValueInt64()
-	var replicationMethod *shared.SourceMssqlReplicationMethod
+	var replicationMethod *shared.SourceMssqlUpdateMethod
 	if r.Configuration.ReplicationMethod != nil {
-		var sourceMssqlReplicationMethodStandard *shared.SourceMssqlReplicationMethodStandard
-		if r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodStandard != nil {
-			method := shared.SourceMssqlReplicationMethodStandardMethod(r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodStandard.Method.ValueString())
-			sourceMssqlReplicationMethodStandard = &shared.SourceMssqlReplicationMethodStandard{
-				Method: method,
-			}
-		}
-		if sourceMssqlReplicationMethodStandard != nil {
-			replicationMethod = &shared.SourceMssqlReplicationMethod{
-				SourceMssqlReplicationMethodStandard: sourceMssqlReplicationMethodStandard,
-			}
-		}
-		var sourceMssqlReplicationMethodLogicalReplicationCDC *shared.SourceMssqlReplicationMethodLogicalReplicationCDC
-		if r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC != nil {
-			dataToSync := new(shared.SourceMssqlReplicationMethodLogicalReplicationCDCDataToSync)
-			if !r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.DataToSync.IsUnknown() && !r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.DataToSync.IsNull() {
-				*dataToSync = shared.SourceMssqlReplicationMethodLogicalReplicationCDCDataToSync(r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.DataToSync.ValueString())
+		var sourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC *shared.SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC
+		if r.Configuration.ReplicationMethod.SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC != nil {
+			dataToSync := new(shared.SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDCDataToSync)
+			if !r.Configuration.ReplicationMethod.SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC.DataToSync.IsUnknown() && !r.Configuration.ReplicationMethod.SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC.DataToSync.IsNull() {
+				*dataToSync = shared.SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDCDataToSync(r.Configuration.ReplicationMethod.SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC.DataToSync.ValueString())
 			} else {
 				dataToSync = nil
 			}
 			initialWaitingSeconds := new(int64)
-			if !r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds.IsUnknown() && !r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds.IsNull() {
-				*initialWaitingSeconds = r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds.ValueInt64()
+			if !r.Configuration.ReplicationMethod.SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC.InitialWaitingSeconds.IsUnknown() && !r.Configuration.ReplicationMethod.SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC.InitialWaitingSeconds.IsNull() {
+				*initialWaitingSeconds = r.Configuration.ReplicationMethod.SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC.InitialWaitingSeconds.ValueInt64()
 			} else {
 				initialWaitingSeconds = nil
 			}
-			method1 := shared.SourceMssqlReplicationMethodLogicalReplicationCDCMethod(r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.Method.ValueString())
-			snapshotIsolation := new(shared.SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevel)
-			if !r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.SnapshotIsolation.IsUnknown() && !r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.SnapshotIsolation.IsNull() {
-				*snapshotIsolation = shared.SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevel(r.Configuration.ReplicationMethod.SourceMssqlReplicationMethodLogicalReplicationCDC.SnapshotIsolation.ValueString())
+			method := shared.SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDCMethod(r.Configuration.ReplicationMethod.SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC.Method.ValueString())
+			snapshotIsolation := new(shared.SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDCInitialSnapshotIsolationLevel)
+			if !r.Configuration.ReplicationMethod.SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC.SnapshotIsolation.IsUnknown() && !r.Configuration.ReplicationMethod.SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC.SnapshotIsolation.IsNull() {
+				*snapshotIsolation = shared.SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDCInitialSnapshotIsolationLevel(r.Configuration.ReplicationMethod.SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC.SnapshotIsolation.ValueString())
 			} else {
 				snapshotIsolation = nil
 			}
-			sourceMssqlReplicationMethodLogicalReplicationCDC = &shared.SourceMssqlReplicationMethodLogicalReplicationCDC{
+			sourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC = &shared.SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC{
 				DataToSync:            dataToSync,
 				InitialWaitingSeconds: initialWaitingSeconds,
-				Method:                method1,
+				Method:                method,
 				SnapshotIsolation:     snapshotIsolation,
 			}
 		}
-		if sourceMssqlReplicationMethodLogicalReplicationCDC != nil {
-			replicationMethod = &shared.SourceMssqlReplicationMethod{
-				SourceMssqlReplicationMethodLogicalReplicationCDC: sourceMssqlReplicationMethodLogicalReplicationCDC,
+		if sourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC != nil {
+			replicationMethod = &shared.SourceMssqlUpdateMethod{
+				SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC: sourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC,
+			}
+		}
+		var sourceMssqlUpdateMethodScanChangesWithUserDefinedCursor *shared.SourceMssqlUpdateMethodScanChangesWithUserDefinedCursor
+		if r.Configuration.ReplicationMethod.SourceMssqlUpdateMethodScanChangesWithUserDefinedCursor != nil {
+			method1 := shared.SourceMssqlUpdateMethodScanChangesWithUserDefinedCursorMethod(r.Configuration.ReplicationMethod.SourceMssqlUpdateMethodScanChangesWithUserDefinedCursor.Method.ValueString())
+			sourceMssqlUpdateMethodScanChangesWithUserDefinedCursor = &shared.SourceMssqlUpdateMethodScanChangesWithUserDefinedCursor{
+				Method: method1,
+			}
+		}
+		if sourceMssqlUpdateMethodScanChangesWithUserDefinedCursor != nil {
+			replicationMethod = &shared.SourceMssqlUpdateMethod{
+				SourceMssqlUpdateMethodScanChangesWithUserDefinedCursor: sourceMssqlUpdateMethodScanChangesWithUserDefinedCursor,
 			}
 		}
 	}
@@ -217,51 +217,51 @@ func (r *SourceMssqlResourceModel) ToUpdateSDKType() *shared.SourceMssqlPutReque
 		password = nil
 	}
 	port := r.Configuration.Port.ValueInt64()
-	var replicationMethod *shared.SourceMssqlUpdateReplicationMethod
+	var replicationMethod *shared.SourceMssqlUpdateUpdateMethod
 	if r.Configuration.ReplicationMethod != nil {
-		var sourceMssqlUpdateReplicationMethodStandard *shared.SourceMssqlUpdateReplicationMethodStandard
-		if r.Configuration.ReplicationMethod.SourceMssqlUpdateReplicationMethodStandard != nil {
-			method := shared.SourceMssqlUpdateReplicationMethodStandardMethod(r.Configuration.ReplicationMethod.SourceMssqlUpdateReplicationMethodStandard.Method.ValueString())
-			sourceMssqlUpdateReplicationMethodStandard = &shared.SourceMssqlUpdateReplicationMethodStandard{
-				Method: method,
-			}
-		}
-		if sourceMssqlUpdateReplicationMethodStandard != nil {
-			replicationMethod = &shared.SourceMssqlUpdateReplicationMethod{
-				SourceMssqlUpdateReplicationMethodStandard: sourceMssqlUpdateReplicationMethodStandard,
-			}
-		}
-		var sourceMssqlUpdateReplicationMethodLogicalReplicationCDC *shared.SourceMssqlUpdateReplicationMethodLogicalReplicationCDC
-		if r.Configuration.ReplicationMethod.SourceMssqlUpdateReplicationMethodLogicalReplicationCDC != nil {
-			dataToSync := new(shared.SourceMssqlUpdateReplicationMethodLogicalReplicationCDCDataToSync)
-			if !r.Configuration.ReplicationMethod.SourceMssqlUpdateReplicationMethodLogicalReplicationCDC.DataToSync.IsUnknown() && !r.Configuration.ReplicationMethod.SourceMssqlUpdateReplicationMethodLogicalReplicationCDC.DataToSync.IsNull() {
-				*dataToSync = shared.SourceMssqlUpdateReplicationMethodLogicalReplicationCDCDataToSync(r.Configuration.ReplicationMethod.SourceMssqlUpdateReplicationMethodLogicalReplicationCDC.DataToSync.ValueString())
+		var sourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDC *shared.SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDC
+		if r.Configuration.ReplicationMethod.SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDC != nil {
+			dataToSync := new(shared.SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDCDataToSync)
+			if !r.Configuration.ReplicationMethod.SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDC.DataToSync.IsUnknown() && !r.Configuration.ReplicationMethod.SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDC.DataToSync.IsNull() {
+				*dataToSync = shared.SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDCDataToSync(r.Configuration.ReplicationMethod.SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDC.DataToSync.ValueString())
 			} else {
 				dataToSync = nil
 			}
 			initialWaitingSeconds := new(int64)
-			if !r.Configuration.ReplicationMethod.SourceMssqlUpdateReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds.IsUnknown() && !r.Configuration.ReplicationMethod.SourceMssqlUpdateReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds.IsNull() {
-				*initialWaitingSeconds = r.Configuration.ReplicationMethod.SourceMssqlUpdateReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds.ValueInt64()
+			if !r.Configuration.ReplicationMethod.SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDC.InitialWaitingSeconds.IsUnknown() && !r.Configuration.ReplicationMethod.SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDC.InitialWaitingSeconds.IsNull() {
+				*initialWaitingSeconds = r.Configuration.ReplicationMethod.SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDC.InitialWaitingSeconds.ValueInt64()
 			} else {
 				initialWaitingSeconds = nil
 			}
-			method1 := shared.SourceMssqlUpdateReplicationMethodLogicalReplicationCDCMethod(r.Configuration.ReplicationMethod.SourceMssqlUpdateReplicationMethodLogicalReplicationCDC.Method.ValueString())
-			snapshotIsolation := new(shared.SourceMssqlUpdateReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevel)
-			if !r.Configuration.ReplicationMethod.SourceMssqlUpdateReplicationMethodLogicalReplicationCDC.SnapshotIsolation.IsUnknown() && !r.Configuration.ReplicationMethod.SourceMssqlUpdateReplicationMethodLogicalReplicationCDC.SnapshotIsolation.IsNull() {
-				*snapshotIsolation = shared.SourceMssqlUpdateReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevel(r.Configuration.ReplicationMethod.SourceMssqlUpdateReplicationMethodLogicalReplicationCDC.SnapshotIsolation.ValueString())
+			method := shared.SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDCMethod(r.Configuration.ReplicationMethod.SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDC.Method.ValueString())
+			snapshotIsolation := new(shared.SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDCInitialSnapshotIsolationLevel)
+			if !r.Configuration.ReplicationMethod.SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDC.SnapshotIsolation.IsUnknown() && !r.Configuration.ReplicationMethod.SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDC.SnapshotIsolation.IsNull() {
+				*snapshotIsolation = shared.SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDCInitialSnapshotIsolationLevel(r.Configuration.ReplicationMethod.SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDC.SnapshotIsolation.ValueString())
 			} else {
 				snapshotIsolation = nil
 			}
-			sourceMssqlUpdateReplicationMethodLogicalReplicationCDC = &shared.SourceMssqlUpdateReplicationMethodLogicalReplicationCDC{
+			sourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDC = &shared.SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDC{
 				DataToSync:            dataToSync,
 				InitialWaitingSeconds: initialWaitingSeconds,
-				Method:                method1,
+				Method:                method,
 				SnapshotIsolation:     snapshotIsolation,
 			}
 		}
-		if sourceMssqlUpdateReplicationMethodLogicalReplicationCDC != nil {
-			replicationMethod = &shared.SourceMssqlUpdateReplicationMethod{
-				SourceMssqlUpdateReplicationMethodLogicalReplicationCDC: sourceMssqlUpdateReplicationMethodLogicalReplicationCDC,
+		if sourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDC != nil {
+			replicationMethod = &shared.SourceMssqlUpdateUpdateMethod{
+				SourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDC: sourceMssqlUpdateUpdateMethodReadChangesUsingChangeDataCaptureCDC,
+			}
+		}
+		var sourceMssqlUpdateUpdateMethodScanChangesWithUserDefinedCursor *shared.SourceMssqlUpdateUpdateMethodScanChangesWithUserDefinedCursor
+		if r.Configuration.ReplicationMethod.SourceMssqlUpdateUpdateMethodScanChangesWithUserDefinedCursor != nil {
+			method1 := shared.SourceMssqlUpdateUpdateMethodScanChangesWithUserDefinedCursorMethod(r.Configuration.ReplicationMethod.SourceMssqlUpdateUpdateMethodScanChangesWithUserDefinedCursor.Method.ValueString())
+			sourceMssqlUpdateUpdateMethodScanChangesWithUserDefinedCursor = &shared.SourceMssqlUpdateUpdateMethodScanChangesWithUserDefinedCursor{
+				Method: method1,
+			}
+		}
+		if sourceMssqlUpdateUpdateMethodScanChangesWithUserDefinedCursor != nil {
+			replicationMethod = &shared.SourceMssqlUpdateUpdateMethod{
+				SourceMssqlUpdateUpdateMethodScanChangesWithUserDefinedCursor: sourceMssqlUpdateUpdateMethodScanChangesWithUserDefinedCursor,
 			}
 		}
 	}

@@ -9,19 +9,48 @@ import (
 	"fmt"
 )
 
-// SourceMssqlReplicationMethodLogicalReplicationCDCDataToSync - What data should be synced under the CDC. "Existing and New" will read existing data as a snapshot, and sync new changes through CDC. "New Changes Only" will skip the initial snapshot, and only sync new changes through CDC.
-type SourceMssqlReplicationMethodLogicalReplicationCDCDataToSync string
+type SourceMssqlUpdateMethodScanChangesWithUserDefinedCursorMethod string
 
 const (
-	SourceMssqlReplicationMethodLogicalReplicationCDCDataToSyncExistingAndNew SourceMssqlReplicationMethodLogicalReplicationCDCDataToSync = "Existing and New"
-	SourceMssqlReplicationMethodLogicalReplicationCDCDataToSyncNewChangesOnly SourceMssqlReplicationMethodLogicalReplicationCDCDataToSync = "New Changes Only"
+	SourceMssqlUpdateMethodScanChangesWithUserDefinedCursorMethodStandard SourceMssqlUpdateMethodScanChangesWithUserDefinedCursorMethod = "STANDARD"
 )
 
-func (e SourceMssqlReplicationMethodLogicalReplicationCDCDataToSync) ToPointer() *SourceMssqlReplicationMethodLogicalReplicationCDCDataToSync {
+func (e SourceMssqlUpdateMethodScanChangesWithUserDefinedCursorMethod) ToPointer() *SourceMssqlUpdateMethodScanChangesWithUserDefinedCursorMethod {
 	return &e
 }
 
-func (e *SourceMssqlReplicationMethodLogicalReplicationCDCDataToSync) UnmarshalJSON(data []byte) error {
+func (e *SourceMssqlUpdateMethodScanChangesWithUserDefinedCursorMethod) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "STANDARD":
+		*e = SourceMssqlUpdateMethodScanChangesWithUserDefinedCursorMethod(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceMssqlUpdateMethodScanChangesWithUserDefinedCursorMethod: %v", v)
+	}
+}
+
+// SourceMssqlUpdateMethodScanChangesWithUserDefinedCursor - Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at).
+type SourceMssqlUpdateMethodScanChangesWithUserDefinedCursor struct {
+	Method SourceMssqlUpdateMethodScanChangesWithUserDefinedCursorMethod `json:"method"`
+}
+
+// SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDCDataToSync - What data should be synced under the CDC. "Existing and New" will read existing data as a snapshot, and sync new changes through CDC. "New Changes Only" will skip the initial snapshot, and only sync new changes through CDC.
+type SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDCDataToSync string
+
+const (
+	SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDCDataToSyncExistingAndNew SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDCDataToSync = "Existing and New"
+	SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDCDataToSyncNewChangesOnly SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDCDataToSync = "New Changes Only"
+)
+
+func (e SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDCDataToSync) ToPointer() *SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDCDataToSync {
+	return &e
+}
+
+func (e *SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDCDataToSync) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -30,50 +59,50 @@ func (e *SourceMssqlReplicationMethodLogicalReplicationCDCDataToSync) UnmarshalJ
 	case "Existing and New":
 		fallthrough
 	case "New Changes Only":
-		*e = SourceMssqlReplicationMethodLogicalReplicationCDCDataToSync(v)
+		*e = SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDCDataToSync(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMssqlReplicationMethodLogicalReplicationCDCDataToSync: %v", v)
+		return fmt.Errorf("invalid value for SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDCDataToSync: %v", v)
 	}
 }
 
-type SourceMssqlReplicationMethodLogicalReplicationCDCMethod string
+type SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDCMethod string
 
 const (
-	SourceMssqlReplicationMethodLogicalReplicationCDCMethodCdc SourceMssqlReplicationMethodLogicalReplicationCDCMethod = "CDC"
+	SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDCMethodCdc SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDCMethod = "CDC"
 )
 
-func (e SourceMssqlReplicationMethodLogicalReplicationCDCMethod) ToPointer() *SourceMssqlReplicationMethodLogicalReplicationCDCMethod {
+func (e SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDCMethod) ToPointer() *SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDCMethod {
 	return &e
 }
 
-func (e *SourceMssqlReplicationMethodLogicalReplicationCDCMethod) UnmarshalJSON(data []byte) error {
+func (e *SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDCMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "CDC":
-		*e = SourceMssqlReplicationMethodLogicalReplicationCDCMethod(v)
+		*e = SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDCMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMssqlReplicationMethodLogicalReplicationCDCMethod: %v", v)
+		return fmt.Errorf("invalid value for SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDCMethod: %v", v)
 	}
 }
 
-// SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevel - Existing data in the database are synced through an initial snapshot. This parameter controls the isolation level that will be used during the initial snapshotting. If you choose the "Snapshot" level, you must enable the <a href="https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/snapshot-isolation-in-sql-server">snapshot isolation mode</a> on the database.
-type SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevel string
+// SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDCInitialSnapshotIsolationLevel - Existing data in the database are synced through an initial snapshot. This parameter controls the isolation level that will be used during the initial snapshotting. If you choose the "Snapshot" level, you must enable the <a href="https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/snapshot-isolation-in-sql-server">snapshot isolation mode</a> on the database.
+type SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDCInitialSnapshotIsolationLevel string
 
 const (
-	SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevelSnapshot      SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevel = "Snapshot"
-	SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevelReadCommitted SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevel = "Read Committed"
+	SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDCInitialSnapshotIsolationLevelSnapshot      SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDCInitialSnapshotIsolationLevel = "Snapshot"
+	SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDCInitialSnapshotIsolationLevelReadCommitted SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDCInitialSnapshotIsolationLevel = "Read Committed"
 )
 
-func (e SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevel) ToPointer() *SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevel {
+func (e SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDCInitialSnapshotIsolationLevel) ToPointer() *SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDCInitialSnapshotIsolationLevel {
 	return &e
 }
 
-func (e *SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevel) UnmarshalJSON(data []byte) error {
+func (e *SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDCInitialSnapshotIsolationLevel) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -82,116 +111,87 @@ func (e *SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolati
 	case "Snapshot":
 		fallthrough
 	case "Read Committed":
-		*e = SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevel(v)
+		*e = SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDCInitialSnapshotIsolationLevel(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevel: %v", v)
+		return fmt.Errorf("invalid value for SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDCInitialSnapshotIsolationLevel: %v", v)
 	}
 }
 
-// SourceMssqlReplicationMethodLogicalReplicationCDC - CDC uses {TBC} to detect inserts, updates, and deletes. This needs to be configured on the source database itself.
-type SourceMssqlReplicationMethodLogicalReplicationCDC struct {
+// SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC - <i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the SQL Server's <a href="https://docs.airbyte.com/integrations/sources/mssql/#change-data-capture-cdc">change data capture feature</a>. This must be enabled on your database.
+type SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC struct {
 	// What data should be synced under the CDC. "Existing and New" will read existing data as a snapshot, and sync new changes through CDC. "New Changes Only" will skip the initial snapshot, and only sync new changes through CDC.
-	DataToSync *SourceMssqlReplicationMethodLogicalReplicationCDCDataToSync `json:"data_to_sync,omitempty"`
+	DataToSync *SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDCDataToSync `json:"data_to_sync,omitempty"`
 	// The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/mysql/#change-data-capture-cdc">initial waiting time</a>.
-	InitialWaitingSeconds *int64                                                  `json:"initial_waiting_seconds,omitempty"`
-	Method                SourceMssqlReplicationMethodLogicalReplicationCDCMethod `json:"method"`
+	InitialWaitingSeconds *int64                                                            `json:"initial_waiting_seconds,omitempty"`
+	Method                SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDCMethod `json:"method"`
 	// Existing data in the database are synced through an initial snapshot. This parameter controls the isolation level that will be used during the initial snapshotting. If you choose the "Snapshot" level, you must enable the <a href="https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/snapshot-isolation-in-sql-server">snapshot isolation mode</a> on the database.
-	SnapshotIsolation *SourceMssqlReplicationMethodLogicalReplicationCDCInitialSnapshotIsolationLevel `json:"snapshot_isolation,omitempty"`
+	SnapshotIsolation *SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDCInitialSnapshotIsolationLevel `json:"snapshot_isolation,omitempty"`
 }
 
-type SourceMssqlReplicationMethodStandardMethod string
+type SourceMssqlUpdateMethodType string
 
 const (
-	SourceMssqlReplicationMethodStandardMethodStandard SourceMssqlReplicationMethodStandardMethod = "STANDARD"
+	SourceMssqlUpdateMethodTypeSourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC SourceMssqlUpdateMethodType = "source-mssql_Update Method_Read Changes using Change Data Capture (CDC)"
+	SourceMssqlUpdateMethodTypeSourceMssqlUpdateMethodScanChangesWithUserDefinedCursor     SourceMssqlUpdateMethodType = "source-mssql_Update Method_Scan Changes with User Defined Cursor"
 )
 
-func (e SourceMssqlReplicationMethodStandardMethod) ToPointer() *SourceMssqlReplicationMethodStandardMethod {
-	return &e
+type SourceMssqlUpdateMethod struct {
+	SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC *SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC
+	SourceMssqlUpdateMethodScanChangesWithUserDefinedCursor     *SourceMssqlUpdateMethodScanChangesWithUserDefinedCursor
+
+	Type SourceMssqlUpdateMethodType
 }
 
-func (e *SourceMssqlReplicationMethodStandardMethod) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "STANDARD":
-		*e = SourceMssqlReplicationMethodStandardMethod(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceMssqlReplicationMethodStandardMethod: %v", v)
-	}
-}
+func CreateSourceMssqlUpdateMethodSourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC(sourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC) SourceMssqlUpdateMethod {
+	typ := SourceMssqlUpdateMethodTypeSourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC
 
-// SourceMssqlReplicationMethodStandard - Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.
-type SourceMssqlReplicationMethodStandard struct {
-	Method SourceMssqlReplicationMethodStandardMethod `json:"method"`
-}
-
-type SourceMssqlReplicationMethodType string
-
-const (
-	SourceMssqlReplicationMethodTypeSourceMssqlReplicationMethodStandard              SourceMssqlReplicationMethodType = "source-mssql_Replication Method_Standard"
-	SourceMssqlReplicationMethodTypeSourceMssqlReplicationMethodLogicalReplicationCDC SourceMssqlReplicationMethodType = "source-mssql_Replication Method_Logical Replication (CDC)"
-)
-
-type SourceMssqlReplicationMethod struct {
-	SourceMssqlReplicationMethodStandard              *SourceMssqlReplicationMethodStandard
-	SourceMssqlReplicationMethodLogicalReplicationCDC *SourceMssqlReplicationMethodLogicalReplicationCDC
-
-	Type SourceMssqlReplicationMethodType
-}
-
-func CreateSourceMssqlReplicationMethodSourceMssqlReplicationMethodStandard(sourceMssqlReplicationMethodStandard SourceMssqlReplicationMethodStandard) SourceMssqlReplicationMethod {
-	typ := SourceMssqlReplicationMethodTypeSourceMssqlReplicationMethodStandard
-
-	return SourceMssqlReplicationMethod{
-		SourceMssqlReplicationMethodStandard: &sourceMssqlReplicationMethodStandard,
-		Type:                                 typ,
-	}
-}
-
-func CreateSourceMssqlReplicationMethodSourceMssqlReplicationMethodLogicalReplicationCDC(sourceMssqlReplicationMethodLogicalReplicationCDC SourceMssqlReplicationMethodLogicalReplicationCDC) SourceMssqlReplicationMethod {
-	typ := SourceMssqlReplicationMethodTypeSourceMssqlReplicationMethodLogicalReplicationCDC
-
-	return SourceMssqlReplicationMethod{
-		SourceMssqlReplicationMethodLogicalReplicationCDC: &sourceMssqlReplicationMethodLogicalReplicationCDC,
+	return SourceMssqlUpdateMethod{
+		SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC: &sourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC,
 		Type: typ,
 	}
 }
 
-func (u *SourceMssqlReplicationMethod) UnmarshalJSON(data []byte) error {
+func CreateSourceMssqlUpdateMethodSourceMssqlUpdateMethodScanChangesWithUserDefinedCursor(sourceMssqlUpdateMethodScanChangesWithUserDefinedCursor SourceMssqlUpdateMethodScanChangesWithUserDefinedCursor) SourceMssqlUpdateMethod {
+	typ := SourceMssqlUpdateMethodTypeSourceMssqlUpdateMethodScanChangesWithUserDefinedCursor
+
+	return SourceMssqlUpdateMethod{
+		SourceMssqlUpdateMethodScanChangesWithUserDefinedCursor: &sourceMssqlUpdateMethodScanChangesWithUserDefinedCursor,
+		Type: typ,
+	}
+}
+
+func (u *SourceMssqlUpdateMethod) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceMssqlReplicationMethodStandard := new(SourceMssqlReplicationMethodStandard)
+	sourceMssqlUpdateMethodScanChangesWithUserDefinedCursor := new(SourceMssqlUpdateMethodScanChangesWithUserDefinedCursor)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMssqlReplicationMethodStandard); err == nil {
-		u.SourceMssqlReplicationMethodStandard = sourceMssqlReplicationMethodStandard
-		u.Type = SourceMssqlReplicationMethodTypeSourceMssqlReplicationMethodStandard
+	if err := d.Decode(&sourceMssqlUpdateMethodScanChangesWithUserDefinedCursor); err == nil {
+		u.SourceMssqlUpdateMethodScanChangesWithUserDefinedCursor = sourceMssqlUpdateMethodScanChangesWithUserDefinedCursor
+		u.Type = SourceMssqlUpdateMethodTypeSourceMssqlUpdateMethodScanChangesWithUserDefinedCursor
 		return nil
 	}
 
-	sourceMssqlReplicationMethodLogicalReplicationCDC := new(SourceMssqlReplicationMethodLogicalReplicationCDC)
+	sourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC := new(SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMssqlReplicationMethodLogicalReplicationCDC); err == nil {
-		u.SourceMssqlReplicationMethodLogicalReplicationCDC = sourceMssqlReplicationMethodLogicalReplicationCDC
-		u.Type = SourceMssqlReplicationMethodTypeSourceMssqlReplicationMethodLogicalReplicationCDC
+	if err := d.Decode(&sourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC); err == nil {
+		u.SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC = sourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC
+		u.Type = SourceMssqlUpdateMethodTypeSourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u SourceMssqlReplicationMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceMssqlReplicationMethodStandard != nil {
-		return json.Marshal(u.SourceMssqlReplicationMethodStandard)
+func (u SourceMssqlUpdateMethod) MarshalJSON() ([]byte, error) {
+	if u.SourceMssqlUpdateMethodScanChangesWithUserDefinedCursor != nil {
+		return json.Marshal(u.SourceMssqlUpdateMethodScanChangesWithUserDefinedCursor)
 	}
 
-	if u.SourceMssqlReplicationMethodLogicalReplicationCDC != nil {
-		return json.Marshal(u.SourceMssqlReplicationMethodLogicalReplicationCDC)
+	if u.SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC != nil {
+		return json.Marshal(u.SourceMssqlUpdateMethodReadChangesUsingChangeDataCaptureCDC)
 	}
 
 	return nil, nil
@@ -561,8 +561,8 @@ type SourceMssql struct {
 	Password *string `json:"password,omitempty"`
 	// The port of the database.
 	Port int64 `json:"port"`
-	// The replication method used for extracting data from the database. STANDARD replication requires no setup on the DB side but will not be able to represent deletions incrementally. CDC uses {TBC} to detect inserts, updates, and deletes. This needs to be configured on the source database itself.
-	ReplicationMethod *SourceMssqlReplicationMethod `json:"replication_method,omitempty"`
+	// Configures how data is extracted from the database.
+	ReplicationMethod *SourceMssqlUpdateMethod `json:"replication_method,omitempty"`
 	// The list of schemas to sync from. Defaults to user. Case sensitive.
 	Schemas    []string         `json:"schemas,omitempty"`
 	SourceType SourceMssqlMssql `json:"sourceType"`

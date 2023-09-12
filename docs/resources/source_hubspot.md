@@ -26,9 +26,9 @@ resource "airbyte_source_hubspot" "my_source_hubspot" {
     source_type = "hubspot"
     start_date  = "2017-01-25T00:00:00Z"
   }
-  name         = "Pauline Paucek"
+  name         = "Mr. Tomas Wisozk DVM"
   secret_id    = "...my_secret_id..."
-  workspace_id = "a9a35d08-6b6f-466f-af02-0e9f443b4257"
+  workspace_id = "9f443b42-57b9-492c-8dbd-a6a61efa2198"
 }
 ```
 

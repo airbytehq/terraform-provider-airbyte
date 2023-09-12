@@ -13,7 +13,6 @@ type DestinationSnowflake struct {
 	RawDataSchema   types.String                             `tfsdk:"raw_data_schema"`
 	Role            types.String                             `tfsdk:"role"`
 	Schema          types.String                             `tfsdk:"schema"`
-	Use1s1tFormat   types.Bool                               `tfsdk:"use_1s1t_format"`
 	Username        types.String                             `tfsdk:"username"`
 	Warehouse       types.String                             `tfsdk:"warehouse"`
 }

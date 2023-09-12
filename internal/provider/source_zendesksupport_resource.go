@@ -206,7 +206,7 @@ func (r *SourceZendeskSupportResource) Schema(ctx context.Context, req resource.
 						Description: `must be one of ["zendesk-support"]`,
 					},
 					"start_date": schema.StringAttribute{
-						Required: true,
+						Optional: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},

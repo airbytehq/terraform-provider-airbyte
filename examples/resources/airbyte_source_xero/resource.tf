@@ -11,7 +11,7 @@ resource "airbyte_source_xero" "my_source_xero" {
     start_date  = "2022-03-01T00:00:00Z"
     tenant_id   = "...my_tenant_id..."
   }
-  name         = "Geraldine Crist"
+  name         = "Roger Hudson"
   secret_id    = "...my_secret_id..."
-  workspace_id = "7510da80-3122-492c-861c-2a702bb97ee1"
+  workspace_id = "6beb68a0-f657-4b7d-83a1-480f8de30f06"
 }

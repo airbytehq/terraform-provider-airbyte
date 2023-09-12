@@ -10,7 +10,7 @@ resource "airbyte_source_lever_hiring" "my_source_leverhiring" {
     source_type = "lever-hiring"
     start_date  = "2021-03-01T00:00:00Z"
   }
-  name         = "Mrs. Amos Ryan"
+  name         = "Donald Wuckert"
   secret_id    = "...my_secret_id..."
-  workspace_id = "eb4d6e1e-ae0f-475a-adf2-acab58b991c9"
+  workspace_id = "aedf2aca-b58b-4991-8926-ddb589461e74"
 }

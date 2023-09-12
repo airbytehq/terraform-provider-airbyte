@@ -761,21 +761,30 @@ func (u *DestinationS3OutputFormatAvroApacheAvroCompressionCodec) UnmarshalJSON(
 		return nil
 	}
 
-	destinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate := new(DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate); err == nil {
-		u.DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate = destinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate
-		u.Type = DestinationS3OutputFormatAvroApacheAvroCompressionCodecTypeDestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate
-		return nil
-	}
-
 	destinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2 := new(DestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
 	if err := d.Decode(&destinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2); err == nil {
 		u.DestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2 = destinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2
 		u.Type = DestinationS3OutputFormatAvroApacheAvroCompressionCodecTypeDestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2
+		return nil
+	}
+
+	destinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy := new(DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&destinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy); err == nil {
+		u.DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy = destinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy
+		u.Type = DestinationS3OutputFormatAvroApacheAvroCompressionCodecTypeDestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy
+		return nil
+	}
+
+	destinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate := new(DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&destinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate); err == nil {
+		u.DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate = destinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate
+		u.Type = DestinationS3OutputFormatAvroApacheAvroCompressionCodecTypeDestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate
 		return nil
 	}
 
@@ -797,15 +806,6 @@ func (u *DestinationS3OutputFormatAvroApacheAvroCompressionCodec) UnmarshalJSON(
 		return nil
 	}
 
-	destinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy := new(DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy); err == nil {
-		u.DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy = destinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy
-		u.Type = DestinationS3OutputFormatAvroApacheAvroCompressionCodecTypeDestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy
-		return nil
-	}
-
 	return errors.New("could not unmarshal into supported union types")
 }
 
@@ -814,12 +814,16 @@ func (u DestinationS3OutputFormatAvroApacheAvroCompressionCodec) MarshalJSON() (
 		return json.Marshal(u.DestinationS3OutputFormatAvroApacheAvroCompressionCodecNoCompression)
 	}
 
-	if u.DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate != nil {
-		return json.Marshal(u.DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate)
-	}
-
 	if u.DestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2 != nil {
 		return json.Marshal(u.DestinationS3OutputFormatAvroApacheAvroCompressionCodecBzip2)
+	}
+
+	if u.DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy != nil {
+		return json.Marshal(u.DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy)
+	}
+
+	if u.DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate != nil {
+		return json.Marshal(u.DestinationS3OutputFormatAvroApacheAvroCompressionCodecDeflate)
 	}
 
 	if u.DestinationS3OutputFormatAvroApacheAvroCompressionCodecXz != nil {
@@ -828,10 +832,6 @@ func (u DestinationS3OutputFormatAvroApacheAvroCompressionCodec) MarshalJSON() (
 
 	if u.DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandard != nil {
 		return json.Marshal(u.DestinationS3OutputFormatAvroApacheAvroCompressionCodecZstandard)
-	}
-
-	if u.DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy != nil {
-		return json.Marshal(u.DestinationS3OutputFormatAvroApacheAvroCompressionCodecSnappy)
 	}
 
 	return nil, nil

@@ -21,11 +21,11 @@ resource "airbyte_source_mssql" "my_source_mssql" {
     password        = "...my_password..."
     port            = 1433
     replication_method = {
-      source_mssql_replication_method_logical_replication_cdc_ = {
-        data_to_sync            = "Existing and New"
-        initial_waiting_seconds = 6
+      source_mssql_update_method_read_changes_using_change_data_capture_cdc_ = {
+        data_to_sync            = "New Changes Only"
+        initial_waiting_seconds = 7
         method                  = "CDC"
-        snapshot_isolation      = "Read Committed"
+        snapshot_isolation      = "Snapshot"
       }
     }
     schemas = [
@@ -42,11 +42,11 @@ resource "airbyte_source_mssql" "my_source_mssql" {
         tunnel_method = "NO_TUNNEL"
       }
     }
-    username = "Rhianna75"
+    username = "Bobbie60"
   }
-  name         = "Victor Gleason"
+  name         = "Clarence Murazik"
   secret_id    = "...my_secret_id..."
-  workspace_id = "da21729f-2ac4-41ef-9725-f1169ac1e41d"
+  workspace_id = "1ef5725f-1169-4ac1-a41d-8a23c23e34f2"
 }
 ```
 
@@ -83,7 +83,7 @@ Optional:
 
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (example: key1=value1&key2=value2&key3=value3).
 - `password` (String) The password associated with the username.
-- `replication_method` (Attributes) The replication method used for extracting data from the database. STANDARD replication requires no setup on the DB side but will not be able to represent deletions incrementally. CDC uses {TBC} to detect inserts, updates, and deletes. This needs to be configured on the source database itself. (see [below for nested schema](#nestedatt--configuration--replication_method))
+- `replication_method` (Attributes) Configures how data is extracted from the database. (see [below for nested schema](#nestedatt--configuration--replication_method))
 - `schemas` (List of String) The list of schemas to sync from. Defaults to user. Case sensitive.
 - `ssl_method` (Attributes) The encryption method which is used when communicating with the database. (see [below for nested schema](#nestedatt--configuration--ssl_method))
 - `tunnel_method` (Attributes) Whether to initiate an SSH tunnel before connecting to the database, and if so, which kind of authentication to use. (see [below for nested schema](#nestedatt--configuration--tunnel_method))
@@ -93,13 +93,13 @@ Optional:
 
 Optional:
 
-- `source_mssql_replication_method_logical_replication_cdc` (Attributes) CDC uses {TBC} to detect inserts, updates, and deletes. This needs to be configured on the source database itself. (see [below for nested schema](#nestedatt--configuration--replication_method--source_mssql_replication_method_logical_replication_cdc))
-- `source_mssql_replication_method_standard` (Attributes) Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally. (see [below for nested schema](#nestedatt--configuration--replication_method--source_mssql_replication_method_standard))
-- `source_mssql_update_replication_method_logical_replication_cdc` (Attributes) CDC uses {TBC} to detect inserts, updates, and deletes. This needs to be configured on the source database itself. (see [below for nested schema](#nestedatt--configuration--replication_method--source_mssql_update_replication_method_logical_replication_cdc))
-- `source_mssql_update_replication_method_standard` (Attributes) Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally. (see [below for nested schema](#nestedatt--configuration--replication_method--source_mssql_update_replication_method_standard))
+- `source_mssql_update_method_read_changes_using_change_data_capture_cdc` (Attributes) <i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the SQL Server's <a href="https://docs.airbyte.com/integrations/sources/mssql/#change-data-capture-cdc">change data capture feature</a>. This must be enabled on your database. (see [below for nested schema](#nestedatt--configuration--replication_method--source_mssql_update_method_read_changes_using_change_data_capture_cdc))
+- `source_mssql_update_method_scan_changes_with_user_defined_cursor` (Attributes) Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at). (see [below for nested schema](#nestedatt--configuration--replication_method--source_mssql_update_method_scan_changes_with_user_defined_cursor))
+- `source_mssql_update_update_method_read_changes_using_change_data_capture_cdc` (Attributes) <i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the SQL Server's <a href="https://docs.airbyte.com/integrations/sources/mssql/#change-data-capture-cdc">change data capture feature</a>. This must be enabled on your database. (see [below for nested schema](#nestedatt--configuration--replication_method--source_mssql_update_update_method_read_changes_using_change_data_capture_cdc))
+- `source_mssql_update_update_method_scan_changes_with_user_defined_cursor` (Attributes) Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at). (see [below for nested schema](#nestedatt--configuration--replication_method--source_mssql_update_update_method_scan_changes_with_user_defined_cursor))
 
-<a id="nestedatt--configuration--replication_method--source_mssql_replication_method_logical_replication_cdc"></a>
-### Nested Schema for `configuration.replication_method.source_mssql_replication_method_logical_replication_cdc`
+<a id="nestedatt--configuration--replication_method--source_mssql_update_method_read_changes_using_change_data_capture_cdc"></a>
+### Nested Schema for `configuration.replication_method.source_mssql_update_method_read_changes_using_change_data_capture_cdc`
 
 Required:
 
@@ -114,16 +114,16 @@ What data should be synced under the CDC. "Existing and New" will read existing 
 Existing data in the database are synced through an initial snapshot. This parameter controls the isolation level that will be used during the initial snapshotting. If you choose the "Snapshot" level, you must enable the <a href="https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/snapshot-isolation-in-sql-server">snapshot isolation mode</a> on the database.
 
 
-<a id="nestedatt--configuration--replication_method--source_mssql_replication_method_standard"></a>
-### Nested Schema for `configuration.replication_method.source_mssql_replication_method_standard`
+<a id="nestedatt--configuration--replication_method--source_mssql_update_method_scan_changes_with_user_defined_cursor"></a>
+### Nested Schema for `configuration.replication_method.source_mssql_update_method_scan_changes_with_user_defined_cursor`
 
 Required:
 
 - `method` (String) must be one of ["STANDARD"]
 
 
-<a id="nestedatt--configuration--replication_method--source_mssql_update_replication_method_logical_replication_cdc"></a>
-### Nested Schema for `configuration.replication_method.source_mssql_update_replication_method_logical_replication_cdc`
+<a id="nestedatt--configuration--replication_method--source_mssql_update_update_method_read_changes_using_change_data_capture_cdc"></a>
+### Nested Schema for `configuration.replication_method.source_mssql_update_update_method_read_changes_using_change_data_capture_cdc`
 
 Required:
 
@@ -138,8 +138,8 @@ What data should be synced under the CDC. "Existing and New" will read existing 
 Existing data in the database are synced through an initial snapshot. This parameter controls the isolation level that will be used during the initial snapshotting. If you choose the "Snapshot" level, you must enable the <a href="https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/snapshot-isolation-in-sql-server">snapshot isolation mode</a> on the database.
 
 
-<a id="nestedatt--configuration--replication_method--source_mssql_update_replication_method_standard"></a>
-### Nested Schema for `configuration.replication_method.source_mssql_update_replication_method_standard`
+<a id="nestedatt--configuration--replication_method--source_mssql_update_update_method_scan_changes_with_user_defined_cursor"></a>
+### Nested Schema for `configuration.replication_method.source_mssql_update_update_method_scan_changes_with_user_defined_cursor`
 
 Required:
 

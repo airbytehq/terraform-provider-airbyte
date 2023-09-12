@@ -32,11 +32,11 @@ type SourceZendeskSunshineDataSource struct {
 
 // SourceZendeskSunshineDataSourceModel describes the data model.
 type SourceZendeskSunshineDataSourceModel struct {
-	Configuration SourceZendeskSunshine1 `tfsdk:"configuration"`
-	Name          types.String           `tfsdk:"name"`
-	SecretID      types.String           `tfsdk:"secret_id"`
-	SourceID      types.String           `tfsdk:"source_id"`
-	WorkspaceID   types.String           `tfsdk:"workspace_id"`
+	Configuration SourceZendeskSunshine `tfsdk:"configuration"`
+	Name          types.String          `tfsdk:"name"`
+	SecretID      types.String          `tfsdk:"secret_id"`
+	SourceID      types.String          `tfsdk:"source_id"`
+	WorkspaceID   types.String          `tfsdk:"workspace_id"`
 }
 
 // Metadata returns the data source type name.
@@ -76,13 +76,6 @@ func (r *SourceZendeskSunshineDataSource) Schema(ctx context.Context, req dataso
 										Computed:    true,
 										Description: `The user email for your Zendesk account`,
 									},
-									"additional_properties": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											validators.IsValidJSON(),
-										},
-										Description: `Parsed as JSON.`,
-									},
 								},
 							},
 							"source_zendesk_sunshine_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
@@ -109,13 +102,6 @@ func (r *SourceZendeskSunshineDataSource) Schema(ctx context.Context, req dataso
 										Computed:    true,
 										Description: `The Client Secret of your OAuth application.`,
 									},
-									"additional_properties": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											validators.IsValidJSON(),
-										},
-										Description: `Parsed as JSON.`,
-									},
 								},
 							},
 							"source_zendesk_sunshine_update_authorization_method_api_token": schema.SingleNestedAttribute{
@@ -137,13 +123,6 @@ func (r *SourceZendeskSunshineDataSource) Schema(ctx context.Context, req dataso
 									"email": schema.StringAttribute{
 										Computed:    true,
 										Description: `The user email for your Zendesk account`,
-									},
-									"additional_properties": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											validators.IsValidJSON(),
-										},
-										Description: `Parsed as JSON.`,
 									},
 								},
 							},
@@ -171,13 +150,6 @@ func (r *SourceZendeskSunshineDataSource) Schema(ctx context.Context, req dataso
 										Computed:    true,
 										Description: `The Client Secret of your OAuth application.`,
 									},
-									"additional_properties": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											validators.IsValidJSON(),
-										},
-										Description: `Parsed as JSON.`,
-									},
 								},
 							},
 						},
@@ -195,7 +167,10 @@ func (r *SourceZendeskSunshineDataSource) Schema(ctx context.Context, req dataso
 						Description: `must be one of ["zendesk-sunshine"]`,
 					},
 					"start_date": schema.StringAttribute{
-						Computed:    true,
+						Computed: true,
+						Validators: []validator.String{
+							validators.IsRFC3339(),
+						},
 						Description: `The date from which you'd like to replicate data for Zendesk Sunshine API, in the format YYYY-MM-DDT00:00:00Z.`,
 					},
 					"subdomain": schema.StringAttribute{

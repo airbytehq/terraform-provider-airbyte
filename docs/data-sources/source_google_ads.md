@@ -45,10 +45,10 @@ Read-Only:
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
 - `custom_queries` (Attributes List) (see [below for nested schema](#nestedatt--configuration--custom_queries))
 - `customer_id` (String) Comma-separated list of (client) customer IDs. Each customer ID must be specified as a 10-digit number without dashes. For detailed instructions on finding this value, refer to our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">documentation</a>.
-- `end_date` (String) UTC date in the format YYYY-MM-DD. Any data after this date will not be replicated.
+- `end_date` (String) UTC date in the format YYYY-MM-DD. Any data after this date will not be replicated. (Default value of today is used if not set)
 - `login_customer_id` (String) If your access to the customer account is through a manager account, this field is required, and must be set to the 10-digit customer ID of the manager account. For more information about this field, refer to <a href="https://developers.google.com/google-ads/api/docs/concepts/call-structure#cid">Google's documentation</a>.
 - `source_type` (String) must be one of ["google-ads"]
-- `start_date` (String) UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated.
+- `start_date` (String) UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated. (Default value of two years ago is used if not set)
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`

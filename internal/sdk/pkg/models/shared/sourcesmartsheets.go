@@ -113,15 +113,6 @@ func CreateSourceSmartsheetsAuthorizationMethodSourceSmartsheetsAuthorizationMet
 func (u *SourceSmartsheetsAuthorizationMethod) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceSmartsheetsAuthorizationMethodOAuth20 := new(SourceSmartsheetsAuthorizationMethodOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceSmartsheetsAuthorizationMethodOAuth20); err == nil {
-		u.SourceSmartsheetsAuthorizationMethodOAuth20 = sourceSmartsheetsAuthorizationMethodOAuth20
-		u.Type = SourceSmartsheetsAuthorizationMethodTypeSourceSmartsheetsAuthorizationMethodOAuth20
-		return nil
-	}
-
 	sourceSmartsheetsAuthorizationMethodAPIAccessToken := new(SourceSmartsheetsAuthorizationMethodAPIAccessToken)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -131,16 +122,25 @@ func (u *SourceSmartsheetsAuthorizationMethod) UnmarshalJSON(data []byte) error 
 		return nil
 	}
 
+	sourceSmartsheetsAuthorizationMethodOAuth20 := new(SourceSmartsheetsAuthorizationMethodOAuth20)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceSmartsheetsAuthorizationMethodOAuth20); err == nil {
+		u.SourceSmartsheetsAuthorizationMethodOAuth20 = sourceSmartsheetsAuthorizationMethodOAuth20
+		u.Type = SourceSmartsheetsAuthorizationMethodTypeSourceSmartsheetsAuthorizationMethodOAuth20
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceSmartsheetsAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceSmartsheetsAuthorizationMethodOAuth20 != nil {
-		return json.Marshal(u.SourceSmartsheetsAuthorizationMethodOAuth20)
-	}
-
 	if u.SourceSmartsheetsAuthorizationMethodAPIAccessToken != nil {
 		return json.Marshal(u.SourceSmartsheetsAuthorizationMethodAPIAccessToken)
+	}
+
+	if u.SourceSmartsheetsAuthorizationMethodOAuth20 != nil {
+		return json.Marshal(u.SourceSmartsheetsAuthorizationMethodOAuth20)
 	}
 
 	return nil, nil

@@ -5,15 +5,15 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourcePostgres1 struct {
-	Database          types.String                      `tfsdk:"database"`
-	Host              types.String                      `tfsdk:"host"`
-	JdbcURLParams     types.String                      `tfsdk:"jdbc_url_params"`
-	Password          types.String                      `tfsdk:"password"`
-	Port              types.Int64                       `tfsdk:"port"`
-	ReplicationMethod *SourcePostgresReplicationMethod1 `tfsdk:"replication_method"`
-	Schemas           []types.String                    `tfsdk:"schemas"`
-	SourceType        types.String                      `tfsdk:"source_type"`
-	SslMode           *SourcePostgresSSLModes1          `tfsdk:"ssl_mode"`
-	TunnelMethod      *SourcePostgresSSHTunnelMethod    `tfsdk:"tunnel_method"`
-	Username          types.String                      `tfsdk:"username"`
+	Database          types.String                   `tfsdk:"database"`
+	Host              types.String                   `tfsdk:"host"`
+	JdbcURLParams     types.String                   `tfsdk:"jdbc_url_params"`
+	Password          types.String                   `tfsdk:"password"`
+	Port              types.Int64                    `tfsdk:"port"`
+	ReplicationMethod *SourcePostgresUpdateMethod1   `tfsdk:"replication_method"`
+	Schemas           []types.String                 `tfsdk:"schemas"`
+	SourceType        types.String                   `tfsdk:"source_type"`
+	SslMode           *SourcePostgresSSLModes1       `tfsdk:"ssl_mode"`
+	TunnelMethod      *SourcePostgresSSHTunnelMethod `tfsdk:"tunnel_method"`
+	Username          types.String                   `tfsdk:"username"`
 }

@@ -27,10 +27,10 @@ resource "airbyte_destination_vertica" "my_destination_vertica" {
         tunnel_method = "NO_TUNNEL"
       }
     }
-    username = "Judge_Schinner"
+    username = "Jackson.Kuvalis"
   }
-  name         = "Marion Aufderhar"
-  workspace_id = "cdb5a341-8143-4010-8218-13d5208ece7e"
+  name         = "Ida Lubowitz"
+  workspace_id = "73a8418d-1623-409f-b092-9921aefb9f58"
 }
 ```
 

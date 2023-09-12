@@ -108,7 +108,7 @@ func (r *SourceGoogleAdsResource) Schema(ctx context.Context, req resource.Schem
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
-						Description: `UTC date in the format YYYY-MM-DD. Any data after this date will not be replicated.`,
+						Description: `UTC date in the format YYYY-MM-DD. Any data after this date will not be replicated. (Default value of today is used if not set)`,
 					},
 					"login_customer_id": schema.StringAttribute{
 						Optional:    true,
@@ -124,11 +124,11 @@ func (r *SourceGoogleAdsResource) Schema(ctx context.Context, req resource.Schem
 						Description: `must be one of ["google-ads"]`,
 					},
 					"start_date": schema.StringAttribute{
-						Required: true,
+						Optional: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
-						Description: `UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated.`,
+						Description: `UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated. (Default value of two years ago is used if not set)`,
 					},
 				},
 			},

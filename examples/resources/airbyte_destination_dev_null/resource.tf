@@ -7,6 +7,6 @@ resource "airbyte_destination_dev_null" "my_destination_devnull" {
       }
     }
   }
-  name         = "Kari Leannon PhD"
-  workspace_id = "446ce2af-7a73-4cf3-be45-3f870b326b5a"
+  name         = "Rene Hane"
+  workspace_id = "a0d446ce-2af7-4a73-8f3b-e453f870b326"
 }

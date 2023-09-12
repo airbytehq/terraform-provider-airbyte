@@ -57,9 +57,21 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToCreateSDKType() *shared.Sourc
 	} else {
 		customReports = nil
 	}
-	dataState := new(shared.SourceGoogleSearchConsoleDataState)
+	var customReportsArray []shared.SourceGoogleSearchConsoleCustomReportConfig = nil
+	for _, customReportsArrayItem := range r.Configuration.CustomReportsArray {
+		var dimensions []shared.SourceGoogleSearchConsoleCustomReportConfigValidEnums = nil
+		for _, dimensionsItem := range customReportsArrayItem.Dimensions {
+			dimensions = append(dimensions, shared.SourceGoogleSearchConsoleCustomReportConfigValidEnums(dimensionsItem.ValueString()))
+		}
+		name := customReportsArrayItem.Name.ValueString()
+		customReportsArray = append(customReportsArray, shared.SourceGoogleSearchConsoleCustomReportConfig{
+			Dimensions: dimensions,
+			Name:       name,
+		})
+	}
+	dataState := new(shared.SourceGoogleSearchConsoleDataFreshness)
 	if !r.Configuration.DataState.IsUnknown() && !r.Configuration.DataState.IsNull() {
-		*dataState = shared.SourceGoogleSearchConsoleDataState(r.Configuration.DataState.ValueString())
+		*dataState = shared.SourceGoogleSearchConsoleDataFreshness(r.Configuration.DataState.ValueString())
 	} else {
 		dataState = nil
 	}
@@ -74,17 +86,23 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToCreateSDKType() *shared.Sourc
 		siteUrls = append(siteUrls, siteUrlsItem.ValueString())
 	}
 	sourceType := shared.SourceGoogleSearchConsoleGoogleSearchConsole(r.Configuration.SourceType.ValueString())
-	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
-	configuration := shared.SourceGoogleSearchConsole{
-		Authorization: authorization,
-		CustomReports: customReports,
-		DataState:     dataState,
-		EndDate:       endDate,
-		SiteUrls:      siteUrls,
-		SourceType:    sourceType,
-		StartDate:     startDate,
+	startDate := new(customTypes.Date)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
 	}
-	name := r.Name.ValueString()
+	configuration := shared.SourceGoogleSearchConsole{
+		Authorization:      authorization,
+		CustomReports:      customReports,
+		CustomReportsArray: customReportsArray,
+		DataState:          dataState,
+		EndDate:            endDate,
+		SiteUrls:           siteUrls,
+		SourceType:         sourceType,
+		StartDate:          startDate,
+	}
+	name1 := r.Name.ValueString()
 	secretID := new(string)
 	if !r.SecretID.IsUnknown() && !r.SecretID.IsNull() {
 		*secretID = r.SecretID.ValueString()
@@ -94,7 +112,7 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToCreateSDKType() *shared.Sourc
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceGoogleSearchConsoleCreateRequest{
 		Configuration: configuration,
-		Name:          name,
+		Name:          name1,
 		SecretID:      secretID,
 		WorkspaceID:   workspaceID,
 	}
@@ -155,9 +173,21 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToUpdateSDKType() *shared.Sourc
 	} else {
 		customReports = nil
 	}
-	dataState := new(shared.SourceGoogleSearchConsoleUpdateDataState)
+	var customReportsArray []shared.SourceGoogleSearchConsoleUpdateCustomReportConfig = nil
+	for _, customReportsArrayItem := range r.Configuration.CustomReportsArray {
+		var dimensions []shared.SourceGoogleSearchConsoleUpdateCustomReportConfigValidEnums = nil
+		for _, dimensionsItem := range customReportsArrayItem.Dimensions {
+			dimensions = append(dimensions, shared.SourceGoogleSearchConsoleUpdateCustomReportConfigValidEnums(dimensionsItem.ValueString()))
+		}
+		name := customReportsArrayItem.Name.ValueString()
+		customReportsArray = append(customReportsArray, shared.SourceGoogleSearchConsoleUpdateCustomReportConfig{
+			Dimensions: dimensions,
+			Name:       name,
+		})
+	}
+	dataState := new(shared.SourceGoogleSearchConsoleUpdateDataFreshness)
 	if !r.Configuration.DataState.IsUnknown() && !r.Configuration.DataState.IsNull() {
-		*dataState = shared.SourceGoogleSearchConsoleUpdateDataState(r.Configuration.DataState.ValueString())
+		*dataState = shared.SourceGoogleSearchConsoleUpdateDataFreshness(r.Configuration.DataState.ValueString())
 	} else {
 		dataState = nil
 	}
@@ -171,20 +201,26 @@ func (r *SourceGoogleSearchConsoleResourceModel) ToUpdateSDKType() *shared.Sourc
 	for _, siteUrlsItem := range r.Configuration.SiteUrls {
 		siteUrls = append(siteUrls, siteUrlsItem.ValueString())
 	}
-	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
-	configuration := shared.SourceGoogleSearchConsoleUpdate{
-		Authorization: authorization,
-		CustomReports: customReports,
-		DataState:     dataState,
-		EndDate:       endDate,
-		SiteUrls:      siteUrls,
-		StartDate:     startDate,
+	startDate := new(customTypes.Date)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
 	}
-	name := r.Name.ValueString()
+	configuration := shared.SourceGoogleSearchConsoleUpdate{
+		Authorization:      authorization,
+		CustomReports:      customReports,
+		CustomReportsArray: customReportsArray,
+		DataState:          dataState,
+		EndDate:            endDate,
+		SiteUrls:           siteUrls,
+		StartDate:          startDate,
+	}
+	name1 := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
 	out := shared.SourceGoogleSearchConsolePutRequest{
 		Configuration: configuration,
-		Name:          name,
+		Name:          name1,
 		WorkspaceID:   workspaceID,
 	}
 	return &out

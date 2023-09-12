@@ -21,9 +21,9 @@ resource "airbyte_source_woocommerce" "my_source_woocommerce" {
     source_type = "woocommerce"
     start_date  = "2021-01-01"
   }
-  name         = "Dr. Mattie Nader"
+  name         = "Laura Lindgren III"
   secret_id    = "...my_secret_id..."
-  workspace_id = "57b7d03a-1480-4f8d-a30f-069d810618d9"
+  workspace_id = "0097019a-48f8-48ec-a7bf-904e01105d38"
 }
 ```
 

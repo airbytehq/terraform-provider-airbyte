@@ -69,6 +69,10 @@ func (r *SourceApifyDatasetDataSource) Schema(ctx context.Context, req datasourc
 						},
 						Description: `must be one of ["apify-dataset"]`,
 					},
+					"token": schema.StringAttribute{
+						Computed:    true,
+						Description: `Your application's Client Secret. You can find this value on the <a href="https://console.apify.com/account/integrations">console integrations tab</a> after you login.`,
+					},
 				},
 			},
 			"name": schema.StringAttribute{

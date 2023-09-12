@@ -5,7 +5,7 @@ resource "airbyte_source_clockify" "my_source_clockify" {
     source_type  = "clockify"
     workspace_id = "...my_workspace_id..."
   }
-  name         = "Guy Beier"
+  name         = "Angela Schaefer"
   secret_id    = "...my_secret_id..."
-  workspace_id = "2ec09ff8-f0f8-416f-b347-7c13e902c141"
+  workspace_id = "76ffb901-c6ec-4bb4-a243-cf789ffafeda"
 }

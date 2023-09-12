@@ -56,7 +56,7 @@ func (r *SourceLinkedinAdsDataSource) Schema(ctx context.Context, req datasource
 					"account_ids": schema.ListAttribute{
 						Computed:    true,
 						ElementType: types.Int64Type,
-						Description: `Specify the account IDs separated by a space, to pull the data from. Leave empty, if you want to pull the data from all associated accounts. See the <a href="https://www.linkedin.com/help/linkedin/answer/a424270/find-linkedin-ads-account-details?lang=en">LinkedIn Ads docs</a> for more info.`,
+						Description: `Specify the account IDs to pull data from, separated by a space. Leave this field empty if you want to pull the data from all accounts accessible by the authenticated user. See the <a href="https://www.linkedin.com/help/linkedin/answer/a424270/find-linkedin-ads-account-details?lang=en">LinkedIn docs</a> to locate these IDs.`,
 					},
 					"ad_analytics_reports": schema.ListNestedAttribute{
 						Computed: true,
@@ -64,7 +64,7 @@ func (r *SourceLinkedinAdsDataSource) Schema(ctx context.Context, req datasource
 							Attributes: map[string]schema.Attribute{
 								"name": schema.StringAttribute{
 									Computed:    true,
-									Description: `The name for the report`,
+									Description: `The name for the custom report.`,
 								},
 								"pivot_by": schema.StringAttribute{
 									Computed: true,
@@ -94,7 +94,7 @@ func (r *SourceLinkedinAdsDataSource) Schema(ctx context.Context, req datasource
 										),
 									},
 									MarkdownDescription: `must be one of ["COMPANY", "ACCOUNT", "SHARE", "CAMPAIGN", "CREATIVE", "CAMPAIGN_GROUP", "CONVERSION", "CONVERSATION_NODE", "CONVERSATION_NODE_OPTION_INDEX", "SERVING_LOCATION", "CARD_INDEX", "MEMBER_COMPANY_SIZE", "MEMBER_INDUSTRY", "MEMBER_SENIORITY", "MEMBER_JOB_TITLE ", "MEMBER_JOB_FUNCTION ", "MEMBER_COUNTRY_V2 ", "MEMBER_REGION_V2", "MEMBER_COMPANY", "PLACEMENT_NAME", "IMPRESSION_DEVICE_TYPE"]` + "\n" +
-										`Select value from list to pivot by`,
+										`Choose a category to pivot your analytics report around. This selection will organize your data based on the chosen attribute, allowing you to analyze trends and performance from different perspectives.`,
 								},
 								"time_granularity": schema.StringAttribute{
 									Computed: true,
@@ -107,11 +107,7 @@ func (r *SourceLinkedinAdsDataSource) Schema(ctx context.Context, req datasource
 										),
 									},
 									MarkdownDescription: `must be one of ["ALL", "DAILY", "MONTHLY", "YEARLY"]` + "\n" +
-										`Set time granularity for report: ` + "\n" +
-										`ALL - Results grouped into a single result across the entire time range of the report.` + "\n" +
-										`DAILY - Results grouped by day.` + "\n" +
-										`MONTHLY - Results grouped by month.` + "\n" +
-										`YEARLY - Results grouped by year.`,
+										`Choose how to group the data in your report by time. The options are:<br>- 'ALL': A single result summarizing the entire time range.<br>- 'DAILY': Group results by each day.<br>- 'MONTHLY': Group results by each month.<br>- 'YEARLY': Group results by each year.<br>Selecting a time grouping helps you analyze trends and patterns over different time periods.`,
 								},
 							},
 						},
@@ -124,7 +120,7 @@ func (r *SourceLinkedinAdsDataSource) Schema(ctx context.Context, req datasource
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Computed:    true,
-										Description: `The token value generated using the authentication code. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-ads#authentication">docs</a> to obtain yours.`,
+										Description: `The access token generated for your developer application. Refer to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a> for more information.`,
 									},
 									"auth_method": schema.StringAttribute{
 										Computed: true,
@@ -151,15 +147,15 @@ func (r *SourceLinkedinAdsDataSource) Schema(ctx context.Context, req datasource
 									},
 									"client_id": schema.StringAttribute{
 										Computed:    true,
-										Description: `The client ID of the LinkedIn Ads developer application.`,
+										Description: `The client ID of your developer application. Refer to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a> for more information.`,
 									},
 									"client_secret": schema.StringAttribute{
 										Computed:    true,
-										Description: `The client secret the LinkedIn Ads developer application.`,
+										Description: `The client secret of your developer application. Refer to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a> for more information.`,
 									},
 									"refresh_token": schema.StringAttribute{
 										Computed:    true,
-										Description: `The key to refresh the expired access token.`,
+										Description: `The key to refresh the expired access token. Refer to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a> for more information.`,
 									},
 								},
 							},
@@ -168,7 +164,7 @@ func (r *SourceLinkedinAdsDataSource) Schema(ctx context.Context, req datasource
 								Attributes: map[string]schema.Attribute{
 									"access_token": schema.StringAttribute{
 										Computed:    true,
-										Description: `The token value generated using the authentication code. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-ads#authentication">docs</a> to obtain yours.`,
+										Description: `The access token generated for your developer application. Refer to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a> for more information.`,
 									},
 									"auth_method": schema.StringAttribute{
 										Computed: true,
@@ -195,15 +191,15 @@ func (r *SourceLinkedinAdsDataSource) Schema(ctx context.Context, req datasource
 									},
 									"client_id": schema.StringAttribute{
 										Computed:    true,
-										Description: `The client ID of the LinkedIn Ads developer application.`,
+										Description: `The client ID of your developer application. Refer to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a> for more information.`,
 									},
 									"client_secret": schema.StringAttribute{
 										Computed:    true,
-										Description: `The client secret the LinkedIn Ads developer application.`,
+										Description: `The client secret of your developer application. Refer to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a> for more information.`,
 									},
 									"refresh_token": schema.StringAttribute{
 										Computed:    true,
-										Description: `The key to refresh the expired access token.`,
+										Description: `The key to refresh the expired access token. Refer to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a> for more information.`,
 									},
 								},
 							},
@@ -226,7 +222,7 @@ func (r *SourceLinkedinAdsDataSource) Schema(ctx context.Context, req datasource
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
-						Description: `UTC date in the format 2020-09-17. Any data before this date will not be replicated.`,
+						Description: `UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated.`,
 					},
 				},
 			},

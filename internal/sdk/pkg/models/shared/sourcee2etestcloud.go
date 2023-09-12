@@ -110,15 +110,6 @@ func CreateSourceE2eTestCloudMockCatalogSourceE2eTestCloudMockCatalogMultiSchema
 func (u *SourceE2eTestCloudMockCatalog) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceE2eTestCloudMockCatalogSingleSchema := new(SourceE2eTestCloudMockCatalogSingleSchema)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceE2eTestCloudMockCatalogSingleSchema); err == nil {
-		u.SourceE2eTestCloudMockCatalogSingleSchema = sourceE2eTestCloudMockCatalogSingleSchema
-		u.Type = SourceE2eTestCloudMockCatalogTypeSourceE2eTestCloudMockCatalogSingleSchema
-		return nil
-	}
-
 	sourceE2eTestCloudMockCatalogMultiSchema := new(SourceE2eTestCloudMockCatalogMultiSchema)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -128,16 +119,25 @@ func (u *SourceE2eTestCloudMockCatalog) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	sourceE2eTestCloudMockCatalogSingleSchema := new(SourceE2eTestCloudMockCatalogSingleSchema)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceE2eTestCloudMockCatalogSingleSchema); err == nil {
+		u.SourceE2eTestCloudMockCatalogSingleSchema = sourceE2eTestCloudMockCatalogSingleSchema
+		u.Type = SourceE2eTestCloudMockCatalogTypeSourceE2eTestCloudMockCatalogSingleSchema
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceE2eTestCloudMockCatalog) MarshalJSON() ([]byte, error) {
-	if u.SourceE2eTestCloudMockCatalogSingleSchema != nil {
-		return json.Marshal(u.SourceE2eTestCloudMockCatalogSingleSchema)
-	}
-
 	if u.SourceE2eTestCloudMockCatalogMultiSchema != nil {
 		return json.Marshal(u.SourceE2eTestCloudMockCatalogMultiSchema)
+	}
+
+	if u.SourceE2eTestCloudMockCatalogSingleSchema != nil {
+		return json.Marshal(u.SourceE2eTestCloudMockCatalogSingleSchema)
 	}
 
 	return nil, nil

@@ -18,9 +18,9 @@ resource "airbyte_source_greenhouse" "my_source_greenhouse" {
     api_key     = "...my_api_key..."
     source_type = "greenhouse"
   }
-  name         = "Kendra Schmitt III"
+  name         = "Patricia Pouros"
   secret_id    = "...my_secret_id..."
-  workspace_id = "c8ca12d0-2529-4270-b8d5-722dd895b8bc"
+  workspace_id = "5722dd89-5b8b-4cf2-8db9-59693352f745"
 }
 ```
 

@@ -108,15 +108,6 @@ func CreateSourceOktaUpdateAuthorizationMethodSourceOktaUpdateAuthorizationMetho
 func (u *SourceOktaUpdateAuthorizationMethod) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceOktaUpdateAuthorizationMethodOAuth20 := new(SourceOktaUpdateAuthorizationMethodOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceOktaUpdateAuthorizationMethodOAuth20); err == nil {
-		u.SourceOktaUpdateAuthorizationMethodOAuth20 = sourceOktaUpdateAuthorizationMethodOAuth20
-		u.Type = SourceOktaUpdateAuthorizationMethodTypeSourceOktaUpdateAuthorizationMethodOAuth20
-		return nil
-	}
-
 	sourceOktaUpdateAuthorizationMethodAPIToken := new(SourceOktaUpdateAuthorizationMethodAPIToken)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -126,16 +117,25 @@ func (u *SourceOktaUpdateAuthorizationMethod) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	sourceOktaUpdateAuthorizationMethodOAuth20 := new(SourceOktaUpdateAuthorizationMethodOAuth20)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceOktaUpdateAuthorizationMethodOAuth20); err == nil {
+		u.SourceOktaUpdateAuthorizationMethodOAuth20 = sourceOktaUpdateAuthorizationMethodOAuth20
+		u.Type = SourceOktaUpdateAuthorizationMethodTypeSourceOktaUpdateAuthorizationMethodOAuth20
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceOktaUpdateAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceOktaUpdateAuthorizationMethodOAuth20 != nil {
-		return json.Marshal(u.SourceOktaUpdateAuthorizationMethodOAuth20)
-	}
-
 	if u.SourceOktaUpdateAuthorizationMethodAPIToken != nil {
 		return json.Marshal(u.SourceOktaUpdateAuthorizationMethodAPIToken)
+	}
+
+	if u.SourceOktaUpdateAuthorizationMethodOAuth20 != nil {
+		return json.Marshal(u.SourceOktaUpdateAuthorizationMethodOAuth20)
 	}
 
 	return nil, nil

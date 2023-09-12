@@ -113,15 +113,6 @@ func CreateSourceSalesloftCredentialsSourceSalesloftCredentialsAuthenticateViaAP
 func (u *SourceSalesloftCredentials) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceSalesloftCredentialsAuthenticateViaOAuth := new(SourceSalesloftCredentialsAuthenticateViaOAuth)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceSalesloftCredentialsAuthenticateViaOAuth); err == nil {
-		u.SourceSalesloftCredentialsAuthenticateViaOAuth = sourceSalesloftCredentialsAuthenticateViaOAuth
-		u.Type = SourceSalesloftCredentialsTypeSourceSalesloftCredentialsAuthenticateViaOAuth
-		return nil
-	}
-
 	sourceSalesloftCredentialsAuthenticateViaAPIKey := new(SourceSalesloftCredentialsAuthenticateViaAPIKey)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -131,16 +122,25 @@ func (u *SourceSalesloftCredentials) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	sourceSalesloftCredentialsAuthenticateViaOAuth := new(SourceSalesloftCredentialsAuthenticateViaOAuth)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceSalesloftCredentialsAuthenticateViaOAuth); err == nil {
+		u.SourceSalesloftCredentialsAuthenticateViaOAuth = sourceSalesloftCredentialsAuthenticateViaOAuth
+		u.Type = SourceSalesloftCredentialsTypeSourceSalesloftCredentialsAuthenticateViaOAuth
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceSalesloftCredentials) MarshalJSON() ([]byte, error) {
-	if u.SourceSalesloftCredentialsAuthenticateViaOAuth != nil {
-		return json.Marshal(u.SourceSalesloftCredentialsAuthenticateViaOAuth)
-	}
-
 	if u.SourceSalesloftCredentialsAuthenticateViaAPIKey != nil {
 		return json.Marshal(u.SourceSalesloftCredentialsAuthenticateViaAPIKey)
+	}
+
+	if u.SourceSalesloftCredentialsAuthenticateViaOAuth != nil {
+		return json.Marshal(u.SourceSalesloftCredentialsAuthenticateViaOAuth)
 	}
 
 	return nil, nil

@@ -167,7 +167,24 @@ func (r *SourceGoogleSearchConsoleDataSource) Schema(ctx context.Context, req da
 					},
 					"custom_reports": schema.StringAttribute{
 						Computed:    true,
-						Description: `A JSON array describing the custom reports you want to sync from Google Search Console. See <a href="https://docs.airbyte.com/integrations/sources/google-search-console#step-2-set-up-the-google-search-console-connector-in-airbyte">the docs</a> for more information about the exact format you can use to fill out this field.`,
+						Description: `(DEPRCATED) A JSON array describing the custom reports you want to sync from Google Search Console. See our <a href='https://docs.airbyte.com/integrations/sources/google-search-console'>documentation</a> for more information on formulating custom reports.`,
+					},
+					"custom_reports_array": schema.ListNestedAttribute{
+						Computed: true,
+						NestedObject: schema.NestedAttributeObject{
+							Attributes: map[string]schema.Attribute{
+								"dimensions": schema.ListAttribute{
+									Computed:    true,
+									ElementType: types.StringType,
+									Description: `A list of dimensions (country, date, device, page, query)`,
+								},
+								"name": schema.StringAttribute{
+									Computed:    true,
+									Description: `The name of the custom report, this name would be used as stream name`,
+								},
+							},
+						},
+						Description: `You can add your Custom Analytics report by creating one.`,
 					},
 					"data_state": schema.StringAttribute{
 						Computed: true,
@@ -178,19 +195,19 @@ func (r *SourceGoogleSearchConsoleDataSource) Schema(ctx context.Context, req da
 							),
 						},
 						MarkdownDescription: `must be one of ["final", "all"]` + "\n" +
-							`If "final" or if this parameter is omitted, the returned data will include only finalized data. Setting this parameter to "all" should not be used with Incremental Sync mode as it may cause data loss. If "all", data will include fresh data.`,
+							`If set to 'final', the returned data will include only finalized, stable data. If set to 'all', fresh data will be included. When using Incremental sync mode, we do not recommend setting this parameter to 'all' as it may cause data loss. More information can be found in our <a href='https://docs.airbyte.com/integrations/source/google-search-console'>full documentation</a>.`,
 					},
 					"end_date": schema.StringAttribute{
 						Computed: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
-						Description: `UTC date in the format 2017-01-25. Any data after this date will not be replicated. Must be greater or equal to the start date field.`,
+						Description: `UTC date in the format YYYY-MM-DD. Any data created after this date will not be replicated. Must be greater or equal to the start date field. Leaving this field blank will replicate all data from the start date onward.`,
 					},
 					"site_urls": schema.ListAttribute{
 						Computed:    true,
 						ElementType: types.StringType,
-						Description: `The URLs of the website property attached to your GSC account. Read more <a href="https://support.google.com/webmasters/answer/34592?hl=en">here</a>.`,
+						Description: `The URLs of the website property attached to your GSC account. Learn more about properties <a href="https://support.google.com/webmasters/answer/34592?hl=en">here</a>.`,
 					},
 					"source_type": schema.StringAttribute{
 						Computed: true,
@@ -206,7 +223,7 @@ func (r *SourceGoogleSearchConsoleDataSource) Schema(ctx context.Context, req da
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
-						Description: `UTC date in the format 2017-01-25. Any data before this date will not be replicated.`,
+						Description: `UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated.`,
 					},
 				},
 			},

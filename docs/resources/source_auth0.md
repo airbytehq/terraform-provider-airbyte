@@ -23,10 +23,11 @@ resource "airbyte_source_auth0" "my_source_auth0" {
       }
     }
     source_type = "auth0"
+    start_date  = "2023-08-05T00:43:59.244Z"
   }
-  name         = "Roosevelt Schultz"
+  name         = "Willard McLaughlin"
   secret_id    = "...my_secret_id..."
-  workspace_id = "5ff2e4b2-7537-4a8c-99e7-319c177d525f"
+  workspace_id = "75dad636-c600-4503-98bb-31180f739ae9"
 }
 ```
 
@@ -56,6 +57,10 @@ Required:
 - `base_url` (String) The Authentication API is served over HTTPS. All URLs referenced in the documentation have the following base `https://YOUR_DOMAIN`
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
 - `source_type` (String) must be one of ["auth0"]
+
+Optional:
+
+- `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`

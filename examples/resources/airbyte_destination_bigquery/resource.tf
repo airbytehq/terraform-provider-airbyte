@@ -24,8 +24,7 @@ resource "airbyte_destination_bigquery" "my_destination_bigquery" {
     project_id              = "...my_project_id..."
     raw_data_dataset        = "...my_raw_data_dataset..."
     transformation_priority = "batch"
-    use_1s1t_format         = false
   }
-  name         = "Alison Mann"
-  workspace_id = "488e1e91-e450-4ad2-abd4-4269802d502a"
+  name         = "Edna Pouros"
+  workspace_id = "d488e1e9-1e45-40ad-aabd-44269802d502"
 }

@@ -20,9 +20,9 @@ resource "airbyte_source_confluence" "my_source_confluence" {
     email       = "abc@example.com"
     source_type = "confluence"
   }
-  name         = "Ms. Russell Wunsch"
+  name         = "Jody Will"
   secret_id    = "...my_secret_id..."
-  workspace_id = "a363c887-3e48-4438-8b1f-6b8ca275a60a"
+  workspace_id = "ccca99bc-7fc0-4b2d-8e10-873e42b006d6"
 }
 ```
 

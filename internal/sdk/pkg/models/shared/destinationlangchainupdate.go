@@ -103,15 +103,6 @@ func CreateDestinationLangchainUpdateEmbeddingDestinationLangchainUpdateEmbeddin
 func (u *DestinationLangchainUpdateEmbedding) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	destinationLangchainUpdateEmbeddingOpenAI := new(DestinationLangchainUpdateEmbeddingOpenAI)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationLangchainUpdateEmbeddingOpenAI); err == nil {
-		u.DestinationLangchainUpdateEmbeddingOpenAI = destinationLangchainUpdateEmbeddingOpenAI
-		u.Type = DestinationLangchainUpdateEmbeddingTypeDestinationLangchainUpdateEmbeddingOpenAI
-		return nil
-	}
-
 	destinationLangchainUpdateEmbeddingFake := new(DestinationLangchainUpdateEmbeddingFake)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -121,16 +112,25 @@ func (u *DestinationLangchainUpdateEmbedding) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	destinationLangchainUpdateEmbeddingOpenAI := new(DestinationLangchainUpdateEmbeddingOpenAI)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&destinationLangchainUpdateEmbeddingOpenAI); err == nil {
+		u.DestinationLangchainUpdateEmbeddingOpenAI = destinationLangchainUpdateEmbeddingOpenAI
+		u.Type = DestinationLangchainUpdateEmbeddingTypeDestinationLangchainUpdateEmbeddingOpenAI
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u DestinationLangchainUpdateEmbedding) MarshalJSON() ([]byte, error) {
-	if u.DestinationLangchainUpdateEmbeddingOpenAI != nil {
-		return json.Marshal(u.DestinationLangchainUpdateEmbeddingOpenAI)
-	}
-
 	if u.DestinationLangchainUpdateEmbeddingFake != nil {
 		return json.Marshal(u.DestinationLangchainUpdateEmbeddingFake)
+	}
+
+	if u.DestinationLangchainUpdateEmbeddingOpenAI != nil {
+		return json.Marshal(u.DestinationLangchainUpdateEmbeddingOpenAI)
 	}
 
 	return nil, nil
@@ -280,15 +280,6 @@ func CreateDestinationLangchainUpdateIndexingDestinationLangchainUpdateIndexingC
 func (u *DestinationLangchainUpdateIndexing) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	destinationLangchainUpdateIndexingPinecone := new(DestinationLangchainUpdateIndexingPinecone)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationLangchainUpdateIndexingPinecone); err == nil {
-		u.DestinationLangchainUpdateIndexingPinecone = destinationLangchainUpdateIndexingPinecone
-		u.Type = DestinationLangchainUpdateIndexingTypeDestinationLangchainUpdateIndexingPinecone
-		return nil
-	}
-
 	destinationLangchainUpdateIndexingDocArrayHnswSearch := new(DestinationLangchainUpdateIndexingDocArrayHnswSearch)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -307,20 +298,29 @@ func (u *DestinationLangchainUpdateIndexing) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	destinationLangchainUpdateIndexingPinecone := new(DestinationLangchainUpdateIndexingPinecone)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&destinationLangchainUpdateIndexingPinecone); err == nil {
+		u.DestinationLangchainUpdateIndexingPinecone = destinationLangchainUpdateIndexingPinecone
+		u.Type = DestinationLangchainUpdateIndexingTypeDestinationLangchainUpdateIndexingPinecone
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u DestinationLangchainUpdateIndexing) MarshalJSON() ([]byte, error) {
-	if u.DestinationLangchainUpdateIndexingPinecone != nil {
-		return json.Marshal(u.DestinationLangchainUpdateIndexingPinecone)
-	}
-
 	if u.DestinationLangchainUpdateIndexingDocArrayHnswSearch != nil {
 		return json.Marshal(u.DestinationLangchainUpdateIndexingDocArrayHnswSearch)
 	}
 
 	if u.DestinationLangchainUpdateIndexingChromaLocalPersistance != nil {
 		return json.Marshal(u.DestinationLangchainUpdateIndexingChromaLocalPersistance)
+	}
+
+	if u.DestinationLangchainUpdateIndexingPinecone != nil {
+		return json.Marshal(u.DestinationLangchainUpdateIndexingPinecone)
 	}
 
 	return nil, nil

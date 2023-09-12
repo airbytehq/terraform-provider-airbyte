@@ -35,9 +35,9 @@ resource "airbyte_source_google_ads" "my_source_googleads" {
     source_type       = "google-ads"
     start_date        = "2017-01-25"
   }
-  name         = "Miss Lloyd Funk"
+  name         = "Dr. Forrest Roob"
   secret_id    = "...my_secret_id..."
-  workspace_id = "d190feb2-1780-4bcc-80db-bddb484708fb"
+  workspace_id = "bddb4847-08fb-44e3-91e6-bc158c4c4e54"
 }
 ```
 
@@ -67,14 +67,14 @@ Required:
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
 - `customer_id` (String) Comma-separated list of (client) customer IDs. Each customer ID must be specified as a 10-digit number without dashes. For detailed instructions on finding this value, refer to our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">documentation</a>.
 - `source_type` (String) must be one of ["google-ads"]
-- `start_date` (String) UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated.
 
 Optional:
 
 - `conversion_window_days` (Number) A conversion window is the number of days after an ad interaction (such as an ad click or video view) during which a conversion, such as a purchase, is recorded in Google Ads. For more information, see <a href="https://support.google.com/google-ads/answer/3123169?hl=en">Google's documentation</a>.
 - `custom_queries` (Attributes List) (see [below for nested schema](#nestedatt--configuration--custom_queries))
-- `end_date` (String) UTC date in the format YYYY-MM-DD. Any data after this date will not be replicated.
+- `end_date` (String) UTC date in the format YYYY-MM-DD. Any data after this date will not be replicated. (Default value of today is used if not set)
 - `login_customer_id` (String) If your access to the customer account is through a manager account, this field is required, and must be set to the 10-digit customer ID of the manager account. For more information about this field, refer to <a href="https://developers.google.com/google-ads/api/docs/concepts/call-structure#cid">Google's documentation</a>.
+- `start_date` (String) UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated. (Default value of two years ago is used if not set)
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`

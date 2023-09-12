@@ -5,8 +5,9 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourcePosthog struct {
-	APIKey     types.String `tfsdk:"api_key"`
-	BaseURL    types.String `tfsdk:"base_url"`
-	SourceType types.String `tfsdk:"source_type"`
-	StartDate  types.String `tfsdk:"start_date"`
+	APIKey         types.String `tfsdk:"api_key"`
+	BaseURL        types.String `tfsdk:"base_url"`
+	EventsTimeStep types.Int64  `tfsdk:"events_time_step"`
+	SourceType     types.String `tfsdk:"source_type"`
+	StartDate      types.String `tfsdk:"start_date"`
 }

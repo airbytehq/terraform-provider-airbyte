@@ -4,9 +4,9 @@ resource "airbyte_source_my_hours" "my_source_myhours" {
     logs_batch_size = 30
     password        = "...my_password..."
     source_type     = "my-hours"
-    start_date      = "%Y-%m-%d"
+    start_date      = "2016-01-01"
   }
-  name         = "Allen Grant"
+  name         = "Elsa Kerluke"
   secret_id    = "...my_secret_id..."
-  workspace_id = "dfa4a197-f6de-4922-951f-e1712099853e"
+  workspace_id = "922151fe-1712-4099-853e-9f543d854439"
 }

@@ -111,15 +111,6 @@ func CreateSourceNotionUpdateAuthenticateUsingSourceNotionUpdateAuthenticateUsin
 func (u *SourceNotionUpdateAuthenticateUsing) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceNotionUpdateAuthenticateUsingOAuth20 := new(SourceNotionUpdateAuthenticateUsingOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceNotionUpdateAuthenticateUsingOAuth20); err == nil {
-		u.SourceNotionUpdateAuthenticateUsingOAuth20 = sourceNotionUpdateAuthenticateUsingOAuth20
-		u.Type = SourceNotionUpdateAuthenticateUsingTypeSourceNotionUpdateAuthenticateUsingOAuth20
-		return nil
-	}
-
 	sourceNotionUpdateAuthenticateUsingAccessToken := new(SourceNotionUpdateAuthenticateUsingAccessToken)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -129,16 +120,25 @@ func (u *SourceNotionUpdateAuthenticateUsing) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	sourceNotionUpdateAuthenticateUsingOAuth20 := new(SourceNotionUpdateAuthenticateUsingOAuth20)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceNotionUpdateAuthenticateUsingOAuth20); err == nil {
+		u.SourceNotionUpdateAuthenticateUsingOAuth20 = sourceNotionUpdateAuthenticateUsingOAuth20
+		u.Type = SourceNotionUpdateAuthenticateUsingTypeSourceNotionUpdateAuthenticateUsingOAuth20
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceNotionUpdateAuthenticateUsing) MarshalJSON() ([]byte, error) {
-	if u.SourceNotionUpdateAuthenticateUsingOAuth20 != nil {
-		return json.Marshal(u.SourceNotionUpdateAuthenticateUsingOAuth20)
-	}
-
 	if u.SourceNotionUpdateAuthenticateUsingAccessToken != nil {
 		return json.Marshal(u.SourceNotionUpdateAuthenticateUsingAccessToken)
+	}
+
+	if u.SourceNotionUpdateAuthenticateUsingOAuth20 != nil {
+		return json.Marshal(u.SourceNotionUpdateAuthenticateUsingOAuth20)
 	}
 
 	return nil, nil

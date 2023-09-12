@@ -158,10 +158,6 @@ func (r *SourceGoogleSheetsDataSource) Schema(ctx context.Context, req datasourc
 						Computed:    true,
 						Description: `Enables the conversion of column names to a standardized, SQL-compliant format. For example, 'My Name' -> 'my_name'. Enable this option if your destination is SQL-based.`,
 					},
-					"row_batch_size": schema.Int64Attribute{
-						Computed:    true,
-						Description: `The number of rows fetched when making a Google Sheet API call. Defaults to 200.`,
-					},
 					"source_type": schema.StringAttribute{
 						Computed: true,
 						Validators: []validator.String{

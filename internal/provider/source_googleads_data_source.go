@@ -106,7 +106,7 @@ func (r *SourceGoogleAdsDataSource) Schema(ctx context.Context, req datasource.S
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
-						Description: `UTC date in the format YYYY-MM-DD. Any data after this date will not be replicated.`,
+						Description: `UTC date in the format YYYY-MM-DD. Any data after this date will not be replicated. (Default value of today is used if not set)`,
 					},
 					"login_customer_id": schema.StringAttribute{
 						Computed:    true,
@@ -126,7 +126,7 @@ func (r *SourceGoogleAdsDataSource) Schema(ctx context.Context, req datasource.S
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},
-						Description: `UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated.`,
+						Description: `UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated. (Default value of two years ago is used if not set)`,
 					},
 				},
 			},

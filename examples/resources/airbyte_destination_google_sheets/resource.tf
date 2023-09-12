@@ -8,6 +8,6 @@ resource "airbyte_destination_google_sheets" "my_destination_googlesheets" {
     destination_type = "google-sheets"
     spreadsheet_id   = "https://docs.google.com/spreadsheets/d/1hLd9Qqti3UyLXZB2aFfUWDT7BG/edit"
   }
-  name         = "Angela Olson"
-  workspace_id = "cdca4251-904e-4523-87e0-bc7178e4796f"
+  name         = "Mr. Irma Schaefer"
+  workspace_id = "b3cdca42-5190-44e5-a3c7-e0bc7178e479"
 }

@@ -24,7 +24,12 @@ func (r *SourceStripeResourceModel) ToCreateSDKType() *shared.SourceStripeCreate
 		sliceRange = nil
 	}
 	sourceType := shared.SourceStripeStripe(r.Configuration.SourceType.ValueString())
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
 	configuration := shared.SourceStripe{
 		AccountID:          accountID,
 		ClientSecret:       clientSecret,
@@ -70,7 +75,12 @@ func (r *SourceStripeResourceModel) ToUpdateSDKType() *shared.SourceStripePutReq
 	} else {
 		sliceRange = nil
 	}
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
 	configuration := shared.SourceStripeUpdate{
 		AccountID:          accountID,
 		ClientSecret:       clientSecret,

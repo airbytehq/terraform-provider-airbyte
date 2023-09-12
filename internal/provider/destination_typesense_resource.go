@@ -57,7 +57,7 @@ func (r *DestinationTypesenseResource) Schema(ctx context.Context, req resource.
 						Required:    true,
 						Description: `Typesense API Key`,
 					},
-					"batch_size": schema.StringAttribute{
+					"batch_size": schema.Int64Attribute{
 						Optional:    true,
 						Description: `How many documents should be imported together. Default 1000`,
 					},

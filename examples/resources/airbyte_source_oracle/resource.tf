@@ -8,14 +8,14 @@ resource "airbyte_source_oracle" "my_source_oracle" {
     }
     encryption = {
       source_oracle_encryption_native_network_encryption_nne_ = {
-        encryption_algorithm = "AES256"
+        encryption_algorithm = "RC4_56"
         encryption_method    = "client_nne"
       }
     }
     host            = "...my_host..."
     jdbc_url_params = "...my_jdbc_url_params..."
     password        = "...my_password..."
-    port            = 10
+    port            = 4
     schemas = [
       "...",
     ]
@@ -25,9 +25,9 @@ resource "airbyte_source_oracle" "my_source_oracle" {
         tunnel_method = "NO_TUNNEL"
       }
     }
-    username = "Lila92"
+    username = "Oswaldo42"
   }
-  name         = "Barbara Hilll"
+  name         = "Cheryl McKenzie"
   secret_id    = "...my_secret_id..."
-  workspace_id = "4b935d23-7a72-4f90-849d-6aed4aecb753"
+  workspace_id = "b90f2e09-d19d-42fc-af9e-2e105944b935"
 }

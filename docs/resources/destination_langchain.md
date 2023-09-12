@@ -29,15 +29,15 @@ resource "airbyte_destination_langchain" "my_destination_langchain" {
       }
     }
     processing = {
-      chunk_overlap = 1
+      chunk_overlap = 0
       chunk_size    = 1
       text_fields = [
         "...",
       ]
     }
   }
-  name         = "Shannon Jacobi DVM"
-  workspace_id = "674bdb04-f157-4560-82d6-8ea19f1d1705"
+  name         = "Hattie Nader"
+  workspace_id = "1e674bdb-04f1-4575-a082-d68ea19f1d17"
 }
 ```
 

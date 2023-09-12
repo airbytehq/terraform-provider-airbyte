@@ -6,14 +6,8 @@ resource "airbyte_source_postgres" "my_source_postgres" {
     password        = "...my_password..."
     port            = 5432
     replication_method = {
-      source_postgres_replication_method_logical_replication_cdc_ = {
-        initial_waiting_seconds = 4
-        lsn_commit_behaviour    = "While reading Data"
-        method                  = "CDC"
-        plugin                  = "pgoutput"
-        publication             = "...my_publication..."
-        queue_size              = 4
-        replication_slot        = "...my_replication_slot..."
+      source_postgres_update_method_detect_changes_with_xmin_system_column = {
+        method = "Xmin"
       }
     }
     schemas = [
@@ -30,9 +24,9 @@ resource "airbyte_source_postgres" "my_source_postgres" {
         tunnel_method = "NO_TUNNEL"
       }
     }
-    username = "Kendrick52"
+    username = "Edwardo.Streich"
   }
-  name         = "Vivian Dietrich"
+  name         = "Roosevelt Cummings"
   secret_id    = "...my_secret_id..."
-  workspace_id = "10006bef-4921-4ec2-853b-749366ac8ee0"
+  workspace_id = "480632b9-954b-46fa-a206-369828553cb1"
 }

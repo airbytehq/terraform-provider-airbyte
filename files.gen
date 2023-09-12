@@ -99,6 +99,16 @@ internal/provider/type_destination_langchain_indexing_pinecone.go
 internal/provider/type_destination_langchain_indexing.go
 internal/provider/type_destination_langchain_processing_config_model.go
 internal/provider/type_destination_langchain.go
+internal/provider/type_destination_milvus_embedding_cohere.go
+internal/provider/type_destination_milvus_embedding_from_field.go
+internal/provider/type_destination_milvus_embedding.go
+internal/provider/type_destination_milvus_indexing_authentication_api_token.go
+internal/provider/type_destination_milvus_indexing_authentication_no_auth.go
+internal/provider/type_destination_milvus_indexing_authentication_username_password.go
+internal/provider/type_destination_milvus_indexing_authentication.go
+internal/provider/type_destination_milvus_indexing.go
+internal/provider/type_destination_milvus_processing_config_model.go
+internal/provider/type_destination_milvus.go
 internal/provider/type_destination_mongodb_authorization_type_login_password.go
 internal/provider/type_destination_mongodb_authorization_type_none.go
 internal/provider/type_destination_mongodb_authorization_type.go
@@ -117,6 +127,9 @@ internal/provider/type_destination_mysql_ssh_tunnel_method.go
 internal/provider/type_destination_mysql.go
 internal/provider/type_destination_oracle_ssh_tunnel_method.go
 internal/provider/type_destination_oracle.go
+internal/provider/type_destination_pinecone_embedding.go
+internal/provider/type_destination_pinecone_indexing.go
+internal/provider/type_destination_pinecone.go
 internal/provider/type_destination_postgres_ssl_modes_allow.go
 internal/provider/type_destination_postgres_ssl_modes_disable.go
 internal/provider/type_destination_postgres_ssl_modes_prefer.go
@@ -236,8 +249,6 @@ internal/provider/type_source_coinmarketcap.go
 internal/provider/type_source_configcat.go
 internal/provider/type_source_confluence.go
 internal/provider/type_source_convex.go
-internal/provider/type_source_datadog_queries.go
-internal/provider/type_source_datadog.go
 internal/provider/type_source_datascope.go
 internal/provider/type_source_delighted.go
 internal/provider/type_source_dixa.go
@@ -302,6 +313,7 @@ internal/provider/type_source_google_pagespeed_insights.go
 internal/provider/type_source_google_search_console_authentication_type_o_auth.go
 internal/provider/type_source_google_search_console_authentication_type_service_account_key_authentication.go
 internal/provider/type_source_google_search_console_authentication_type.go
+internal/provider/type_source_google_search_console_custom_report_config.go
 internal/provider/type_source_google_search_console.go
 internal/provider/type_source_google_sheets_authentication_authenticate_via_google_o_auth.go
 internal/provider/type_source_google_sheets_authentication_service_account_key_authentication.go
@@ -376,15 +388,14 @@ internal/provider/type_source_mongodb_update_mongo_db_instance_type_mongo_db_atl
 internal/provider/type_source_mongodb_mongo_db_instance_type.go
 internal/provider/type_source_mongodb.go
 internal/provider/type_source_mongodb_internal_poc.go
-internal/provider/type_source_mssql_replication_method_logical_replication_cdc.go
-internal/provider/type_source_mssql_replication_method_standard.go
-internal/provider/type_source_mssql_replication_method.go
+internal/provider/type_source_mssql_update_method_read_changes_using_change_data_capture_cdc.go
+internal/provider/type_source_mssql_update_method_scan_changes_with_user_defined_cursor.go
+internal/provider/type_source_mssql_update_method.go
 internal/provider/type_source_mssql_ssl_method.go
 internal/provider/type_source_mssql_ssh_tunnel_method.go
 internal/provider/type_source_mssql.go
 internal/provider/type_source_my_hours.go
 internal/provider/type_source_mysql_update_method_read_changes_using_binary_log_cdc.go
-internal/provider/type_source_mysql_update_method_scan_changes_with_user_defined_cursor.go
 internal/provider/type_source_mysql_update_method.go
 internal/provider/type_source_mysql_ssl_modes_preferred.go
 internal/provider/type_source_mysql_ssl_modes_required.go
@@ -405,7 +416,6 @@ internal/provider/type_source_okta.go
 internal/provider/type_source_omnisend.go
 internal/provider/type_source_onesignal_applications.go
 internal/provider/type_source_onesignal.go
-internal/provider/type_source_openweather.go
 internal/provider/type_source_oracle_connect_by_service_name.go
 internal/provider/type_source_oracle_connect_by_system_idsid.go
 internal/provider/type_source_oracle_connect_by.go
@@ -434,9 +444,11 @@ internal/provider/type_source_pipedrive.go
 internal/provider/type_source_pocket.go
 internal/provider/type_source_pokeapi.go
 internal/provider/type_source_polygon_stock_api.go
-internal/provider/type_source_postgres_replication_method_logical_replication_cdc.go
-internal/provider/type_source_postgres_update_replication_method_logical_replication_cdc.go
-internal/provider/type_source_postgres_replication_method.go
+internal/provider/type_source_postgres_update_method_detect_changes_with_xmin_system_column.go
+internal/provider/type_source_postgres_update_method_read_changes_using_write_ahead_log_cdc.go
+internal/provider/type_source_postgres_update_method_scan_changes_with_user_defined_cursor.go
+internal/provider/type_source_postgres_update_update_method_read_changes_using_write_ahead_log_cdc.go
+internal/provider/type_source_postgres_update_method.go
 internal/provider/type_source_postgres_ssl_modes_allow.go
 internal/provider/type_source_postgres_ssl_modes_disable.go
 internal/provider/type_source_postgres_ssl_modes_prefer.go
@@ -455,7 +467,6 @@ internal/provider/type_source_postgres.go
 internal/provider/type_source_posthog.go
 internal/provider/type_source_postmarkapp.go
 internal/provider/type_source_prestashop.go
-internal/provider/type_source_public_apis.go
 internal/provider/type_source_punk_api.go
 internal/provider/type_source_pypi.go
 internal/provider/type_source_qualaroo.go
@@ -482,6 +493,18 @@ internal/provider/type_source_s3_file_format_jsonl.go
 internal/provider/type_source_s3_file_format_parquet.go
 internal/provider/type_source_s3_file_format.go
 internal/provider/type_source_s3_s3_amazon_web_services.go
+internal/provider/type_source_s3_file_based_stream_config_format_avro_format.go
+internal/provider/type_source_s3_file_based_stream_config_format_csv_format_csv_header_definition_autogenerated.go
+internal/provider/type_source_s3_file_based_stream_config_format_csv_format_csv_header_definition_from_csv.go
+internal/provider/type_source_s3_file_based_stream_config_format_csv_format_csv_header_definition_user_provided.go
+internal/provider/type_source_s3_file_based_stream_config_format_csv_format_csv_header_definition.go
+internal/provider/type_source_s3_file_based_stream_config_format_csv_format.go
+internal/provider/type_source_s3_file_based_stream_config_format_jsonl_format.go
+internal/provider/type_source_s3_file_based_stream_config_format_parquet_format.go
+internal/provider/type_source_s3_update_file_based_stream_config_format_csv_format_csv_header_definition.go
+internal/provider/type_source_s3_update_file_based_stream_config_format_csv_format.go
+internal/provider/type_source_s3_file_based_stream_config_format.go
+internal/provider/type_source_s3_file_based_stream_config.go
 internal/provider/type_source_s3.go
 internal/provider/type_source_salesforce_streams_criteria.go
 internal/provider/type_source_salesforce.go
@@ -568,8 +591,6 @@ internal/provider/type_source_zendesk_chat_authorization_method.go
 internal/provider/type_source_zendesk_chat.go
 internal/provider/type_source_zendesk_sunshine_authorization_method_api_token.go
 internal/provider/type_source_zendesk_sunshine_authorization_method_o_auth20.go
-internal/provider/type_source_zendesk_sunshine_update_authorization_method_api_token.go
-internal/provider/type_source_zendesk_sunshine_update_authorization_method_o_auth20.go
 internal/provider/type_source_zendesk_sunshine_authorization_method.go
 internal/provider/type_source_zendesk_sunshine.go
 internal/provider/type_source_zendesk_support_authentication_api_token.go
@@ -628,9 +649,9 @@ internal/provider/type_source_mongodb_mongo_db_instance_type_mongo_db_atlas1.go
 internal/provider/type_source_mongodb_update_mongo_db_instance_type_mongo_db_atlas1.go
 internal/provider/type_source_mongodb_mongo_db_instance_type1.go
 internal/provider/type_source_mongodb1.go
-internal/provider/type_source_postgres_replication_method_logical_replication_cdc1.go
-internal/provider/type_source_postgres_update_replication_method_logical_replication_cdc1.go
-internal/provider/type_source_postgres_replication_method1.go
+internal/provider/type_source_postgres_update_method_read_changes_using_write_ahead_log_cdc1.go
+internal/provider/type_source_postgres_update_update_method_read_changes_using_write_ahead_log_cdc1.go
+internal/provider/type_source_postgres_update_method1.go
 internal/provider/type_source_postgres_ssl_modes_allow1.go
 internal/provider/type_source_postgres_ssl_modes_disable1.go
 internal/provider/type_source_postgres_ssl_modes_prefer1.go
@@ -653,12 +674,6 @@ internal/provider/type_source_retently_authentication_mechanism1.go
 internal/provider/type_source_retently1.go
 internal/provider/type_source_youtube_analytics_authenticate_via_o_auth201.go
 internal/provider/type_source_youtube_analytics1.go
-internal/provider/type_source_zendesk_sunshine_authorization_method_api_token1.go
-internal/provider/type_source_zendesk_sunshine_authorization_method_o_auth201.go
-internal/provider/type_source_zendesk_sunshine_update_authorization_method_api_token1.go
-internal/provider/type_source_zendesk_sunshine_update_authorization_method_o_auth201.go
-internal/provider/type_source_zendesk_sunshine_authorization_method1.go
-internal/provider/type_source_zendesk_sunshine1.go
 internal/provider/type_source_zendesk_support_authentication_api_token1.go
 internal/provider/type_source_zendesk_support_authentication_o_auth201.go
 internal/provider/type_source_zendesk_support_update_authentication_api_token1.go
@@ -743,10 +758,12 @@ internal/sdk/pkg/models/operations/createdestinationgooglesheets.go
 internal/sdk/pkg/models/operations/createdestinationkeen.go
 internal/sdk/pkg/models/operations/createdestinationkinesis.go
 internal/sdk/pkg/models/operations/createdestinationlangchain.go
+internal/sdk/pkg/models/operations/createdestinationmilvus.go
 internal/sdk/pkg/models/operations/createdestinationmongodb.go
 internal/sdk/pkg/models/operations/createdestinationmssql.go
 internal/sdk/pkg/models/operations/createdestinationmysql.go
 internal/sdk/pkg/models/operations/createdestinationoracle.go
+internal/sdk/pkg/models/operations/createdestinationpinecone.go
 internal/sdk/pkg/models/operations/createdestinationpostgres.go
 internal/sdk/pkg/models/operations/createdestinationpubsub.go
 internal/sdk/pkg/models/operations/createdestinationredis.go
@@ -779,10 +796,12 @@ internal/sdk/pkg/models/operations/deletedestinationgooglesheets.go
 internal/sdk/pkg/models/operations/deletedestinationkeen.go
 internal/sdk/pkg/models/operations/deletedestinationkinesis.go
 internal/sdk/pkg/models/operations/deletedestinationlangchain.go
+internal/sdk/pkg/models/operations/deletedestinationmilvus.go
 internal/sdk/pkg/models/operations/deletedestinationmongodb.go
 internal/sdk/pkg/models/operations/deletedestinationmssql.go
 internal/sdk/pkg/models/operations/deletedestinationmysql.go
 internal/sdk/pkg/models/operations/deletedestinationoracle.go
+internal/sdk/pkg/models/operations/deletedestinationpinecone.go
 internal/sdk/pkg/models/operations/deletedestinationpostgres.go
 internal/sdk/pkg/models/operations/deletedestinationpubsub.go
 internal/sdk/pkg/models/operations/deletedestinationredis.go
@@ -815,10 +834,12 @@ internal/sdk/pkg/models/operations/getdestinationgooglesheets.go
 internal/sdk/pkg/models/operations/getdestinationkeen.go
 internal/sdk/pkg/models/operations/getdestinationkinesis.go
 internal/sdk/pkg/models/operations/getdestinationlangchain.go
+internal/sdk/pkg/models/operations/getdestinationmilvus.go
 internal/sdk/pkg/models/operations/getdestinationmongodb.go
 internal/sdk/pkg/models/operations/getdestinationmssql.go
 internal/sdk/pkg/models/operations/getdestinationmysql.go
 internal/sdk/pkg/models/operations/getdestinationoracle.go
+internal/sdk/pkg/models/operations/getdestinationpinecone.go
 internal/sdk/pkg/models/operations/getdestinationpostgres.go
 internal/sdk/pkg/models/operations/getdestinationpubsub.go
 internal/sdk/pkg/models/operations/getdestinationredis.go
@@ -853,10 +874,12 @@ internal/sdk/pkg/models/operations/putdestinationgooglesheets.go
 internal/sdk/pkg/models/operations/putdestinationkeen.go
 internal/sdk/pkg/models/operations/putdestinationkinesis.go
 internal/sdk/pkg/models/operations/putdestinationlangchain.go
+internal/sdk/pkg/models/operations/putdestinationmilvus.go
 internal/sdk/pkg/models/operations/putdestinationmongodb.go
 internal/sdk/pkg/models/operations/putdestinationmssql.go
 internal/sdk/pkg/models/operations/putdestinationmysql.go
 internal/sdk/pkg/models/operations/putdestinationoracle.go
+internal/sdk/pkg/models/operations/putdestinationpinecone.go
 internal/sdk/pkg/models/operations/putdestinationpostgres.go
 internal/sdk/pkg/models/operations/putdestinationpubsub.go
 internal/sdk/pkg/models/operations/putdestinationredis.go
@@ -907,7 +930,6 @@ internal/sdk/pkg/models/operations/createsourcecoinmarketcap.go
 internal/sdk/pkg/models/operations/createsourceconfigcat.go
 internal/sdk/pkg/models/operations/createsourceconfluence.go
 internal/sdk/pkg/models/operations/createsourceconvex.go
-internal/sdk/pkg/models/operations/createsourcedatadog.go
 internal/sdk/pkg/models/operations/createsourcedatascope.go
 internal/sdk/pkg/models/operations/createsourcedelighted.go
 internal/sdk/pkg/models/operations/createsourcedixa.go
@@ -985,7 +1007,6 @@ internal/sdk/pkg/models/operations/createsourcenytimes.go
 internal/sdk/pkg/models/operations/createsourceokta.go
 internal/sdk/pkg/models/operations/createsourceomnisend.go
 internal/sdk/pkg/models/operations/createsourceonesignal.go
-internal/sdk/pkg/models/operations/createsourceopenweather.go
 internal/sdk/pkg/models/operations/createsourceoracle.go
 internal/sdk/pkg/models/operations/createsourceorb.go
 internal/sdk/pkg/models/operations/createsourceorbit.go
@@ -1005,7 +1026,6 @@ internal/sdk/pkg/models/operations/createsourcepostgres.go
 internal/sdk/pkg/models/operations/createsourceposthog.go
 internal/sdk/pkg/models/operations/createsourcepostmarkapp.go
 internal/sdk/pkg/models/operations/createsourceprestashop.go
-internal/sdk/pkg/models/operations/createsourcepublicapis.go
 internal/sdk/pkg/models/operations/createsourcepunkapi.go
 internal/sdk/pkg/models/operations/createsourcepypi.go
 internal/sdk/pkg/models/operations/createsourcequalaroo.go
@@ -1110,7 +1130,6 @@ internal/sdk/pkg/models/operations/deletesourcecoinmarketcap.go
 internal/sdk/pkg/models/operations/deletesourceconfigcat.go
 internal/sdk/pkg/models/operations/deletesourceconfluence.go
 internal/sdk/pkg/models/operations/deletesourceconvex.go
-internal/sdk/pkg/models/operations/deletesourcedatadog.go
 internal/sdk/pkg/models/operations/deletesourcedatascope.go
 internal/sdk/pkg/models/operations/deletesourcedelighted.go
 internal/sdk/pkg/models/operations/deletesourcedixa.go
@@ -1188,7 +1207,6 @@ internal/sdk/pkg/models/operations/deletesourcenytimes.go
 internal/sdk/pkg/models/operations/deletesourceokta.go
 internal/sdk/pkg/models/operations/deletesourceomnisend.go
 internal/sdk/pkg/models/operations/deletesourceonesignal.go
-internal/sdk/pkg/models/operations/deletesourceopenweather.go
 internal/sdk/pkg/models/operations/deletesourceoracle.go
 internal/sdk/pkg/models/operations/deletesourceorb.go
 internal/sdk/pkg/models/operations/deletesourceorbit.go
@@ -1208,7 +1226,6 @@ internal/sdk/pkg/models/operations/deletesourcepostgres.go
 internal/sdk/pkg/models/operations/deletesourceposthog.go
 internal/sdk/pkg/models/operations/deletesourcepostmarkapp.go
 internal/sdk/pkg/models/operations/deletesourceprestashop.go
-internal/sdk/pkg/models/operations/deletesourcepublicapis.go
 internal/sdk/pkg/models/operations/deletesourcepunkapi.go
 internal/sdk/pkg/models/operations/deletesourcepypi.go
 internal/sdk/pkg/models/operations/deletesourcequalaroo.go
@@ -1313,7 +1330,6 @@ internal/sdk/pkg/models/operations/getsourcecoinmarketcap.go
 internal/sdk/pkg/models/operations/getsourceconfigcat.go
 internal/sdk/pkg/models/operations/getsourceconfluence.go
 internal/sdk/pkg/models/operations/getsourceconvex.go
-internal/sdk/pkg/models/operations/getsourcedatadog.go
 internal/sdk/pkg/models/operations/getsourcedatascope.go
 internal/sdk/pkg/models/operations/getsourcedelighted.go
 internal/sdk/pkg/models/operations/getsourcedixa.go
@@ -1391,7 +1407,6 @@ internal/sdk/pkg/models/operations/getsourcenytimes.go
 internal/sdk/pkg/models/operations/getsourceokta.go
 internal/sdk/pkg/models/operations/getsourceomnisend.go
 internal/sdk/pkg/models/operations/getsourceonesignal.go
-internal/sdk/pkg/models/operations/getsourceopenweather.go
 internal/sdk/pkg/models/operations/getsourceoracle.go
 internal/sdk/pkg/models/operations/getsourceorb.go
 internal/sdk/pkg/models/operations/getsourceorbit.go
@@ -1411,7 +1426,6 @@ internal/sdk/pkg/models/operations/getsourcepostgres.go
 internal/sdk/pkg/models/operations/getsourceposthog.go
 internal/sdk/pkg/models/operations/getsourcepostmarkapp.go
 internal/sdk/pkg/models/operations/getsourceprestashop.go
-internal/sdk/pkg/models/operations/getsourcepublicapis.go
 internal/sdk/pkg/models/operations/getsourcepunkapi.go
 internal/sdk/pkg/models/operations/getsourcepypi.go
 internal/sdk/pkg/models/operations/getsourcequalaroo.go
@@ -1519,7 +1533,6 @@ internal/sdk/pkg/models/operations/putsourcecoinmarketcap.go
 internal/sdk/pkg/models/operations/putsourceconfigcat.go
 internal/sdk/pkg/models/operations/putsourceconfluence.go
 internal/sdk/pkg/models/operations/putsourceconvex.go
-internal/sdk/pkg/models/operations/putsourcedatadog.go
 internal/sdk/pkg/models/operations/putsourcedatascope.go
 internal/sdk/pkg/models/operations/putsourcedelighted.go
 internal/sdk/pkg/models/operations/putsourcedixa.go
@@ -1597,7 +1610,6 @@ internal/sdk/pkg/models/operations/putsourcenytimes.go
 internal/sdk/pkg/models/operations/putsourceokta.go
 internal/sdk/pkg/models/operations/putsourceomnisend.go
 internal/sdk/pkg/models/operations/putsourceonesignal.go
-internal/sdk/pkg/models/operations/putsourceopenweather.go
 internal/sdk/pkg/models/operations/putsourceoracle.go
 internal/sdk/pkg/models/operations/putsourceorb.go
 internal/sdk/pkg/models/operations/putsourceorbit.go
@@ -1617,7 +1629,6 @@ internal/sdk/pkg/models/operations/putsourcepostgres.go
 internal/sdk/pkg/models/operations/putsourceposthog.go
 internal/sdk/pkg/models/operations/putsourcepostmarkapp.go
 internal/sdk/pkg/models/operations/putsourceprestashop.go
-internal/sdk/pkg/models/operations/putsourcepublicapis.go
 internal/sdk/pkg/models/operations/putsourcepunkapi.go
 internal/sdk/pkg/models/operations/putsourcepypi.go
 internal/sdk/pkg/models/operations/putsourcequalaroo.go
@@ -1753,6 +1764,8 @@ internal/sdk/pkg/models/shared/destinationkinesiscreaterequest.go
 internal/sdk/pkg/models/shared/destinationkinesis.go
 internal/sdk/pkg/models/shared/destinationlangchaincreaterequest.go
 internal/sdk/pkg/models/shared/destinationlangchain.go
+internal/sdk/pkg/models/shared/destinationmilvuscreaterequest.go
+internal/sdk/pkg/models/shared/destinationmilvus.go
 internal/sdk/pkg/models/shared/destinationmongodbcreaterequest.go
 internal/sdk/pkg/models/shared/destinationmongodb.go
 internal/sdk/pkg/models/shared/destinationmssqlcreaterequest.go
@@ -1761,6 +1774,8 @@ internal/sdk/pkg/models/shared/destinationmysqlcreaterequest.go
 internal/sdk/pkg/models/shared/destinationmysql.go
 internal/sdk/pkg/models/shared/destinationoraclecreaterequest.go
 internal/sdk/pkg/models/shared/destinationoracle.go
+internal/sdk/pkg/models/shared/destinationpineconecreaterequest.go
+internal/sdk/pkg/models/shared/destinationpinecone.go
 internal/sdk/pkg/models/shared/destinationpostgrescreaterequest.go
 internal/sdk/pkg/models/shared/destinationpostgres.go
 internal/sdk/pkg/models/shared/destinationpubsubcreaterequest.go
@@ -1826,6 +1841,8 @@ internal/sdk/pkg/models/shared/destinationkinesisputrequest.go
 internal/sdk/pkg/models/shared/destinationkinesisupdate.go
 internal/sdk/pkg/models/shared/destinationlangchainputrequest.go
 internal/sdk/pkg/models/shared/destinationlangchainupdate.go
+internal/sdk/pkg/models/shared/destinationmilvusputrequest.go
+internal/sdk/pkg/models/shared/destinationmilvusupdate.go
 internal/sdk/pkg/models/shared/destinationmongodbputrequest.go
 internal/sdk/pkg/models/shared/destinationmongodbupdate.go
 internal/sdk/pkg/models/shared/destinationmssqlputrequest.go
@@ -1834,6 +1851,8 @@ internal/sdk/pkg/models/shared/destinationmysqlputrequest.go
 internal/sdk/pkg/models/shared/destinationmysqlupdate.go
 internal/sdk/pkg/models/shared/destinationoracleputrequest.go
 internal/sdk/pkg/models/shared/destinationoracleupdate.go
+internal/sdk/pkg/models/shared/destinationpineconeputrequest.go
+internal/sdk/pkg/models/shared/destinationpineconeupdate.go
 internal/sdk/pkg/models/shared/destinationpostgresputrequest.go
 internal/sdk/pkg/models/shared/destinationpostgresupdate.go
 internal/sdk/pkg/models/shared/destinationpubsubputrequest.go
@@ -1931,8 +1950,6 @@ internal/sdk/pkg/models/shared/sourceconfluencecreaterequest.go
 internal/sdk/pkg/models/shared/sourceconfluence.go
 internal/sdk/pkg/models/shared/sourceconvexcreaterequest.go
 internal/sdk/pkg/models/shared/sourceconvex.go
-internal/sdk/pkg/models/shared/sourcedatadogcreaterequest.go
-internal/sdk/pkg/models/shared/sourcedatadog.go
 internal/sdk/pkg/models/shared/sourcedatascopecreaterequest.go
 internal/sdk/pkg/models/shared/sourcedatascope.go
 internal/sdk/pkg/models/shared/sourcedelightedcreaterequest.go
@@ -2087,8 +2104,6 @@ internal/sdk/pkg/models/shared/sourceomnisendcreaterequest.go
 internal/sdk/pkg/models/shared/sourceomnisend.go
 internal/sdk/pkg/models/shared/sourceonesignalcreaterequest.go
 internal/sdk/pkg/models/shared/sourceonesignal.go
-internal/sdk/pkg/models/shared/sourceopenweathercreaterequest.go
-internal/sdk/pkg/models/shared/sourceopenweather.go
 internal/sdk/pkg/models/shared/sourceoraclecreaterequest.go
 internal/sdk/pkg/models/shared/sourceoracle.go
 internal/sdk/pkg/models/shared/sourceorbcreaterequest.go
@@ -2127,8 +2142,6 @@ internal/sdk/pkg/models/shared/sourcepostmarkappcreaterequest.go
 internal/sdk/pkg/models/shared/sourcepostmarkapp.go
 internal/sdk/pkg/models/shared/sourceprestashopcreaterequest.go
 internal/sdk/pkg/models/shared/sourceprestashop.go
-internal/sdk/pkg/models/shared/sourcepublicapiscreaterequest.go
-internal/sdk/pkg/models/shared/sourcepublicapis.go
 internal/sdk/pkg/models/shared/sourcepunkapicreaterequest.go
 internal/sdk/pkg/models/shared/sourcepunkapi.go
 internal/sdk/pkg/models/shared/sourcepypicreaterequest.go
@@ -2340,8 +2353,6 @@ internal/sdk/pkg/models/shared/sourceconfluenceputrequest.go
 internal/sdk/pkg/models/shared/sourceconfluenceupdate.go
 internal/sdk/pkg/models/shared/sourceconvexputrequest.go
 internal/sdk/pkg/models/shared/sourceconvexupdate.go
-internal/sdk/pkg/models/shared/sourcedatadogputrequest.go
-internal/sdk/pkg/models/shared/sourcedatadogupdate.go
 internal/sdk/pkg/models/shared/sourcedatascopeputrequest.go
 internal/sdk/pkg/models/shared/sourcedatascopeupdate.go
 internal/sdk/pkg/models/shared/sourcedelightedputrequest.go
@@ -2496,8 +2507,6 @@ internal/sdk/pkg/models/shared/sourceomnisendputrequest.go
 internal/sdk/pkg/models/shared/sourceomnisendupdate.go
 internal/sdk/pkg/models/shared/sourceonesignalputrequest.go
 internal/sdk/pkg/models/shared/sourceonesignalupdate.go
-internal/sdk/pkg/models/shared/sourceopenweatherputrequest.go
-internal/sdk/pkg/models/shared/sourceopenweatherupdate.go
 internal/sdk/pkg/models/shared/sourceoracleputrequest.go
 internal/sdk/pkg/models/shared/sourceoracleupdate.go
 internal/sdk/pkg/models/shared/sourceorbputrequest.go
@@ -2536,8 +2545,6 @@ internal/sdk/pkg/models/shared/sourcepostmarkappputrequest.go
 internal/sdk/pkg/models/shared/sourcepostmarkappupdate.go
 internal/sdk/pkg/models/shared/sourceprestashopputrequest.go
 internal/sdk/pkg/models/shared/sourceprestashopupdate.go
-internal/sdk/pkg/models/shared/sourcepublicapisputrequest.go
-internal/sdk/pkg/models/shared/sourcepublicapisupdate.go
 internal/sdk/pkg/models/shared/sourcepunkapiputrequest.go
 internal/sdk/pkg/models/shared/sourcepunkapiupdate.go
 internal/sdk/pkg/models/shared/sourcepypiputrequest.go
@@ -2688,8 +2695,6 @@ internal/sdk/pkg/models/shared/workspacecreaterequest.go
 internal/sdk/pkg/models/shared/workspacesresponse.go
 internal/sdk/pkg/models/shared/workspaceupdaterequest.go
 internal/sdk/pkg/models/shared/security.go
-internal/sdk/pkg/models/shared/connectionresponseroottypeforconnectionresponse.go
-internal/sdk/pkg/models/shared/workspaceresponseroottypeforworkspaceresponse.go
 USAGE.md
 internal/provider/provider.go
 examples/provider/provider.tf
@@ -2753,6 +2758,9 @@ examples/resources/airbyte_destination_kinesis/resource.tf
 internal/provider/destination_langchain_resource.go
 internal/provider/destination_langchain_resource_sdk.go
 examples/resources/airbyte_destination_langchain/resource.tf
+internal/provider/destination_milvus_resource.go
+internal/provider/destination_milvus_resource_sdk.go
+examples/resources/airbyte_destination_milvus/resource.tf
 internal/provider/destination_mongodb_resource.go
 internal/provider/destination_mongodb_resource_sdk.go
 examples/resources/airbyte_destination_mongodb/resource.tf
@@ -2765,6 +2773,9 @@ examples/resources/airbyte_destination_mysql/resource.tf
 internal/provider/destination_oracle_resource.go
 internal/provider/destination_oracle_resource_sdk.go
 examples/resources/airbyte_destination_oracle/resource.tf
+internal/provider/destination_pinecone_resource.go
+internal/provider/destination_pinecone_resource_sdk.go
+examples/resources/airbyte_destination_pinecone/resource.tf
 internal/provider/destination_postgres_resource.go
 internal/provider/destination_postgres_resource_sdk.go
 examples/resources/airbyte_destination_postgres/resource.tf
@@ -2900,9 +2911,6 @@ examples/resources/airbyte_source_confluence/resource.tf
 internal/provider/source_convex_resource.go
 internal/provider/source_convex_resource_sdk.go
 examples/resources/airbyte_source_convex/resource.tf
-internal/provider/source_datadog_resource.go
-internal/provider/source_datadog_resource_sdk.go
-examples/resources/airbyte_source_datadog/resource.tf
 internal/provider/source_datascope_resource.go
 internal/provider/source_datascope_resource_sdk.go
 examples/resources/airbyte_source_datascope/resource.tf
@@ -3134,9 +3142,6 @@ examples/resources/airbyte_source_omnisend/resource.tf
 internal/provider/source_onesignal_resource.go
 internal/provider/source_onesignal_resource_sdk.go
 examples/resources/airbyte_source_onesignal/resource.tf
-internal/provider/source_openweather_resource.go
-internal/provider/source_openweather_resource_sdk.go
-examples/resources/airbyte_source_openweather/resource.tf
 internal/provider/source_oracle_resource.go
 internal/provider/source_oracle_resource_sdk.go
 examples/resources/airbyte_source_oracle/resource.tf
@@ -3194,9 +3199,6 @@ examples/resources/airbyte_source_postmarkapp/resource.tf
 internal/provider/source_prestashop_resource.go
 internal/provider/source_prestashop_resource_sdk.go
 examples/resources/airbyte_source_prestashop/resource.tf
-internal/provider/source_publicapis_resource.go
-internal/provider/source_publicapis_resource_sdk.go
-examples/resources/airbyte_source_public_apis/resource.tf
 internal/provider/source_punkapi_resource.go
 internal/provider/source_punkapi_resource_sdk.go
 examples/resources/airbyte_source_punk_api/resource.tf
@@ -3470,6 +3472,9 @@ examples/data-sources/airbyte_destination_kinesis/data-source.tf
 internal/provider/destination_langchain_data_source.go
 internal/provider/destination_langchain_data_source_sdk.go
 examples/data-sources/airbyte_destination_langchain/data-source.tf
+internal/provider/destination_milvus_data_source.go
+internal/provider/destination_milvus_data_source_sdk.go
+examples/data-sources/airbyte_destination_milvus/data-source.tf
 internal/provider/destination_mongodb_data_source.go
 internal/provider/destination_mongodb_data_source_sdk.go
 examples/data-sources/airbyte_destination_mongodb/data-source.tf
@@ -3482,6 +3487,9 @@ examples/data-sources/airbyte_destination_mysql/data-source.tf
 internal/provider/destination_oracle_data_source.go
 internal/provider/destination_oracle_data_source_sdk.go
 examples/data-sources/airbyte_destination_oracle/data-source.tf
+internal/provider/destination_pinecone_data_source.go
+internal/provider/destination_pinecone_data_source_sdk.go
+examples/data-sources/airbyte_destination_pinecone/data-source.tf
 internal/provider/destination_postgres_data_source.go
 internal/provider/destination_postgres_data_source_sdk.go
 examples/data-sources/airbyte_destination_postgres/data-source.tf
@@ -3617,9 +3625,6 @@ examples/data-sources/airbyte_source_confluence/data-source.tf
 internal/provider/source_convex_data_source.go
 internal/provider/source_convex_data_source_sdk.go
 examples/data-sources/airbyte_source_convex/data-source.tf
-internal/provider/source_datadog_data_source.go
-internal/provider/source_datadog_data_source_sdk.go
-examples/data-sources/airbyte_source_datadog/data-source.tf
 internal/provider/source_datascope_data_source.go
 internal/provider/source_datascope_data_source_sdk.go
 examples/data-sources/airbyte_source_datascope/data-source.tf
@@ -3851,9 +3856,6 @@ examples/data-sources/airbyte_source_omnisend/data-source.tf
 internal/provider/source_onesignal_data_source.go
 internal/provider/source_onesignal_data_source_sdk.go
 examples/data-sources/airbyte_source_onesignal/data-source.tf
-internal/provider/source_openweather_data_source.go
-internal/provider/source_openweather_data_source_sdk.go
-examples/data-sources/airbyte_source_openweather/data-source.tf
 internal/provider/source_oracle_data_source.go
 internal/provider/source_oracle_data_source_sdk.go
 examples/data-sources/airbyte_source_oracle/data-source.tf
@@ -3911,9 +3913,6 @@ examples/data-sources/airbyte_source_postmarkapp/data-source.tf
 internal/provider/source_prestashop_data_source.go
 internal/provider/source_prestashop_data_source_sdk.go
 examples/data-sources/airbyte_source_prestashop/data-source.tf
-internal/provider/source_publicapis_data_source.go
-internal/provider/source_publicapis_data_source_sdk.go
-examples/data-sources/airbyte_source_public_apis/data-source.tf
 internal/provider/source_punkapi_data_source.go
 internal/provider/source_punkapi_data_source_sdk.go
 examples/data-sources/airbyte_source_punk_api/data-source.tf
@@ -4127,3 +4126,4 @@ examples/data-sources/airbyte_source_zuora/data-source.tf
 internal/provider/workspace_data_source.go
 internal/provider/workspace_data_source_sdk.go
 examples/data-sources/airbyte_workspace/data-source.tf
+.gitattributes

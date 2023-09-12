@@ -47,18 +47,11 @@ func (r *SourceGoogleSheetsResourceModel) ToCreateSDKType() *shared.SourceGoogle
 	} else {
 		namesConversion = nil
 	}
-	rowBatchSize := new(int64)
-	if !r.Configuration.RowBatchSize.IsUnknown() && !r.Configuration.RowBatchSize.IsNull() {
-		*rowBatchSize = r.Configuration.RowBatchSize.ValueInt64()
-	} else {
-		rowBatchSize = nil
-	}
 	sourceType := shared.SourceGoogleSheetsGoogleSheets(r.Configuration.SourceType.ValueString())
 	spreadsheetID := r.Configuration.SpreadsheetID.ValueString()
 	configuration := shared.SourceGoogleSheets{
 		Credentials:     credentials,
 		NamesConversion: namesConversion,
-		RowBatchSize:    rowBatchSize,
 		SourceType:      sourceType,
 		SpreadsheetID:   spreadsheetID,
 	}
@@ -124,17 +117,10 @@ func (r *SourceGoogleSheetsResourceModel) ToUpdateSDKType() *shared.SourceGoogle
 	} else {
 		namesConversion = nil
 	}
-	rowBatchSize := new(int64)
-	if !r.Configuration.RowBatchSize.IsUnknown() && !r.Configuration.RowBatchSize.IsNull() {
-		*rowBatchSize = r.Configuration.RowBatchSize.ValueInt64()
-	} else {
-		rowBatchSize = nil
-	}
 	spreadsheetID := r.Configuration.SpreadsheetID.ValueString()
 	configuration := shared.SourceGoogleSheetsUpdate{
 		Credentials:     credentials,
 		NamesConversion: namesConversion,
-		RowBatchSize:    rowBatchSize,
 		SpreadsheetID:   spreadsheetID,
 	}
 	name := r.Name.ValueString()

@@ -3,7 +3,7 @@ resource "airbyte_source_omnisend" "my_source_omnisend" {
     api_key     = "...my_api_key..."
     source_type = "omnisend"
   }
-  name         = "Virginia Mitchell"
+  name         = "Lynn Miller"
   secret_id    = "...my_secret_id..."
-  workspace_id = "b44bd3c4-3159-4d33-a595-3c001139863a"
+  workspace_id = "3e5953c0-0113-4986-baa4-1e6c31cc2f1f"
 }

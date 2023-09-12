@@ -19,17 +19,17 @@ resource "airbyte_source_zendesk_support" "my_source_zendesksupport" {
       source_zendesk_support_authentication_api_token = {
         api_token   = "...my_api_token..."
         credentials = "api_token"
-        email       = "Kacie27@hotmail.com"
+        email       = "Ezequiel.Lindgren56@yahoo.com"
       }
     }
-    ignore_pagination = false
+    ignore_pagination = true
     source_type       = "zendesk-support"
     start_date        = "2020-10-15T00:00:00Z"
     subdomain         = "...my_subdomain..."
   }
-  name         = "May McClure"
+  name         = "Alexander Friesen"
   secret_id    = "...my_secret_id..."
-  workspace_id = "b0c69e37-2db1-4344-ba9f-78a5c0ed7aab"
+  workspace_id = "82dbec75-c68c-4606-9946-8ce304d8849b"
 }
 ```
 
@@ -57,13 +57,13 @@ resource "airbyte_source_zendesk_support" "my_source_zendesksupport" {
 Required:
 
 - `source_type` (String) must be one of ["zendesk-support"]
-- `start_date` (String) The UTC date and time from which you'd like to replicate data, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 - `subdomain` (String) This is your unique Zendesk subdomain that can be found in your account URL. For example, in https://MY_SUBDOMAIN.zendesk.com/, MY_SUBDOMAIN is the value of your subdomain.
 
 Optional:
 
 - `credentials` (Attributes) Zendesk allows two authentication methods. We recommend using `OAuth2.0` for Airbyte Cloud users and `API token` for Airbyte Open Source users. (see [below for nested schema](#nestedatt--configuration--credentials))
 - `ignore_pagination` (Boolean) Makes each stream read a single page of data.
+- `start_date` (String) The UTC date and time from which you'd like to replicate data, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`

@@ -25,9 +25,9 @@ resource "airbyte_source_retently" "my_source_retently" {
     }
     source_type = "retently"
   }
-  name         = "Mrs. Lamar Fritsch"
+  name         = "Kelly Pfeffer"
   secret_id    = "...my_secret_id..."
-  workspace_id = "ba26fd36-8ba9-4216-bcb4-15835c736417"
+  workspace_id = "c9f1cc50-3f6c-439b-8d0a-6290f957f385"
 }
 ```
 

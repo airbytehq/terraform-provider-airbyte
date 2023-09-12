@@ -108,12 +108,6 @@ func (r *DestinationSnowflakeResourceModel) ToCreateSDKType() *shared.Destinatio
 	}
 	role := r.Configuration.Role.ValueString()
 	schema := r.Configuration.Schema.ValueString()
-	use1s1tFormat := new(bool)
-	if !r.Configuration.Use1s1tFormat.IsUnknown() && !r.Configuration.Use1s1tFormat.IsNull() {
-		*use1s1tFormat = r.Configuration.Use1s1tFormat.ValueBool()
-	} else {
-		use1s1tFormat = nil
-	}
 	username := r.Configuration.Username.ValueString()
 	warehouse := r.Configuration.Warehouse.ValueString()
 	configuration := shared.DestinationSnowflake{
@@ -125,7 +119,6 @@ func (r *DestinationSnowflakeResourceModel) ToCreateSDKType() *shared.Destinatio
 		RawDataSchema:   rawDataSchema,
 		Role:            role,
 		Schema:          schema,
-		Use1s1tFormat:   use1s1tFormat,
 		Username:        username,
 		Warehouse:       warehouse,
 	}
@@ -244,12 +237,6 @@ func (r *DestinationSnowflakeResourceModel) ToUpdateSDKType() *shared.Destinatio
 	}
 	role := r.Configuration.Role.ValueString()
 	schema := r.Configuration.Schema.ValueString()
-	use1s1tFormat := new(bool)
-	if !r.Configuration.Use1s1tFormat.IsUnknown() && !r.Configuration.Use1s1tFormat.IsNull() {
-		*use1s1tFormat = r.Configuration.Use1s1tFormat.ValueBool()
-	} else {
-		use1s1tFormat = nil
-	}
 	username := r.Configuration.Username.ValueString()
 	warehouse := r.Configuration.Warehouse.ValueString()
 	configuration := shared.DestinationSnowflakeUpdate{
@@ -260,7 +247,6 @@ func (r *DestinationSnowflakeResourceModel) ToUpdateSDKType() *shared.Destinatio
 		RawDataSchema: rawDataSchema,
 		Role:          role,
 		Schema:        schema,
-		Use1s1tFormat: use1s1tFormat,
 		Username:      username,
 		Warehouse:     warehouse,
 	}

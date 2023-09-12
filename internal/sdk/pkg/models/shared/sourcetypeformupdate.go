@@ -113,15 +113,6 @@ func CreateSourceTypeformUpdateAuthorizationMethodSourceTypeformUpdateAuthorizat
 func (u *SourceTypeformUpdateAuthorizationMethod) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceTypeformUpdateAuthorizationMethodOAuth20 := new(SourceTypeformUpdateAuthorizationMethodOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceTypeformUpdateAuthorizationMethodOAuth20); err == nil {
-		u.SourceTypeformUpdateAuthorizationMethodOAuth20 = sourceTypeformUpdateAuthorizationMethodOAuth20
-		u.Type = SourceTypeformUpdateAuthorizationMethodTypeSourceTypeformUpdateAuthorizationMethodOAuth20
-		return nil
-	}
-
 	sourceTypeformUpdateAuthorizationMethodPrivateToken := new(SourceTypeformUpdateAuthorizationMethodPrivateToken)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -131,16 +122,25 @@ func (u *SourceTypeformUpdateAuthorizationMethod) UnmarshalJSON(data []byte) err
 		return nil
 	}
 
+	sourceTypeformUpdateAuthorizationMethodOAuth20 := new(SourceTypeformUpdateAuthorizationMethodOAuth20)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceTypeformUpdateAuthorizationMethodOAuth20); err == nil {
+		u.SourceTypeformUpdateAuthorizationMethodOAuth20 = sourceTypeformUpdateAuthorizationMethodOAuth20
+		u.Type = SourceTypeformUpdateAuthorizationMethodTypeSourceTypeformUpdateAuthorizationMethodOAuth20
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceTypeformUpdateAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceTypeformUpdateAuthorizationMethodOAuth20 != nil {
-		return json.Marshal(u.SourceTypeformUpdateAuthorizationMethodOAuth20)
-	}
-
 	if u.SourceTypeformUpdateAuthorizationMethodPrivateToken != nil {
 		return json.Marshal(u.SourceTypeformUpdateAuthorizationMethodPrivateToken)
+	}
+
+	if u.SourceTypeformUpdateAuthorizationMethodOAuth20 != nil {
+		return json.Marshal(u.SourceTypeformUpdateAuthorizationMethodOAuth20)
 	}
 
 	return nil, nil

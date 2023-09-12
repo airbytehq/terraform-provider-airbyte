@@ -1,10 +1,10 @@
 resource "airbyte_source_spacex_api" "my_source_spacexapi" {
   configuration = {
-    id          = "8f532d89-2cf7-4812-8b51-2c878240bf54"
+    id          = "382bd7ed-5650-4762-9c58-f4d7396564c2"
     options     = "...my_options..."
     source_type = "spacex-api"
   }
-  name         = "Randal Lockman"
+  name         = "Lee Batz Jr."
   secret_id    = "...my_secret_id..."
-  workspace_id = "8f1bf0bc-8e1f-4206-95d8-31d0081090f6"
+  workspace_id = "a961d24a-7dbb-48f5-b2d8-92cf7812cb51"
 }

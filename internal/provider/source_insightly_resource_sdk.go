@@ -9,8 +9,18 @@ import (
 
 func (r *SourceInsightlyResourceModel) ToCreateSDKType() *shared.SourceInsightlyCreateRequest {
 	sourceType := shared.SourceInsightlyInsightly(r.Configuration.SourceType.ValueString())
-	startDate := r.Configuration.StartDate.ValueString()
-	token := r.Configuration.Token.ValueString()
+	startDate := new(string)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate = r.Configuration.StartDate.ValueString()
+	} else {
+		startDate = nil
+	}
+	token := new(string)
+	if !r.Configuration.Token.IsUnknown() && !r.Configuration.Token.IsNull() {
+		*token = r.Configuration.Token.ValueString()
+	} else {
+		token = nil
+	}
 	configuration := shared.SourceInsightly{
 		SourceType: sourceType,
 		StartDate:  startDate,
@@ -39,8 +49,18 @@ func (r *SourceInsightlyResourceModel) ToGetSDKType() *shared.SourceInsightlyCre
 }
 
 func (r *SourceInsightlyResourceModel) ToUpdateSDKType() *shared.SourceInsightlyPutRequest {
-	startDate := r.Configuration.StartDate.ValueString()
-	token := r.Configuration.Token.ValueString()
+	startDate := new(string)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate = r.Configuration.StartDate.ValueString()
+	} else {
+		startDate = nil
+	}
+	token := new(string)
+	if !r.Configuration.Token.IsUnknown() && !r.Configuration.Token.IsNull() {
+		*token = r.Configuration.Token.ValueString()
+	} else {
+		token = nil
+	}
 	configuration := shared.SourceInsightlyUpdate{
 		StartDate: startDate,
 		Token:     token,

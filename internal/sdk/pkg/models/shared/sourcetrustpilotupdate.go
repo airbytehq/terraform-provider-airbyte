@@ -114,15 +114,6 @@ func CreateSourceTrustpilotUpdateAuthorizationMethodSourceTrustpilotUpdateAuthor
 func (u *SourceTrustpilotUpdateAuthorizationMethod) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceTrustpilotUpdateAuthorizationMethodOAuth20 := new(SourceTrustpilotUpdateAuthorizationMethodOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceTrustpilotUpdateAuthorizationMethodOAuth20); err == nil {
-		u.SourceTrustpilotUpdateAuthorizationMethodOAuth20 = sourceTrustpilotUpdateAuthorizationMethodOAuth20
-		u.Type = SourceTrustpilotUpdateAuthorizationMethodTypeSourceTrustpilotUpdateAuthorizationMethodOAuth20
-		return nil
-	}
-
 	sourceTrustpilotUpdateAuthorizationMethodAPIKey := new(SourceTrustpilotUpdateAuthorizationMethodAPIKey)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -132,16 +123,25 @@ func (u *SourceTrustpilotUpdateAuthorizationMethod) UnmarshalJSON(data []byte) e
 		return nil
 	}
 
+	sourceTrustpilotUpdateAuthorizationMethodOAuth20 := new(SourceTrustpilotUpdateAuthorizationMethodOAuth20)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceTrustpilotUpdateAuthorizationMethodOAuth20); err == nil {
+		u.SourceTrustpilotUpdateAuthorizationMethodOAuth20 = sourceTrustpilotUpdateAuthorizationMethodOAuth20
+		u.Type = SourceTrustpilotUpdateAuthorizationMethodTypeSourceTrustpilotUpdateAuthorizationMethodOAuth20
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceTrustpilotUpdateAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceTrustpilotUpdateAuthorizationMethodOAuth20 != nil {
-		return json.Marshal(u.SourceTrustpilotUpdateAuthorizationMethodOAuth20)
-	}
-
 	if u.SourceTrustpilotUpdateAuthorizationMethodAPIKey != nil {
 		return json.Marshal(u.SourceTrustpilotUpdateAuthorizationMethodAPIKey)
+	}
+
+	if u.SourceTrustpilotUpdateAuthorizationMethodOAuth20 != nil {
+		return json.Marshal(u.SourceTrustpilotUpdateAuthorizationMethodOAuth20)
 	}
 
 	return nil, nil

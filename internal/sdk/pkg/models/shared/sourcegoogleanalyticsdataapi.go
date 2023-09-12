@@ -113,15 +113,6 @@ func CreateSourceGoogleAnalyticsDataAPICredentialsSourceGoogleAnalyticsDataAPICr
 func (u *SourceGoogleAnalyticsDataAPICredentials) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth := new(SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth); err == nil {
-		u.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth = sourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth
-		u.Type = SourceGoogleAnalyticsDataAPICredentialsTypeSourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth
-		return nil
-	}
-
 	sourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication := new(SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -131,16 +122,25 @@ func (u *SourceGoogleAnalyticsDataAPICredentials) UnmarshalJSON(data []byte) err
 		return nil
 	}
 
+	sourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth := new(SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth); err == nil {
+		u.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth = sourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth
+		u.Type = SourceGoogleAnalyticsDataAPICredentialsTypeSourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceGoogleAnalyticsDataAPICredentials) MarshalJSON() ([]byte, error) {
-	if u.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth != nil {
-		return json.Marshal(u.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth)
-	}
-
 	if u.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication != nil {
 		return json.Marshal(u.SourceGoogleAnalyticsDataAPICredentialsServiceAccountKeyAuthentication)
+	}
+
+	if u.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth != nil {
+		return json.Marshal(u.SourceGoogleAnalyticsDataAPICredentialsAuthenticateViaGoogleOauth)
 	}
 
 	return nil, nil

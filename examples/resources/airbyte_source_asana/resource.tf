@@ -10,7 +10,7 @@ resource "airbyte_source_asana" "my_source_asana" {
     }
     source_type = "asana"
   }
-  name         = "Doug Baumbach"
+  name         = "Jill Wintheiser"
   secret_id    = "...my_secret_id..."
-  workspace_id = "b197cd44-e2f5-42d8-ad35-13bb6f48b656"
+  workspace_id = "b114eeb5-2ff7-485f-8378-14d4c98e0c2b"
 }

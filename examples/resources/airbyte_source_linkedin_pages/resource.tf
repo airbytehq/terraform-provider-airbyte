@@ -9,7 +9,7 @@ resource "airbyte_source_linkedin_pages" "my_source_linkedinpages" {
     org_id      = "123456789"
     source_type = "linkedin-pages"
   }
-  name         = "Karen Barrows I"
+  name         = "Tracey Kutch"
   secret_id    = "...my_secret_id..."
-  workspace_id = "91160820-7888-4ec6-a183-bfe9659eb40e"
+  workspace_id = "c66183bf-e965-49eb-80ec-16faf75b0b53"
 }

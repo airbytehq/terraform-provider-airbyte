@@ -18,9 +18,9 @@ resource "airbyte_source_sap_fieldglass" "my_source_sapfieldglass" {
     api_key     = "...my_api_key..."
     source_type = "sap-fieldglass"
   }
-  name         = "Miss Jack Wintheiser"
+  name         = "Juana Williamson"
   secret_id    = "...my_secret_id..."
-  workspace_id = "0a0003eb-22d9-4b3a-b0d9-4faa741c57d1"
+  workspace_id = "2bf7d67c-a84a-4d99-b41d-61243531870c"
 }
 ```
 

@@ -8,4 +8,5 @@ type SourceApifyDataset struct {
 	Clean      types.Bool   `tfsdk:"clean"`
 	DatasetID  types.String `tfsdk:"dataset_id"`
 	SourceType types.String `tfsdk:"source_type"`
+	Token      types.String `tfsdk:"token"`
 }

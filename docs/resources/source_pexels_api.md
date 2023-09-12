@@ -19,13 +19,13 @@ resource "airbyte_source_pexels_api" "my_source_pexelsapi" {
     color       = "orange"
     locale      = "en-US"
     orientation = "landscape"
-    query       = "people"
+    query       = "oceans"
     size        = "small"
     source_type = "pexels-api"
   }
-  name         = "Wilbert Cummings"
+  name         = "Arnold Dooley"
   secret_id    = "...my_secret_id..."
-  workspace_id = "c7b66a1f-30c7-43df-9b67-19890f42a4bb"
+  workspace_id = "63457150-9a8e-4870-93c5-a1f9c242c7b6"
 }
 ```
 

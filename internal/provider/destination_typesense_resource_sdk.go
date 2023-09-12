@@ -9,9 +9,9 @@ import (
 
 func (r *DestinationTypesenseResourceModel) ToCreateSDKType() *shared.DestinationTypesenseCreateRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	batchSize := new(string)
+	batchSize := new(int64)
 	if !r.Configuration.BatchSize.IsUnknown() && !r.Configuration.BatchSize.IsNull() {
-		*batchSize = r.Configuration.BatchSize.ValueString()
+		*batchSize = r.Configuration.BatchSize.ValueInt64()
 	} else {
 		batchSize = nil
 	}
@@ -54,9 +54,9 @@ func (r *DestinationTypesenseResourceModel) ToGetSDKType() *shared.DestinationTy
 
 func (r *DestinationTypesenseResourceModel) ToUpdateSDKType() *shared.DestinationTypesensePutRequest {
 	apiKey := r.Configuration.APIKey.ValueString()
-	batchSize := new(string)
+	batchSize := new(int64)
 	if !r.Configuration.BatchSize.IsUnknown() && !r.Configuration.BatchSize.IsNull() {
-		*batchSize = r.Configuration.BatchSize.ValueString()
+		*batchSize = r.Configuration.BatchSize.ValueInt64()
 	} else {
 		batchSize = nil
 	}

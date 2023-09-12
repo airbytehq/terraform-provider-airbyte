@@ -108,15 +108,6 @@ func CreateSourceAuth0AuthenticationMethodSourceAuth0AuthenticationMethodOAuth2A
 func (u *SourceAuth0AuthenticationMethod) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceAuth0AuthenticationMethodOAuth2ConfidentialApplication := new(SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceAuth0AuthenticationMethodOAuth2ConfidentialApplication); err == nil {
-		u.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication = sourceAuth0AuthenticationMethodOAuth2ConfidentialApplication
-		u.Type = SourceAuth0AuthenticationMethodTypeSourceAuth0AuthenticationMethodOAuth2ConfidentialApplication
-		return nil
-	}
-
 	sourceAuth0AuthenticationMethodOAuth2AccessToken := new(SourceAuth0AuthenticationMethodOAuth2AccessToken)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -126,16 +117,25 @@ func (u *SourceAuth0AuthenticationMethod) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	sourceAuth0AuthenticationMethodOAuth2ConfidentialApplication := new(SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceAuth0AuthenticationMethodOAuth2ConfidentialApplication); err == nil {
+		u.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication = sourceAuth0AuthenticationMethodOAuth2ConfidentialApplication
+		u.Type = SourceAuth0AuthenticationMethodTypeSourceAuth0AuthenticationMethodOAuth2ConfidentialApplication
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceAuth0AuthenticationMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication != nil {
-		return json.Marshal(u.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication)
-	}
-
 	if u.SourceAuth0AuthenticationMethodOAuth2AccessToken != nil {
 		return json.Marshal(u.SourceAuth0AuthenticationMethodOAuth2AccessToken)
+	}
+
+	if u.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication != nil {
+		return json.Marshal(u.SourceAuth0AuthenticationMethodOAuth2ConfidentialApplication)
 	}
 
 	return nil, nil
@@ -170,4 +170,6 @@ type SourceAuth0 struct {
 	BaseURL     string                          `json:"base_url"`
 	Credentials SourceAuth0AuthenticationMethod `json:"credentials"`
 	SourceType  SourceAuth0Auth0                `json:"sourceType"`
+	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
+	StartDate *string `json:"start_date,omitempty"`
 }

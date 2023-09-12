@@ -784,21 +784,30 @@ func (u *DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodec) Unmarsh
 		return nil
 	}
 
-	destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflate := new(DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflate)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflate); err == nil {
-		u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflate = destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflate
-		u.Type = DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecTypeDestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflate
-		return nil
-	}
-
 	destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecBzip2 := new(DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecBzip2)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
 	if err := d.Decode(&destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecBzip2); err == nil {
 		u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecBzip2 = destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecBzip2
 		u.Type = DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecTypeDestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecBzip2
+		return nil
+	}
+
+	destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappy := new(DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappy)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappy); err == nil {
+		u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappy = destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappy
+		u.Type = DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecTypeDestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappy
+		return nil
+	}
+
+	destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflate := new(DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflate)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflate); err == nil {
+		u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflate = destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflate
+		u.Type = DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecTypeDestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflate
 		return nil
 	}
 
@@ -820,15 +829,6 @@ func (u *DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodec) Unmarsh
 		return nil
 	}
 
-	destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappy := new(DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappy)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappy); err == nil {
-		u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappy = destinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappy
-		u.Type = DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecTypeDestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappy
-		return nil
-	}
-
 	return errors.New("could not unmarshal into supported union types")
 }
 
@@ -837,12 +837,16 @@ func (u DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodec) MarshalJ
 		return json.Marshal(u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecNoCompression)
 	}
 
-	if u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflate != nil {
-		return json.Marshal(u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflate)
-	}
-
 	if u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecBzip2 != nil {
 		return json.Marshal(u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecBzip2)
+	}
+
+	if u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappy != nil {
+		return json.Marshal(u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappy)
+	}
+
+	if u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflate != nil {
+		return json.Marshal(u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecDeflate)
 	}
 
 	if u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecXz != nil {
@@ -851,10 +855,6 @@ func (u DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodec) MarshalJ
 
 	if u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecZstandard != nil {
 		return json.Marshal(u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecZstandard)
-	}
-
-	if u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappy != nil {
-		return json.Marshal(u.DestinationGcsUpdateOutputFormatAvroApacheAvroCompressionCodecSnappy)
 	}
 
 	return nil, nil
@@ -957,21 +957,21 @@ func (u *DestinationGcsUpdateOutputFormat) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	destinationGcsUpdateOutputFormatCSVCommaSeparatedValues := new(DestinationGcsUpdateOutputFormatCSVCommaSeparatedValues)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationGcsUpdateOutputFormatCSVCommaSeparatedValues); err == nil {
-		u.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValues = destinationGcsUpdateOutputFormatCSVCommaSeparatedValues
-		u.Type = DestinationGcsUpdateOutputFormatTypeDestinationGcsUpdateOutputFormatCSVCommaSeparatedValues
-		return nil
-	}
-
 	destinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON := new(DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
 	if err := d.Decode(&destinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON); err == nil {
 		u.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON = destinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON
 		u.Type = DestinationGcsUpdateOutputFormatTypeDestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON
+		return nil
+	}
+
+	destinationGcsUpdateOutputFormatCSVCommaSeparatedValues := new(DestinationGcsUpdateOutputFormatCSVCommaSeparatedValues)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&destinationGcsUpdateOutputFormatCSVCommaSeparatedValues); err == nil {
+		u.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValues = destinationGcsUpdateOutputFormatCSVCommaSeparatedValues
+		u.Type = DestinationGcsUpdateOutputFormatTypeDestinationGcsUpdateOutputFormatCSVCommaSeparatedValues
 		return nil
 	}
 
@@ -992,12 +992,12 @@ func (u DestinationGcsUpdateOutputFormat) MarshalJSON() ([]byte, error) {
 		return json.Marshal(u.DestinationGcsUpdateOutputFormatAvroApacheAvro)
 	}
 
-	if u.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValues != nil {
-		return json.Marshal(u.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValues)
-	}
-
 	if u.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON != nil {
 		return json.Marshal(u.DestinationGcsUpdateOutputFormatJSONLinesNewlineDelimitedJSON)
+	}
+
+	if u.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValues != nil {
+		return json.Marshal(u.DestinationGcsUpdateOutputFormatCSVCommaSeparatedValues)
 	}
 
 	if u.DestinationGcsUpdateOutputFormatParquetColumnarStorage != nil {

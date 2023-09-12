@@ -18,9 +18,9 @@ resource "airbyte_source_lemlist" "my_source_lemlist" {
     api_key     = "...my_api_key..."
     source_type = "lemlist"
   }
-  name         = "Erika Jaskolski Jr."
+  name         = "Gene Herman"
   secret_id    = "...my_secret_id..."
-  workspace_id = "313b3e50-44f6-45fe-b2dc-4077d0cc3f40"
+  workspace_id = "72dc4077-d0cc-43f4-88ef-c15ceb4d6e1e"
 }
 ```
 
@@ -47,7 +47,7 @@ resource "airbyte_source_lemlist" "my_source_lemlist" {
 
 Required:
 
-- `api_key` (String) Lemlist API key.
+- `api_key` (String) Lemlist API key,
 - `source_type` (String) must be one of ["lemlist"]
 
 

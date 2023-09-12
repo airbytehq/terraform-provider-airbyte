@@ -20,9 +20,9 @@ resource "airbyte_source_aircall" "my_source_aircall" {
     source_type = "aircall"
     start_date  = "2022-03-01T00:00:00.000Z"
   }
-  name         = "Leslie Waters"
+  name         = "Martha Bashirian"
   secret_id    = "...my_secret_id..."
-  workspace_id = "e4be0560-13f5-49da-b57a-59ecfef66ef1"
+  workspace_id = "1e96349e-1cf9-4e06-a3a4-37000ae6b6bc"
 }
 ```
 

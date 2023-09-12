@@ -21,14 +21,8 @@ resource "airbyte_source_postgres" "my_source_postgres" {
     password        = "...my_password..."
     port            = 5432
     replication_method = {
-      source_postgres_replication_method_logical_replication_cdc_ = {
-        initial_waiting_seconds = 4
-        lsn_commit_behaviour    = "While reading Data"
-        method                  = "CDC"
-        plugin                  = "pgoutput"
-        publication             = "...my_publication..."
-        queue_size              = 4
-        replication_slot        = "...my_replication_slot..."
+      source_postgres_update_method_detect_changes_with_xmin_system_column = {
+        method = "Xmin"
       }
     }
     schemas = [
@@ -45,11 +39,11 @@ resource "airbyte_source_postgres" "my_source_postgres" {
         tunnel_method = "NO_TUNNEL"
       }
     }
-    username = "Kendrick52"
+    username = "Edwardo.Streich"
   }
-  name         = "Vivian Dietrich"
+  name         = "Roosevelt Cummings"
   secret_id    = "...my_secret_id..."
-  workspace_id = "10006bef-4921-4ec2-853b-749366ac8ee0"
+  workspace_id = "480632b9-954b-46fa-a206-369828553cb1"
 }
 ```
 
@@ -86,7 +80,7 @@ Optional:
 
 - `jdbc_url_params` (String) Additional properties to pass to the JDBC URL string when connecting to the database formatted as 'key=value' pairs separated by the symbol '&'. (Eg. key1=value1&key2=value2&key3=value3). For more information read about <a href="https://jdbc.postgresql.org/documentation/head/connect.html">JDBC URL parameters</a>.
 - `password` (String) Password associated with the username.
-- `replication_method` (Attributes) Replication method for extracting data from the database. (see [below for nested schema](#nestedatt--configuration--replication_method))
+- `replication_method` (Attributes) Configures how data is extracted from the database. (see [below for nested schema](#nestedatt--configuration--replication_method))
 - `schemas` (List of String) The list of schemas (case sensitive) to sync from. Defaults to public.
 - `ssl_mode` (Attributes) SSL connection modes. 
   Read more <a href="https://jdbc.postgresql.org/documentation/head/ssl-client.html"> in the docs</a>. (see [below for nested schema](#nestedatt--configuration--ssl_mode))
@@ -97,15 +91,23 @@ Optional:
 
 Optional:
 
-- `source_postgres_replication_method_logical_replication_cdc` (Attributes) Logical replication uses the Postgres write-ahead log (WAL) to detect inserts, updates, and deletes. This needs to be configured on the source database itself. Only available on Postgres 10 and above. Read the <a href="https://docs.airbyte.com/integrations/sources/postgres">docs</a>. (see [below for nested schema](#nestedatt--configuration--replication_method--source_postgres_replication_method_logical_replication_cdc))
-- `source_postgres_replication_method_standard` (Attributes) Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally. (see [below for nested schema](#nestedatt--configuration--replication_method--source_postgres_replication_method_standard))
-- `source_postgres_replication_method_standard_xmin` (Attributes) Xmin replication requires no setup on the DB side but will not be able to represent deletions incrementally. (see [below for nested schema](#nestedatt--configuration--replication_method--source_postgres_replication_method_standard_xmin))
-- `source_postgres_update_replication_method_logical_replication_cdc` (Attributes) Logical replication uses the Postgres write-ahead log (WAL) to detect inserts, updates, and deletes. This needs to be configured on the source database itself. Only available on Postgres 10 and above. Read the <a href="https://docs.airbyte.com/integrations/sources/postgres">docs</a>. (see [below for nested schema](#nestedatt--configuration--replication_method--source_postgres_update_replication_method_logical_replication_cdc))
-- `source_postgres_update_replication_method_standard` (Attributes) Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally. (see [below for nested schema](#nestedatt--configuration--replication_method--source_postgres_update_replication_method_standard))
-- `source_postgres_update_replication_method_standard_xmin` (Attributes) Xmin replication requires no setup on the DB side but will not be able to represent deletions incrementally. (see [below for nested schema](#nestedatt--configuration--replication_method--source_postgres_update_replication_method_standard_xmin))
+- `source_postgres_update_method_detect_changes_with_xmin_system_column` (Attributes) <i>Recommended</i> - Incrementally reads new inserts and updates via Postgres <a href="https://docs.airbyte.com/integrations/sources/postgres/#xmin">Xmin system column</a>. Only recommended for tables up to 500GB. (see [below for nested schema](#nestedatt--configuration--replication_method--source_postgres_update_method_detect_changes_with_xmin_system_column))
+- `source_postgres_update_method_read_changes_using_write_ahead_log_cdc` (Attributes) <i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the Postgres <a href="https://docs.airbyte.com/integrations/sources/postgres/#cdc">write-ahead log (WAL)</a>. This needs to be configured on the source database itself. Recommended for tables of any size. (see [below for nested schema](#nestedatt--configuration--replication_method--source_postgres_update_method_read_changes_using_write_ahead_log_cdc))
+- `source_postgres_update_method_scan_changes_with_user_defined_cursor` (Attributes) Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at). (see [below for nested schema](#nestedatt--configuration--replication_method--source_postgres_update_method_scan_changes_with_user_defined_cursor))
+- `source_postgres_update_update_method_detect_changes_with_xmin_system_column` (Attributes) <i>Recommended</i> - Incrementally reads new inserts and updates via Postgres <a href="https://docs.airbyte.com/integrations/sources/postgres/#xmin">Xmin system column</a>. Only recommended for tables up to 500GB. (see [below for nested schema](#nestedatt--configuration--replication_method--source_postgres_update_update_method_detect_changes_with_xmin_system_column))
+- `source_postgres_update_update_method_read_changes_using_write_ahead_log_cdc` (Attributes) <i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the Postgres <a href="https://docs.airbyte.com/integrations/sources/postgres/#cdc">write-ahead log (WAL)</a>. This needs to be configured on the source database itself. Recommended for tables of any size. (see [below for nested schema](#nestedatt--configuration--replication_method--source_postgres_update_update_method_read_changes_using_write_ahead_log_cdc))
+- `source_postgres_update_update_method_scan_changes_with_user_defined_cursor` (Attributes) Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at). (see [below for nested schema](#nestedatt--configuration--replication_method--source_postgres_update_update_method_scan_changes_with_user_defined_cursor))
 
-<a id="nestedatt--configuration--replication_method--source_postgres_replication_method_logical_replication_cdc"></a>
-### Nested Schema for `configuration.replication_method.source_postgres_replication_method_logical_replication_cdc`
+<a id="nestedatt--configuration--replication_method--source_postgres_update_method_detect_changes_with_xmin_system_column"></a>
+### Nested Schema for `configuration.replication_method.source_postgres_update_method_detect_changes_with_xmin_system_column`
+
+Required:
+
+- `method` (String) must be one of ["Xmin"]
+
+
+<a id="nestedatt--configuration--replication_method--source_postgres_update_method_read_changes_using_write_ahead_log_cdc"></a>
+### Nested Schema for `configuration.replication_method.source_postgres_update_method_read_changes_using_write_ahead_log_cdc`
 
 Required:
 
@@ -124,24 +126,24 @@ A logical decoding plugin installed on the PostgreSQL server.
 - `queue_size` (Number) The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful.
 
 
-<a id="nestedatt--configuration--replication_method--source_postgres_replication_method_standard"></a>
-### Nested Schema for `configuration.replication_method.source_postgres_replication_method_standard`
+<a id="nestedatt--configuration--replication_method--source_postgres_update_method_scan_changes_with_user_defined_cursor"></a>
+### Nested Schema for `configuration.replication_method.source_postgres_update_method_scan_changes_with_user_defined_cursor`
 
 Required:
 
 - `method` (String) must be one of ["Standard"]
 
 
-<a id="nestedatt--configuration--replication_method--source_postgres_replication_method_standard_xmin"></a>
-### Nested Schema for `configuration.replication_method.source_postgres_replication_method_standard_xmin`
+<a id="nestedatt--configuration--replication_method--source_postgres_update_update_method_detect_changes_with_xmin_system_column"></a>
+### Nested Schema for `configuration.replication_method.source_postgres_update_update_method_detect_changes_with_xmin_system_column`
 
 Required:
 
 - `method` (String) must be one of ["Xmin"]
 
 
-<a id="nestedatt--configuration--replication_method--source_postgres_update_replication_method_logical_replication_cdc"></a>
-### Nested Schema for `configuration.replication_method.source_postgres_update_replication_method_logical_replication_cdc`
+<a id="nestedatt--configuration--replication_method--source_postgres_update_update_method_read_changes_using_write_ahead_log_cdc"></a>
+### Nested Schema for `configuration.replication_method.source_postgres_update_update_method_read_changes_using_write_ahead_log_cdc`
 
 Required:
 
@@ -160,20 +162,12 @@ A logical decoding plugin installed on the PostgreSQL server.
 - `queue_size` (Number) The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful.
 
 
-<a id="nestedatt--configuration--replication_method--source_postgres_update_replication_method_standard"></a>
-### Nested Schema for `configuration.replication_method.source_postgres_update_replication_method_standard`
+<a id="nestedatt--configuration--replication_method--source_postgres_update_update_method_scan_changes_with_user_defined_cursor"></a>
+### Nested Schema for `configuration.replication_method.source_postgres_update_update_method_scan_changes_with_user_defined_cursor`
 
 Required:
 
 - `method` (String) must be one of ["Standard"]
-
-
-<a id="nestedatt--configuration--replication_method--source_postgres_update_replication_method_standard_xmin"></a>
-### Nested Schema for `configuration.replication_method.source_postgres_update_replication_method_standard_xmin`
-
-Required:
-
-- `method` (String) must be one of ["Xmin"]
 
 
 

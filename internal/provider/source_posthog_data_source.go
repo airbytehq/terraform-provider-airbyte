@@ -61,6 +61,10 @@ func (r *SourcePosthogDataSource) Schema(ctx context.Context, req datasource.Sch
 						Computed:    true,
 						Description: `Base PostHog url. Defaults to PostHog Cloud (https://app.posthog.com).`,
 					},
+					"events_time_step": schema.Int64Attribute{
+						Computed:    true,
+						Description: `Set lower value in case of failing long running sync of events stream.`,
+					},
 					"source_type": schema.StringAttribute{
 						Computed: true,
 						Validators: []validator.String{

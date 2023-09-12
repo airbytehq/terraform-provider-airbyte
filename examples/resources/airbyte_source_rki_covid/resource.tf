@@ -3,7 +3,7 @@ resource "airbyte_source_rki_covid" "my_source_rkicovid" {
     source_type = "rki-covid"
     start_date  = "...my_start_date..."
   }
-  name         = "Diana Bogisich"
+  name         = "Penny Morissette"
   secret_id    = "...my_secret_id..."
-  workspace_id = "edc046bc-5163-4bbc-a492-27c42c22c553"
+  workspace_id = "7ef807aa-e03f-433c-a79f-b9de4032ba26"
 }

@@ -113,15 +113,6 @@ func CreateSourceAirtableUpdateAuthenticationSourceAirtableUpdateAuthenticationP
 func (u *SourceAirtableUpdateAuthentication) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceAirtableUpdateAuthenticationOAuth20 := new(SourceAirtableUpdateAuthenticationOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceAirtableUpdateAuthenticationOAuth20); err == nil {
-		u.SourceAirtableUpdateAuthenticationOAuth20 = sourceAirtableUpdateAuthenticationOAuth20
-		u.Type = SourceAirtableUpdateAuthenticationTypeSourceAirtableUpdateAuthenticationOAuth20
-		return nil
-	}
-
 	sourceAirtableUpdateAuthenticationPersonalAccessToken := new(SourceAirtableUpdateAuthenticationPersonalAccessToken)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -131,16 +122,25 @@ func (u *SourceAirtableUpdateAuthentication) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	sourceAirtableUpdateAuthenticationOAuth20 := new(SourceAirtableUpdateAuthenticationOAuth20)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceAirtableUpdateAuthenticationOAuth20); err == nil {
+		u.SourceAirtableUpdateAuthenticationOAuth20 = sourceAirtableUpdateAuthenticationOAuth20
+		u.Type = SourceAirtableUpdateAuthenticationTypeSourceAirtableUpdateAuthenticationOAuth20
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceAirtableUpdateAuthentication) MarshalJSON() ([]byte, error) {
-	if u.SourceAirtableUpdateAuthenticationOAuth20 != nil {
-		return json.Marshal(u.SourceAirtableUpdateAuthenticationOAuth20)
-	}
-
 	if u.SourceAirtableUpdateAuthenticationPersonalAccessToken != nil {
 		return json.Marshal(u.SourceAirtableUpdateAuthenticationPersonalAccessToken)
+	}
+
+	if u.SourceAirtableUpdateAuthenticationOAuth20 != nil {
+		return json.Marshal(u.SourceAirtableUpdateAuthenticationOAuth20)
 	}
 
 	return nil, nil

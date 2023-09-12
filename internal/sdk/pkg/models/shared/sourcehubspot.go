@@ -115,15 +115,6 @@ func CreateSourceHubspotAuthenticationSourceHubspotAuthenticationPrivateApp(sour
 func (u *SourceHubspotAuthentication) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceHubspotAuthenticationOAuth := new(SourceHubspotAuthenticationOAuth)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceHubspotAuthenticationOAuth); err == nil {
-		u.SourceHubspotAuthenticationOAuth = sourceHubspotAuthenticationOAuth
-		u.Type = SourceHubspotAuthenticationTypeSourceHubspotAuthenticationOAuth
-		return nil
-	}
-
 	sourceHubspotAuthenticationPrivateApp := new(SourceHubspotAuthenticationPrivateApp)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -133,16 +124,25 @@ func (u *SourceHubspotAuthentication) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	sourceHubspotAuthenticationOAuth := new(SourceHubspotAuthenticationOAuth)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceHubspotAuthenticationOAuth); err == nil {
+		u.SourceHubspotAuthenticationOAuth = sourceHubspotAuthenticationOAuth
+		u.Type = SourceHubspotAuthenticationTypeSourceHubspotAuthenticationOAuth
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceHubspotAuthentication) MarshalJSON() ([]byte, error) {
-	if u.SourceHubspotAuthenticationOAuth != nil {
-		return json.Marshal(u.SourceHubspotAuthenticationOAuth)
-	}
-
 	if u.SourceHubspotAuthenticationPrivateApp != nil {
 		return json.Marshal(u.SourceHubspotAuthenticationPrivateApp)
+	}
+
+	if u.SourceHubspotAuthenticationOAuth != nil {
+		return json.Marshal(u.SourceHubspotAuthenticationOAuth)
 	}
 
 	return nil, nil

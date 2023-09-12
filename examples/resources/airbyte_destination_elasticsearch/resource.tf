@@ -10,8 +10,8 @@ resource "airbyte_destination_elasticsearch" "my_destination_elasticsearch" {
     ca_certificate   = "...my_ca_certificate..."
     destination_type = "elasticsearch"
     endpoint         = "...my_endpoint..."
-    upsert           = false
+    upsert           = true
   }
-  name         = "Dr. Randolph McDermott"
-  workspace_id = "443a1108-e0ad-4cf4-b921-879fce953f73"
+  name         = "Carolyn Rohan"
+  workspace_id = "90f3443a-1108-4e0a-9cf4-b921879fce95"
 }

@@ -4,7 +4,7 @@ resource "airbyte_source_datascope" "my_source_datascope" {
     source_type = "datascope"
     start_date  = "dd/mm/YYYY HH:MM"
   }
-  name         = "Amy Lynch"
+  name         = "Danny Bahringer"
   secret_id    = "...my_secret_id..."
-  workspace_id = "4fefa9c9-5f2e-4ac5-965d-307cfee81206"
+  workspace_id = "fee81206-e281-43fa-8a41-c480d3f2132a"
 }

@@ -115,15 +115,6 @@ func CreateSourceTiktokMarketingAuthenticationMethodSourceTiktokMarketingAuthent
 func (u *SourceTiktokMarketingAuthenticationMethod) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceTiktokMarketingAuthenticationMethodOAuth20 := new(SourceTiktokMarketingAuthenticationMethodOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceTiktokMarketingAuthenticationMethodOAuth20); err == nil {
-		u.SourceTiktokMarketingAuthenticationMethodOAuth20 = sourceTiktokMarketingAuthenticationMethodOAuth20
-		u.Type = SourceTiktokMarketingAuthenticationMethodTypeSourceTiktokMarketingAuthenticationMethodOAuth20
-		return nil
-	}
-
 	sourceTiktokMarketingAuthenticationMethodSandboxAccessToken := new(SourceTiktokMarketingAuthenticationMethodSandboxAccessToken)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -133,16 +124,25 @@ func (u *SourceTiktokMarketingAuthenticationMethod) UnmarshalJSON(data []byte) e
 		return nil
 	}
 
+	sourceTiktokMarketingAuthenticationMethodOAuth20 := new(SourceTiktokMarketingAuthenticationMethodOAuth20)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceTiktokMarketingAuthenticationMethodOAuth20); err == nil {
+		u.SourceTiktokMarketingAuthenticationMethodOAuth20 = sourceTiktokMarketingAuthenticationMethodOAuth20
+		u.Type = SourceTiktokMarketingAuthenticationMethodTypeSourceTiktokMarketingAuthenticationMethodOAuth20
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceTiktokMarketingAuthenticationMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceTiktokMarketingAuthenticationMethodOAuth20 != nil {
-		return json.Marshal(u.SourceTiktokMarketingAuthenticationMethodOAuth20)
-	}
-
 	if u.SourceTiktokMarketingAuthenticationMethodSandboxAccessToken != nil {
 		return json.Marshal(u.SourceTiktokMarketingAuthenticationMethodSandboxAccessToken)
+	}
+
+	if u.SourceTiktokMarketingAuthenticationMethodOAuth20 != nil {
+		return json.Marshal(u.SourceTiktokMarketingAuthenticationMethodOAuth20)
 	}
 
 	return nil, nil

@@ -156,15 +156,6 @@ func CreateDestinationAzureBlobStorageOutputFormatDestinationAzureBlobStorageOut
 func (u *DestinationAzureBlobStorageOutputFormat) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	destinationAzureBlobStorageOutputFormatCSVCommaSeparatedValues := new(DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValues)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationAzureBlobStorageOutputFormatCSVCommaSeparatedValues); err == nil {
-		u.DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValues = destinationAzureBlobStorageOutputFormatCSVCommaSeparatedValues
-		u.Type = DestinationAzureBlobStorageOutputFormatTypeDestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValues
-		return nil
-	}
-
 	destinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON := new(DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -174,16 +165,25 @@ func (u *DestinationAzureBlobStorageOutputFormat) UnmarshalJSON(data []byte) err
 		return nil
 	}
 
+	destinationAzureBlobStorageOutputFormatCSVCommaSeparatedValues := new(DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValues)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&destinationAzureBlobStorageOutputFormatCSVCommaSeparatedValues); err == nil {
+		u.DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValues = destinationAzureBlobStorageOutputFormatCSVCommaSeparatedValues
+		u.Type = DestinationAzureBlobStorageOutputFormatTypeDestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValues
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u DestinationAzureBlobStorageOutputFormat) MarshalJSON() ([]byte, error) {
-	if u.DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValues != nil {
-		return json.Marshal(u.DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValues)
-	}
-
 	if u.DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON != nil {
 		return json.Marshal(u.DestinationAzureBlobStorageOutputFormatJSONLinesNewlineDelimitedJSON)
+	}
+
+	if u.DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValues != nil {
+		return json.Marshal(u.DestinationAzureBlobStorageOutputFormatCSVCommaSeparatedValues)
 	}
 
 	return nil, nil

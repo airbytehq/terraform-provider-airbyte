@@ -24,17 +24,16 @@ resource "airbyte_destination_snowflake" "my_destination_snowflake" {
     }
     database         = "AIRBYTE_DATABASE"
     destination_type = "snowflake"
-    host             = "accountname.us-east-2.aws.snowflakecomputing.com"
+    host             = "accountname.snowflakecomputing.com"
     jdbc_url_params  = "...my_jdbc_url_params..."
     raw_data_schema  = "...my_raw_data_schema..."
     role             = "AIRBYTE_ROLE"
     schema           = "AIRBYTE_SCHEMA"
-    use_1s1t_format  = true
     username         = "AIRBYTE_USER"
     warehouse        = "AIRBYTE_WAREHOUSE"
   }
-  name         = "Dr. Terrell Stanton"
-  workspace_id = "fe6c632c-a3ae-4d01-9799-6312fde04771"
+  name         = "Shaun Osinski"
+  workspace_id = "851d6c64-5b08-4b61-891b-aa0fe1ade008"
 }
 ```
 
@@ -69,8 +68,7 @@ Optional:
 
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
 - `jdbc_url_params` (String) Enter the additional properties to pass to the JDBC URL string when connecting to the database (formatted as key=value pairs separated by the symbol &). Example: key1=value1&key2=value2&key3=value3
-- `raw_data_schema` (String) (Beta) The schema to write raw tables into
-- `use_1s1t_format` (Boolean) (Beta) Use <a href="https://github.com/airbytehq/airbyte/issues/26028" target="_blank">Destinations V2</a>. Contact Airbyte Support to participate in the beta program.
+- `raw_data_schema` (String) The schema to write raw tables into
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`

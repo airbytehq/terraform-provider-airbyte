@@ -34,8 +34,12 @@ func (e *SourceIntercomIntercom) UnmarshalJSON(data []byte) error {
 
 type SourceIntercom struct {
 	// Access token for making authenticated requests. See the <a href="https://developers.intercom.com/building-apps/docs/authentication-types#how-to-get-your-access-token">Intercom docs</a> for more information.
-	AccessToken string                 `json:"access_token"`
-	SourceType  SourceIntercomIntercom `json:"sourceType"`
+	AccessToken string `json:"access_token"`
+	// Client Id for your Intercom application.
+	ClientID *string `json:"client_id,omitempty"`
+	// Client Secret for your Intercom application.
+	ClientSecret *string                `json:"client_secret,omitempty"`
+	SourceType   SourceIntercomIntercom `json:"sourceType"`
 	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
 }

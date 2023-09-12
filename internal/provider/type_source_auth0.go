@@ -8,4 +8,5 @@ type SourceAuth0 struct {
 	BaseURL     types.String                    `tfsdk:"base_url"`
 	Credentials SourceAuth0AuthenticationMethod `tfsdk:"credentials"`
 	SourceType  types.String                    `tfsdk:"source_type"`
+	StartDate   types.String                    `tfsdk:"start_date"`
 }

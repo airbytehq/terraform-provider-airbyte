@@ -9,7 +9,7 @@ resource "airbyte_source_salesloft" "my_source_salesloft" {
     source_type = "salesloft"
     start_date  = "2020-11-16T00:00:00Z"
   }
-  name         = "Amelia Simonis"
+  name         = "Lynda Dicki"
   secret_id    = "...my_secret_id..."
-  workspace_id = "b41d6124-3531-4870-8f68-b03ad421bd43"
+  workspace_id = "2c1aa010-e9aa-4c2e-9135-586d18f9f97a"
 }

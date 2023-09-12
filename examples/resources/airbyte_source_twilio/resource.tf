@@ -6,7 +6,7 @@ resource "airbyte_source_twilio" "my_source_twilio" {
     source_type     = "twilio"
     start_date      = "2020-10-01T00:00:00Z"
   }
-  name         = "Oliver Kautzer"
+  name         = "Andre Sporer"
   secret_id    = "...my_secret_id..."
-  workspace_id = "3b90a1b8-c95b-4e12-94b7-39f4fe77210d"
+  workspace_id = "9e5635b3-3bc0-4f97-8c42-fc9f4844225e"
 }

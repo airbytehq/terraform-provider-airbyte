@@ -5,10 +5,10 @@ resource "airbyte_source_zuora" "my_source_zuora" {
     data_query      = "Unlimited"
     source_type     = "zuora"
     start_date      = "...my_start_date..."
-    tenant_endpoint = "EU API Sandbox"
-    window_in_days  = "1"
+    tenant_endpoint = "US Performance Test"
+    window_in_days  = "200"
   }
-  name         = "Carroll Grant"
+  name         = "Joan Bednar"
   secret_id    = "...my_secret_id..."
-  workspace_id = "8d0358a8-2c80-48fe-a751-a2047c0449e1"
+  workspace_id = "a44707bf-375b-4442-8282-1fdb2f69e592"
 }

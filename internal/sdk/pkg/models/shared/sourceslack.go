@@ -111,15 +111,6 @@ func CreateSourceSlackAuthenticationMechanismSourceSlackAuthenticationMechanismA
 func (u *SourceSlackAuthenticationMechanism) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceSlackAuthenticationMechanismSignInViaSlackOAuth := new(SourceSlackAuthenticationMechanismSignInViaSlackOAuth)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceSlackAuthenticationMechanismSignInViaSlackOAuth); err == nil {
-		u.SourceSlackAuthenticationMechanismSignInViaSlackOAuth = sourceSlackAuthenticationMechanismSignInViaSlackOAuth
-		u.Type = SourceSlackAuthenticationMechanismTypeSourceSlackAuthenticationMechanismSignInViaSlackOAuth
-		return nil
-	}
-
 	sourceSlackAuthenticationMechanismAPIToken := new(SourceSlackAuthenticationMechanismAPIToken)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -129,16 +120,25 @@ func (u *SourceSlackAuthenticationMechanism) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	sourceSlackAuthenticationMechanismSignInViaSlackOAuth := new(SourceSlackAuthenticationMechanismSignInViaSlackOAuth)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceSlackAuthenticationMechanismSignInViaSlackOAuth); err == nil {
+		u.SourceSlackAuthenticationMechanismSignInViaSlackOAuth = sourceSlackAuthenticationMechanismSignInViaSlackOAuth
+		u.Type = SourceSlackAuthenticationMechanismTypeSourceSlackAuthenticationMechanismSignInViaSlackOAuth
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceSlackAuthenticationMechanism) MarshalJSON() ([]byte, error) {
-	if u.SourceSlackAuthenticationMechanismSignInViaSlackOAuth != nil {
-		return json.Marshal(u.SourceSlackAuthenticationMechanismSignInViaSlackOAuth)
-	}
-
 	if u.SourceSlackAuthenticationMechanismAPIToken != nil {
 		return json.Marshal(u.SourceSlackAuthenticationMechanismAPIToken)
+	}
+
+	if u.SourceSlackAuthenticationMechanismSignInViaSlackOAuth != nil {
+		return json.Marshal(u.SourceSlackAuthenticationMechanismSignInViaSlackOAuth)
 	}
 
 	return nil, nil

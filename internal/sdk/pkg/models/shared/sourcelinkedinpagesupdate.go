@@ -108,15 +108,6 @@ func CreateSourceLinkedinPagesUpdateAuthenticationSourceLinkedinPagesUpdateAuthe
 func (u *SourceLinkedinPagesUpdateAuthentication) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceLinkedinPagesUpdateAuthenticationOAuth20 := new(SourceLinkedinPagesUpdateAuthenticationOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceLinkedinPagesUpdateAuthenticationOAuth20); err == nil {
-		u.SourceLinkedinPagesUpdateAuthenticationOAuth20 = sourceLinkedinPagesUpdateAuthenticationOAuth20
-		u.Type = SourceLinkedinPagesUpdateAuthenticationTypeSourceLinkedinPagesUpdateAuthenticationOAuth20
-		return nil
-	}
-
 	sourceLinkedinPagesUpdateAuthenticationAccessToken := new(SourceLinkedinPagesUpdateAuthenticationAccessToken)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -126,16 +117,25 @@ func (u *SourceLinkedinPagesUpdateAuthentication) UnmarshalJSON(data []byte) err
 		return nil
 	}
 
+	sourceLinkedinPagesUpdateAuthenticationOAuth20 := new(SourceLinkedinPagesUpdateAuthenticationOAuth20)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceLinkedinPagesUpdateAuthenticationOAuth20); err == nil {
+		u.SourceLinkedinPagesUpdateAuthenticationOAuth20 = sourceLinkedinPagesUpdateAuthenticationOAuth20
+		u.Type = SourceLinkedinPagesUpdateAuthenticationTypeSourceLinkedinPagesUpdateAuthenticationOAuth20
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceLinkedinPagesUpdateAuthentication) MarshalJSON() ([]byte, error) {
-	if u.SourceLinkedinPagesUpdateAuthenticationOAuth20 != nil {
-		return json.Marshal(u.SourceLinkedinPagesUpdateAuthenticationOAuth20)
-	}
-
 	if u.SourceLinkedinPagesUpdateAuthenticationAccessToken != nil {
 		return json.Marshal(u.SourceLinkedinPagesUpdateAuthenticationAccessToken)
+	}
+
+	if u.SourceLinkedinPagesUpdateAuthenticationOAuth20 != nil {
+		return json.Marshal(u.SourceLinkedinPagesUpdateAuthenticationOAuth20)
 	}
 
 	return nil, nil

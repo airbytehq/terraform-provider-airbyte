@@ -44,5 +44,6 @@ Read-Only:
 - `clean` (Boolean) If set to true, only clean items will be downloaded from the dataset. See description of what clean means in <a href="https://docs.apify.com/api/v2#/reference/datasets/item-collection/get-items">Apify API docs</a>. If not sure, set clean to false.
 - `dataset_id` (String) ID of the dataset you would like to load to Airbyte.
 - `source_type` (String) must be one of ["apify-dataset"]
+- `token` (String) Your application's Client Secret. You can find this value on the <a href="https://console.apify.com/account/integrations">console integrations tab</a> after you login.
 
 

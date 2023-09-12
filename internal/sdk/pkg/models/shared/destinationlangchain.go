@@ -127,15 +127,6 @@ func CreateDestinationLangchainEmbeddingDestinationLangchainEmbeddingFake(destin
 func (u *DestinationLangchainEmbedding) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	destinationLangchainEmbeddingOpenAI := new(DestinationLangchainEmbeddingOpenAI)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationLangchainEmbeddingOpenAI); err == nil {
-		u.DestinationLangchainEmbeddingOpenAI = destinationLangchainEmbeddingOpenAI
-		u.Type = DestinationLangchainEmbeddingTypeDestinationLangchainEmbeddingOpenAI
-		return nil
-	}
-
 	destinationLangchainEmbeddingFake := new(DestinationLangchainEmbeddingFake)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -145,16 +136,25 @@ func (u *DestinationLangchainEmbedding) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	destinationLangchainEmbeddingOpenAI := new(DestinationLangchainEmbeddingOpenAI)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&destinationLangchainEmbeddingOpenAI); err == nil {
+		u.DestinationLangchainEmbeddingOpenAI = destinationLangchainEmbeddingOpenAI
+		u.Type = DestinationLangchainEmbeddingTypeDestinationLangchainEmbeddingOpenAI
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u DestinationLangchainEmbedding) MarshalJSON() ([]byte, error) {
-	if u.DestinationLangchainEmbeddingOpenAI != nil {
-		return json.Marshal(u.DestinationLangchainEmbeddingOpenAI)
-	}
-
 	if u.DestinationLangchainEmbeddingFake != nil {
 		return json.Marshal(u.DestinationLangchainEmbeddingFake)
+	}
+
+	if u.DestinationLangchainEmbeddingOpenAI != nil {
+		return json.Marshal(u.DestinationLangchainEmbeddingOpenAI)
 	}
 
 	return nil, nil
@@ -304,15 +304,6 @@ func CreateDestinationLangchainIndexingDestinationLangchainIndexingChromaLocalPe
 func (u *DestinationLangchainIndexing) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	destinationLangchainIndexingPinecone := new(DestinationLangchainIndexingPinecone)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationLangchainIndexingPinecone); err == nil {
-		u.DestinationLangchainIndexingPinecone = destinationLangchainIndexingPinecone
-		u.Type = DestinationLangchainIndexingTypeDestinationLangchainIndexingPinecone
-		return nil
-	}
-
 	destinationLangchainIndexingDocArrayHnswSearch := new(DestinationLangchainIndexingDocArrayHnswSearch)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -331,20 +322,29 @@ func (u *DestinationLangchainIndexing) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	destinationLangchainIndexingPinecone := new(DestinationLangchainIndexingPinecone)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&destinationLangchainIndexingPinecone); err == nil {
+		u.DestinationLangchainIndexingPinecone = destinationLangchainIndexingPinecone
+		u.Type = DestinationLangchainIndexingTypeDestinationLangchainIndexingPinecone
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u DestinationLangchainIndexing) MarshalJSON() ([]byte, error) {
-	if u.DestinationLangchainIndexingPinecone != nil {
-		return json.Marshal(u.DestinationLangchainIndexingPinecone)
-	}
-
 	if u.DestinationLangchainIndexingDocArrayHnswSearch != nil {
 		return json.Marshal(u.DestinationLangchainIndexingDocArrayHnswSearch)
 	}
 
 	if u.DestinationLangchainIndexingChromaLocalPersistance != nil {
 		return json.Marshal(u.DestinationLangchainIndexingChromaLocalPersistance)
+	}
+
+	if u.DestinationLangchainIndexingPinecone != nil {
+		return json.Marshal(u.DestinationLangchainIndexingPinecone)
 	}
 
 	return nil, nil

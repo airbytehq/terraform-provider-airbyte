@@ -7,7 +7,6 @@ import (
 	"fmt"
 )
 
-// JobStatusEnum - The Job status you want to filter by
 type JobStatusEnum string
 
 const (

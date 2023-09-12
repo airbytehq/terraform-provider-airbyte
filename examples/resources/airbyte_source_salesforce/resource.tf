@@ -4,18 +4,18 @@ resource "airbyte_source_salesforce" "my_source_salesforce" {
     client_id          = "...my_client_id..."
     client_secret      = "...my_client_secret..."
     force_use_bulk_api = true
-    is_sandbox         = true
+    is_sandbox         = false
     refresh_token      = "...my_refresh_token..."
     source_type        = "salesforce"
-    start_date         = "2021-07-25T00:00:00Z"
+    start_date         = "2021-07-25"
     streams_criteria = [
       {
-        criteria = "starts with"
+        criteria = "not contains"
         value    = "...my_value..."
       },
     ]
   }
-  name         = "Andy Paucek"
+  name         = "Gregg Boyer Sr."
   secret_id    = "...my_secret_id..."
-  workspace_id = "2e913558-6d18-4f9f-97a4-bfad2bf7d67c"
+  workspace_id = "ebde64bf-cc54-469d-8015-dfa796206bef"
 }

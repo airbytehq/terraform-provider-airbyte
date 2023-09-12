@@ -108,15 +108,6 @@ func CreateSourceMailchimpAuthenticationSourceMailchimpAuthenticationAPIKey(sour
 func (u *SourceMailchimpAuthentication) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceMailchimpAuthenticationOAuth20 := new(SourceMailchimpAuthenticationOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMailchimpAuthenticationOAuth20); err == nil {
-		u.SourceMailchimpAuthenticationOAuth20 = sourceMailchimpAuthenticationOAuth20
-		u.Type = SourceMailchimpAuthenticationTypeSourceMailchimpAuthenticationOAuth20
-		return nil
-	}
-
 	sourceMailchimpAuthenticationAPIKey := new(SourceMailchimpAuthenticationAPIKey)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -126,16 +117,25 @@ func (u *SourceMailchimpAuthentication) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	sourceMailchimpAuthenticationOAuth20 := new(SourceMailchimpAuthenticationOAuth20)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceMailchimpAuthenticationOAuth20); err == nil {
+		u.SourceMailchimpAuthenticationOAuth20 = sourceMailchimpAuthenticationOAuth20
+		u.Type = SourceMailchimpAuthenticationTypeSourceMailchimpAuthenticationOAuth20
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceMailchimpAuthentication) MarshalJSON() ([]byte, error) {
-	if u.SourceMailchimpAuthenticationOAuth20 != nil {
-		return json.Marshal(u.SourceMailchimpAuthenticationOAuth20)
-	}
-
 	if u.SourceMailchimpAuthenticationAPIKey != nil {
 		return json.Marshal(u.SourceMailchimpAuthenticationAPIKey)
+	}
+
+	if u.SourceMailchimpAuthenticationOAuth20 != nil {
+		return json.Marshal(u.SourceMailchimpAuthenticationOAuth20)
 	}
 
 	return nil, nil

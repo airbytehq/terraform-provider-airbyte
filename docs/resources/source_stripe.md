@@ -17,14 +17,14 @@ resource "airbyte_source_stripe" "my_source_stripe" {
   configuration = {
     account_id           = "...my_account_id..."
     client_secret        = "...my_client_secret..."
-    lookback_window_days = 3
+    lookback_window_days = 5
     slice_range          = 10
     source_type          = "stripe"
     start_date           = "2017-01-25T00:00:00Z"
   }
-  name         = "Bernice Schultz I"
+  name         = "Seth Nitzsche"
   secret_id    = "...my_secret_id..."
-  workspace_id = "e13a4823-1090-47bd-b54c-092bd734f024"
+  workspace_id = "63e3af3d-d9dd-4a33-9cd6-3483e4a7a98e"
 }
 ```
 
@@ -54,11 +54,11 @@ Required:
 - `account_id` (String) Your Stripe account ID (starts with 'acct_', find yours <a href="https://dashboard.stripe.com/settings/account">here</a>).
 - `client_secret` (String) Stripe API key (usually starts with 'sk_live_'; find yours <a href="https://dashboard.stripe.com/apikeys">here</a>).
 - `source_type` (String) must be one of ["stripe"]
-- `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Only data generated after this date will be replicated.
 
 Optional:
 
-- `lookback_window_days` (Number) When set, the connector will always re-export data from the past N days, where N is the value set here. This is useful if your data is frequently updated after creation. More info <a href="https://docs.airbyte.com/integrations/sources/stripe#requirements">here</a>
+- `lookback_window_days` (Number) When set, the connector will always re-export data from the past N days, where N is the value set here. This is useful if your data is frequently updated after creation. Applies only to streams that do not support event-based incremental syncs: CheckoutSessionLineItems,  Events, SetupAttempts, ShippingRates, BalanceTransactions, Files, FileLinks. More info <a href="https://docs.airbyte.com/integrations/sources/stripe#requirements">here</a>
 - `slice_range` (Number) The time increment used by the connector when requesting data from the Stripe API. The bigger the value is, the less requests will be made and faster the sync will be. On the other hand, the more seldom the state is persisted.
+- `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Only data generated after this date will be replicated.
 
 

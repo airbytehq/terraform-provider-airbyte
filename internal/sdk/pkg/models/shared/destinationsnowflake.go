@@ -153,12 +153,12 @@ func CreateDestinationSnowflakeAuthorizationMethodDestinationSnowflakeAuthorizat
 func (u *DestinationSnowflakeAuthorizationMethod) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	destinationSnowflakeAuthorizationMethodOAuth20 := new(DestinationSnowflakeAuthorizationMethodOAuth20)
+	destinationSnowflakeAuthorizationMethodUsernameAndPassword := new(DestinationSnowflakeAuthorizationMethodUsernameAndPassword)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationSnowflakeAuthorizationMethodOAuth20); err == nil {
-		u.DestinationSnowflakeAuthorizationMethodOAuth20 = destinationSnowflakeAuthorizationMethodOAuth20
-		u.Type = DestinationSnowflakeAuthorizationMethodTypeDestinationSnowflakeAuthorizationMethodOAuth20
+	if err := d.Decode(&destinationSnowflakeAuthorizationMethodUsernameAndPassword); err == nil {
+		u.DestinationSnowflakeAuthorizationMethodUsernameAndPassword = destinationSnowflakeAuthorizationMethodUsernameAndPassword
+		u.Type = DestinationSnowflakeAuthorizationMethodTypeDestinationSnowflakeAuthorizationMethodUsernameAndPassword
 		return nil
 	}
 
@@ -171,12 +171,12 @@ func (u *DestinationSnowflakeAuthorizationMethod) UnmarshalJSON(data []byte) err
 		return nil
 	}
 
-	destinationSnowflakeAuthorizationMethodUsernameAndPassword := new(DestinationSnowflakeAuthorizationMethodUsernameAndPassword)
+	destinationSnowflakeAuthorizationMethodOAuth20 := new(DestinationSnowflakeAuthorizationMethodOAuth20)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationSnowflakeAuthorizationMethodUsernameAndPassword); err == nil {
-		u.DestinationSnowflakeAuthorizationMethodUsernameAndPassword = destinationSnowflakeAuthorizationMethodUsernameAndPassword
-		u.Type = DestinationSnowflakeAuthorizationMethodTypeDestinationSnowflakeAuthorizationMethodUsernameAndPassword
+	if err := d.Decode(&destinationSnowflakeAuthorizationMethodOAuth20); err == nil {
+		u.DestinationSnowflakeAuthorizationMethodOAuth20 = destinationSnowflakeAuthorizationMethodOAuth20
+		u.Type = DestinationSnowflakeAuthorizationMethodTypeDestinationSnowflakeAuthorizationMethodOAuth20
 		return nil
 	}
 
@@ -184,16 +184,16 @@ func (u *DestinationSnowflakeAuthorizationMethod) UnmarshalJSON(data []byte) err
 }
 
 func (u DestinationSnowflakeAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.DestinationSnowflakeAuthorizationMethodOAuth20 != nil {
-		return json.Marshal(u.DestinationSnowflakeAuthorizationMethodOAuth20)
+	if u.DestinationSnowflakeAuthorizationMethodUsernameAndPassword != nil {
+		return json.Marshal(u.DestinationSnowflakeAuthorizationMethodUsernameAndPassword)
 	}
 
 	if u.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication != nil {
 		return json.Marshal(u.DestinationSnowflakeAuthorizationMethodKeyPairAuthentication)
 	}
 
-	if u.DestinationSnowflakeAuthorizationMethodUsernameAndPassword != nil {
-		return json.Marshal(u.DestinationSnowflakeAuthorizationMethodUsernameAndPassword)
+	if u.DestinationSnowflakeAuthorizationMethodOAuth20 != nil {
+		return json.Marshal(u.DestinationSnowflakeAuthorizationMethodOAuth20)
 	}
 
 	return nil, nil
@@ -232,14 +232,12 @@ type DestinationSnowflake struct {
 	Host string `json:"host"`
 	// Enter the additional properties to pass to the JDBC URL string when connecting to the database (formatted as key=value pairs separated by the symbol &). Example: key1=value1&key2=value2&key3=value3
 	JdbcURLParams *string `json:"jdbc_url_params,omitempty"`
-	// (Beta) The schema to write raw tables into
+	// The schema to write raw tables into
 	RawDataSchema *string `json:"raw_data_schema,omitempty"`
 	// Enter the <a href="https://docs.snowflake.com/en/user-guide/security-access-control-overview.html#roles">role</a> that you want to use to access Snowflake
 	Role string `json:"role"`
 	// Enter the name of the default <a href="https://docs.snowflake.com/en/sql-reference/ddl-database.html#database-schema-share-ddl">schema</a>
 	Schema string `json:"schema"`
-	// (Beta) Use <a href="https://github.com/airbytehq/airbyte/issues/26028" target="_blank">Destinations V2</a>. Contact Airbyte Support to participate in the beta program.
-	Use1s1tFormat *bool `json:"use_1s1t_format,omitempty"`
 	// Enter the name of the user you want to use to access the database
 	Username string `json:"username"`
 	// Enter the name of the <a href="https://docs.snowflake.com/en/user-guide/warehouses-overview.html#overview-of-warehouses">warehouse</a> that you want to sync data into

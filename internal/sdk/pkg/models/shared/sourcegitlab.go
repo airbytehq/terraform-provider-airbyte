@@ -113,15 +113,6 @@ func CreateSourceGitlabAuthorizationMethodSourceGitlabAuthorizationMethodPrivate
 func (u *SourceGitlabAuthorizationMethod) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceGitlabAuthorizationMethodOAuth20 := new(SourceGitlabAuthorizationMethodOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceGitlabAuthorizationMethodOAuth20); err == nil {
-		u.SourceGitlabAuthorizationMethodOAuth20 = sourceGitlabAuthorizationMethodOAuth20
-		u.Type = SourceGitlabAuthorizationMethodTypeSourceGitlabAuthorizationMethodOAuth20
-		return nil
-	}
-
 	sourceGitlabAuthorizationMethodPrivateToken := new(SourceGitlabAuthorizationMethodPrivateToken)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -131,16 +122,25 @@ func (u *SourceGitlabAuthorizationMethod) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	sourceGitlabAuthorizationMethodOAuth20 := new(SourceGitlabAuthorizationMethodOAuth20)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceGitlabAuthorizationMethodOAuth20); err == nil {
+		u.SourceGitlabAuthorizationMethodOAuth20 = sourceGitlabAuthorizationMethodOAuth20
+		u.Type = SourceGitlabAuthorizationMethodTypeSourceGitlabAuthorizationMethodOAuth20
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceGitlabAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceGitlabAuthorizationMethodOAuth20 != nil {
-		return json.Marshal(u.SourceGitlabAuthorizationMethodOAuth20)
-	}
-
 	if u.SourceGitlabAuthorizationMethodPrivateToken != nil {
 		return json.Marshal(u.SourceGitlabAuthorizationMethodPrivateToken)
+	}
+
+	if u.SourceGitlabAuthorizationMethodOAuth20 != nil {
+		return json.Marshal(u.SourceGitlabAuthorizationMethodOAuth20)
 	}
 
 	return nil, nil

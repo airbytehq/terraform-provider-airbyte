@@ -210,15 +210,6 @@ func CreateSourceZendeskSupportAuthenticationSourceZendeskSupportAuthenticationA
 func (u *SourceZendeskSupportAuthentication) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceZendeskSupportAuthenticationOAuth20 := new(SourceZendeskSupportAuthenticationOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceZendeskSupportAuthenticationOAuth20); err == nil {
-		u.SourceZendeskSupportAuthenticationOAuth20 = sourceZendeskSupportAuthenticationOAuth20
-		u.Type = SourceZendeskSupportAuthenticationTypeSourceZendeskSupportAuthenticationOAuth20
-		return nil
-	}
-
 	sourceZendeskSupportAuthenticationAPIToken := new(SourceZendeskSupportAuthenticationAPIToken)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -228,16 +219,25 @@ func (u *SourceZendeskSupportAuthentication) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	sourceZendeskSupportAuthenticationOAuth20 := new(SourceZendeskSupportAuthenticationOAuth20)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceZendeskSupportAuthenticationOAuth20); err == nil {
+		u.SourceZendeskSupportAuthenticationOAuth20 = sourceZendeskSupportAuthenticationOAuth20
+		u.Type = SourceZendeskSupportAuthenticationTypeSourceZendeskSupportAuthenticationOAuth20
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceZendeskSupportAuthentication) MarshalJSON() ([]byte, error) {
-	if u.SourceZendeskSupportAuthenticationOAuth20 != nil {
-		return json.Marshal(u.SourceZendeskSupportAuthenticationOAuth20)
-	}
-
 	if u.SourceZendeskSupportAuthenticationAPIToken != nil {
 		return json.Marshal(u.SourceZendeskSupportAuthenticationAPIToken)
+	}
+
+	if u.SourceZendeskSupportAuthenticationOAuth20 != nil {
+		return json.Marshal(u.SourceZendeskSupportAuthenticationOAuth20)
 	}
 
 	return nil, nil
@@ -274,7 +274,7 @@ type SourceZendeskSupport struct {
 	IgnorePagination *bool                              `json:"ignore_pagination,omitempty"`
 	SourceType       SourceZendeskSupportZendeskSupport `json:"sourceType"`
 	// The UTC date and time from which you'd like to replicate data, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
-	StartDate time.Time `json:"start_date"`
+	StartDate *time.Time `json:"start_date,omitempty"`
 	// This is your unique Zendesk subdomain that can be found in your account URL. For example, in https://MY_SUBDOMAIN.zendesk.com/, MY_SUBDOMAIN is the value of your subdomain.
 	Subdomain string `json:"subdomain"`
 }

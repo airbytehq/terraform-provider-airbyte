@@ -206,15 +206,6 @@ func CreateSourceRetentlyAuthenticationMechanismSourceRetentlyAuthenticationMech
 func (u *SourceRetentlyAuthenticationMechanism) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth := new(SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth); err == nil {
-		u.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth = sourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth
-		u.Type = SourceRetentlyAuthenticationMechanismTypeSourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth
-		return nil
-	}
-
 	sourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken := new(SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -224,16 +215,25 @@ func (u *SourceRetentlyAuthenticationMechanism) UnmarshalJSON(data []byte) error
 		return nil
 	}
 
+	sourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth := new(SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth); err == nil {
+		u.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth = sourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth
+		u.Type = SourceRetentlyAuthenticationMechanismTypeSourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceRetentlyAuthenticationMechanism) MarshalJSON() ([]byte, error) {
-	if u.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth != nil {
-		return json.Marshal(u.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth)
-	}
-
 	if u.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken != nil {
 		return json.Marshal(u.SourceRetentlyAuthenticationMechanismAuthenticateWithAPIToken)
+	}
+
+	if u.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth != nil {
+		return json.Marshal(u.SourceRetentlyAuthenticationMechanismAuthenticateViaRetentlyOAuth)
 	}
 
 	return nil, nil

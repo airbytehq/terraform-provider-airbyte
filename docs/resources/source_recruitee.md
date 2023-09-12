@@ -19,9 +19,9 @@ resource "airbyte_source_recruitee" "my_source_recruitee" {
     company_id  = 9
     source_type = "recruitee"
   }
-  name         = "Dr. Sean Williamson"
+  name         = "Mrs. Tina White"
   secret_id    = "...my_secret_id..."
-  workspace_id = "5eb4a8b6-74ee-45cf-818e-dc7f787e32e0"
+  workspace_id = "6bcf1525-58da-4a95-be6c-d02756c354aa"
 }
 ```
 

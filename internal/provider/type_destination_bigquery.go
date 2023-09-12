@@ -14,5 +14,4 @@ type DestinationBigquery struct {
 	ProjectID                  types.String                      `tfsdk:"project_id"`
 	RawDataDataset             types.String                      `tfsdk:"raw_data_dataset"`
 	TransformationPriority     types.String                      `tfsdk:"transformation_priority"`
-	Use1s1tFormat              types.Bool                        `tfsdk:"use_1s1t_format"`
 }

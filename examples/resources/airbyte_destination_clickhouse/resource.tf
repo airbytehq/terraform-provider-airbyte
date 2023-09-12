@@ -11,8 +11,8 @@ resource "airbyte_destination_clickhouse" "my_destination_clickhouse" {
         tunnel_method = "NO_TUNNEL"
       }
     }
-    username = "Jewell.Lesch64"
+    username = "Magdalena_Kuvalis"
   }
-  name         = "Wilma Mosciski"
-  workspace_id = "074ba446-9b6e-4214-9959-890afa563e25"
+  name         = "Sandy Huels"
+  workspace_id = "97074ba4-469b-46e2-9419-59890afa563e"
 }

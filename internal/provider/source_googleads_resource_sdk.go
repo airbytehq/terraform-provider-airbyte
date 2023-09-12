@@ -55,7 +55,12 @@ func (r *SourceGoogleAdsResourceModel) ToCreateSDKType() *shared.SourceGoogleAds
 		loginCustomerID = nil
 	}
 	sourceType := shared.SourceGoogleAdsGoogleAds(r.Configuration.SourceType.ValueString())
-	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
+	startDate := new(customTypes.Date)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
 	configuration := shared.SourceGoogleAds{
 		ConversionWindowDays: conversionWindowDays,
 		Credentials:          credentials,
@@ -134,7 +139,12 @@ func (r *SourceGoogleAdsResourceModel) ToUpdateSDKType() *shared.SourceGoogleAds
 	} else {
 		loginCustomerID = nil
 	}
-	startDate := customTypes.MustDateFromString(r.Configuration.StartDate.ValueString())
+	startDate := new(customTypes.Date)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		startDate = customTypes.MustNewDateFromString(r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
 	configuration := shared.SourceGoogleAdsUpdate{
 		ConversionWindowDays: conversionWindowDays,
 		Credentials:          credentials,

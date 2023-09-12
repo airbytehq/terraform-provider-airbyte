@@ -24,9 +24,9 @@ resource "airbyte_source_mailchimp" "my_source_mailchimp" {
     }
     source_type = "mailchimp"
   }
-  name         = "Faye Dicki"
+  name         = "Benny Williamson"
   secret_id    = "...my_secret_id..."
-  workspace_id = "aa69cd5f-bcf7-49da-98a7-822bf95894e6"
+  workspace_id = "da18a782-2bf9-4589-8e68-61adb55f9e5d"
 }
 ```
 

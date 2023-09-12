@@ -113,15 +113,6 @@ func CreateSourceTypeformAuthorizationMethodSourceTypeformAuthorizationMethodPri
 func (u *SourceTypeformAuthorizationMethod) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceTypeformAuthorizationMethodOAuth20 := new(SourceTypeformAuthorizationMethodOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceTypeformAuthorizationMethodOAuth20); err == nil {
-		u.SourceTypeformAuthorizationMethodOAuth20 = sourceTypeformAuthorizationMethodOAuth20
-		u.Type = SourceTypeformAuthorizationMethodTypeSourceTypeformAuthorizationMethodOAuth20
-		return nil
-	}
-
 	sourceTypeformAuthorizationMethodPrivateToken := new(SourceTypeformAuthorizationMethodPrivateToken)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -131,16 +122,25 @@ func (u *SourceTypeformAuthorizationMethod) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	sourceTypeformAuthorizationMethodOAuth20 := new(SourceTypeformAuthorizationMethodOAuth20)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceTypeformAuthorizationMethodOAuth20); err == nil {
+		u.SourceTypeformAuthorizationMethodOAuth20 = sourceTypeformAuthorizationMethodOAuth20
+		u.Type = SourceTypeformAuthorizationMethodTypeSourceTypeformAuthorizationMethodOAuth20
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceTypeformAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceTypeformAuthorizationMethodOAuth20 != nil {
-		return json.Marshal(u.SourceTypeformAuthorizationMethodOAuth20)
-	}
-
 	if u.SourceTypeformAuthorizationMethodPrivateToken != nil {
 		return json.Marshal(u.SourceTypeformAuthorizationMethodPrivateToken)
+	}
+
+	if u.SourceTypeformAuthorizationMethodOAuth20 != nil {
+		return json.Marshal(u.SourceTypeformAuthorizationMethodOAuth20)
 	}
 
 	return nil, nil

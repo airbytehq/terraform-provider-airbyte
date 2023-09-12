@@ -5,9 +5,8 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceZendeskSunshineAuthorizationMethodOAuth20 struct {
-	AccessToken          types.String `tfsdk:"access_token"`
-	AuthMethod           types.String `tfsdk:"auth_method"`
-	ClientID             types.String `tfsdk:"client_id"`
-	ClientSecret         types.String `tfsdk:"client_secret"`
-	AdditionalProperties types.String `tfsdk:"additional_properties"`
+	AccessToken  types.String `tfsdk:"access_token"`
+	AuthMethod   types.String `tfsdk:"auth_method"`
+	ClientID     types.String `tfsdk:"client_id"`
+	ClientSecret types.String `tfsdk:"client_secret"`
 }

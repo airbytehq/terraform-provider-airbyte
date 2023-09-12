@@ -9,6 +9,7 @@ type SourceAmazonAds struct {
 	ClientID          types.String   `tfsdk:"client_id"`
 	ClientSecret      types.String   `tfsdk:"client_secret"`
 	LookBackWindow    types.Int64    `tfsdk:"look_back_window"`
+	MarketplaceIds    []types.String `tfsdk:"marketplace_ids"`
 	Profiles          []types.Int64  `tfsdk:"profiles"`
 	RefreshToken      types.String   `tfsdk:"refresh_token"`
 	Region            types.String   `tfsdk:"region"`

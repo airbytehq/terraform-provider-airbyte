@@ -18,14 +18,17 @@ resource "airbyte_source_amazon_ads" "my_source_amazonads" {
     auth_type        = "oauth2.0"
     client_id        = "...my_client_id..."
     client_secret    = "...my_client_secret..."
-    look_back_window = 3
+    look_back_window = 10
+    marketplace_ids = [
+      "...",
+    ]
     profiles = [
       6,
     ]
     refresh_token = "...my_refresh_token..."
     region        = "EU"
     report_record_types = [
-      "asins_keywords",
+      "asins_targets",
     ]
     source_type = "amazon-ads"
     start_date  = "2022-10-10"
@@ -33,9 +36,9 @@ resource "airbyte_source_amazon_ads" "my_source_amazonads" {
       "archived",
     ]
   }
-  name         = "Evelyn Bode"
+  name         = "Dan Towne"
   secret_id    = "...my_secret_id..."
-  workspace_id = "2965bb8a-7202-4611-835e-139dbc2259b1"
+  workspace_id = "d02bae0b-e2d7-4822-99e3-ea4b5197f924"
 }
 ```
 
@@ -71,7 +74,8 @@ Optional:
 
 - `auth_type` (String) must be one of ["oauth2.0"]
 - `look_back_window` (Number) The amount of days to go back in time to get the updated data from Amazon Ads
-- `profiles` (List of Number) Profile IDs you want to fetch data for. See <a href="https://advertising.amazon.com/API/docs/en-us/concepts/authorization/profiles">docs</a> for more details.
+- `marketplace_ids` (List of String) Marketplace IDs you want to fetch data for. Note: If Profile IDs are also selected, profiles will be selected if they match the Profile ID OR the Marketplace ID.
+- `profiles` (List of Number) Profile IDs you want to fetch data for. See <a href="https://advertising.amazon.com/API/docs/en-us/concepts/authorization/profiles">docs</a> for more details. Note: If Marketplace IDs are also selected, profiles will be selected if they match the Profile ID OR the Marketplace ID.
 - `region` (String) must be one of ["NA", "EU", "FE"]
 Region to pull data from (EU/NA/FE). See <a href="https://advertising.amazon.com/API/docs/en-us/info/api-overview#api-endpoints">docs</a> for more details.
 - `report_record_types` (List of String) Optional configuration which accepts an array of string of record types. Leave blank for default behaviour to pull all report types. Use this config option only if you want to pull specific report type(s). See <a href="https://advertising.amazon.com/API/docs/en-us/reporting/v2/report-types">docs</a> for more details

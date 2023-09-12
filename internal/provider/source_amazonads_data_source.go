@@ -73,10 +73,15 @@ func (r *SourceAmazonAdsDataSource) Schema(ctx context.Context, req datasource.S
 						Computed:    true,
 						Description: `The amount of days to go back in time to get the updated data from Amazon Ads`,
 					},
+					"marketplace_ids": schema.ListAttribute{
+						Computed:    true,
+						ElementType: types.StringType,
+						Description: `Marketplace IDs you want to fetch data for. Note: If Profile IDs are also selected, profiles will be selected if they match the Profile ID OR the Marketplace ID.`,
+					},
 					"profiles": schema.ListAttribute{
 						Computed:    true,
 						ElementType: types.Int64Type,
-						Description: `Profile IDs you want to fetch data for. See <a href="https://advertising.amazon.com/API/docs/en-us/concepts/authorization/profiles">docs</a> for more details.`,
+						Description: `Profile IDs you want to fetch data for. See <a href="https://advertising.amazon.com/API/docs/en-us/concepts/authorization/profiles">docs</a> for more details. Note: If Marketplace IDs are also selected, profiles will be selected if they match the Profile ID OR the Marketplace ID.`,
 					},
 					"refresh_token": schema.StringAttribute{
 						Computed:    true,

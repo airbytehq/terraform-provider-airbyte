@@ -24,57 +24,45 @@ func (r *SourcePostgresResourceModel) ToCreateSDKType() *shared.SourcePostgresCr
 		password = nil
 	}
 	port := r.Configuration.Port.ValueInt64()
-	var replicationMethod *shared.SourcePostgresReplicationMethod
+	var replicationMethod *shared.SourcePostgresUpdateMethod
 	if r.Configuration.ReplicationMethod != nil {
-		var sourcePostgresReplicationMethodStandardXmin *shared.SourcePostgresReplicationMethodStandardXmin
-		if r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodStandardXmin != nil {
-			method := shared.SourcePostgresReplicationMethodStandardXminMethod(r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodStandardXmin.Method.ValueString())
-			sourcePostgresReplicationMethodStandardXmin = &shared.SourcePostgresReplicationMethodStandardXmin{
-				Method: method,
-			}
-		}
-		if sourcePostgresReplicationMethodStandardXmin != nil {
-			replicationMethod = &shared.SourcePostgresReplicationMethod{
-				SourcePostgresReplicationMethodStandardXmin: sourcePostgresReplicationMethodStandardXmin,
-			}
-		}
-		var sourcePostgresReplicationMethodLogicalReplicationCDC *shared.SourcePostgresReplicationMethodLogicalReplicationCDC
-		if r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC != nil {
+		var sourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC *shared.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC
+		if r.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC != nil {
 			initialWaitingSeconds := new(int64)
-			if !r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds.IsUnknown() && !r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds.IsNull() {
-				*initialWaitingSeconds = r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds.ValueInt64()
+			if !r.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.InitialWaitingSeconds.IsUnknown() && !r.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.InitialWaitingSeconds.IsNull() {
+				*initialWaitingSeconds = r.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.InitialWaitingSeconds.ValueInt64()
 			} else {
 				initialWaitingSeconds = nil
 			}
-			lsnCommitBehaviour := new(shared.SourcePostgresReplicationMethodLogicalReplicationCDCLSNCommitBehaviour)
-			if !r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.LsnCommitBehaviour.IsUnknown() && !r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.LsnCommitBehaviour.IsNull() {
-				*lsnCommitBehaviour = shared.SourcePostgresReplicationMethodLogicalReplicationCDCLSNCommitBehaviour(r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.LsnCommitBehaviour.ValueString())
+			lsnCommitBehaviour := new(shared.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDCLSNCommitBehaviour)
+			if !r.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.LsnCommitBehaviour.IsUnknown() && !r.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.LsnCommitBehaviour.IsNull() {
+				*lsnCommitBehaviour = shared.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDCLSNCommitBehaviour(r.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.LsnCommitBehaviour.ValueString())
 			} else {
 				lsnCommitBehaviour = nil
 			}
-			method1 := shared.SourcePostgresReplicationMethodLogicalReplicationCDCMethod(r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.Method.ValueString())
-			plugin := new(shared.SourcePostgresReplicationMethodLogicalReplicationCDCPlugin)
-			if !r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.Plugin.IsUnknown() && !r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.Plugin.IsNull() {
-				*plugin = shared.SourcePostgresReplicationMethodLogicalReplicationCDCPlugin(r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.Plugin.ValueString())
+			method := shared.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDCMethod(r.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.Method.ValueString())
+			plugin := new(shared.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDCPlugin)
+			if !r.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.Plugin.IsUnknown() && !r.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.Plugin.IsNull() {
+				*plugin = shared.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDCPlugin(r.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.Plugin.ValueString())
 			} else {
 				plugin = nil
 			}
-			publication := r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.Publication.ValueString()
+			publication := r.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.Publication.ValueString()
 			queueSize := new(int64)
-			if !r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.QueueSize.IsUnknown() && !r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.QueueSize.IsNull() {
-				*queueSize = r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.QueueSize.ValueInt64()
+			if !r.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.QueueSize.IsUnknown() && !r.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.QueueSize.IsNull() {
+				*queueSize = r.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.QueueSize.ValueInt64()
 			} else {
 				queueSize = nil
 			}
-			replicationSlot := r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.ReplicationSlot.ValueString()
+			replicationSlot := r.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.ReplicationSlot.ValueString()
 			var additionalProperties interface{}
-			if !r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.AdditionalProperties.IsUnknown() && !r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodLogicalReplicationCDC.AdditionalProperties.ValueString()), &additionalProperties)
+			if !r.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.AdditionalProperties.IsUnknown() && !r.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.ReplicationMethod.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC.AdditionalProperties.ValueString()), &additionalProperties)
 			}
-			sourcePostgresReplicationMethodLogicalReplicationCDC = &shared.SourcePostgresReplicationMethodLogicalReplicationCDC{
+			sourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC = &shared.SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC{
 				InitialWaitingSeconds: initialWaitingSeconds,
 				LsnCommitBehaviour:    lsnCommitBehaviour,
-				Method:                method1,
+				Method:                method,
 				Plugin:                plugin,
 				Publication:           publication,
 				QueueSize:             queueSize,
@@ -82,21 +70,33 @@ func (r *SourcePostgresResourceModel) ToCreateSDKType() *shared.SourcePostgresCr
 				AdditionalProperties:  additionalProperties,
 			}
 		}
-		if sourcePostgresReplicationMethodLogicalReplicationCDC != nil {
-			replicationMethod = &shared.SourcePostgresReplicationMethod{
-				SourcePostgresReplicationMethodLogicalReplicationCDC: sourcePostgresReplicationMethodLogicalReplicationCDC,
+		if sourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC != nil {
+			replicationMethod = &shared.SourcePostgresUpdateMethod{
+				SourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC: sourcePostgresUpdateMethodReadChangesUsingWriteAheadLogCDC,
 			}
 		}
-		var sourcePostgresReplicationMethodStandard *shared.SourcePostgresReplicationMethodStandard
-		if r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodStandard != nil {
-			method2 := shared.SourcePostgresReplicationMethodStandardMethod(r.Configuration.ReplicationMethod.SourcePostgresReplicationMethodStandard.Method.ValueString())
-			sourcePostgresReplicationMethodStandard = &shared.SourcePostgresReplicationMethodStandard{
+		var sourcePostgresUpdateMethodDetectChangesWithXminSystemColumn *shared.SourcePostgresUpdateMethodDetectChangesWithXminSystemColumn
+		if r.Configuration.ReplicationMethod.SourcePostgresUpdateMethodDetectChangesWithXminSystemColumn != nil {
+			method1 := shared.SourcePostgresUpdateMethodDetectChangesWithXminSystemColumnMethod(r.Configuration.ReplicationMethod.SourcePostgresUpdateMethodDetectChangesWithXminSystemColumn.Method.ValueString())
+			sourcePostgresUpdateMethodDetectChangesWithXminSystemColumn = &shared.SourcePostgresUpdateMethodDetectChangesWithXminSystemColumn{
+				Method: method1,
+			}
+		}
+		if sourcePostgresUpdateMethodDetectChangesWithXminSystemColumn != nil {
+			replicationMethod = &shared.SourcePostgresUpdateMethod{
+				SourcePostgresUpdateMethodDetectChangesWithXminSystemColumn: sourcePostgresUpdateMethodDetectChangesWithXminSystemColumn,
+			}
+		}
+		var sourcePostgresUpdateMethodScanChangesWithUserDefinedCursor *shared.SourcePostgresUpdateMethodScanChangesWithUserDefinedCursor
+		if r.Configuration.ReplicationMethod.SourcePostgresUpdateMethodScanChangesWithUserDefinedCursor != nil {
+			method2 := shared.SourcePostgresUpdateMethodScanChangesWithUserDefinedCursorMethod(r.Configuration.ReplicationMethod.SourcePostgresUpdateMethodScanChangesWithUserDefinedCursor.Method.ValueString())
+			sourcePostgresUpdateMethodScanChangesWithUserDefinedCursor = &shared.SourcePostgresUpdateMethodScanChangesWithUserDefinedCursor{
 				Method: method2,
 			}
 		}
-		if sourcePostgresReplicationMethodStandard != nil {
-			replicationMethod = &shared.SourcePostgresReplicationMethod{
-				SourcePostgresReplicationMethodStandard: sourcePostgresReplicationMethodStandard,
+		if sourcePostgresUpdateMethodScanChangesWithUserDefinedCursor != nil {
+			replicationMethod = &shared.SourcePostgresUpdateMethod{
+				SourcePostgresUpdateMethodScanChangesWithUserDefinedCursor: sourcePostgresUpdateMethodScanChangesWithUserDefinedCursor,
 			}
 		}
 	}
@@ -363,57 +363,45 @@ func (r *SourcePostgresResourceModel) ToUpdateSDKType() *shared.SourcePostgresPu
 		password = nil
 	}
 	port := r.Configuration.Port.ValueInt64()
-	var replicationMethod *shared.SourcePostgresUpdateReplicationMethod
+	var replicationMethod *shared.SourcePostgresUpdateUpdateMethod
 	if r.Configuration.ReplicationMethod != nil {
-		var sourcePostgresUpdateReplicationMethodStandardXmin *shared.SourcePostgresUpdateReplicationMethodStandardXmin
-		if r.Configuration.ReplicationMethod.SourcePostgresUpdateReplicationMethodStandardXmin != nil {
-			method := shared.SourcePostgresUpdateReplicationMethodStandardXminMethod(r.Configuration.ReplicationMethod.SourcePostgresUpdateReplicationMethodStandardXmin.Method.ValueString())
-			sourcePostgresUpdateReplicationMethodStandardXmin = &shared.SourcePostgresUpdateReplicationMethodStandardXmin{
-				Method: method,
-			}
-		}
-		if sourcePostgresUpdateReplicationMethodStandardXmin != nil {
-			replicationMethod = &shared.SourcePostgresUpdateReplicationMethod{
-				SourcePostgresUpdateReplicationMethodStandardXmin: sourcePostgresUpdateReplicationMethodStandardXmin,
-			}
-		}
-		var sourcePostgresUpdateReplicationMethodLogicalReplicationCDC *shared.SourcePostgresUpdateReplicationMethodLogicalReplicationCDC
-		if r.Configuration.ReplicationMethod.SourcePostgresUpdateReplicationMethodLogicalReplicationCDC != nil {
+		var sourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC *shared.SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC
+		if r.Configuration.ReplicationMethod.SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC != nil {
 			initialWaitingSeconds := new(int64)
-			if !r.Configuration.ReplicationMethod.SourcePostgresUpdateReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds.IsUnknown() && !r.Configuration.ReplicationMethod.SourcePostgresUpdateReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds.IsNull() {
-				*initialWaitingSeconds = r.Configuration.ReplicationMethod.SourcePostgresUpdateReplicationMethodLogicalReplicationCDC.InitialWaitingSeconds.ValueInt64()
+			if !r.Configuration.ReplicationMethod.SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC.InitialWaitingSeconds.IsUnknown() && !r.Configuration.ReplicationMethod.SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC.InitialWaitingSeconds.IsNull() {
+				*initialWaitingSeconds = r.Configuration.ReplicationMethod.SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC.InitialWaitingSeconds.ValueInt64()
 			} else {
 				initialWaitingSeconds = nil
 			}
-			lsnCommitBehaviour := new(shared.SourcePostgresUpdateReplicationMethodLogicalReplicationCDCLSNCommitBehaviour)
-			if !r.Configuration.ReplicationMethod.SourcePostgresUpdateReplicationMethodLogicalReplicationCDC.LsnCommitBehaviour.IsUnknown() && !r.Configuration.ReplicationMethod.SourcePostgresUpdateReplicationMethodLogicalReplicationCDC.LsnCommitBehaviour.IsNull() {
-				*lsnCommitBehaviour = shared.SourcePostgresUpdateReplicationMethodLogicalReplicationCDCLSNCommitBehaviour(r.Configuration.ReplicationMethod.SourcePostgresUpdateReplicationMethodLogicalReplicationCDC.LsnCommitBehaviour.ValueString())
+			lsnCommitBehaviour := new(shared.SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCLSNCommitBehaviour)
+			if !r.Configuration.ReplicationMethod.SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC.LsnCommitBehaviour.IsUnknown() && !r.Configuration.ReplicationMethod.SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC.LsnCommitBehaviour.IsNull() {
+				*lsnCommitBehaviour = shared.SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCLSNCommitBehaviour(r.Configuration.ReplicationMethod.SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC.LsnCommitBehaviour.ValueString())
 			} else {
 				lsnCommitBehaviour = nil
 			}
-			method1 := shared.SourcePostgresUpdateReplicationMethodLogicalReplicationCDCMethod(r.Configuration.ReplicationMethod.SourcePostgresUpdateReplicationMethodLogicalReplicationCDC.Method.ValueString())
-			plugin := new(shared.SourcePostgresUpdateReplicationMethodLogicalReplicationCDCPlugin)
-			if !r.Configuration.ReplicationMethod.SourcePostgresUpdateReplicationMethodLogicalReplicationCDC.Plugin.IsUnknown() && !r.Configuration.ReplicationMethod.SourcePostgresUpdateReplicationMethodLogicalReplicationCDC.Plugin.IsNull() {
-				*plugin = shared.SourcePostgresUpdateReplicationMethodLogicalReplicationCDCPlugin(r.Configuration.ReplicationMethod.SourcePostgresUpdateReplicationMethodLogicalReplicationCDC.Plugin.ValueString())
+			method := shared.SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCMethod(r.Configuration.ReplicationMethod.SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC.Method.ValueString())
+			plugin := new(shared.SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCPlugin)
+			if !r.Configuration.ReplicationMethod.SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC.Plugin.IsUnknown() && !r.Configuration.ReplicationMethod.SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC.Plugin.IsNull() {
+				*plugin = shared.SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCPlugin(r.Configuration.ReplicationMethod.SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC.Plugin.ValueString())
 			} else {
 				plugin = nil
 			}
-			publication := r.Configuration.ReplicationMethod.SourcePostgresUpdateReplicationMethodLogicalReplicationCDC.Publication.ValueString()
+			publication := r.Configuration.ReplicationMethod.SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC.Publication.ValueString()
 			queueSize := new(int64)
-			if !r.Configuration.ReplicationMethod.SourcePostgresUpdateReplicationMethodLogicalReplicationCDC.QueueSize.IsUnknown() && !r.Configuration.ReplicationMethod.SourcePostgresUpdateReplicationMethodLogicalReplicationCDC.QueueSize.IsNull() {
-				*queueSize = r.Configuration.ReplicationMethod.SourcePostgresUpdateReplicationMethodLogicalReplicationCDC.QueueSize.ValueInt64()
+			if !r.Configuration.ReplicationMethod.SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC.QueueSize.IsUnknown() && !r.Configuration.ReplicationMethod.SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC.QueueSize.IsNull() {
+				*queueSize = r.Configuration.ReplicationMethod.SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC.QueueSize.ValueInt64()
 			} else {
 				queueSize = nil
 			}
-			replicationSlot := r.Configuration.ReplicationMethod.SourcePostgresUpdateReplicationMethodLogicalReplicationCDC.ReplicationSlot.ValueString()
+			replicationSlot := r.Configuration.ReplicationMethod.SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC.ReplicationSlot.ValueString()
 			var additionalProperties interface{}
-			if !r.Configuration.ReplicationMethod.SourcePostgresUpdateReplicationMethodLogicalReplicationCDC.AdditionalProperties.IsUnknown() && !r.Configuration.ReplicationMethod.SourcePostgresUpdateReplicationMethodLogicalReplicationCDC.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.ReplicationMethod.SourcePostgresUpdateReplicationMethodLogicalReplicationCDC.AdditionalProperties.ValueString()), &additionalProperties)
+			if !r.Configuration.ReplicationMethod.SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC.AdditionalProperties.IsUnknown() && !r.Configuration.ReplicationMethod.SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC.AdditionalProperties.IsNull() {
+				_ = json.Unmarshal([]byte(r.Configuration.ReplicationMethod.SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC.AdditionalProperties.ValueString()), &additionalProperties)
 			}
-			sourcePostgresUpdateReplicationMethodLogicalReplicationCDC = &shared.SourcePostgresUpdateReplicationMethodLogicalReplicationCDC{
+			sourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC = &shared.SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC{
 				InitialWaitingSeconds: initialWaitingSeconds,
 				LsnCommitBehaviour:    lsnCommitBehaviour,
-				Method:                method1,
+				Method:                method,
 				Plugin:                plugin,
 				Publication:           publication,
 				QueueSize:             queueSize,
@@ -421,21 +409,33 @@ func (r *SourcePostgresResourceModel) ToUpdateSDKType() *shared.SourcePostgresPu
 				AdditionalProperties:  additionalProperties,
 			}
 		}
-		if sourcePostgresUpdateReplicationMethodLogicalReplicationCDC != nil {
-			replicationMethod = &shared.SourcePostgresUpdateReplicationMethod{
-				SourcePostgresUpdateReplicationMethodLogicalReplicationCDC: sourcePostgresUpdateReplicationMethodLogicalReplicationCDC,
+		if sourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC != nil {
+			replicationMethod = &shared.SourcePostgresUpdateUpdateMethod{
+				SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC: sourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC,
 			}
 		}
-		var sourcePostgresUpdateReplicationMethodStandard *shared.SourcePostgresUpdateReplicationMethodStandard
-		if r.Configuration.ReplicationMethod.SourcePostgresUpdateReplicationMethodStandard != nil {
-			method2 := shared.SourcePostgresUpdateReplicationMethodStandardMethod(r.Configuration.ReplicationMethod.SourcePostgresUpdateReplicationMethodStandard.Method.ValueString())
-			sourcePostgresUpdateReplicationMethodStandard = &shared.SourcePostgresUpdateReplicationMethodStandard{
+		var sourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn *shared.SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn
+		if r.Configuration.ReplicationMethod.SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn != nil {
+			method1 := shared.SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumnMethod(r.Configuration.ReplicationMethod.SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn.Method.ValueString())
+			sourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn = &shared.SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn{
+				Method: method1,
+			}
+		}
+		if sourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn != nil {
+			replicationMethod = &shared.SourcePostgresUpdateUpdateMethod{
+				SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn: sourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn,
+			}
+		}
+		var sourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor *shared.SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor
+		if r.Configuration.ReplicationMethod.SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor != nil {
+			method2 := shared.SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursorMethod(r.Configuration.ReplicationMethod.SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor.Method.ValueString())
+			sourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor = &shared.SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor{
 				Method: method2,
 			}
 		}
-		if sourcePostgresUpdateReplicationMethodStandard != nil {
-			replicationMethod = &shared.SourcePostgresUpdateReplicationMethod{
-				SourcePostgresUpdateReplicationMethodStandard: sourcePostgresUpdateReplicationMethodStandard,
+		if sourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor != nil {
+			replicationMethod = &shared.SourcePostgresUpdateUpdateMethod{
+				SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor: sourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor,
 			}
 		}
 	}

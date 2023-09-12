@@ -108,15 +108,6 @@ func CreateSourceLinkedinPagesAuthenticationSourceLinkedinPagesAuthenticationAcc
 func (u *SourceLinkedinPagesAuthentication) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceLinkedinPagesAuthenticationOAuth20 := new(SourceLinkedinPagesAuthenticationOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceLinkedinPagesAuthenticationOAuth20); err == nil {
-		u.SourceLinkedinPagesAuthenticationOAuth20 = sourceLinkedinPagesAuthenticationOAuth20
-		u.Type = SourceLinkedinPagesAuthenticationTypeSourceLinkedinPagesAuthenticationOAuth20
-		return nil
-	}
-
 	sourceLinkedinPagesAuthenticationAccessToken := new(SourceLinkedinPagesAuthenticationAccessToken)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -126,16 +117,25 @@ func (u *SourceLinkedinPagesAuthentication) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	sourceLinkedinPagesAuthenticationOAuth20 := new(SourceLinkedinPagesAuthenticationOAuth20)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceLinkedinPagesAuthenticationOAuth20); err == nil {
+		u.SourceLinkedinPagesAuthenticationOAuth20 = sourceLinkedinPagesAuthenticationOAuth20
+		u.Type = SourceLinkedinPagesAuthenticationTypeSourceLinkedinPagesAuthenticationOAuth20
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceLinkedinPagesAuthentication) MarshalJSON() ([]byte, error) {
-	if u.SourceLinkedinPagesAuthenticationOAuth20 != nil {
-		return json.Marshal(u.SourceLinkedinPagesAuthenticationOAuth20)
-	}
-
 	if u.SourceLinkedinPagesAuthenticationAccessToken != nil {
 		return json.Marshal(u.SourceLinkedinPagesAuthenticationAccessToken)
+	}
+
+	if u.SourceLinkedinPagesAuthenticationOAuth20 != nil {
+		return json.Marshal(u.SourceLinkedinPagesAuthenticationOAuth20)
 	}
 
 	return nil, nil

@@ -21,17 +21,17 @@ resource "airbyte_source_fauna" "my_source_fauna" {
           deletion_mode = "ignore"
         }
       }
-      page_size = 9
+      page_size = 4
     }
     domain      = "...my_domain..."
-    port        = 10
+    port        = 5
     scheme      = "...my_scheme..."
     secret      = "...my_secret..."
     source_type = "fauna"
   }
-  name         = "Mrs. Edna Abbott"
+  name         = "Irvin Klein"
   secret_id    = "...my_secret_id..."
-  workspace_id = "78a61fa1-cf20-4688-b77c-1ffc71dca163"
+  workspace_id = "1ffc71dc-a163-4f2a-bc80-a97ff334cddf"
 }
 ```
 

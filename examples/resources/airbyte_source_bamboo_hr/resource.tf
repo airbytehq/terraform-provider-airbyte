@@ -6,7 +6,7 @@ resource "airbyte_source_bamboo_hr" "my_source_bamboohr" {
     source_type                           = "bamboo-hr"
     subdomain                             = "...my_subdomain..."
   }
-  name         = "Mandy Collier"
+  name         = "Ralph Rau"
   secret_id    = "...my_secret_id..."
-  workspace_id = "da7e23f2-2574-411f-af4b-7544e472e802"
+  workspace_id = "1b36a080-88d1-400e-bada-200ef0422eb2"
 }

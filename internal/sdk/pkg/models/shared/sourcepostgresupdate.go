@@ -9,48 +9,77 @@ import (
 	"fmt"
 )
 
-type SourcePostgresUpdateReplicationMethodStandardMethod string
+type SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursorMethod string
 
 const (
-	SourcePostgresUpdateReplicationMethodStandardMethodStandard SourcePostgresUpdateReplicationMethodStandardMethod = "Standard"
+	SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursorMethodStandard SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursorMethod = "Standard"
 )
 
-func (e SourcePostgresUpdateReplicationMethodStandardMethod) ToPointer() *SourcePostgresUpdateReplicationMethodStandardMethod {
+func (e SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursorMethod) ToPointer() *SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursorMethod {
 	return &e
 }
 
-func (e *SourcePostgresUpdateReplicationMethodStandardMethod) UnmarshalJSON(data []byte) error {
+func (e *SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursorMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "Standard":
-		*e = SourcePostgresUpdateReplicationMethodStandardMethod(v)
+		*e = SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursorMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresUpdateReplicationMethodStandardMethod: %v", v)
+		return fmt.Errorf("invalid value for SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursorMethod: %v", v)
 	}
 }
 
-// SourcePostgresUpdateReplicationMethodStandard - Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.
-type SourcePostgresUpdateReplicationMethodStandard struct {
-	Method SourcePostgresUpdateReplicationMethodStandardMethod `json:"method"`
+// SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor - Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at).
+type SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor struct {
+	Method SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursorMethod `json:"method"`
 }
 
-// SourcePostgresUpdateReplicationMethodLogicalReplicationCDCLSNCommitBehaviour - Determines when Airbtye should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.
-type SourcePostgresUpdateReplicationMethodLogicalReplicationCDCLSNCommitBehaviour string
+type SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumnMethod string
 
 const (
-	SourcePostgresUpdateReplicationMethodLogicalReplicationCDCLSNCommitBehaviourWhileReadingData                 SourcePostgresUpdateReplicationMethodLogicalReplicationCDCLSNCommitBehaviour = "While reading Data"
-	SourcePostgresUpdateReplicationMethodLogicalReplicationCDCLSNCommitBehaviourAfterLoadingDataInTheDestination SourcePostgresUpdateReplicationMethodLogicalReplicationCDCLSNCommitBehaviour = "After loading Data in the destination"
+	SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumnMethodXmin SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumnMethod = "Xmin"
 )
 
-func (e SourcePostgresUpdateReplicationMethodLogicalReplicationCDCLSNCommitBehaviour) ToPointer() *SourcePostgresUpdateReplicationMethodLogicalReplicationCDCLSNCommitBehaviour {
+func (e SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumnMethod) ToPointer() *SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumnMethod {
 	return &e
 }
 
-func (e *SourcePostgresUpdateReplicationMethodLogicalReplicationCDCLSNCommitBehaviour) UnmarshalJSON(data []byte) error {
+func (e *SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumnMethod) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Xmin":
+		*e = SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumnMethod(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumnMethod: %v", v)
+	}
+}
+
+// SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn - <i>Recommended</i> - Incrementally reads new inserts and updates via Postgres <a href="https://docs.airbyte.com/integrations/sources/postgres/#xmin">Xmin system column</a>. Only recommended for tables up to 500GB.
+type SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn struct {
+	Method SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumnMethod `json:"method"`
+}
+
+// SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCLSNCommitBehaviour - Determines when Airbtye should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.
+type SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCLSNCommitBehaviour string
+
+const (
+	SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCLSNCommitBehaviourWhileReadingData                 SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCLSNCommitBehaviour = "While reading Data"
+	SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCLSNCommitBehaviourAfterLoadingDataInTheDestination SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCLSNCommitBehaviour = "After loading Data in the destination"
+)
+
+func (e SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCLSNCommitBehaviour) ToPointer() *SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCLSNCommitBehaviour {
+	return &e
+}
+
+func (e *SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCLSNCommitBehaviour) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -59,71 +88,71 @@ func (e *SourcePostgresUpdateReplicationMethodLogicalReplicationCDCLSNCommitBeha
 	case "While reading Data":
 		fallthrough
 	case "After loading Data in the destination":
-		*e = SourcePostgresUpdateReplicationMethodLogicalReplicationCDCLSNCommitBehaviour(v)
+		*e = SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCLSNCommitBehaviour(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresUpdateReplicationMethodLogicalReplicationCDCLSNCommitBehaviour: %v", v)
+		return fmt.Errorf("invalid value for SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCLSNCommitBehaviour: %v", v)
 	}
 }
 
-type SourcePostgresUpdateReplicationMethodLogicalReplicationCDCMethod string
+type SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCMethod string
 
 const (
-	SourcePostgresUpdateReplicationMethodLogicalReplicationCDCMethodCdc SourcePostgresUpdateReplicationMethodLogicalReplicationCDCMethod = "CDC"
+	SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCMethodCdc SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCMethod = "CDC"
 )
 
-func (e SourcePostgresUpdateReplicationMethodLogicalReplicationCDCMethod) ToPointer() *SourcePostgresUpdateReplicationMethodLogicalReplicationCDCMethod {
+func (e SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCMethod) ToPointer() *SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCMethod {
 	return &e
 }
 
-func (e *SourcePostgresUpdateReplicationMethodLogicalReplicationCDCMethod) UnmarshalJSON(data []byte) error {
+func (e *SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCMethod) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "CDC":
-		*e = SourcePostgresUpdateReplicationMethodLogicalReplicationCDCMethod(v)
+		*e = SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCMethod(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresUpdateReplicationMethodLogicalReplicationCDCMethod: %v", v)
+		return fmt.Errorf("invalid value for SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCMethod: %v", v)
 	}
 }
 
-// SourcePostgresUpdateReplicationMethodLogicalReplicationCDCPlugin - A logical decoding plugin installed on the PostgreSQL server.
-type SourcePostgresUpdateReplicationMethodLogicalReplicationCDCPlugin string
+// SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCPlugin - A logical decoding plugin installed on the PostgreSQL server.
+type SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCPlugin string
 
 const (
-	SourcePostgresUpdateReplicationMethodLogicalReplicationCDCPluginPgoutput SourcePostgresUpdateReplicationMethodLogicalReplicationCDCPlugin = "pgoutput"
+	SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCPluginPgoutput SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCPlugin = "pgoutput"
 )
 
-func (e SourcePostgresUpdateReplicationMethodLogicalReplicationCDCPlugin) ToPointer() *SourcePostgresUpdateReplicationMethodLogicalReplicationCDCPlugin {
+func (e SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCPlugin) ToPointer() *SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCPlugin {
 	return &e
 }
 
-func (e *SourcePostgresUpdateReplicationMethodLogicalReplicationCDCPlugin) UnmarshalJSON(data []byte) error {
+func (e *SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCPlugin) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
 	}
 	switch v {
 	case "pgoutput":
-		*e = SourcePostgresUpdateReplicationMethodLogicalReplicationCDCPlugin(v)
+		*e = SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCPlugin(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourcePostgresUpdateReplicationMethodLogicalReplicationCDCPlugin: %v", v)
+		return fmt.Errorf("invalid value for SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCPlugin: %v", v)
 	}
 }
 
-// SourcePostgresUpdateReplicationMethodLogicalReplicationCDC - Logical replication uses the Postgres write-ahead log (WAL) to detect inserts, updates, and deletes. This needs to be configured on the source database itself. Only available on Postgres 10 and above. Read the <a href="https://docs.airbyte.com/integrations/sources/postgres">docs</a>.
-type SourcePostgresUpdateReplicationMethodLogicalReplicationCDC struct {
+// SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC - <i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the Postgres <a href="https://docs.airbyte.com/integrations/sources/postgres/#cdc">write-ahead log (WAL)</a>. This needs to be configured on the source database itself. Recommended for tables of any size.
+type SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC struct {
 	// The amount of time the connector will wait when it launches to determine if there is new data to sync or not. Defaults to 300 seconds. Valid range: 120 seconds to 1200 seconds. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-5-optional-set-up-initial-waiting-time">initial waiting time</a>.
 	InitialWaitingSeconds *int64 `json:"initial_waiting_seconds,omitempty"`
 	// Determines when Airbtye should flush the LSN of processed WAL logs in the source database. `After loading Data in the destination` is default. If `While reading Data` is selected, in case of a downstream failure (while loading data into the destination), next sync would result in a full sync.
-	LsnCommitBehaviour *SourcePostgresUpdateReplicationMethodLogicalReplicationCDCLSNCommitBehaviour `json:"lsn_commit_behaviour,omitempty"`
-	Method             SourcePostgresUpdateReplicationMethodLogicalReplicationCDCMethod              `json:"method"`
+	LsnCommitBehaviour *SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCLSNCommitBehaviour `json:"lsn_commit_behaviour,omitempty"`
+	Method             SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCMethod              `json:"method"`
 	// A logical decoding plugin installed on the PostgreSQL server.
-	Plugin *SourcePostgresUpdateReplicationMethodLogicalReplicationCDCPlugin `json:"plugin,omitempty"`
+	Plugin *SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDCPlugin `json:"plugin,omitempty"`
 	// A Postgres publication used for consuming changes. Read about <a href="https://docs.airbyte.com/integrations/sources/postgres#step-4-create-publications-and-replication-identities-for-tables">publications and replication identities</a>.
 	Publication string `json:"publication"`
 	// The size of the internal queue. This may interfere with memory consumption and efficiency of the connector, please be careful.
@@ -133,15 +162,15 @@ type SourcePostgresUpdateReplicationMethodLogicalReplicationCDC struct {
 
 	AdditionalProperties interface{} `json:"-"`
 }
-type _SourcePostgresUpdateReplicationMethodLogicalReplicationCDC SourcePostgresUpdateReplicationMethodLogicalReplicationCDC
+type _SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC
 
-func (c *SourcePostgresUpdateReplicationMethodLogicalReplicationCDC) UnmarshalJSON(bs []byte) error {
-	data := _SourcePostgresUpdateReplicationMethodLogicalReplicationCDC{}
+func (c *SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC) UnmarshalJSON(bs []byte) error {
+	data := _SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC{}
 
 	if err := json.Unmarshal(bs, &data); err != nil {
 		return err
 	}
-	*c = SourcePostgresUpdateReplicationMethodLogicalReplicationCDC(data)
+	*c = SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC(data)
 
 	additionalFields := make(map[string]interface{})
 
@@ -161,9 +190,9 @@ func (c *SourcePostgresUpdateReplicationMethodLogicalReplicationCDC) UnmarshalJS
 	return nil
 }
 
-func (c SourcePostgresUpdateReplicationMethodLogicalReplicationCDC) MarshalJSON() ([]byte, error) {
+func (c SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC) MarshalJSON() ([]byte, error) {
 	out := map[string]interface{}{}
-	bs, err := json.Marshal(_SourcePostgresUpdateReplicationMethodLogicalReplicationCDC(c))
+	bs, err := json.Marshal(_SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC(c))
 	if err != nil {
 		return nil, err
 	}
@@ -184,122 +213,93 @@ func (c SourcePostgresUpdateReplicationMethodLogicalReplicationCDC) MarshalJSON(
 	return json.Marshal(out)
 }
 
-type SourcePostgresUpdateReplicationMethodStandardXminMethod string
+type SourcePostgresUpdateUpdateMethodType string
 
 const (
-	SourcePostgresUpdateReplicationMethodStandardXminMethodXmin SourcePostgresUpdateReplicationMethodStandardXminMethod = "Xmin"
+	SourcePostgresUpdateUpdateMethodTypeSourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC  SourcePostgresUpdateUpdateMethodType = "source-postgres-update_Update Method_Read Changes using Write-Ahead Log (CDC)"
+	SourcePostgresUpdateUpdateMethodTypeSourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn SourcePostgresUpdateUpdateMethodType = "source-postgres-update_Update Method_Detect Changes with Xmin System Column"
+	SourcePostgresUpdateUpdateMethodTypeSourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor  SourcePostgresUpdateUpdateMethodType = "source-postgres-update_Update Method_Scan Changes with User Defined Cursor"
 )
 
-func (e SourcePostgresUpdateReplicationMethodStandardXminMethod) ToPointer() *SourcePostgresUpdateReplicationMethodStandardXminMethod {
-	return &e
+type SourcePostgresUpdateUpdateMethod struct {
+	SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC  *SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC
+	SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn *SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn
+	SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor  *SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor
+
+	Type SourcePostgresUpdateUpdateMethodType
 }
 
-func (e *SourcePostgresUpdateReplicationMethodStandardXminMethod) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "Xmin":
-		*e = SourcePostgresUpdateReplicationMethodStandardXminMethod(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourcePostgresUpdateReplicationMethodStandardXminMethod: %v", v)
-	}
-}
+func CreateSourcePostgresUpdateUpdateMethodSourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC(sourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC) SourcePostgresUpdateUpdateMethod {
+	typ := SourcePostgresUpdateUpdateMethodTypeSourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC
 
-// SourcePostgresUpdateReplicationMethodStandardXmin - Xmin replication requires no setup on the DB side but will not be able to represent deletions incrementally.
-type SourcePostgresUpdateReplicationMethodStandardXmin struct {
-	Method SourcePostgresUpdateReplicationMethodStandardXminMethod `json:"method"`
-}
-
-type SourcePostgresUpdateReplicationMethodType string
-
-const (
-	SourcePostgresUpdateReplicationMethodTypeSourcePostgresUpdateReplicationMethodStandardXmin          SourcePostgresUpdateReplicationMethodType = "source-postgres-update_Replication Method_Standard (Xmin)"
-	SourcePostgresUpdateReplicationMethodTypeSourcePostgresUpdateReplicationMethodLogicalReplicationCDC SourcePostgresUpdateReplicationMethodType = "source-postgres-update_Replication Method_Logical Replication (CDC)"
-	SourcePostgresUpdateReplicationMethodTypeSourcePostgresUpdateReplicationMethodStandard              SourcePostgresUpdateReplicationMethodType = "source-postgres-update_Replication Method_Standard"
-)
-
-type SourcePostgresUpdateReplicationMethod struct {
-	SourcePostgresUpdateReplicationMethodStandardXmin          *SourcePostgresUpdateReplicationMethodStandardXmin
-	SourcePostgresUpdateReplicationMethodLogicalReplicationCDC *SourcePostgresUpdateReplicationMethodLogicalReplicationCDC
-	SourcePostgresUpdateReplicationMethodStandard              *SourcePostgresUpdateReplicationMethodStandard
-
-	Type SourcePostgresUpdateReplicationMethodType
-}
-
-func CreateSourcePostgresUpdateReplicationMethodSourcePostgresUpdateReplicationMethodStandardXmin(sourcePostgresUpdateReplicationMethodStandardXmin SourcePostgresUpdateReplicationMethodStandardXmin) SourcePostgresUpdateReplicationMethod {
-	typ := SourcePostgresUpdateReplicationMethodTypeSourcePostgresUpdateReplicationMethodStandardXmin
-
-	return SourcePostgresUpdateReplicationMethod{
-		SourcePostgresUpdateReplicationMethodStandardXmin: &sourcePostgresUpdateReplicationMethodStandardXmin,
+	return SourcePostgresUpdateUpdateMethod{
+		SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC: &sourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC,
 		Type: typ,
 	}
 }
 
-func CreateSourcePostgresUpdateReplicationMethodSourcePostgresUpdateReplicationMethodLogicalReplicationCDC(sourcePostgresUpdateReplicationMethodLogicalReplicationCDC SourcePostgresUpdateReplicationMethodLogicalReplicationCDC) SourcePostgresUpdateReplicationMethod {
-	typ := SourcePostgresUpdateReplicationMethodTypeSourcePostgresUpdateReplicationMethodLogicalReplicationCDC
+func CreateSourcePostgresUpdateUpdateMethodSourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn(sourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn) SourcePostgresUpdateUpdateMethod {
+	typ := SourcePostgresUpdateUpdateMethodTypeSourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn
 
-	return SourcePostgresUpdateReplicationMethod{
-		SourcePostgresUpdateReplicationMethodLogicalReplicationCDC: &sourcePostgresUpdateReplicationMethodLogicalReplicationCDC,
+	return SourcePostgresUpdateUpdateMethod{
+		SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn: &sourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn,
 		Type: typ,
 	}
 }
 
-func CreateSourcePostgresUpdateReplicationMethodSourcePostgresUpdateReplicationMethodStandard(sourcePostgresUpdateReplicationMethodStandard SourcePostgresUpdateReplicationMethodStandard) SourcePostgresUpdateReplicationMethod {
-	typ := SourcePostgresUpdateReplicationMethodTypeSourcePostgresUpdateReplicationMethodStandard
+func CreateSourcePostgresUpdateUpdateMethodSourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor(sourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor) SourcePostgresUpdateUpdateMethod {
+	typ := SourcePostgresUpdateUpdateMethodTypeSourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor
 
-	return SourcePostgresUpdateReplicationMethod{
-		SourcePostgresUpdateReplicationMethodStandard: &sourcePostgresUpdateReplicationMethodStandard,
+	return SourcePostgresUpdateUpdateMethod{
+		SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor: &sourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor,
 		Type: typ,
 	}
 }
 
-func (u *SourcePostgresUpdateReplicationMethod) UnmarshalJSON(data []byte) error {
+func (u *SourcePostgresUpdateUpdateMethod) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourcePostgresUpdateReplicationMethodStandardXmin := new(SourcePostgresUpdateReplicationMethodStandardXmin)
+	sourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn := new(SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
-	if err := d.Decode(&sourcePostgresUpdateReplicationMethodStandardXmin); err == nil {
-		u.SourcePostgresUpdateReplicationMethodStandardXmin = sourcePostgresUpdateReplicationMethodStandardXmin
-		u.Type = SourcePostgresUpdateReplicationMethodTypeSourcePostgresUpdateReplicationMethodStandardXmin
+	if err := d.Decode(&sourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn); err == nil {
+		u.SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn = sourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn
+		u.Type = SourcePostgresUpdateUpdateMethodTypeSourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn
 		return nil
 	}
 
-	sourcePostgresUpdateReplicationMethodLogicalReplicationCDC := new(SourcePostgresUpdateReplicationMethodLogicalReplicationCDC)
+	sourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor := new(SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
-	if err := d.Decode(&sourcePostgresUpdateReplicationMethodLogicalReplicationCDC); err == nil {
-		u.SourcePostgresUpdateReplicationMethodLogicalReplicationCDC = sourcePostgresUpdateReplicationMethodLogicalReplicationCDC
-		u.Type = SourcePostgresUpdateReplicationMethodTypeSourcePostgresUpdateReplicationMethodLogicalReplicationCDC
+	if err := d.Decode(&sourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor); err == nil {
+		u.SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor = sourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor
+		u.Type = SourcePostgresUpdateUpdateMethodTypeSourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor
 		return nil
 	}
 
-	sourcePostgresUpdateReplicationMethodStandard := new(SourcePostgresUpdateReplicationMethodStandard)
+	sourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC := new(SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
-	if err := d.Decode(&sourcePostgresUpdateReplicationMethodStandard); err == nil {
-		u.SourcePostgresUpdateReplicationMethodStandard = sourcePostgresUpdateReplicationMethodStandard
-		u.Type = SourcePostgresUpdateReplicationMethodTypeSourcePostgresUpdateReplicationMethodStandard
+	if err := d.Decode(&sourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC); err == nil {
+		u.SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC = sourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC
+		u.Type = SourcePostgresUpdateUpdateMethodTypeSourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC
 		return nil
 	}
 
 	return errors.New("could not unmarshal into supported union types")
 }
 
-func (u SourcePostgresUpdateReplicationMethod) MarshalJSON() ([]byte, error) {
-	if u.SourcePostgresUpdateReplicationMethodStandardXmin != nil {
-		return json.Marshal(u.SourcePostgresUpdateReplicationMethodStandardXmin)
+func (u SourcePostgresUpdateUpdateMethod) MarshalJSON() ([]byte, error) {
+	if u.SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn != nil {
+		return json.Marshal(u.SourcePostgresUpdateUpdateMethodDetectChangesWithXminSystemColumn)
 	}
 
-	if u.SourcePostgresUpdateReplicationMethodLogicalReplicationCDC != nil {
-		return json.Marshal(u.SourcePostgresUpdateReplicationMethodLogicalReplicationCDC)
+	if u.SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor != nil {
+		return json.Marshal(u.SourcePostgresUpdateUpdateMethodScanChangesWithUserDefinedCursor)
 	}
 
-	if u.SourcePostgresUpdateReplicationMethodStandard != nil {
-		return json.Marshal(u.SourcePostgresUpdateReplicationMethodStandard)
+	if u.SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC != nil {
+		return json.Marshal(u.SourcePostgresUpdateUpdateMethodReadChangesUsingWriteAheadLogCDC)
 	}
 
 	return nil, nil
@@ -1155,8 +1155,8 @@ type SourcePostgresUpdate struct {
 	Password *string `json:"password,omitempty"`
 	// Port of the database.
 	Port int64 `json:"port"`
-	// Replication method for extracting data from the database.
-	ReplicationMethod *SourcePostgresUpdateReplicationMethod `json:"replication_method,omitempty"`
+	// Configures how data is extracted from the database.
+	ReplicationMethod *SourcePostgresUpdateUpdateMethod `json:"replication_method,omitempty"`
 	// The list of schemas (case sensitive) to sync from. Defaults to public.
 	Schemas []string `json:"schemas,omitempty"`
 	// SSL connection modes.

@@ -42,6 +42,8 @@ data "airbyte_source_intercom" "my_source_intercom" {
 Read-Only:
 
 - `access_token` (String) Access token for making authenticated requests. See the <a href="https://developers.intercom.com/building-apps/docs/authentication-types#how-to-get-your-access-token">Intercom docs</a> for more information.
+- `client_id` (String) Client Id for your Intercom application.
+- `client_secret` (String) Client Secret for your Intercom application.
 - `source_type` (String) must be one of ["intercom"]
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 

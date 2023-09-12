@@ -8,7 +8,7 @@ resource "airbyte_source_qualaroo" "my_source_qualaroo" {
     ]
     token = "...my_token..."
   }
-  name         = "Grace Ankunding"
+  name         = "Sue Thompson"
   secret_id    = "...my_secret_id..."
-  workspace_id = "fbba5cce-ff5c-4b01-be51-e528a45ac82b"
+  workspace_id = "b518c4da-1fad-4355-92f0-6d4e5b72f0f5"
 }

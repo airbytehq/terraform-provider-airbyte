@@ -19,8 +19,8 @@ resource "airbyte_destination_convex" "my_destination_convex" {
     deployment_url   = "https://murky-swan-635.convex.cloud"
     destination_type = "convex"
   }
-  name         = "Melba Toy"
-  workspace_id = "8b711e5b-7fd2-4ed0-a892-1cddc692601f"
+  name         = "Joyce Kertzmann"
+  workspace_id = "4c8b711e-5b7f-4d2e-9028-921cddc69260"
 }
 ```
 

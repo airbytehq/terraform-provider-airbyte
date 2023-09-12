@@ -8,9 +8,9 @@ resource "airbyte_source_shopify" "my_source_shopify" {
     }
     shop        = "my-store"
     source_type = "shopify"
-    start_date  = "2021-01-01"
+    start_date  = "2022-01-02"
   }
-  name         = "Rhonda Gislason"
+  name         = "Randal Kris"
   secret_id    = "...my_secret_id..."
-  workspace_id = "619039da-cd38-4ed0-9c67-1dc7f1e3af15"
+  workspace_id = "df54fdd5-ea95-4433-98da-fb42a8d63388"
 }
