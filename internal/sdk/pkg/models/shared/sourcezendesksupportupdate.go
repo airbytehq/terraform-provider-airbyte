@@ -210,15 +210,6 @@ func CreateSourceZendeskSupportUpdateAuthenticationSourceZendeskSupportUpdateAut
 func (u *SourceZendeskSupportUpdateAuthentication) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceZendeskSupportUpdateAuthenticationOAuth20 := new(SourceZendeskSupportUpdateAuthenticationOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceZendeskSupportUpdateAuthenticationOAuth20); err == nil {
-		u.SourceZendeskSupportUpdateAuthenticationOAuth20 = sourceZendeskSupportUpdateAuthenticationOAuth20
-		u.Type = SourceZendeskSupportUpdateAuthenticationTypeSourceZendeskSupportUpdateAuthenticationOAuth20
-		return nil
-	}
-
 	sourceZendeskSupportUpdateAuthenticationAPIToken := new(SourceZendeskSupportUpdateAuthenticationAPIToken)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -228,16 +219,25 @@ func (u *SourceZendeskSupportUpdateAuthentication) UnmarshalJSON(data []byte) er
 		return nil
 	}
 
+	sourceZendeskSupportUpdateAuthenticationOAuth20 := new(SourceZendeskSupportUpdateAuthenticationOAuth20)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceZendeskSupportUpdateAuthenticationOAuth20); err == nil {
+		u.SourceZendeskSupportUpdateAuthenticationOAuth20 = sourceZendeskSupportUpdateAuthenticationOAuth20
+		u.Type = SourceZendeskSupportUpdateAuthenticationTypeSourceZendeskSupportUpdateAuthenticationOAuth20
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceZendeskSupportUpdateAuthentication) MarshalJSON() ([]byte, error) {
-	if u.SourceZendeskSupportUpdateAuthenticationOAuth20 != nil {
-		return json.Marshal(u.SourceZendeskSupportUpdateAuthenticationOAuth20)
-	}
-
 	if u.SourceZendeskSupportUpdateAuthenticationAPIToken != nil {
 		return json.Marshal(u.SourceZendeskSupportUpdateAuthenticationAPIToken)
+	}
+
+	if u.SourceZendeskSupportUpdateAuthenticationOAuth20 != nil {
+		return json.Marshal(u.SourceZendeskSupportUpdateAuthenticationOAuth20)
 	}
 
 	return nil, nil
@@ -249,7 +249,7 @@ type SourceZendeskSupportUpdate struct {
 	// Makes each stream read a single page of data.
 	IgnorePagination *bool `json:"ignore_pagination,omitempty"`
 	// The UTC date and time from which you'd like to replicate data, in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated.
-	StartDate time.Time `json:"start_date"`
+	StartDate *time.Time `json:"start_date,omitempty"`
 	// This is your unique Zendesk subdomain that can be found in your account URL. For example, in https://MY_SUBDOMAIN.zendesk.com/, MY_SUBDOMAIN is the value of your subdomain.
 	Subdomain string `json:"subdomain"`
 }

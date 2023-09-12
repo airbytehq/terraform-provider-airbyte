@@ -36,8 +36,10 @@ type SourcePosthog struct {
 	// API Key. See the <a href="https://docs.airbyte.com/integrations/sources/posthog">docs</a> for information on how to generate this key.
 	APIKey string `json:"api_key"`
 	// Base PostHog url. Defaults to PostHog Cloud (https://app.posthog.com).
-	BaseURL    *string              `json:"base_url,omitempty"`
-	SourceType SourcePosthogPosthog `json:"sourceType"`
+	BaseURL *string `json:"base_url,omitempty"`
+	// Set lower value in case of failing long running sync of events stream.
+	EventsTimeStep *int64               `json:"events_time_step,omitempty"`
+	SourceType     SourcePosthogPosthog `json:"sourceType"`
 	// The date from which you'd like to replicate the data. Any data before this date will not be replicated.
 	StartDate time.Time `json:"start_date"`
 }

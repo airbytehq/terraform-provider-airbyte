@@ -34,7 +34,7 @@ func (e *SourceInsightlyInsightly) UnmarshalJSON(data []byte) error {
 type SourceInsightly struct {
 	SourceType SourceInsightlyInsightly `json:"sourceType"`
 	// The date from which you'd like to replicate data for Insightly in the format YYYY-MM-DDT00:00:00Z. All data generated after this date will be replicated. Note that it will be used only for incremental streams.
-	StartDate string `json:"start_date"`
+	StartDate *string `json:"start_date"`
 	// Your Insightly API token.
-	Token string `json:"token"`
+	Token *string `json:"token"`
 }

@@ -4,12 +4,12 @@ resource "airbyte_source_sentry" "my_source_sentry" {
     discover_fields = [
       "{ \"see\": \"documentation\" }",
     ]
-    hostname     = "imperfect-creator.name"
+    hostname     = "muted-ingredient.biz"
     organization = "...my_organization..."
     project      = "...my_project..."
     source_type  = "sentry"
   }
-  name         = "Laurie Farrell"
+  name         = "Krystal Quitzon"
   secret_id    = "...my_secret_id..."
-  workspace_id = "12ab2521-b9f2-4e07-a467-b8a40bc05fab"
+  workspace_id = "4c59f0a5-6ceb-4cad-a29c-a79181c95671"
 }

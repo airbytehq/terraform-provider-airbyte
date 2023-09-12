@@ -3,7 +3,7 @@ resource "airbyte_source_secoda" "my_source_secoda" {
     api_key     = "...my_api_key..."
     source_type = "secoda"
   }
-  name         = "Ignacio Sporer"
+  name         = "Brett Leannon I"
   secret_id    = "...my_secret_id..."
-  workspace_id = "050d38dc-3ce1-4854-b2f9-ee69166a8be3"
+  workspace_id = "ad421bd4-3d1f-40cb-8a00-03eb22d9b3a7"
 }

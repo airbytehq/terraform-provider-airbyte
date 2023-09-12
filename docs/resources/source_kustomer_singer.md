@@ -19,9 +19,9 @@ resource "airbyte_source_kustomer_singer" "my_source_kustomersinger" {
     source_type = "kustomer-singer"
     start_date  = "2019-01-01T00:00:00Z"
   }
-  name         = "Camille Johnston"
+  name         = "Bobbie Jacobs"
   secret_id    = "...my_secret_id..."
-  workspace_id = "3c4cce4b-6d76-496f-b3c5-747501357e44"
+  workspace_id = "3c574750-1357-4e44-b51f-8b084c3197e1"
 }
 ```
 

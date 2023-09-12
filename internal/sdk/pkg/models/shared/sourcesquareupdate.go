@@ -111,15 +111,6 @@ func CreateSourceSquareUpdateAuthenticationSourceSquareUpdateAuthenticationAPIKe
 func (u *SourceSquareUpdateAuthentication) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceSquareUpdateAuthenticationOauthAuthentication := new(SourceSquareUpdateAuthenticationOauthAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceSquareUpdateAuthenticationOauthAuthentication); err == nil {
-		u.SourceSquareUpdateAuthenticationOauthAuthentication = sourceSquareUpdateAuthenticationOauthAuthentication
-		u.Type = SourceSquareUpdateAuthenticationTypeSourceSquareUpdateAuthenticationOauthAuthentication
-		return nil
-	}
-
 	sourceSquareUpdateAuthenticationAPIKey := new(SourceSquareUpdateAuthenticationAPIKey)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -129,16 +120,25 @@ func (u *SourceSquareUpdateAuthentication) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	sourceSquareUpdateAuthenticationOauthAuthentication := new(SourceSquareUpdateAuthenticationOauthAuthentication)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceSquareUpdateAuthenticationOauthAuthentication); err == nil {
+		u.SourceSquareUpdateAuthenticationOauthAuthentication = sourceSquareUpdateAuthenticationOauthAuthentication
+		u.Type = SourceSquareUpdateAuthenticationTypeSourceSquareUpdateAuthenticationOauthAuthentication
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceSquareUpdateAuthentication) MarshalJSON() ([]byte, error) {
-	if u.SourceSquareUpdateAuthenticationOauthAuthentication != nil {
-		return json.Marshal(u.SourceSquareUpdateAuthenticationOauthAuthentication)
-	}
-
 	if u.SourceSquareUpdateAuthenticationAPIKey != nil {
 		return json.Marshal(u.SourceSquareUpdateAuthenticationAPIKey)
+	}
+
+	if u.SourceSquareUpdateAuthenticationOauthAuthentication != nil {
+		return json.Marshal(u.SourceSquareUpdateAuthenticationOauthAuthentication)
 	}
 
 	return nil, nil

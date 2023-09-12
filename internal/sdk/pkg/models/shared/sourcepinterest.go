@@ -109,15 +109,6 @@ func CreateSourcePinterestAuthorizationMethodSourcePinterestAuthorizationMethodA
 func (u *SourcePinterestAuthorizationMethod) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourcePinterestAuthorizationMethodOAuth20 := new(SourcePinterestAuthorizationMethodOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourcePinterestAuthorizationMethodOAuth20); err == nil {
-		u.SourcePinterestAuthorizationMethodOAuth20 = sourcePinterestAuthorizationMethodOAuth20
-		u.Type = SourcePinterestAuthorizationMethodTypeSourcePinterestAuthorizationMethodOAuth20
-		return nil
-	}
-
 	sourcePinterestAuthorizationMethodAccessToken := new(SourcePinterestAuthorizationMethodAccessToken)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -127,16 +118,25 @@ func (u *SourcePinterestAuthorizationMethod) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	sourcePinterestAuthorizationMethodOAuth20 := new(SourcePinterestAuthorizationMethodOAuth20)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourcePinterestAuthorizationMethodOAuth20); err == nil {
+		u.SourcePinterestAuthorizationMethodOAuth20 = sourcePinterestAuthorizationMethodOAuth20
+		u.Type = SourcePinterestAuthorizationMethodTypeSourcePinterestAuthorizationMethodOAuth20
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourcePinterestAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.SourcePinterestAuthorizationMethodOAuth20 != nil {
-		return json.Marshal(u.SourcePinterestAuthorizationMethodOAuth20)
-	}
-
 	if u.SourcePinterestAuthorizationMethodAccessToken != nil {
 		return json.Marshal(u.SourcePinterestAuthorizationMethodAccessToken)
+	}
+
+	if u.SourcePinterestAuthorizationMethodOAuth20 != nil {
+		return json.Marshal(u.SourcePinterestAuthorizationMethodOAuth20)
 	}
 
 	return nil, nil

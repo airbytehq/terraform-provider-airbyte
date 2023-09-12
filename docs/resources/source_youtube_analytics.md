@@ -22,9 +22,9 @@ resource "airbyte_source_youtube_analytics" "my_source_youtubeanalytics" {
     }
     source_type = "youtube-analytics"
   }
-  name         = "Dr. Kara Lowe"
+  name         = "Tommy Rippin"
   secret_id    = "...my_secret_id..."
-  workspace_id = "10f8c23d-f931-4da3-adb5-1fad94acc943"
+  workspace_id = "707f06b2-8ecc-4864-9238-6f62c969c4cc"
 }
 ```
 

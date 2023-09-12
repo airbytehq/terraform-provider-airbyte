@@ -32,7 +32,7 @@ func (e *SourceLemlistLemlist) UnmarshalJSON(data []byte) error {
 }
 
 type SourceLemlist struct {
-	// Lemlist API key.
+	// Lemlist API key,
 	APIKey     string               `json:"api_key"`
 	SourceType SourceLemlistLemlist `json:"sourceType"`
 }

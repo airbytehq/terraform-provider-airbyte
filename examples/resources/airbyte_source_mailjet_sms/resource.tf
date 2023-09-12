@@ -5,7 +5,7 @@ resource "airbyte_source_mailjet_sms" "my_source_mailjetsms" {
     start_date  = 1666261656
     token       = "...my_token..."
   }
-  name         = "Eleanor Gibson"
+  name         = "Dr. Eloise Cronin"
   secret_id    = "...my_secret_id..."
-  workspace_id = "379f3fb2-7e21-4f86-a657-b36fc6b9f587"
+  workspace_id = "62657b36-fc6b-49f5-87ce-525c67641a83"
 }

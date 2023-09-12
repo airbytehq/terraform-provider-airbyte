@@ -20,8 +20,8 @@ resource "airbyte_destination_gcs" "my_destination_gcs" {
     }
     gcs_bucket_name   = "airbyte_sync"
     gcs_bucket_path   = "data_sync/test"
-    gcs_bucket_region = "us-east1"
+    gcs_bucket_region = "us-west1"
   }
-  name         = "Neal Schroeder"
-  workspace_id = "6c8dd6b1-4429-4074-b477-8a7bd466d28c"
+  name         = "Miss Dennis Friesen"
+  workspace_id = "c366c8dd-6b14-4429-8747-4778a7bd466d"
 }

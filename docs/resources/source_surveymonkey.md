@@ -28,9 +28,9 @@ resource "airbyte_source_surveymonkey" "my_source_surveymonkey" {
       "...",
     ]
   }
-  name         = "Cecil Wintheiser"
+  name         = "Pearl Trantow"
   secret_id    = "...my_secret_id..."
-  workspace_id = "b20fe5d9-11cb-4fe7-89ca-f45a27f69e2c"
+  workspace_id = "b8955d41-3e13-4a48-a310-907bd354c092"
 }
 ```
 

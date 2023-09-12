@@ -19,9 +19,9 @@ resource "airbyte_source_insightly" "my_source_insightly" {
     start_date  = "2021-03-01T00:00:00Z"
     token       = "...my_token..."
   }
-  name         = "Arturo Marks"
+  name         = "Dana Lindgren"
   secret_id    = "...my_secret_id..."
-  workspace_id = "8dbda6a6-1efa-4219-8258-fd0a9eba47f7"
+  workspace_id = "0a9eba47-f7d3-4ef0-8964-0d6a1831c87a"
 }
 ```
 

@@ -24,12 +24,12 @@ resource "airbyte_source_pinterest" "my_source_pinterest" {
     source_type = "pinterest"
     start_date  = "2022-07-28"
     status = [
-      "PAUSED",
+      "ACTIVE",
     ]
   }
-  name         = "Jordan Hegmann"
+  name         = "Nathan Bauch"
   secret_id    = "...my_secret_id..."
-  workspace_id = "60591d74-5e3c-4205-9c9c-3f567e0e2527"
+  workspace_id = "3df5b671-9890-4f42-a4bb-438d85b26059"
 }
 ```
 

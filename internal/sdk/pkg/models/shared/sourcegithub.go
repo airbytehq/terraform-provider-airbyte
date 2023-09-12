@@ -111,15 +111,6 @@ func CreateSourceGithubAuthenticationSourceGithubAuthenticationPersonalAccessTok
 func (u *SourceGithubAuthentication) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceGithubAuthenticationOAuth := new(SourceGithubAuthenticationOAuth)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceGithubAuthenticationOAuth); err == nil {
-		u.SourceGithubAuthenticationOAuth = sourceGithubAuthenticationOAuth
-		u.Type = SourceGithubAuthenticationTypeSourceGithubAuthenticationOAuth
-		return nil
-	}
-
 	sourceGithubAuthenticationPersonalAccessToken := new(SourceGithubAuthenticationPersonalAccessToken)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -129,16 +120,25 @@ func (u *SourceGithubAuthentication) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	sourceGithubAuthenticationOAuth := new(SourceGithubAuthenticationOAuth)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceGithubAuthenticationOAuth); err == nil {
+		u.SourceGithubAuthenticationOAuth = sourceGithubAuthenticationOAuth
+		u.Type = SourceGithubAuthenticationTypeSourceGithubAuthenticationOAuth
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceGithubAuthentication) MarshalJSON() ([]byte, error) {
-	if u.SourceGithubAuthenticationOAuth != nil {
-		return json.Marshal(u.SourceGithubAuthenticationOAuth)
-	}
-
 	if u.SourceGithubAuthenticationPersonalAccessToken != nil {
 		return json.Marshal(u.SourceGithubAuthenticationPersonalAccessToken)
+	}
+
+	if u.SourceGithubAuthenticationOAuth != nil {
+		return json.Marshal(u.SourceGithubAuthenticationOAuth)
 	}
 
 	return nil, nil

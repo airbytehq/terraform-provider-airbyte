@@ -271,21 +271,21 @@ func (u *DestinationDatabricksDataSource) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	destinationDatabricksDataSourceAmazonS3 := new(DestinationDatabricksDataSourceAmazonS3)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationDatabricksDataSourceAmazonS3); err == nil {
-		u.DestinationDatabricksDataSourceAmazonS3 = destinationDatabricksDataSourceAmazonS3
-		u.Type = DestinationDatabricksDataSourceTypeDestinationDatabricksDataSourceAmazonS3
-		return nil
-	}
-
 	destinationDatabricksDataSourceAzureBlobStorage := new(DestinationDatabricksDataSourceAzureBlobStorage)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
 	if err := d.Decode(&destinationDatabricksDataSourceAzureBlobStorage); err == nil {
 		u.DestinationDatabricksDataSourceAzureBlobStorage = destinationDatabricksDataSourceAzureBlobStorage
 		u.Type = DestinationDatabricksDataSourceTypeDestinationDatabricksDataSourceAzureBlobStorage
+		return nil
+	}
+
+	destinationDatabricksDataSourceAmazonS3 := new(DestinationDatabricksDataSourceAmazonS3)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&destinationDatabricksDataSourceAmazonS3); err == nil {
+		u.DestinationDatabricksDataSourceAmazonS3 = destinationDatabricksDataSourceAmazonS3
+		u.Type = DestinationDatabricksDataSourceTypeDestinationDatabricksDataSourceAmazonS3
 		return nil
 	}
 
@@ -297,12 +297,12 @@ func (u DestinationDatabricksDataSource) MarshalJSON() ([]byte, error) {
 		return json.Marshal(u.DestinationDatabricksDataSourceRecommendedManagedTables)
 	}
 
-	if u.DestinationDatabricksDataSourceAmazonS3 != nil {
-		return json.Marshal(u.DestinationDatabricksDataSourceAmazonS3)
-	}
-
 	if u.DestinationDatabricksDataSourceAzureBlobStorage != nil {
 		return json.Marshal(u.DestinationDatabricksDataSourceAzureBlobStorage)
+	}
+
+	if u.DestinationDatabricksDataSourceAmazonS3 != nil {
+		return json.Marshal(u.DestinationDatabricksDataSourceAmazonS3)
 	}
 
 	return nil, nil

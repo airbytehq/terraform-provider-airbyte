@@ -113,15 +113,6 @@ func CreateSourceGoogleAnalyticsV4CredentialsSourceGoogleAnalyticsV4CredentialsS
 func (u *SourceGoogleAnalyticsV4Credentials) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth := new(SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth); err == nil {
-		u.SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth = sourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth
-		u.Type = SourceGoogleAnalyticsV4CredentialsTypeSourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth
-		return nil
-	}
-
 	sourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthentication := new(SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthentication)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -131,16 +122,25 @@ func (u *SourceGoogleAnalyticsV4Credentials) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	sourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth := new(SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth); err == nil {
+		u.SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth = sourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth
+		u.Type = SourceGoogleAnalyticsV4CredentialsTypeSourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceGoogleAnalyticsV4Credentials) MarshalJSON() ([]byte, error) {
-	if u.SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth != nil {
-		return json.Marshal(u.SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth)
-	}
-
 	if u.SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthentication != nil {
 		return json.Marshal(u.SourceGoogleAnalyticsV4CredentialsServiceAccountKeyAuthentication)
+	}
+
+	if u.SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth != nil {
+		return json.Marshal(u.SourceGoogleAnalyticsV4CredentialsAuthenticateViaGoogleOauth)
 	}
 
 	return nil, nil

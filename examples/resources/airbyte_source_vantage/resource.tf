@@ -3,7 +3,7 @@ resource "airbyte_source_vantage" "my_source_vantage" {
     access_token = "...my_access_token..."
     source_type  = "vantage"
   }
-  name         = "Veronica Pagac Sr."
+  name         = "Corey Pacocha"
   secret_id    = "...my_secret_id..."
-  workspace_id = "38e1a735-ac26-4ae3-bbef-971a8f46bca1"
+  workspace_id = "6487c5fc-2b86-42a0-8bef-69e100157630"
 }

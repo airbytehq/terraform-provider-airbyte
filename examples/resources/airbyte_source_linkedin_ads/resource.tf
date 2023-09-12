@@ -5,8 +5,8 @@ resource "airbyte_source_linkedin_ads" "my_source_linkedinads" {
     ]
     ad_analytics_reports = [
       {
-        name             = "Mable Stroman"
-        pivot_by         = "MEMBER_COMPANY_SIZE"
+        name             = "Kara Rohan"
+        pivot_by         = "MEMBER_REGION_V2"
         time_granularity = "MONTHLY"
       },
     ]
@@ -19,7 +19,7 @@ resource "airbyte_source_linkedin_ads" "my_source_linkedinads" {
     source_type = "linkedin-ads"
     start_date  = "2021-05-17"
   }
-  name         = "Leigh Kuhic"
+  name         = "Elsa Adams"
   secret_id    = "...my_secret_id..."
-  workspace_id = "1cbe6d95-02f0-4ea9-b0b6-9f7ac2f72f88"
+  workspace_id = "930b69f7-ac2f-472f-8850-090491160820"
 }

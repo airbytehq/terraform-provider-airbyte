@@ -8,7 +8,7 @@ resource "airbyte_source_firebolt" "my_source_firebolt" {
     source_type = "firebolt"
     username    = "username@email.com"
   }
-  name         = "Hector Yundt"
+  name         = "Donna Abshire"
   secret_id    = "...my_secret_id..."
-  workspace_id = "d7993900-66a6-4d2d-8003-55338cec086f"
+  workspace_id = "5338cec0-86fa-421e-9152-cb3119167b8e"
 }

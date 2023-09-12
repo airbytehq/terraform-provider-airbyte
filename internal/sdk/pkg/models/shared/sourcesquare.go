@@ -111,15 +111,6 @@ func CreateSourceSquareAuthenticationSourceSquareAuthenticationAPIKey(sourceSqua
 func (u *SourceSquareAuthentication) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceSquareAuthenticationOauthAuthentication := new(SourceSquareAuthenticationOauthAuthentication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceSquareAuthenticationOauthAuthentication); err == nil {
-		u.SourceSquareAuthenticationOauthAuthentication = sourceSquareAuthenticationOauthAuthentication
-		u.Type = SourceSquareAuthenticationTypeSourceSquareAuthenticationOauthAuthentication
-		return nil
-	}
-
 	sourceSquareAuthenticationAPIKey := new(SourceSquareAuthenticationAPIKey)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -129,16 +120,25 @@ func (u *SourceSquareAuthentication) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	sourceSquareAuthenticationOauthAuthentication := new(SourceSquareAuthenticationOauthAuthentication)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceSquareAuthenticationOauthAuthentication); err == nil {
+		u.SourceSquareAuthenticationOauthAuthentication = sourceSquareAuthenticationOauthAuthentication
+		u.Type = SourceSquareAuthenticationTypeSourceSquareAuthenticationOauthAuthentication
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceSquareAuthentication) MarshalJSON() ([]byte, error) {
-	if u.SourceSquareAuthenticationOauthAuthentication != nil {
-		return json.Marshal(u.SourceSquareAuthenticationOauthAuthentication)
-	}
-
 	if u.SourceSquareAuthenticationAPIKey != nil {
 		return json.Marshal(u.SourceSquareAuthenticationAPIKey)
+	}
+
+	if u.SourceSquareAuthenticationOauthAuthentication != nil {
+		return json.Marshal(u.SourceSquareAuthenticationOauthAuthentication)
 	}
 
 	return nil, nil

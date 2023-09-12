@@ -162,6 +162,10 @@ func (r *SourceAuth0DataSource) Schema(ctx context.Context, req datasource.Schem
 						},
 						Description: `must be one of ["auth0"]`,
 					},
+					"start_date": schema.StringAttribute{
+						Computed:    true,
+						Description: `UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.`,
+					},
 				},
 			},
 			"name": schema.StringAttribute{

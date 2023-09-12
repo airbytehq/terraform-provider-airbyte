@@ -9,12 +9,12 @@ resource "airbyte_source_slack" "my_source_slack" {
         option_title = "API Token Credentials"
       }
     }
-    join_channels   = true
-    lookback_window = 14
+    join_channels   = false
+    lookback_window = 7
     source_type     = "slack"
     start_date      = "2017-01-25T00:00:00Z"
   }
-  name         = "Eduardo Gottlieb"
+  name         = "Dr. Jamie Wintheiser"
   secret_id    = "...my_secret_id..."
-  workspace_id = "43664a8f-0af8-4c69-9d73-2d9fbaf9476a"
+  workspace_id = "af15920c-90d1-4b49-81f2-bd89c8a32639"
 }

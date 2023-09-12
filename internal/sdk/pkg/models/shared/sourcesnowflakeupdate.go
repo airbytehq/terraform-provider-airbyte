@@ -112,15 +112,6 @@ func CreateSourceSnowflakeUpdateAuthorizationMethodSourceSnowflakeUpdateAuthoriz
 func (u *SourceSnowflakeUpdateAuthorizationMethod) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceSnowflakeUpdateAuthorizationMethodOAuth20 := new(SourceSnowflakeUpdateAuthorizationMethodOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceSnowflakeUpdateAuthorizationMethodOAuth20); err == nil {
-		u.SourceSnowflakeUpdateAuthorizationMethodOAuth20 = sourceSnowflakeUpdateAuthorizationMethodOAuth20
-		u.Type = SourceSnowflakeUpdateAuthorizationMethodTypeSourceSnowflakeUpdateAuthorizationMethodOAuth20
-		return nil
-	}
-
 	sourceSnowflakeUpdateAuthorizationMethodUsernameAndPassword := new(SourceSnowflakeUpdateAuthorizationMethodUsernameAndPassword)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -130,16 +121,25 @@ func (u *SourceSnowflakeUpdateAuthorizationMethod) UnmarshalJSON(data []byte) er
 		return nil
 	}
 
+	sourceSnowflakeUpdateAuthorizationMethodOAuth20 := new(SourceSnowflakeUpdateAuthorizationMethodOAuth20)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceSnowflakeUpdateAuthorizationMethodOAuth20); err == nil {
+		u.SourceSnowflakeUpdateAuthorizationMethodOAuth20 = sourceSnowflakeUpdateAuthorizationMethodOAuth20
+		u.Type = SourceSnowflakeUpdateAuthorizationMethodTypeSourceSnowflakeUpdateAuthorizationMethodOAuth20
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceSnowflakeUpdateAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceSnowflakeUpdateAuthorizationMethodOAuth20 != nil {
-		return json.Marshal(u.SourceSnowflakeUpdateAuthorizationMethodOAuth20)
-	}
-
 	if u.SourceSnowflakeUpdateAuthorizationMethodUsernameAndPassword != nil {
 		return json.Marshal(u.SourceSnowflakeUpdateAuthorizationMethodUsernameAndPassword)
+	}
+
+	if u.SourceSnowflakeUpdateAuthorizationMethodOAuth20 != nil {
+		return json.Marshal(u.SourceSnowflakeUpdateAuthorizationMethodOAuth20)
 	}
 
 	return nil, nil

@@ -4,12 +4,12 @@ resource "airbyte_source_google_directory" "my_source_googledirectory" {
       source_google_directory_google_credentials_service_account_key = {
         credentials_json  = "...my_credentials_json..."
         credentials_title = "Service accounts"
-        email             = "Juvenal.Frami64@hotmail.com"
+        email             = "Ayla.Zulauf@hotmail.com"
       }
     }
     source_type = "google-directory"
   }
-  name         = "Kelvin Kshlerin"
+  name         = "Mrs. Allen Lockman"
   secret_id    = "...my_secret_id..."
-  workspace_id = "9d22e8c1-f849-4382-9fdc-42c876c2c2df"
+  workspace_id = "dc42c876-c2c2-4dfb-8cfc-1c76230f841f"
 }

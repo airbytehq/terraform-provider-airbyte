@@ -20,8 +20,8 @@ resource "airbyte_destination_cumulio" "my_destination_cumulio" {
     api_token        = "...my_api_token..."
     destination_type = "cumulio"
   }
-  name         = "Clyde Kling"
-  workspace_id = "0d5f0d30-c5fb-4b25-8705-3202c73d5fe9"
+  name         = "Ebony Predovic"
+  workspace_id = "6b0d5f0d-30c5-4fbb-a587-053202c73d5f"
 }
 ```
 

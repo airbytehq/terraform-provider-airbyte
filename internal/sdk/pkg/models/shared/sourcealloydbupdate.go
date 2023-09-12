@@ -268,21 +268,21 @@ func (u *SourceAlloydbUpdateReplicationMethod) UnmarshalJSON(data []byte) error 
 		return nil
 	}
 
-	sourceAlloydbUpdateReplicationMethodLogicalReplicationCDC := new(SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceAlloydbUpdateReplicationMethodLogicalReplicationCDC); err == nil {
-		u.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC = sourceAlloydbUpdateReplicationMethodLogicalReplicationCDC
-		u.Type = SourceAlloydbUpdateReplicationMethodTypeSourceAlloydbUpdateReplicationMethodLogicalReplicationCDC
-		return nil
-	}
-
 	sourceAlloydbUpdateReplicationMethodStandard := new(SourceAlloydbUpdateReplicationMethodStandard)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
 	if err := d.Decode(&sourceAlloydbUpdateReplicationMethodStandard); err == nil {
 		u.SourceAlloydbUpdateReplicationMethodStandard = sourceAlloydbUpdateReplicationMethodStandard
 		u.Type = SourceAlloydbUpdateReplicationMethodTypeSourceAlloydbUpdateReplicationMethodStandard
+		return nil
+	}
+
+	sourceAlloydbUpdateReplicationMethodLogicalReplicationCDC := new(SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceAlloydbUpdateReplicationMethodLogicalReplicationCDC); err == nil {
+		u.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC = sourceAlloydbUpdateReplicationMethodLogicalReplicationCDC
+		u.Type = SourceAlloydbUpdateReplicationMethodTypeSourceAlloydbUpdateReplicationMethodLogicalReplicationCDC
 		return nil
 	}
 
@@ -294,12 +294,12 @@ func (u SourceAlloydbUpdateReplicationMethod) MarshalJSON() ([]byte, error) {
 		return json.Marshal(u.SourceAlloydbUpdateReplicationMethodStandardXmin)
 	}
 
-	if u.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC != nil {
-		return json.Marshal(u.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC)
-	}
-
 	if u.SourceAlloydbUpdateReplicationMethodStandard != nil {
 		return json.Marshal(u.SourceAlloydbUpdateReplicationMethodStandard)
+	}
+
+	if u.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC != nil {
+		return json.Marshal(u.SourceAlloydbUpdateReplicationMethodLogicalReplicationCDC)
 	}
 
 	return nil, nil

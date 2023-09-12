@@ -15,13 +15,15 @@ SourceIntercom Resource
 ```terraform
 resource "airbyte_source_intercom" "my_source_intercom" {
   configuration = {
-    access_token = "...my_access_token..."
-    source_type  = "intercom"
-    start_date   = "2020-11-16T00:00:00Z"
+    access_token  = "...my_access_token..."
+    client_id     = "...my_client_id..."
+    client_secret = "...my_client_secret..."
+    source_type   = "intercom"
+    start_date    = "2020-11-16T00:00:00Z"
   }
-  name         = "Emma Lueilwitz"
+  name         = "Darnell Watsica"
   secret_id    = "...my_secret_id..."
-  workspace_id = "977a0ef2-f536-4028-afee-f934152ed7e2"
+  workspace_id = "934152ed-7e25-43f4-8157-deaa7170f445"
 }
 ```
 
@@ -51,5 +53,10 @@ Required:
 - `access_token` (String) Access token for making authenticated requests. See the <a href="https://developers.intercom.com/building-apps/docs/authentication-types#how-to-get-your-access-token">Intercom docs</a> for more information.
 - `source_type` (String) must be one of ["intercom"]
 - `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
+
+Optional:
+
+- `client_id` (String) Client Id for your Intercom application.
+- `client_secret` (String) Client Secret for your Intercom application.
 
 

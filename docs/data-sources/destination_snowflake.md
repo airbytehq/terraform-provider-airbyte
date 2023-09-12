@@ -41,10 +41,9 @@ Read-Only:
 - `destination_type` (String) must be one of ["snowflake"]
 - `host` (String) Enter your Snowflake account's <a href="https://docs.snowflake.com/en/user-guide/admin-account-identifier.html#using-an-account-locator-as-an-identifier">locator</a> (in the format <account_locator>.<region>.<cloud>.snowflakecomputing.com)
 - `jdbc_url_params` (String) Enter the additional properties to pass to the JDBC URL string when connecting to the database (formatted as key=value pairs separated by the symbol &). Example: key1=value1&key2=value2&key3=value3
-- `raw_data_schema` (String) (Beta) The schema to write raw tables into
+- `raw_data_schema` (String) The schema to write raw tables into
 - `role` (String) Enter the <a href="https://docs.snowflake.com/en/user-guide/security-access-control-overview.html#roles">role</a> that you want to use to access Snowflake
 - `schema` (String) Enter the name of the default <a href="https://docs.snowflake.com/en/sql-reference/ddl-database.html#database-schema-share-ddl">schema</a>
-- `use_1s1t_format` (Boolean) (Beta) Use <a href="https://github.com/airbytehq/airbyte/issues/26028" target="_blank">Destinations V2</a>. Contact Airbyte Support to participate in the beta program.
 - `username` (String) Enter the name of the user you want to use to access the database
 - `warehouse` (String) Enter the name of the <a href="https://docs.snowflake.com/en/user-guide/warehouses-overview.html#overview-of-warehouses">warehouse</a> that you want to sync data into
 

@@ -8,8 +8,9 @@ resource "airbyte_source_auth0" "my_source_auth0" {
       }
     }
     source_type = "auth0"
+    start_date  = "2023-08-05T00:43:59.244Z"
   }
-  name         = "Roosevelt Schultz"
+  name         = "Willard McLaughlin"
   secret_id    = "...my_secret_id..."
-  workspace_id = "5ff2e4b2-7537-4a8c-99e7-319c177d525f"
+  workspace_id = "75dad636-c600-4503-98bb-31180f739ae9"
 }

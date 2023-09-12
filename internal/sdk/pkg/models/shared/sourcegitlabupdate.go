@@ -113,15 +113,6 @@ func CreateSourceGitlabUpdateAuthorizationMethodSourceGitlabUpdateAuthorizationM
 func (u *SourceGitlabUpdateAuthorizationMethod) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceGitlabUpdateAuthorizationMethodOAuth20 := new(SourceGitlabUpdateAuthorizationMethodOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceGitlabUpdateAuthorizationMethodOAuth20); err == nil {
-		u.SourceGitlabUpdateAuthorizationMethodOAuth20 = sourceGitlabUpdateAuthorizationMethodOAuth20
-		u.Type = SourceGitlabUpdateAuthorizationMethodTypeSourceGitlabUpdateAuthorizationMethodOAuth20
-		return nil
-	}
-
 	sourceGitlabUpdateAuthorizationMethodPrivateToken := new(SourceGitlabUpdateAuthorizationMethodPrivateToken)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -131,16 +122,25 @@ func (u *SourceGitlabUpdateAuthorizationMethod) UnmarshalJSON(data []byte) error
 		return nil
 	}
 
+	sourceGitlabUpdateAuthorizationMethodOAuth20 := new(SourceGitlabUpdateAuthorizationMethodOAuth20)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceGitlabUpdateAuthorizationMethodOAuth20); err == nil {
+		u.SourceGitlabUpdateAuthorizationMethodOAuth20 = sourceGitlabUpdateAuthorizationMethodOAuth20
+		u.Type = SourceGitlabUpdateAuthorizationMethodTypeSourceGitlabUpdateAuthorizationMethodOAuth20
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceGitlabUpdateAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceGitlabUpdateAuthorizationMethodOAuth20 != nil {
-		return json.Marshal(u.SourceGitlabUpdateAuthorizationMethodOAuth20)
-	}
-
 	if u.SourceGitlabUpdateAuthorizationMethodPrivateToken != nil {
 		return json.Marshal(u.SourceGitlabUpdateAuthorizationMethodPrivateToken)
+	}
+
+	if u.SourceGitlabUpdateAuthorizationMethodOAuth20 != nil {
+		return json.Marshal(u.SourceGitlabUpdateAuthorizationMethodOAuth20)
 	}
 
 	return nil, nil

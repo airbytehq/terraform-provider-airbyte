@@ -44,6 +44,7 @@ Read-Only:
 - `base_url` (String) The Authentication API is served over HTTPS. All URLs referenced in the documentation have the following base `https://YOUR_DOMAIN`
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
 - `source_type` (String) must be one of ["auth0"]
+- `start_date` (String) UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
 
 <a id="nestedatt--configuration--credentials"></a>
 ### Nested Schema for `configuration.credentials`

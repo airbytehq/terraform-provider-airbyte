@@ -16,25 +16,25 @@ SourceGnews Resource
 resource "airbyte_source_gnews" "my_source_gnews" {
   configuration = {
     api_key  = "...my_api_key..."
-    country  = "ca"
+    country  = "ie"
     end_date = "2022-08-21 16:27:09"
     in = [
+      "content",
+    ]
+    language = "fr"
+    nullable = [
       "description",
     ]
-    language = "en"
-    nullable = [
-      "title",
-    ]
-    query               = "Microsoft Windows 10"
+    query               = "Apple AND NOT iPhone"
     sortby              = "publishedAt"
     source_type         = "gnews"
     start_date          = "2022-08-21 16:27:09"
-    top_headlines_query = "Apple OR Microsoft"
-    top_headlines_topic = "technology"
+    top_headlines_query = "Apple AND NOT iPhone"
+    top_headlines_topic = "business"
   }
-  name         = "Mercedes Schiller"
+  name         = "Katrina Considine"
   secret_id    = "...my_secret_id..."
-  workspace_id = "89df975e-3566-4860-92e9-c3ddc5f111de"
+  workspace_id = "c3ddc5f1-11de-4a10-a6d5-41a4d190feb2"
 }
 ```
 

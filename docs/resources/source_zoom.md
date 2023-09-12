@@ -18,9 +18,9 @@ resource "airbyte_source_zoom" "my_source_zoom" {
     jwt_token   = "...my_jwt_token..."
     source_type = "zoom"
   }
-  name         = "Charlene Abbott"
+  name         = "Alexis Gutmann IV"
   secret_id    = "...my_secret_id..."
-  workspace_id = "f375b442-8282-41fd-b2f6-9e59267c71cc"
+  workspace_id = "0aa10418-6ec7-459e-82f3-702c5c8e2d30"
 }
 ```
 

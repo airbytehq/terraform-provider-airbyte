@@ -16,7 +16,7 @@ func (r *SourceLinkedinAdsResourceModel) ToCreateSDKType() *shared.SourceLinkedi
 	var adAnalyticsReports []shared.SourceLinkedinAdsAdAnalyticsReportConfiguration = nil
 	for _, adAnalyticsReportsItem := range r.Configuration.AdAnalyticsReports {
 		name := adAnalyticsReportsItem.Name.ValueString()
-		pivotBy := shared.SourceLinkedinAdsAdAnalyticsReportConfigurationPivotBy(adAnalyticsReportsItem.PivotBy.ValueString())
+		pivotBy := shared.SourceLinkedinAdsAdAnalyticsReportConfigurationPivotCategory(adAnalyticsReportsItem.PivotBy.ValueString())
 		timeGranularity := shared.SourceLinkedinAdsAdAnalyticsReportConfigurationTimeGranularity(adAnalyticsReportsItem.TimeGranularity.ValueString())
 		adAnalyticsReports = append(adAnalyticsReports, shared.SourceLinkedinAdsAdAnalyticsReportConfiguration{
 			Name:            name,
@@ -108,7 +108,7 @@ func (r *SourceLinkedinAdsResourceModel) ToUpdateSDKType() *shared.SourceLinkedi
 	var adAnalyticsReports []shared.SourceLinkedinAdsUpdateAdAnalyticsReportConfiguration = nil
 	for _, adAnalyticsReportsItem := range r.Configuration.AdAnalyticsReports {
 		name := adAnalyticsReportsItem.Name.ValueString()
-		pivotBy := shared.SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotBy(adAnalyticsReportsItem.PivotBy.ValueString())
+		pivotBy := shared.SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategory(adAnalyticsReportsItem.PivotBy.ValueString())
 		timeGranularity := shared.SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationTimeGranularity(adAnalyticsReportsItem.TimeGranularity.ValueString())
 		adAnalyticsReports = append(adAnalyticsReports, shared.SourceLinkedinAdsUpdateAdAnalyticsReportConfiguration{
 			Name:            name,

@@ -7,6 +7,7 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"time"
 )
 
 type SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethod string
@@ -39,54 +40,6 @@ type SourceZendeskSunshineAuthorizationMethodAPIToken struct {
 	AuthMethod SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethod `json:"auth_method"`
 	// The user email for your Zendesk account
 	Email string `json:"email"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _SourceZendeskSunshineAuthorizationMethodAPIToken SourceZendeskSunshineAuthorizationMethodAPIToken
-
-func (c *SourceZendeskSunshineAuthorizationMethodAPIToken) UnmarshalJSON(bs []byte) error {
-	data := _SourceZendeskSunshineAuthorizationMethodAPIToken{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = SourceZendeskSunshineAuthorizationMethodAPIToken(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "api_token")
-	delete(additionalFields, "auth_method")
-	delete(additionalFields, "email")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c SourceZendeskSunshineAuthorizationMethodAPIToken) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_SourceZendeskSunshineAuthorizationMethodAPIToken(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 type SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethod string
@@ -121,55 +74,6 @@ type SourceZendeskSunshineAuthorizationMethodOAuth20 struct {
 	ClientID string `json:"client_id"`
 	// The Client Secret of your OAuth application.
 	ClientSecret string `json:"client_secret"`
-
-	AdditionalProperties interface{} `json:"-"`
-}
-type _SourceZendeskSunshineAuthorizationMethodOAuth20 SourceZendeskSunshineAuthorizationMethodOAuth20
-
-func (c *SourceZendeskSunshineAuthorizationMethodOAuth20) UnmarshalJSON(bs []byte) error {
-	data := _SourceZendeskSunshineAuthorizationMethodOAuth20{}
-
-	if err := json.Unmarshal(bs, &data); err != nil {
-		return err
-	}
-	*c = SourceZendeskSunshineAuthorizationMethodOAuth20(data)
-
-	additionalFields := make(map[string]interface{})
-
-	if err := json.Unmarshal(bs, &additionalFields); err != nil {
-		return err
-	}
-	delete(additionalFields, "access_token")
-	delete(additionalFields, "auth_method")
-	delete(additionalFields, "client_id")
-	delete(additionalFields, "client_secret")
-
-	c.AdditionalProperties = additionalFields
-
-	return nil
-}
-
-func (c SourceZendeskSunshineAuthorizationMethodOAuth20) MarshalJSON() ([]byte, error) {
-	out := map[string]interface{}{}
-	bs, err := json.Marshal(_SourceZendeskSunshineAuthorizationMethodOAuth20(c))
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	bs, err = json.Marshal(c.AdditionalProperties)
-	if err != nil {
-		return nil, err
-	}
-
-	if err := json.Unmarshal([]byte(bs), &out); err != nil {
-		return nil, err
-	}
-
-	return json.Marshal(out)
 }
 
 type SourceZendeskSunshineAuthorizationMethodType string
@@ -207,15 +111,6 @@ func CreateSourceZendeskSunshineAuthorizationMethodSourceZendeskSunshineAuthoriz
 func (u *SourceZendeskSunshineAuthorizationMethod) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceZendeskSunshineAuthorizationMethodOAuth20 := new(SourceZendeskSunshineAuthorizationMethodOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceZendeskSunshineAuthorizationMethodOAuth20); err == nil {
-		u.SourceZendeskSunshineAuthorizationMethodOAuth20 = sourceZendeskSunshineAuthorizationMethodOAuth20
-		u.Type = SourceZendeskSunshineAuthorizationMethodTypeSourceZendeskSunshineAuthorizationMethodOAuth20
-		return nil
-	}
-
 	sourceZendeskSunshineAuthorizationMethodAPIToken := new(SourceZendeskSunshineAuthorizationMethodAPIToken)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -225,16 +120,25 @@ func (u *SourceZendeskSunshineAuthorizationMethod) UnmarshalJSON(data []byte) er
 		return nil
 	}
 
+	sourceZendeskSunshineAuthorizationMethodOAuth20 := new(SourceZendeskSunshineAuthorizationMethodOAuth20)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceZendeskSunshineAuthorizationMethodOAuth20); err == nil {
+		u.SourceZendeskSunshineAuthorizationMethodOAuth20 = sourceZendeskSunshineAuthorizationMethodOAuth20
+		u.Type = SourceZendeskSunshineAuthorizationMethodTypeSourceZendeskSunshineAuthorizationMethodOAuth20
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceZendeskSunshineAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceZendeskSunshineAuthorizationMethodOAuth20 != nil {
-		return json.Marshal(u.SourceZendeskSunshineAuthorizationMethodOAuth20)
-	}
-
 	if u.SourceZendeskSunshineAuthorizationMethodAPIToken != nil {
 		return json.Marshal(u.SourceZendeskSunshineAuthorizationMethodAPIToken)
+	}
+
+	if u.SourceZendeskSunshineAuthorizationMethodOAuth20 != nil {
+		return json.Marshal(u.SourceZendeskSunshineAuthorizationMethodOAuth20)
 	}
 
 	return nil, nil
@@ -268,7 +172,7 @@ type SourceZendeskSunshine struct {
 	Credentials *SourceZendeskSunshineAuthorizationMethod `json:"credentials,omitempty"`
 	SourceType  SourceZendeskSunshineZendeskSunshine      `json:"sourceType"`
 	// The date from which you'd like to replicate data for Zendesk Sunshine API, in the format YYYY-MM-DDT00:00:00Z.
-	StartDate string `json:"start_date"`
+	StartDate time.Time `json:"start_date"`
 	// The subdomain for your Zendesk Account.
 	Subdomain string `json:"subdomain"`
 }

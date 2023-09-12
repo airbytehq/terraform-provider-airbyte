@@ -113,15 +113,6 @@ func CreateSourceSmartsheetsUpdateAuthorizationMethodSourceSmartsheetsUpdateAuth
 func (u *SourceSmartsheetsUpdateAuthorizationMethod) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceSmartsheetsUpdateAuthorizationMethodOAuth20 := new(SourceSmartsheetsUpdateAuthorizationMethodOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceSmartsheetsUpdateAuthorizationMethodOAuth20); err == nil {
-		u.SourceSmartsheetsUpdateAuthorizationMethodOAuth20 = sourceSmartsheetsUpdateAuthorizationMethodOAuth20
-		u.Type = SourceSmartsheetsUpdateAuthorizationMethodTypeSourceSmartsheetsUpdateAuthorizationMethodOAuth20
-		return nil
-	}
-
 	sourceSmartsheetsUpdateAuthorizationMethodAPIAccessToken := new(SourceSmartsheetsUpdateAuthorizationMethodAPIAccessToken)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -131,16 +122,25 @@ func (u *SourceSmartsheetsUpdateAuthorizationMethod) UnmarshalJSON(data []byte) 
 		return nil
 	}
 
+	sourceSmartsheetsUpdateAuthorizationMethodOAuth20 := new(SourceSmartsheetsUpdateAuthorizationMethodOAuth20)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceSmartsheetsUpdateAuthorizationMethodOAuth20); err == nil {
+		u.SourceSmartsheetsUpdateAuthorizationMethodOAuth20 = sourceSmartsheetsUpdateAuthorizationMethodOAuth20
+		u.Type = SourceSmartsheetsUpdateAuthorizationMethodTypeSourceSmartsheetsUpdateAuthorizationMethodOAuth20
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceSmartsheetsUpdateAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceSmartsheetsUpdateAuthorizationMethodOAuth20 != nil {
-		return json.Marshal(u.SourceSmartsheetsUpdateAuthorizationMethodOAuth20)
-	}
-
 	if u.SourceSmartsheetsUpdateAuthorizationMethodAPIAccessToken != nil {
 		return json.Marshal(u.SourceSmartsheetsUpdateAuthorizationMethodAPIAccessToken)
+	}
+
+	if u.SourceSmartsheetsUpdateAuthorizationMethodOAuth20 != nil {
+		return json.Marshal(u.SourceSmartsheetsUpdateAuthorizationMethodOAuth20)
 	}
 
 	return nil, nil

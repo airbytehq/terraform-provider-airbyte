@@ -8,7 +8,7 @@ resource "airbyte_source_strava" "my_source_strava" {
     source_type   = "strava"
     start_date    = "2021-03-01T00:00:00Z"
   }
-  name         = "Henrietta Durgan"
+  name         = "Jeffrey Wintheiser"
   secret_id    = "...my_secret_id..."
-  workspace_id = "3dd9dda3-3dcd-4634-83e4-a7a98e4df37e"
+  workspace_id = "06673f3a-681c-4576-8dce-742409a215e0"
 }

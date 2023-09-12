@@ -116,15 +116,6 @@ func CreateSourceMicrosoftTeamsAuthenticationMechanismSourceMicrosoftTeamsAuthen
 func (u *SourceMicrosoftTeamsAuthenticationMechanism) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20 := new(SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20); err == nil {
-		u.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20 = sourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20
-		u.Type = SourceMicrosoftTeamsAuthenticationMechanismTypeSourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20
-		return nil
-	}
-
 	sourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoft := new(SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoft)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -134,16 +125,25 @@ func (u *SourceMicrosoftTeamsAuthenticationMechanism) UnmarshalJSON(data []byte)
 		return nil
 	}
 
+	sourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20 := new(SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20); err == nil {
+		u.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20 = sourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20
+		u.Type = SourceMicrosoftTeamsAuthenticationMechanismTypeSourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceMicrosoftTeamsAuthenticationMechanism) MarshalJSON() ([]byte, error) {
-	if u.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20 != nil {
-		return json.Marshal(u.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20)
-	}
-
 	if u.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoft != nil {
 		return json.Marshal(u.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoft)
+	}
+
+	if u.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20 != nil {
+		return json.Marshal(u.SourceMicrosoftTeamsAuthenticationMechanismAuthenticateViaMicrosoftOAuth20)
 	}
 
 	return nil, nil

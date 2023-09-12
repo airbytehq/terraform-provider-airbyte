@@ -5,7 +5,7 @@ resource "airbyte_source_bigquery" "my_source_bigquery" {
     project_id       = "...my_project_id..."
     source_type      = "bigquery"
   }
-  name         = "Tracey Bosco"
+  name         = "Joe Bradtke"
   secret_id    = "...my_secret_id..."
-  workspace_id = "6a08088d-100e-4fad-a200-ef0422eb2164"
+  workspace_id = "80bff918-544e-4c42-9efc-ce8f1977773e"
 }

@@ -78,13 +78,6 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 										Required:    true,
 										Description: `The user email for your Zendesk account`,
 									},
-									"additional_properties": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											validators.IsValidJSON(),
-										},
-										Description: `Parsed as JSON.`,
-									},
 								},
 							},
 							"source_zendesk_sunshine_authorization_method_o_auth2_0": schema.SingleNestedAttribute{
@@ -111,13 +104,6 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 										Required:    true,
 										Description: `The Client Secret of your OAuth application.`,
 									},
-									"additional_properties": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											validators.IsValidJSON(),
-										},
-										Description: `Parsed as JSON.`,
-									},
 								},
 							},
 							"source_zendesk_sunshine_update_authorization_method_api_token": schema.SingleNestedAttribute{
@@ -139,13 +125,6 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 									"email": schema.StringAttribute{
 										Required:    true,
 										Description: `The user email for your Zendesk account`,
-									},
-									"additional_properties": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											validators.IsValidJSON(),
-										},
-										Description: `Parsed as JSON.`,
 									},
 								},
 							},
@@ -173,13 +152,6 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 										Required:    true,
 										Description: `The Client Secret of your OAuth application.`,
 									},
-									"additional_properties": schema.StringAttribute{
-										Optional: true,
-										Validators: []validator.String{
-											validators.IsValidJSON(),
-										},
-										Description: `Parsed as JSON.`,
-									},
 								},
 							},
 						},
@@ -197,7 +169,10 @@ func (r *SourceZendeskSunshineResource) Schema(ctx context.Context, req resource
 						Description: `must be one of ["zendesk-sunshine"]`,
 					},
 					"start_date": schema.StringAttribute{
-						Required:    true,
+						Required: true,
+						Validators: []validator.String{
+							validators.IsRFC3339(),
+						},
 						Description: `The date from which you'd like to replicate data for Zendesk Sunshine API, in the format YYYY-MM-DDT00:00:00Z.`,
 					},
 					"subdomain": schema.StringAttribute{

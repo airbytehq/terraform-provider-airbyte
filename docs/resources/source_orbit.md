@@ -20,9 +20,9 @@ resource "airbyte_source_orbit" "my_source_orbit" {
     start_date  = "...my_start_date..."
     workspace   = "...my_workspace..."
   }
-  name         = "Dr. Nancy Ferry"
+  name         = "Jo Greenholt V"
   secret_id    = "...my_secret_id..."
-  workspace_id = "899f0c20-01e2-42cd-95cc-0584a184d76d"
+  workspace_id = "abfa2e76-1f0c-4a4d-856e-f1031e6899f0"
 }
 ```
 

@@ -99,12 +99,6 @@ func (r *DestinationBigqueryResourceModel) ToCreateSDKType() *shared.Destination
 	} else {
 		transformationPriority = nil
 	}
-	use1s1tFormat := new(bool)
-	if !r.Configuration.Use1s1tFormat.IsUnknown() && !r.Configuration.Use1s1tFormat.IsNull() {
-		*use1s1tFormat = r.Configuration.Use1s1tFormat.ValueBool()
-	} else {
-		use1s1tFormat = nil
-	}
 	configuration := shared.DestinationBigquery{
 		BigQueryClientBufferSizeMb: bigQueryClientBufferSizeMb,
 		CredentialsJSON:            credentialsJSON,
@@ -115,7 +109,6 @@ func (r *DestinationBigqueryResourceModel) ToCreateSDKType() *shared.Destination
 		ProjectID:                  projectID,
 		RawDataDataset:             rawDataDataset,
 		TransformationPriority:     transformationPriority,
-		Use1s1tFormat:              use1s1tFormat,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()
@@ -223,12 +216,6 @@ func (r *DestinationBigqueryResourceModel) ToUpdateSDKType() *shared.Destination
 	} else {
 		transformationPriority = nil
 	}
-	use1s1tFormat := new(bool)
-	if !r.Configuration.Use1s1tFormat.IsUnknown() && !r.Configuration.Use1s1tFormat.IsNull() {
-		*use1s1tFormat = r.Configuration.Use1s1tFormat.ValueBool()
-	} else {
-		use1s1tFormat = nil
-	}
 	configuration := shared.DestinationBigqueryUpdate{
 		BigQueryClientBufferSizeMb: bigQueryClientBufferSizeMb,
 		CredentialsJSON:            credentialsJSON,
@@ -238,7 +225,6 @@ func (r *DestinationBigqueryResourceModel) ToUpdateSDKType() *shared.Destination
 		ProjectID:                  projectID,
 		RawDataDataset:             rawDataDataset,
 		TransformationPriority:     transformationPriority,
-		Use1s1tFormat:              use1s1tFormat,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()

@@ -22,9 +22,9 @@ resource "airbyte_source_paypal_transaction" "my_source_paypaltransaction" {
     source_type   = "paypal-transaction"
     start_date    = "2021-06-11T23:59:59+00:00"
   }
-  name         = "Mrs. Roy Moore"
+  name         = "Ernestine Little"
   secret_id    = "...my_secret_id..."
-  workspace_id = "f569b7af-f0ea-4221-acbe-071bc163e279"
+  workspace_id = "da013191-1296-4466-85c1-d81f29042f56"
 }
 ```
 

@@ -27,9 +27,9 @@ resource "airbyte_source_mongodb" "my_source_mongodb" {
     source_type = "mongodb"
     user        = "...my_user..."
   }
-  name         = "Elvira Collins"
+  name         = "Doreen Mayer"
   secret_id    = "...my_secret_id..."
-  workspace_id = "309db053-6d9e-475c-a006-f5392c11a25a"
+  workspace_id = "5ca006f5-392c-411a-a5a8-bf92f97428ad"
 }
 ```
 

@@ -13,9 +13,9 @@ resource "airbyte_destination_databricks" "my_destination_databricks" {
     databricks_server_hostname       = "abc-12345678-wxyz.cloud.databricks.com"
     destination_type                 = "databricks"
     enable_schema_evolution          = true
-    purge_staging_data               = true
+    purge_staging_data               = false
     schema                           = "default"
   }
-  name         = "Rickey Wolf"
-  workspace_id = "280d1ba7-7a89-4ebf-b37a-e4203ce5e6a9"
+  name         = "Bertha Thompson"
+  workspace_id = "69280d1b-a77a-489e-bf73-7ae4203ce5e6"
 }

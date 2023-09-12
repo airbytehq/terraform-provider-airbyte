@@ -10,9 +10,9 @@ resource "airbyte_source_netsuite" "my_source_netsuite" {
     start_datetime = "2017-01-25T00:00:00Z"
     token_key      = "...my_token_key..."
     token_secret   = "...my_token_secret..."
-    window_in_days = 5
+    window_in_days = 7
   }
-  name         = "Judy Towne"
+  name         = "Miss Meredith Hand"
   secret_id    = "...my_secret_id..."
-  workspace_id = "d617c3b0-d51a-444b-b01b-ad8706d46082"
+  workspace_id = "4bf01bad-8706-4d46-882b-fbdc41ff5d4e"
 }

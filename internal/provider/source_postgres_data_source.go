@@ -76,7 +76,22 @@ func (r *SourcePostgresDataSource) Schema(ctx context.Context, req datasource.Sc
 					"replication_method": schema.SingleNestedAttribute{
 						Computed: true,
 						Attributes: map[string]schema.Attribute{
-							"source_postgres_replication_method_logical_replication_cdc": schema.SingleNestedAttribute{
+							"source_postgres_update_method_detect_changes_with_xmin_system_column": schema.SingleNestedAttribute{
+								Computed: true,
+								Attributes: map[string]schema.Attribute{
+									"method": schema.StringAttribute{
+										Computed: true,
+										Validators: []validator.String{
+											stringvalidator.OneOf(
+												"Xmin",
+											),
+										},
+										Description: `must be one of ["Xmin"]`,
+									},
+								},
+								Description: `<i>Recommended</i> - Incrementally reads new inserts and updates via Postgres <a href="https://docs.airbyte.com/integrations/sources/postgres/#xmin">Xmin system column</a>. Only recommended for tables up to 500GB.`,
+							},
+							"source_postgres_update_method_read_changes_using_write_ahead_log_cdc": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
 									"initial_waiting_seconds": schema.Int64Attribute{
@@ -133,9 +148,9 @@ func (r *SourcePostgresDataSource) Schema(ctx context.Context, req datasource.Sc
 										Description: `Parsed as JSON.`,
 									},
 								},
-								Description: `Logical replication uses the Postgres write-ahead log (WAL) to detect inserts, updates, and deletes. This needs to be configured on the source database itself. Only available on Postgres 10 and above. Read the <a href="https://docs.airbyte.com/integrations/sources/postgres">docs</a>.`,
+								Description: `<i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the Postgres <a href="https://docs.airbyte.com/integrations/sources/postgres/#cdc">write-ahead log (WAL)</a>. This needs to be configured on the source database itself. Recommended for tables of any size.`,
 							},
-							"source_postgres_replication_method_standard": schema.SingleNestedAttribute{
+							"source_postgres_update_method_scan_changes_with_user_defined_cursor": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
@@ -148,9 +163,9 @@ func (r *SourcePostgresDataSource) Schema(ctx context.Context, req datasource.Sc
 										Description: `must be one of ["Standard"]`,
 									},
 								},
-								Description: `Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
+								Description: `Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at).`,
 							},
-							"source_postgres_replication_method_standard_xmin": schema.SingleNestedAttribute{
+							"source_postgres_update_update_method_detect_changes_with_xmin_system_column": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
@@ -163,9 +178,9 @@ func (r *SourcePostgresDataSource) Schema(ctx context.Context, req datasource.Sc
 										Description: `must be one of ["Xmin"]`,
 									},
 								},
-								Description: `Xmin replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
+								Description: `<i>Recommended</i> - Incrementally reads new inserts and updates via Postgres <a href="https://docs.airbyte.com/integrations/sources/postgres/#xmin">Xmin system column</a>. Only recommended for tables up to 500GB.`,
 							},
-							"source_postgres_update_replication_method_logical_replication_cdc": schema.SingleNestedAttribute{
+							"source_postgres_update_update_method_read_changes_using_write_ahead_log_cdc": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
 									"initial_waiting_seconds": schema.Int64Attribute{
@@ -222,9 +237,9 @@ func (r *SourcePostgresDataSource) Schema(ctx context.Context, req datasource.Sc
 										Description: `Parsed as JSON.`,
 									},
 								},
-								Description: `Logical replication uses the Postgres write-ahead log (WAL) to detect inserts, updates, and deletes. This needs to be configured on the source database itself. Only available on Postgres 10 and above. Read the <a href="https://docs.airbyte.com/integrations/sources/postgres">docs</a>.`,
+								Description: `<i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the Postgres <a href="https://docs.airbyte.com/integrations/sources/postgres/#cdc">write-ahead log (WAL)</a>. This needs to be configured on the source database itself. Recommended for tables of any size.`,
 							},
-							"source_postgres_update_replication_method_standard": schema.SingleNestedAttribute{
+							"source_postgres_update_update_method_scan_changes_with_user_defined_cursor": schema.SingleNestedAttribute{
 								Computed: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
@@ -237,28 +252,13 @@ func (r *SourcePostgresDataSource) Schema(ctx context.Context, req datasource.Sc
 										Description: `must be one of ["Standard"]`,
 									},
 								},
-								Description: `Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
-							},
-							"source_postgres_update_replication_method_standard_xmin": schema.SingleNestedAttribute{
-								Computed: true,
-								Attributes: map[string]schema.Attribute{
-									"method": schema.StringAttribute{
-										Computed: true,
-										Validators: []validator.String{
-											stringvalidator.OneOf(
-												"Xmin",
-											),
-										},
-										Description: `must be one of ["Xmin"]`,
-									},
-								},
-								Description: `Xmin replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
+								Description: `Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at).`,
 							},
 						},
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
-						Description: `Replication method for extracting data from the database.`,
+						Description: `Configures how data is extracted from the database.`,
 					},
 					"schemas": schema.ListAttribute{
 						Computed:    true,

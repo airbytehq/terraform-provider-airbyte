@@ -59,10 +59,6 @@ Read-Only:
 <a id="nestedatt--configuration--credentials--source_zendesk_sunshine_authorization_method_api_token"></a>
 ### Nested Schema for `configuration.credentials.source_zendesk_sunshine_authorization_method_api_token`
 
-Optional:
-
-- `additional_properties` (String) Parsed as JSON.
-
 Read-Only:
 
 - `api_token` (String) API Token. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk_sunshine">docs</a> for information on how to generate this key.
@@ -72,10 +68,6 @@ Read-Only:
 
 <a id="nestedatt--configuration--credentials--source_zendesk_sunshine_authorization_method_o_auth2_0"></a>
 ### Nested Schema for `configuration.credentials.source_zendesk_sunshine_authorization_method_o_auth2_0`
-
-Optional:
-
-- `additional_properties` (String) Parsed as JSON.
 
 Read-Only:
 
@@ -88,10 +80,6 @@ Read-Only:
 <a id="nestedatt--configuration--credentials--source_zendesk_sunshine_update_authorization_method_api_token"></a>
 ### Nested Schema for `configuration.credentials.source_zendesk_sunshine_update_authorization_method_api_token`
 
-Optional:
-
-- `additional_properties` (String) Parsed as JSON.
-
 Read-Only:
 
 - `api_token` (String) API Token. See the <a href="https://docs.airbyte.com/integrations/sources/zendesk_sunshine">docs</a> for information on how to generate this key.
@@ -101,10 +89,6 @@ Read-Only:
 
 <a id="nestedatt--configuration--credentials--source_zendesk_sunshine_update_authorization_method_o_auth2_0"></a>
 ### Nested Schema for `configuration.credentials.source_zendesk_sunshine_update_authorization_method_o_auth2_0`
-
-Optional:
-
-- `additional_properties` (String) Parsed as JSON.
 
 Read-Only:
 

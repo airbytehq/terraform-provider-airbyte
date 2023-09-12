@@ -20,9 +20,9 @@ resource "airbyte_source_recurly" "my_source_recurly" {
     end_time    = "2021-12-01T00:00:00"
     source_type = "recurly"
   }
-  name         = "Susie Donnelly"
+  name         = "Josephine Dibbert"
   secret_id    = "...my_secret_id..."
-  workspace_id = "ed0c5670-ef42-4bd3-89f1-cc503f6c39bc"
+  workspace_id = "7e1763c5-208c-423e-9802-d82f0d45eb4a"
 }
 ```
 

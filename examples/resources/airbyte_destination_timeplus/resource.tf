@@ -4,6 +4,6 @@ resource "airbyte_destination_timeplus" "my_destination_timeplus" {
     destination_type = "timeplus"
     endpoint         = "https://us.timeplus.cloud/workspace_id"
   }
-  name         = "Tamara Lang"
-  workspace_id = "61d01747-6360-4a15-9b6a-660659a1adea"
+  name         = "Ruben Williamson"
+  workspace_id = "5f350d8c-db5a-4341-8143-010421813d52"
 }

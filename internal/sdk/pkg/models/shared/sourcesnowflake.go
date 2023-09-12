@@ -112,15 +112,6 @@ func CreateSourceSnowflakeAuthorizationMethodSourceSnowflakeAuthorizationMethodU
 func (u *SourceSnowflakeAuthorizationMethod) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceSnowflakeAuthorizationMethodOAuth20 := new(SourceSnowflakeAuthorizationMethodOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceSnowflakeAuthorizationMethodOAuth20); err == nil {
-		u.SourceSnowflakeAuthorizationMethodOAuth20 = sourceSnowflakeAuthorizationMethodOAuth20
-		u.Type = SourceSnowflakeAuthorizationMethodTypeSourceSnowflakeAuthorizationMethodOAuth20
-		return nil
-	}
-
 	sourceSnowflakeAuthorizationMethodUsernameAndPassword := new(SourceSnowflakeAuthorizationMethodUsernameAndPassword)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -130,16 +121,25 @@ func (u *SourceSnowflakeAuthorizationMethod) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	sourceSnowflakeAuthorizationMethodOAuth20 := new(SourceSnowflakeAuthorizationMethodOAuth20)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceSnowflakeAuthorizationMethodOAuth20); err == nil {
+		u.SourceSnowflakeAuthorizationMethodOAuth20 = sourceSnowflakeAuthorizationMethodOAuth20
+		u.Type = SourceSnowflakeAuthorizationMethodTypeSourceSnowflakeAuthorizationMethodOAuth20
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceSnowflakeAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceSnowflakeAuthorizationMethodOAuth20 != nil {
-		return json.Marshal(u.SourceSnowflakeAuthorizationMethodOAuth20)
-	}
-
 	if u.SourceSnowflakeAuthorizationMethodUsernameAndPassword != nil {
 		return json.Marshal(u.SourceSnowflakeAuthorizationMethodUsernameAndPassword)
+	}
+
+	if u.SourceSnowflakeAuthorizationMethodOAuth20 != nil {
+		return json.Marshal(u.SourceSnowflakeAuthorizationMethodOAuth20)
 	}
 
 	return nil, nil

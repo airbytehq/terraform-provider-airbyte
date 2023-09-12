@@ -21,9 +21,9 @@ resource "airbyte_source_zenloop" "my_source_zenloop" {
     survey_group_id = "...my_survey_group_id..."
     survey_id       = "...my_survey_id..."
   }
-  name         = "Ms. Emma Rodriguez Jr."
+  name         = "Ricardo Champlin"
   secret_id    = "...my_secret_id..."
-  workspace_id = "688deebe-f897-4f3d-90cc-d33f11b3e4e0"
+  workspace_id = "7261fb0c-58d2-47b5-9996-b5b4b50eef71"
 }
 ```
 

@@ -41,7 +41,7 @@ data "airbyte_source_lemlist" "my_source_lemlist" {
 
 Read-Only:
 
-- `api_key` (String) Lemlist API key.
+- `api_key` (String) Lemlist API key,
 - `source_type` (String) must be one of ["lemlist"]
 
 

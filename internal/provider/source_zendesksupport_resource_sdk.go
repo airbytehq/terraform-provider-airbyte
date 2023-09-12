@@ -84,7 +84,12 @@ func (r *SourceZendeskSupportResourceModel) ToCreateSDKType() *shared.SourceZend
 		ignorePagination = nil
 	}
 	sourceType := shared.SourceZendeskSupportZendeskSupport(r.Configuration.SourceType.ValueString())
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
 	subdomain := r.Configuration.Subdomain.ValueString()
 	configuration := shared.SourceZendeskSupport{
 		Credentials:      credentials,
@@ -189,7 +194,12 @@ func (r *SourceZendeskSupportResourceModel) ToUpdateSDKType() *shared.SourceZend
 	} else {
 		ignorePagination = nil
 	}
-	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	startDate := new(time.Time)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate, _ = time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
+	} else {
+		startDate = nil
+	}
 	subdomain := r.Configuration.Subdomain.ValueString()
 	configuration := shared.SourceZendeskSupportUpdate{
 		Credentials:      credentials,

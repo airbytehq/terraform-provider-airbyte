@@ -223,7 +223,7 @@ func (r *DestinationSnowflakeDataSource) Schema(ctx context.Context, req datasou
 					},
 					"raw_data_schema": schema.StringAttribute{
 						Computed:    true,
-						Description: `(Beta) The schema to write raw tables into`,
+						Description: `The schema to write raw tables into`,
 					},
 					"role": schema.StringAttribute{
 						Computed:    true,
@@ -232,10 +232,6 @@ func (r *DestinationSnowflakeDataSource) Schema(ctx context.Context, req datasou
 					"schema": schema.StringAttribute{
 						Computed:    true,
 						Description: `Enter the name of the default <a href="https://docs.snowflake.com/en/sql-reference/ddl-database.html#database-schema-share-ddl">schema</a>`,
-					},
-					"use_1s1t_format": schema.BoolAttribute{
-						Computed:    true,
-						Description: `(Beta) Use <a href="https://github.com/airbytehq/airbyte/issues/26028" target="_blank">Destinations V2</a>. Contact Airbyte Support to participate in the beta program.`,
 					},
 					"username": schema.StringAttribute{
 						Computed:    true,

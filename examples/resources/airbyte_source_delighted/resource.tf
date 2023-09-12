@@ -4,7 +4,7 @@ resource "airbyte_source_delighted" "my_source_delighted" {
     since       = "2022-05-30 04:50:23"
     source_type = "delighted"
   }
-  name         = "Peggy Windler"
+  name         = "Sarah Collier"
   secret_id    = "...my_secret_id..."
-  workspace_id = "a41c480d-3f21-432a-b031-02d514f4cc6f"
+  workspace_id = "14f4cc6f-18bf-4962-9a6a-4f77a87ee3e4"
 }

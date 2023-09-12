@@ -59,11 +59,11 @@ type SourceGoogleAds struct {
 	CustomQueries        []SourceGoogleAdsCustomQueries   `json:"custom_queries,omitempty"`
 	// Comma-separated list of (client) customer IDs. Each customer ID must be specified as a 10-digit number without dashes. For detailed instructions on finding this value, refer to our <a href="https://docs.airbyte.com/integrations/sources/google-ads#setup-guide">documentation</a>.
 	CustomerID string `json:"customer_id"`
-	// UTC date in the format YYYY-MM-DD. Any data after this date will not be replicated.
+	// UTC date in the format YYYY-MM-DD. Any data after this date will not be replicated. (Default value of today is used if not set)
 	EndDate *types.Date `json:"end_date,omitempty"`
 	// If your access to the customer account is through a manager account, this field is required, and must be set to the 10-digit customer ID of the manager account. For more information about this field, refer to <a href="https://developers.google.com/google-ads/api/docs/concepts/call-structure#cid">Google's documentation</a>.
 	LoginCustomerID *string                  `json:"login_customer_id,omitempty"`
 	SourceType      SourceGoogleAdsGoogleAds `json:"sourceType"`
-	// UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated.
-	StartDate types.Date `json:"start_date"`
+	// UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated. (Default value of two years ago is used if not set)
+	StartDate *types.Date `json:"start_date,omitempty"`
 }

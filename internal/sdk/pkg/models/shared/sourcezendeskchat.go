@@ -111,15 +111,6 @@ func CreateSourceZendeskChatAuthorizationMethodSourceZendeskChatAuthorizationMet
 func (u *SourceZendeskChatAuthorizationMethod) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceZendeskChatAuthorizationMethodOAuth20 := new(SourceZendeskChatAuthorizationMethodOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceZendeskChatAuthorizationMethodOAuth20); err == nil {
-		u.SourceZendeskChatAuthorizationMethodOAuth20 = sourceZendeskChatAuthorizationMethodOAuth20
-		u.Type = SourceZendeskChatAuthorizationMethodTypeSourceZendeskChatAuthorizationMethodOAuth20
-		return nil
-	}
-
 	sourceZendeskChatAuthorizationMethodAccessToken := new(SourceZendeskChatAuthorizationMethodAccessToken)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -129,16 +120,25 @@ func (u *SourceZendeskChatAuthorizationMethod) UnmarshalJSON(data []byte) error 
 		return nil
 	}
 
+	sourceZendeskChatAuthorizationMethodOAuth20 := new(SourceZendeskChatAuthorizationMethodOAuth20)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceZendeskChatAuthorizationMethodOAuth20); err == nil {
+		u.SourceZendeskChatAuthorizationMethodOAuth20 = sourceZendeskChatAuthorizationMethodOAuth20
+		u.Type = SourceZendeskChatAuthorizationMethodTypeSourceZendeskChatAuthorizationMethodOAuth20
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceZendeskChatAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceZendeskChatAuthorizationMethodOAuth20 != nil {
-		return json.Marshal(u.SourceZendeskChatAuthorizationMethodOAuth20)
-	}
-
 	if u.SourceZendeskChatAuthorizationMethodAccessToken != nil {
 		return json.Marshal(u.SourceZendeskChatAuthorizationMethodAccessToken)
+	}
+
+	if u.SourceZendeskChatAuthorizationMethodOAuth20 != nil {
+		return json.Marshal(u.SourceZendeskChatAuthorizationMethodOAuth20)
 	}
 
 	return nil, nil

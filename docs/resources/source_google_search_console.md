@@ -25,17 +25,25 @@ resource "airbyte_source_google_search_console" "my_source_googlesearchconsole" 
       }
     }
     custom_reports = "...my_custom_reports..."
-    data_state     = "final"
-    end_date       = "2021-12-12"
+    custom_reports_array = [
+      {
+        dimensions = [
+          "page",
+        ]
+        name = "Heidi Bernier"
+      },
+    ]
+    data_state = "all"
+    end_date   = "2021-12-12"
     site_urls = [
       "...",
     ]
     source_type = "google-search-console"
-    start_date  = "2021-01-01"
+    start_date  = "2022-07-11"
   }
-  name         = "Janie Swift PhD"
+  name         = "Jordan Hilll"
   secret_id    = "...my_secret_id..."
-  workspace_id = "a16fc2b2-71a2-489c-97e8-54e90439d222"
+  workspace_id = "90439d22-2465-4694-a240-7084f7ab37ce"
 }
 ```
 
@@ -63,16 +71,17 @@ resource "airbyte_source_google_search_console" "my_source_googlesearchconsole" 
 Required:
 
 - `authorization` (Attributes) (see [below for nested schema](#nestedatt--configuration--authorization))
-- `site_urls` (List of String) The URLs of the website property attached to your GSC account. Read more <a href="https://support.google.com/webmasters/answer/34592?hl=en">here</a>.
+- `site_urls` (List of String) The URLs of the website property attached to your GSC account. Learn more about properties <a href="https://support.google.com/webmasters/answer/34592?hl=en">here</a>.
 - `source_type` (String) must be one of ["google-search-console"]
-- `start_date` (String) UTC date in the format 2017-01-25. Any data before this date will not be replicated.
 
 Optional:
 
-- `custom_reports` (String) A JSON array describing the custom reports you want to sync from Google Search Console. See <a href="https://docs.airbyte.com/integrations/sources/google-search-console#step-2-set-up-the-google-search-console-connector-in-airbyte">the docs</a> for more information about the exact format you can use to fill out this field.
+- `custom_reports` (String) (DEPRCATED) A JSON array describing the custom reports you want to sync from Google Search Console. See our <a href='https://docs.airbyte.com/integrations/sources/google-search-console'>documentation</a> for more information on formulating custom reports.
+- `custom_reports_array` (Attributes List) You can add your Custom Analytics report by creating one. (see [below for nested schema](#nestedatt--configuration--custom_reports_array))
 - `data_state` (String) must be one of ["final", "all"]
-If "final" or if this parameter is omitted, the returned data will include only finalized data. Setting this parameter to "all" should not be used with Incremental Sync mode as it may cause data loss. If "all", data will include fresh data.
-- `end_date` (String) UTC date in the format 2017-01-25. Any data after this date will not be replicated. Must be greater or equal to the start date field.
+If set to 'final', the returned data will include only finalized, stable data. If set to 'all', fresh data will be included. When using Incremental sync mode, we do not recommend setting this parameter to 'all' as it may cause data loss. More information can be found in our <a href='https://docs.airbyte.com/integrations/source/google-search-console'>full documentation</a>.
+- `end_date` (String) UTC date in the format YYYY-MM-DD. Any data created after this date will not be replicated. Must be greater or equal to the start date field. Leaving this field blank will replicate all data from the start date onward.
+- `start_date` (String) UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated.
 
 <a id="nestedatt--configuration--authorization"></a>
 ### Nested Schema for `configuration.authorization`
@@ -132,5 +141,15 @@ Required:
 - `auth_type` (String) must be one of ["Service"]
 - `email` (String) The email of the user which has permissions to access the Google Workspace Admin APIs.
 - `service_account_info` (String) The JSON key of the service account to use for authorization. Read more <a href="https://cloud.google.com/iam/docs/creating-managing-service-account-keys">here</a>.
+
+
+
+<a id="nestedatt--configuration--custom_reports_array"></a>
+### Nested Schema for `configuration.custom_reports_array`
+
+Required:
+
+- `dimensions` (List of String) A list of dimensions (country, date, device, page, query)
+- `name` (String) The name of the custom report, this name would be used as stream name
 
 

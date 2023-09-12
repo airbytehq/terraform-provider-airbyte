@@ -38,11 +38,11 @@ resource "airbyte_source_mysql" "my_source_mysql" {
         tunnel_method = "NO_TUNNEL"
       }
     }
-    username = "Eusebio86"
+    username = "Carley25"
   }
-  name         = "Herman Greenfelder"
+  name         = "Ruth Goodwin"
   secret_id    = "...my_secret_id..."
-  workspace_id = "9ee22446-0443-4bc1-9418-8c2f56e85da7"
+  workspace_id = "bc154188-c2f5-46e8-9da7-832eabd617c3"
 }
 ```
 

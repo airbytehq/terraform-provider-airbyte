@@ -110,15 +110,6 @@ func CreateSourceGoogleSheetsAuthenticationSourceGoogleSheetsAuthenticationServi
 func (u *SourceGoogleSheetsAuthentication) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth := new(SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth); err == nil {
-		u.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth = sourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth
-		u.Type = SourceGoogleSheetsAuthenticationTypeSourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth
-		return nil
-	}
-
 	sourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication := new(SourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -128,16 +119,25 @@ func (u *SourceGoogleSheetsAuthentication) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	sourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth := new(SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth); err == nil {
+		u.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth = sourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth
+		u.Type = SourceGoogleSheetsAuthenticationTypeSourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceGoogleSheetsAuthentication) MarshalJSON() ([]byte, error) {
-	if u.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth != nil {
-		return json.Marshal(u.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth)
-	}
-
 	if u.SourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication != nil {
 		return json.Marshal(u.SourceGoogleSheetsAuthenticationServiceAccountKeyAuthentication)
+	}
+
+	if u.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth != nil {
+		return json.Marshal(u.SourceGoogleSheetsAuthenticationAuthenticateViaGoogleOAuth)
 	}
 
 	return nil, nil
@@ -171,10 +171,8 @@ type SourceGoogleSheets struct {
 	// Credentials for connecting to the Google Sheets API
 	Credentials SourceGoogleSheetsAuthentication `json:"credentials"`
 	// Enables the conversion of column names to a standardized, SQL-compliant format. For example, 'My Name' -> 'my_name'. Enable this option if your destination is SQL-based.
-	NamesConversion *bool `json:"names_conversion,omitempty"`
-	// The number of rows fetched when making a Google Sheet API call. Defaults to 200.
-	RowBatchSize *int64                         `json:"row_batch_size,omitempty"`
-	SourceType   SourceGoogleSheetsGoogleSheets `json:"sourceType"`
+	NamesConversion *bool                          `json:"names_conversion,omitempty"`
+	SourceType      SourceGoogleSheetsGoogleSheets `json:"sourceType"`
 	// Enter the link to the Google spreadsheet you want to sync. To copy the link, click the 'Share' button in the top-right corner of the spreadsheet, then click 'Copy link'.
 	SpreadsheetID string `json:"spreadsheet_id"`
 }

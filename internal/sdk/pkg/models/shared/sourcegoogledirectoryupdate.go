@@ -116,15 +116,6 @@ func CreateSourceGoogleDirectoryUpdateGoogleCredentialsSourceGoogleDirectoryUpda
 func (u *SourceGoogleDirectoryUpdateGoogleCredentials) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth := new(SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth); err == nil {
-		u.SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth = sourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth
-		u.Type = SourceGoogleDirectoryUpdateGoogleCredentialsTypeSourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth
-		return nil
-	}
-
 	sourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKey := new(SourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKey)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -134,16 +125,25 @@ func (u *SourceGoogleDirectoryUpdateGoogleCredentials) UnmarshalJSON(data []byte
 		return nil
 	}
 
+	sourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth := new(SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth); err == nil {
+		u.SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth = sourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth
+		u.Type = SourceGoogleDirectoryUpdateGoogleCredentialsTypeSourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceGoogleDirectoryUpdateGoogleCredentials) MarshalJSON() ([]byte, error) {
-	if u.SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth != nil {
-		return json.Marshal(u.SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth)
-	}
-
 	if u.SourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKey != nil {
 		return json.Marshal(u.SourceGoogleDirectoryUpdateGoogleCredentialsServiceAccountKey)
+	}
+
+	if u.SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth != nil {
+		return json.Marshal(u.SourceGoogleDirectoryUpdateGoogleCredentialsSignInViaGoogleOAuth)
 	}
 
 	return nil, nil

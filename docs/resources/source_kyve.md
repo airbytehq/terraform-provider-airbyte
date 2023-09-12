@@ -15,16 +15,16 @@ SourceKyve Resource
 ```terraform
 resource "airbyte_source_kyve" "my_source_kyve" {
   configuration = {
-    max_pages   = 10
-    page_size   = 4
-    pool_ids    = "0"
+    max_pages   = 6
+    page_size   = 2
+    pool_ids    = "0,1"
     source_type = "kyve"
-    start_ids   = "0,0"
-    url_base    = "https://api.beta.kyve.network/"
+    start_ids   = "0"
+    url_base    = "https://api.korellia.kyve.network/"
   }
-  name         = "William Larson"
+  name         = "Gail Homenick"
   secret_id    = "...my_secret_id..."
-  workspace_id = "3197e193-a245-4467-b948-74c2d5cc4972"
+  workspace_id = "94874c2d-5cc4-4972-a33e-66bd8fe5d00b"
 }
 ```
 

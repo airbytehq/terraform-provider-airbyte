@@ -7,7 +7,7 @@ resource "airbyte_source_pipedrive" "my_source_pipedrive" {
     replication_start_date = "2017-01-25T00:00:00Z"
     source_type            = "pipedrive"
   }
-  name         = "Albert Sipes"
+  name         = "Rhonda Hammes"
   secret_id    = "...my_secret_id..."
-  workspace_id = "fcdace1f-0121-46ce-a239-e8f25cd0d19d"
+  workspace_id = "c2059c9c-3f56-47e0-a252-765b1d62fcda"
 }

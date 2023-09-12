@@ -111,15 +111,6 @@ func CreateSourceAsanaAuthenticationMechanismSourceAsanaAuthenticationMechanismA
 func (u *SourceAsanaAuthenticationMechanism) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth := new(SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth); err == nil {
-		u.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth = sourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth
-		u.Type = SourceAsanaAuthenticationMechanismTypeSourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth
-		return nil
-	}
-
 	sourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken := new(SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -129,16 +120,25 @@ func (u *SourceAsanaAuthenticationMechanism) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	sourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth := new(SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth); err == nil {
+		u.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth = sourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth
+		u.Type = SourceAsanaAuthenticationMechanismTypeSourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceAsanaAuthenticationMechanism) MarshalJSON() ([]byte, error) {
-	if u.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth != nil {
-		return json.Marshal(u.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth)
-	}
-
 	if u.SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken != nil {
 		return json.Marshal(u.SourceAsanaAuthenticationMechanismAuthenticateWithPersonalAccessToken)
+	}
+
+	if u.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth != nil {
+		return json.Marshal(u.SourceAsanaAuthenticationMechanismAuthenticateViaAsanaOauth)
 	}
 
 	return nil, nil

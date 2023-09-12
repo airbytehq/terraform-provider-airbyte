@@ -199,6 +199,15 @@ func CreateSourceMongodbMongoDbInstanceTypeSourceMongodbMongoDBInstanceTypeMongo
 func (u *SourceMongodbMongoDbInstanceType) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
+	sourceMongodbMongoDBInstanceTypeMongoDBAtlas := new(SourceMongodbMongoDBInstanceTypeMongoDBAtlas)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceMongodbMongoDBInstanceTypeMongoDBAtlas); err == nil {
+		u.SourceMongodbMongoDBInstanceTypeMongoDBAtlas = sourceMongodbMongoDBInstanceTypeMongoDBAtlas
+		u.Type = SourceMongodbMongoDbInstanceTypeTypeSourceMongodbMongoDBInstanceTypeMongoDBAtlas
+		return nil
+	}
+
 	sourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance := new(SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -217,29 +226,20 @@ func (u *SourceMongodbMongoDbInstanceType) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	sourceMongodbMongoDBInstanceTypeMongoDBAtlas := new(SourceMongodbMongoDBInstanceTypeMongoDBAtlas)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMongodbMongoDBInstanceTypeMongoDBAtlas); err == nil {
-		u.SourceMongodbMongoDBInstanceTypeMongoDBAtlas = sourceMongodbMongoDBInstanceTypeMongoDBAtlas
-		u.Type = SourceMongodbMongoDbInstanceTypeTypeSourceMongodbMongoDBInstanceTypeMongoDBAtlas
-		return nil
-	}
-
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceMongodbMongoDbInstanceType) MarshalJSON() ([]byte, error) {
+	if u.SourceMongodbMongoDBInstanceTypeMongoDBAtlas != nil {
+		return json.Marshal(u.SourceMongodbMongoDBInstanceTypeMongoDBAtlas)
+	}
+
 	if u.SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance != nil {
 		return json.Marshal(u.SourceMongodbMongoDbInstanceTypeStandaloneMongoDbInstance)
 	}
 
 	if u.SourceMongodbMongoDbInstanceTypeReplicaSet != nil {
 		return json.Marshal(u.SourceMongodbMongoDbInstanceTypeReplicaSet)
-	}
-
-	if u.SourceMongodbMongoDBInstanceTypeMongoDBAtlas != nil {
-		return json.Marshal(u.SourceMongodbMongoDBInstanceTypeMongoDBAtlas)
 	}
 
 	return nil, nil

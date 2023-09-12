@@ -106,15 +106,6 @@ func CreateSourceMysqlUpdateUpdateMethodSourceMysqlUpdateUpdateMethodScanChanges
 func (u *SourceMysqlUpdateUpdateMethod) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC := new(SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC); err == nil {
-		u.SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC = sourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC
-		u.Type = SourceMysqlUpdateUpdateMethodTypeSourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC
-		return nil
-	}
-
 	sourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor := new(SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -124,16 +115,25 @@ func (u *SourceMysqlUpdateUpdateMethod) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	sourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC := new(SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC); err == nil {
+		u.SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC = sourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC
+		u.Type = SourceMysqlUpdateUpdateMethodTypeSourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceMysqlUpdateUpdateMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC != nil {
-		return json.Marshal(u.SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC)
-	}
-
 	if u.SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor != nil {
 		return json.Marshal(u.SourceMysqlUpdateUpdateMethodScanChangesWithUserDefinedCursor)
+	}
+
+	if u.SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC != nil {
+		return json.Marshal(u.SourceMysqlUpdateUpdateMethodReadChangesUsingBinaryLogCDC)
 	}
 
 	return nil, nil

@@ -109,15 +109,6 @@ func CreateSourcePinterestUpdateAuthorizationMethodSourcePinterestUpdateAuthoriz
 func (u *SourcePinterestUpdateAuthorizationMethod) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourcePinterestUpdateAuthorizationMethodOAuth20 := new(SourcePinterestUpdateAuthorizationMethodOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourcePinterestUpdateAuthorizationMethodOAuth20); err == nil {
-		u.SourcePinterestUpdateAuthorizationMethodOAuth20 = sourcePinterestUpdateAuthorizationMethodOAuth20
-		u.Type = SourcePinterestUpdateAuthorizationMethodTypeSourcePinterestUpdateAuthorizationMethodOAuth20
-		return nil
-	}
-
 	sourcePinterestUpdateAuthorizationMethodAccessToken := new(SourcePinterestUpdateAuthorizationMethodAccessToken)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -127,16 +118,25 @@ func (u *SourcePinterestUpdateAuthorizationMethod) UnmarshalJSON(data []byte) er
 		return nil
 	}
 
+	sourcePinterestUpdateAuthorizationMethodOAuth20 := new(SourcePinterestUpdateAuthorizationMethodOAuth20)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourcePinterestUpdateAuthorizationMethodOAuth20); err == nil {
+		u.SourcePinterestUpdateAuthorizationMethodOAuth20 = sourcePinterestUpdateAuthorizationMethodOAuth20
+		u.Type = SourcePinterestUpdateAuthorizationMethodTypeSourcePinterestUpdateAuthorizationMethodOAuth20
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourcePinterestUpdateAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.SourcePinterestUpdateAuthorizationMethodOAuth20 != nil {
-		return json.Marshal(u.SourcePinterestUpdateAuthorizationMethodOAuth20)
-	}
-
 	if u.SourcePinterestUpdateAuthorizationMethodAccessToken != nil {
 		return json.Marshal(u.SourcePinterestUpdateAuthorizationMethodAccessToken)
+	}
+
+	if u.SourcePinterestUpdateAuthorizationMethodOAuth20 != nil {
+		return json.Marshal(u.SourcePinterestUpdateAuthorizationMethodOAuth20)
 	}
 
 	return nil, nil

@@ -113,15 +113,6 @@ func CreateSourceSalesloftUpdateCredentialsSourceSalesloftUpdateCredentialsAuthe
 func (u *SourceSalesloftUpdateCredentials) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceSalesloftUpdateCredentialsAuthenticateViaOAuth := new(SourceSalesloftUpdateCredentialsAuthenticateViaOAuth)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceSalesloftUpdateCredentialsAuthenticateViaOAuth); err == nil {
-		u.SourceSalesloftUpdateCredentialsAuthenticateViaOAuth = sourceSalesloftUpdateCredentialsAuthenticateViaOAuth
-		u.Type = SourceSalesloftUpdateCredentialsTypeSourceSalesloftUpdateCredentialsAuthenticateViaOAuth
-		return nil
-	}
-
 	sourceSalesloftUpdateCredentialsAuthenticateViaAPIKey := new(SourceSalesloftUpdateCredentialsAuthenticateViaAPIKey)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -131,16 +122,25 @@ func (u *SourceSalesloftUpdateCredentials) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	sourceSalesloftUpdateCredentialsAuthenticateViaOAuth := new(SourceSalesloftUpdateCredentialsAuthenticateViaOAuth)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceSalesloftUpdateCredentialsAuthenticateViaOAuth); err == nil {
+		u.SourceSalesloftUpdateCredentialsAuthenticateViaOAuth = sourceSalesloftUpdateCredentialsAuthenticateViaOAuth
+		u.Type = SourceSalesloftUpdateCredentialsTypeSourceSalesloftUpdateCredentialsAuthenticateViaOAuth
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceSalesloftUpdateCredentials) MarshalJSON() ([]byte, error) {
-	if u.SourceSalesloftUpdateCredentialsAuthenticateViaOAuth != nil {
-		return json.Marshal(u.SourceSalesloftUpdateCredentialsAuthenticateViaOAuth)
-	}
-
 	if u.SourceSalesloftUpdateCredentialsAuthenticateViaAPIKey != nil {
 		return json.Marshal(u.SourceSalesloftUpdateCredentialsAuthenticateViaAPIKey)
+	}
+
+	if u.SourceSalesloftUpdateCredentialsAuthenticateViaOAuth != nil {
+		return json.Marshal(u.SourceSalesloftUpdateCredentialsAuthenticateViaOAuth)
 	}
 
 	return nil, nil

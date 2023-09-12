@@ -111,15 +111,6 @@ func CreateSourceSlackUpdateAuthenticationMechanismSourceSlackUpdateAuthenticati
 func (u *SourceSlackUpdateAuthenticationMechanism) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth := new(SourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth); err == nil {
-		u.SourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth = sourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth
-		u.Type = SourceSlackUpdateAuthenticationMechanismTypeSourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth
-		return nil
-	}
-
 	sourceSlackUpdateAuthenticationMechanismAPIToken := new(SourceSlackUpdateAuthenticationMechanismAPIToken)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -129,16 +120,25 @@ func (u *SourceSlackUpdateAuthenticationMechanism) UnmarshalJSON(data []byte) er
 		return nil
 	}
 
+	sourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth := new(SourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth); err == nil {
+		u.SourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth = sourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth
+		u.Type = SourceSlackUpdateAuthenticationMechanismTypeSourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceSlackUpdateAuthenticationMechanism) MarshalJSON() ([]byte, error) {
-	if u.SourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth != nil {
-		return json.Marshal(u.SourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth)
-	}
-
 	if u.SourceSlackUpdateAuthenticationMechanismAPIToken != nil {
 		return json.Marshal(u.SourceSlackUpdateAuthenticationMechanismAPIToken)
+	}
+
+	if u.SourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth != nil {
+		return json.Marshal(u.SourceSlackUpdateAuthenticationMechanismSignInViaSlackOAuth)
 	}
 
 	return nil, nil

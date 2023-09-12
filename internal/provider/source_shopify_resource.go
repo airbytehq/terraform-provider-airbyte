@@ -170,7 +170,7 @@ func (r *SourceShopifyResource) Schema(ctx context.Context, req resource.SchemaR
 						Description: `must be one of ["shopify"]`,
 					},
 					"start_date": schema.StringAttribute{
-						Required: true,
+						Optional: true,
 						Validators: []validator.String{
 							validators.IsValidDate(),
 						},

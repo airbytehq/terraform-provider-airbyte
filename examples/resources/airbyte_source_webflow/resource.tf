@@ -4,7 +4,7 @@ resource "airbyte_source_webflow" "my_source_webflow" {
     site_id     = "a relatively long hex sequence"
     source_type = "webflow"
   }
-  name         = "Jennifer Johnson"
+  name         = "Taylor Paucek"
   secret_id    = "...my_secret_id..."
-  workspace_id = "965b711d-08cf-488e-89f7-b99a550a656e"
+  workspace_id = "fded84a3-5a41-4238-a1a7-35ac26ae33be"
 }

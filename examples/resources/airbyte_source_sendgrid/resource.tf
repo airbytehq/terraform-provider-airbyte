@@ -4,7 +4,7 @@ resource "airbyte_source_sendgrid" "my_source_sendgrid" {
     source_type = "sendgrid"
     start_time  = "2020-01-01T01:01:01Z"
   }
-  name         = "Dana Sauer"
+  name         = "Shari Pfannerstill"
   secret_id    = "...my_secret_id..."
-  workspace_id = "3a2875c6-c1fe-4606-907d-2a9c87ae50c1"
+  workspace_id = "41c57d1f-edc2-4050-938d-c3ce185472f9"
 }

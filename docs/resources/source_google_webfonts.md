@@ -21,9 +21,9 @@ resource "airbyte_source_google_webfonts" "my_source_googlewebfonts" {
     sort         = "...my_sort..."
     source_type  = "google-webfonts"
   }
-  name         = "Garrett Hoeger"
+  name         = "Donald Hyatt"
   secret_id    = "...my_secret_id..."
-  workspace_id = "af90a26c-7cdc-4981-b068-981d6bb33cfa"
+  workspace_id = "81d6bb33-cfaa-4348-831b-f407ee4fcf0c"
 }
 ```
 

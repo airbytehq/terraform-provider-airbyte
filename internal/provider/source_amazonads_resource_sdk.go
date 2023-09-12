@@ -22,6 +22,10 @@ func (r *SourceAmazonAdsResourceModel) ToCreateSDKType() *shared.SourceAmazonAds
 	} else {
 		lookBackWindow = nil
 	}
+	var marketplaceIds []string = nil
+	for _, marketplaceIdsItem := range r.Configuration.MarketplaceIds {
+		marketplaceIds = append(marketplaceIds, marketplaceIdsItem.ValueString())
+	}
 	var profiles []int64 = nil
 	for _, profilesItem := range r.Configuration.Profiles {
 		profiles = append(profiles, profilesItem.ValueInt64())
@@ -53,6 +57,7 @@ func (r *SourceAmazonAdsResourceModel) ToCreateSDKType() *shared.SourceAmazonAds
 		ClientID:          clientID,
 		ClientSecret:      clientSecret,
 		LookBackWindow:    lookBackWindow,
+		MarketplaceIds:    marketplaceIds,
 		Profiles:          profiles,
 		RefreshToken:      refreshToken,
 		Region:            region,
@@ -98,6 +103,10 @@ func (r *SourceAmazonAdsResourceModel) ToUpdateSDKType() *shared.SourceAmazonAds
 	} else {
 		lookBackWindow = nil
 	}
+	var marketplaceIds []string = nil
+	for _, marketplaceIdsItem := range r.Configuration.MarketplaceIds {
+		marketplaceIds = append(marketplaceIds, marketplaceIdsItem.ValueString())
+	}
 	var profiles []int64 = nil
 	for _, profilesItem := range r.Configuration.Profiles {
 		profiles = append(profiles, profilesItem.ValueInt64())
@@ -128,6 +137,7 @@ func (r *SourceAmazonAdsResourceModel) ToUpdateSDKType() *shared.SourceAmazonAds
 		ClientID:          clientID,
 		ClientSecret:      clientSecret,
 		LookBackWindow:    lookBackWindow,
+		MarketplaceIds:    marketplaceIds,
 		Profiles:          profiles,
 		RefreshToken:      refreshToken,
 		Region:            region,

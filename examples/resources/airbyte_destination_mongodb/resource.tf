@@ -4,7 +4,7 @@ resource "airbyte_destination_mongodb" "my_destination_mongodb" {
       destination_mongodb_authorization_type_login_password = {
         authorization = "login/password"
         password      = "...my_password..."
-        username      = "Asha61"
+        username      = "Lucienne.Yundt"
       }
     }
     database         = "...my_database..."
@@ -21,6 +21,6 @@ resource "airbyte_destination_mongodb" "my_destination_mongodb" {
       }
     }
   }
-  name         = "Ms. Kenneth Ledner"
-  workspace_id = "a1840394-c260-471f-93f5-f0642dac7af5"
+  name         = "Robyn Schmitt I"
+  workspace_id = "aa63aae8-d678-464d-bb67-5fd5e60b375e"
 }

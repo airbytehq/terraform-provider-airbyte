@@ -10,15 +10,23 @@ resource "airbyte_source_google_search_console" "my_source_googlesearchconsole" 
       }
     }
     custom_reports = "...my_custom_reports..."
-    data_state     = "final"
-    end_date       = "2021-12-12"
+    custom_reports_array = [
+      {
+        dimensions = [
+          "page",
+        ]
+        name = "Heidi Bernier"
+      },
+    ]
+    data_state = "all"
+    end_date   = "2021-12-12"
     site_urls = [
       "...",
     ]
     source_type = "google-search-console"
-    start_date  = "2021-01-01"
+    start_date  = "2022-07-11"
   }
-  name         = "Janie Swift PhD"
+  name         = "Jordan Hilll"
   secret_id    = "...my_secret_id..."
-  workspace_id = "a16fc2b2-71a2-489c-97e8-54e90439d222"
+  workspace_id = "90439d22-2465-4694-a240-7084f7ab37ce"
 }

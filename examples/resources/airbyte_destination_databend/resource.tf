@@ -6,8 +6,8 @@ resource "airbyte_destination_databend" "my_destination_databend" {
     password         = "...my_password..."
     port             = 443
     table            = "default"
-    username         = "Lauryn.Bartoletti50"
+    username         = "Leo.Purdy"
   }
-  name         = "Gary Mayert"
-  workspace_id = "fe49a8d9-cbf4-4863-b323-f9b77f3a4100"
+  name         = "Bobby Kutch V"
+  workspace_id = "b3fe49a8-d9cb-4f48-a333-23f9b77f3a41"
 }

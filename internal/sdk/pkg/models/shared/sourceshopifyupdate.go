@@ -10,6 +10,37 @@ import (
 	"fmt"
 )
 
+type SourceShopifyUpdateShopifyAuthorizationMethodAPIPasswordAuthMethod string
+
+const (
+	SourceShopifyUpdateShopifyAuthorizationMethodAPIPasswordAuthMethodAPIPassword SourceShopifyUpdateShopifyAuthorizationMethodAPIPasswordAuthMethod = "api_password"
+)
+
+func (e SourceShopifyUpdateShopifyAuthorizationMethodAPIPasswordAuthMethod) ToPointer() *SourceShopifyUpdateShopifyAuthorizationMethodAPIPasswordAuthMethod {
+	return &e
+}
+
+func (e *SourceShopifyUpdateShopifyAuthorizationMethodAPIPasswordAuthMethod) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "api_password":
+		*e = SourceShopifyUpdateShopifyAuthorizationMethodAPIPasswordAuthMethod(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceShopifyUpdateShopifyAuthorizationMethodAPIPasswordAuthMethod: %v", v)
+	}
+}
+
+// SourceShopifyUpdateShopifyAuthorizationMethodAPIPassword - API Password Auth
+type SourceShopifyUpdateShopifyAuthorizationMethodAPIPassword struct {
+	// The API Password for your private application in the `Shopify` store.
+	APIPassword string                                                             `json:"api_password"`
+	AuthMethod  SourceShopifyUpdateShopifyAuthorizationMethodAPIPasswordAuthMethod `json:"auth_method"`
+}
+
 type SourceShopifyUpdateShopifyAuthorizationMethodOAuth20AuthMethod string
 
 const (
@@ -45,58 +76,18 @@ type SourceShopifyUpdateShopifyAuthorizationMethodOAuth20 struct {
 	ClientSecret *string `json:"client_secret,omitempty"`
 }
 
-type SourceShopifyUpdateShopifyAuthorizationMethodAPIPasswordAuthMethod string
-
-const (
-	SourceShopifyUpdateShopifyAuthorizationMethodAPIPasswordAuthMethodAPIPassword SourceShopifyUpdateShopifyAuthorizationMethodAPIPasswordAuthMethod = "api_password"
-)
-
-func (e SourceShopifyUpdateShopifyAuthorizationMethodAPIPasswordAuthMethod) ToPointer() *SourceShopifyUpdateShopifyAuthorizationMethodAPIPasswordAuthMethod {
-	return &e
-}
-
-func (e *SourceShopifyUpdateShopifyAuthorizationMethodAPIPasswordAuthMethod) UnmarshalJSON(data []byte) error {
-	var v string
-	if err := json.Unmarshal(data, &v); err != nil {
-		return err
-	}
-	switch v {
-	case "api_password":
-		*e = SourceShopifyUpdateShopifyAuthorizationMethodAPIPasswordAuthMethod(v)
-		return nil
-	default:
-		return fmt.Errorf("invalid value for SourceShopifyUpdateShopifyAuthorizationMethodAPIPasswordAuthMethod: %v", v)
-	}
-}
-
-// SourceShopifyUpdateShopifyAuthorizationMethodAPIPassword - API Password Auth
-type SourceShopifyUpdateShopifyAuthorizationMethodAPIPassword struct {
-	// The API Password for your private application in the `Shopify` store.
-	APIPassword string                                                             `json:"api_password"`
-	AuthMethod  SourceShopifyUpdateShopifyAuthorizationMethodAPIPasswordAuthMethod `json:"auth_method"`
-}
-
 type SourceShopifyUpdateShopifyAuthorizationMethodType string
 
 const (
-	SourceShopifyUpdateShopifyAuthorizationMethodTypeSourceShopifyUpdateShopifyAuthorizationMethodAPIPassword SourceShopifyUpdateShopifyAuthorizationMethodType = "source-shopify-update_Shopify Authorization Method_API Password"
 	SourceShopifyUpdateShopifyAuthorizationMethodTypeSourceShopifyUpdateShopifyAuthorizationMethodOAuth20     SourceShopifyUpdateShopifyAuthorizationMethodType = "source-shopify-update_Shopify Authorization Method_OAuth2.0"
+	SourceShopifyUpdateShopifyAuthorizationMethodTypeSourceShopifyUpdateShopifyAuthorizationMethodAPIPassword SourceShopifyUpdateShopifyAuthorizationMethodType = "source-shopify-update_Shopify Authorization Method_API Password"
 )
 
 type SourceShopifyUpdateShopifyAuthorizationMethod struct {
-	SourceShopifyUpdateShopifyAuthorizationMethodAPIPassword *SourceShopifyUpdateShopifyAuthorizationMethodAPIPassword
 	SourceShopifyUpdateShopifyAuthorizationMethodOAuth20     *SourceShopifyUpdateShopifyAuthorizationMethodOAuth20
+	SourceShopifyUpdateShopifyAuthorizationMethodAPIPassword *SourceShopifyUpdateShopifyAuthorizationMethodAPIPassword
 
 	Type SourceShopifyUpdateShopifyAuthorizationMethodType
-}
-
-func CreateSourceShopifyUpdateShopifyAuthorizationMethodSourceShopifyUpdateShopifyAuthorizationMethodAPIPassword(sourceShopifyUpdateShopifyAuthorizationMethodAPIPassword SourceShopifyUpdateShopifyAuthorizationMethodAPIPassword) SourceShopifyUpdateShopifyAuthorizationMethod {
-	typ := SourceShopifyUpdateShopifyAuthorizationMethodTypeSourceShopifyUpdateShopifyAuthorizationMethodAPIPassword
-
-	return SourceShopifyUpdateShopifyAuthorizationMethod{
-		SourceShopifyUpdateShopifyAuthorizationMethodAPIPassword: &sourceShopifyUpdateShopifyAuthorizationMethodAPIPassword,
-		Type: typ,
-	}
 }
 
 func CreateSourceShopifyUpdateShopifyAuthorizationMethodSourceShopifyUpdateShopifyAuthorizationMethodOAuth20(sourceShopifyUpdateShopifyAuthorizationMethodOAuth20 SourceShopifyUpdateShopifyAuthorizationMethodOAuth20) SourceShopifyUpdateShopifyAuthorizationMethod {
@@ -104,6 +95,15 @@ func CreateSourceShopifyUpdateShopifyAuthorizationMethodSourceShopifyUpdateShopi
 
 	return SourceShopifyUpdateShopifyAuthorizationMethod{
 		SourceShopifyUpdateShopifyAuthorizationMethodOAuth20: &sourceShopifyUpdateShopifyAuthorizationMethodOAuth20,
+		Type: typ,
+	}
+}
+
+func CreateSourceShopifyUpdateShopifyAuthorizationMethodSourceShopifyUpdateShopifyAuthorizationMethodAPIPassword(sourceShopifyUpdateShopifyAuthorizationMethodAPIPassword SourceShopifyUpdateShopifyAuthorizationMethodAPIPassword) SourceShopifyUpdateShopifyAuthorizationMethod {
+	typ := SourceShopifyUpdateShopifyAuthorizationMethodTypeSourceShopifyUpdateShopifyAuthorizationMethodAPIPassword
+
+	return SourceShopifyUpdateShopifyAuthorizationMethod{
+		SourceShopifyUpdateShopifyAuthorizationMethodAPIPassword: &sourceShopifyUpdateShopifyAuthorizationMethodAPIPassword,
 		Type: typ,
 	}
 }
@@ -150,5 +150,5 @@ type SourceShopifyUpdate struct {
 	// The name of your Shopify store found in the URL. For example, if your URL was https://NAME.myshopify.com, then the name would be 'NAME' or 'NAME.myshopify.com'.
 	Shop string `json:"shop"`
 	// The date you would like to replicate data from. Format: YYYY-MM-DD. Any data before this date will not be replicated.
-	StartDate types.Date `json:"start_date"`
+	StartDate *types.Date `json:"start_date,omitempty"`
 }

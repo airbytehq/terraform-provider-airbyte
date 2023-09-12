@@ -14,7 +14,7 @@ Workspace Resource
 
 ```terraform
 resource "airbyte_workspace" "my_workspace" {
-  name = "Crystal Weissnat"
+  name = "Glenda Schiller DDS"
 }
 ```
 

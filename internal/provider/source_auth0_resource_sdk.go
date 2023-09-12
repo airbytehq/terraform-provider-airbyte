@@ -43,10 +43,17 @@ func (r *SourceAuth0ResourceModel) ToCreateSDKType() *shared.SourceAuth0CreateRe
 		}
 	}
 	sourceType := shared.SourceAuth0Auth0(r.Configuration.SourceType.ValueString())
+	startDate := new(string)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate = r.Configuration.StartDate.ValueString()
+	} else {
+		startDate = nil
+	}
 	configuration := shared.SourceAuth0{
 		BaseURL:     baseURL,
 		Credentials: credentials,
 		SourceType:  sourceType,
+		StartDate:   startDate,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -105,9 +112,16 @@ func (r *SourceAuth0ResourceModel) ToUpdateSDKType() *shared.SourceAuth0PutReque
 			SourceAuth0UpdateAuthenticationMethodOAuth2AccessToken: sourceAuth0UpdateAuthenticationMethodOAuth2AccessToken,
 		}
 	}
+	startDate := new(string)
+	if !r.Configuration.StartDate.IsUnknown() && !r.Configuration.StartDate.IsNull() {
+		*startDate = r.Configuration.StartDate.ValueString()
+	} else {
+		startDate = nil
+	}
 	configuration := shared.SourceAuth0Update{
 		BaseURL:     baseURL,
 		Credentials: credentials,
+		StartDate:   startDate,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()

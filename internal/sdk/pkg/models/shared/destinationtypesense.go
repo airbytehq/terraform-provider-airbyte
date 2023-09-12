@@ -35,7 +35,7 @@ type DestinationTypesense struct {
 	// Typesense API Key
 	APIKey string `json:"api_key"`
 	// How many documents should be imported together. Default 1000
-	BatchSize       *string                       `json:"batch_size,omitempty"`
+	BatchSize       *int64                        `json:"batch_size,omitempty"`
 	DestinationType DestinationTypesenseTypesense `json:"destinationType"`
 	// Hostname of the Typesense instance without protocol.
 	Host string `json:"host"`

@@ -110,15 +110,6 @@ func CreateSourceE2eTestCloudUpdateMockCatalogSourceE2eTestCloudUpdateMockCatalo
 func (u *SourceE2eTestCloudUpdateMockCatalog) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceE2eTestCloudUpdateMockCatalogSingleSchema := new(SourceE2eTestCloudUpdateMockCatalogSingleSchema)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceE2eTestCloudUpdateMockCatalogSingleSchema); err == nil {
-		u.SourceE2eTestCloudUpdateMockCatalogSingleSchema = sourceE2eTestCloudUpdateMockCatalogSingleSchema
-		u.Type = SourceE2eTestCloudUpdateMockCatalogTypeSourceE2eTestCloudUpdateMockCatalogSingleSchema
-		return nil
-	}
-
 	sourceE2eTestCloudUpdateMockCatalogMultiSchema := new(SourceE2eTestCloudUpdateMockCatalogMultiSchema)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -128,16 +119,25 @@ func (u *SourceE2eTestCloudUpdateMockCatalog) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	sourceE2eTestCloudUpdateMockCatalogSingleSchema := new(SourceE2eTestCloudUpdateMockCatalogSingleSchema)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceE2eTestCloudUpdateMockCatalogSingleSchema); err == nil {
+		u.SourceE2eTestCloudUpdateMockCatalogSingleSchema = sourceE2eTestCloudUpdateMockCatalogSingleSchema
+		u.Type = SourceE2eTestCloudUpdateMockCatalogTypeSourceE2eTestCloudUpdateMockCatalogSingleSchema
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceE2eTestCloudUpdateMockCatalog) MarshalJSON() ([]byte, error) {
-	if u.SourceE2eTestCloudUpdateMockCatalogSingleSchema != nil {
-		return json.Marshal(u.SourceE2eTestCloudUpdateMockCatalogSingleSchema)
-	}
-
 	if u.SourceE2eTestCloudUpdateMockCatalogMultiSchema != nil {
 		return json.Marshal(u.SourceE2eTestCloudUpdateMockCatalogMultiSchema)
+	}
+
+	if u.SourceE2eTestCloudUpdateMockCatalogSingleSchema != nil {
+		return json.Marshal(u.SourceE2eTestCloudUpdateMockCatalogSingleSchema)
 	}
 
 	return nil, nil

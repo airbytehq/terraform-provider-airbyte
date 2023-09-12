@@ -11,8 +11,8 @@ resource "airbyte_destination_mysql" "my_destination_mysql" {
         tunnel_method = "NO_TUNNEL"
       }
     }
-    username = "Mavis.Ullrich12"
+    username = "Sheldon.Smitham"
   }
-  name         = "Chad Franey IV"
-  workspace_id = "fe35b60e-b1ea-4426-955b-a3c28744ed53"
+  name         = "Guy Luettgen"
+  workspace_id = "a8d8f5c0-b2f2-4fb7-b194-a276b26916fe"
 }

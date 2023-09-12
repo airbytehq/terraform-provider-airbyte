@@ -5,7 +5,7 @@ resource "airbyte_source_punk_api" "my_source_punkapi" {
     id            = 22
     source_type   = "punk-api"
   }
-  name         = "Santos Langosh"
+  name         = "Darnell Turcotte"
   secret_id    = "...my_secret_id..."
-  workspace_id = "51bd76ee-eb51-48c4-9a1f-ad35512f06d4"
+  workspace_id = "540ef53a-34a1-4b8f-a997-31adc05d85ae"
 }

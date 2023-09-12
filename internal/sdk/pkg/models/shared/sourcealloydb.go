@@ -268,21 +268,21 @@ func (u *SourceAlloydbReplicationMethod) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	sourceAlloydbReplicationMethodLogicalReplicationCDC := new(SourceAlloydbReplicationMethodLogicalReplicationCDC)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceAlloydbReplicationMethodLogicalReplicationCDC); err == nil {
-		u.SourceAlloydbReplicationMethodLogicalReplicationCDC = sourceAlloydbReplicationMethodLogicalReplicationCDC
-		u.Type = SourceAlloydbReplicationMethodTypeSourceAlloydbReplicationMethodLogicalReplicationCDC
-		return nil
-	}
-
 	sourceAlloydbReplicationMethodStandard := new(SourceAlloydbReplicationMethodStandard)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
 	if err := d.Decode(&sourceAlloydbReplicationMethodStandard); err == nil {
 		u.SourceAlloydbReplicationMethodStandard = sourceAlloydbReplicationMethodStandard
 		u.Type = SourceAlloydbReplicationMethodTypeSourceAlloydbReplicationMethodStandard
+		return nil
+	}
+
+	sourceAlloydbReplicationMethodLogicalReplicationCDC := new(SourceAlloydbReplicationMethodLogicalReplicationCDC)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceAlloydbReplicationMethodLogicalReplicationCDC); err == nil {
+		u.SourceAlloydbReplicationMethodLogicalReplicationCDC = sourceAlloydbReplicationMethodLogicalReplicationCDC
+		u.Type = SourceAlloydbReplicationMethodTypeSourceAlloydbReplicationMethodLogicalReplicationCDC
 		return nil
 	}
 
@@ -294,12 +294,12 @@ func (u SourceAlloydbReplicationMethod) MarshalJSON() ([]byte, error) {
 		return json.Marshal(u.SourceAlloydbReplicationMethodStandardXmin)
 	}
 
-	if u.SourceAlloydbReplicationMethodLogicalReplicationCDC != nil {
-		return json.Marshal(u.SourceAlloydbReplicationMethodLogicalReplicationCDC)
-	}
-
 	if u.SourceAlloydbReplicationMethodStandard != nil {
 		return json.Marshal(u.SourceAlloydbReplicationMethodStandard)
+	}
+
+	if u.SourceAlloydbReplicationMethodLogicalReplicationCDC != nil {
+		return json.Marshal(u.SourceAlloydbReplicationMethodLogicalReplicationCDC)
 	}
 
 	return nil, nil

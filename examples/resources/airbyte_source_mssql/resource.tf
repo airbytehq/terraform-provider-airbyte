@@ -6,11 +6,11 @@ resource "airbyte_source_mssql" "my_source_mssql" {
     password        = "...my_password..."
     port            = 1433
     replication_method = {
-      source_mssql_replication_method_logical_replication_cdc_ = {
-        data_to_sync            = "Existing and New"
-        initial_waiting_seconds = 6
+      source_mssql_update_method_read_changes_using_change_data_capture_cdc_ = {
+        data_to_sync            = "New Changes Only"
+        initial_waiting_seconds = 7
         method                  = "CDC"
-        snapshot_isolation      = "Read Committed"
+        snapshot_isolation      = "Snapshot"
       }
     }
     schemas = [
@@ -27,9 +27,9 @@ resource "airbyte_source_mssql" "my_source_mssql" {
         tunnel_method = "NO_TUNNEL"
       }
     }
-    username = "Rhianna75"
+    username = "Bobbie60"
   }
-  name         = "Victor Gleason"
+  name         = "Clarence Murazik"
   secret_id    = "...my_secret_id..."
-  workspace_id = "da21729f-2ac4-41ef-9725-f1169ac1e41d"
+  workspace_id = "1ef5725f-1169-4ac1-a41d-8a23c23e34f2"
 }

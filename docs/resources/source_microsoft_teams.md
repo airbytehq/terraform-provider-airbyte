@@ -26,9 +26,9 @@ resource "airbyte_source_microsoft_teams" "my_source_microsoftteams" {
     period      = "D7"
     source_type = "microsoft-teams"
   }
-  name         = "Noah Bernier"
+  name         = "Brandy Ryan"
   secret_id    = "...my_secret_id..."
-  workspace_id = "7097b5da-08c5-47fa-ac78-a216e19bafec"
+  workspace_id = "fa6c78a2-16e1-49ba-beca-6191498140b6"
 }
 ```
 

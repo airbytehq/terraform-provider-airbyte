@@ -8,7 +8,7 @@ resource "airbyte_source_monday" "my_source_monday" {
     }
     source_type = "monday"
   }
-  name         = "Lynda Padberg"
+  name         = "Shirley Wisoky"
   secret_id    = "...my_secret_id..."
-  workspace_id = "cb6682cb-70f8-4cfd-9fb6-e91b9a9f7484"
+  workspace_id = "fd5fb6e9-1b9a-49f7-8846-e2c3309db053"
 }

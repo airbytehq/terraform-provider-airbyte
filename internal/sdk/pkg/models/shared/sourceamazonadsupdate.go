@@ -145,7 +145,9 @@ type SourceAmazonAdsUpdate struct {
 	ClientSecret string `json:"client_secret"`
 	// The amount of days to go back in time to get the updated data from Amazon Ads
 	LookBackWindow *int64 `json:"look_back_window,omitempty"`
-	// Profile IDs you want to fetch data for. See <a href="https://advertising.amazon.com/API/docs/en-us/concepts/authorization/profiles">docs</a> for more details.
+	// Marketplace IDs you want to fetch data for. Note: If Profile IDs are also selected, profiles will be selected if they match the Profile ID OR the Marketplace ID.
+	MarketplaceIds []string `json:"marketplace_ids,omitempty"`
+	// Profile IDs you want to fetch data for. See <a href="https://advertising.amazon.com/API/docs/en-us/concepts/authorization/profiles">docs</a> for more details. Note: If Marketplace IDs are also selected, profiles will be selected if they match the Profile ID OR the Marketplace ID.
 	Profiles []int64 `json:"profiles,omitempty"`
 	// Amazon Ads refresh token. See the <a href="https://advertising.amazon.com/API/docs/en-us/get-started/generate-api-tokens">docs</a> for more information on how to obtain this token.
 	RefreshToken string `json:"refresh_token"`

@@ -78,7 +78,7 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 					"replication_method": schema.SingleNestedAttribute{
 						Optional: true,
 						Attributes: map[string]schema.Attribute{
-							"source_mssql_replication_method_logical_replication_cdc": schema.SingleNestedAttribute{
+							"source_mssql_update_method_read_changes_using_change_data_capture_cdc": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"data_to_sync": schema.StringAttribute{
@@ -117,9 +117,9 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 											`Existing data in the database are synced through an initial snapshot. This parameter controls the isolation level that will be used during the initial snapshotting. If you choose the "Snapshot" level, you must enable the <a href="https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/snapshot-isolation-in-sql-server">snapshot isolation mode</a> on the database.`,
 									},
 								},
-								Description: `CDC uses {TBC} to detect inserts, updates, and deletes. This needs to be configured on the source database itself.`,
+								Description: `<i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the SQL Server's <a href="https://docs.airbyte.com/integrations/sources/mssql/#change-data-capture-cdc">change data capture feature</a>. This must be enabled on your database.`,
 							},
-							"source_mssql_replication_method_standard": schema.SingleNestedAttribute{
+							"source_mssql_update_method_scan_changes_with_user_defined_cursor": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
@@ -132,9 +132,9 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 										Description: `must be one of ["STANDARD"]`,
 									},
 								},
-								Description: `Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
+								Description: `Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at).`,
 							},
-							"source_mssql_update_replication_method_logical_replication_cdc": schema.SingleNestedAttribute{
+							"source_mssql_update_update_method_read_changes_using_change_data_capture_cdc": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"data_to_sync": schema.StringAttribute{
@@ -173,9 +173,9 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 											`Existing data in the database are synced through an initial snapshot. This parameter controls the isolation level that will be used during the initial snapshotting. If you choose the "Snapshot" level, you must enable the <a href="https://docs.microsoft.com/en-us/dotnet/framework/data/adonet/sql/snapshot-isolation-in-sql-server">snapshot isolation mode</a> on the database.`,
 									},
 								},
-								Description: `CDC uses {TBC} to detect inserts, updates, and deletes. This needs to be configured on the source database itself.`,
+								Description: `<i>Recommended</i> - Incrementally reads new inserts, updates, and deletes using the SQL Server's <a href="https://docs.airbyte.com/integrations/sources/mssql/#change-data-capture-cdc">change data capture feature</a>. This must be enabled on your database.`,
 							},
-							"source_mssql_update_replication_method_standard": schema.SingleNestedAttribute{
+							"source_mssql_update_update_method_scan_changes_with_user_defined_cursor": schema.SingleNestedAttribute{
 								Optional: true,
 								Attributes: map[string]schema.Attribute{
 									"method": schema.StringAttribute{
@@ -188,13 +188,13 @@ func (r *SourceMssqlResource) Schema(ctx context.Context, req resource.SchemaReq
 										Description: `must be one of ["STANDARD"]`,
 									},
 								},
-								Description: `Standard replication requires no setup on the DB side but will not be able to represent deletions incrementally.`,
+								Description: `Incrementally detects new inserts and updates using the <a href="https://docs.airbyte.com/understanding-airbyte/connections/incremental-append/#user-defined-cursor">cursor column</a> chosen when configuring a connection (e.g. created_at, updated_at).`,
 							},
 						},
 						Validators: []validator.Object{
 							validators.ExactlyOneChild(),
 						},
-						Description: `The replication method used for extracting data from the database. STANDARD replication requires no setup on the DB side but will not be able to represent deletions incrementally. CDC uses {TBC} to detect inserts, updates, and deletes. This needs to be configured on the source database itself.`,
+						Description: `Configures how data is extracted from the database.`,
 					},
 					"schemas": schema.ListAttribute{
 						Optional:    true,

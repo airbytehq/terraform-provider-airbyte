@@ -22,14 +22,14 @@ resource "airbyte_source_outbrain_amplify" "my_source_outbrainamplify" {
       }
     }
     end_date               = "...my_end_date..."
-    geo_location_breakdown = "region"
-    report_granularity     = "weekly"
+    geo_location_breakdown = "subregion"
+    report_granularity     = "daily"
     source_type            = "outbrain-amplify"
     start_date             = "...my_start_date..."
   }
-  name         = "Johanna Runolfsson Jr."
+  name         = "Cynthia Boyer"
   secret_id    = "...my_secret_id..."
-  workspace_id = "c65b037b-b8e0-4cc8-8518-7e4de04af28c"
+  workspace_id = "2cd55cc0-584a-4184-976d-971fc820c65b"
 }
 ```
 

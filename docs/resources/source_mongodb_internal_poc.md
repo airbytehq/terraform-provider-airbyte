@@ -22,9 +22,9 @@ resource "airbyte_source_mongodb_internal_poc" "my_source_mongodbinternalpoc" {
     source_type       = "mongodb-internal-poc"
     user              = "...my_user..."
   }
-  name         = "Dr. Cary McKenzie"
+  name         = "Eduardo Weissnat"
   secret_id    = "...my_secret_id..."
-  workspace_id = "7428ad9a-9f8b-4f82-a112-5359d98387f7"
+  workspace_id = "f8221125-359d-4983-87f7-a79cd72cd248"
 }
 ```
 

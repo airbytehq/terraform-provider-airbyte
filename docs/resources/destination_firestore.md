@@ -19,8 +19,8 @@ resource "airbyte_destination_firestore" "my_destination_firestore" {
     destination_type = "firestore"
     project_id       = "...my_project_id..."
   }
-  name         = "Ms. Cindy Wuckert"
-  workspace_id = "9f5fce6c-5561-446c-be25-0fb008c42e14"
+  name         = "Paula Jacobs I"
+  workspace_id = "f16d9f5f-ce6c-4556-946c-3e250fb008c4"
 }
 ```
 

@@ -27,9 +27,9 @@ resource "airbyte_source_google_pagespeed_insights" "my_source_googlepagespeedin
       "...",
     ]
   }
-  name         = "Miss Terrell Satterfield"
+  name         = "Kristopher Dare"
   secret_id    = "...my_secret_id..."
-  workspace_id = "6230f841-fb1b-4d23-bdb1-4db6be5a6859"
+  workspace_id = "db14db6b-e5a6-4859-98e2-2ae20da16fc2"
 }
 ```
 

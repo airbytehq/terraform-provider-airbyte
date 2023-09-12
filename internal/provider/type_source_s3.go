@@ -5,10 +5,16 @@ package provider
 import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type SourceS3 struct {
-	Dataset     types.String                `tfsdk:"dataset"`
-	Format      *SourceS3FileFormat         `tfsdk:"format"`
-	PathPattern types.String                `tfsdk:"path_pattern"`
-	Provider    SourceS3S3AmazonWebServices `tfsdk:"provider"`
-	Schema      types.String                `tfsdk:"schema"`
-	SourceType  types.String                `tfsdk:"source_type"`
+	AwsAccessKeyID     types.String                    `tfsdk:"aws_access_key_id"`
+	AwsSecretAccessKey types.String                    `tfsdk:"aws_secret_access_key"`
+	Bucket             types.String                    `tfsdk:"bucket"`
+	Dataset            types.String                    `tfsdk:"dataset"`
+	Endpoint           types.String                    `tfsdk:"endpoint"`
+	Format             *SourceS3FileFormat             `tfsdk:"format"`
+	PathPattern        types.String                    `tfsdk:"path_pattern"`
+	Provider           *SourceS3S3AmazonWebServices    `tfsdk:"provider"`
+	Schema             types.String                    `tfsdk:"schema"`
+	SourceType         types.String                    `tfsdk:"source_type"`
+	StartDate          types.String                    `tfsdk:"start_date"`
+	Streams            []SourceS3FileBasedStreamConfig `tfsdk:"streams"`
 }

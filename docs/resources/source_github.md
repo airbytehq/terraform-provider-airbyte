@@ -24,14 +24,14 @@ resource "airbyte_source_github" "my_source_github" {
         option_title  = "OAuth Credentials"
       }
     }
-    repository        = "airbytehq/airbyte airbytehq/another-repo"
-    requests_per_hour = 6
+    repository        = "airbytehq/airbyte"
+    requests_per_hour = 10
     source_type       = "github"
     start_date        = "2021-03-01T00:00:00Z"
   }
-  name         = "Brandy Kuvalis V"
+  name         = "Van Kuhlman IV"
   secret_id    = "...my_secret_id..."
-  workspace_id = "83dabf9e-f3ff-4dd9-b7f0-79af4d35724c"
+  workspace_id = "9af4d357-24cd-4b0f-8d28-1187d56844ed"
 }
 ```
 

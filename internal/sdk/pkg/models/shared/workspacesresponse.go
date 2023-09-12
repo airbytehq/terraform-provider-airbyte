@@ -2,7 +2,6 @@
 
 package shared
 
-// WorkspacesResponse - Successful operation
 type WorkspacesResponse struct {
 	Data     []WorkspaceResponse `json:"data"`
 	Next     *string             `json:"next,omitempty"`

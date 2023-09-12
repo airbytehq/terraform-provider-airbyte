@@ -25,9 +25,9 @@ resource "airbyte_source_okta" "my_source_okta" {
     source_type = "okta"
     start_date  = "2022-07-22T00:00:00Z"
   }
-  name         = "Randolph Russel"
+  name         = "Mr. Emmett Heidenreich"
   secret_id    = "...my_secret_id..."
-  workspace_id = "47b7684e-ff50-4126-971c-ffbd0eb74b84"
+  workspace_id = "6d71cffb-d0eb-474b-8421-953b44bd3c43"
 }
 ```
 

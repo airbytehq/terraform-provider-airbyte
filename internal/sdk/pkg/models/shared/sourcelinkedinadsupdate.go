@@ -10,38 +10,38 @@ import (
 	"fmt"
 )
 
-// SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotBy - Select value from list to pivot by
-type SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotBy string
+// SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategory - Choose a category to pivot your analytics report around. This selection will organize your data based on the chosen attribute, allowing you to analyze trends and performance from different perspectives.
+type SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategory string
 
 const (
-	SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotByCompany                     SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotBy = "COMPANY"
-	SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotByAccount                     SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotBy = "ACCOUNT"
-	SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotByShare                       SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotBy = "SHARE"
-	SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotByCampaign                    SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotBy = "CAMPAIGN"
-	SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotByCreative                    SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotBy = "CREATIVE"
-	SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotByCampaignGroup               SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotBy = "CAMPAIGN_GROUP"
-	SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotByConversion                  SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotBy = "CONVERSION"
-	SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotByConversationNode            SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotBy = "CONVERSATION_NODE"
-	SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotByConversationNodeOptionIndex SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotBy = "CONVERSATION_NODE_OPTION_INDEX"
-	SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotByServingLocation             SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotBy = "SERVING_LOCATION"
-	SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotByCardIndex                   SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotBy = "CARD_INDEX"
-	SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotByMemberCompanySize           SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotBy = "MEMBER_COMPANY_SIZE"
-	SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotByMemberIndustry              SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotBy = "MEMBER_INDUSTRY"
-	SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotByMemberSeniority             SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotBy = "MEMBER_SENIORITY"
-	SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotByMemberJobTitle              SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotBy = "MEMBER_JOB_TITLE "
-	SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotByMemberJobFunction           SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotBy = "MEMBER_JOB_FUNCTION "
-	SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotByMemberCountryV2             SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotBy = "MEMBER_COUNTRY_V2 "
-	SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotByMemberRegionV2              SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotBy = "MEMBER_REGION_V2"
-	SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotByMemberCompany               SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotBy = "MEMBER_COMPANY"
-	SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotByPlacementName               SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotBy = "PLACEMENT_NAME"
-	SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotByImpressionDeviceType        SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotBy = "IMPRESSION_DEVICE_TYPE"
+	SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategoryCompany                     SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategory = "COMPANY"
+	SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategoryAccount                     SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategory = "ACCOUNT"
+	SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategoryShare                       SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategory = "SHARE"
+	SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategoryCampaign                    SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategory = "CAMPAIGN"
+	SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategoryCreative                    SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategory = "CREATIVE"
+	SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategoryCampaignGroup               SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategory = "CAMPAIGN_GROUP"
+	SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategoryConversion                  SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategory = "CONVERSION"
+	SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategoryConversationNode            SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategory = "CONVERSATION_NODE"
+	SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategoryConversationNodeOptionIndex SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategory = "CONVERSATION_NODE_OPTION_INDEX"
+	SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategoryServingLocation             SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategory = "SERVING_LOCATION"
+	SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategoryCardIndex                   SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategory = "CARD_INDEX"
+	SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategoryMemberCompanySize           SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategory = "MEMBER_COMPANY_SIZE"
+	SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategoryMemberIndustry              SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategory = "MEMBER_INDUSTRY"
+	SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategoryMemberSeniority             SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategory = "MEMBER_SENIORITY"
+	SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategoryMemberJobTitle              SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategory = "MEMBER_JOB_TITLE "
+	SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategoryMemberJobFunction           SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategory = "MEMBER_JOB_FUNCTION "
+	SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategoryMemberCountryV2             SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategory = "MEMBER_COUNTRY_V2 "
+	SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategoryMemberRegionV2              SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategory = "MEMBER_REGION_V2"
+	SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategoryMemberCompany               SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategory = "MEMBER_COMPANY"
+	SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategoryPlacementName               SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategory = "PLACEMENT_NAME"
+	SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategoryImpressionDeviceType        SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategory = "IMPRESSION_DEVICE_TYPE"
 )
 
-func (e SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotBy) ToPointer() *SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotBy {
+func (e SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategory) ToPointer() *SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategory {
 	return &e
 }
 
-func (e *SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotBy) UnmarshalJSON(data []byte) error {
+func (e *SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategory) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -88,18 +88,14 @@ func (e *SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotBy) Unmarshal
 	case "PLACEMENT_NAME":
 		fallthrough
 	case "IMPRESSION_DEVICE_TYPE":
-		*e = SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotBy(v)
+		*e = SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategory(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotBy: %v", v)
+		return fmt.Errorf("invalid value for SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategory: %v", v)
 	}
 }
 
-// SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationTimeGranularity - Set time granularity for report:
-// ALL - Results grouped into a single result across the entire time range of the report.
-// DAILY - Results grouped by day.
-// MONTHLY - Results grouped by month.
-// YEARLY - Results grouped by year.
+// SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationTimeGranularity - Choose how to group the data in your report by time. The options are:<br>- 'ALL': A single result summarizing the entire time range.<br>- 'DAILY': Group results by each day.<br>- 'MONTHLY': Group results by each month.<br>- 'YEARLY': Group results by each year.<br>Selecting a time grouping helps you analyze trends and patterns over different time periods.
 type SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationTimeGranularity string
 
 const (
@@ -135,15 +131,11 @@ func (e *SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationTimeGranularity) U
 
 // SourceLinkedinAdsUpdateAdAnalyticsReportConfiguration - Config for custom ad Analytics Report
 type SourceLinkedinAdsUpdateAdAnalyticsReportConfiguration struct {
-	// The name for the report
+	// The name for the custom report.
 	Name string `json:"name"`
-	// Select value from list to pivot by
-	PivotBy SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotBy `json:"pivot_by"`
-	// Set time granularity for report:
-	// ALL - Results grouped into a single result across the entire time range of the report.
-	// DAILY - Results grouped by day.
-	// MONTHLY - Results grouped by month.
-	// YEARLY - Results grouped by year.
+	// Choose a category to pivot your analytics report around. This selection will organize your data based on the chosen attribute, allowing you to analyze trends and performance from different perspectives.
+	PivotBy SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationPivotCategory `json:"pivot_by"`
+	// Choose how to group the data in your report by time. The options are:<br>- 'ALL': A single result summarizing the entire time range.<br>- 'DAILY': Group results by each day.<br>- 'MONTHLY': Group results by each month.<br>- 'YEARLY': Group results by each year.<br>Selecting a time grouping helps you analyze trends and patterns over different time periods.
 	TimeGranularity SourceLinkedinAdsUpdateAdAnalyticsReportConfigurationTimeGranularity `json:"time_granularity"`
 }
 
@@ -172,7 +164,7 @@ func (e *SourceLinkedinAdsUpdateAuthenticationAccessTokenAuthMethod) UnmarshalJS
 }
 
 type SourceLinkedinAdsUpdateAuthenticationAccessToken struct {
-	// The token value generated using the authentication code. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-ads#authentication">docs</a> to obtain yours.
+	// The access token generated for your developer application. Refer to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a> for more information.
 	AccessToken string                                                      `json:"access_token"`
 	AuthMethod  *SourceLinkedinAdsUpdateAuthenticationAccessTokenAuthMethod `json:"auth_method,omitempty"`
 }
@@ -203,11 +195,11 @@ func (e *SourceLinkedinAdsUpdateAuthenticationOAuth20AuthMethod) UnmarshalJSON(d
 
 type SourceLinkedinAdsUpdateAuthenticationOAuth20 struct {
 	AuthMethod *SourceLinkedinAdsUpdateAuthenticationOAuth20AuthMethod `json:"auth_method,omitempty"`
-	// The client ID of the LinkedIn Ads developer application.
+	// The client ID of your developer application. Refer to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a> for more information.
 	ClientID string `json:"client_id"`
-	// The client secret the LinkedIn Ads developer application.
+	// The client secret of your developer application. Refer to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a> for more information.
 	ClientSecret string `json:"client_secret"`
-	// The key to refresh the expired access token.
+	// The key to refresh the expired access token. Refer to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a> for more information.
 	RefreshToken string `json:"refresh_token"`
 }
 
@@ -215,7 +207,7 @@ type SourceLinkedinAdsUpdateAuthenticationType string
 
 const (
 	SourceLinkedinAdsUpdateAuthenticationTypeSourceLinkedinAdsUpdateAuthenticationOAuth20     SourceLinkedinAdsUpdateAuthenticationType = "source-linkedin-ads-update_Authentication_OAuth2.0"
-	SourceLinkedinAdsUpdateAuthenticationTypeSourceLinkedinAdsUpdateAuthenticationAccessToken SourceLinkedinAdsUpdateAuthenticationType = "source-linkedin-ads-update_Authentication_Access token"
+	SourceLinkedinAdsUpdateAuthenticationTypeSourceLinkedinAdsUpdateAuthenticationAccessToken SourceLinkedinAdsUpdateAuthenticationType = "source-linkedin-ads-update_Authentication_Access Token"
 )
 
 type SourceLinkedinAdsUpdateAuthentication struct {
@@ -246,15 +238,6 @@ func CreateSourceLinkedinAdsUpdateAuthenticationSourceLinkedinAdsUpdateAuthentic
 func (u *SourceLinkedinAdsUpdateAuthentication) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceLinkedinAdsUpdateAuthenticationOAuth20 := new(SourceLinkedinAdsUpdateAuthenticationOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceLinkedinAdsUpdateAuthenticationOAuth20); err == nil {
-		u.SourceLinkedinAdsUpdateAuthenticationOAuth20 = sourceLinkedinAdsUpdateAuthenticationOAuth20
-		u.Type = SourceLinkedinAdsUpdateAuthenticationTypeSourceLinkedinAdsUpdateAuthenticationOAuth20
-		return nil
-	}
-
 	sourceLinkedinAdsUpdateAuthenticationAccessToken := new(SourceLinkedinAdsUpdateAuthenticationAccessToken)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -264,26 +247,35 @@ func (u *SourceLinkedinAdsUpdateAuthentication) UnmarshalJSON(data []byte) error
 		return nil
 	}
 
+	sourceLinkedinAdsUpdateAuthenticationOAuth20 := new(SourceLinkedinAdsUpdateAuthenticationOAuth20)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceLinkedinAdsUpdateAuthenticationOAuth20); err == nil {
+		u.SourceLinkedinAdsUpdateAuthenticationOAuth20 = sourceLinkedinAdsUpdateAuthenticationOAuth20
+		u.Type = SourceLinkedinAdsUpdateAuthenticationTypeSourceLinkedinAdsUpdateAuthenticationOAuth20
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceLinkedinAdsUpdateAuthentication) MarshalJSON() ([]byte, error) {
-	if u.SourceLinkedinAdsUpdateAuthenticationOAuth20 != nil {
-		return json.Marshal(u.SourceLinkedinAdsUpdateAuthenticationOAuth20)
-	}
-
 	if u.SourceLinkedinAdsUpdateAuthenticationAccessToken != nil {
 		return json.Marshal(u.SourceLinkedinAdsUpdateAuthenticationAccessToken)
+	}
+
+	if u.SourceLinkedinAdsUpdateAuthenticationOAuth20 != nil {
+		return json.Marshal(u.SourceLinkedinAdsUpdateAuthenticationOAuth20)
 	}
 
 	return nil, nil
 }
 
 type SourceLinkedinAdsUpdate struct {
-	// Specify the account IDs separated by a space, to pull the data from. Leave empty, if you want to pull the data from all associated accounts. See the <a href="https://www.linkedin.com/help/linkedin/answer/a424270/find-linkedin-ads-account-details?lang=en">LinkedIn Ads docs</a> for more info.
+	// Specify the account IDs to pull data from, separated by a space. Leave this field empty if you want to pull the data from all accounts accessible by the authenticated user. See the <a href="https://www.linkedin.com/help/linkedin/answer/a424270/find-linkedin-ads-account-details?lang=en">LinkedIn docs</a> to locate these IDs.
 	AccountIds         []int64                                                 `json:"account_ids,omitempty"`
 	AdAnalyticsReports []SourceLinkedinAdsUpdateAdAnalyticsReportConfiguration `json:"ad_analytics_reports,omitempty"`
 	Credentials        *SourceLinkedinAdsUpdateAuthentication                  `json:"credentials,omitempty"`
-	// UTC date in the format 2020-09-17. Any data before this date will not be replicated.
+	// UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated.
 	StartDate types.Date `json:"start_date"`
 }

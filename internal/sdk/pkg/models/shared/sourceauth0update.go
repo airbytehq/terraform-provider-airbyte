@@ -108,15 +108,6 @@ func CreateSourceAuth0UpdateAuthenticationMethodSourceAuth0UpdateAuthenticationM
 func (u *SourceAuth0UpdateAuthenticationMethod) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication := new(SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication); err == nil {
-		u.SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication = sourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication
-		u.Type = SourceAuth0UpdateAuthenticationMethodTypeSourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication
-		return nil
-	}
-
 	sourceAuth0UpdateAuthenticationMethodOAuth2AccessToken := new(SourceAuth0UpdateAuthenticationMethodOAuth2AccessToken)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -126,16 +117,25 @@ func (u *SourceAuth0UpdateAuthenticationMethod) UnmarshalJSON(data []byte) error
 		return nil
 	}
 
+	sourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication := new(SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication); err == nil {
+		u.SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication = sourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication
+		u.Type = SourceAuth0UpdateAuthenticationMethodTypeSourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceAuth0UpdateAuthenticationMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication != nil {
-		return json.Marshal(u.SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication)
-	}
-
 	if u.SourceAuth0UpdateAuthenticationMethodOAuth2AccessToken != nil {
 		return json.Marshal(u.SourceAuth0UpdateAuthenticationMethodOAuth2AccessToken)
+	}
+
+	if u.SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication != nil {
+		return json.Marshal(u.SourceAuth0UpdateAuthenticationMethodOAuth2ConfidentialApplication)
 	}
 
 	return nil, nil
@@ -145,4 +145,6 @@ type SourceAuth0Update struct {
 	// The Authentication API is served over HTTPS. All URLs referenced in the documentation have the following base `https://YOUR_DOMAIN`
 	BaseURL     string                                `json:"base_url"`
 	Credentials SourceAuth0UpdateAuthenticationMethod `json:"credentials"`
+	// UTC date and time in the format 2017-01-25T00:00:00Z. Any data before this date will not be replicated.
+	StartDate *string `json:"start_date,omitempty"`
 }

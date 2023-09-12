@@ -27,10 +27,10 @@ resource "airbyte_destination_oracle" "my_destination_oracle" {
         tunnel_method = "NO_TUNNEL"
       }
     }
-    username = "Jimmy.Luettgen63"
+    username = "Viviane_Aufderhar"
   }
-  name         = "Dewey Leannon"
-  workspace_id = "c0b2f2fb-7b19-44a2-b6b2-6916fe1f08f4"
+  name         = "Tammy Medhurst"
+  workspace_id = "3698f447-f603-4e8b-845e-80ca55efd20e"
 }
 ```
 

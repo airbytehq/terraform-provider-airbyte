@@ -114,15 +114,6 @@ func CreateSourceTrustpilotAuthorizationMethodSourceTrustpilotAuthorizationMetho
 func (u *SourceTrustpilotAuthorizationMethod) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceTrustpilotAuthorizationMethodOAuth20 := new(SourceTrustpilotAuthorizationMethodOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceTrustpilotAuthorizationMethodOAuth20); err == nil {
-		u.SourceTrustpilotAuthorizationMethodOAuth20 = sourceTrustpilotAuthorizationMethodOAuth20
-		u.Type = SourceTrustpilotAuthorizationMethodTypeSourceTrustpilotAuthorizationMethodOAuth20
-		return nil
-	}
-
 	sourceTrustpilotAuthorizationMethodAPIKey := new(SourceTrustpilotAuthorizationMethodAPIKey)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -132,16 +123,25 @@ func (u *SourceTrustpilotAuthorizationMethod) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	sourceTrustpilotAuthorizationMethodOAuth20 := new(SourceTrustpilotAuthorizationMethodOAuth20)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceTrustpilotAuthorizationMethodOAuth20); err == nil {
+		u.SourceTrustpilotAuthorizationMethodOAuth20 = sourceTrustpilotAuthorizationMethodOAuth20
+		u.Type = SourceTrustpilotAuthorizationMethodTypeSourceTrustpilotAuthorizationMethodOAuth20
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceTrustpilotAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceTrustpilotAuthorizationMethodOAuth20 != nil {
-		return json.Marshal(u.SourceTrustpilotAuthorizationMethodOAuth20)
-	}
-
 	if u.SourceTrustpilotAuthorizationMethodAPIKey != nil {
 		return json.Marshal(u.SourceTrustpilotAuthorizationMethodAPIKey)
+	}
+
+	if u.SourceTrustpilotAuthorizationMethodOAuth20 != nil {
+		return json.Marshal(u.SourceTrustpilotAuthorizationMethodOAuth20)
 	}
 
 	return nil, nil

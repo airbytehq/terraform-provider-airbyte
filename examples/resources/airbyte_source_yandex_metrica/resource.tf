@@ -6,7 +6,7 @@ resource "airbyte_source_yandex_metrica" "my_source_yandexmetrica" {
     source_type = "yandex-metrica"
     start_date  = "2022-01-01"
   }
-  name         = "Reginald Carter"
+  name         = "Dominic Marvin"
   secret_id    = "...my_secret_id..."
-  workspace_id = "e5eb5f0c-492b-4574-8d08-a2267aaee79e"
+  workspace_id = "e102da2d-e35f-48e0-9bf3-3eaab45402ac"
 }

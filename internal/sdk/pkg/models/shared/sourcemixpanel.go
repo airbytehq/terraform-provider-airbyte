@@ -109,15 +109,6 @@ func CreateSourceMixpanelAuthenticationWildcardSourceMixpanelAuthenticationWildc
 func (u *SourceMixpanelAuthenticationWildcard) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceMixpanelAuthenticationWildcardServiceAccount := new(SourceMixpanelAuthenticationWildcardServiceAccount)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMixpanelAuthenticationWildcardServiceAccount); err == nil {
-		u.SourceMixpanelAuthenticationWildcardServiceAccount = sourceMixpanelAuthenticationWildcardServiceAccount
-		u.Type = SourceMixpanelAuthenticationWildcardTypeSourceMixpanelAuthenticationWildcardServiceAccount
-		return nil
-	}
-
 	sourceMixpanelAuthenticationWildcardProjectSecret := new(SourceMixpanelAuthenticationWildcardProjectSecret)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -127,16 +118,25 @@ func (u *SourceMixpanelAuthenticationWildcard) UnmarshalJSON(data []byte) error 
 		return nil
 	}
 
+	sourceMixpanelAuthenticationWildcardServiceAccount := new(SourceMixpanelAuthenticationWildcardServiceAccount)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceMixpanelAuthenticationWildcardServiceAccount); err == nil {
+		u.SourceMixpanelAuthenticationWildcardServiceAccount = sourceMixpanelAuthenticationWildcardServiceAccount
+		u.Type = SourceMixpanelAuthenticationWildcardTypeSourceMixpanelAuthenticationWildcardServiceAccount
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceMixpanelAuthenticationWildcard) MarshalJSON() ([]byte, error) {
-	if u.SourceMixpanelAuthenticationWildcardServiceAccount != nil {
-		return json.Marshal(u.SourceMixpanelAuthenticationWildcardServiceAccount)
-	}
-
 	if u.SourceMixpanelAuthenticationWildcardProjectSecret != nil {
 		return json.Marshal(u.SourceMixpanelAuthenticationWildcardProjectSecret)
+	}
+
+	if u.SourceMixpanelAuthenticationWildcardServiceAccount != nil {
+		return json.Marshal(u.SourceMixpanelAuthenticationWildcardServiceAccount)
 	}
 
 	return nil, nil

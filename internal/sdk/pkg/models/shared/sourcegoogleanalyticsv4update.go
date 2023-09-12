@@ -113,15 +113,6 @@ func CreateSourceGoogleAnalyticsV4UpdateCredentialsSourceGoogleAnalyticsV4Update
 func (u *SourceGoogleAnalyticsV4UpdateCredentials) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceGoogleAnalyticsV4UpdateCredentialsAuthenticateViaGoogleOauth := new(SourceGoogleAnalyticsV4UpdateCredentialsAuthenticateViaGoogleOauth)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceGoogleAnalyticsV4UpdateCredentialsAuthenticateViaGoogleOauth); err == nil {
-		u.SourceGoogleAnalyticsV4UpdateCredentialsAuthenticateViaGoogleOauth = sourceGoogleAnalyticsV4UpdateCredentialsAuthenticateViaGoogleOauth
-		u.Type = SourceGoogleAnalyticsV4UpdateCredentialsTypeSourceGoogleAnalyticsV4UpdateCredentialsAuthenticateViaGoogleOauth
-		return nil
-	}
-
 	sourceGoogleAnalyticsV4UpdateCredentialsServiceAccountKeyAuthentication := new(SourceGoogleAnalyticsV4UpdateCredentialsServiceAccountKeyAuthentication)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -131,16 +122,25 @@ func (u *SourceGoogleAnalyticsV4UpdateCredentials) UnmarshalJSON(data []byte) er
 		return nil
 	}
 
+	sourceGoogleAnalyticsV4UpdateCredentialsAuthenticateViaGoogleOauth := new(SourceGoogleAnalyticsV4UpdateCredentialsAuthenticateViaGoogleOauth)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceGoogleAnalyticsV4UpdateCredentialsAuthenticateViaGoogleOauth); err == nil {
+		u.SourceGoogleAnalyticsV4UpdateCredentialsAuthenticateViaGoogleOauth = sourceGoogleAnalyticsV4UpdateCredentialsAuthenticateViaGoogleOauth
+		u.Type = SourceGoogleAnalyticsV4UpdateCredentialsTypeSourceGoogleAnalyticsV4UpdateCredentialsAuthenticateViaGoogleOauth
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceGoogleAnalyticsV4UpdateCredentials) MarshalJSON() ([]byte, error) {
-	if u.SourceGoogleAnalyticsV4UpdateCredentialsAuthenticateViaGoogleOauth != nil {
-		return json.Marshal(u.SourceGoogleAnalyticsV4UpdateCredentialsAuthenticateViaGoogleOauth)
-	}
-
 	if u.SourceGoogleAnalyticsV4UpdateCredentialsServiceAccountKeyAuthentication != nil {
 		return json.Marshal(u.SourceGoogleAnalyticsV4UpdateCredentialsServiceAccountKeyAuthentication)
+	}
+
+	if u.SourceGoogleAnalyticsV4UpdateCredentialsAuthenticateViaGoogleOauth != nil {
+		return json.Marshal(u.SourceGoogleAnalyticsV4UpdateCredentialsAuthenticateViaGoogleOauth)
 	}
 
 	return nil, nil

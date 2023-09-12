@@ -307,7 +307,7 @@ func (r *DestinationBigqueryDataSource) Schema(ctx context.Context, req datasour
 					},
 					"raw_data_dataset": schema.StringAttribute{
 						Computed:    true,
-						Description: `(Early Access) The dataset to write raw tables into`,
+						Description: `The dataset to write raw tables into`,
 					},
 					"transformation_priority": schema.StringAttribute{
 						Computed: true,
@@ -319,10 +319,6 @@ func (r *DestinationBigqueryDataSource) Schema(ctx context.Context, req datasour
 						},
 						MarkdownDescription: `must be one of ["interactive", "batch"]` + "\n" +
 							`Interactive run type means that the query is executed as soon as possible, and these queries count towards concurrent rate limit and daily limit. Read more about interactive run type <a href="https://cloud.google.com/bigquery/docs/running-queries#queries">here</a>. Batch queries are queued and started as soon as idle resources are available in the BigQuery shared resource pool, which usually occurs within a few minutes. Batch queries don’t count towards your concurrent rate limit. Read more about batch queries <a href="https://cloud.google.com/bigquery/docs/running-queries#batch">here</a>. The default "interactive" value is used if not set explicitly.`,
-					},
-					"use_1s1t_format": schema.BoolAttribute{
-						Computed:    true,
-						Description: `(Early Access) Use <a href="https://docs.airbyte.com/understanding-airbyte/typing-deduping" target="_blank">Destinations V2</a>.`,
 					},
 				},
 			},

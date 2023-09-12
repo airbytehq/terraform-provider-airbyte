@@ -65,7 +65,7 @@ func (r *SourceStripeResource) Schema(ctx context.Context, req resource.SchemaRe
 					},
 					"lookback_window_days": schema.Int64Attribute{
 						Optional:    true,
-						Description: `When set, the connector will always re-export data from the past N days, where N is the value set here. This is useful if your data is frequently updated after creation. More info <a href="https://docs.airbyte.com/integrations/sources/stripe#requirements">here</a>`,
+						Description: `When set, the connector will always re-export data from the past N days, where N is the value set here. This is useful if your data is frequently updated after creation. Applies only to streams that do not support event-based incremental syncs: CheckoutSessionLineItems,  Events, SetupAttempts, ShippingRates, BalanceTransactions, Files, FileLinks. More info <a href="https://docs.airbyte.com/integrations/sources/stripe#requirements">here</a>`,
 					},
 					"slice_range": schema.Int64Attribute{
 						Optional:    true,
@@ -81,7 +81,7 @@ func (r *SourceStripeResource) Schema(ctx context.Context, req resource.SchemaRe
 						Description: `must be one of ["stripe"]`,
 					},
 					"start_date": schema.StringAttribute{
-						Required: true,
+						Optional: true,
 						Validators: []validator.String{
 							validators.IsRFC3339(),
 						},

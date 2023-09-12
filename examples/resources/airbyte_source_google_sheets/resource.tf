@@ -9,11 +9,10 @@ resource "airbyte_source_google_sheets" "my_source_googlesheets" {
       }
     }
     names_conversion = true
-    row_batch_size   = 100
     source_type      = "google-sheets"
     spreadsheet_id   = "https://docs.google.com/spreadsheets/d/1hLd9Qqti3UyLXZB2aFfUWDT7BG-arw2xy4HR3D-dwUb/edit"
   }
-  name         = "Mae Gleichner"
+  name         = "Irene Davis"
   secret_id    = "...my_secret_id..."
-  workspace_id = "407084f7-ab37-4cef-8222-5194db55410a"
+  workspace_id = "194db554-10ad-4c66-9af9-0a26c7cdc981"
 }

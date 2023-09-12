@@ -54,7 +54,7 @@ func (r *SourceLemlistDataSource) Schema(ctx context.Context, req datasource.Sch
 				Attributes: map[string]schema.Attribute{
 					"api_key": schema.StringAttribute{
 						Computed:    true,
-						Description: `Lemlist API key.`,
+						Description: `Lemlist API key,`,
 					},
 					"source_type": schema.StringAttribute{
 						Computed: true,

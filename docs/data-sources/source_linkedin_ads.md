@@ -41,26 +41,22 @@ data "airbyte_source_linkedin_ads" "my_source_linkedinads" {
 
 Read-Only:
 
-- `account_ids` (List of Number) Specify the account IDs separated by a space, to pull the data from. Leave empty, if you want to pull the data from all associated accounts. See the <a href="https://www.linkedin.com/help/linkedin/answer/a424270/find-linkedin-ads-account-details?lang=en">LinkedIn Ads docs</a> for more info.
+- `account_ids` (List of Number) Specify the account IDs to pull data from, separated by a space. Leave this field empty if you want to pull the data from all accounts accessible by the authenticated user. See the <a href="https://www.linkedin.com/help/linkedin/answer/a424270/find-linkedin-ads-account-details?lang=en">LinkedIn docs</a> to locate these IDs.
 - `ad_analytics_reports` (Attributes List) (see [below for nested schema](#nestedatt--configuration--ad_analytics_reports))
 - `credentials` (Attributes) (see [below for nested schema](#nestedatt--configuration--credentials))
 - `source_type` (String) must be one of ["linkedin-ads"]
-- `start_date` (String) UTC date in the format 2020-09-17. Any data before this date will not be replicated.
+- `start_date` (String) UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated.
 
 <a id="nestedatt--configuration--ad_analytics_reports"></a>
 ### Nested Schema for `configuration.ad_analytics_reports`
 
 Read-Only:
 
-- `name` (String) The name for the report
+- `name` (String) The name for the custom report.
 - `pivot_by` (String) must be one of ["COMPANY", "ACCOUNT", "SHARE", "CAMPAIGN", "CREATIVE", "CAMPAIGN_GROUP", "CONVERSION", "CONVERSATION_NODE", "CONVERSATION_NODE_OPTION_INDEX", "SERVING_LOCATION", "CARD_INDEX", "MEMBER_COMPANY_SIZE", "MEMBER_INDUSTRY", "MEMBER_SENIORITY", "MEMBER_JOB_TITLE ", "MEMBER_JOB_FUNCTION ", "MEMBER_COUNTRY_V2 ", "MEMBER_REGION_V2", "MEMBER_COMPANY", "PLACEMENT_NAME", "IMPRESSION_DEVICE_TYPE"]
-Select value from list to pivot by
+Choose a category to pivot your analytics report around. This selection will organize your data based on the chosen attribute, allowing you to analyze trends and performance from different perspectives.
 - `time_granularity` (String) must be one of ["ALL", "DAILY", "MONTHLY", "YEARLY"]
-Set time granularity for report: 
-ALL - Results grouped into a single result across the entire time range of the report.
-DAILY - Results grouped by day.
-MONTHLY - Results grouped by month.
-YEARLY - Results grouped by year.
+Choose how to group the data in your report by time. The options are:<br>- 'ALL': A single result summarizing the entire time range.<br>- 'DAILY': Group results by each day.<br>- 'MONTHLY': Group results by each month.<br>- 'YEARLY': Group results by each year.<br>Selecting a time grouping helps you analyze trends and patterns over different time periods.
 
 
 <a id="nestedatt--configuration--credentials"></a>
@@ -78,7 +74,7 @@ Read-Only:
 
 Read-Only:
 
-- `access_token` (String) The token value generated using the authentication code. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-ads#authentication">docs</a> to obtain yours.
+- `access_token` (String) The access token generated for your developer application. Refer to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a> for more information.
 - `auth_method` (String) must be one of ["access_token"]
 
 
@@ -88,9 +84,9 @@ Read-Only:
 Read-Only:
 
 - `auth_method` (String) must be one of ["oAuth2.0"]
-- `client_id` (String) The client ID of the LinkedIn Ads developer application.
-- `client_secret` (String) The client secret the LinkedIn Ads developer application.
-- `refresh_token` (String) The key to refresh the expired access token.
+- `client_id` (String) The client ID of your developer application. Refer to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a> for more information.
+- `client_secret` (String) The client secret of your developer application. Refer to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a> for more information.
+- `refresh_token` (String) The key to refresh the expired access token. Refer to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a> for more information.
 
 
 <a id="nestedatt--configuration--credentials--source_linkedin_ads_update_authentication_access_token"></a>
@@ -98,7 +94,7 @@ Read-Only:
 
 Read-Only:
 
-- `access_token` (String) The token value generated using the authentication code. See the <a href="https://docs.airbyte.com/integrations/sources/linkedin-ads#authentication">docs</a> to obtain yours.
+- `access_token` (String) The access token generated for your developer application. Refer to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a> for more information.
 - `auth_method` (String) must be one of ["access_token"]
 
 
@@ -108,8 +104,8 @@ Read-Only:
 Read-Only:
 
 - `auth_method` (String) must be one of ["oAuth2.0"]
-- `client_id` (String) The client ID of the LinkedIn Ads developer application.
-- `client_secret` (String) The client secret the LinkedIn Ads developer application.
-- `refresh_token` (String) The key to refresh the expired access token.
+- `client_id` (String) The client ID of your developer application. Refer to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a> for more information.
+- `client_secret` (String) The client secret of your developer application. Refer to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a> for more information.
+- `refresh_token` (String) The key to refresh the expired access token. Refer to our <a href='https://docs.airbyte.com/integrations/sources/linkedin-ads#setup-guide'>documentation</a> for more information.
 
 

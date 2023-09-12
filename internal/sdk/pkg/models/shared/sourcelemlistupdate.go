@@ -3,6 +3,6 @@
 package shared
 
 type SourceLemlistUpdate struct {
-	// Lemlist API key.
+	// Lemlist API key,
 	APIKey string `json:"api_key"`
 }

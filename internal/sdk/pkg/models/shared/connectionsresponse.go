@@ -2,7 +2,6 @@
 
 package shared
 
-// ConnectionsResponse - Successful operation
 type ConnectionsResponse struct {
 	Data     []ConnectionResponse `json:"data"`
 	Next     *string              `json:"next,omitempty"`

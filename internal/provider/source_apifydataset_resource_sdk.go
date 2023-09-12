@@ -14,12 +14,19 @@ func (r *SourceApifyDatasetResourceModel) ToCreateSDKType() *shared.SourceApifyD
 	} else {
 		clean = nil
 	}
-	datasetID := r.Configuration.DatasetID.ValueString()
+	datasetID := new(string)
+	if !r.Configuration.DatasetID.IsUnknown() && !r.Configuration.DatasetID.IsNull() {
+		*datasetID = r.Configuration.DatasetID.ValueString()
+	} else {
+		datasetID = nil
+	}
 	sourceType := shared.SourceApifyDatasetApifyDataset(r.Configuration.SourceType.ValueString())
+	token := r.Configuration.Token.ValueString()
 	configuration := shared.SourceApifyDataset{
 		Clean:      clean,
 		DatasetID:  datasetID,
 		SourceType: sourceType,
+		Token:      token,
 	}
 	name := r.Name.ValueString()
 	secretID := new(string)
@@ -50,10 +57,17 @@ func (r *SourceApifyDatasetResourceModel) ToUpdateSDKType() *shared.SourceApifyD
 	} else {
 		clean = nil
 	}
-	datasetID := r.Configuration.DatasetID.ValueString()
+	datasetID := new(string)
+	if !r.Configuration.DatasetID.IsUnknown() && !r.Configuration.DatasetID.IsNull() {
+		*datasetID = r.Configuration.DatasetID.ValueString()
+	} else {
+		datasetID = nil
+	}
+	token := r.Configuration.Token.ValueString()
 	configuration := shared.SourceApifyDatasetUpdate{
 		Clean:     clean,
 		DatasetID: datasetID,
+		Token:     token,
 	}
 	name := r.Name.ValueString()
 	workspaceID := r.WorkspaceID.ValueString()

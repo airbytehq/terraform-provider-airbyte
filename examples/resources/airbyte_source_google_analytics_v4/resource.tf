@@ -15,7 +15,7 @@ resource "airbyte_source_google_analytics_v4" "my_source_googleanalyticsv4" {
     view_id        = "...my_view_id..."
     window_in_days = 120
   }
-  name         = "Miss Harvey Nicolas Sr."
+  name         = "Dr. Doug Dibbert"
   secret_id    = "...my_secret_id..."
-  workspace_id = "6ce723d4-097f-4a30-a9af-725b29122030"
+  workspace_id = "af725b29-1220-430d-83f5-aeb7799d22e8"
 }

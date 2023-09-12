@@ -111,15 +111,6 @@ func CreateSourceZendeskChatUpdateAuthorizationMethodSourceZendeskChatUpdateAuth
 func (u *SourceZendeskChatUpdateAuthorizationMethod) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceZendeskChatUpdateAuthorizationMethodOAuth20 := new(SourceZendeskChatUpdateAuthorizationMethodOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceZendeskChatUpdateAuthorizationMethodOAuth20); err == nil {
-		u.SourceZendeskChatUpdateAuthorizationMethodOAuth20 = sourceZendeskChatUpdateAuthorizationMethodOAuth20
-		u.Type = SourceZendeskChatUpdateAuthorizationMethodTypeSourceZendeskChatUpdateAuthorizationMethodOAuth20
-		return nil
-	}
-
 	sourceZendeskChatUpdateAuthorizationMethodAccessToken := new(SourceZendeskChatUpdateAuthorizationMethodAccessToken)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -129,16 +120,25 @@ func (u *SourceZendeskChatUpdateAuthorizationMethod) UnmarshalJSON(data []byte) 
 		return nil
 	}
 
+	sourceZendeskChatUpdateAuthorizationMethodOAuth20 := new(SourceZendeskChatUpdateAuthorizationMethodOAuth20)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceZendeskChatUpdateAuthorizationMethodOAuth20); err == nil {
+		u.SourceZendeskChatUpdateAuthorizationMethodOAuth20 = sourceZendeskChatUpdateAuthorizationMethodOAuth20
+		u.Type = SourceZendeskChatUpdateAuthorizationMethodTypeSourceZendeskChatUpdateAuthorizationMethodOAuth20
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceZendeskChatUpdateAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceZendeskChatUpdateAuthorizationMethodOAuth20 != nil {
-		return json.Marshal(u.SourceZendeskChatUpdateAuthorizationMethodOAuth20)
-	}
-
 	if u.SourceZendeskChatUpdateAuthorizationMethodAccessToken != nil {
 		return json.Marshal(u.SourceZendeskChatUpdateAuthorizationMethodAccessToken)
+	}
+
+	if u.SourceZendeskChatUpdateAuthorizationMethodOAuth20 != nil {
+		return json.Marshal(u.SourceZendeskChatUpdateAuthorizationMethodOAuth20)
 	}
 
 	return nil, nil

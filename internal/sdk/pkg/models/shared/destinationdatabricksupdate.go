@@ -271,21 +271,21 @@ func (u *DestinationDatabricksUpdateDataSource) UnmarshalJSON(data []byte) error
 		return nil
 	}
 
-	destinationDatabricksUpdateDataSourceAmazonS3 := new(DestinationDatabricksUpdateDataSourceAmazonS3)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationDatabricksUpdateDataSourceAmazonS3); err == nil {
-		u.DestinationDatabricksUpdateDataSourceAmazonS3 = destinationDatabricksUpdateDataSourceAmazonS3
-		u.Type = DestinationDatabricksUpdateDataSourceTypeDestinationDatabricksUpdateDataSourceAmazonS3
-		return nil
-	}
-
 	destinationDatabricksUpdateDataSourceAzureBlobStorage := new(DestinationDatabricksUpdateDataSourceAzureBlobStorage)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
 	if err := d.Decode(&destinationDatabricksUpdateDataSourceAzureBlobStorage); err == nil {
 		u.DestinationDatabricksUpdateDataSourceAzureBlobStorage = destinationDatabricksUpdateDataSourceAzureBlobStorage
 		u.Type = DestinationDatabricksUpdateDataSourceTypeDestinationDatabricksUpdateDataSourceAzureBlobStorage
+		return nil
+	}
+
+	destinationDatabricksUpdateDataSourceAmazonS3 := new(DestinationDatabricksUpdateDataSourceAmazonS3)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&destinationDatabricksUpdateDataSourceAmazonS3); err == nil {
+		u.DestinationDatabricksUpdateDataSourceAmazonS3 = destinationDatabricksUpdateDataSourceAmazonS3
+		u.Type = DestinationDatabricksUpdateDataSourceTypeDestinationDatabricksUpdateDataSourceAmazonS3
 		return nil
 	}
 
@@ -297,12 +297,12 @@ func (u DestinationDatabricksUpdateDataSource) MarshalJSON() ([]byte, error) {
 		return json.Marshal(u.DestinationDatabricksUpdateDataSourceRecommendedManagedTables)
 	}
 
-	if u.DestinationDatabricksUpdateDataSourceAmazonS3 != nil {
-		return json.Marshal(u.DestinationDatabricksUpdateDataSourceAmazonS3)
-	}
-
 	if u.DestinationDatabricksUpdateDataSourceAzureBlobStorage != nil {
 		return json.Marshal(u.DestinationDatabricksUpdateDataSourceAzureBlobStorage)
+	}
+
+	if u.DestinationDatabricksUpdateDataSourceAmazonS3 != nil {
+		return json.Marshal(u.DestinationDatabricksUpdateDataSourceAmazonS3)
 	}
 
 	return nil, nil

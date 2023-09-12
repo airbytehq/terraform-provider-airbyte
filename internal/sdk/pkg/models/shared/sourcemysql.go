@@ -106,15 +106,6 @@ func CreateSourceMysqlUpdateMethodSourceMysqlUpdateMethodScanChangesWithUserDefi
 func (u *SourceMysqlUpdateMethod) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC := new(SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC); err == nil {
-		u.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC = sourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC
-		u.Type = SourceMysqlUpdateMethodTypeSourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC
-		return nil
-	}
-
 	sourceMysqlUpdateMethodScanChangesWithUserDefinedCursor := new(SourceMysqlUpdateMethodScanChangesWithUserDefinedCursor)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -124,16 +115,25 @@ func (u *SourceMysqlUpdateMethod) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	sourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC := new(SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC); err == nil {
+		u.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC = sourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC
+		u.Type = SourceMysqlUpdateMethodTypeSourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceMysqlUpdateMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC != nil {
-		return json.Marshal(u.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC)
-	}
-
 	if u.SourceMysqlUpdateMethodScanChangesWithUserDefinedCursor != nil {
 		return json.Marshal(u.SourceMysqlUpdateMethodScanChangesWithUserDefinedCursor)
+	}
+
+	if u.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC != nil {
+		return json.Marshal(u.SourceMysqlUpdateMethodReadChangesUsingBinaryLogCDC)
 	}
 
 	return nil, nil

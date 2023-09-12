@@ -6,7 +6,7 @@ type DestinationTypesenseUpdate struct {
 	// Typesense API Key
 	APIKey string `json:"api_key"`
 	// How many documents should be imported together. Default 1000
-	BatchSize *string `json:"batch_size,omitempty"`
+	BatchSize *int64 `json:"batch_size,omitempty"`
 	// Hostname of the Typesense instance without protocol.
 	Host string `json:"host"`
 	// Port of the Typesense instance. Ex: 8108, 80, 443. Default is 443

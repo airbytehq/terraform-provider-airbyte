@@ -3,7 +3,7 @@ resource "airbyte_destination_bigquery_denormalized" "my_destination_bigqueryden
     big_query_client_buffer_size_mb = 15
     credentials_json                = "...my_credentials_json..."
     dataset_id                      = "...my_dataset_id..."
-    dataset_location                = "asia-southeast2"
+    dataset_location                = "europe-west7"
     destination_type                = "bigquery-denormalized"
     loading_method = {
       destination_bigquery_denormalized_loading_method_gcs_staging = {
@@ -23,6 +23,6 @@ resource "airbyte_destination_bigquery_denormalized" "my_destination_bigqueryden
     }
     project_id = "...my_project_id..."
   }
-  name         = "Lucia Kemmer"
-  workspace_id = "969e9a3e-fa77-4dfb-94cd-66ae395efb9b"
+  name         = "Francisco Windler"
+  workspace_id = "c969e9a3-efa7-47df-b14c-d66ae395efb9"
 }

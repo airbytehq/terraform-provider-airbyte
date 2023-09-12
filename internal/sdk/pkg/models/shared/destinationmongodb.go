@@ -306,6 +306,15 @@ func CreateDestinationMongodbMongoDbInstanceTypeDestinationMongodbMongoDBInstanc
 func (u *DestinationMongodbMongoDbInstanceType) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
+	destinationMongodbMongoDBInstanceTypeMongoDBAtlas := new(DestinationMongodbMongoDBInstanceTypeMongoDBAtlas)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&destinationMongodbMongoDBInstanceTypeMongoDBAtlas); err == nil {
+		u.DestinationMongodbMongoDBInstanceTypeMongoDBAtlas = destinationMongodbMongoDBInstanceTypeMongoDBAtlas
+		u.Type = DestinationMongodbMongoDbInstanceTypeTypeDestinationMongodbMongoDBInstanceTypeMongoDBAtlas
+		return nil
+	}
+
 	destinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance := new(DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -324,29 +333,20 @@ func (u *DestinationMongodbMongoDbInstanceType) UnmarshalJSON(data []byte) error
 		return nil
 	}
 
-	destinationMongodbMongoDBInstanceTypeMongoDBAtlas := new(DestinationMongodbMongoDBInstanceTypeMongoDBAtlas)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&destinationMongodbMongoDBInstanceTypeMongoDBAtlas); err == nil {
-		u.DestinationMongodbMongoDBInstanceTypeMongoDBAtlas = destinationMongodbMongoDBInstanceTypeMongoDBAtlas
-		u.Type = DestinationMongodbMongoDbInstanceTypeTypeDestinationMongodbMongoDBInstanceTypeMongoDBAtlas
-		return nil
-	}
-
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u DestinationMongodbMongoDbInstanceType) MarshalJSON() ([]byte, error) {
+	if u.DestinationMongodbMongoDBInstanceTypeMongoDBAtlas != nil {
+		return json.Marshal(u.DestinationMongodbMongoDBInstanceTypeMongoDBAtlas)
+	}
+
 	if u.DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance != nil {
 		return json.Marshal(u.DestinationMongodbMongoDbInstanceTypeStandaloneMongoDbInstance)
 	}
 
 	if u.DestinationMongodbMongoDbInstanceTypeReplicaSet != nil {
 		return json.Marshal(u.DestinationMongodbMongoDbInstanceTypeReplicaSet)
-	}
-
-	if u.DestinationMongodbMongoDBInstanceTypeMongoDBAtlas != nil {
-		return json.Marshal(u.DestinationMongodbMongoDBInstanceTypeMongoDBAtlas)
 	}
 
 	return nil, nil

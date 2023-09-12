@@ -20,7 +20,7 @@ resource "airbyte_source_google_ads" "my_source_googleads" {
     source_type       = "google-ads"
     start_date        = "2017-01-25"
   }
-  name         = "Miss Lloyd Funk"
+  name         = "Dr. Forrest Roob"
   secret_id    = "...my_secret_id..."
-  workspace_id = "d190feb2-1780-4bcc-80db-bddb484708fb"
+  workspace_id = "bddb4847-08fb-44e3-91e6-bc158c4c4e54"
 }

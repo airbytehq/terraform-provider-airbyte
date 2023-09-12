@@ -3,7 +3,7 @@ resource "airbyte_source_pokeapi" "my_source_pokeapi" {
     pokemon_name = "snorlax"
     source_type  = "pokeapi"
   }
-  name         = "Lynn Mertz"
+  name         = "Jeremiah Hahn"
   secret_id    = "...my_secret_id..."
-  workspace_id = "17c29776-7633-4425-8038-bfb5971e9819"
+  workspace_id = "aa2b2411-3695-4d1e-a698-fcc4596217c2"
 }

@@ -207,15 +207,6 @@ func CreateSourceHarvestUpdateAuthenticationMechanismSourceHarvestUpdateAuthenti
 func (u *SourceHarvestUpdateAuthenticationMechanism) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceHarvestUpdateAuthenticationMechanismAuthenticateViaHarvestOAuth := new(SourceHarvestUpdateAuthenticationMechanismAuthenticateViaHarvestOAuth)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceHarvestUpdateAuthenticationMechanismAuthenticateViaHarvestOAuth); err == nil {
-		u.SourceHarvestUpdateAuthenticationMechanismAuthenticateViaHarvestOAuth = sourceHarvestUpdateAuthenticationMechanismAuthenticateViaHarvestOAuth
-		u.Type = SourceHarvestUpdateAuthenticationMechanismTypeSourceHarvestUpdateAuthenticationMechanismAuthenticateViaHarvestOAuth
-		return nil
-	}
-
 	sourceHarvestUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken := new(SourceHarvestUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -225,16 +216,25 @@ func (u *SourceHarvestUpdateAuthenticationMechanism) UnmarshalJSON(data []byte) 
 		return nil
 	}
 
+	sourceHarvestUpdateAuthenticationMechanismAuthenticateViaHarvestOAuth := new(SourceHarvestUpdateAuthenticationMechanismAuthenticateViaHarvestOAuth)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceHarvestUpdateAuthenticationMechanismAuthenticateViaHarvestOAuth); err == nil {
+		u.SourceHarvestUpdateAuthenticationMechanismAuthenticateViaHarvestOAuth = sourceHarvestUpdateAuthenticationMechanismAuthenticateViaHarvestOAuth
+		u.Type = SourceHarvestUpdateAuthenticationMechanismTypeSourceHarvestUpdateAuthenticationMechanismAuthenticateViaHarvestOAuth
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceHarvestUpdateAuthenticationMechanism) MarshalJSON() ([]byte, error) {
-	if u.SourceHarvestUpdateAuthenticationMechanismAuthenticateViaHarvestOAuth != nil {
-		return json.Marshal(u.SourceHarvestUpdateAuthenticationMechanismAuthenticateViaHarvestOAuth)
-	}
-
 	if u.SourceHarvestUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken != nil {
 		return json.Marshal(u.SourceHarvestUpdateAuthenticationMechanismAuthenticateWithPersonalAccessToken)
+	}
+
+	if u.SourceHarvestUpdateAuthenticationMechanismAuthenticateViaHarvestOAuth != nil {
+		return json.Marshal(u.SourceHarvestUpdateAuthenticationMechanismAuthenticateViaHarvestOAuth)
 	}
 
 	return nil, nil

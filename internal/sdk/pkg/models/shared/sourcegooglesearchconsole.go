@@ -113,15 +113,6 @@ func CreateSourceGoogleSearchConsoleAuthenticationTypeSourceGoogleSearchConsoleA
 func (u *SourceGoogleSearchConsoleAuthenticationType) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceGoogleSearchConsoleAuthenticationTypeOAuth := new(SourceGoogleSearchConsoleAuthenticationTypeOAuth)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceGoogleSearchConsoleAuthenticationTypeOAuth); err == nil {
-		u.SourceGoogleSearchConsoleAuthenticationTypeOAuth = sourceGoogleSearchConsoleAuthenticationTypeOAuth
-		u.Type = SourceGoogleSearchConsoleAuthenticationTypeTypeSourceGoogleSearchConsoleAuthenticationTypeOAuth
-		return nil
-	}
-
 	sourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication := new(SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -131,34 +122,87 @@ func (u *SourceGoogleSearchConsoleAuthenticationType) UnmarshalJSON(data []byte)
 		return nil
 	}
 
+	sourceGoogleSearchConsoleAuthenticationTypeOAuth := new(SourceGoogleSearchConsoleAuthenticationTypeOAuth)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceGoogleSearchConsoleAuthenticationTypeOAuth); err == nil {
+		u.SourceGoogleSearchConsoleAuthenticationTypeOAuth = sourceGoogleSearchConsoleAuthenticationTypeOAuth
+		u.Type = SourceGoogleSearchConsoleAuthenticationTypeTypeSourceGoogleSearchConsoleAuthenticationTypeOAuth
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceGoogleSearchConsoleAuthenticationType) MarshalJSON() ([]byte, error) {
-	if u.SourceGoogleSearchConsoleAuthenticationTypeOAuth != nil {
-		return json.Marshal(u.SourceGoogleSearchConsoleAuthenticationTypeOAuth)
-	}
-
 	if u.SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication != nil {
 		return json.Marshal(u.SourceGoogleSearchConsoleAuthenticationTypeServiceAccountKeyAuthentication)
+	}
+
+	if u.SourceGoogleSearchConsoleAuthenticationTypeOAuth != nil {
+		return json.Marshal(u.SourceGoogleSearchConsoleAuthenticationTypeOAuth)
 	}
 
 	return nil, nil
 }
 
-// SourceGoogleSearchConsoleDataState - If "final" or if this parameter is omitted, the returned data will include only finalized data. Setting this parameter to "all" should not be used with Incremental Sync mode as it may cause data loss. If "all", data will include fresh data.
-type SourceGoogleSearchConsoleDataState string
+// SourceGoogleSearchConsoleCustomReportConfigValidEnums - An enumeration of dimensions.
+type SourceGoogleSearchConsoleCustomReportConfigValidEnums string
 
 const (
-	SourceGoogleSearchConsoleDataStateFinal SourceGoogleSearchConsoleDataState = "final"
-	SourceGoogleSearchConsoleDataStateAll   SourceGoogleSearchConsoleDataState = "all"
+	SourceGoogleSearchConsoleCustomReportConfigValidEnumsCountry SourceGoogleSearchConsoleCustomReportConfigValidEnums = "country"
+	SourceGoogleSearchConsoleCustomReportConfigValidEnumsDate    SourceGoogleSearchConsoleCustomReportConfigValidEnums = "date"
+	SourceGoogleSearchConsoleCustomReportConfigValidEnumsDevice  SourceGoogleSearchConsoleCustomReportConfigValidEnums = "device"
+	SourceGoogleSearchConsoleCustomReportConfigValidEnumsPage    SourceGoogleSearchConsoleCustomReportConfigValidEnums = "page"
+	SourceGoogleSearchConsoleCustomReportConfigValidEnumsQuery   SourceGoogleSearchConsoleCustomReportConfigValidEnums = "query"
 )
 
-func (e SourceGoogleSearchConsoleDataState) ToPointer() *SourceGoogleSearchConsoleDataState {
+func (e SourceGoogleSearchConsoleCustomReportConfigValidEnums) ToPointer() *SourceGoogleSearchConsoleCustomReportConfigValidEnums {
 	return &e
 }
 
-func (e *SourceGoogleSearchConsoleDataState) UnmarshalJSON(data []byte) error {
+func (e *SourceGoogleSearchConsoleCustomReportConfigValidEnums) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "country":
+		fallthrough
+	case "date":
+		fallthrough
+	case "device":
+		fallthrough
+	case "page":
+		fallthrough
+	case "query":
+		*e = SourceGoogleSearchConsoleCustomReportConfigValidEnums(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceGoogleSearchConsoleCustomReportConfigValidEnums: %v", v)
+	}
+}
+
+type SourceGoogleSearchConsoleCustomReportConfig struct {
+	// A list of dimensions (country, date, device, page, query)
+	Dimensions []SourceGoogleSearchConsoleCustomReportConfigValidEnums `json:"dimensions"`
+	// The name of the custom report, this name would be used as stream name
+	Name string `json:"name"`
+}
+
+// SourceGoogleSearchConsoleDataFreshness - If set to 'final', the returned data will include only finalized, stable data. If set to 'all', fresh data will be included. When using Incremental sync mode, we do not recommend setting this parameter to 'all' as it may cause data loss. More information can be found in our <a href='https://docs.airbyte.com/integrations/source/google-search-console'>full documentation</a>.
+type SourceGoogleSearchConsoleDataFreshness string
+
+const (
+	SourceGoogleSearchConsoleDataFreshnessFinal SourceGoogleSearchConsoleDataFreshness = "final"
+	SourceGoogleSearchConsoleDataFreshnessAll   SourceGoogleSearchConsoleDataFreshness = "all"
+)
+
+func (e SourceGoogleSearchConsoleDataFreshness) ToPointer() *SourceGoogleSearchConsoleDataFreshness {
+	return &e
+}
+
+func (e *SourceGoogleSearchConsoleDataFreshness) UnmarshalJSON(data []byte) error {
 	var v string
 	if err := json.Unmarshal(data, &v); err != nil {
 		return err
@@ -167,10 +211,10 @@ func (e *SourceGoogleSearchConsoleDataState) UnmarshalJSON(data []byte) error {
 	case "final":
 		fallthrough
 	case "all":
-		*e = SourceGoogleSearchConsoleDataState(v)
+		*e = SourceGoogleSearchConsoleDataFreshness(v)
 		return nil
 	default:
-		return fmt.Errorf("invalid value for SourceGoogleSearchConsoleDataState: %v", v)
+		return fmt.Errorf("invalid value for SourceGoogleSearchConsoleDataFreshness: %v", v)
 	}
 }
 
@@ -200,15 +244,17 @@ func (e *SourceGoogleSearchConsoleGoogleSearchConsole) UnmarshalJSON(data []byte
 
 type SourceGoogleSearchConsole struct {
 	Authorization SourceGoogleSearchConsoleAuthenticationType `json:"authorization"`
-	// A JSON array describing the custom reports you want to sync from Google Search Console. See <a href="https://docs.airbyte.com/integrations/sources/google-search-console#step-2-set-up-the-google-search-console-connector-in-airbyte">the docs</a> for more information about the exact format you can use to fill out this field.
+	// (DEPRCATED) A JSON array describing the custom reports you want to sync from Google Search Console. See our <a href='https://docs.airbyte.com/integrations/sources/google-search-console'>documentation</a> for more information on formulating custom reports.
 	CustomReports *string `json:"custom_reports,omitempty"`
-	// If "final" or if this parameter is omitted, the returned data will include only finalized data. Setting this parameter to "all" should not be used with Incremental Sync mode as it may cause data loss. If "all", data will include fresh data.
-	DataState *SourceGoogleSearchConsoleDataState `json:"data_state,omitempty"`
-	// UTC date in the format 2017-01-25. Any data after this date will not be replicated. Must be greater or equal to the start date field.
+	// You can add your Custom Analytics report by creating one.
+	CustomReportsArray []SourceGoogleSearchConsoleCustomReportConfig `json:"custom_reports_array,omitempty"`
+	// If set to 'final', the returned data will include only finalized, stable data. If set to 'all', fresh data will be included. When using Incremental sync mode, we do not recommend setting this parameter to 'all' as it may cause data loss. More information can be found in our <a href='https://docs.airbyte.com/integrations/source/google-search-console'>full documentation</a>.
+	DataState *SourceGoogleSearchConsoleDataFreshness `json:"data_state,omitempty"`
+	// UTC date in the format YYYY-MM-DD. Any data created after this date will not be replicated. Must be greater or equal to the start date field. Leaving this field blank will replicate all data from the start date onward.
 	EndDate *types.Date `json:"end_date,omitempty"`
-	// The URLs of the website property attached to your GSC account. Read more <a href="https://support.google.com/webmasters/answer/34592?hl=en">here</a>.
+	// The URLs of the website property attached to your GSC account. Learn more about properties <a href="https://support.google.com/webmasters/answer/34592?hl=en">here</a>.
 	SiteUrls   []string                                     `json:"site_urls"`
 	SourceType SourceGoogleSearchConsoleGoogleSearchConsole `json:"sourceType"`
-	// UTC date in the format 2017-01-25. Any data before this date will not be replicated.
-	StartDate types.Date `json:"start_date"`
+	// UTC date in the format YYYY-MM-DD. Any data before this date will not be replicated.
+	StartDate *types.Date `json:"start_date,omitempty"`
 }

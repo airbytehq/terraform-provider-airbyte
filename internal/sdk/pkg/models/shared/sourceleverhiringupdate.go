@@ -110,15 +110,6 @@ func CreateSourceLeverHiringUpdateAuthenticationMechanismSourceLeverHiringUpdate
 func (u *SourceLeverHiringUpdateAuthenticationMechanism) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverOAuth := new(SourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverOAuth)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverOAuth); err == nil {
-		u.SourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverOAuth = sourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverOAuth
-		u.Type = SourceLeverHiringUpdateAuthenticationMechanismTypeSourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverOAuth
-		return nil
-	}
-
 	sourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverAPIKey := new(SourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverAPIKey)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -128,16 +119,25 @@ func (u *SourceLeverHiringUpdateAuthenticationMechanism) UnmarshalJSON(data []by
 		return nil
 	}
 
+	sourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverOAuth := new(SourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverOAuth)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverOAuth); err == nil {
+		u.SourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverOAuth = sourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverOAuth
+		u.Type = SourceLeverHiringUpdateAuthenticationMechanismTypeSourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverOAuth
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceLeverHiringUpdateAuthenticationMechanism) MarshalJSON() ([]byte, error) {
-	if u.SourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverOAuth != nil {
-		return json.Marshal(u.SourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverOAuth)
-	}
-
 	if u.SourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverAPIKey != nil {
 		return json.Marshal(u.SourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverAPIKey)
+	}
+
+	if u.SourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverOAuth != nil {
+		return json.Marshal(u.SourceLeverHiringUpdateAuthenticationMechanismAuthenticateViaLeverOAuth)
 	}
 
 	return nil, nil

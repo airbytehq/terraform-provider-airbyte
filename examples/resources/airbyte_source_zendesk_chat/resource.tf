@@ -10,7 +10,7 @@ resource "airbyte_source_zendesk_chat" "my_source_zendeskchat" {
     start_date  = "2021-02-01T00:00:00Z"
     subdomain   = "...my_subdomain..."
   }
-  name         = "Melinda Koch"
+  name         = "Mabel Lebsack MD"
   secret_id    = "...my_secret_id..."
-  workspace_id = "d15321b8-32a5-46d6-9180-ff60eb9a6658"
+  workspace_id = "3fd3c81d-a10f-48c2-bdf9-31da3edb51fa"
 }

@@ -2,7 +2,6 @@
 
 package shared
 
-// SourcesResponse - Successful operation
 type SourcesResponse struct {
 	Data     []SourceResponse `json:"data"`
 	Next     *string          `json:"next,omitempty"`

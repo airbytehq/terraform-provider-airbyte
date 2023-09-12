@@ -6,7 +6,7 @@ import "github.com/hashicorp/terraform-plugin-framework/types"
 
 type DestinationTypesense struct {
 	APIKey          types.String `tfsdk:"api_key"`
-	BatchSize       types.String `tfsdk:"batch_size"`
+	BatchSize       types.Int64  `tfsdk:"batch_size"`
 	DestinationType types.String `tfsdk:"destination_type"`
 	Host            types.String `tfsdk:"host"`
 	Port            types.String `tfsdk:"port"`

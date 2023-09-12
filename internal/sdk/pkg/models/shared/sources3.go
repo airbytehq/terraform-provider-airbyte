@@ -246,12 +246,12 @@ func CreateSourceS3FileFormatSourceS3FileFormatJsonl(sourceS3FileFormatJsonl Sou
 func (u *SourceS3FileFormat) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceS3FileFormatCSV := new(SourceS3FileFormatCSV)
+	sourceS3FileFormatAvro := new(SourceS3FileFormatAvro)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceS3FileFormatCSV); err == nil {
-		u.SourceS3FileFormatCSV = sourceS3FileFormatCSV
-		u.Type = SourceS3FileFormatTypeSourceS3FileFormatCSV
+	if err := d.Decode(&sourceS3FileFormatAvro); err == nil {
+		u.SourceS3FileFormatAvro = sourceS3FileFormatAvro
+		u.Type = SourceS3FileFormatTypeSourceS3FileFormatAvro
 		return nil
 	}
 
@@ -264,15 +264,6 @@ func (u *SourceS3FileFormat) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
-	sourceS3FileFormatAvro := new(SourceS3FileFormatAvro)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceS3FileFormatAvro); err == nil {
-		u.SourceS3FileFormatAvro = sourceS3FileFormatAvro
-		u.Type = SourceS3FileFormatTypeSourceS3FileFormatAvro
-		return nil
-	}
-
 	sourceS3FileFormatJsonl := new(SourceS3FileFormatJsonl)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -282,37 +273,46 @@ func (u *SourceS3FileFormat) UnmarshalJSON(data []byte) error {
 		return nil
 	}
 
+	sourceS3FileFormatCSV := new(SourceS3FileFormatCSV)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceS3FileFormatCSV); err == nil {
+		u.SourceS3FileFormatCSV = sourceS3FileFormatCSV
+		u.Type = SourceS3FileFormatTypeSourceS3FileFormatCSV
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceS3FileFormat) MarshalJSON() ([]byte, error) {
-	if u.SourceS3FileFormatCSV != nil {
-		return json.Marshal(u.SourceS3FileFormatCSV)
+	if u.SourceS3FileFormatAvro != nil {
+		return json.Marshal(u.SourceS3FileFormatAvro)
 	}
 
 	if u.SourceS3FileFormatParquet != nil {
 		return json.Marshal(u.SourceS3FileFormatParquet)
 	}
 
-	if u.SourceS3FileFormatAvro != nil {
-		return json.Marshal(u.SourceS3FileFormatAvro)
-	}
-
 	if u.SourceS3FileFormatJsonl != nil {
 		return json.Marshal(u.SourceS3FileFormatJsonl)
+	}
+
+	if u.SourceS3FileFormatCSV != nil {
+		return json.Marshal(u.SourceS3FileFormatCSV)
 	}
 
 	return nil, nil
 }
 
-// SourceS3S3AmazonWebServices - Use this to load files from S3 or S3-compatible services
+// SourceS3S3AmazonWebServices - Deprecated and will be removed soon. Please do not use this field anymore and use bucket, aws_access_key_id, aws_secret_access_key and endpoint instead. Use this to load files from S3 or S3-compatible services
 type SourceS3S3AmazonWebServices struct {
 	// In order to access private Buckets stored on AWS S3, this connector requires credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
 	AwsAccessKeyID *string `json:"aws_access_key_id,omitempty"`
 	// In order to access private Buckets stored on AWS S3, this connector requires credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
 	AwsSecretAccessKey *string `json:"aws_secret_access_key,omitempty"`
 	// Name of the S3 bucket where the file(s) exist.
-	Bucket string `json:"bucket"`
+	Bucket *string `json:"bucket,omitempty"`
 	// Endpoint to an S3 compatible service. Leave empty to use AWS.
 	Endpoint *string `json:"endpoint,omitempty"`
 	// By providing a path-like prefix (e.g. myFolder/thisTable/) under which all the relevant files sit, we can optimize finding these in S3. This is optional but recommended if your bucket contains many folders/files which you don't need to replicate.
@@ -345,16 +345,555 @@ func (e *SourceS3S3) UnmarshalJSON(data []byte) error {
 	}
 }
 
+type SourceS3FileBasedStreamConfigFormatParquetFormatFiletype string
+
+const (
+	SourceS3FileBasedStreamConfigFormatParquetFormatFiletypeParquet SourceS3FileBasedStreamConfigFormatParquetFormatFiletype = "parquet"
+)
+
+func (e SourceS3FileBasedStreamConfigFormatParquetFormatFiletype) ToPointer() *SourceS3FileBasedStreamConfigFormatParquetFormatFiletype {
+	return &e
+}
+
+func (e *SourceS3FileBasedStreamConfigFormatParquetFormatFiletype) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "parquet":
+		*e = SourceS3FileBasedStreamConfigFormatParquetFormatFiletype(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceS3FileBasedStreamConfigFormatParquetFormatFiletype: %v", v)
+	}
+}
+
+// SourceS3FileBasedStreamConfigFormatParquetFormat - The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
+type SourceS3FileBasedStreamConfigFormatParquetFormat struct {
+	// Whether to convert decimal fields to floats. There is a loss of precision when converting decimals to floats, so this is not recommended.
+	DecimalAsFloat *bool                                                     `json:"decimal_as_float,omitempty"`
+	Filetype       *SourceS3FileBasedStreamConfigFormatParquetFormatFiletype `json:"filetype,omitempty"`
+}
+
+type SourceS3FileBasedStreamConfigFormatJsonlFormatFiletype string
+
+const (
+	SourceS3FileBasedStreamConfigFormatJsonlFormatFiletypeJsonl SourceS3FileBasedStreamConfigFormatJsonlFormatFiletype = "jsonl"
+)
+
+func (e SourceS3FileBasedStreamConfigFormatJsonlFormatFiletype) ToPointer() *SourceS3FileBasedStreamConfigFormatJsonlFormatFiletype {
+	return &e
+}
+
+func (e *SourceS3FileBasedStreamConfigFormatJsonlFormatFiletype) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "jsonl":
+		*e = SourceS3FileBasedStreamConfigFormatJsonlFormatFiletype(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceS3FileBasedStreamConfigFormatJsonlFormatFiletype: %v", v)
+	}
+}
+
+// SourceS3FileBasedStreamConfigFormatJsonlFormat - The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
+type SourceS3FileBasedStreamConfigFormatJsonlFormat struct {
+	Filetype *SourceS3FileBasedStreamConfigFormatJsonlFormatFiletype `json:"filetype,omitempty"`
+}
+
+type SourceS3FileBasedStreamConfigFormatCSVFormatFiletype string
+
+const (
+	SourceS3FileBasedStreamConfigFormatCSVFormatFiletypeCsv SourceS3FileBasedStreamConfigFormatCSVFormatFiletype = "csv"
+)
+
+func (e SourceS3FileBasedStreamConfigFormatCSVFormatFiletype) ToPointer() *SourceS3FileBasedStreamConfigFormatCSVFormatFiletype {
+	return &e
+}
+
+func (e *SourceS3FileBasedStreamConfigFormatCSVFormatFiletype) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "csv":
+		*e = SourceS3FileBasedStreamConfigFormatCSVFormatFiletype(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceS3FileBasedStreamConfigFormatCSVFormatFiletype: %v", v)
+	}
+}
+
+type SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionUserProvidedHeaderDefinitionType string
+
+const (
+	SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionUserProvidedHeaderDefinitionTypeUserProvided SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionUserProvidedHeaderDefinitionType = "User Provided"
+)
+
+func (e SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionUserProvidedHeaderDefinitionType) ToPointer() *SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionUserProvidedHeaderDefinitionType {
+	return &e
+}
+
+func (e *SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionUserProvidedHeaderDefinitionType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "User Provided":
+		*e = SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionUserProvidedHeaderDefinitionType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionUserProvidedHeaderDefinitionType: %v", v)
+	}
+}
+
+// SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionUserProvided - How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.
+type SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionUserProvided struct {
+	// The column names that will be used while emitting the CSV records
+	ColumnNames          []string                                                                                         `json:"column_names"`
+	HeaderDefinitionType *SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionUserProvidedHeaderDefinitionType `json:"header_definition_type,omitempty"`
+}
+
+type SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionAutogeneratedHeaderDefinitionType string
+
+const (
+	SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionAutogeneratedHeaderDefinitionTypeAutogenerated SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionAutogeneratedHeaderDefinitionType = "Autogenerated"
+)
+
+func (e SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionAutogeneratedHeaderDefinitionType) ToPointer() *SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionAutogeneratedHeaderDefinitionType {
+	return &e
+}
+
+func (e *SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionAutogeneratedHeaderDefinitionType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Autogenerated":
+		*e = SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionAutogeneratedHeaderDefinitionType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionAutogeneratedHeaderDefinitionType: %v", v)
+	}
+}
+
+// SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionAutogenerated - How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.
+type SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionAutogenerated struct {
+	HeaderDefinitionType *SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionAutogeneratedHeaderDefinitionType `json:"header_definition_type,omitempty"`
+}
+
+type SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionFromCSVHeaderDefinitionType string
+
+const (
+	SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionFromCSVHeaderDefinitionTypeFromCsv SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionFromCSVHeaderDefinitionType = "From CSV"
+)
+
+func (e SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionFromCSVHeaderDefinitionType) ToPointer() *SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionFromCSVHeaderDefinitionType {
+	return &e
+}
+
+func (e *SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionFromCSVHeaderDefinitionType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "From CSV":
+		*e = SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionFromCSVHeaderDefinitionType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionFromCSVHeaderDefinitionType: %v", v)
+	}
+}
+
+// SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionFromCSV - How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.
+type SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionFromCSV struct {
+	HeaderDefinitionType *SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionFromCSVHeaderDefinitionType `json:"header_definition_type,omitempty"`
+}
+
+type SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionType string
+
+const (
+	SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionTypeSourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionFromCSV       SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionType = "source-s3_FileBasedStreamConfig_Format_CSV Format_CSV Header Definition_From CSV"
+	SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionTypeSourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionAutogenerated SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionType = "source-s3_FileBasedStreamConfig_Format_CSV Format_CSV Header Definition_Autogenerated"
+	SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionTypeSourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionUserProvided  SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionType = "source-s3_FileBasedStreamConfig_Format_CSV Format_CSV Header Definition_User Provided"
+)
+
+type SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinition struct {
+	SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionFromCSV       *SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionFromCSV
+	SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionAutogenerated *SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionAutogenerated
+	SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionUserProvided  *SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionUserProvided
+
+	Type SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionType
+}
+
+func CreateSourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionSourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionFromCSV(sourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionFromCSV SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionFromCSV) SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinition {
+	typ := SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionTypeSourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionFromCSV
+
+	return SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinition{
+		SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionFromCSV: &sourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionFromCSV,
+		Type: typ,
+	}
+}
+
+func CreateSourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionSourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionAutogenerated(sourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionAutogenerated SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionAutogenerated) SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinition {
+	typ := SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionTypeSourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionAutogenerated
+
+	return SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinition{
+		SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionAutogenerated: &sourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionAutogenerated,
+		Type: typ,
+	}
+}
+
+func CreateSourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionSourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionUserProvided(sourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionUserProvided SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionUserProvided) SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinition {
+	typ := SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionTypeSourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionUserProvided
+
+	return SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinition{
+		SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionUserProvided: &sourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionUserProvided,
+		Type: typ,
+	}
+}
+
+func (u *SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinition) UnmarshalJSON(data []byte) error {
+	var d *json.Decoder
+
+	sourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionFromCSV := new(SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionFromCSV)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionFromCSV); err == nil {
+		u.SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionFromCSV = sourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionFromCSV
+		u.Type = SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionTypeSourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionFromCSV
+		return nil
+	}
+
+	sourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionAutogenerated := new(SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionAutogenerated)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionAutogenerated); err == nil {
+		u.SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionAutogenerated = sourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionAutogenerated
+		u.Type = SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionTypeSourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionAutogenerated
+		return nil
+	}
+
+	sourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionUserProvided := new(SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionUserProvided)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionUserProvided); err == nil {
+		u.SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionUserProvided = sourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionUserProvided
+		u.Type = SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionTypeSourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionUserProvided
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinition) MarshalJSON() ([]byte, error) {
+	if u.SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionFromCSV != nil {
+		return json.Marshal(u.SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionFromCSV)
+	}
+
+	if u.SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionAutogenerated != nil {
+		return json.Marshal(u.SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionAutogenerated)
+	}
+
+	if u.SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionUserProvided != nil {
+		return json.Marshal(u.SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinitionUserProvided)
+	}
+
+	return nil, nil
+}
+
+// SourceS3FileBasedStreamConfigFormatCSVFormatInferenceType - How to infer the types of the columns. If none, inference default to strings.
+type SourceS3FileBasedStreamConfigFormatCSVFormatInferenceType string
+
+const (
+	SourceS3FileBasedStreamConfigFormatCSVFormatInferenceTypeNone               SourceS3FileBasedStreamConfigFormatCSVFormatInferenceType = "None"
+	SourceS3FileBasedStreamConfigFormatCSVFormatInferenceTypePrimitiveTypesOnly SourceS3FileBasedStreamConfigFormatCSVFormatInferenceType = "Primitive Types Only"
+)
+
+func (e SourceS3FileBasedStreamConfigFormatCSVFormatInferenceType) ToPointer() *SourceS3FileBasedStreamConfigFormatCSVFormatInferenceType {
+	return &e
+}
+
+func (e *SourceS3FileBasedStreamConfigFormatCSVFormatInferenceType) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "None":
+		fallthrough
+	case "Primitive Types Only":
+		*e = SourceS3FileBasedStreamConfigFormatCSVFormatInferenceType(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceS3FileBasedStreamConfigFormatCSVFormatInferenceType: %v", v)
+	}
+}
+
+// SourceS3FileBasedStreamConfigFormatCSVFormat - The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
+type SourceS3FileBasedStreamConfigFormatCSVFormat struct {
+	// The character delimiting individual cells in the CSV data. This may only be a 1-character string. For tab-delimited data enter '\t'.
+	Delimiter *string `json:"delimiter,omitempty"`
+	// Whether two quotes in a quoted CSV value denote a single quote in the data.
+	DoubleQuote *bool `json:"double_quote,omitempty"`
+	// The character encoding of the CSV data. Leave blank to default to <strong>UTF8</strong>. See <a href="https://docs.python.org/3/library/codecs.html#standard-encodings" target="_blank">list of python encodings</a> for allowable options.
+	Encoding *string `json:"encoding,omitempty"`
+	// The character used for escaping special characters. To disallow escaping, leave this field blank.
+	EscapeChar *string `json:"escape_char,omitempty"`
+	// A set of case-sensitive strings that should be interpreted as false values.
+	FalseValues []string                                              `json:"false_values,omitempty"`
+	Filetype    *SourceS3FileBasedStreamConfigFormatCSVFormatFiletype `json:"filetype,omitempty"`
+	// How headers will be defined. `User Provided` assumes the CSV does not have a header row and uses the headers provided and `Autogenerated` assumes the CSV does not have a header row and the CDK will generate headers using for `f{i}` where `i` is the index starting from 0. Else, the default behavior is to use the header from the CSV file. If a user wants to autogenerate or provide column names for a CSV having headers, they can skip rows.
+	HeaderDefinition *SourceS3FileBasedStreamConfigFormatCSVFormatCSVHeaderDefinition `json:"header_definition,omitempty"`
+	// How to infer the types of the columns. If none, inference default to strings.
+	InferenceType *SourceS3FileBasedStreamConfigFormatCSVFormatInferenceType `json:"inference_type,omitempty"`
+	// A set of case-sensitive strings that should be interpreted as null values. For example, if the value 'NA' should be interpreted as null, enter 'NA' in this field.
+	NullValues []string `json:"null_values,omitempty"`
+	// The character used for quoting CSV values. To disallow quoting, make this field blank.
+	QuoteChar *string `json:"quote_char,omitempty"`
+	// The number of rows to skip after the header row.
+	SkipRowsAfterHeader *int64 `json:"skip_rows_after_header,omitempty"`
+	// The number of rows to skip before the header row. For example, if the header row is on the 3rd row, enter 2 in this field.
+	SkipRowsBeforeHeader *int64 `json:"skip_rows_before_header,omitempty"`
+	// Whether strings can be interpreted as null values. If true, strings that match the null_values set will be interpreted as null. If false, strings that match the null_values set will be interpreted as the string itself.
+	StringsCanBeNull *bool `json:"strings_can_be_null,omitempty"`
+	// A set of case-sensitive strings that should be interpreted as true values.
+	TrueValues []string `json:"true_values,omitempty"`
+}
+
+type SourceS3FileBasedStreamConfigFormatAvroFormatFiletype string
+
+const (
+	SourceS3FileBasedStreamConfigFormatAvroFormatFiletypeAvro SourceS3FileBasedStreamConfigFormatAvroFormatFiletype = "avro"
+)
+
+func (e SourceS3FileBasedStreamConfigFormatAvroFormatFiletype) ToPointer() *SourceS3FileBasedStreamConfigFormatAvroFormatFiletype {
+	return &e
+}
+
+func (e *SourceS3FileBasedStreamConfigFormatAvroFormatFiletype) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "avro":
+		*e = SourceS3FileBasedStreamConfigFormatAvroFormatFiletype(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceS3FileBasedStreamConfigFormatAvroFormatFiletype: %v", v)
+	}
+}
+
+// SourceS3FileBasedStreamConfigFormatAvroFormat - The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
+type SourceS3FileBasedStreamConfigFormatAvroFormat struct {
+	// Whether to convert double fields to strings. This is recommended if you have decimal numbers with a high degree of precision because there can be a loss precision when handling floating point numbers.
+	DoubleAsString *bool                                                  `json:"double_as_string,omitempty"`
+	Filetype       *SourceS3FileBasedStreamConfigFormatAvroFormatFiletype `json:"filetype,omitempty"`
+}
+
+type SourceS3FileBasedStreamConfigFormatType string
+
+const (
+	SourceS3FileBasedStreamConfigFormatTypeSourceS3FileBasedStreamConfigFormatAvroFormat    SourceS3FileBasedStreamConfigFormatType = "source-s3_FileBasedStreamConfig_Format_Avro Format"
+	SourceS3FileBasedStreamConfigFormatTypeSourceS3FileBasedStreamConfigFormatCSVFormat     SourceS3FileBasedStreamConfigFormatType = "source-s3_FileBasedStreamConfig_Format_CSV Format"
+	SourceS3FileBasedStreamConfigFormatTypeSourceS3FileBasedStreamConfigFormatJsonlFormat   SourceS3FileBasedStreamConfigFormatType = "source-s3_FileBasedStreamConfig_Format_Jsonl Format"
+	SourceS3FileBasedStreamConfigFormatTypeSourceS3FileBasedStreamConfigFormatParquetFormat SourceS3FileBasedStreamConfigFormatType = "source-s3_FileBasedStreamConfig_Format_Parquet Format"
+)
+
+type SourceS3FileBasedStreamConfigFormat struct {
+	SourceS3FileBasedStreamConfigFormatAvroFormat    *SourceS3FileBasedStreamConfigFormatAvroFormat
+	SourceS3FileBasedStreamConfigFormatCSVFormat     *SourceS3FileBasedStreamConfigFormatCSVFormat
+	SourceS3FileBasedStreamConfigFormatJsonlFormat   *SourceS3FileBasedStreamConfigFormatJsonlFormat
+	SourceS3FileBasedStreamConfigFormatParquetFormat *SourceS3FileBasedStreamConfigFormatParquetFormat
+
+	Type SourceS3FileBasedStreamConfigFormatType
+}
+
+func CreateSourceS3FileBasedStreamConfigFormatSourceS3FileBasedStreamConfigFormatAvroFormat(sourceS3FileBasedStreamConfigFormatAvroFormat SourceS3FileBasedStreamConfigFormatAvroFormat) SourceS3FileBasedStreamConfigFormat {
+	typ := SourceS3FileBasedStreamConfigFormatTypeSourceS3FileBasedStreamConfigFormatAvroFormat
+
+	return SourceS3FileBasedStreamConfigFormat{
+		SourceS3FileBasedStreamConfigFormatAvroFormat: &sourceS3FileBasedStreamConfigFormatAvroFormat,
+		Type: typ,
+	}
+}
+
+func CreateSourceS3FileBasedStreamConfigFormatSourceS3FileBasedStreamConfigFormatCSVFormat(sourceS3FileBasedStreamConfigFormatCSVFormat SourceS3FileBasedStreamConfigFormatCSVFormat) SourceS3FileBasedStreamConfigFormat {
+	typ := SourceS3FileBasedStreamConfigFormatTypeSourceS3FileBasedStreamConfigFormatCSVFormat
+
+	return SourceS3FileBasedStreamConfigFormat{
+		SourceS3FileBasedStreamConfigFormatCSVFormat: &sourceS3FileBasedStreamConfigFormatCSVFormat,
+		Type: typ,
+	}
+}
+
+func CreateSourceS3FileBasedStreamConfigFormatSourceS3FileBasedStreamConfigFormatJsonlFormat(sourceS3FileBasedStreamConfigFormatJsonlFormat SourceS3FileBasedStreamConfigFormatJsonlFormat) SourceS3FileBasedStreamConfigFormat {
+	typ := SourceS3FileBasedStreamConfigFormatTypeSourceS3FileBasedStreamConfigFormatJsonlFormat
+
+	return SourceS3FileBasedStreamConfigFormat{
+		SourceS3FileBasedStreamConfigFormatJsonlFormat: &sourceS3FileBasedStreamConfigFormatJsonlFormat,
+		Type: typ,
+	}
+}
+
+func CreateSourceS3FileBasedStreamConfigFormatSourceS3FileBasedStreamConfigFormatParquetFormat(sourceS3FileBasedStreamConfigFormatParquetFormat SourceS3FileBasedStreamConfigFormatParquetFormat) SourceS3FileBasedStreamConfigFormat {
+	typ := SourceS3FileBasedStreamConfigFormatTypeSourceS3FileBasedStreamConfigFormatParquetFormat
+
+	return SourceS3FileBasedStreamConfigFormat{
+		SourceS3FileBasedStreamConfigFormatParquetFormat: &sourceS3FileBasedStreamConfigFormatParquetFormat,
+		Type: typ,
+	}
+}
+
+func (u *SourceS3FileBasedStreamConfigFormat) UnmarshalJSON(data []byte) error {
+	var d *json.Decoder
+
+	sourceS3FileBasedStreamConfigFormatJsonlFormat := new(SourceS3FileBasedStreamConfigFormatJsonlFormat)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceS3FileBasedStreamConfigFormatJsonlFormat); err == nil {
+		u.SourceS3FileBasedStreamConfigFormatJsonlFormat = sourceS3FileBasedStreamConfigFormatJsonlFormat
+		u.Type = SourceS3FileBasedStreamConfigFormatTypeSourceS3FileBasedStreamConfigFormatJsonlFormat
+		return nil
+	}
+
+	sourceS3FileBasedStreamConfigFormatAvroFormat := new(SourceS3FileBasedStreamConfigFormatAvroFormat)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceS3FileBasedStreamConfigFormatAvroFormat); err == nil {
+		u.SourceS3FileBasedStreamConfigFormatAvroFormat = sourceS3FileBasedStreamConfigFormatAvroFormat
+		u.Type = SourceS3FileBasedStreamConfigFormatTypeSourceS3FileBasedStreamConfigFormatAvroFormat
+		return nil
+	}
+
+	sourceS3FileBasedStreamConfigFormatParquetFormat := new(SourceS3FileBasedStreamConfigFormatParquetFormat)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceS3FileBasedStreamConfigFormatParquetFormat); err == nil {
+		u.SourceS3FileBasedStreamConfigFormatParquetFormat = sourceS3FileBasedStreamConfigFormatParquetFormat
+		u.Type = SourceS3FileBasedStreamConfigFormatTypeSourceS3FileBasedStreamConfigFormatParquetFormat
+		return nil
+	}
+
+	sourceS3FileBasedStreamConfigFormatCSVFormat := new(SourceS3FileBasedStreamConfigFormatCSVFormat)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceS3FileBasedStreamConfigFormatCSVFormat); err == nil {
+		u.SourceS3FileBasedStreamConfigFormatCSVFormat = sourceS3FileBasedStreamConfigFormatCSVFormat
+		u.Type = SourceS3FileBasedStreamConfigFormatTypeSourceS3FileBasedStreamConfigFormatCSVFormat
+		return nil
+	}
+
+	return errors.New("could not unmarshal into supported union types")
+}
+
+func (u SourceS3FileBasedStreamConfigFormat) MarshalJSON() ([]byte, error) {
+	if u.SourceS3FileBasedStreamConfigFormatJsonlFormat != nil {
+		return json.Marshal(u.SourceS3FileBasedStreamConfigFormatJsonlFormat)
+	}
+
+	if u.SourceS3FileBasedStreamConfigFormatAvroFormat != nil {
+		return json.Marshal(u.SourceS3FileBasedStreamConfigFormatAvroFormat)
+	}
+
+	if u.SourceS3FileBasedStreamConfigFormatParquetFormat != nil {
+		return json.Marshal(u.SourceS3FileBasedStreamConfigFormatParquetFormat)
+	}
+
+	if u.SourceS3FileBasedStreamConfigFormatCSVFormat != nil {
+		return json.Marshal(u.SourceS3FileBasedStreamConfigFormatCSVFormat)
+	}
+
+	return nil, nil
+}
+
+// SourceS3FileBasedStreamConfigValidationPolicy - The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.
+type SourceS3FileBasedStreamConfigValidationPolicy string
+
+const (
+	SourceS3FileBasedStreamConfigValidationPolicyEmitRecord      SourceS3FileBasedStreamConfigValidationPolicy = "Emit Record"
+	SourceS3FileBasedStreamConfigValidationPolicySkipRecord      SourceS3FileBasedStreamConfigValidationPolicy = "Skip Record"
+	SourceS3FileBasedStreamConfigValidationPolicyWaitForDiscover SourceS3FileBasedStreamConfigValidationPolicy = "Wait for Discover"
+)
+
+func (e SourceS3FileBasedStreamConfigValidationPolicy) ToPointer() *SourceS3FileBasedStreamConfigValidationPolicy {
+	return &e
+}
+
+func (e *SourceS3FileBasedStreamConfigValidationPolicy) UnmarshalJSON(data []byte) error {
+	var v string
+	if err := json.Unmarshal(data, &v); err != nil {
+		return err
+	}
+	switch v {
+	case "Emit Record":
+		fallthrough
+	case "Skip Record":
+		fallthrough
+	case "Wait for Discover":
+		*e = SourceS3FileBasedStreamConfigValidationPolicy(v)
+		return nil
+	default:
+		return fmt.Errorf("invalid value for SourceS3FileBasedStreamConfigValidationPolicy: %v", v)
+	}
+}
+
+type SourceS3FileBasedStreamConfig struct {
+	// When the state history of the file store is full, syncs will only read files that were last modified in the provided day range.
+	DaysToSyncIfHistoryIsFull *int64 `json:"days_to_sync_if_history_is_full,omitempty"`
+	// The data file type that is being extracted for a stream.
+	FileType string `json:"file_type"`
+	// The configuration options that are used to alter how to read incoming files that deviate from the standard formatting.
+	Format *SourceS3FileBasedStreamConfigFormat `json:"format,omitempty"`
+	// The pattern used to specify which files should be selected from the file system. For more information on glob pattern matching look <a href="https://en.wikipedia.org/wiki/Glob_(programming)">here</a>.
+	Globs []string `json:"globs,omitempty"`
+	// The schema that will be used to validate records extracted from the file. This will override the stream schema that is auto-detected from incoming files.
+	InputSchema *string `json:"input_schema,omitempty"`
+	// The path prefix configured in v3 versions of the S3 connector. This option is deprecated in favor of a single glob.
+	LegacyPrefix *string `json:"legacy_prefix,omitempty"`
+	// The name of the stream.
+	Name string `json:"name"`
+	// The column or columns (for a composite key) that serves as the unique identifier of a record.
+	PrimaryKey *string `json:"primary_key,omitempty"`
+	// When enabled, syncs will not validate or structure records against the stream's schema.
+	Schemaless *bool `json:"schemaless,omitempty"`
+	// The name of the validation policy that dictates sync behavior when a record does not adhere to the stream schema.
+	ValidationPolicy *SourceS3FileBasedStreamConfigValidationPolicy `json:"validation_policy,omitempty"`
+}
+
+// SourceS3 - NOTE: When this Spec is changed, legacy_config_transformer.py must also be modified to uptake the changes
+// because it is responsible for converting legacy S3 v3 configs into v4 configs using the File-Based CDK.
 type SourceS3 struct {
-	// The name of the stream you would like this source to output. Can contain letters, numbers, or underscores.
-	Dataset string `json:"dataset"`
-	// The format of the files you'd like to replicate
+	// In order to access private Buckets stored on AWS S3, this connector requires credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
+	AwsAccessKeyID *string `json:"aws_access_key_id,omitempty"`
+	// In order to access private Buckets stored on AWS S3, this connector requires credentials with the proper permissions. If accessing publicly available data, this field is not necessary.
+	AwsSecretAccessKey *string `json:"aws_secret_access_key,omitempty"`
+	// Name of the S3 bucket where the file(s) exist.
+	Bucket string `json:"bucket"`
+	// Deprecated and will be removed soon. Please do not use this field anymore and use streams.name instead. The name of the stream you would like this source to output. Can contain letters, numbers, or underscores.
+	Dataset *string `json:"dataset,omitempty"`
+	// Endpoint to an S3 compatible service. Leave empty to use AWS.
+	Endpoint *string `json:"endpoint,omitempty"`
+	// Deprecated and will be removed soon. Please do not use this field anymore and use streams.format instead. The format of the files you'd like to replicate
 	Format *SourceS3FileFormat `json:"format,omitempty"`
-	// A regular expression which tells the connector which files to replicate. All files which match this pattern will be replicated. Use | to separate multiple patterns. See <a href="https://facelessuser.github.io/wcmatch/glob/" target="_blank">this page</a> to understand pattern syntax (GLOBSTAR and SPLIT flags are enabled). Use pattern <strong>**</strong> to pick up all files.
-	PathPattern string `json:"path_pattern"`
-	// Use this to load files from S3 or S3-compatible services
-	Provider SourceS3S3AmazonWebServices `json:"provider"`
-	// Optionally provide a schema to enforce, as a valid JSON string. Ensure this is a mapping of <strong>{ "column" : "type" }</strong>, where types are valid <a href="https://json-schema.org/understanding-json-schema/reference/type.html" target="_blank">JSON Schema datatypes</a>. Leave as {} to auto-infer the schema.
+	// Deprecated and will be removed soon. Please do not use this field anymore and use streams.globs instead. A regular expression which tells the connector which files to replicate. All files which match this pattern will be replicated. Use | to separate multiple patterns. See <a href="https://facelessuser.github.io/wcmatch/glob/" target="_blank">this page</a> to understand pattern syntax (GLOBSTAR and SPLIT flags are enabled). Use pattern <strong>**</strong> to pick up all files.
+	PathPattern *string `json:"path_pattern,omitempty"`
+	// Deprecated and will be removed soon. Please do not use this field anymore and use bucket, aws_access_key_id, aws_secret_access_key and endpoint instead. Use this to load files from S3 or S3-compatible services
+	Provider *SourceS3S3AmazonWebServices `json:"provider,omitempty"`
+	// Deprecated and will be removed soon. Please do not use this field anymore and use streams.input_schema instead. Optionally provide a schema to enforce, as a valid JSON string. Ensure this is a mapping of <strong>{ "column" : "type" }</strong>, where types are valid <a href="https://json-schema.org/understanding-json-schema/reference/type.html" target="_blank">JSON Schema datatypes</a>. Leave as {} to auto-infer the schema.
 	Schema     *string    `json:"schema,omitempty"`
 	SourceType SourceS3S3 `json:"sourceType"`
+	// UTC date and time in the format 2017-01-25T00:00:00.000000Z. Any file modified before this date will not be replicated.
+	StartDate *time.Time `json:"start_date,omitempty"`
+	// Each instance of this configuration defines a <a href="https://docs.airbyte.com/cloud/core-concepts#stream">stream</a>. Use this to define which files belong in the stream, their format, and how they should be parsed and validated. When sending data to warehouse destination such as Snowflake or BigQuery, each stream is a separate table.
+	Streams []SourceS3FileBasedStreamConfig `json:"streams"`
 }

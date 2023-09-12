@@ -19,9 +19,9 @@ resource "airbyte_source_aha" "my_source_aha" {
     source_type = "aha"
     url         = "...my_url..."
   }
-  name         = "Brandy Gibson"
+  name         = "Van Bergnaum"
   secret_id    = "...my_secret_id..."
-  workspace_id = "3a8418d1-6230-49fb-8929-921aefb9f58c"
+  workspace_id = "a3383c2b-eb47-4737-bc8d-72f64d1db1f2"
 }
 ```
 

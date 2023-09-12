@@ -110,15 +110,6 @@ func CreateSourceMondayUpdateAuthorizationMethodSourceMondayUpdateAuthorizationM
 func (u *SourceMondayUpdateAuthorizationMethod) UnmarshalJSON(data []byte) error {
 	var d *json.Decoder
 
-	sourceMondayUpdateAuthorizationMethodOAuth20 := new(SourceMondayUpdateAuthorizationMethodOAuth20)
-	d = json.NewDecoder(bytes.NewReader(data))
-	d.DisallowUnknownFields()
-	if err := d.Decode(&sourceMondayUpdateAuthorizationMethodOAuth20); err == nil {
-		u.SourceMondayUpdateAuthorizationMethodOAuth20 = sourceMondayUpdateAuthorizationMethodOAuth20
-		u.Type = SourceMondayUpdateAuthorizationMethodTypeSourceMondayUpdateAuthorizationMethodOAuth20
-		return nil
-	}
-
 	sourceMondayUpdateAuthorizationMethodAPIToken := new(SourceMondayUpdateAuthorizationMethodAPIToken)
 	d = json.NewDecoder(bytes.NewReader(data))
 	d.DisallowUnknownFields()
@@ -128,16 +119,25 @@ func (u *SourceMondayUpdateAuthorizationMethod) UnmarshalJSON(data []byte) error
 		return nil
 	}
 
+	sourceMondayUpdateAuthorizationMethodOAuth20 := new(SourceMondayUpdateAuthorizationMethodOAuth20)
+	d = json.NewDecoder(bytes.NewReader(data))
+	d.DisallowUnknownFields()
+	if err := d.Decode(&sourceMondayUpdateAuthorizationMethodOAuth20); err == nil {
+		u.SourceMondayUpdateAuthorizationMethodOAuth20 = sourceMondayUpdateAuthorizationMethodOAuth20
+		u.Type = SourceMondayUpdateAuthorizationMethodTypeSourceMondayUpdateAuthorizationMethodOAuth20
+		return nil
+	}
+
 	return errors.New("could not unmarshal into supported union types")
 }
 
 func (u SourceMondayUpdateAuthorizationMethod) MarshalJSON() ([]byte, error) {
-	if u.SourceMondayUpdateAuthorizationMethodOAuth20 != nil {
-		return json.Marshal(u.SourceMondayUpdateAuthorizationMethodOAuth20)
-	}
-
 	if u.SourceMondayUpdateAuthorizationMethodAPIToken != nil {
 		return json.Marshal(u.SourceMondayUpdateAuthorizationMethodAPIToken)
+	}
+
+	if u.SourceMondayUpdateAuthorizationMethodOAuth20 != nil {
+		return json.Marshal(u.SourceMondayUpdateAuthorizationMethodOAuth20)
 	}
 
 	return nil, nil

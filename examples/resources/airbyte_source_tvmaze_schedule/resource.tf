@@ -4,9 +4,9 @@ resource "airbyte_source_tvmaze_schedule" "my_source_tvmazeschedule" {
     end_date                       = "...my_end_date..."
     source_type                    = "tvmaze-schedule"
     start_date                     = "...my_start_date..."
-    web_schedule_country_code      = "GB"
+    web_schedule_country_code      = "global"
   }
-  name         = "Audrey Rippin"
+  name         = "Gretchen Waters"
   secret_id    = "...my_secret_id..."
-  workspace_id = "bc0f970c-42fc-49f4-8442-25e75b796065"
+  workspace_id = "e78bf606-8258-494e-a763-d5c72795b785"
 }

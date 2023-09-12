@@ -21,14 +21,14 @@ resource "airbyte_source_square" "my_source_square" {
         auth_type = "API Key"
       }
     }
-    include_deleted_objects = false
+    include_deleted_objects = true
     is_sandbox              = false
     source_type             = "square"
-    start_date              = "2022-08-13"
+    start_date              = "2022-02-01"
   }
-  name         = "Josephine Yundt"
+  name         = "Miss Bruce Gibson"
   secret_id    = "...my_secret_id..."
-  workspace_id = "681c5768-dce7-4424-89a2-15e08601489a"
+  workspace_id = "548f88f8-f1bf-40bc-8e1f-206d5d831d00"
 }
 ```
 

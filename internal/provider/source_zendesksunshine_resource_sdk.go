@@ -4,8 +4,8 @@ package provider
 
 import (
 	"airbyte/internal/sdk/pkg/models/shared"
-	"encoding/json"
 	"github.com/hashicorp/terraform-plugin-framework/types"
+	"time"
 )
 
 func (r *SourceZendeskSunshineResourceModel) ToCreateSDKType() *shared.SourceZendeskSunshineCreateRequest {
@@ -17,16 +17,11 @@ func (r *SourceZendeskSunshineResourceModel) ToCreateSDKType() *shared.SourceZen
 			authMethod := shared.SourceZendeskSunshineAuthorizationMethodOAuth20AuthMethod(r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20.AuthMethod.ValueString())
 			clientID := r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20.ClientID.ValueString()
 			clientSecret := r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20.ClientSecret.ValueString()
-			var additionalProperties interface{}
-			if !r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodOAuth20.AdditionalProperties.ValueString()), &additionalProperties)
-			}
 			sourceZendeskSunshineAuthorizationMethodOAuth20 = &shared.SourceZendeskSunshineAuthorizationMethodOAuth20{
-				AccessToken:          accessToken,
-				AuthMethod:           authMethod,
-				ClientID:             clientID,
-				ClientSecret:         clientSecret,
-				AdditionalProperties: additionalProperties,
+				AccessToken:  accessToken,
+				AuthMethod:   authMethod,
+				ClientID:     clientID,
+				ClientSecret: clientSecret,
 			}
 		}
 		if sourceZendeskSunshineAuthorizationMethodOAuth20 != nil {
@@ -39,15 +34,10 @@ func (r *SourceZendeskSunshineResourceModel) ToCreateSDKType() *shared.SourceZen
 			apiToken := r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodAPIToken.APIToken.ValueString()
 			authMethod1 := shared.SourceZendeskSunshineAuthorizationMethodAPITokenAuthMethod(r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodAPIToken.AuthMethod.ValueString())
 			email := r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodAPIToken.Email.ValueString()
-			var additionalProperties1 interface{}
-			if !r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodAPIToken.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodAPIToken.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.Credentials.SourceZendeskSunshineAuthorizationMethodAPIToken.AdditionalProperties.ValueString()), &additionalProperties1)
-			}
 			sourceZendeskSunshineAuthorizationMethodAPIToken = &shared.SourceZendeskSunshineAuthorizationMethodAPIToken{
-				APIToken:             apiToken,
-				AuthMethod:           authMethod1,
-				Email:                email,
-				AdditionalProperties: additionalProperties1,
+				APIToken:   apiToken,
+				AuthMethod: authMethod1,
+				Email:      email,
 			}
 		}
 		if sourceZendeskSunshineAuthorizationMethodAPIToken != nil {
@@ -57,7 +47,7 @@ func (r *SourceZendeskSunshineResourceModel) ToCreateSDKType() *shared.SourceZen
 		}
 	}
 	sourceType := shared.SourceZendeskSunshineZendeskSunshine(r.Configuration.SourceType.ValueString())
-	startDate := r.Configuration.StartDate.ValueString()
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	subdomain := r.Configuration.Subdomain.ValueString()
 	configuration := shared.SourceZendeskSunshine{
 		Credentials: credentials,
@@ -96,16 +86,11 @@ func (r *SourceZendeskSunshineResourceModel) ToUpdateSDKType() *shared.SourceZen
 			authMethod := shared.SourceZendeskSunshineUpdateAuthorizationMethodOAuth20AuthMethod(r.Configuration.Credentials.SourceZendeskSunshineUpdateAuthorizationMethodOAuth20.AuthMethod.ValueString())
 			clientID := r.Configuration.Credentials.SourceZendeskSunshineUpdateAuthorizationMethodOAuth20.ClientID.ValueString()
 			clientSecret := r.Configuration.Credentials.SourceZendeskSunshineUpdateAuthorizationMethodOAuth20.ClientSecret.ValueString()
-			var additionalProperties interface{}
-			if !r.Configuration.Credentials.SourceZendeskSunshineUpdateAuthorizationMethodOAuth20.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.SourceZendeskSunshineUpdateAuthorizationMethodOAuth20.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.Credentials.SourceZendeskSunshineUpdateAuthorizationMethodOAuth20.AdditionalProperties.ValueString()), &additionalProperties)
-			}
 			sourceZendeskSunshineUpdateAuthorizationMethodOAuth20 = &shared.SourceZendeskSunshineUpdateAuthorizationMethodOAuth20{
-				AccessToken:          accessToken,
-				AuthMethod:           authMethod,
-				ClientID:             clientID,
-				ClientSecret:         clientSecret,
-				AdditionalProperties: additionalProperties,
+				AccessToken:  accessToken,
+				AuthMethod:   authMethod,
+				ClientID:     clientID,
+				ClientSecret: clientSecret,
 			}
 		}
 		if sourceZendeskSunshineUpdateAuthorizationMethodOAuth20 != nil {
@@ -118,15 +103,10 @@ func (r *SourceZendeskSunshineResourceModel) ToUpdateSDKType() *shared.SourceZen
 			apiToken := r.Configuration.Credentials.SourceZendeskSunshineUpdateAuthorizationMethodAPIToken.APIToken.ValueString()
 			authMethod1 := shared.SourceZendeskSunshineUpdateAuthorizationMethodAPITokenAuthMethod(r.Configuration.Credentials.SourceZendeskSunshineUpdateAuthorizationMethodAPIToken.AuthMethod.ValueString())
 			email := r.Configuration.Credentials.SourceZendeskSunshineUpdateAuthorizationMethodAPIToken.Email.ValueString()
-			var additionalProperties1 interface{}
-			if !r.Configuration.Credentials.SourceZendeskSunshineUpdateAuthorizationMethodAPIToken.AdditionalProperties.IsUnknown() && !r.Configuration.Credentials.SourceZendeskSunshineUpdateAuthorizationMethodAPIToken.AdditionalProperties.IsNull() {
-				_ = json.Unmarshal([]byte(r.Configuration.Credentials.SourceZendeskSunshineUpdateAuthorizationMethodAPIToken.AdditionalProperties.ValueString()), &additionalProperties1)
-			}
 			sourceZendeskSunshineUpdateAuthorizationMethodAPIToken = &shared.SourceZendeskSunshineUpdateAuthorizationMethodAPIToken{
-				APIToken:             apiToken,
-				AuthMethod:           authMethod1,
-				Email:                email,
-				AdditionalProperties: additionalProperties1,
+				APIToken:   apiToken,
+				AuthMethod: authMethod1,
+				Email:      email,
 			}
 		}
 		if sourceZendeskSunshineUpdateAuthorizationMethodAPIToken != nil {
@@ -135,7 +115,7 @@ func (r *SourceZendeskSunshineResourceModel) ToUpdateSDKType() *shared.SourceZen
 			}
 		}
 	}
-	startDate := r.Configuration.StartDate.ValueString()
+	startDate, _ := time.Parse(time.RFC3339Nano, r.Configuration.StartDate.ValueString())
 	subdomain := r.Configuration.Subdomain.ValueString()
 	configuration := shared.SourceZendeskSunshineUpdate{
 		Credentials: credentials,
